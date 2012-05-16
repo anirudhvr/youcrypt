@@ -976,7 +976,7 @@ RootPtr createV6Config( EncFS_Context *ctx,
     bool useStdin = opts->useStdin;
     bool reverseEncryption = opts->reverseEncryption;
     ConfigMode configMode = opts->configMode;
-    
+
     RootPtr rootInfo;
 
     // creating new volume key.. should check that is what the user is
@@ -993,9 +993,9 @@ RootPtr createV6Config( EncFS_Context *ctx,
                 " enter \"p\" for pre-configured paranoia mode,\n"
                 " anything else, or an empty line will select standard mode.\n"
                 "?> ");
-    
+
         char *res = fgets( answer, sizeof(answer), stdin );
-	(void)res;
+        (void)res;
         cout << "\n";
     }
 
@@ -1010,119 +1010,119 @@ RootPtr createV6Config( EncFS_Context *ctx,
     bool externalIV = false;
     bool allowHoles = true;
     long desiredKDFDuration = NormalKDFDuration;
-    
+
     if (reverseEncryption)
     {
-	uniqueIV = false;
-	chainedIV = false;
-	externalIV = false;
-	blockMACBytes = 0;
-	blockMACRandBytes = 0;
+        uniqueIV = false;
+        chainedIV = false;
+        externalIV = false;
+        blockMACBytes = 0;
+        blockMACRandBytes = 0;
     }
 
     if(configMode == Config_Paranoia || answer[0] == 'p')
     {
-	if (reverseEncryption)
-	{
-	    rError(_("Paranoia configuration not supported for --reverse"));
-	    return rootInfo;
-	}
+        if (reverseEncryption)
+        {
+            rError(_("Paranoia configuration not supported for --reverse"));
+            return rootInfo;
+        }
 
-	// xgroup(setup)
-	cout << _("Paranoia configuration selected.") << "\n";
-	// look for AES with 256 bit key..
-	// Use block filename encryption mode.
-	// Enable per-block HMAC headers at substantial performance penalty..
-	// Enable per-file initialization vector headers.
-	// Enable filename initialization vector chaning
-	keySize = 256;
-	blockSize = DefaultBlockSize;
-	alg = findCipherAlgorithm("AES", keySize);
-	nameIOIface = BlockNameIO::CurrentInterface();
-	blockMACBytes = 8;
-	blockMACRandBytes = 0; // using uniqueIV, so this isn't necessary
-	uniqueIV = true;
-	chainedIV = true;
-	externalIV = true;
+        // xgroup(setup)
+        cout << _("Paranoia configuration selected.") << "\n";
+        // look for AES with 256 bit key..
+        // Use block filename encryption mode.
+        // Enable per-block HMAC headers at substantial performance penalty..
+        // Enable per-file initialization vector headers.
+        // Enable filename initialization vector chaning
+        keySize = 256;
+        blockSize = DefaultBlockSize;
+        alg = findCipherAlgorithm("AES", keySize);
+        nameIOIface = BlockNameIO::CurrentInterface();
+        blockMACBytes = 8;
+        blockMACRandBytes = 0; // using uniqueIV, so this isn't necessary
+        uniqueIV = true;
+        chainedIV = true;
+        externalIV = true;
         desiredKDFDuration = ParanoiaKDFDuration;
     } else if(configMode == Config_Standard || answer[0] != 'x')
     {
-	// xgroup(setup)
-	cout << _("Standard configuration selected.") << "\n";
-	// AES w/ 192 bit key, block name encoding, per-file initialization
+        // xgroup(setup)
+        cout << _("Standard configuration selected.") << "\n";
+        // AES w/ 192 bit key, block name encoding, per-file initialization
         // vectors are all standard.
-	keySize = 192;
-	blockSize = DefaultBlockSize;
-	alg = findCipherAlgorithm("AES", keySize);
-	blockMACBytes = 0;
-	externalIV = false;
-	nameIOIface = BlockNameIO::CurrentInterface();
+        keySize = 192;
+        blockSize = DefaultBlockSize;
+        alg = findCipherAlgorithm("AES", keySize);
+        blockMACBytes = 0;
+        externalIV = false;
+        nameIOIface = BlockNameIO::CurrentInterface();
 
-	if (reverseEncryption)
-	{
-	    cout << _("--reverse specified, not using unique/chained IV") 
-		<< "\n";
-	} else
-	{
-	    uniqueIV = true;
-	    chainedIV = true;
-	}
+        if (reverseEncryption)
+        {
+            cout << _("--reverse specified, not using unique/chained IV") 
+                << "\n";
+        } else
+        {
+            uniqueIV = true;
+            chainedIV = true;
+        }
     }
 
     if(answer[0] == 'x' || alg.name.empty())
     {
-	if(answer[0] != 'x')
-	{
-	    // xgroup(setup)
-	    cout << _("Sorry, unable to locate cipher for predefined "
-		"configuration...\n"
-		"Falling through to Manual configuration mode.");
-	} else
-	{
-	    // xgroup(setup)
-	    cout << _("Manual configuration mode selected.");
-	}
-	cout << endl;
+        if(answer[0] != 'x')
+        {
+            // xgroup(setup)
+            cout << _("Sorry, unable to locate cipher for predefined "
+                    "configuration...\n"
+                    "Falling through to Manual configuration mode.");
+        } else
+        {
+            // xgroup(setup)
+            cout << _("Manual configuration mode selected.");
+        }
+        cout << endl;
 
-	// query user for settings..
-    	alg = selectCipherAlgorithm();
-	keySize = selectKeySize( alg );
-	blockSize = selectBlockSize( alg );
-	nameIOIface = selectNameCoding();
-	if (reverseEncryption)
-	{
-	    cout << _("--reverse specified, not using unique/chained IV") << "\n";
-	} else
-	{
-	    chainedIV = selectChainedIV();
-	    uniqueIV = selectUniqueIV();
-	    if(chainedIV && uniqueIV)
-		externalIV = selectExternalChainedIV();
-	    else
-	    {
-		// xgroup(setup)
-		cout << _("External chained IV disabled, as both 'IV chaining'\n"
-		    "and 'unique IV' features are required for this option.") 
+        // query user for settings..
+        alg = selectCipherAlgorithm();
+        keySize = selectKeySize( alg );
+        blockSize = selectBlockSize( alg );
+        nameIOIface = selectNameCoding();
+        if (reverseEncryption)
+        {
+            cout << _("--reverse specified, not using unique/chained IV") << "\n";
+        } else
+        {
+            chainedIV = selectChainedIV();
+            uniqueIV = selectUniqueIV();
+            if(chainedIV && uniqueIV)
+                externalIV = selectExternalChainedIV();
+            else
+            {
+                // xgroup(setup)
+                cout << _("External chained IV disabled, as both 'IV chaining'\n"
+                        "and 'unique IV' features are required for this option.") 
                     << "\n";
-		externalIV = false;
-	    }
-	    selectBlockMAC(&blockMACBytes, &blockMACRandBytes);
+                externalIV = false;
+            }
+            selectBlockMAC(&blockMACBytes, &blockMACRandBytes);
             allowHoles = selectZeroBlockPassThrough();
-	}
+        }
     }
 
     shared_ptr<Cipher> cipher = Cipher::New( alg.name, keySize );
     if(!cipher)
     {
-	rError(_("Unable to instanciate cipher %s, key size %i, block size %i"),
-		alg.name.c_str(), keySize, blockSize);
-	return rootInfo;
+        rError(_("Unable to instanciate cipher %s, key size %i, block size %i"),
+                alg.name.c_str(), keySize, blockSize);
+        return rootInfo;
     } else
     {
-	rDebug("Using cipher %s, key size %i, block size %i",
-	    alg.name.c_str(), keySize, blockSize);
+        rDebug("Using cipher %s, key size %i, block size %i",
+                alg.name.c_str(), keySize, blockSize);
     }
-    
+
     shared_ptr<EncFSConfig> config( new EncFSConfig );
 
     config->cfgType = Config_V6;
@@ -1146,29 +1146,29 @@ RootPtr createV6Config( EncFS_Context *ctx,
     cout << "\n";
     // xgroup(setup)
     cout << _("Configuration finished.  The filesystem to be created has\n"
-	"the following properties:") << endl;
+            "the following properties:") << endl;
     showFSInfo( config );
-    
+
     if( config->externalIVChaining )
     {
-	cout << 
-	    _("-------------------------- WARNING --------------------------\n")
-	    <<
-	    _("The external initialization-vector chaining option has been\n"
-	      "enabled.  This option disables the use of hard links on the\n"
-	      "filesystem. Without hard links, some programs may not work.\n"
-	      "The programs 'mutt' and 'procmail' are known to fail.  For\n"
-	      "more information, please see the encfs mailing list.\n"
-	      "If you would like to choose another configuration setting,\n"
-	      "please press CTRL-C now to abort and start over.") << endl;
-	cout << endl;
+        cout << 
+            _("-------------------------- WARNING --------------------------\n")
+            <<
+            _("The external initialization-vector chaining option has been\n"
+                    "enabled.  This option disables the use of hard links on the\n"
+                    "filesystem. Without hard links, some programs may not work.\n"
+                    "The programs 'mutt' and 'procmail' are known to fail.  For\n"
+                    "more information, please see the encfs mailing list.\n"
+                    "If you would like to choose another configuration setting,\n"
+                    "please press CTRL-C now to abort and start over.") << endl;
+        cout << endl;
     }
 
     // xgroup(setup)
     cout << _("Now you will need to enter a password for your filesystem.\n"
-	"You will need to remember this password, as there is absolutely\n"
-	"no recovery mechanism.  However, the password can be changed\n"
-	"later using encfsctl.\n\n");
+            "You will need to remember this password, as there is absolutely\n"
+            "no recovery mechanism.  However, the password can be changed\n"
+            "later using encfsctl.\n\n");
 
     int encodedKeySize = cipher->encodedKeySize();
     unsigned char *encodedKey = new unsigned char[ encodedKeySize ];
@@ -1193,25 +1193,25 @@ RootPtr createV6Config( EncFS_Context *ctx,
 
     if(!volumeKey)
     {
-	rWarning(_("Failure generating new volume key! "
-		    "Please report this error."));
-	return rootInfo;
+        rWarning(_("Failure generating new volume key! "
+                    "Please report this error."));
+        return rootInfo;
     }
 
     if(!saveConfig( Config_V6, rootDir, config ))
-	return rootInfo;
+        return rootInfo;
 
     // fill in config struct
     shared_ptr<NameIO> nameCoder = NameIO::New( config->nameIface,
-	    cipher, volumeKey );
+            cipher, volumeKey );
     if(!nameCoder)
     {
-	rWarning(_("Name coding interface not supported"));
-	cout << _("The filename encoding interface requested is not available") 
-	    << endl;
-	return rootInfo;
+        rWarning(_("Name coding interface not supported"));
+        cout << _("The filename encoding interface requested is not available") 
+            << endl;
+        return rootInfo;
     }
-	
+
     nameCoder->setChainedNameIV( config->chainedNameIV );
     nameCoder->setReverseEncryption( reverseEncryption );
 
