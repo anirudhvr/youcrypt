@@ -63,6 +63,7 @@
 #include <boost/archive/xml_iarchive.hpp>
 #include <boost/archive/xml_oarchive.hpp>
 #include <boost/serialization/split_free.hpp>
+#include <boost/serialization/vector.hpp>
 #include <boost/serialization/binary_object.hpp>
 
 // disable rlog section grouping for this file.. seems to cause problems
@@ -100,6 +101,11 @@ static int V5SubVersionDefault = 0;
 //const int V6SubVersion = 20080813; // switch to v6/XML, add allowHoles option
 //const int V6SubVersion = 20080816; // add salt and iteration count
 const int V6SubVersion = 20100713; // add version field for boost 1.42+
+
+/* easyenc */
+const int EASYENC_MAGIC = 0xDEADBEEF;
+const char* EASYENC_MAGIC_S = "DEADBEEF";
+
 
 struct ConfigInfo
 {
@@ -162,6 +168,20 @@ namespace boost
             ar << make_nvp("encodedKeyData",
                     serial::make_binary_object(cfg.getKeyData(), encodedSize));
 
+            /* easyenc */
+            ar << make_nvp("easyencNumUsers", cfg.easyencNumUsers);
+            for (int i = 0; i < cfg.easyencNumUsers; ++i) {
+                ar << make_nvp(autosprintf("easyencMagicNumbers%d", i),
+                        serial::make_binary_object(
+                            const_cast<unsigned char
+                            *>(&cfg.easyencMagicNumbers[i].front()),
+                            encodedSize));
+                ar << make_nvp(autosprintf("easyencKey%d", i),
+                        serial::make_binary_object(
+                            const_cast<unsigned char *>(&cfg.easyencKeys[i].front()),
+                            encodedSize));
+            }
+
             // version 20080816
             int size = cfg.salt.size();
             ar << make_nvp("saltLen", size);
@@ -218,7 +238,29 @@ namespace boost
             ar >> make_nvp("encodedKeyData",
                     serial::make_binary_object(key, encodedSize));
             cfg.assignKeyData(key, encodedSize);
-            delete[] key;
+            delete [] key;
+
+            /* easyenc */
+            unsigned char *encodedmagic = new unsigned char[encodedSize];
+            unsigned char *encodeduserkey = new unsigned char[encodedSize];
+            ar >> make_nvp("easyencNumUsers", cfg.easyencNumUsers);
+            rAssert(cfg.easyencNumUsers > 0);
+            cfg.easyencMagicNumbers.resize(cfg.easyencNumUsers);
+            cfg.easyencKeys.resize(cfg.easyencNumUsers);
+
+            for (int i = 0; i < cfg.easyencNumUsers; ++i) {
+                ar >> make_nvp(autosprintf("easyencMagicNumbers%d", i),
+                        serial::make_binary_object(encodedmagic, encodedSize));
+                cfg.easyencMagicNumbers[i].assign(encodedmagic,
+                        encodedmagic + encodedSize);
+                ar >> make_nvp(autosprintf("easyencKey%d", i),
+                        serial::make_binary_object(encodeduserkey, encodedSize));
+                cfg.easyencKeys[i].assign(encodeduserkey, 
+                        encodeduserkey + encodedSize);
+            }
+
+            delete [] encodedmagic;
+            delete [] encodeduserkey;
 
             if(cfg.subVersion >= 20080816)
             {
@@ -559,7 +601,10 @@ bool writeV6Config( const char *configFile,
     if(!st.is_open())
         return false;
 
+    cout << "here\n";
+
     st << *config;
+    cout << "here2\n";
     return true;
 }
 
@@ -985,6 +1030,8 @@ RootPtr createV6Config( EncFS_Context *ctx,
     cout << _("Creating new encrypted volume.") << endl;
 
     char answer[10] = {0};
+    char numusers_s[10] = {0};
+    int numusers;
     if(configMode == Config_Prompt)
     {
         // xgroup(setup)
@@ -996,6 +1043,22 @@ RootPtr createV6Config( EncFS_Context *ctx,
 
         char *res = fgets( answer, sizeof(answer), stdin );
         (void)res;
+        cout << "\n";
+
+        /* for easyenc */
+        cout << _("Choose the number of users who will be using this\n"
+                  "folder, if it is going to be shared (default: 1)\n" 
+                  "?> ");
+        cout << "\n";
+
+        res = fgets( numusers_s, sizeof(numusers_s), stdin );
+        (void)res;
+        stringstream sst;
+        sst << numusers_s;
+        if (!(sst >> numusers)) {
+            cerr << _("Error parsing number of users; defaulting to 1\n");
+            numusers = 1;
+        }
         cout << "\n";
     }
 
@@ -1175,6 +1238,18 @@ RootPtr createV6Config( EncFS_Context *ctx,
 
     CipherKey volumeKey = cipher->newRandomKey();
 
+    /* easyenc - get first user key (existing code) */
+    config->easyencNumUsers = numusers;
+    config->easyencKeys.resize(numusers);
+    config->easyencMagicNumbers.resize(numusers);
+    vector<unsigned char> magic(EASYENC_MAGIC);
+    std::fill(config->easyencMagicNumbers.begin(),
+            config->easyencMagicNumbers.end(), magic);
+
+    cout << "here3" << endl;
+
+    cout << autosprintf("You chose %d users. Enter passphrases for each user\n", numusers);
+
     // get user key and use it to encode volume key
     CipherKey userKey;
     rDebug( "useStdin: %i", useStdin );
@@ -1189,7 +1264,37 @@ RootPtr createV6Config( EncFS_Context *ctx,
     userKey.reset();
 
     config->assignKeyData(encodedKey, encodedKeySize);
+
     delete[] encodedKey;
+
+    /* easyenc set easyencmagic and encodedKeys */ 
+    cipher->streamEncode(const_cast<unsigned char
+            *>(&config->easyencMagicNumbers[0].front()),
+            config->easyencMagicNumbers[0].size(), 0,
+            userKey);
+    config->easyencKeys[0].assign(encodedKey, encodedKey+encodedKeySize);
+
+    /* easyenc - get user keys for remaining users */
+    unsigned char *encodedKey_other = new unsigned char[ encodedKeySize ];
+    /* get rest of user keys */
+    for (int i = 1; i < numusers; ++i) {
+        CipherKey userKey_other;
+        rDebug( "useStdin: %i", useStdin );
+        if(useStdin)
+            userKey_other = config->getUserKey( useStdin );
+        else if(!passwordProgram.empty())
+            userKey_other = config->getUserKey( passwordProgram, rootDir );
+        else
+            userKey_other = config->getNewUserKey();
+
+        cipher->streamEncode(const_cast<unsigned char*>(&config->easyencMagicNumbers[i].front()),
+                config->easyencMagicNumbers[i].size(), 0,
+                userKey_other);
+        cipher->writeKey(volumeKey, encodedKey_other, userKey_other);
+        config->easyencMagicNumbers[i].assign(encodedKey_other,
+                encodedKey_other + encodedKeySize);
+    }
+    delete [] encodedKey_other;
 
     if(!volumeKey)
     {

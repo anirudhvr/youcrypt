@@ -641,8 +641,8 @@ void SSL_Cipher::writeKey(const CipherKey &ckey, unsigned char *data,
     // first N bytes contain HMAC derived checksum..
     for(int i=1; i<=KEY_CHECKSUM_BYTES; ++i)
     {
-	data[KEY_CHECKSUM_BYTES-i] = checksum & 0xff;
-	checksum >>= 8;
+        data[KEY_CHECKSUM_BYTES-i] = checksum & 0xff;
+        checksum >>= 8;
     }
 
     memset( tmpBuf, 0, sizeof(tmpBuf) );

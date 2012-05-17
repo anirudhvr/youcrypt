@@ -71,6 +71,11 @@ struct EncFSConfig
     bool chainedNameIV; // filename IV chaining
     bool allowHoles; // allow holes in files (implicit zero blocks)
 
+    /* Easyenc modifications - avr */
+    int easyencNumUsers;
+    std::vector<std::vector<unsigned char> >  easyencMagicNumbers;
+    std::vector<std::vector<unsigned char> >  easyencKeys;
+
     EncFSConfig()
         : keyData()
         , salt()
@@ -86,6 +91,7 @@ struct EncFSConfig
 
         kdfIterations = 0;
         desiredKDFDuration = 500;
+        easyencNumUsers = 1;
     }
 
     CipherKey getUserKey(bool useStdin);

@@ -32,6 +32,8 @@ bool isAbsolutePath( const char *fileName );
 // pointer to just after the last '/'
 const char *lastPathElement( const char *name );
 
+
+
 std::string parentDirectory( const std::string &path );
 
 // ask the user for permission to create the directory.  If they say ok, then
