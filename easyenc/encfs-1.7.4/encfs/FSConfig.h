@@ -73,7 +73,6 @@ struct EncFSConfig
 
     /* Easyenc modifications - avr */
     int easyencNumUsers;
-    std::vector<std::vector<unsigned char> >  easyencMagicNumbers;
     std::vector<std::vector<unsigned char> >  easyencKeys;
 
     EncFSConfig()
