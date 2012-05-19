@@ -173,13 +173,12 @@ namespace boost
             for (int i = 0; i < cfg.easyencNumUsers; ++i) {
                 ar << make_nvp(autosprintf("easyencMagicNumbers%d", i),
                         serial::make_binary_object(
-                            const_cast<unsigned char
-                            *>(&cfg.easyencMagicNumbers[i].front()),
-                            encodedSize));
+                            const_cast<unsigned char *>(&cfg.easyencMagicNumbers[i].front()),
+                            cfg.easyencMagicNumbers[i].size()));
                 ar << make_nvp(autosprintf("easyencKey%d", i),
                         serial::make_binary_object(
                             const_cast<unsigned char *>(&cfg.easyencKeys[i].front()),
-                            encodedSize));
+                            cfg.easyencKeys[i].size()));
             }
 
             // version 20080816
@@ -1047,9 +1046,8 @@ RootPtr createV6Config( EncFS_Context *ctx,
 
         /* for easyenc */
         cout << _("Choose the number of users who will be using this\n"
-                  "folder, if it is going to be shared (default: 1)\n" 
-                  "?> ");
-        cout << "\n";
+                "folder, if it is going to be shared (default: 1)\n" 
+                "?> ");
 
         res = fgets( numusers_s, sizeof(numusers_s), stdin );
         (void)res;
@@ -1242,13 +1240,10 @@ RootPtr createV6Config( EncFS_Context *ctx,
     config->easyencNumUsers = numusers;
     config->easyencKeys.resize(numusers);
     config->easyencMagicNumbers.resize(numusers);
-    vector<unsigned char> magic(EASYENC_MAGIC);
-    std::fill(config->easyencMagicNumbers.begin(),
-            config->easyencMagicNumbers.end(), magic);
+    vector<unsigned char> magic(EASYENC_MAGIC_S, EASYENC_MAGIC_S + strlen(EASYENC_MAGIC_S));
+    std::fill(config->easyencMagicNumbers.begin(), config->easyencMagicNumbers.end(), magic);
 
-    cout << "here3" << endl;
-
-    cout << autosprintf("You chose %d users. Enter passphrases for each user\n", numusers);
+    cout << autosprintf("You chose %d users. Enter passphrase user 1\n", numusers);
 
     // get user key and use it to encode volume key
     CipherKey userKey;
@@ -1261,24 +1256,23 @@ RootPtr createV6Config( EncFS_Context *ctx,
         userKey = config->getNewUserKey();
 
     cipher->writeKey( volumeKey, encodedKey, userKey );
-    userKey.reset();
-
     config->assignKeyData(encodedKey, encodedKeySize);
 
-    delete[] encodedKey;
-
     /* easyenc set easyencmagic and encodedKeys */ 
-    cipher->streamEncode(const_cast<unsigned char
-            *>(&config->easyencMagicNumbers[0].front()),
+    cipher->streamEncode(const_cast<unsigned char *>(&config->easyencMagicNumbers[0].front()),
             config->easyencMagicNumbers[0].size(), 0,
             userKey);
     config->easyencKeys[0].assign(encodedKey, encodedKey+encodedKeySize);
 
+    userKey.reset();
+    delete[] encodedKey;
+
     /* easyenc - get user keys for remaining users */
-    unsigned char *encodedKey_other = new unsigned char[ encodedKeySize ];
     /* get rest of user keys */
     for (int i = 1; i < numusers; ++i) {
         CipherKey userKey_other;
+        unsigned char *encodedKey_other = new unsigned char[ encodedKeySize ];
+        cout << autosprintf("You chose %d users. Enter passphrase user %d\n", numusers, i);
         rDebug( "useStdin: %i", useStdin );
         if(useStdin)
             userKey_other = config->getUserKey( useStdin );
@@ -1293,8 +1287,9 @@ RootPtr createV6Config( EncFS_Context *ctx,
         cipher->writeKey(volumeKey, encodedKey_other, userKey_other);
         config->easyencMagicNumbers[i].assign(encodedKey_other,
                 encodedKey_other + encodedKeySize);
+        userKey_other.reset();
+        delete [] encodedKey_other;
     }
-    delete [] encodedKey_other;
 
     if(!volumeKey)
     {
@@ -1742,6 +1737,8 @@ RootPtr initFS( EncFS_Context *ctx, const shared_ptr<EncFS_Opts> &opts )
 	    cout << _("Error decoding volume key, password incorrect\n");
 	    return rootInfo;
 	}
+
+    /* easyenc */
 
 	shared_ptr<NameIO> nameCoder = NameIO::New( config->nameIface, 
 		cipher, volumeKey );
