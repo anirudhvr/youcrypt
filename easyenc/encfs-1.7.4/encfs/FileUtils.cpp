@@ -102,11 +102,6 @@ static int V5SubVersionDefault = 0;
 //const int V6SubVersion = 20080816; // add salt and iteration count
 const int V6SubVersion = 20100713; // add version field for boost 1.42+
 
-/* easyenc */
-const int EASYENC_MAGIC = 0xDEADBEEF;
-const char* EASYENC_MAGIC_S = "DEADBEEF";
-
-
 struct ConfigInfo
 {
     const char *fileName;
@@ -171,10 +166,6 @@ namespace boost
             /* easyenc */
             ar << make_nvp("easyencNumUsers", cfg.easyencNumUsers);
             for (int i = 0; i < cfg.easyencNumUsers; ++i) {
-                ar << make_nvp(autosprintf("easyencMagicNumbers%d", i),
-                        serial::make_binary_object(
-                            const_cast<unsigned char *>(&cfg.easyencMagicNumbers[i].front()),
-                            cfg.easyencMagicNumbers[i].size()));
                 ar << make_nvp(autosprintf("easyencKey%d", i),
                         serial::make_binary_object(
                             const_cast<unsigned char *>(&cfg.easyencKeys[i].front()),
@@ -240,25 +231,18 @@ namespace boost
             delete [] key;
 
             /* easyenc */
-            unsigned char *encodedmagic = new unsigned char[encodedSize];
             unsigned char *encodeduserkey = new unsigned char[encodedSize];
             ar >> make_nvp("easyencNumUsers", cfg.easyencNumUsers);
             rAssert(cfg.easyencNumUsers > 0);
-            cfg.easyencMagicNumbers.resize(cfg.easyencNumUsers);
             cfg.easyencKeys.resize(cfg.easyencNumUsers);
 
             for (int i = 0; i < cfg.easyencNumUsers; ++i) {
-                ar >> make_nvp(autosprintf("easyencMagicNumbers%d", i),
-                        serial::make_binary_object(encodedmagic, encodedSize));
-                cfg.easyencMagicNumbers[i].assign(encodedmagic,
-                        encodedmagic + encodedSize);
                 ar >> make_nvp(autosprintf("easyencKey%d", i),
                         serial::make_binary_object(encodeduserkey, encodedSize));
                 cfg.easyencKeys[i].assign(encodeduserkey, 
                         encodeduserkey + encodedSize);
             }
 
-            delete [] encodedmagic;
             delete [] encodeduserkey;
 
             if(cfg.subVersion >= 20080816)
@@ -600,10 +584,8 @@ bool writeV6Config( const char *configFile,
     if(!st.is_open())
         return false;
 
-    cout << "here\n";
-
     st << *config;
-    cout << "here2\n";
+
     return true;
 }
 
@@ -1239,11 +1221,8 @@ RootPtr createV6Config( EncFS_Context *ctx,
     /* easyenc - get first user key (existing code) */
     config->easyencNumUsers = numusers;
     config->easyencKeys.resize(numusers);
-    config->easyencMagicNumbers.resize(numusers);
-    vector<unsigned char> magic(EASYENC_MAGIC_S, EASYENC_MAGIC_S + strlen(EASYENC_MAGIC_S));
-    std::fill(config->easyencMagicNumbers.begin(), config->easyencMagicNumbers.end(), magic);
 
-    cout << autosprintf("You chose %d users. Enter passphrase user 1\n", numusers);
+    cout << autosprintf("You chose %d users. Enter passphrase for user 1\n", numusers);
 
     // get user key and use it to encode volume key
     CipherKey userKey;
@@ -1258,10 +1237,7 @@ RootPtr createV6Config( EncFS_Context *ctx,
     cipher->writeKey( volumeKey, encodedKey, userKey );
     config->assignKeyData(encodedKey, encodedKeySize);
 
-    /* easyenc set easyencmagic and encodedKeys */ 
-    cipher->streamEncode(const_cast<unsigned char *>(&config->easyencMagicNumbers[0].front()),
-            config->easyencMagicNumbers[0].size(), 0,
-            userKey);
+    /* easyenc set and encodedKeys */ 
     config->easyencKeys[0].assign(encodedKey, encodedKey+encodedKeySize);
 
     userKey.reset();
@@ -1272,7 +1248,7 @@ RootPtr createV6Config( EncFS_Context *ctx,
     for (int i = 1; i < numusers; ++i) {
         CipherKey userKey_other;
         unsigned char *encodedKey_other = new unsigned char[ encodedKeySize ];
-        cout << autosprintf("You chose %d users. Enter passphrase user %d\n", numusers, i);
+        cout << autosprintf("You chose %d users. Enter passphrase for user %d\n", numusers, i+1);
         rDebug( "useStdin: %i", useStdin );
         if(useStdin)
             userKey_other = config->getUserKey( useStdin );
@@ -1281,11 +1257,8 @@ RootPtr createV6Config( EncFS_Context *ctx,
         else
             userKey_other = config->getNewUserKey();
 
-        cipher->streamEncode(const_cast<unsigned char*>(&config->easyencMagicNumbers[i].front()),
-                config->easyencMagicNumbers[i].size(), 0,
-                userKey_other);
         cipher->writeKey(volumeKey, encodedKey_other, userKey_other);
-        config->easyencMagicNumbers[i].assign(encodedKey_other,
+        config->easyencKeys[i].assign(encodedKey_other,
                 encodedKey_other + encodedKeySize);
         userKey_other.reset();
         delete [] encodedKey_other;
@@ -1729,16 +1702,35 @@ RootPtr initFS( EncFS_Context *ctx, const shared_ptr<EncFS_Opts> &opts )
 	// decode volume key..
 	CipherKey volumeKey = cipher->readKey(
                 config->getKeyData(), userKey, opts->checkKey);
-	userKey.reset();
-
 	if(!volumeKey)
 	{
-	    // xgroup(diag)
-	    cout << _("Error decoding volume key, password incorrect\n");
-	    return rootInfo;
+        /* easyenc mods; old code below */
+        /* try other keys */
+        int i;
+        for (i = 1; i < config->easyencNumUsers; ++i)
+        {
+            volumeKey = cipher->readKey(
+                    const_cast<unsigned char *>(&(config->easyencKeys[i].front())),
+                    userKey, opts->checkKey);
+            if (!volumeKey) {
+                continue;
+            } else {
+                /* cout << "Match found in easyenc key %d" << i << endl; */
+                break;
+            }
+        }
+
+        /* old code below */
+        if (i == config->easyencNumUsers)  {
+            // xgroup(diag)
+            cout << autosprintf("Error decoding any of %d volume keys,"
+                    " password incorrect\n", config->easyencNumUsers);
+            return rootInfo;
+        }
 	}
 
-    /* easyenc */
+	userKey.reset();
+
 
 	shared_ptr<NameIO> nameCoder = NameIO::New( config->nameIface, 
 		cipher, volumeKey );
