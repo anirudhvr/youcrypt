@@ -1004,15 +1004,24 @@ RootPtr createV6Config( EncFS_Context *ctx,
     ConfigMode configMode = opts->configMode;
 
     RootPtr rootInfo;
+    char numusers_s[10] = {0};
+    int numusers;
+
+    if (opts->no_interactive_configuration) { /* easyenc */
+        rAssert(opts->num_users > 0 &&
+                opts->passphrases.size() > 0);
+        configMode = Config_Paranoia;
+        numusers = opts->num_users;
+    }
 
     // creating new volume key.. should check that is what the user is
     // expecting...
     // xgroup(setup)
-    cout << _("Creating new encrypted volume.") << endl;
+    if (!opts->no_interactive_configuration) {
+        cout << _("Creating new encrypted volume.") << endl;
+    }
 
     char answer[10] = {0};
-    char numusers_s[10] = {0};
-    int numusers;
     if(configMode == Config_Prompt)
     {
         // xgroup(setup)
@@ -1072,7 +1081,8 @@ RootPtr createV6Config( EncFS_Context *ctx,
         }
 
         // xgroup(setup)
-        cout << _("Paranoia configuration selected.") << "\n";
+        if (!opts->no_interactive_configuration) 
+            cout << _("Paranoia configuration selected.") << "\n";
         // look for AES with 256 bit key..
         // Use block filename encryption mode.
         // Enable per-block HMAC headers at substantial performance penalty..
@@ -1186,13 +1196,15 @@ RootPtr createV6Config( EncFS_Context *ctx,
     config->kdfIterations = 0; // filled in by keying function
     config->desiredKDFDuration = desiredKDFDuration;
 
-    cout << "\n";
     // xgroup(setup)
-    cout << _("Configuration finished.  The filesystem to be created has\n"
-            "the following properties:") << endl;
-    showFSInfo( config );
+    if (!opts->no_interactive_configuration) {
+        cout << _("Configuration finished.  The filesystem to be created has\n"
+                "the following properties:") << endl;
+        showFSInfo( config );
+    }
 
-    if( config->externalIVChaining )
+    if( config->externalIVChaining &&
+            !opts->no_interactive_configuration)
     {
         cout << 
             _("-------------------------- WARNING --------------------------\n")
@@ -1207,11 +1219,13 @@ RootPtr createV6Config( EncFS_Context *ctx,
         cout << endl;
     }
 
-    // xgroup(setup)
-    cout << _("Now you will need to enter a password for your filesystem.\n"
-            "You will need to remember this password, as there is absolutely\n"
-            "no recovery mechanism.  However, the password can be changed\n"
-            "later using encfsctl.\n\n");
+    if (!opts->no_interactive_configuration) {
+        // xgroup(setup)
+        cout << _("Now you will need to enter a password for your filesystem.\n"
+                "You will need to remember this password, as there is absolutely\n"
+                "no recovery mechanism.  However, the password can be changed\n"
+                "later using encfsctl.\n\n");
+    }
 
     int encodedKeySize = cipher->encodedKeySize();
     unsigned char *encodedKey = new unsigned char[ encodedKeySize ];
@@ -1222,17 +1236,23 @@ RootPtr createV6Config( EncFS_Context *ctx,
     config->easyencNumUsers = numusers;
     config->easyencKeys.resize(numusers);
 
-    cout << autosprintf("You chose %d users. Enter passphrase for user 1\n", numusers);
-
     // get user key and use it to encode volume key
     CipherKey userKey;
-    rDebug( "useStdin: %i", useStdin );
-    if(useStdin)
-        userKey = config->getUserKey( useStdin );
-    else if(!passwordProgram.empty())
-        userKey = config->getUserKey( passwordProgram, rootDir );
-    else
-        userKey = config->getNewUserKey();
+
+    if (!opts->no_interactive_configuration) {
+        cout << autosprintf("You chose %d users. Enter passphrase for user 1\n", numusers);
+
+        rDebug( "useStdin: %i", useStdin );
+        if(useStdin)
+            userKey = config->getUserKey( useStdin );
+        else if(!passwordProgram.empty())
+            userKey = config->getUserKey( passwordProgram, rootDir );
+        else
+            userKey = config->getNewUserKey();
+    } else {
+        userKey =
+            config->createUserKeyFromPassphrase(opts->passphrases[0]);
+    }
 
     cipher->writeKey( volumeKey, encodedKey, userKey );
     config->assignKeyData(encodedKey, encodedKeySize);
@@ -1248,14 +1268,19 @@ RootPtr createV6Config( EncFS_Context *ctx,
     for (int i = 1; i < numusers; ++i) {
         CipherKey userKey_other;
         unsigned char *encodedKey_other = new unsigned char[ encodedKeySize ];
-        cout << autosprintf("You chose %d users. Enter passphrase for user %d\n", numusers, i+1);
-        rDebug( "useStdin: %i", useStdin );
-        if(useStdin)
-            userKey_other = config->getUserKey( useStdin );
-        else if(!passwordProgram.empty())
-            userKey_other = config->getUserKey( passwordProgram, rootDir );
-        else
-            userKey_other = config->getNewUserKey();
+        if (!opts->no_interactive_configuration) {
+            cout << autosprintf("You chose %d users. Enter passphrase for user %d\n", numusers, i+1);
+            rDebug( "useStdin: %i", useStdin );
+            if(useStdin)
+                userKey_other = config->getUserKey( useStdin );
+            else if(!passwordProgram.empty())
+                userKey_other = config->getUserKey( passwordProgram, rootDir );
+            else
+                userKey_other = config->getNewUserKey();
+        } else { 
+            userKey_other =
+                config->createUserKeyFromPassphrase(opts->passphrases[i]);
+        }
 
         cipher->writeKey(volumeKey, encodedKey_other, userKey_other);
         config->easyencKeys[i].assign(encodedKey_other,
@@ -1487,6 +1512,17 @@ CipherKey EncFSConfig::makeKey(const char *password, int passwdLen)
     return userKey;
 }
 
+CipherKey EncFSConfig::createUserKeyFromPassphrase(string passphrase)
+{
+    CipherKey userKey;
+    if(passphrase.length() == 0)
+        cerr << _("Zero length password not allowed\n");
+    else
+        userKey = makeKey(passphrase.c_str(), passphrase.length());
+
+    return userKey;
+}
+
 CipherKey EncFSConfig::getUserKey(bool useStdin)
 {
     char passBuf[MaxPassBuf];
@@ -1660,95 +1696,101 @@ RootPtr initFS( EncFS_Context *ctx, const shared_ptr<EncFS_Opts> &opts )
 
     if(readConfig( opts->rootDir, config ) != Config_None)
     {
-	if(opts->reverseEncryption)
-	{
-	    if (config->blockMACBytes != 0 || config->blockMACRandBytes != 0
-		|| config->uniqueIV || config->externalIVChaining
-		|| config->chainedNameIV )
-	    {  
-		cout << _("The configuration loaded is not compatible with --reverse\n");
-		return rootInfo;
-	    }
-	}
-
-        // first, instanciate the cipher.
-	shared_ptr<Cipher> cipher = config->getCipher();
-	if(!cipher)
-	{
-	    rError(_("Unable to find cipher %s, version %i:%i:%i"),
-		    config->cipherIface.name().c_str(),
-		    config->cipherIface.current(),
-		    config->cipherIface.revision(),
-		    config->cipherIface.age());
-	    // xgroup(diag)
-	    cout << _("The requested cipher interface is not available\n");
-	    return rootInfo;
-	}
-
-	// get user key
-	CipherKey userKey;
-
-        if(opts->passwordProgram.empty())
+        if(opts->reverseEncryption)
         {
-            rDebug( "useStdin: %i", opts->useStdin );
-            userKey = config->getUserKey( opts->useStdin );
-        } else
-            userKey = config->getUserKey( opts->passwordProgram, opts->rootDir );
-
-	if(!userKey)
-	    return rootInfo;
-
-	rDebug("cipher key size = %i", cipher->encodedKeySize());
-	// decode volume key..
-	CipherKey volumeKey = cipher->readKey(
-                config->getKeyData(), userKey, opts->checkKey);
-	if(!volumeKey)
-	{
-        /* easyenc mods; old code below */
-        /* try other keys */
-        int i;
-        for (i = 1; i < config->easyencNumUsers; ++i)
-        {
-            volumeKey = cipher->readKey(
-                    const_cast<unsigned char *>(&(config->easyencKeys[i].front())),
-                    userKey, opts->checkKey);
-            if (!volumeKey) {
-                continue;
-            } else {
-                /* cout << "Match found in easyenc key %d" << i << endl; */
-                break;
+            if (config->blockMACBytes != 0 || config->blockMACRandBytes != 0
+                    || config->uniqueIV || config->externalIVChaining
+                    || config->chainedNameIV )
+            {  
+                cout << _("The configuration loaded is not compatible with --reverse\n");
+                return rootInfo;
             }
         }
 
-        /* old code below */
-        if (i == config->easyencNumUsers)  {
+        // first, instanciate the cipher.
+        shared_ptr<Cipher> cipher = config->getCipher();
+        if(!cipher)
+        {
+            rError(_("Unable to find cipher %s, version %i:%i:%i"),
+                    config->cipherIface.name().c_str(),
+                    config->cipherIface.current(),
+                    config->cipherIface.revision(),
+                    config->cipherIface.age());
             // xgroup(diag)
-            cout << autosprintf("Error decoding any of %d volume keys,"
-                    " password incorrect\n", config->easyencNumUsers);
+            cout << _("The requested cipher interface is not available\n");
             return rootInfo;
         }
-	}
 
-	userKey.reset();
+        // get user key
+        CipherKey userKey;
+
+        if (!opts->no_interactive_configuration)  {
+
+            if(opts->passwordProgram.empty()) {
+                rDebug( "useStdin: %i", opts->useStdin );
+                userKey = config->getUserKey( opts->useStdin );
+            } else {
+                userKey = config->getUserKey( opts->passwordProgram, opts->rootDir );
+            } 
+        } else {
+            rAssert(opts->num_users == 0 && opts->passphrases.size() == 1);
+            userKey = config->createUserKeyFromPassphrase(opts->passphrases[0]);
+        }
+
+        if(!userKey)
+            return rootInfo;
+
+        rDebug("cipher key size = %i", cipher->encodedKeySize());
+        // decode volume key..
+        CipherKey volumeKey = cipher->readKey(
+                config->getKeyData(), userKey, opts->checkKey);
+        if(!volumeKey)
+        {
+            /* easyenc mods; old code below */
+            /* try other keys */
+            int i;
+            for (i = 1; i < config->easyencNumUsers; ++i)
+            {
+                volumeKey = cipher->readKey(
+                        const_cast<unsigned char *>(&(config->easyencKeys[i].front())),
+                        userKey, opts->checkKey);
+                if (!volumeKey) {
+                    continue;
+                } else {
+                    /* cout << "Match found in easyenc key %d" << i << endl; */
+                    break;
+                }
+            }
+
+            /* old code below */
+            if (i == config->easyencNumUsers)  {
+                // xgroup(diag)
+                cout << autosprintf("Error decoding any of %d volume keys,"
+                        " password incorrect\n", config->easyencNumUsers);
+                return rootInfo;
+            }
+        }
+
+        userKey.reset();
 
 
-	shared_ptr<NameIO> nameCoder = NameIO::New( config->nameIface, 
-		cipher, volumeKey );
-	if(!nameCoder)
-	{
-	    rError(_("Unable to find nameio interface %s, version %i:%i:%i"),
-		    config->nameIface.name().c_str(),
-		    config->nameIface.current(),
-		    config->nameIface.revision(),
-		    config->nameIface.age());
-	    // xgroup(diag)
-	    cout << _("The requested filename coding interface is "
-		"not available\n");
-	    return rootInfo;
-	}
-   
-	nameCoder->setChainedNameIV( config->chainedNameIV );
-	nameCoder->setReverseEncryption( opts->reverseEncryption );
+        shared_ptr<NameIO> nameCoder = NameIO::New( config->nameIface, 
+                cipher, volumeKey );
+        if(!nameCoder)
+        {
+            rError(_("Unable to find nameio interface %s, version %i:%i:%i"),
+                    config->nameIface.name().c_str(),
+                    config->nameIface.current(),
+                    config->nameIface.revision(),
+                    config->nameIface.age());
+            // xgroup(diag)
+            cout << _("The requested filename coding interface is "
+                    "not available\n");
+            return rootInfo;
+        }
+
+        nameCoder->setChainedNameIV( config->chainedNameIV );
+        nameCoder->setReverseEncryption( opts->reverseEncryption );
 
         FSConfigPtr fsConfig( new FSConfig );
         fsConfig->cipher = cipher;
@@ -1759,20 +1801,20 @@ RootPtr initFS( EncFS_Context *ctx, const shared_ptr<EncFS_Opts> &opts )
         fsConfig->reverseEncryption = opts->reverseEncryption;
         fsConfig->opts = opts;
 
-	rootInfo = RootPtr( new EncFS_Root );
-	rootInfo->cipher = cipher;
-	rootInfo->volumeKey = volumeKey;
-	rootInfo->root = shared_ptr<DirNode>( 
+        rootInfo = RootPtr( new EncFS_Root );
+        rootInfo->cipher = cipher;
+        rootInfo->volumeKey = volumeKey;
+        rootInfo->root = shared_ptr<DirNode>( 
                 new DirNode( ctx, opts->rootDir, fsConfig ));
     } else
     {
-	if(opts->createIfNotFound)
-	{
-	    // creating a new encrypted filesystem
-	    rootInfo = createV6Config( ctx, opts );
-	}
+        if(opts->createIfNotFound)
+        {
+            // creating a new encrypted filesystem
+            rootInfo = createV6Config( ctx, opts );
+        }
     }
-	
+
     return rootInfo;
 }
 

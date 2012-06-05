@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<!DOCTYPE boost_serialization>
+<boost_serialization signature="serialization::archive" version="9">
+<cfg class_id="0" tracking_level="0" version="20">
+	<version>20100713</version>
+	<creator>EncFS 1.7.4</creator>
+	<cipherAlg class_id="1" tracking_level="0" version="0">
+		<name>ssl/aes</name>
+		<major>3</major>
+		<minor>0</minor>
+	</cipherAlg>
+	<nameAlg>
+		<name>nameio/block</name>
+		<major>3</major>
+		<minor>0</minor>
+	</nameAlg>
+	<keySize>256</keySize>
+	<blockSize>1024</blockSize>
+	<uniqueIV>1</uniqueIV>
+	<chainedNameIV>1</chainedNameIV>
+	<externalIVChaining>1</externalIVChaining>
+	<blockMACBytes>8</blockMACBytes>
+	<blockMACRandBytes>0</blockMACRandBytes>
+	<allowHoles>1</allowHoles>
+	<encodedKeySize>52</encodedKeySize>
+	<encodedKeyData>
+Iyqu87ppESeNbi8wWqQIweqR4Z1eYbcB/VTy/6HR6dTPx7qMgfhon6OrfjFaorwTl5ICDA==
+	</encodedKeyData>
+	<easyencNumUsers>2</easyencNumUsers>
+	<easyencKey0>
+Iyqu87ppESeNbi8wWqQIweqR4Z1eYbcB/VTy/6HR6dTPx7qMgfhon6OrfjFaorwTl5ICDA==
+	</easyencKey0>
+	<easyencKey1>
+hxHaz58ugZH3fK6cnd8AmCZkEozgKonVJ23F0N2UMgkM0L3yqY3tpv6HWnjVXWHTY4EB1Q==
+	</easyencKey1>
+	<saltLen>20</saltLen>
+	<saltData>
+/JV8ns9nTyWmcKALhoPl+z51qfs=
+	</saltData>
+	<kdfIterations>755577</kdfIterations>
+	<desiredKDFDuration>3000</desiredKDFDuration>
+</cfg>
+</boost_serialization>
+

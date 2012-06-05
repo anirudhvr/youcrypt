@@ -81,6 +81,11 @@ struct EncFS_Opts
 
     ConfigMode configMode;
 
+    /* easyenc */
+    bool no_interactive_configuration; 
+    int num_users;
+    std::vector<std::string> passphrases;
+
     EncFS_Opts()
     {
         createIfNotFound = true;

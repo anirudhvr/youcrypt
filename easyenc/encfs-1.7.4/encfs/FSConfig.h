@@ -93,6 +93,7 @@ struct EncFSConfig
         easyencNumUsers = 1;
     }
 
+    CipherKey createUserKeyFromPassphrase(std::string passphrase);
     CipherKey getUserKey(bool useStdin);
     CipherKey getUserKey(const std::string &passwordProgram,
                          const std::string &rootDir);

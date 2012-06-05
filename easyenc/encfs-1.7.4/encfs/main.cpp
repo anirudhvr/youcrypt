@@ -30,6 +30,8 @@
 #include <sys/time.h>
 #include <cerrno>
 #include <cstring>
+#include <vector>
+#include <sstream>
 
 #include <getopt.h>
 
@@ -145,13 +147,17 @@ void usage(const char *name)
 	<< _("  --public\t\t"   "act as a typical multi-user filesystem\n"
 	                  "\t\t\t(encfs must be run as root)\n")
 	<< _("  --reverse\t\t"  "reverse encryption\n")
-
-	// xgroup(usage)
-	<< _("  --extpass=program\tUse external program for password prompt\n"
+    << _("  --extpass=program\tUse external program for password prompt\n"
 	"\n"
 	"Example, to mount at ~/crypt with raw storage in ~/.crypt :\n"
 	"    encfs ~/.crypt ~/crypt\n"
 	"\n")
+    << _("\n\t\t****EasyEnc Options****\n")
+    << _("   --nu \t\t Number of users to share this folder with\n")
+    << _("   --pw \t\t List of passwords for users separated by ','\n")
+    << _("\t\t         (first pw is used for the main user)\n")
+	// xgroup(usage)
+	
 	// xgroup(usage)
 	<< _("For more information, see the man page encfs(1)") << "\n"
 	<< endl;
@@ -180,6 +186,23 @@ string slashTerminate( const string &src )
     if( result[ result.length()-1 ] != '/' )
 	result.append( "/" );
     return result;
+}
+
+/* added by avr for easyenc */
+static std::vector<std::string> &split(const std::string &s, char delim,
+        std::vector<std::string> &elems) {
+    std::stringstream ss(s);
+    std::string item;
+    while(std::getline(ss, item, delim)) {
+        elems.push_back(item);
+    }
+    return elems;
+}
+
+
+static std::vector<std::string> split(const std::string &s, char delim) {
+    std::vector<std::string> elems;
+    return split(s, delim, elems);
 }
 
 static 
@@ -228,8 +251,15 @@ bool processArgs(int argc, char *argv[], const shared_ptr<EncFS_Args> &out)
 	{"reverse", 0, 0, 'r'}, // reverse encryption
         {"standard", 0, 0, '1'},  // standard configuration
         {"paranoia", 0, 0, '2'},  // standard configuration
+        // easyenc
+	{"pw", 1, 0, 'w'}, // list of passphrases
+	{"nu", 1, 0, 'x'}, // number of users
 	{0,0,0,0}
     };
+
+    out->opts->no_interactive_configuration = false;
+    out->opts->num_users = 0;
+    string pps;
 
     while (1)
     {
@@ -243,11 +273,16 @@ bool processArgs(int argc, char *argv[], const shared_ptr<EncFS_Args> &out)
 	// 'm' : mount-on-demand
 	// 'S' : password from stdin
 	// 'o' : arguments meant for fuse
+    // easyenc
+    // 'nu': number of users
+    // 'pw': list of passphrases
+
 	int res = getopt_long( argc, argv, "HsSfvdmi:o:",
 		long_options, &option_index);
 
 	if(res == -1)
 	    break;
+
 
 	switch( res )
 	{
@@ -321,6 +356,18 @@ bool processArgs(int argc, char *argv[], const shared_ptr<EncFS_Args> &out)
 	    FuseUsage();
 	    exit(EXIT_SUCCESS);
 	    break;
+
+    case 'w':
+        pps = optarg;
+        split(pps, ',', out->opts->passphrases);
+        out->opts->no_interactive_configuration = true;
+        break;
+
+    case 'x': 
+        out->opts->num_users = strtol( optarg, (char**)NULL, 10);
+        out->opts->no_interactive_configuration = true;
+        break;
+
 	case '?':
 	    // invalid options..
 	    break;
