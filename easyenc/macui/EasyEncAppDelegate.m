@@ -39,6 +39,32 @@
 	
 }
 
+NSString* systemCallWithBinSh(NSString *binary, NSArray *args) {
+    NSString *fileHeader = @"#!/bin/sh \n ";
+    NSString *joinedArguments = [args componentsJoinedByString:@" "];
+    NSString *fileContents = [NSString stringWithFormat:@"%@ %@ %@\n", 
+                              fileHeader, binary, joinedArguments];
+    NSLog(fileContents);
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDesktopDirectory, NSUserDomainMask, YES);
+    NSString *desktopDirectory=[paths objectAtIndex:0];
+    NSString *filename = [desktopDirectory stringByAppendingString: @"/easyenc-tmp.sh"];
+    [fileContents writeToFile:filename atomically:YES encoding: NSUTF8StringEncoding error: NULL];
+    
+    // At this point, we have already checked if script exists and has a shebang
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    if (![fileManager isExecutableFileAtPath:filename]) {
+        NSArray *chmodArguments = [NSArray arrayWithObjects:@"+x", filename, nil];
+        NSTask *chmod = [NSTask launchedTaskWithLaunchPath:@"/bin/chmod" arguments:chmodArguments];
+        [chmod waitUntilExit];
+    }
+    
+    /* Finally run the goddamn file */
+    NSTask *task = [NSTask launchedTaskWithLaunchPath:filename arguments:[NSArray arrayWithObjects: @" ", nil]];
+    [task waitUntilExit];
+    
+    return NULL;
+}
+
 NSString* systemCall(NSString *binary, NSArray *arguments) {
 	NSTask *task;	
 	task = [[NSTask alloc] init];
@@ -64,6 +90,8 @@ NSString* systemCall(NSString *binary, NSArray *arguments) {
 	return string;
 }
 
+
+
 - (IBAction)apply:(id)sender
 {
 	NSArray *arguments = [[NSProcessInfo processInfo] arguments];
@@ -87,11 +115,7 @@ NSString* systemCall(NSString *binary, NSArray *arguments) {
 	
 	NSString *homeDirectory = NSHomeDirectory();
 	NSLog(homeDirectory);
-	
-	systemCall(@"/bin/ls", [NSArray arrayWithObjects:
-							@"-al",
-							@"/tmp/*"]
-			   );
+		
 	
 	systemCall(@"/bin/mkdir",[NSArray arrayWithObjects: 
 							@"-p", 
@@ -105,20 +129,21 @@ NSString* systemCall(NSString *binary, NSArray *arguments) {
 							   nil
 							   ]);
 	
-	systemCall(@"/bin/cp", [NSArray arrayWithObjects:
-							@"-r",
+	systemCallWithBinSh(@"/bin/mv", [NSArray arrayWithObjects:
 							[NSString stringWithFormat:@"%@/*",srcFolder],
 							[NSString stringWithFormat:@"/tmp/easyenc%@",srcFolder],
 							nil
 							   ]);
 	
-	systemCall(@"/bin/rm", [NSArray arrayWithObjects:
+    /*
+	systemCallWithBinSh(@"/bin/rm", [NSArray arrayWithObjects:
 							@"-rf",
 							[NSString stringWithFormat:@"%@/*",srcFolder],
 							nil
 							   ]);
+    */
 		
-	
+
 	/**** <!-- END PREP --> ***/
 	
 	
@@ -131,7 +156,7 @@ NSString* systemCall(NSString *binary, NSArray *arguments) {
 		if(![yourFriendsEmailString isEqualToString:@""]) {
 			combinedPasswordString = [NSString stringWithFormat:@"%@%@%d", yourPasswordString, @",", yourFriendsPassphrase];
 			numberOfUsers = @"2";
-			[yourFriendsPassphrase retain];
+		//	[yourFriendsPassphrase retain];
 		} else {
 			combinedPasswordString = yourPasswordString;
 			numberOfUsers = @"1";
@@ -181,21 +206,17 @@ NSString* systemCall(NSString *binary, NSArray *arguments) {
 	/*** PREPARE ORIGINAL FOLDER
 	 cp -r /tmp/easyenc/src/* $HOME/easyenc/src
 	 rm -rf /tmp/easyenc/src
-	 ***/
+	 */
 		
-	systemCall(@"/bin/cp", [NSArray arrayWithObjects:
-							@"-r",
+	systemCallWithBinSh(@"/bin/mv", [NSArray arrayWithObjects:
 							[NSString stringWithFormat:@"/tmp/easyenc%@/*",srcFolder],
-							[NSString stringWithFormat:@"%@/easyenc%@",homeDirectory, srcFolder],
+							destFolder,
 							nil
 							]);
 	
-	
-	systemCall(@"/bin/rm", [NSArray arrayWithObjects:
-							@"-rf",
-							[NSString stringWithFormat:@"/tmp/easyenc%@/",srcFolder],
-							nil
-							]);
+    systemCall(@"/sbin/umount", [NSArray arrayWithObjects: 
+                                  destFolder, 
+                                 nil]);
 	
 		/*** <!-- ENCFS END --> ***/
 		
@@ -211,17 +232,17 @@ NSString* systemCall(NSString *binary, NSArray *arguments) {
 			NSLog(combinedPasswordString);
 			NSLog(yourFriendsPassphraseString);
 			
-			NSString *curlEmail = [NSString stringWithFormat:@"to='%@'", yourFriendsEmailString];
+			NSString *curlEmail = [NSString stringWithFormat:@"to=\"%@\"", yourFriendsEmailString];
 			NSLog(curlEmail);
-			NSString *curlKey   = [NSString stringWithFormat:@"text='%@'", yourFriendsPassphraseString];
+			NSString *curlKey   = [NSString stringWithFormat:@"text=\"%@\"", yourFriendsPassphraseString];
 			
 			arguments = [NSArray arrayWithObjects: 
 						 @"-s", @"-k", 
-						 @"--user", @"api:key-51pzkithdv41-pu7y70xelro2-2a6s76",
-						 @"https://api.mailgun.net/v2/youcrypt.mailgun.org/messages",
-						 @"-F", @"from='Postmaster <postmaster@youcrypt.mailgun.org>'",
+						 @"--user", @"api:key-67fgovcfrggd6y4l02ucpz-av4b22i26",
+						 @"https://api.mailgun.net/v2/cloudclear.mailgun.org/messages",
+						 @"-F", @"from='YouCrypt <postmaster@cloudclear.mailgun.org>'",
 						 @"-F", curlEmail,
-						 @"-F", @"subject='Your Key'",
+						 @"-F", @"subject='Your Temporary Passphrase'",
 						 @"-F", curlKey,
 						 nil];
 			
