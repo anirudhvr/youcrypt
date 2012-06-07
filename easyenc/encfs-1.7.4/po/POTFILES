@@ -1,8 +1,0 @@
-     ../encfs/BlockFileIO.cpp \
-     ../encfs/BlockNameIO.cpp \
-     ../encfs/FileUtils.cpp \
-     ../encfs/MACFileIO.cpp \
-     ../encfs/SSL_Cipher.cpp \
-     ../encfs/StreamNameIO.cpp \
-     ../encfs/encfsctl.cpp \
-     ../encfs/main.cpp
