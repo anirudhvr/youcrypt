@@ -62,12 +62,11 @@ void systemCallWithBinSh(NSString *binary, NSArray *args) {
     /* Finally run the goddamn file */
 	NSArray *fileArgs = [NSArray arrayWithObjects: @" ", nil];
 	
-	NSLog(@"previouS TEST");
-    NSTask *task = [NSTask launchedTaskWithLaunchPath:filename arguments:fileArgs];
+	NSTask *task = [NSTask launchedTaskWithLaunchPath:filename arguments:fileArgs];
 	[task waitUntilExit];
 	[task release];
     
-	NSLog(@"previouS TEST");
+	NSLog(@"This will not log !! # BUG ");
     //return NULL;
 }
 
@@ -164,7 +163,7 @@ NSString* systemCall(NSString *binary, NSArray *arguments) {
 							nil
 							   ]);
 	
-	NSLog(@"TESTINGGGGGGGG");
+	NSLog(@"This will not log either.. # BUG");
     /*
 	systemCallWithBinSh(@"/bin/rm", [NSArray arrayWithObjects:
 							@"-rf",

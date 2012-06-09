@@ -313,6 +313,8 @@
 					<key>Dock</key>
 					<array>
 						<dict>
+							<key>BecomeActive</key>
+							<true/>
 							<key>ContentConfiguration</key>
 							<dict>
 								<key>PBXProjectModuleGUID</key>
@@ -330,7 +332,7 @@
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>E648476D1582E19200B3806D</string>
+										<string>E64847721582E55400B3806D</string>
 										<key>history</key>
 										<array>
 											<string>E6CADFEA157EE4730003D837</string>
@@ -364,8 +366,6 @@
 							<string>592pt</string>
 						</dict>
 						<dict>
-							<key>BecomeActive</key>
-							<true/>
 							<key>ContentConfiguration</key>
 							<dict>
 								<key>PBXProjectModuleGUID</key>
@@ -542,13 +542,12 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
-		<string>E648476E1582E19200B3806D</string>
 		<string>E64846A61582C88000B3806D</string>
 		<string>E64846A71582C88000B3806D</string>
+		<string>1C78EAAD065D492600B07095</string>
 		<string>1CD10A99069EF8BA00B06720</string>
 		<string>E6C767101579418E00784371</string>
 		<string>/Users/avr/Documents/easyenc/easyenc/macui/EasyEnc.xcodeproj</string>
-		<string>1C78EAAD065D492600B07095</string>
 	</array>
 	<key>WindowString</key>
 	<string>0 115 1280 887 0 0 1280 1002 </string>
@@ -924,7 +923,7 @@
 			<key>WindowToolGUID</key>
 			<string>1C78EAAD065D492600B07095</string>
 			<key>WindowToolIsVisible</key>
-			<true/>
+			<false/>
 		</dict>
 		<dict>
 			<key>Identifier</key>
