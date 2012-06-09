@@ -39,7 +39,7 @@
 	
 }
 
-NSString* systemCallWithBinSh(NSString *binary, NSArray *args) {
+void systemCallWithBinSh(NSString *binary, NSArray *args) {
     NSString *fileHeader = @"#!/bin/sh \n ";
     NSString *joinedArguments = [args componentsJoinedByString:@" "];
     NSString *fileContents = [NSString stringWithFormat:@"%@ %@ %@\n", 
@@ -56,13 +56,19 @@ NSString* systemCallWithBinSh(NSString *binary, NSArray *args) {
         NSArray *chmodArguments = [NSArray arrayWithObjects:@"+x", filename, nil];
         NSTask *chmod = [NSTask launchedTaskWithLaunchPath:@"/bin/chmod" arguments:chmodArguments];
         [chmod waitUntilExit];
-    }
+		[chmod release];
+	}
     
     /* Finally run the goddamn file */
-    NSTask *task = [NSTask launchedTaskWithLaunchPath:filename arguments:[NSArray arrayWithObjects: @" ", nil]];
-    [task waitUntilExit];
+	NSArray *fileArgs = [NSArray arrayWithObjects: @" ", nil];
+	
+	NSLog(@"previouS TEST");
+    NSTask *task = [NSTask launchedTaskWithLaunchPath:filename arguments:fileArgs];
+	[task waitUntilExit];
+	[task release];
     
-    return NULL;
+	NSLog(@"previouS TEST");
+    //return NULL;
 }
 
 NSString* systemCall(NSString *binary, NSArray *arguments) {
@@ -96,14 +102,19 @@ NSString* systemCall(NSString *binary, NSArray *arguments) {
 {
 	NSArray *arguments = [[NSProcessInfo processInfo] arguments];
 	
-	NSString *srcFolder = [arguments objectAtIndex:2];
-	NSString *destFolder = [arguments objectAtIndex:3];
+	NSMutableString *srcFolder = @"/Users/avr/new folder";// [arguments objectAtIndex:2];
+	NSMutableString *destFolder = @"/Users/avr/new temp folder"; // [arguments objectAtIndex:3];
+	
+	NSString *srcFolderEscaped = [[srcFolder stringByReplacingOccurrencesOfString:@" "
+													  withString:@"\\ "]
+				 mutableCopy];
+	NSString *destFolderEscaped = [[destFolder stringByReplacingOccurrencesOfString:@" "
+													  withString:@"\\ "]
+				 mutableCopy];
+	
 	NSLog(srcFolder);
 	NSLog(destFolder);
-	
-	
-	
-	
+		
 	
 	/*** PREPARATIONS
 	 src = /Users/avr/d
@@ -115,26 +126,45 @@ NSString* systemCall(NSString *binary, NSArray *arguments) {
 	
 	NSString *homeDirectory = NSHomeDirectory();
 	NSLog(homeDirectory);
-		
+	/*
+	NSFileManager *manager= [NSFileManager defaultManager]; 
+	
+	NSString *folderPath = [NSString stringWithFormat:@"\"%@/%@%@\"",homeDirectory, @"easyenc",srcFolderEscaped];
+	
+	if(![manager createDirectoryAtPath:folderPath attributes:nil])
+			NSLog(@"Error: Create folder failed %@",folderPath);
+	*/
 	
 	systemCall(@"/bin/mkdir",[NSArray arrayWithObjects: 
 							@"-p", 
-							[NSString stringWithFormat:@"%@/%@%@",homeDirectory, @"easyenc",srcFolder],
+							[NSString stringWithFormat:@"\"%@/%@%@\"",homeDirectory, @"easyenc",srcFolder],
 							  nil
 							  ]);
+	NSLog(@"mkdir %@",[NSString stringWithFormat:@"\"%@/%@%@\"",homeDirectory, @"easyenc",srcFolder]);
 	
+	/*
+	folderPath = [NSString stringWithFormat:@"\"/tmp/easyenc%@\"",srcFolderEscaped];
+	
+		if(![manager createDirectoryAtPath:folderPath attributes:nil])
+			NSLog(@"Error: Create folder failed %@",folderPath);
+	*/
+	 
 	systemCall(@"/bin/mkdir", [NSArray arrayWithObjects:
 							@"-p",
-							[NSString stringWithFormat:@"/tmp/easyenc%@",srcFolder],
+							[NSString stringWithFormat:@"\"/tmp/easyenc%@\"",srcFolder],
 							   nil
 							   ]);
 	
+	 NSLog(@"mkdir %@",[NSString stringWithFormat:@"\"/tmp/easyenc%@\"",srcFolder]);
+
+	
 	systemCallWithBinSh(@"/bin/mv", [NSArray arrayWithObjects:
-							[NSString stringWithFormat:@"%@/*",srcFolder],
-							[NSString stringWithFormat:@"/tmp/easyenc%@",srcFolder],
+							[NSString stringWithFormat:@"\"%@/\"*",srcFolder],
+							[NSString stringWithFormat:@"\"/tmp/easyenc%@/\"",srcFolder],
 							nil
 							   ]);
 	
+	NSLog(@"TESTINGGGGGGGG");
     /*
 	systemCallWithBinSh(@"/bin/rm", [NSArray arrayWithObjects:
 							@"-rf",
@@ -143,7 +173,6 @@ NSString* systemCall(NSString *binary, NSArray *arguments) {
 							   ]);
     */
 		
-
 	/**** <!-- END PREP --> ***/
 	
 	
@@ -161,7 +190,8 @@ NSString* systemCall(NSString *binary, NSArray *arguments) {
 			combinedPasswordString = yourPasswordString;
 			numberOfUsers = @"1";
 		}
-		
+	
+			
 		//NSLog(yourEmailString);
 		//NSLog(yourPasswordString);
 	//	NSLog(yourFriendsEmailString);
@@ -196,8 +226,8 @@ NSString* systemCall(NSString *binary, NSArray *arguments) {
 		 ****/
 	
 	systemCall(@"/usr/local/bin/encfs", [NSArray arrayWithObjects: 
-										 srcFolder, 
-										 destFolder, 
+										 srcFolderEscaped, 
+										 destFolderEscaped, 
 										 @"--nu", numberOfUsers, 
 										 @"--pw", combinedPasswordString, 
 										 nil
@@ -209,8 +239,8 @@ NSString* systemCall(NSString *binary, NSArray *arguments) {
 	 */
 		
 	systemCallWithBinSh(@"/bin/mv", [NSArray arrayWithObjects:
-							[NSString stringWithFormat:@"/tmp/easyenc%@/*",srcFolder],
-							destFolder,
+							[NSString stringWithFormat:@"\"/tmp/easyenc%@/\"*",srcFolder],
+							[NSString stringWithFormat:@"\"%@\"/",destFolder],
 							nil
 							]);
 	
@@ -234,7 +264,7 @@ NSString* systemCall(NSString *binary, NSArray *arguments) {
 			
 			NSString *curlEmail = [NSString stringWithFormat:@"to=\"%@\"", yourFriendsEmailString];
 			NSLog(curlEmail);
-			NSString *curlKey   = [NSString stringWithFormat:@"text=\"%@\"", yourFriendsPassphraseString];
+			NSString *curlKey   = [NSString stringWithFormat:@"text=\%@\"", yourFriendsPassphraseString];
 			
 			arguments = [NSArray arrayWithObjects: 
 						 @"-s", @"-k", 
@@ -261,7 +291,7 @@ NSString* systemCall(NSString *binary, NSArray *arguments) {
 			
 			NSString *string = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]; 
 			
-			//NSLog (@"got\n%@", string); 
+			NSLog (@"got\n%@", string); 
 			
 			[string release];
 			

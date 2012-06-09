@@ -1,0 +1,260 @@
+TEasyEnc
+v7
+r0
+t360893282.650382
+cCheck dependencies
+cProcessInfoPlistFile /Users/avr/Documents/easyenc/easyenc/macui/build/Debug/EasyEnc.app/Contents/Info.plist EasyEnc-Info.plist
+cCopyStringsFile /Users/avr/Documents/easyenc/easyenc/macui/build/Debug/EasyEnc.app/Contents/Resources/English.lproj/InfoPlist.strings English.lproj/InfoPlist.strings
+cCompileXIB /Users/avr/Documents/easyenc/easyenc/macui/English.lproj/MainMenu.xib
+cCompileXIB /Users/avr/Documents/easyenc/easyenc/macui/Decrypt.xib
+cProcessPCH /var/folders/Go/Goh3jyCcE9arAD5kabJvv++++TI/-Caches-/com.apple.Xcode.501/SharedPrecompiledHeaders/EasyEnc_Prefix-dbtqpsbhtrbctkejzzpexrwoiiwu/EasyEnc_Prefix.pch.gch EasyEnc_Prefix.pch normal i386 objective-c com.apple.compilers.gcc.4_2
+cCompileC build/EasyEnc.build/Debug/EasyEnc.build/Objects-normal/i386/main.o /Users/avr/Documents/easyenc/easyenc/macui/main.m normal i386 objective-c com.apple.compilers.gcc.4_2
+cCompileC build/EasyEnc.build/Debug/EasyEnc.build/Objects-normal/i386/EasyEncAppDelegate.o /Users/avr/Documents/easyenc/easyenc/macui/EasyEncAppDelegate.m normal i386 objective-c com.apple.compilers.gcc.4_2
+cCompileC build/EasyEnc.build/Debug/EasyEnc.build/Objects-normal/i386/Decrypt.o /Users/avr/Documents/easyenc/easyenc/macui/Decrypt.m normal i386 objective-c com.apple.compilers.gcc.4_2
+cLd /Users/avr/Documents/easyenc/easyenc/macui/build/Debug/EasyEnc.app/Contents/MacOS/EasyEnc normal i386
+cTouch /Users/avr/Documents/easyenc/easyenc/macui/build/Debug/EasyEnc.app
+
+N/Developer/SDKs/MacOSX10.6.sdk
+c000000004FC698B600000000000000EE
+t1338415286
+s238
+
+N/Developer/SDKs/MacOSX10.6.sdk/System/Library/Frameworks/Cocoa.framework/Headers/Cocoa.h
+c0000000040C4AA6800000000000001E5
+t1086630504
+s485
+
+N/System/Library/Frameworks/Cocoa.framework/Cocoa
+c000000004A1F2D63000000000000A5E0
+t1243557219
+s42464
+
+N/Users/avr/Documents/easyenc/easyenc/macui/Decrypt.h
+c000000004FD0E8E9000000000000013C
+t1339091177
+s316
+i<Cocoa/Cocoa.h>
+
+N/Users/avr/Documents/easyenc/easyenc/macui/Decrypt.m
+c000000004FD0E8E90000000000000612
+t1339091177
+s1554
+i"Decrypt.h"
+
+N/Users/avr/Documents/easyenc/easyenc/macui/Decrypt.xib
+c000000004FD0E8E90000000000009D55
+t1339091177
+s40277
+
+N/Users/avr/Documents/easyenc/easyenc/macui/EasyEncAppDelegate.h
+c000000004FD0E8E90000000000000162
+t1339091177
+s354
+i<Cocoa/Cocoa.h>
+
+N/Users/avr/Documents/easyenc/easyenc/macui/EasyEncAppDelegate.m
+c000000004FD293550000000000001ED3
+t1339200341
+s7891
+i"EasyEncAppDelegate.h"
+
+N/Users/avr/Documents/easyenc/easyenc/macui/EasyEnc_Prefix.pch
+c000000004FD0E8E90000000000000095
+t1339091177
+s149
+i<Cocoa/Cocoa.h>
+
+N/Users/avr/Documents/easyenc/easyenc/macui/English.lproj/InfoPlist.strings
+c000000004FD0E8E9000000000000002D
+t1339091177
+s45
+
+N/Users/avr/Documents/easyenc/easyenc/macui/English.lproj/MainMenu.xib
+c000000004FD0E8E90000000000033816
+t1339091177
+s210966
+
+N/Users/avr/Documents/easyenc/easyenc/macui/build/Debug/EasyEnc.app
+t1339200482
+s102
+
+N/Users/avr/Documents/easyenc/easyenc/macui/build/Debug/EasyEnc.app/Contents/Info.plist
+t1339200478
+s1284
+
+N/Users/avr/Documents/easyenc/easyenc/macui/build/Debug/EasyEnc.app/Contents/MacOS/EasyEnc
+t1339200482
+s23784
+
+N/Users/avr/Documents/easyenc/easyenc/macui/build/Debug/EasyEnc.app/Contents/PkgInfo
+t1339200478
+s8
+
+N/Users/avr/Documents/easyenc/easyenc/macui/build/Debug/EasyEnc.app/Contents/Resources/Decrypt.nib
+t1339200479
+s5512
+
+N/Users/avr/Documents/easyenc/easyenc/macui/build/Debug/EasyEnc.app/Contents/Resources/English.lproj/InfoPlist.strings
+t1339200479
+s92
+
+N/Users/avr/Documents/easyenc/easyenc/macui/build/Debug/EasyEnc.app/Contents/Resources/English.lproj/MainMenu.nib
+t1339200479
+s40481
+
+N/Users/avr/Documents/easyenc/easyenc/macui/build/EasyEnc.build/Debug/EasyEnc.build/Objects-normal/i386/Decrypt.o
+t1339200482
+s18224
+
+N/Users/avr/Documents/easyenc/easyenc/macui/build/EasyEnc.build/Debug/EasyEnc.build/Objects-normal/i386/EasyEnc.LinkFileList
+c000000004FD293DE000000000000015B
+t1339200478
+s347
+
+N/Users/avr/Documents/easyenc/easyenc/macui/build/EasyEnc.build/Debug/EasyEnc.build/Objects-normal/i386/EasyEncAppDelegate.o
+t1339200482
+s34708
+
+N/Users/avr/Documents/easyenc/easyenc/macui/build/EasyEnc.build/Debug/EasyEnc.build/Objects-normal/i386/main.o
+t1339200482
+s4872
+
+N/Users/avr/Documents/easyenc/easyenc/macui/main.m
+c000000004FD0E8E90000000000000106
+t1339091177
+s262
+i<Cocoa/Cocoa.h>
+
+N/var/folders/Go/Goh3jyCcE9arAD5kabJvv++++TI/-Caches-/com.apple.Xcode.501/SharedPrecompiledHeaders/EasyEnc_Prefix-dbtqpsbhtrbctkejzzpexrwoiiwu/EasyEnc_Prefix.pch.gch
+t1339200482
+s38381548
+
+NEasyEnc-Info.plist
+c000000004FD0E8E900000000000003EA
+t1339091177
+s1002
+
+CCheck dependencies
+r0
+lSLF07#2@18"Check dependencies360893278#360893278#0(0"0(0#1#0"549408#0"0#
+
+CCompileC build/EasyEnc.build/Debug/EasyEnc.build/Objects-normal/i386/Decrypt.o /Users/avr/Documents/easyenc/easyenc/macui/Decrypt.m normal i386 objective-c com.apple.compilers.gcc.4_2
+s360893282.459969
+e360893282.599796
+r1
+xCompileC
+xbuild/EasyEnc.build/Debug/EasyEnc.build/Objects-normal/i386/Decrypt.o
+x/Users/avr/Documents/easyenc/easyenc/macui/Decrypt.m
+xnormal
+xi386
+xobjective-c
+xcom.apple.compilers.gcc.4_2
+o/Users/avr/Documents/easyenc/easyenc/macui/Decrypt.m: In function '-[Decrypt decrypt:]':
+o/Users/avr/Documents/easyenc/easyenc/macui/Decrypt.m:29: warning: format not a string literal and no format arguments
+o/Users/avr/Documents/easyenc/easyenc/macui/Decrypt.m:30: warning: format not a string literal and no format arguments
+lSLF07#2@60"Compile /Users/avr/Documents/easyenc/easyenc/macui/Decrypt.m360893282#360893282#0(325"/Users/avr/Documents/easyenc/easyenc/macui/Decrypt.m: In function '-[Decrypt decrypt:]':/Users/avr/Documents/easyenc/easyenc/macui/Decrypt.m:29: warning: format not a string literal and no format arguments/Users/avr/Documents/easyenc/easyenc/macui/Decrypt.m:30: warning: format not a string literal and no format arguments2(22@51"Format not a string literal and no format arguments360893282#89#118#0(6@52"/Users/avr/Documents/easyenc/easyenc/macui/Decrypt.m360783977#29#0#29#0#51"format not a string literal and no format arguments0(22@51"Format not a string literal and no format arguments360893282#207#118#0(6@52"/Users/avr/Documents/easyenc/easyenc/macui/Decrypt.m360783977#30#0#30#0#51"format not a string literal and no format arguments0(0#0#52"/Users/avr/Documents/easyenc/easyenc/macui/Decrypt.m549408#1505"    cd /Users/avr/Documents/easyenc/easyenc/macui    setenv LANG en_US.US-ASCII    /Developer/usr/bin/gcc-4.2 -x objective-c -arch i386 -fmessage-length=0 -pipe -std=gnu99 -Wno-trigraphs -fpascal-strings -fasm-blocks -O0 -Wreturn-type -Wunused-variable -isysroot /Developer/SDKs/MacOSX10.6.sdk -fobjc-gc -fvisibility=hidden -mmacosx-version-min=10.6 -gdwarf-2 -iquote /Users/avr/Documents/easyenc/easyenc/macui/build/EasyEnc.build/Debug/EasyEnc.build/EasyEnc-generated-files.hmap -I/Users/avr/Documents/easyenc/easyenc/macui/build/EasyEnc.build/Debug/EasyEnc.build/EasyEnc-own-target-headers.hmap -I/Users/avr/Documents/easyenc/easyenc/macui/build/EasyEnc.build/Debug/EasyEnc.build/EasyEnc-all-target-headers.hmap -iquote /Users/avr/Documents/easyenc/easyenc/macui/build/EasyEnc.build/Debug/EasyEnc.build/EasyEnc-project-headers.hmap -F/Users/avr/Documents/easyenc/easyenc/macui/build/Debug -I/Users/avr/Documents/easyenc/easyenc/macui/build/Debug/include -I/Users/avr/Documents/easyenc/easyenc/macui/build/EasyEnc.build/Debug/EasyEnc.build/DerivedSources/i386 -I/Users/avr/Documents/easyenc/easyenc/macui/build/EasyEnc.build/Debug/EasyEnc.build/DerivedSources -include /var/folders/Go/Goh3jyCcE9arAD5kabJvv++++TI/-Caches-/com.apple.Xcode.501/SharedPrecompiledHeaders/EasyEnc_Prefix-dbtqpsbhtrbctkejzzpexrwoiiwu/EasyEnc_Prefix.pch -c /Users/avr/Documents/easyenc/easyenc/macui/Decrypt.m -o /Users/avr/Documents/easyenc/easyenc/macui/build/EasyEnc.build/Debug/EasyEnc.build/Objects-normal/i386/Decrypt.o0#
+
+CCompileC build/EasyEnc.build/Debug/EasyEnc.build/Objects-normal/i386/EasyEncAppDelegate.o /Users/avr/Documents/easyenc/easyenc/macui/EasyEncAppDelegate.m normal i386 objective-c com.apple.compilers.gcc.4_2
+s360893282.303445
+e360893282.477004
+r1
+xCompileC
+xbuild/EasyEnc.build/Debug/EasyEnc.build/Objects-normal/i386/EasyEncAppDelegate.o
+x/Users/avr/Documents/easyenc/easyenc/macui/EasyEncAppDelegate.m
+xnormal
+xi386
+xobjective-c
+xcom.apple.compilers.gcc.4_2
+o/Users/avr/Documents/easyenc/easyenc/macui/EasyEncAppDelegate.m: In function 'systemCallWithBinSh':
+o/Users/avr/Documents/easyenc/easyenc/macui/EasyEncAppDelegate.m:47: warning: format not a string literal and no format arguments
+o/Users/avr/Documents/easyenc/easyenc/macui/EasyEncAppDelegate.m: In function '-[SpeakLineAppDelegate apply:]':
+o/Users/avr/Documents/easyenc/easyenc/macui/EasyEncAppDelegate.m:99: warning: incompatible Objective-C types initializing 'struct NSString *', expected 'struct NSMutableString *'
+o/Users/avr/Documents/easyenc/easyenc/macui/EasyEncAppDelegate.m:100: warning: incompatible Objective-C types initializing 'struct NSString *', expected 'struct NSMutableString *'
+o/Users/avr/Documents/easyenc/easyenc/macui/EasyEncAppDelegate.m:109: warning: format not a string literal and no format arguments
+o/Users/avr/Documents/easyenc/easyenc/macui/EasyEncAppDelegate.m:110: warning: format not a string literal and no format arguments
+o/Users/avr/Documents/easyenc/easyenc/macui/EasyEncAppDelegate.m:122: warning: format not a string literal and no format arguments
+o/Users/avr/Documents/easyenc/easyenc/macui/EasyEncAppDelegate.m:236: warning: format not a string literal and no format arguments
+o/Users/avr/Documents/easyenc/easyenc/macui/EasyEncAppDelegate.m:237: warning: format not a string literal and no format arguments
+o/Users/avr/Documents/easyenc/easyenc/macui/EasyEncAppDelegate.m:238: warning: format not a string literal and no format arguments
+o/Users/avr/Documents/easyenc/easyenc/macui/EasyEncAppDelegate.m:241: warning: format not a string literal and no format arguments
+o/Users/avr/Documents/easyenc/easyenc/macui/EasyEncAppDelegate.m:155: warning: unused variable 'yourEmailString'
+lSLF07#2@71"Compile /Users/avr/Documents/easyenc/easyenc/macui/EasyEncAppDelegate.m360893282#360893282#0(1719"/Users/avr/Documents/easyenc/easyenc/macui/EasyEncAppDelegate.m: In function 'systemCallWithBinSh':/Users/avr/Documents/easyenc/easyenc/macui/EasyEncAppDelegate.m:47: warning: format not a string literal and no format arguments/Users/avr/Documents/easyenc/easyenc/macui/EasyEncAppDelegate.m: In function '-[SpeakLineAppDelegate apply:]':/Users/avr/Documents/easyenc/easyenc/macui/EasyEncAppDelegate.m:99: warning: incompatible Objective-C types initializing 'struct NSString *', expected 'struct NSMutableString *'/Users/avr/Documents/easyenc/easyenc/macui/EasyEncAppDelegate.m:100: warning: incompatible Objective-C types initializing 'struct NSString *', expected 'struct NSMutableString *'/Users/avr/Documents/easyenc/easyenc/macui/EasyEncAppDelegate.m:109: warning: format not a string literal and no format arguments/Users/avr/Documents/easyenc/easyenc/macui/EasyEncAppDelegate.m:110: warning: format not a string literal and no format arguments/Users/avr/Documents/easyenc/easyenc/macui/EasyEncAppDelegate.m:122: warning: format not a string literal and no format arguments/Users/avr/Documents/easyenc/easyenc/macui/EasyEncAppDelegate.m:236: warning: format not a string literal and no format arguments/Users/avr/Documents/easyenc/easyenc/macui/EasyEncAppDelegate.m:237: warning: format not a string literal and no format arguments/Users/avr/Documents/easyenc/easyenc/macui/EasyEncAppDelegate.m:238: warning: format not a string literal and no format arguments/Users/avr/Documents/easyenc/easyenc/macui/EasyEncAppDelegate.m:241: warning: format not a string literal and no format arguments/Users/avr/Documents/easyenc/easyenc/macui/EasyEncAppDelegate.m:155: warning: unused variable 'yourEmailString'11(22@51"Format not a string literal and no format arguments360893282#100#129#0(6@63"/Users/avr/Documents/easyenc/easyenc/macui/EasyEncAppDelegate.m360893141#47#0#47#0#51"format not a string literal and no format arguments0(22@100"Incompatible Objective-C types initializing 'struct NSString *', expected 'struct NSMutableString *'360893282#340#178#0(6@63"/Users/avr/Documents/easyenc/easyenc/macui/EasyEncAppDelegate.m360893141#99#0#99#0#61"incompatible Objective-C types initializing '*', expected '*'0(22@100"Incompatible Objective-C types initializing 'struct NSString *', expected 'struct NSMutableString *'360893282#518#179#0(6@63"/Users/avr/Documents/easyenc/easyenc/macui/EasyEncAppDelegate.m360893141#100#0#100#0#61"incompatible Objective-C types initializing '*', expected '*'0(22@51"Format not a string literal and no format arguments360893282#697#130#0(6@63"/Users/avr/Documents/easyenc/easyenc/macui/EasyEncAppDelegate.m360893141#109#0#109#0#51"format not a string literal and no format arguments0(22@51"Format not a string literal and no format arguments360893282#827#130#0(6@63"/Users/avr/Documents/easyenc/easyenc/macui/EasyEncAppDelegate.m360893141#110#0#110#0#51"format not a string literal and no format arguments0(22@51"Format not a string literal and no format arguments360893282#957#130#0(6@63"/Users/avr/Documents/easyenc/easyenc/macui/EasyEncAppDelegate.m360893141#122#0#122#0#51"format not a string literal and no format arguments0(22@51"Format not a string literal and no format arguments360893282#1087#130#0(6@63"/Users/avr/Documents/easyenc/easyenc/macui/EasyEncAppDelegate.m360893141#236#0#236#0#51"format not a string literal and no format arguments0(22@51"Format not a string literal and no format arguments360893282#1217#130#0(6@63"/Users/avr/Documents/easyenc/easyenc/macui/EasyEncAppDelegate.m360893141#237#0#237#0#51"format not a string literal and no format arguments0(22@51"Format not a string literal and no format arguments360893282#1347#130#0(6@63"/Users/avr/Documents/easyenc/easyenc/macui/EasyEncAppDelegate.m360893141#238#0#238#0#51"format not a string literal and no format arguments0(22@51"Format not a string literal and no format arguments360893282#1477#130#0(6@63"/Users/avr/Documents/easyenc/easyenc/macui/EasyEncAppDelegate.m360893141#241#0#241#0#51"format not a string literal and no format arguments0(22@33"Unused variable 'yourEmailString'360893282#1607#112#0(6@63"/Users/avr/Documents/easyenc/easyenc/macui/EasyEncAppDelegate.m360893141#155#0#155#0#19"unused variable '*'0(0#0#63"/Users/avr/Documents/easyenc/easyenc/macui/EasyEncAppDelegate.m549408#1527"    cd /Users/avr/Documents/easyenc/easyenc/macui    setenv LANG en_US.US-ASCII    /Developer/usr/bin/gcc-4.2 -x objective-c -arch i386 -fmessage-length=0 -pipe -std=gnu99 -Wno-trigraphs -fpascal-strings -fasm-blocks -O0 -Wreturn-type -Wunused-variable -isysroot /Developer/SDKs/MacOSX10.6.sdk -fobjc-gc -fvisibility=hidden -mmacosx-version-min=10.6 -gdwarf-2 -iquote /Users/avr/Documents/easyenc/easyenc/macui/build/EasyEnc.build/Debug/EasyEnc.build/EasyEnc-generated-files.hmap -I/Users/avr/Documents/easyenc/easyenc/macui/build/EasyEnc.build/Debug/EasyEnc.build/EasyEnc-own-target-headers.hmap -I/Users/avr/Documents/easyenc/easyenc/macui/build/EasyEnc.build/Debug/EasyEnc.build/EasyEnc-all-target-headers.hmap -iquote /Users/avr/Documents/easyenc/easyenc/macui/build/EasyEnc.build/Debug/EasyEnc.build/EasyEnc-project-headers.hmap -F/Users/avr/Documents/easyenc/easyenc/macui/build/Debug -I/Users/avr/Documents/easyenc/easyenc/macui/build/Debug/include -I/Users/avr/Documents/easyenc/easyenc/macui/build/EasyEnc.build/Debug/EasyEnc.build/DerivedSources/i386 -I/Users/avr/Documents/easyenc/easyenc/macui/build/EasyEnc.build/Debug/EasyEnc.build/DerivedSources -include /var/folders/Go/Goh3jyCcE9arAD5kabJvv++++TI/-Caches-/com.apple.Xcode.501/SharedPrecompiledHeaders/EasyEnc_Prefix-dbtqpsbhtrbctkejzzpexrwoiiwu/EasyEnc_Prefix.pch -c /Users/avr/Documents/easyenc/easyenc/macui/EasyEncAppDelegate.m -o /Users/avr/Documents/easyenc/easyenc/macui/build/EasyEnc.build/Debug/EasyEnc.build/Objects-normal/i386/EasyEncAppDelegate.o0#
+
+CCompileC build/EasyEnc.build/Debug/EasyEnc.build/Objects-normal/i386/main.o /Users/avr/Documents/easyenc/easyenc/macui/main.m normal i386 objective-c com.apple.compilers.gcc.4_2
+s360893282.302520
+e360893282.459865
+r1
+xCompileC
+xbuild/EasyEnc.build/Debug/EasyEnc.build/Objects-normal/i386/main.o
+x/Users/avr/Documents/easyenc/easyenc/macui/main.m
+xnormal
+xi386
+xobjective-c
+xcom.apple.compilers.gcc.4_2
+lSLF07#2@57"Compile /Users/avr/Documents/easyenc/easyenc/macui/main.m360893282#360893282#0(0"0(0#0#49"/Users/avr/Documents/easyenc/easyenc/macui/main.m549408#1499"    cd /Users/avr/Documents/easyenc/easyenc/macui    setenv LANG en_US.US-ASCII    /Developer/usr/bin/gcc-4.2 -x objective-c -arch i386 -fmessage-length=0 -pipe -std=gnu99 -Wno-trigraphs -fpascal-strings -fasm-blocks -O0 -Wreturn-type -Wunused-variable -isysroot /Developer/SDKs/MacOSX10.6.sdk -fobjc-gc -fvisibility=hidden -mmacosx-version-min=10.6 -gdwarf-2 -iquote /Users/avr/Documents/easyenc/easyenc/macui/build/EasyEnc.build/Debug/EasyEnc.build/EasyEnc-generated-files.hmap -I/Users/avr/Documents/easyenc/easyenc/macui/build/EasyEnc.build/Debug/EasyEnc.build/EasyEnc-own-target-headers.hmap -I/Users/avr/Documents/easyenc/easyenc/macui/build/EasyEnc.build/Debug/EasyEnc.build/EasyEnc-all-target-headers.hmap -iquote /Users/avr/Documents/easyenc/easyenc/macui/build/EasyEnc.build/Debug/EasyEnc.build/EasyEnc-project-headers.hmap -F/Users/avr/Documents/easyenc/easyenc/macui/build/Debug -I/Users/avr/Documents/easyenc/easyenc/macui/build/Debug/include -I/Users/avr/Documents/easyenc/easyenc/macui/build/EasyEnc.build/Debug/EasyEnc.build/DerivedSources/i386 -I/Users/avr/Documents/easyenc/easyenc/macui/build/EasyEnc.build/Debug/EasyEnc.build/DerivedSources -include /var/folders/Go/Goh3jyCcE9arAD5kabJvv++++TI/-Caches-/com.apple.Xcode.501/SharedPrecompiledHeaders/EasyEnc_Prefix-dbtqpsbhtrbctkejzzpexrwoiiwu/EasyEnc_Prefix.pch -c /Users/avr/Documents/easyenc/easyenc/macui/main.m -o /Users/avr/Documents/easyenc/easyenc/macui/build/EasyEnc.build/Debug/EasyEnc.build/Objects-normal/i386/main.o0#
+
+CCompileXIB /Users/avr/Documents/easyenc/easyenc/macui/Decrypt.xib
+s360893279.083516
+e360893279.471196
+r1
+xCompileXIB
+x/Users/avr/Documents/easyenc/easyenc/macui/Decrypt.xib
+lSLF07#2@22"CompileXIB Decrypt.xib360893279#360893279#0(0"0(0#0#54"/Users/avr/Documents/easyenc/easyenc/macui/Decrypt.xib549408#346"    cd /Users/avr/Documents/easyenc/easyenc/macui    /Developer/usr/bin/ibtool --errors --warnings --notices --output-format human-readable-text --compile /Users/avr/Documents/easyenc/easyenc/macui/build/Debug/EasyEnc.app/Contents/Resources/Decrypt.nib /Users/avr/Documents/easyenc/easyenc/macui/Decrypt.xib --sdk /Developer/SDKs/MacOSX10.6.sdk0#
+
+CCompileXIB /Users/avr/Documents/easyenc/easyenc/macui/English.lproj/MainMenu.xib
+s360893278.981356
+e360893279.492839
+r1
+xCompileXIB
+x/Users/avr/Documents/easyenc/easyenc/macui/English.lproj/MainMenu.xib
+lSLF07#2@37"CompileXIB English.lproj/MainMenu.xib360893278#360893279#0(0"0(0#0#69"/Users/avr/Documents/easyenc/easyenc/macui/English.lproj/MainMenu.xib549408#376"    cd /Users/avr/Documents/easyenc/easyenc/macui    /Developer/usr/bin/ibtool --errors --warnings --notices --output-format human-readable-text --compile /Users/avr/Documents/easyenc/easyenc/macui/build/Debug/EasyEnc.app/Contents/Resources/English.lproj/MainMenu.nib /Users/avr/Documents/easyenc/easyenc/macui/English.lproj/MainMenu.xib --sdk /Developer/SDKs/MacOSX10.6.sdk0#
+
+CCopyStringsFile /Users/avr/Documents/easyenc/easyenc/macui/build/Debug/EasyEnc.app/Contents/Resources/English.lproj/InfoPlist.strings English.lproj/InfoPlist.strings
+s360893278.975213
+e360893279.083443
+r1
+xCopyStringsFile
+x/Users/avr/Documents/easyenc/easyenc/macui/build/Debug/EasyEnc.app/Contents/Resources/English.lproj/InfoPlist.strings
+xEnglish.lproj/InfoPlist.strings
+lSLF07#2@36"Copy English.lproj/InfoPlist.strings360893278#360893279#0(0"0(0#0#74"/Users/avr/Documents/easyenc/easyenc/macui/English.lproj/InfoPlist.strings549408#373"    cd /Users/avr/Documents/easyenc/easyenc/macui    setenv ICONV /usr/bin/iconv    /Developer/Library/Xcode/Plug-ins/CoreBuildTasks.xcplugin/Contents/Resources/copystrings --validate --inputencoding utf-8 --outputencoding UTF-16 English.lproj/InfoPlist.strings --outdir /Users/avr/Documents/easyenc/easyenc/macui/build/Debug/EasyEnc.app/Contents/Resources/English.lproj0#
+
+CLd /Users/avr/Documents/easyenc/easyenc/macui/build/Debug/EasyEnc.app/Contents/MacOS/EasyEnc normal i386
+s360893282.600174
+e360893282.645485
+r1
+xLd
+x/Users/avr/Documents/easyenc/easyenc/macui/build/Debug/EasyEnc.app/Contents/MacOS/EasyEnc
+xnormal
+xi386
+lSLF07#2@94"Link /Users/avr/Documents/easyenc/easyenc/macui/build/Debug/EasyEnc.app/Contents/MacOS/EasyEnc360893282#360893282#0(0"0(0#0#0"549408#567"    cd /Users/avr/Documents/easyenc/easyenc/macui    setenv MACOSX_DEPLOYMENT_TARGET 10.6    /Developer/usr/bin/gcc-4.2 -arch i386 -isysroot /Developer/SDKs/MacOSX10.6.sdk -L/Users/avr/Documents/easyenc/easyenc/macui/build/Debug -F/Users/avr/Documents/easyenc/easyenc/macui/build/Debug -filelist /Users/avr/Documents/easyenc/easyenc/macui/build/EasyEnc.build/Debug/EasyEnc.build/Objects-normal/i386/EasyEnc.LinkFileList -mmacosx-version-min=10.6 -framework Cocoa -prebind -o /Users/avr/Documents/easyenc/easyenc/macui/build/Debug/EasyEnc.app/Contents/MacOS/EasyEnc0#
+
+CProcessInfoPlistFile /Users/avr/Documents/easyenc/easyenc/macui/build/Debug/EasyEnc.app/Contents/Info.plist EasyEnc-Info.plist
+s360893278.963099
+e360893278.975135
+r1
+xProcessInfoPlistFile
+x/Users/avr/Documents/easyenc/easyenc/macui/build/Debug/EasyEnc.app/Contents/Info.plist
+xEasyEnc-Info.plist
+lSLF07#2@26"Process EasyEnc-Info.plist360893278#360893278#0(0"0(0#0#61"/Users/avr/Documents/easyenc/easyenc/macui/EasyEnc-Info.plist549408#322"    cd /Users/avr/Documents/easyenc/easyenc/macui    builtin-infoPlistUtility EasyEnc-Info.plist -genpkginfo /Users/avr/Documents/easyenc/easyenc/macui/build/Debug/EasyEnc.app/Contents/PkgInfo -expandbuildsettings -platform macosx -o /Users/avr/Documents/easyenc/easyenc/macui/build/Debug/EasyEnc.app/Contents/Info.plist0#
+
+CProcessPCH /var/folders/Go/Goh3jyCcE9arAD5kabJvv++++TI/-Caches-/com.apple.Xcode.501/SharedPrecompiledHeaders/EasyEnc_Prefix-dbtqpsbhtrbctkejzzpexrwoiiwu/EasyEnc_Prefix.pch.gch EasyEnc_Prefix.pch normal i386 objective-c com.apple.compilers.gcc.4_2
+s360893279.492927
+e360893282.302276
+r1
+xProcessPCH
+x/var/folders/Go/Goh3jyCcE9arAD5kabJvv++++TI/-Caches-/com.apple.Xcode.501/SharedPrecompiledHeaders/EasyEnc_Prefix-dbtqpsbhtrbctkejzzpexrwoiiwu/EasyEnc_Prefix.pch.gch
+xEasyEnc_Prefix.pch
+xnormal
+xi386
+xobjective-c
+xcom.apple.compilers.gcc.4_2
+lSLF07#2@29"Precompile EasyEnc_Prefix.pch360893279#360893282#0(0"0(0#0#61"/Users/avr/Documents/easyenc/easyenc/macui/EasyEnc_Prefix.pch549408#1403"    cd /Users/avr/Documents/easyenc/easyenc/macui    setenv LANG en_US.US-ASCII    /Developer/usr/bin/gcc-4.2 -x objective-c-header -arch i386 -fmessage-length=0 -pipe -std=gnu99 -Wno-trigraphs -fpascal-strings -fasm-blocks -O0 -Wreturn-type -Wunused-variable -isysroot /Developer/SDKs/MacOSX10.6.sdk -fobjc-gc -fvisibility=hidden -mmacosx-version-min=10.6 -gdwarf-2 -iquote /Users/avr/Documents/easyenc/easyenc/macui/build/EasyEnc.build/Debug/EasyEnc.build/EasyEnc-generated-files.hmap -I/Users/avr/Documents/easyenc/easyenc/macui/build/EasyEnc.build/Debug/EasyEnc.build/EasyEnc-own-target-headers.hmap -I/Users/avr/Documents/easyenc/easyenc/macui/build/EasyEnc.build/Debug/EasyEnc.build/EasyEnc-all-target-headers.hmap -iquote /Users/avr/Documents/easyenc/easyenc/macui/build/EasyEnc.build/Debug/EasyEnc.build/EasyEnc-project-headers.hmap -F/Users/avr/Documents/easyenc/easyenc/macui/build/Debug -I/Users/avr/Documents/easyenc/easyenc/macui/build/Debug/include -I/Users/avr/Documents/easyenc/easyenc/macui/build/EasyEnc.build/Debug/EasyEnc.build/DerivedSources/i386 -I/Users/avr/Documents/easyenc/easyenc/macui/build/EasyEnc.build/Debug/EasyEnc.build/DerivedSources -c /Users/avr/Documents/easyenc/easyenc/macui/EasyEnc_Prefix.pch -o /var/folders/Go/Goh3jyCcE9arAD5kabJvv++++TI/-Caches-/com.apple.Xcode.501/SharedPrecompiledHeaders/EasyEnc_Prefix-dbtqpsbhtrbctkejzzpexrwoiiwu/EasyEnc_Prefix.pch.gch0#
+
+CTouch /Users/avr/Documents/easyenc/easyenc/macui/build/Debug/EasyEnc.app
+s360893282.645567
+e360893282.650358
+r1
+xTouch
+x/Users/avr/Documents/easyenc/easyenc/macui/build/Debug/EasyEnc.app
+lSLF07#2@72"Touch /Users/avr/Documents/easyenc/easyenc/macui/build/Debug/EasyEnc.app360893282#360893282#0(0"0(0#0#0"549408#139"    cd /Users/avr/Documents/easyenc/easyenc/macui    /usr/bin/touch -c /Users/avr/Documents/easyenc/easyenc/macui/build/Debug/EasyEnc.app0#
+
