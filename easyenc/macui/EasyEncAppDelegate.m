@@ -148,18 +148,18 @@ NSString* systemCall(NSString *binary, NSArray *arguments) {
 	
 	mkdir(destFolder);
 	
-	createDirectoryRecursivelyAtPath([NSString stringWithFormat:@"%@/easyencd%@",homeDirectory,srcFolder]);
+	createDirectoryRecursivelyAtPath([NSString stringWithFormat:@"%@/easyenc%@",homeDirectory,srcFolder]);
 	
-	NSLog(@"mkdir %@",[NSString stringWithFormat:@"\"%@/easyencd%@\"",homeDirectory,srcFolder]);
+	NSLog(@"mkdir %@",[NSString stringWithFormat:@"\"%@/easyenc%@\"",homeDirectory,srcFolder]);
 	
-	
-	createDirectoryRecursivelyAtPath([NSString stringWithFormat:@"/tmp/easyencd%@",srcFolder]);
+
+	createDirectoryRecursivelyAtPath([NSString stringWithFormat:@"/tmp/easyenc%@",srcFolder]);
 	
 		
-	NSLog(@"mkdir %@",[NSString stringWithFormat:@"\"/tmp/easyencd%@\"",srcFolder]);
+	NSLog(@"mkdir %@",[NSString stringWithFormat:@"\"/tmp/easyenc%@\"",srcFolder]);
 	
 	
-	mvRecursive(srcFolder, [NSString stringWithFormat:@"/tmp/easyencd%@/",srcFolder]);
+	mvRecursive(srcFolder, [NSString stringWithFormat:@"/tmp/easyenc%@/",srcFolder]);
 	
 		
 	/**** <!-- END PREP --> ***/
@@ -189,20 +189,21 @@ NSString* systemCall(NSString *binary, NSArray *arguments) {
 										 nil
 										 ]);
 	
+    
 	/*** PREPARE ORIGINAL FOLDER
 	 cp -r /tmp/easyenc/src/* $HOME/easyenc/src
 	 rm -rf /tmp/easyenc/src
 	 */
 	
 	
-	mvRecursive([NSString stringWithFormat:@"/tmp/easyencd%@/",srcFolder],
+	mvRecursive([NSString stringWithFormat:@"/tmp/easyenc%@/",srcFolder],
 				destFolder);
 	
-    /*
+    
 	systemCall(@"/sbin/umount", [NSArray arrayWithObjects: 
 								 destFolder, 
                                  nil]);
-	*/
+	
 	/*** <!-- ENCFS END --> ***/
 	
 	if([numberOfUsers isEqualToString:@"2"]) {

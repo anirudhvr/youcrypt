@@ -17,6 +17,31 @@
 	return self;
 }
 
+NSString* sysCall(NSString *binary, NSArray *arguments) {
+	NSTask *task;	
+	task = [[NSTask alloc] init];
+	[task setLaunchPath: binary];
+	
+	[task setArguments: arguments];
+	
+	NSPipe *pipe;
+	pipe = [NSPipe pipe];
+	[task setStandardOutput: pipe];
+	
+	[task launch];
+	
+	NSData *data = [[pipe fileHandleForReading] readDataToEndOfFile];
+	
+	[task waitUntilExit]; 
+	[task release];
+	
+	NSString *string = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]; 
+	
+	NSLog (@"got\n%@", string); 
+	
+	return string;
+}
+
 - (IBAction)decrypt:(id)sender
 {
 	NSLog(@"Yayy ");
@@ -38,41 +63,14 @@
 	
 	
 		NSString *yourPasswordString = [yourPassword stringValue];
-		NSTask *task;	
-		task = [[NSTask alloc] init];
-		[task setLaunchPath: @"/usr/local/bin/encfs"];
 		
-		arguments = [NSArray arrayWithObjects:
-					 srcFolder,
-					 destFolder, 
-					 @"--pw", yourPasswordString, 
-					 nil];
-	
-		[task setArguments: arguments];
-	
-		NSPipe *pipe;
-		pipe = [NSPipe pipe];
-		[task setStandardOutput: pipe];
-	
-		[task launch];
-	
-		NSData *data = [[pipe fileHandleForReading] readDataToEndOfFile];
-	
-		[task waitUntilExit]; 
-		[task release];
-	
-		NSString *string = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]; 
-		
-		if([string isEqualToString:@"Error decoding any of 2 volume keys, password incorrect"]) {
-			[errorMessage setStringValue:@"ERROR! Invalid Password"];
-		} else if ([string isEqualToString:@""]) {
-			NSLog(@"DECRYPTED ! ");
-			decrypted = YES;
-		} else {
-			[errorMessage setStringValue:@"ERROR! Maybe not mounted ?"];
-		}
-	[string release];
-	
+    sysCall(@"/usr/local/bin/encfs", [NSArray arrayWithObjects:
+                                         srcFolder,
+                                         destFolder, 
+                                         @"--pw", yourPasswordString, 
+                                         nil]);
+    
+    sysCall(@"/usr/bin/open", [NSArray arrayWithObject:destFolder]);
 	
 	[NSApp terminate: nil];
 	
