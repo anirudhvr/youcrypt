@@ -26,14 +26,13 @@
 	
 	NSMutableString *srcFolder = [arguments objectAtIndex:2];
 	NSMutableString *destFolder = [arguments objectAtIndex:3];
-	
-	srcFolder = [[srcFolder stringByReplacingOccurrencesOfString:@" "
+	/*	srcFolder = [[srcFolder stringByReplacingOccurrencesOfString:@" "
 													  withString:@"\\ "]
 				 mutableCopy];
 	destFolder = [[destFolder stringByReplacingOccurrencesOfString:@" "
 														withString:@"\\ "]
 				  mutableCopy];
-	
+	*/
 	NSLog(srcFolder);
 	NSLog(destFolder);
 	

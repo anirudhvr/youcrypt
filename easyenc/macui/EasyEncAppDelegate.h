@@ -14,5 +14,5 @@
 @property (assign) IBOutlet NSWindow *window;
 
 -(IBAction)apply:(id)sender;
-
+-(void)createDirectoryRecursivelyAtPath:(NSString*)path;
 @end

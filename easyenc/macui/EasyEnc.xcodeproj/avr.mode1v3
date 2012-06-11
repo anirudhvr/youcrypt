@@ -277,8 +277,6 @@
 							<key>PBXSmartGroupTreeModuleOutlineStateSelectionKey</key>
 							<array>
 								<array>
-									<integer>3</integer>
-									<integer>1</integer>
 									<integer>0</integer>
 								</array>
 							</array>
@@ -332,7 +330,7 @@
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>E64847721582E55400B3806D</string>
+										<string>E64848A715867F8400B3806D</string>
 										<key>history</key>
 										<array>
 											<string>E6CADFEA157EE4730003D837</string>
@@ -341,10 +339,10 @@
 											<string>E6CADFED157EE4730003D837</string>
 											<string>E6C7E0A1157FDD3A00999EDE</string>
 											<string>E6C7E1D815800ECA00999EDE</string>
-											<string>E64846871582C7A400B3806D</string>
-											<string>E64846D11582CE9500B3806D</string>
-											<string>E64847071582D62500B3806D</string>
-											<string>E64847081582D62500B3806D</string>
+											<string>E648487A158676BE00B3806D</string>
+											<string>E648489D15867C5000B3806D</string>
+											<string>E648489E15867C5000B3806D</string>
+											<string>E64848811586773E00B3806D</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -356,14 +354,14 @@
 							<key>GeometryConfiguration</key>
 							<dict>
 								<key>Frame</key>
-								<string>{{0, 0}, {1031, 592}}</string>
+								<string>{{0, 0}, {1031, 623}}</string>
 								<key>RubberWindowFrame</key>
 								<string>0 115 1280 887 0 0 1280 1002 </string>
 							</dict>
 							<key>Module</key>
 							<string>PBXNavigatorGroup</string>
 							<key>Proportion</key>
-							<string>592pt</string>
+							<string>623pt</string>
 						</dict>
 						<dict>
 							<key>ContentConfiguration</key>
@@ -376,14 +374,14 @@
 							<key>GeometryConfiguration</key>
 							<dict>
 								<key>Frame</key>
-								<string>{{0, 597}, {1031, 249}}</string>
+								<string>{{0, 628}, {1031, 218}}</string>
 								<key>RubberWindowFrame</key>
 								<string>0 115 1280 887 0 0 1280 1002 </string>
 							</dict>
 							<key>Module</key>
 							<string>XCDetailModule</string>
 							<key>Proportion</key>
-							<string>249pt</string>
+							<string>218pt</string>
 						</dict>
 					</array>
 					<key>Proportion</key>
@@ -544,9 +542,9 @@
 	<array>
 		<string>E64846A61582C88000B3806D</string>
 		<string>E64846A71582C88000B3806D</string>
-		<string>1C78EAAD065D492600B07095</string>
 		<string>1CD10A99069EF8BA00B06720</string>
 		<string>E6C767101579418E00784371</string>
+		<string>1C78EAAD065D492600B07095</string>
 		<string>/Users/avr/Documents/easyenc/easyenc/macui/EasyEnc.xcodeproj</string>
 	</array>
 	<key>WindowString</key>
@@ -578,14 +576,14 @@
 							<key>GeometryConfiguration</key>
 							<dict>
 								<key>Frame</key>
-								<string>{{0, 0}, {500, 218}}</string>
+								<string>{{0, 0}, {836, 305}}</string>
 								<key>RubberWindowFrame</key>
-								<string>71 429 500 500 0 0 1280 1002 </string>
+								<string>71 342 836 587 0 0 1280 1002 </string>
 							</dict>
 							<key>Module</key>
 							<string>PBXNavigatorGroup</string>
 							<key>Proportion</key>
-							<string>218pt</string>
+							<string>305pt</string>
 						</dict>
 						<dict>
 							<key>BecomeActive</key>
@@ -604,9 +602,9 @@
 							<key>GeometryConfiguration</key>
 							<dict>
 								<key>Frame</key>
-								<string>{{0, 223}, {500, 236}}</string>
+								<string>{{0, 310}, {836, 236}}</string>
 								<key>RubberWindowFrame</key>
-								<string>71 429 500 500 0 0 1280 1002 </string>
+								<string>71 342 836 587 0 0 1280 1002 </string>
 							</dict>
 							<key>Module</key>
 							<string>PBXBuildResultsModule</string>
@@ -615,7 +613,7 @@
 						</dict>
 					</array>
 					<key>Proportion</key>
-					<string>459pt</string>
+					<string>546pt</string>
 				</dict>
 			</array>
 			<key>Name</key>
@@ -638,11 +636,11 @@
 			<key>WindowContentMinSize</key>
 			<string>486 300</string>
 			<key>WindowString</key>
-			<string>71 429 500 500 0 0 1280 1002 </string>
+			<string>71 342 836 587 0 0 1280 1002 </string>
 			<key>WindowToolGUID</key>
 			<string>E6C767101579418E00784371</string>
 			<key>WindowToolIsVisible</key>
-			<false/>
+			<true/>
 		</dict>
 		<dict>
 			<key>FirstTimeWindowDisplayed</key>
@@ -923,7 +921,7 @@
 			<key>WindowToolGUID</key>
 			<string>1C78EAAD065D492600B07095</string>
 			<key>WindowToolIsVisible</key>
-			<false/>
+			<true/>
 		</dict>
 		<dict>
 			<key>Identifier</key>

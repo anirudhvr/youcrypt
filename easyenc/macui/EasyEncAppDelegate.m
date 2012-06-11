@@ -19,6 +19,25 @@
 	return self;
 }
 
+void createDirectoryRecursivelyAtPath(NSString *path)
+{
+	//check if the dir just above exists...
+	NSFileManager *fileManager = [NSFileManager defaultManager];
+	BOOL isDir;
+	NSString *directoryAbove = [path stringByDeletingLastPathComponent];
+	NSLog(@"Checking %@",directoryAbove);
+	if (![fileManager fileExistsAtPath:directoryAbove isDirectory:&isDir])
+	{
+		// call ourself with the directory above...
+		NSLog(@"Going to create %@",directoryAbove);
+		createDirectoryRecursivelyAtPath(directoryAbove);
+	}
+	// Now we enforced that the dir exist
+	// Fine, create the dir...
+	[fileManager createDirectoryAtPath:path attributes:nil];
+}
+
+
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
 	// Insert code here to initialize your application 
 	
@@ -38,37 +57,35 @@
 	}
 	
 }
-
-void systemCallWithBinSh(NSString *binary, NSArray *args) {
-    NSString *fileHeader = @"#!/bin/sh \n ";
-    NSString *joinedArguments = [args componentsJoinedByString:@" "];
-    NSString *fileContents = [NSString stringWithFormat:@"%@ %@ %@\n", 
-                              fileHeader, binary, joinedArguments];
-    NSLog(fileContents);
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDesktopDirectory, NSUserDomainMask, YES);
-    NSString *desktopDirectory=[paths objectAtIndex:0];
-    NSString *filename = [desktopDirectory stringByAppendingString: @"/easyenc-tmp.sh"];
-    [fileContents writeToFile:filename atomically:YES encoding: NSUTF8StringEncoding error: NULL];
-    
-    // At this point, we have already checked if script exists and has a shebang
-    NSFileManager *fileManager = [NSFileManager defaultManager];
-    if (![fileManager isExecutableFileAtPath:filename]) {
-        NSArray *chmodArguments = [NSArray arrayWithObjects:@"+x", filename, nil];
-        NSTask *chmod = [NSTask launchedTaskWithLaunchPath:@"/bin/chmod" arguments:chmodArguments];
-        [chmod waitUntilExit];
-		[chmod release];
-	}
-    
-    /* Finally run the goddamn file */
-	NSArray *fileArgs = [NSArray arrayWithObjects: @" ", nil];
+void mvRecursive(NSString *pathFrom, NSString *pathTo) {
+	NSFileManager *manager = [NSFileManager defaultManager];
+	NSArray *files = [manager contentsOfDirectoryAtPath:pathFrom error:nil];
 	
-	NSTask *task = [NSTask launchedTaskWithLaunchPath:filename arguments:fileArgs];
-	[task waitUntilExit];
-	[task release];
-    
-	NSLog(@"This will not log !! # BUG ");
-    //return NULL;
+	for (NSString *file in files) {
+		NSString *fileFrom = [pathFrom stringByAppendingPathComponent:file];
+		BOOL isDir;
+		
+		NSString *fileTo = [pathTo stringByAppendingPathComponent:file];
+		
+		NSError  *error  = nil;
+		
+		NSLog(@"about to copy %@",fileFrom);
+		
+		[manager copyItemAtPath:fileFrom toPath:fileTo error:&error];
+		[manager removeItemAtPath:fileFrom error:&error];
+		if (error) {
+			NSLog(@"%@",[error localizedDescription]);
+		}
+	}
 }
+
+void mkdir(NSString *path) {
+
+	NSFileManager *manager = [NSFileManager defaultManager];
+	[manager createDirectoryAtPath:path attributes:nil];
+	
+}
+
 
 NSString* systemCall(NSString *binary, NSArray *arguments) {
 	NSTask *task;	
@@ -101,19 +118,19 @@ NSString* systemCall(NSString *binary, NSArray *arguments) {
 {
 	NSArray *arguments = [[NSProcessInfo processInfo] arguments];
 	
-	NSMutableString *srcFolder = @"/Users/avr/new folder";// [arguments objectAtIndex:2];
-	NSMutableString *destFolder = @"/Users/avr/new temp folder"; // [arguments objectAtIndex:3];
+	NSMutableString *srcFolder =  [arguments objectAtIndex:2];
+	NSMutableString *destFolder = [arguments objectAtIndex:3];
 	
 	NSString *srcFolderEscaped = [[srcFolder stringByReplacingOccurrencesOfString:@" "
-													  withString:@"\\ "]
-				 mutableCopy];
+																	   withString:@"\\ "]
+								  mutableCopy];
 	NSString *destFolderEscaped = [[destFolder stringByReplacingOccurrencesOfString:@" "
-													  withString:@"\\ "]
-				 mutableCopy];
+																		 withString:@"\\ "]
+								   mutableCopy];
 	
 	NSLog(srcFolder);
 	NSLog(destFolder);
-		
+	
 	
 	/*** PREPARATIONS
 	 src = /Users/avr/d
@@ -125,84 +142,94 @@ NSString* systemCall(NSString *binary, NSArray *arguments) {
 	
 	NSString *homeDirectory = NSHomeDirectory();
 	NSLog(homeDirectory);
-	/*
-	NSFileManager *manager= [NSFileManager defaultManager]; 
 	
-	NSString *folderPath = [NSString stringWithFormat:@"\"%@/%@%@\"",homeDirectory, @"easyenc",srcFolderEscaped];
 	
-	if(![manager createDirectoryAtPath:folderPath attributes:nil])
-			NSLog(@"Error: Create folder failed %@",folderPath);
-	*/
+	NSLog(@"Create %@ if it doesn't already exist",destFolder);
 	
-	systemCall(@"/bin/mkdir",[NSArray arrayWithObjects: 
-							@"-p", 
-							[NSString stringWithFormat:@"\"%@/%@%@\"",homeDirectory, @"easyenc",srcFolder],
-							  nil
-							  ]);
-	NSLog(@"mkdir %@",[NSString stringWithFormat:@"\"%@/%@%@\"",homeDirectory, @"easyenc",srcFolder]);
+	mkdir(destFolder);
 	
-	/*
-	folderPath = [NSString stringWithFormat:@"\"/tmp/easyenc%@\"",srcFolderEscaped];
+	createDirectoryRecursivelyAtPath([NSString stringWithFormat:@"%@/easyencd%@",homeDirectory,srcFolder]);
 	
-		if(![manager createDirectoryAtPath:folderPath attributes:nil])
-			NSLog(@"Error: Create folder failed %@",folderPath);
-	*/
-	 
-	systemCall(@"/bin/mkdir", [NSArray arrayWithObjects:
-							@"-p",
-							[NSString stringWithFormat:@"\"/tmp/easyenc%@\"",srcFolder],
-							   nil
-							   ]);
+	NSLog(@"mkdir %@",[NSString stringWithFormat:@"\"%@/easyencd%@\"",homeDirectory,srcFolder]);
 	
-	 NSLog(@"mkdir %@",[NSString stringWithFormat:@"\"/tmp/easyenc%@\"",srcFolder]);
-
 	
-	systemCallWithBinSh(@"/bin/mv", [NSArray arrayWithObjects:
-							[NSString stringWithFormat:@"\"%@/\"*",srcFolder],
-							[NSString stringWithFormat:@"\"/tmp/easyenc%@/\"",srcFolder],
-							nil
-							   ]);
+	createDirectoryRecursivelyAtPath([NSString stringWithFormat:@"/tmp/easyencd%@",srcFolder]);
 	
-	NSLog(@"This will not log either.. # BUG");
-    /*
-	systemCallWithBinSh(@"/bin/rm", [NSArray arrayWithObjects:
-							@"-rf",
-							[NSString stringWithFormat:@"%@/*",srcFolder],
-							nil
-							   ]);
-    */
+		
+	NSLog(@"mkdir %@",[NSString stringWithFormat:@"\"/tmp/easyencd%@\"",srcFolder]);
+	
+	
+	mvRecursive(srcFolder, [NSString stringWithFormat:@"/tmp/easyencd%@/",srcFolder]);
+	
 		
 	/**** <!-- END PREP --> ***/
 	
 	
-		NSString *yourEmailString = [yourEmail stringValue];
-		NSString *yourPasswordString = [yourPassword stringValue];
-		NSString *yourFriendsEmailString = [yourFriendsEmail stringValue];	
-		NSString *combinedPasswordString, *numberOfUsers;	
-		int yourFriendsPassphrase = arc4random() % 100000000;	
-		NSString *yourFriendsPassphraseString = [NSString stringWithFormat:@"%d", yourFriendsPassphrase];
-		if(![yourFriendsEmailString isEqualToString:@""]) {
-			combinedPasswordString = [NSString stringWithFormat:@"%@%@%d", yourPasswordString, @",", yourFriendsPassphrase];
-			numberOfUsers = @"2";
+	NSString *yourEmailString = [yourEmail stringValue];
+	NSString *yourPasswordString = [yourPassword stringValue];
+	NSString *yourFriendsEmailString = [yourFriendsEmail stringValue];	
+	NSString *combinedPasswordString, *numberOfUsers;	
+	int yourFriendsPassphrase = arc4random() % 100000000;	
+	NSString *yourFriendsPassphraseString = [NSString stringWithFormat:@"%d", yourFriendsPassphrase];
+	if(![yourFriendsEmailString isEqualToString:@""]) {
+		combinedPasswordString = [NSString stringWithFormat:@"%@%@%d", yourPasswordString, @",", yourFriendsPassphrase];
+		numberOfUsers = @"2";
 		//	[yourFriendsPassphrase retain];
-		} else {
-			combinedPasswordString = yourPasswordString;
-			numberOfUsers = @"1";
-		}
+	} else {
+		combinedPasswordString = yourPasswordString;
+		numberOfUsers = @"1";
+	}
 	
-			
-		//NSLog(yourEmailString);
-		//NSLog(yourPasswordString);
-	//	NSLog(yourFriendsEmailString);
-	//	NSLog(combinedPasswordString);
+	
+	systemCall(@"/usr/local/bin/encfs", [NSArray arrayWithObjects: 
+										 srcFolder, 
+										 destFolder, 
+										 @"--nu", numberOfUsers, 
+										 @"--pw", combinedPasswordString, 
+										 nil
+										 ]);
+	
+	/*** PREPARE ORIGINAL FOLDER
+	 cp -r /tmp/easyenc/src/* $HOME/easyenc/src
+	 rm -rf /tmp/easyenc/src
+	 */
+	
+	
+	mvRecursive([NSString stringWithFormat:@"/tmp/easyencd%@/",srcFolder],
+				destFolder);
+	
+    /*
+	systemCall(@"/sbin/umount", [NSArray arrayWithObjects: 
+								 destFolder, 
+                                 nil]);
+	*/
+	/*** <!-- ENCFS END --> ***/
+	
+	if([numberOfUsers isEqualToString:@"2"]) {
 		
-		/****** ENCFS SYSTEM CALL 
-		arguments = [NSArray arrayWithObjects: srcFolder, destFolder, @"--nu", numberOfUsers, @"--pw", combinedPasswordString, nil];
+		/***** MAILGUN TASK START ******/
 		
 		NSTask *task;	
 		task = [[NSTask alloc] init];
-		[task setLaunchPath: @"/usr/local/bin/encfs"];
+		[task setLaunchPath: @"/usr/bin/curl"];
+		NSLog(@"GOING TO EMAIL: DETAILS ARE : ");
+		NSLog(yourFriendsEmailString);
+		NSLog(combinedPasswordString);
+		NSLog(yourFriendsPassphraseString);
 		
+		NSString *curlEmail = [NSString stringWithFormat:@"to=\"%@\"", yourFriendsEmailString];
+		NSLog(curlEmail);
+		NSString *curlKey   = [NSString stringWithFormat:@"text=\%@\"", yourFriendsPassphraseString];
+		
+		arguments = [NSArray arrayWithObjects: 
+					 @"-s", @"-k", 
+					 @"--user", @"api:key-67fgovcfrggd6y4l02ucpz-av4b22i26",
+					 @"https://api.mailgun.net/v2/cloudclear.mailgun.org/messages",
+					 @"-F", @"from='YouCrypt <postmaster@cloudclear.mailgun.org>'",
+					 @"-F", curlEmail,
+					 @"-F", @"subject='Your Temporary Passphrase'",
+					 @"-F", curlKey,
+					 nil];
 		
 		[task setArguments: arguments];
 		
@@ -222,86 +249,13 @@ NSString* systemCall(NSString *binary, NSArray *arguments) {
 		NSLog (@"got\n%@", string); 
 		
 		[string release];
-		 ****/
-	
-	systemCall(@"/usr/local/bin/encfs", [NSArray arrayWithObjects: 
-										 srcFolderEscaped, 
-										 destFolderEscaped, 
-										 @"--nu", numberOfUsers, 
-										 @"--pw", combinedPasswordString, 
-										 nil
-										 ]);
-	
-	/*** PREPARE ORIGINAL FOLDER
-	 cp -r /tmp/easyenc/src/* $HOME/easyenc/src
-	 rm -rf /tmp/easyenc/src
-	 */
 		
-	systemCallWithBinSh(@"/bin/mv", [NSArray arrayWithObjects:
-							[NSString stringWithFormat:@"\"/tmp/easyenc%@/\"*",srcFolder],
-							[NSString stringWithFormat:@"\"%@\"/",destFolder],
-							nil
-							]);
+		/***** <!-- MAILGUN END --> ******/
+	}
 	
-    systemCall(@"/sbin/umount", [NSArray arrayWithObjects: 
-                                  destFolder, 
-                                 nil]);
-	
-		/*** <!-- ENCFS END --> ***/
-		
-		if([numberOfUsers isEqualToString:@"2"]) {
-			
-			/***** MAILGUN TASK START ******/
-			
-			NSTask *task;	
-			task = [[NSTask alloc] init];
-			[task setLaunchPath: @"/usr/bin/curl"];
-			NSLog(@"GOING TO EMAIL: DETAILS ARE : ");
-			NSLog(yourFriendsEmailString);
-			NSLog(combinedPasswordString);
-			NSLog(yourFriendsPassphraseString);
-			
-			NSString *curlEmail = [NSString stringWithFormat:@"to=\"%@\"", yourFriendsEmailString];
-			NSLog(curlEmail);
-			NSString *curlKey   = [NSString stringWithFormat:@"text=\%@\"", yourFriendsPassphraseString];
-			
-			arguments = [NSArray arrayWithObjects: 
-						 @"-s", @"-k", 
-						 @"--user", @"api:key-67fgovcfrggd6y4l02ucpz-av4b22i26",
-						 @"https://api.mailgun.net/v2/cloudclear.mailgun.org/messages",
-						 @"-F", @"from='YouCrypt <postmaster@cloudclear.mailgun.org>'",
-						 @"-F", curlEmail,
-						 @"-F", @"subject='Your Temporary Passphrase'",
-						 @"-F", curlKey,
-						 nil];
-			
-			[task setArguments: arguments];
-			
-			NSPipe *pipe;
-			pipe = [NSPipe pipe];
-			[task setStandardOutput: pipe];
-			
-			[task launch];
-			
-			NSData *data = [[pipe fileHandleForReading] readDataToEndOfFile];
-			
-			[task waitUntilExit]; 
-			[task release];
-			
-			NSString *string = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]; 
-			
-			NSLog (@"got\n%@", string); 
-			
-			[string release];
-			
-			/***** <!-- MAILGUN END --> ******/
-		}
-
 	
 	[NSApp terminate: nil];
 	
 }
-
-
 
 @end
