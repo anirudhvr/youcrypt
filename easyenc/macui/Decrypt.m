@@ -7,6 +7,7 @@
 //
 
 #import "Decrypt.h"
+#import "libFunctions.h"
 
 @implementation Decrypt
 
@@ -17,60 +18,32 @@
 	return self;
 }
 
-NSString* sysCall(NSString *binary, NSArray *arguments) {
-	NSTask *task;	
-	task = [[NSTask alloc] init];
-	[task setLaunchPath: binary];
-	
-	[task setArguments: arguments];
-	
-	NSPipe *pipe;
-	pipe = [NSPipe pipe];
-	[task setStandardOutput: pipe];
-	
-	[task launch];
-	
-	NSData *data = [[pipe fileHandleForReading] readDataToEndOfFile];
-	
-	[task waitUntilExit]; 
-	[task release];
-	
-	NSString *string = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]; 
-	
-	NSLog (@"got\n%@", string); 
-	
-	return string;
-}
+/**
+ 
+ decrypt
+ 
+ Captures the action of the decrypt button, when clicked
+ 
+ sender: window that sent this action
+ 
+**/
 
 - (IBAction)decrypt:(id)sender
-{
-	NSLog(@"Yayy ");
-	BOOL decrypted = NO;
-	
+{	
 	NSArray *arguments = [[NSProcessInfo processInfo] arguments];
 	
-	NSMutableString *srcFolder = [arguments objectAtIndex:2];
-	NSMutableString *destFolder = [arguments objectAtIndex:3];
-	/*	srcFolder = [[srcFolder stringByReplacingOccurrencesOfString:@" "
-													  withString:@"\\ "]
-				 mutableCopy];
-	destFolder = [[destFolder stringByReplacingOccurrencesOfString:@" "
-														withString:@"\\ "]
-				  mutableCopy];
-	*/
-	NSLog(srcFolder);
-	NSLog(destFolder);
+	NSString *srcFolder = [arguments objectAtIndex:2];
+	NSString *destFolder = [arguments objectAtIndex:3];
 	
-	
-		NSString *yourPasswordString = [yourPassword stringValue];
+	NSString *yourPasswordString = [yourPassword stringValue];
 		
-    sysCall(@"/usr/local/bin/encfs", [NSArray arrayWithObjects:
+    systemCall(@"/usr/local/bin/encfs", [NSArray arrayWithObjects:
                                          srcFolder,
                                          destFolder, 
                                          @"--pw", yourPasswordString, 
                                          nil]);
     
-    sysCall(@"/usr/bin/open", [NSArray arrayWithObject:destFolder]);
+    systemCall(@"/usr/bin/open", [NSArray arrayWithObject:destFolder]);
 	
 	[NSApp terminate: nil];
 	

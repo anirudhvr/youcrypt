@@ -12,6 +12,7 @@
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
 		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
+		E64848E31586B6EE00B3806D /* libFunctions.m in Sources */ = {isa = PBXBuildFile; fileRef = E64848E21586B6EE00B3806D /* libFunctions.m */; };
 		E6CADF99157EDCF80003D837 /* Decrypt.xib in Resources */ = {isa = PBXBuildFile; fileRef = E6CADF98157EDCF80003D837 /* Decrypt.xib */; };
 		E6CADFCB157EE0CE0003D837 /* Decrypt.m in Sources */ = {isa = PBXBuildFile; fileRef = E6CADFCA157EE0CE0003D837 /* Decrypt.m */; };
 /* End PBXBuildFile section */
@@ -29,6 +30,8 @@
 		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		8D1107310486CEB800E47090 /* EasyEnc-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "EasyEnc-Info.plist"; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* EasyEnc.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EasyEnc.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E64848E11586B6EE00B3806D /* libFunctions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = libFunctions.h; sourceTree = "<group>"; };
+		E64848E21586B6EE00B3806D /* libFunctions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = libFunctions.m; sourceTree = "<group>"; };
 		E6CADF98157EDCF80003D837 /* Decrypt.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Decrypt.xib; sourceTree = "<group>"; };
 		E6CADFC9157EE0CE0003D837 /* Decrypt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Decrypt.h; sourceTree = "<group>"; };
 		E6CADFCA157EE0CE0003D837 /* Decrypt.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Decrypt.m; sourceTree = "<group>"; };
@@ -49,8 +52,12 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				E6CADFC9157EE0CE0003D837 /* Decrypt.h */,
+				E6CADFCA157EE0CE0003D837 /* Decrypt.m */,
 				256AC3D80F4B6AC300CF3369 /* EasyEncAppDelegate.h */,
 				256AC3D90F4B6AC300CF3369 /* EasyEncAppDelegate.m */,
+				E64848E11586B6EE00B3806D /* libFunctions.h */,
+				E64848E21586B6EE00B3806D /* libFunctions.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -109,8 +116,6 @@
 				8D1107310486CEB800E47090 /* EasyEnc-Info.plist */,
 				089C165CFE840E0CC02AAC07 /* InfoPlist.strings */,
 				1DDD58140DA1D0A300B32029 /* MainMenu.xib */,
-				E6CADFC9157EE0CE0003D837 /* Decrypt.h */,
-				E6CADFCA157EE0CE0003D837 /* Decrypt.m */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -193,6 +198,7 @@
 				8D11072D0486CEB800E47090 /* main.m in Sources */,
 				256AC3DA0F4B6AC300CF3369 /* EasyEncAppDelegate.m in Sources */,
 				E6CADFCB157EE0CE0003D837 /* Decrypt.m in Sources */,
+				E64848E31586B6EE00B3806D /* libFunctions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

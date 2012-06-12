@@ -8,11 +8,9 @@
 
 #import <Cocoa/Cocoa.h>
 
-
 @interface Decrypt : NSObject {
 	IBOutlet NSTextField *yourPassword;
 	IBOutlet NSTextField *errorMessage;
-
 }
 
 - (IBAction)decrypt:(id)sender;
