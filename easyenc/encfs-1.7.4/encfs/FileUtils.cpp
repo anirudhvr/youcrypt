@@ -1010,7 +1010,8 @@ RootPtr createV6Config( EncFS_Context *ctx,
     if (opts->no_interactive_configuration) { /* easyenc */
         rAssert(opts->num_users > 0 &&
                 opts->passphrases.size() > 0);
-        configMode = Config_Paranoia;
+        //configMode = Config_Paranoia; /* takes too long to mount */
+        configMode = Config_Standard;
         numusers = opts->num_users;
     }
 
@@ -1101,7 +1102,8 @@ RootPtr createV6Config( EncFS_Context *ctx,
     } else if(configMode == Config_Standard || answer[0] != 'x')
     {
         // xgroup(setup)
-        cout << _("Standard configuration selected.") << "\n";
+        if (!opts->no_interactive_configuration) 
+            cout << _("Standard configuration selected.") << "\n";
         // AES w/ 192 bit key, block name encoding, per-file initialization
         // vectors are all standard.
         keySize = 192;
