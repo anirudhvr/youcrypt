@@ -1,0 +1,7 @@
+//
+// Prefix header for all source files of the 'Youcrypt Mac alpha' target in the 'Youcrypt Mac alpha' project
+//
+
+#ifdef __OBJC__
+    #import <Cocoa/Cocoa.h>
+#endif

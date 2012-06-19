@@ -1,0 +1,474 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		256C3560158EA75F00E2BEC4 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 256C355F158EA75F00E2BEC4 /* Cocoa.framework */; };
+		256C356A158EA75F00E2BEC4 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 256C3568158EA75F00E2BEC4 /* InfoPlist.strings */; };
+		256C356C158EA75F00E2BEC4 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 256C356B158EA75F00E2BEC4 /* main.m */; };
+		256C3570158EA75F00E2BEC4 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 256C356E158EA75F00E2BEC4 /* Credits.rtf */; };
+		256C3573158EA75F00E2BEC4 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 256C3572158EA75F00E2BEC4 /* AppDelegate.m */; };
+		256C3576158EA75F00E2BEC4 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 256C3574158EA75F00E2BEC4 /* MainMenu.xib */; };
+		256C357E158EA75F00E2BEC4 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 256C357D158EA75F00E2BEC4 /* SenTestingKit.framework */; };
+		256C357F158EA75F00E2BEC4 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 256C355F158EA75F00E2BEC4 /* Cocoa.framework */; };
+		256C3587158EA75F00E2BEC4 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 256C3585158EA75F00E2BEC4 /* InfoPlist.strings */; };
+		256C358A158EA75F00E2BEC4 /* Youcrypt_Mac_alphaTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 256C3589158EA75F00E2BEC4 /* Youcrypt_Mac_alphaTests.m */; };
+		256C359E158EA88700E2BEC4 /* PreferenceController.m in Sources */ = {isa = PBXBuildFile; fileRef = 256C359C158EA88700E2BEC4 /* PreferenceController.m */; };
+		256C35A9158EAF8700E2BEC4 /* Preferences.xib in Resources */ = {isa = PBXBuildFile; fileRef = 256C35A8158EAF8700E2BEC4 /* Preferences.xib */; };
+		25B1E4FE158FED9800CDBC46 /* FileSystem.m in Sources */ = {isa = PBXBuildFile; fileRef = 25B1E4FD158FED9700CDBC46 /* FileSystem.m */; };
+		25B1E509158FF5D400CDBC46 /* pipetest.c in Sources */ = {isa = PBXBuildFile; fileRef = 25B1E508158FF5D400CDBC46 /* pipetest.c */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		256C3580158EA75F00E2BEC4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 256C3552158EA75F00E2BEC4 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 256C355A158EA75F00E2BEC4;
+			remoteInfo = "Youcrypt Mac alpha";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		256C355B158EA75F00E2BEC4 /* Youcrypt Mac alpha.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Youcrypt Mac alpha.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		256C355F158EA75F00E2BEC4 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		256C3562158EA75F00E2BEC4 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
+		256C3563158EA75F00E2BEC4 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		256C3564158EA75F00E2BEC4 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		256C3567158EA75F00E2BEC4 /* Youcrypt Mac alpha-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Youcrypt Mac alpha-Info.plist"; sourceTree = "<group>"; };
+		256C3569158EA75F00E2BEC4 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		256C356B158EA75F00E2BEC4 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		256C356D158EA75F00E2BEC4 /* Youcrypt Mac alpha-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Youcrypt Mac alpha-Prefix.pch"; sourceTree = "<group>"; };
+		256C356F158EA75F00E2BEC4 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
+		256C3571158EA75F00E2BEC4 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		256C3572158EA75F00E2BEC4 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		256C3575158EA75F00E2BEC4 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		256C357C158EA75F00E2BEC4 /* Youcrypt Mac alphaTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Youcrypt Mac alphaTests.octest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		256C357D158EA75F00E2BEC4 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
+		256C3584158EA75F00E2BEC4 /* Youcrypt Mac alphaTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Youcrypt Mac alphaTests-Info.plist"; sourceTree = "<group>"; };
+		256C3586158EA75F00E2BEC4 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		256C3588158EA75F00E2BEC4 /* Youcrypt_Mac_alphaTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Youcrypt_Mac_alphaTests.h; sourceTree = "<group>"; };
+		256C3589158EA75F00E2BEC4 /* Youcrypt_Mac_alphaTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Youcrypt_Mac_alphaTests.m; sourceTree = "<group>"; };
+		256C359B158EA88700E2BEC4 /* PreferenceController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PreferenceController.h; sourceTree = "<group>"; };
+		256C359C158EA88700E2BEC4 /* PreferenceController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PreferenceController.m; sourceTree = "<group>"; };
+		256C35A8158EAF8700E2BEC4 /* Preferences.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Preferences.xib; sourceTree = "<group>"; };
+		25B1E4FC158FED9700CDBC46 /* FileSystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileSystem.h; sourceTree = "<group>"; };
+		25B1E4FD158FED9700CDBC46 /* FileSystem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FileSystem.m; sourceTree = "<group>"; };
+		25B1E505158FF48B00CDBC46 /* pipetest.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = pipetest.h; sourceTree = "<group>"; };
+		25B1E508158FF5D400CDBC46 /* pipetest.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = pipetest.c; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		256C3558158EA75F00E2BEC4 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				256C3560158EA75F00E2BEC4 /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		256C3578158EA75F00E2BEC4 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				256C357E158EA75F00E2BEC4 /* SenTestingKit.framework in Frameworks */,
+				256C357F158EA75F00E2BEC4 /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		256C3550158EA75F00E2BEC4 = {
+			isa = PBXGroup;
+			children = (
+				256C3565158EA75F00E2BEC4 /* Youcrypt Mac alpha */,
+				256C3582158EA75F00E2BEC4 /* Youcrypt Mac alphaTests */,
+				256C355E158EA75F00E2BEC4 /* Frameworks */,
+				256C355C158EA75F00E2BEC4 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		256C355C158EA75F00E2BEC4 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				256C355B158EA75F00E2BEC4 /* Youcrypt Mac alpha.app */,
+				256C357C158EA75F00E2BEC4 /* Youcrypt Mac alphaTests.octest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		256C355E158EA75F00E2BEC4 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				256C355F158EA75F00E2BEC4 /* Cocoa.framework */,
+				256C357D158EA75F00E2BEC4 /* SenTestingKit.framework */,
+				256C3561158EA75F00E2BEC4 /* Other Frameworks */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		256C3561158EA75F00E2BEC4 /* Other Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				256C3562158EA75F00E2BEC4 /* AppKit.framework */,
+				256C3563158EA75F00E2BEC4 /* CoreData.framework */,
+				256C3564158EA75F00E2BEC4 /* Foundation.framework */,
+			);
+			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
+		256C3565158EA75F00E2BEC4 /* Youcrypt Mac alpha */ = {
+			isa = PBXGroup;
+			children = (
+				256C3571158EA75F00E2BEC4 /* AppDelegate.h */,
+				256C3572158EA75F00E2BEC4 /* AppDelegate.m */,
+				256C3574158EA75F00E2BEC4 /* MainMenu.xib */,
+				256C3566158EA75F00E2BEC4 /* Supporting Files */,
+			);
+			path = "Youcrypt Mac alpha";
+			sourceTree = "<group>";
+		};
+		256C3566158EA75F00E2BEC4 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				25B1E508158FF5D400CDBC46 /* pipetest.c */,
+				25B1E505158FF48B00CDBC46 /* pipetest.h */,
+				256C3567158EA75F00E2BEC4 /* Youcrypt Mac alpha-Info.plist */,
+				256C3568158EA75F00E2BEC4 /* InfoPlist.strings */,
+				256C356B158EA75F00E2BEC4 /* main.m */,
+				256C359B158EA88700E2BEC4 /* PreferenceController.h */,
+				256C359C158EA88700E2BEC4 /* PreferenceController.m */,
+				25B1E4FC158FED9700CDBC46 /* FileSystem.h */,
+				25B1E4FD158FED9700CDBC46 /* FileSystem.m */,
+				256C35A8158EAF8700E2BEC4 /* Preferences.xib */,
+				256C356D158EA75F00E2BEC4 /* Youcrypt Mac alpha-Prefix.pch */,
+				256C356E158EA75F00E2BEC4 /* Credits.rtf */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		256C3582158EA75F00E2BEC4 /* Youcrypt Mac alphaTests */ = {
+			isa = PBXGroup;
+			children = (
+				256C3588158EA75F00E2BEC4 /* Youcrypt_Mac_alphaTests.h */,
+				256C3589158EA75F00E2BEC4 /* Youcrypt_Mac_alphaTests.m */,
+				256C3583158EA75F00E2BEC4 /* Supporting Files */,
+			);
+			path = "Youcrypt Mac alphaTests";
+			sourceTree = "<group>";
+		};
+		256C3583158EA75F00E2BEC4 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				256C3584158EA75F00E2BEC4 /* Youcrypt Mac alphaTests-Info.plist */,
+				256C3585158EA75F00E2BEC4 /* InfoPlist.strings */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		256C355A158EA75F00E2BEC4 /* Youcrypt Mac alpha */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 256C358D158EA75F00E2BEC4 /* Build configuration list for PBXNativeTarget "Youcrypt Mac alpha" */;
+			buildPhases = (
+				256C3557158EA75F00E2BEC4 /* Sources */,
+				256C3558158EA75F00E2BEC4 /* Frameworks */,
+				256C3559158EA75F00E2BEC4 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Youcrypt Mac alpha";
+			productName = "Youcrypt Mac alpha";
+			productReference = 256C355B158EA75F00E2BEC4 /* Youcrypt Mac alpha.app */;
+			productType = "com.apple.product-type.application";
+		};
+		256C357B158EA75F00E2BEC4 /* Youcrypt Mac alphaTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 256C3590158EA75F00E2BEC4 /* Build configuration list for PBXNativeTarget "Youcrypt Mac alphaTests" */;
+			buildPhases = (
+				256C3577158EA75F00E2BEC4 /* Sources */,
+				256C3578158EA75F00E2BEC4 /* Frameworks */,
+				256C3579158EA75F00E2BEC4 /* Resources */,
+				256C357A158EA75F00E2BEC4 /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				256C3581158EA75F00E2BEC4 /* PBXTargetDependency */,
+			);
+			name = "Youcrypt Mac alphaTests";
+			productName = "Youcrypt Mac alphaTests";
+			productReference = 256C357C158EA75F00E2BEC4 /* Youcrypt Mac alphaTests.octest */;
+			productType = "com.apple.product-type.bundle";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		256C3552158EA75F00E2BEC4 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0430;
+			};
+			buildConfigurationList = 256C3555158EA75F00E2BEC4 /* Build configuration list for PBXProject "Youcrypt Mac alpha" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 256C3550158EA75F00E2BEC4;
+			productRefGroup = 256C355C158EA75F00E2BEC4 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				256C355A158EA75F00E2BEC4 /* Youcrypt Mac alpha */,
+				256C357B158EA75F00E2BEC4 /* Youcrypt Mac alphaTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		256C3559158EA75F00E2BEC4 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				256C356A158EA75F00E2BEC4 /* InfoPlist.strings in Resources */,
+				256C3570158EA75F00E2BEC4 /* Credits.rtf in Resources */,
+				256C3576158EA75F00E2BEC4 /* MainMenu.xib in Resources */,
+				256C35A9158EAF8700E2BEC4 /* Preferences.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		256C3579158EA75F00E2BEC4 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				256C3587158EA75F00E2BEC4 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		256C357A158EA75F00E2BEC4 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		256C3557158EA75F00E2BEC4 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				256C356C158EA75F00E2BEC4 /* main.m in Sources */,
+				256C3573158EA75F00E2BEC4 /* AppDelegate.m in Sources */,
+				256C359E158EA88700E2BEC4 /* PreferenceController.m in Sources */,
+				25B1E4FE158FED9800CDBC46 /* FileSystem.m in Sources */,
+				25B1E509158FF5D400CDBC46 /* pipetest.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		256C3577158EA75F00E2BEC4 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				256C358A158EA75F00E2BEC4 /* Youcrypt_Mac_alphaTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		256C3581158EA75F00E2BEC4 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 256C355A158EA75F00E2BEC4 /* Youcrypt Mac alpha */;
+			targetProxy = 256C3580158EA75F00E2BEC4 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		256C3568158EA75F00E2BEC4 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				256C3569158EA75F00E2BEC4 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		256C356E158EA75F00E2BEC4 /* Credits.rtf */ = {
+			isa = PBXVariantGroup;
+			children = (
+				256C356F158EA75F00E2BEC4 /* en */,
+			);
+			name = Credits.rtf;
+			sourceTree = "<group>";
+		};
+		256C3574158EA75F00E2BEC4 /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				256C3575158EA75F00E2BEC4 /* en */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+		256C3585158EA75F00E2BEC4 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				256C3586158EA75F00E2BEC4 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		256C358B158EA75F00E2BEC4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		256C358C158EA75F00E2BEC4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		256C358E158EA75F00E2BEC4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Youcrypt Mac alpha/Youcrypt Mac alpha-Prefix.pch";
+				INFOPLIST_FILE = "Youcrypt Mac alpha/Youcrypt Mac alpha-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		256C358F158EA75F00E2BEC4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Youcrypt Mac alpha/Youcrypt Mac alpha-Prefix.pch";
+				INFOPLIST_FILE = "Youcrypt Mac alpha/Youcrypt Mac alpha-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		256C3591158EA75F00E2BEC4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Youcrypt Mac alpha.app/Contents/MacOS/Youcrypt Mac alpha";
+				FRAMEWORK_SEARCH_PATHS = "$(DEVELOPER_LIBRARY_DIR)/Frameworks";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Youcrypt Mac alpha/Youcrypt Mac alpha-Prefix.pch";
+				INFOPLIST_FILE = "Youcrypt Mac alphaTests/Youcrypt Mac alphaTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Debug;
+		};
+		256C3592158EA75F00E2BEC4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Youcrypt Mac alpha.app/Contents/MacOS/Youcrypt Mac alpha";
+				FRAMEWORK_SEARCH_PATHS = "$(DEVELOPER_LIBRARY_DIR)/Frameworks";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Youcrypt Mac alpha/Youcrypt Mac alpha-Prefix.pch";
+				INFOPLIST_FILE = "Youcrypt Mac alphaTests/Youcrypt Mac alphaTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		256C3555158EA75F00E2BEC4 /* Build configuration list for PBXProject "Youcrypt Mac alpha" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				256C358B158EA75F00E2BEC4 /* Debug */,
+				256C358C158EA75F00E2BEC4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		256C358D158EA75F00E2BEC4 /* Build configuration list for PBXNativeTarget "Youcrypt Mac alpha" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				256C358E158EA75F00E2BEC4 /* Debug */,
+				256C358F158EA75F00E2BEC4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		256C3590158EA75F00E2BEC4 /* Build configuration list for PBXNativeTarget "Youcrypt Mac alphaTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				256C3591158EA75F00E2BEC4 /* Debug */,
+				256C3592158EA75F00E2BEC4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 256C3552158EA75F00E2BEC4 /* Project object */;
+}
