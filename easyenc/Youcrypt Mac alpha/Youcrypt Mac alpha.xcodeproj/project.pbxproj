@@ -28,6 +28,7 @@
 		25F3D1511592435600E3383C /* libFunctions.m in Sources */ = {isa = PBXBuildFile; fileRef = 25F3D1501592435600E3383C /* libFunctions.m */; };
 		25F3D15A159244E800E3383C /* Encrypt.m in Sources */ = {isa = PBXBuildFile; fileRef = 25F3D158159244E800E3383C /* Encrypt.m */; };
 		25F3D15B159244E800E3383C /* Encrypt.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25F3D159159244E800E3383C /* Encrypt.xib */; };
+		E6E2A0BA15926C8C003E3F6C /* YoucryptService.m in Sources */ = {isa = PBXBuildFile; fileRef = E6E2A0B6159266F6003E3F6C /* YoucryptService.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -77,6 +78,8 @@
 		25F3D157159244E800E3383C /* Encrypt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Encrypt.h; path = "Youcrypt Mac alpha/Encrypt.h"; sourceTree = "<group>"; };
 		25F3D158159244E800E3383C /* Encrypt.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Encrypt.m; path = "Youcrypt Mac alpha/Encrypt.m"; sourceTree = "<group>"; };
 		25F3D159159244E800E3383C /* Encrypt.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = Encrypt.xib; path = "Youcrypt Mac alpha/Encrypt.xib"; sourceTree = "<group>"; };
+		E6E2A0B6159266F6003E3F6C /* YoucryptService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = YoucryptService.m; path = "Youcrypt Mac alpha/YoucryptService.m"; sourceTree = "<group>"; };
+		E6E2A0B7159266F6003E3F6C /* YoucryptService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = YoucryptService.h; path = "Youcrypt Mac alpha/YoucryptService.h"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -206,6 +209,8 @@
 		25F3D154159243E300E3383C /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				E6E2A0B6159266F6003E3F6C /* YoucryptService.m */,
+				E6E2A0B7159266F6003E3F6C /* YoucryptService.h */,
 				25F3D157159244E800E3383C /* Encrypt.h */,
 				25F3D158159244E800E3383C /* Encrypt.m */,
 				256C3571158EA75F00E2BEC4 /* AppDelegate.h */,
@@ -345,6 +350,7 @@
 				25F3D14C15923FE800E3383C /* Decrypt.m in Sources */,
 				25F3D1511592435600E3383C /* libFunctions.m in Sources */,
 				25F3D15A159244E800E3383C /* Encrypt.m in Sources */,
+				E6E2A0BA15926C8C003E3F6C /* YoucryptService.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -11,6 +11,7 @@
 #import "FileSystem.h"
 #import "Decrypt.h"
 #import "Encrypt.h"
+#import "YoucryptService.h"
 
 #define prefsToolbar @"Prefs"
 #define quitToolbar @"Quit"
@@ -31,6 +32,10 @@
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
     // Insert code here to initialize your application
+    // Insert code here to initialize your application
+    NSLog(@"Hello!\n");
+    YoucryptService *youcryptService = [[YoucryptService alloc] init];
+    [NSApp setServicesProvider:youcryptService];
 }
 
 
@@ -69,7 +74,7 @@
         else type = @"M";
 	}
     
-    type = @"E";
+    type = @"M";
     
     if([type isEqualToString:@"M"])
         [self showMainApp:self];

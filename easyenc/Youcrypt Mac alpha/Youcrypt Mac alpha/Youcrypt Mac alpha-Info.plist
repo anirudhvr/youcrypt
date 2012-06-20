@@ -32,5 +32,42 @@
 	<string>MainMenu</string>
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>
+	<key>NSServices</key>
+	<array>
+		<dict>
+			<key>NSSendTypes</key>
+			<array>
+				<string>NSURLPboardType</string>
+			</array>
+			<key>NSPortName</key>
+			<string>YoucryptService</string>
+			<key>NSMessage</key>
+			<string>openEncryptWindow</string>
+			<key>NSMenuItem</key>
+			<dict>
+				<key>default</key>
+				<string>Encrypt</string>
+			</dict>
+			<key>NSRequiredContext</key>
+			<dict/>
+		</dict>
+		<dict>
+			<key>NSSendTypes</key>
+			<array>
+				<string>NSURLPboardType</string>
+			</array>
+			<key>NSPortName</key>
+			<string>YoucryptService</string>
+			<key>NSMessage</key>
+			<string>openDecryptWindow</string>
+			<key>NSMenuItem</key>
+			<dict>
+				<key>default</key>
+				<string>Decrypt</string>
+			</dict>
+			<key>NSRequiredContext</key>
+			<dict/>
+		</dict>
+	</array>
 </dict>
 </plist>
