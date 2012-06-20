@@ -32,8 +32,7 @@
     
     // NSString *dropboxURL = systemCall(binary, arguments);
     
-    char* shellFile = "/Users/hr/Dropbox/get_dropbox_folder.sh";
-    
+    char *shellFile = "/Users/hr/Dropbox/get_dropbox_folder.sh";
     char *out, *err;
     int outlen,errlen;
     

@@ -21,6 +21,13 @@
 		256C35A9158EAF8700E2BEC4 /* Preferences.xib in Resources */ = {isa = PBXBuildFile; fileRef = 256C35A8158EAF8700E2BEC4 /* Preferences.xib */; };
 		25B1E4FE158FED9800CDBC46 /* FileSystem.m in Sources */ = {isa = PBXBuildFile; fileRef = 25B1E4FD158FED9700CDBC46 /* FileSystem.m */; };
 		25B1E509158FF5D400CDBC46 /* pipetest.c in Sources */ = {isa = PBXBuildFile; fileRef = 25B1E508158FF5D400CDBC46 /* pipetest.c */; };
+		25B1E52A1591398A00CDBC46 /* Cancel.png in Resources */ = {isa = PBXBuildFile; fileRef = 25B1E5291591398A00CDBC46 /* Cancel.png */; };
+		25B1E53015913A9700CDBC46 /* Settings.png in Resources */ = {isa = PBXBuildFile; fileRef = 25B1E52F15913A9600CDBC46 /* Settings.png */; };
+		25F3D14C15923FE800E3383C /* Decrypt.m in Sources */ = {isa = PBXBuildFile; fileRef = 25F3D14A15923FE800E3383C /* Decrypt.m */; };
+		25F3D14D15923FE800E3383C /* Decrypt.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25F3D14B15923FE800E3383C /* Decrypt.xib */; };
+		25F3D1511592435600E3383C /* libFunctions.m in Sources */ = {isa = PBXBuildFile; fileRef = 25F3D1501592435600E3383C /* libFunctions.m */; };
+		25F3D15A159244E800E3383C /* Encrypt.m in Sources */ = {isa = PBXBuildFile; fileRef = 25F3D158159244E800E3383C /* Encrypt.m */; };
+		25F3D15B159244E800E3383C /* Encrypt.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25F3D159159244E800E3383C /* Encrypt.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -39,13 +46,13 @@
 		256C3562158EA75F00E2BEC4 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
 		256C3563158EA75F00E2BEC4 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		256C3564158EA75F00E2BEC4 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		256C3567158EA75F00E2BEC4 /* Youcrypt Mac alpha-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Youcrypt Mac alpha-Info.plist"; sourceTree = "<group>"; };
+		256C3567158EA75F00E2BEC4 /* Youcrypt Mac alpha-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Youcrypt Mac alpha-Info.plist"; path = "Youcrypt Mac alpha/Youcrypt Mac alpha-Info.plist"; sourceTree = "<group>"; };
 		256C3569158EA75F00E2BEC4 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		256C356B158EA75F00E2BEC4 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		256C356D158EA75F00E2BEC4 /* Youcrypt Mac alpha-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Youcrypt Mac alpha-Prefix.pch"; sourceTree = "<group>"; };
 		256C356F158EA75F00E2BEC4 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
-		256C3571158EA75F00E2BEC4 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		256C3572158EA75F00E2BEC4 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		256C3571158EA75F00E2BEC4 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = "Youcrypt Mac alpha/AppDelegate.h"; sourceTree = "<group>"; };
+		256C3572158EA75F00E2BEC4 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = "Youcrypt Mac alpha/AppDelegate.m"; sourceTree = "<group>"; };
 		256C3575158EA75F00E2BEC4 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		256C357C158EA75F00E2BEC4 /* Youcrypt Mac alphaTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Youcrypt Mac alphaTests.octest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		256C357D158EA75F00E2BEC4 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
@@ -53,13 +60,23 @@
 		256C3586158EA75F00E2BEC4 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		256C3588158EA75F00E2BEC4 /* Youcrypt_Mac_alphaTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Youcrypt_Mac_alphaTests.h; sourceTree = "<group>"; };
 		256C3589158EA75F00E2BEC4 /* Youcrypt_Mac_alphaTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Youcrypt_Mac_alphaTests.m; sourceTree = "<group>"; };
-		256C359B158EA88700E2BEC4 /* PreferenceController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PreferenceController.h; sourceTree = "<group>"; };
-		256C359C158EA88700E2BEC4 /* PreferenceController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PreferenceController.m; sourceTree = "<group>"; };
-		256C35A8158EAF8700E2BEC4 /* Preferences.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Preferences.xib; sourceTree = "<group>"; };
-		25B1E4FC158FED9700CDBC46 /* FileSystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileSystem.h; sourceTree = "<group>"; };
-		25B1E4FD158FED9700CDBC46 /* FileSystem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FileSystem.m; sourceTree = "<group>"; };
-		25B1E505158FF48B00CDBC46 /* pipetest.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = pipetest.h; sourceTree = "<group>"; };
-		25B1E508158FF5D400CDBC46 /* pipetest.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = pipetest.c; sourceTree = "<group>"; };
+		256C359B158EA88700E2BEC4 /* PreferenceController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PreferenceController.h; path = "Youcrypt Mac alpha/PreferenceController.h"; sourceTree = "<group>"; };
+		256C359C158EA88700E2BEC4 /* PreferenceController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PreferenceController.m; path = "Youcrypt Mac alpha/PreferenceController.m"; sourceTree = "<group>"; };
+		256C35A8158EAF8700E2BEC4 /* Preferences.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = Preferences.xib; path = "Youcrypt Mac alpha/Preferences.xib"; sourceTree = "<group>"; };
+		25B1E4FC158FED9700CDBC46 /* FileSystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FileSystem.h; path = "Youcrypt Mac alpha/FileSystem.h"; sourceTree = "<group>"; };
+		25B1E4FD158FED9700CDBC46 /* FileSystem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FileSystem.m; path = "Youcrypt Mac alpha/FileSystem.m"; sourceTree = "<group>"; };
+		25B1E505158FF48B00CDBC46 /* pipetest.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = pipetest.h; path = "Youcrypt Mac alpha/pipetest.h"; sourceTree = "<group>"; };
+		25B1E508158FF5D400CDBC46 /* pipetest.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = pipetest.c; path = "Youcrypt Mac alpha/pipetest.c"; sourceTree = "<group>"; };
+		25B1E5291591398A00CDBC46 /* Cancel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Cancel.png; sourceTree = "<group>"; };
+		25B1E52F15913A9600CDBC46 /* Settings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Settings.png; sourceTree = "<group>"; };
+		25F3D14915923FE800E3383C /* Decrypt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Decrypt.h; path = "Youcrypt Mac alpha/Decrypt.h"; sourceTree = "<group>"; };
+		25F3D14A15923FE800E3383C /* Decrypt.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Decrypt.m; path = "Youcrypt Mac alpha/Decrypt.m"; sourceTree = "<group>"; };
+		25F3D14B15923FE800E3383C /* Decrypt.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = Decrypt.xib; path = "Youcrypt Mac alpha/Decrypt.xib"; sourceTree = "<group>"; };
+		25F3D14F1592435600E3383C /* libFunctions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = libFunctions.h; path = "Youcrypt Mac alpha/libFunctions.h"; sourceTree = "<group>"; };
+		25F3D1501592435600E3383C /* libFunctions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = libFunctions.m; path = "Youcrypt Mac alpha/libFunctions.m"; sourceTree = "<group>"; };
+		25F3D157159244E800E3383C /* Encrypt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Encrypt.h; path = "Youcrypt Mac alpha/Encrypt.h"; sourceTree = "<group>"; };
+		25F3D158159244E800E3383C /* Encrypt.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Encrypt.m; path = "Youcrypt Mac alpha/Encrypt.m"; sourceTree = "<group>"; };
+		25F3D159159244E800E3383C /* Encrypt.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = Encrypt.xib; path = "Youcrypt Mac alpha/Encrypt.xib"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -125,9 +142,9 @@
 		256C3565158EA75F00E2BEC4 /* Youcrypt Mac alpha */ = {
 			isa = PBXGroup;
 			children = (
-				256C3571158EA75F00E2BEC4 /* AppDelegate.h */,
-				256C3572158EA75F00E2BEC4 /* AppDelegate.m */,
-				256C3574158EA75F00E2BEC4 /* MainMenu.xib */,
+				25F3D154159243E300E3383C /* Classes */,
+				25F3D1531592437700E3383C /* Plists */,
+				25F3D1521592436000E3383C /* UI */,
 				256C3566158EA75F00E2BEC4 /* Supporting Files */,
 			);
 			path = "Youcrypt Mac alpha";
@@ -136,16 +153,9 @@
 		256C3566158EA75F00E2BEC4 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				25B1E508158FF5D400CDBC46 /* pipetest.c */,
-				25B1E505158FF48B00CDBC46 /* pipetest.h */,
-				256C3567158EA75F00E2BEC4 /* Youcrypt Mac alpha-Info.plist */,
-				256C3568158EA75F00E2BEC4 /* InfoPlist.strings */,
+				25B1E52F15913A9600CDBC46 /* Settings.png */,
+				25B1E5291591398A00CDBC46 /* Cancel.png */,
 				256C356B158EA75F00E2BEC4 /* main.m */,
-				256C359B158EA88700E2BEC4 /* PreferenceController.h */,
-				256C359C158EA88700E2BEC4 /* PreferenceController.m */,
-				25B1E4FC158FED9700CDBC46 /* FileSystem.h */,
-				25B1E4FD158FED9700CDBC46 /* FileSystem.m */,
-				256C35A8158EAF8700E2BEC4 /* Preferences.xib */,
 				256C356D158EA75F00E2BEC4 /* Youcrypt Mac alpha-Prefix.pch */,
 				256C356E158EA75F00E2BEC4 /* Credits.rtf */,
 			);
@@ -169,6 +179,50 @@
 				256C3585158EA75F00E2BEC4 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		25F3D1521592436000E3383C /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				25F3D159159244E800E3383C /* Encrypt.xib */,
+				256C35A8158EAF8700E2BEC4 /* Preferences.xib */,
+				25F3D14B15923FE800E3383C /* Decrypt.xib */,
+				256C3574158EA75F00E2BEC4 /* MainMenu.xib */,
+			);
+			name = UI;
+			path = ..;
+			sourceTree = "<group>";
+		};
+		25F3D1531592437700E3383C /* Plists */ = {
+			isa = PBXGroup;
+			children = (
+				256C3568158EA75F00E2BEC4 /* InfoPlist.strings */,
+				256C3567158EA75F00E2BEC4 /* Youcrypt Mac alpha-Info.plist */,
+			);
+			name = Plists;
+			path = ..;
+			sourceTree = "<group>";
+		};
+		25F3D154159243E300E3383C /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				25F3D157159244E800E3383C /* Encrypt.h */,
+				25F3D158159244E800E3383C /* Encrypt.m */,
+				256C3571158EA75F00E2BEC4 /* AppDelegate.h */,
+				256C3572158EA75F00E2BEC4 /* AppDelegate.m */,
+				25F3D14915923FE800E3383C /* Decrypt.h */,
+				25F3D14A15923FE800E3383C /* Decrypt.m */,
+				25F3D14F1592435600E3383C /* libFunctions.h */,
+				25F3D1501592435600E3383C /* libFunctions.m */,
+				25B1E508158FF5D400CDBC46 /* pipetest.c */,
+				25B1E505158FF48B00CDBC46 /* pipetest.h */,
+				256C359B158EA88700E2BEC4 /* PreferenceController.h */,
+				256C359C158EA88700E2BEC4 /* PreferenceController.m */,
+				25B1E4FC158FED9700CDBC46 /* FileSystem.h */,
+				25B1E4FD158FED9700CDBC46 /* FileSystem.m */,
+			);
+			name = Classes;
+			path = ..;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -245,6 +299,10 @@
 				256C3570158EA75F00E2BEC4 /* Credits.rtf in Resources */,
 				256C3576158EA75F00E2BEC4 /* MainMenu.xib in Resources */,
 				256C35A9158EAF8700E2BEC4 /* Preferences.xib in Resources */,
+				25B1E52A1591398A00CDBC46 /* Cancel.png in Resources */,
+				25B1E53015913A9700CDBC46 /* Settings.png in Resources */,
+				25F3D14D15923FE800E3383C /* Decrypt.xib in Resources */,
+				25F3D15B159244E800E3383C /* Encrypt.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -284,6 +342,9 @@
 				256C359E158EA88700E2BEC4 /* PreferenceController.m in Sources */,
 				25B1E4FE158FED9800CDBC46 /* FileSystem.m in Sources */,
 				25B1E509158FF5D400CDBC46 /* pipetest.c in Sources */,
+				25F3D14C15923FE800E3383C /* Decrypt.m in Sources */,
+				25F3D1511592435600E3383C /* libFunctions.m in Sources */,
+				25F3D15A159244E800E3383C /* Encrypt.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -312,6 +373,7 @@
 				256C3569158EA75F00E2BEC4 /* en */,
 			);
 			name = InfoPlist.strings;
+			path = "Youcrypt Mac alpha";
 			sourceTree = "<group>";
 		};
 		256C356E158EA75F00E2BEC4 /* Credits.rtf */ = {
@@ -328,6 +390,7 @@
 				256C3575158EA75F00E2BEC4 /* en */,
 			);
 			name = MainMenu.xib;
+			path = "Youcrypt Mac alpha";
 			sourceTree = "<group>";
 		};
 		256C3585158EA75F00E2BEC4 /* InfoPlist.strings */ = {

@@ -9,8 +9,10 @@
 #import <Cocoa/Cocoa.h>
 @class PreferenceController;
 @class FileSystemsController;
+@class Decrypt;
+@class Encrypt;
 
-@interface AppDelegate : NSObject <NSApplicationDelegate> {
+@interface AppDelegate : NSObject <NSToolbarDelegate> { // changed from NSApplicationDelegate
     
     // Status Bar for Agent
     IBOutlet NSMenu *statusMenu;
@@ -19,11 +21,19 @@
     // For preferences
     PreferenceController *preferenceController;
     
+    //Encrypt and Decrypt
+    Decrypt *decryptController;
+    Encrypt *encryptController;
+    
     // Array of FileSystems
     NSMutableArray *filesystems;
     
     // Proxies - to be implemented
     FileSystemsController *fc;
+
+    // Toolbar
+
+    IBOutlet NSToolbar *toolbar;
 
 }
 
@@ -38,6 +48,10 @@
 - (IBAction)showMainApp:(id)sender;
 - (IBAction)showPreferencePanel:(id)sender;
 - (IBAction)terminateApp:(id)sender;
+
+// Enc and Dec
+- (IBAction)showEncryptWindow:(id)sender;
+- (IBAction)showDecryptWindow:(id)sender;
 
 -(void)setFilesystems:(NSMutableArray*)f;
 
