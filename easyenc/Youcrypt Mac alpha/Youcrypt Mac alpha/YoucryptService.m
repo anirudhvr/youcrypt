@@ -10,6 +10,21 @@
 
 @implementation YoucryptService
 
+- (void)setApp:(AppDelegate*)x;
+{
+    mainApp = x;
+}
+
+
+- (void)openDecryptWindow:(NSPasteboard *)pboard
+              userData:(NSString *)data
+                 error:(NSString **)error
+{
+
+    return;
+}
+
+
 - (void)openEncryptWindow:(NSPasteboard *)pboard
               userData:(NSString *)data
                  error:(NSString **)error
@@ -23,9 +38,12 @@
         *error = NSLocalizedString(@"Error: Pasteboard deosn't contain URL", @"Pasteboard didn't give url");
         return;
     }
-    NSURL *url = [NSURL URLFromPasteboard:pboard];
+
+    [mainApp showEncryptWindow:mainApp];
     
    /*
+    NSURL *url = [NSURL URLFromPasteboard:pboard];
+    
     NSFileHandle *file;
     file = [NSFileHandle fileHandleForWritingAtPath: @"/tmp/foo.foo"];
     

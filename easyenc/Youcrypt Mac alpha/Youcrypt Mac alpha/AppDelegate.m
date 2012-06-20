@@ -35,6 +35,7 @@
     // Insert code here to initialize your application
     NSLog(@"Hello!\n");
     YoucryptService *youcryptService = [[YoucryptService alloc] init];
+    [youcryptService setApp:self];
     [NSApp setServicesProvider:youcryptService];
 }
 
