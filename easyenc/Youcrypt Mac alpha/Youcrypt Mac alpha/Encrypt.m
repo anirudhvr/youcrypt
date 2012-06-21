@@ -9,6 +9,7 @@
 #import "Encrypt.h"
 #import "PreferenceController.h"
 #import "libFunctions.h"
+#import "SSKeychain.h"
 
 @implementation Encrypt
 
@@ -18,6 +19,61 @@
 	if (![super initWithWindowNibName:@"Encrypt"])
         return nil;
     return self;
+}
+
+-(void)awakeFromNib
+{
+    
+    [self setFolderIcon:self];
+    [shareCheckBox setState:0];
+}
+
+/* Expand window to show sharing functionality */
+-(IBAction)shareCheckClicked:(id)sender
+{
+    NSRect myRect;
+    NSPoint sourcePoint = [self.window frame].origin;
+    if([shareCheckBox state] == 1){
+        myRect = NSMakeRect(sourcePoint.x,sourcePoint.y,354,266);
+        [self.window setFrame:myRect display:YES animate:YES];
+    } else {
+        myRect = NSMakeRect(sourcePoint.x,sourcePoint.y,177,266);
+        [self.window setFrame:myRect display:YES animate:YES];
+    }
+}
+
+/* Change Folder Icon */
+- (IBAction)setFolderIcon:(id)sender
+{
+    NSImage* iconImage = [[NSImage alloc] initWithContentsOfFile:@"glossy.icns"];
+    BOOL didSetIcon = [[NSWorkspace sharedWorkspace] setIcon:iconImage forFile:@"/Users/hr/code" options:0];
+    if(didSetIcon)
+        NSLog(@"DONE :) ");
+    else
+        NSLog(@" :( ");
+    
+}
+
+
+/* Register password with Mac keychain */
+- (IBAction)registerWithKeychain:(id)sender
+{
+    NSString *yourPasswordString = [yourPassword stringValue];
+    NSError *error = nil;
+    
+    if([SSKeychain setPassword:yourPasswordString forService:@"Youcrypt" account:@"hra" error:&error])
+        NSLog(@"success");
+    if (error) {
+        NSLog(@"%@",[error localizedDescription]);
+    }
+    
+    NSString *pass = [SSKeychain passwordForService:@"Youcrypt" account:@"hr" error:&error];
+    NSLog(pass);
+    
+    if(error) {
+        NSLog(@"error!!");
+        NSLog(@"%@",[error localizedDescription]);
+    }
 }
 
 /**
@@ -87,6 +143,8 @@ void mvRecursive(NSString *pathFrom, NSString *pathTo) {
 	}
 }	
 
+
+
 /**
  
  apply
@@ -95,8 +153,7 @@ void mvRecursive(NSString *pathFrom, NSString *pathTo) {
  
  sender: window who sent the action
  
-**/
-
+ **/
 - (IBAction)encrypt:(id)sender
 {
 	NSArray *arguments = [[NSProcessInfo processInfo] arguments];
@@ -133,7 +190,6 @@ void mvRecursive(NSString *pathFrom, NSString *pathTo) {
 	
 	/*** ENCFS START ***/
 	
-	NSString *yourEmailString = [yourEmail stringValue];
 	NSString *yourPasswordString = [yourPassword stringValue];
 	NSString *yourFriendsEmailString = [yourFriendsEmail stringValue];	
 	NSString *combinedPasswordString, *numberOfUsers;	

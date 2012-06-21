@@ -33,6 +33,17 @@
     // Insert code here to initialize your application
 }
 
+- (BOOL)application:(NSApplication *)theApplication openFile:(NSString *)filename
+{
+    return [self processFile:filename];
+}
+
+- (BOOL)processFile:(NSString *)file
+{
+    NSLog(@"The following file has been dropped or selected: %@",file);
+    // Process file here
+    return  YES; // Return YES when file processed succesfull, else return NO.
+}
 
 -(void)awakeFromNib{
     
@@ -42,13 +53,13 @@
     [statusItem setTitle:@"YC"];
     [statusItem setHighlightMode:YES];
 
-    // toolbar
+    // attach toolbar
     toolbar = [[NSToolbar alloc] initWithIdentifier:@"tooltest"];
     [toolbar setDelegate:self];
     [toolbar setAllowsUserCustomization:YES];
     [toolbar setAutosavesConfiguration:YES]; 
     
-    [_window setToolbar:toolbar];
+    [self.window setToolbar:toolbar];
     
     NSArray *arguments = [[NSProcessInfo processInfo] arguments];
 	NSString *type = [[NSString alloc] init];
@@ -69,7 +80,7 @@
         else type = @"M";
 	}
     
-    type = @"E";
+    type = @"M";
     
     if([type isEqualToString:@"M"])
         [self showMainApp:self];
@@ -140,6 +151,14 @@
     [encryptController showWindow:self];
 }
 
+/***
+ ***
+ 
+ TOOLBAR FUNCTIONS 
+ 
+ ***
+ ***/
+
 - (NSToolbarItem *)toolbarItemWithIdentifier:(NSString *)identifier
                                        label:(NSString *)label
                                  paleteLabel:(NSString *)paletteLabel
@@ -184,6 +203,13 @@
         [addedItem setTarget:self];
     }
 }  
+
+- (IBAction)resizeWindow:(id)sender
+{
+    NSRect myRect = NSMakeRect(1000,200,300,400);
+    [self.window setFrame:myRect display:YES animate:YES];
+    
+}
 
 - (NSToolbarItem *)toolbar:(NSToolbar *)toolbar 
      itemForItemIdentifier:(NSString *)itemIdentifier 

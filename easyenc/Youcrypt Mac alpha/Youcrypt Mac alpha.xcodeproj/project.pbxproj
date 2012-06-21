@@ -23,6 +23,8 @@
 		25B1E509158FF5D400CDBC46 /* pipetest.c in Sources */ = {isa = PBXBuildFile; fileRef = 25B1E508158FF5D400CDBC46 /* pipetest.c */; };
 		25B1E52A1591398A00CDBC46 /* Cancel.png in Resources */ = {isa = PBXBuildFile; fileRef = 25B1E5291591398A00CDBC46 /* Cancel.png */; };
 		25B1E53015913A9700CDBC46 /* Settings.png in Resources */ = {isa = PBXBuildFile; fileRef = 25B1E52F15913A9600CDBC46 /* Settings.png */; };
+		25EE6A5915928D2C008A0DC8 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25EE6A5815928D2C008A0DC8 /* Security.framework */; };
+		25EE6A5D15928D5C008A0DC8 /* SSKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = 25EE6A5C15928D5C008A0DC8 /* SSKeychain.m */; };
 		25F3D14C15923FE800E3383C /* Decrypt.m in Sources */ = {isa = PBXBuildFile; fileRef = 25F3D14A15923FE800E3383C /* Decrypt.m */; };
 		25F3D14D15923FE800E3383C /* Decrypt.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25F3D14B15923FE800E3383C /* Decrypt.xib */; };
 		25F3D1511592435600E3383C /* libFunctions.m in Sources */ = {isa = PBXBuildFile; fileRef = 25F3D1501592435600E3383C /* libFunctions.m */; };
@@ -69,6 +71,9 @@
 		25B1E508158FF5D400CDBC46 /* pipetest.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = pipetest.c; path = "Youcrypt Mac alpha/pipetest.c"; sourceTree = "<group>"; };
 		25B1E5291591398A00CDBC46 /* Cancel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Cancel.png; sourceTree = "<group>"; };
 		25B1E52F15913A9600CDBC46 /* Settings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Settings.png; sourceTree = "<group>"; };
+		25EE6A5815928D2C008A0DC8 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		25EE6A5B15928D5C008A0DC8 /* SSKeychain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSKeychain.h; sourceTree = "<group>"; };
+		25EE6A5C15928D5C008A0DC8 /* SSKeychain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSKeychain.m; sourceTree = "<group>"; };
 		25F3D14915923FE800E3383C /* Decrypt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Decrypt.h; path = "Youcrypt Mac alpha/Decrypt.h"; sourceTree = "<group>"; };
 		25F3D14A15923FE800E3383C /* Decrypt.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Decrypt.m; path = "Youcrypt Mac alpha/Decrypt.m"; sourceTree = "<group>"; };
 		25F3D14B15923FE800E3383C /* Decrypt.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = Decrypt.xib; path = "Youcrypt Mac alpha/Decrypt.xib"; sourceTree = "<group>"; };
@@ -84,6 +89,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				25EE6A5915928D2C008A0DC8 /* Security.framework in Frameworks */,
 				256C3560158EA75F00E2BEC4 /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -103,6 +109,7 @@
 		256C3550158EA75F00E2BEC4 = {
 			isa = PBXGroup;
 			children = (
+				25EE6A5815928D2C008A0DC8 /* Security.framework */,
 				256C3565158EA75F00E2BEC4 /* Youcrypt Mac alpha */,
 				256C3582158EA75F00E2BEC4 /* Youcrypt Mac alphaTests */,
 				256C355E158EA75F00E2BEC4 /* Frameworks */,
@@ -153,6 +160,8 @@
 		256C3566158EA75F00E2BEC4 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				25EE6A5B15928D5C008A0DC8 /* SSKeychain.h */,
+				25EE6A5C15928D5C008A0DC8 /* SSKeychain.m */,
 				25B1E52F15913A9600CDBC46 /* Settings.png */,
 				25B1E5291591398A00CDBC46 /* Cancel.png */,
 				256C356B158EA75F00E2BEC4 /* main.m */,
@@ -345,6 +354,7 @@
 				25F3D14C15923FE800E3383C /* Decrypt.m in Sources */,
 				25F3D1511592435600E3383C /* libFunctions.m in Sources */,
 				25F3D15A159244E800E3383C /* Encrypt.m in Sources */,
+				25EE6A5D15928D5C008A0DC8 /* SSKeychain.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

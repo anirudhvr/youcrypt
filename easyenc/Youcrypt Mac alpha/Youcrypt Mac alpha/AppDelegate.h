@@ -54,6 +54,7 @@
 - (IBAction)showDecryptWindow:(id)sender;
 
 -(void)setFilesystems:(NSMutableArray*)f;
+- (IBAction)resizeWindow:(id)sender;
 
 // to implement
 - (IBAction)launchAgent:(id)sender;
