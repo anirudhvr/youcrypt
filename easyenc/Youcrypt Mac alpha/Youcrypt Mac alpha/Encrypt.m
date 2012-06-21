@@ -28,6 +28,45 @@
     [shareCheckBox setState:0];
 }
 
+- (IBAction)startIt:(id)sender {
+    [encryptProgress setHidden:NO];
+    //Create the block that we wish to run on a different thread.
+    void (^progressBlock)(void);
+    progressBlock = ^{
+        [encryptProgress setIndeterminate:NO];
+        [encryptProgress setDoubleValue:0.0];
+        [encryptProgress startAnimation:sender];
+        BOOL running = YES; // this is a instance variable
+        int processAmount = 10000;
+        int i = 0;
+        while (running) {
+            if (i++ >= processAmount) { // processAmount is something like 1000000
+                running = NO;
+                continue;
+            }
+            
+            // Update progress bar
+            double progr = (double)i / (double)processAmount;
+            progr *=100;
+            NSLog(@"progr: %f", progr); // Logs values between 0.0 and 1.0
+            
+            //NOTE: It is important to let all UI updates occur on the main thread,
+            //so we put the following UI updates on the main queue.
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [encryptProgress setDoubleValue:progr];
+                [encryptProgress setNeedsDisplay:YES];
+            });
+            
+            // Do some more hard work here...
+        }
+        
+    }; //end of progressBlock
+    
+    //Finally, run the block on a different thread.
+    dispatch_queue_t queue = dispatch_get_global_queue(0,0);
+    dispatch_async(queue,progressBlock);
+}
+
 /* Expand window to show sharing functionality */
 -(IBAction)shareCheckClicked:(id)sender
 {

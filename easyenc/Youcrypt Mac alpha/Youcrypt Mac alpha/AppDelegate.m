@@ -80,7 +80,7 @@
         else type = @"M";
 	}
     
-    type = @"M";
+    type = @"E";
     
     if([type isEqualToString:@"M"])
         [self showMainApp:self];
