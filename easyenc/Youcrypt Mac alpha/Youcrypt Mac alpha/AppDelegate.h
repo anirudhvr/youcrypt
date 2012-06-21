@@ -59,6 +59,7 @@
 - (IBAction)showDecryptWindow:(id)sender;
 
 -(void)setFilesystems:(NSMutableArray*)f;
+- (IBAction)resizeWindow:(id)sender;
 
 // Setters and getters
 @property (assign) IBOutlet NSWindow *window;

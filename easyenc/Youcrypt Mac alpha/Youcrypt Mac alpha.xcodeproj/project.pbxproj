@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		252C3A451593A2E30044EB3C /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 252C3A441593A2E30044EB3C /* Sparkle.framework */; };
+		252C3A471593A35D0044EB3C /* Sparkle.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 252C3A441593A2E30044EB3C /* Sparkle.framework */; };
+		252C3A491593A5150044EB3C /* dsa_pub.pem in Resources */ = {isa = PBXBuildFile; fileRef = 252C3A481593A5150044EB3C /* dsa_pub.pem */; };
 		256C3560158EA75F00E2BEC4 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 256C355F158EA75F00E2BEC4 /* Cocoa.framework */; };
 		256C356A158EA75F00E2BEC4 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 256C3568158EA75F00E2BEC4 /* InfoPlist.strings */; };
 		256C356C158EA75F00E2BEC4 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 256C356B158EA75F00E2BEC4 /* main.m */; };
@@ -23,6 +26,8 @@
 		25B1E509158FF5D400CDBC46 /* pipetest.c in Sources */ = {isa = PBXBuildFile; fileRef = 25B1E508158FF5D400CDBC46 /* pipetest.c */; };
 		25B1E52A1591398A00CDBC46 /* Cancel.png in Resources */ = {isa = PBXBuildFile; fileRef = 25B1E5291591398A00CDBC46 /* Cancel.png */; };
 		25B1E53015913A9700CDBC46 /* Settings.png in Resources */ = {isa = PBXBuildFile; fileRef = 25B1E52F15913A9600CDBC46 /* Settings.png */; };
+		25EE6A5915928D2C008A0DC8 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25EE6A5815928D2C008A0DC8 /* Security.framework */; };
+		25EE6A5D15928D5C008A0DC8 /* SSKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = 25EE6A5C15928D5C008A0DC8 /* SSKeychain.m */; };
 		25F3D14C15923FE800E3383C /* Decrypt.m in Sources */ = {isa = PBXBuildFile; fileRef = 25F3D14A15923FE800E3383C /* Decrypt.m */; };
 		25F3D14D15923FE800E3383C /* Decrypt.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25F3D14B15923FE800E3383C /* Decrypt.xib */; };
 		25F3D1511592435600E3383C /* libFunctions.m in Sources */ = {isa = PBXBuildFile; fileRef = 25F3D1501592435600E3383C /* libFunctions.m */; };
@@ -42,7 +47,22 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		252C3A461593A34A0044EB3C /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				252C3A471593A35D0044EB3C /* Sparkle.framework in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		252C3A441593A2E30044EB3C /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Sparkle.framework; sourceTree = "<group>"; };
+		252C3A481593A5150044EB3C /* dsa_pub.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = dsa_pub.pem; sourceTree = "<group>"; };
 		256C355B158EA75F00E2BEC4 /* Youcrypt Mac alpha.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Youcrypt Mac alpha.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		256C355F158EA75F00E2BEC4 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		256C3562158EA75F00E2BEC4 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -71,6 +91,9 @@
 		25B1E508158FF5D400CDBC46 /* pipetest.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = pipetest.c; path = "Youcrypt Mac alpha/pipetest.c"; sourceTree = "<group>"; };
 		25B1E5291591398A00CDBC46 /* Cancel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Cancel.png; sourceTree = "<group>"; };
 		25B1E52F15913A9600CDBC46 /* Settings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Settings.png; sourceTree = "<group>"; };
+		25EE6A5815928D2C008A0DC8 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		25EE6A5B15928D5C008A0DC8 /* SSKeychain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSKeychain.h; sourceTree = "<group>"; };
+		25EE6A5C15928D5C008A0DC8 /* SSKeychain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSKeychain.m; sourceTree = "<group>"; };
 		25F3D14915923FE800E3383C /* Decrypt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Decrypt.h; path = "Youcrypt Mac alpha/Decrypt.h"; sourceTree = "<group>"; };
 		25F3D14A15923FE800E3383C /* Decrypt.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Decrypt.m; path = "Youcrypt Mac alpha/Decrypt.m"; sourceTree = "<group>"; };
 		25F3D14B15923FE800E3383C /* Decrypt.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = Decrypt.xib; path = "Youcrypt Mac alpha/Decrypt.xib"; sourceTree = "<group>"; };
@@ -90,7 +113,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				25EE6A5915928D2C008A0DC8 /* Security.framework in Frameworks */,
 				256C3560158EA75F00E2BEC4 /* Cocoa.framework in Frameworks */,
+				252C3A451593A2E30044EB3C /* Sparkle.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -128,6 +153,8 @@
 		256C355E158EA75F00E2BEC4 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				252C3A441593A2E30044EB3C /* Sparkle.framework */,
+				25EE6A5815928D2C008A0DC8 /* Security.framework */,
 				256C355F158EA75F00E2BEC4 /* Cocoa.framework */,
 				256C357D158EA75F00E2BEC4 /* SenTestingKit.framework */,
 				256C3561158EA75F00E2BEC4 /* Other Frameworks */,
@@ -159,6 +186,9 @@
 		256C3566158EA75F00E2BEC4 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				252C3A481593A5150044EB3C /* dsa_pub.pem */,
+				25EE6A5B15928D5C008A0DC8 /* SSKeychain.h */,
+				25EE6A5C15928D5C008A0DC8 /* SSKeychain.m */,
 				25B1E52F15913A9600CDBC46 /* Settings.png */,
 				25B1E5291591398A00CDBC46 /* Cancel.png */,
 				256C356B158EA75F00E2BEC4 /* main.m */,
@@ -245,6 +275,7 @@
 				256C3557158EA75F00E2BEC4 /* Sources */,
 				256C3558158EA75F00E2BEC4 /* Frameworks */,
 				256C3559158EA75F00E2BEC4 /* Resources */,
+				252C3A461593A34A0044EB3C /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -313,6 +344,7 @@
 				25B1E53015913A9700CDBC46 /* Settings.png in Resources */,
 				25F3D14D15923FE800E3383C /* Decrypt.xib in Resources */,
 				25F3D15B159244E800E3383C /* Encrypt.xib in Resources */,
+				252C3A491593A5150044EB3C /* dsa_pub.pem in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -357,6 +389,7 @@
 				25F3D15A159244E800E3383C /* Encrypt.m in Sources */,
 				E6E2A0BA15926C8C003E3F6C /* YoucryptService.m in Sources */,
 				E6E2A0C91592BB8C003E3F6C /* YoucryptConfigDirectory.m in Sources */,
+				25EE6A5D15928D5C008A0DC8 /* SSKeychain.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -466,6 +499,10 @@
 		256C358E158EA75F00E2BEC4 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)\"",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Youcrypt Mac alpha/Youcrypt Mac alpha-Prefix.pch";
 				INFOPLIST_FILE = "Youcrypt Mac alpha/Youcrypt Mac alpha-Info.plist";
@@ -477,6 +514,10 @@
 		256C358F158EA75F00E2BEC4 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)\"",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Youcrypt Mac alpha/Youcrypt Mac alpha-Prefix.pch";
 				INFOPLIST_FILE = "Youcrypt Mac alpha/Youcrypt Mac alpha-Info.plist";

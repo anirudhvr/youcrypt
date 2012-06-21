@@ -2,7 +2,6 @@
 #import <Cocoa/Cocoa.h>
 
 @interface Encrypt :NSWindowController{
-	IBOutlet NSTextField *yourEmail;
 	IBOutlet NSTextField *yourPassword;
 	IBOutlet NSTextField *yourFriendsEmail;
 
@@ -10,6 +9,10 @@
     BOOL lastEncryptionStatus;
 	NSString *sourceFolderPath;
     NSString *destFolderPath;
+
+    IBOutlet NSButton *shareCheckBox;
+	NSString *filePath;
+    IBOutlet NSProgressIndicator *encryptProgress;
 }
 
 @property (atomic, strong) NSString *sourceFolderPath;
@@ -26,5 +29,7 @@
 
 
 
+-(IBAction)shareCheckClicked:(id)sender;
+-(IBAction)startIt:(id)sender;
 
 @end

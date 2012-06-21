@@ -202,8 +202,8 @@ EXEEXT =
 FGREP = /usr/bin/grep -F
 FUSE_LIBS = -lfuse_ino64
 GETTEXT_MACRO_VERSION = 0.17
-GMSGFMT = :
-GMSGFMT_015 = :
+GMSGFMT = /opt/local/bin/msgfmt
+GMSGFMT_015 = /opt/local/bin/msgfmt
 GREP = /usr/bin/grep
 HAVE_EVP_AES = 
 HAVE_EVP_BF = 
@@ -230,9 +230,9 @@ LTLIBINTL =
 LTLIBOBJS = 
 MAKEINFO = ${SHELL} /Users/hr/code/easyenc/easyenc/encfs-1.7.4/missing --run makeinfo
 MKDIR_P = .././install-sh -c -d
-MSGFMT = :
-MSGFMT_015 = :
-MSGMERGE = :
+MSGFMT = /opt/local/bin/msgfmt
+MSGFMT_015 = /opt/local/bin/msgfmt
+MSGMERGE = /opt/local/bin/msgmerge
 NM = /usr/bin/nm
 NMEDIT = nmedit
 OBJDUMP = false
@@ -252,8 +252,8 @@ PATH_SEPARATOR = :
 PKG_CONFIG = /usr/local/bin/pkg-config
 PKG_CONFIG_LIBDIR = 
 PKG_CONFIG_PATH = 
-POD2HTML = /usr/bin/pod2html
-POD2MAN = /usr/bin/pod2man
+POD2HTML = /opt/local/bin/pod2html
+POD2MAN = /opt/local/bin/pod2man
 POSUB = 
 PTHREAD_CC = gcc
 PTHREAD_CFLAGS = -D_THREAD_SAFE 
@@ -267,8 +267,8 @@ SHELL = /bin/sh
 STRIP = strip
 USE_NLS = no
 VERSION = 1.7.4
-XGETTEXT = :
-XGETTEXT_015 = :
+XGETTEXT = /opt/local/bin/xgettext
+XGETTEXT_015 = /opt/local/bin/xgettext
 XGETTEXT_EXTRA_OPTIONS = 
 abs_builddir = /Users/hr/code/easyenc/easyenc/encfs-1.7.4/encfs
 abs_srcdir = /Users/hr/code/easyenc/easyenc/encfs-1.7.4/encfs
@@ -934,10 +934,10 @@ uninstall-man: uninstall-man1
 all-local: encfs-man.html
 # since we have POD2MAN, we can specify how to rebuild encfs.1 if necessary
 .pod.1:
-	/usr/bin/pod2man --section=1 --release=1.7.4 --center="Encrypted Filesystem" $< $@
+	/opt/local/bin/pod2man --section=1 --release=1.7.4 --center="Encrypted Filesystem" $< $@
 
 encfs-man.html: encfs.pod
-	/usr/bin/pod2html encfs.pod > $@
+	/opt/local/bin/pod2html encfs.pod > $@
 
 tests:
 	perl -MTest::Harness -e '$$Test::Harness::verbose=0; runtests @ARGV;' *.t

@@ -30,8 +30,8 @@ Kernel configured for up to 4 processors.
 Processor type: i486 (Intel 80486)
 Processors active: 0 1 2 3
 Primary memory available: 4.00 gigabytes
-Default processor set: 104 tasks, 558 threads, 4 processors
-Load average: 0.89, Mach factor: 3.10
+Default processor set: 102 tasks, 544 threads, 4 processors
+Load average: 1.34, Mach factor: 2.65
 /bin/machine           = unknown
 /usr/bin/oslevel       = unknown
 /bin/universe          = unknown
@@ -131,13 +131,18 @@ configure:3807: result: gcc3
 configure:3827: checking whether NLS is requested
 configure:3836: result: no
 configure:3877: checking for msgfmt
-configure:3912: result: no
+configure: trying /opt/local/bin/msgfmt...
+0 translated messages.
+configure:3909: result: /opt/local/bin/msgfmt
 configure:3918: checking for gmsgfmt
-configure:3949: result: :
+configure:3949: result: /opt/local/bin/msgfmt
 configure:4000: checking for xgettext
-configure:4035: result: no
+configure: trying /opt/local/bin/xgettext...
+/opt/local/bin/xgettext: warning: file `/dev/null' extension `' is unknown; will try C
+configure:4032: result: /opt/local/bin/xgettext
 configure:4078: checking for msgmerge
-configure:4112: result: no
+configure: trying /opt/local/bin/msgmerge...
+configure:4109: result: /opt/local/bin/msgmerge
 configure:4190: checking for gcc
 configure:4206: found /usr/bin/gcc
 configure:4217: result: gcc
@@ -771,11 +776,11 @@ configure:18238: g++ -o conftest -W -Wall -Wpointer-arith -Wwrite-strings -g -O2
 configure:18238: $? = 0
 configure:18247: result: yes
 configure:18260: checking for pod2man
-configure:18278: found /usr/bin/pod2man
-configure:18291: result: /usr/bin/pod2man
+configure:18278: found /opt/local/bin/pod2man
+configure:18291: result: /opt/local/bin/pod2man
 configure:18301: checking for pod2html
-configure:18319: found /usr/bin/pod2html
-configure:18332: result: /usr/bin/pod2html
+configure:18319: found /opt/local/bin/pod2html
+configure:18332: result: /opt/local/bin/pod2html
 configure:18531: creating ./config.status
 
 ## ---------------------- ##
@@ -801,6 +806,7 @@ config.status:1224: creating m4/Makefile
 config.status:1224: creating po/Makefile.in
 config.status:1224: creating po/Makefile
 config.status:1224: creating config.h
+config.status:1405: config.h is unchanged
 config.status:1453: executing depfiles commands
 config.status:1453: executing po-directories commands
 config.status:1453: executing libtool commands
@@ -881,14 +887,14 @@ ac_cv_lib_rlog_RLogVersion=yes
 ac_cv_objext=o
 ac_cv_path_EGREP='/usr/bin/grep -E'
 ac_cv_path_FGREP='/usr/bin/grep -F'
-ac_cv_path_GMSGFMT=:
+ac_cv_path_GMSGFMT=/opt/local/bin/msgfmt
 ac_cv_path_GREP=/usr/bin/grep
-ac_cv_path_MSGFMT=:
-ac_cv_path_MSGMERGE=:
-ac_cv_path_POD2HTML=/usr/bin/pod2html
-ac_cv_path_POD2MAN=/usr/bin/pod2man
+ac_cv_path_MSGFMT=/opt/local/bin/msgfmt
+ac_cv_path_MSGMERGE=/opt/local/bin/msgmerge
+ac_cv_path_POD2HTML=/opt/local/bin/pod2html
+ac_cv_path_POD2MAN=/opt/local/bin/pod2man
 ac_cv_path_SED=/usr/bin/sed
-ac_cv_path_XGETTEXT=:
+ac_cv_path_XGETTEXT=/opt/local/bin/xgettext
 ac_cv_path_ac_pt_PKG_CONFIG=/usr/local/bin/pkg-config
 ac_cv_path_install='/usr/bin/install -c'
 ac_cv_prog_AWK=awk
@@ -1012,8 +1018,8 @@ EXEEXT=''
 FGREP='/usr/bin/grep -F'
 FUSE_LIBS='-lfuse_ino64'
 GETTEXT_MACRO_VERSION='0.17'
-GMSGFMT=':'
-GMSGFMT_015=':'
+GMSGFMT='/opt/local/bin/msgfmt'
+GMSGFMT_015='/opt/local/bin/msgfmt'
 GREP='/usr/bin/grep'
 HAVE_EVP_AES=''
 HAVE_EVP_BF=''
@@ -1039,9 +1045,9 @@ LTLIBINTL=''
 LTLIBOBJS=''
 MAKEINFO='${SHELL} /Users/hr/code/easyenc/easyenc/encfs-1.7.4/missing --run makeinfo'
 MKDIR_P='./install-sh -c -d'
-MSGFMT=':'
-MSGFMT_015=':'
-MSGMERGE=':'
+MSGFMT='/opt/local/bin/msgfmt'
+MSGFMT_015='/opt/local/bin/msgfmt'
+MSGMERGE='/opt/local/bin/msgmerge'
 NM='/usr/bin/nm'
 NMEDIT='nmedit'
 OBJDUMP='false'
@@ -1061,8 +1067,8 @@ PATH_SEPARATOR=':'
 PKG_CONFIG='/usr/local/bin/pkg-config'
 PKG_CONFIG_LIBDIR=''
 PKG_CONFIG_PATH=''
-POD2HTML='/usr/bin/pod2html'
-POD2MAN='/usr/bin/pod2man'
+POD2HTML='/opt/local/bin/pod2html'
+POD2MAN='/opt/local/bin/pod2man'
 POSUB=''
 PTHREAD_CC='gcc'
 PTHREAD_CFLAGS='-D_THREAD_SAFE '
@@ -1076,8 +1082,8 @@ SHELL='/bin/sh'
 STRIP='strip'
 USE_NLS='no'
 VERSION='1.7.4'
-XGETTEXT=':'
-XGETTEXT_015=':'
+XGETTEXT='/opt/local/bin/xgettext'
+XGETTEXT_015='/opt/local/bin/xgettext'
 XGETTEXT_EXTRA_OPTIONS=''
 ac_ct_CC='gcc'
 ac_ct_CXX='g++'

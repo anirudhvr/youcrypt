@@ -13,8 +13,8 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "24"
          endingLineNumber = "24"
-         landmarkName = "@implementation AppDelegate"
-         landmarkType = "3">
+         landmarkName = "decryptController"
+         landmarkType = "19">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "No"
@@ -26,7 +26,7 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "23"
          endingLineNumber = "23"
-         landmarkName = "decryptController"
+         landmarkName = "encryptController"
          landmarkType = "19">
       </FileBreakpoint>
    </FileBreakpoints>
