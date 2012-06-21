@@ -5,11 +5,26 @@
 	IBOutlet NSTextField *yourEmail;
 	IBOutlet NSTextField *yourPassword;
 	IBOutlet NSTextField *yourFriendsEmail;
-	NSString *type;
-	NSString *filePath;
+
+    BOOL encryptionInProcess;
+    BOOL lastEncryptionStatus;
+	NSString *sourceFolderPath;
+    NSString *destFolderPath;
 }
+
+@property (atomic, assign) NSString *sourceFolderPath;
+@property (atomic, assign) NSString *destFolderPath;
+@property (atomic, assign) BOOL lastEncryptionStatus;
+@property (atomic, assign) BOOL encryptionInProcess;
+
 
 -(IBAction)encrypt:(id)sender;
 -(void)createDirectoryRecursivelyAtPath:(NSString*)path;
+-(NSString*)createDestFolder:(NSString*)basepath sourcepath:(NSString*)srcpath;
+
+
+
+
+
 
 @end

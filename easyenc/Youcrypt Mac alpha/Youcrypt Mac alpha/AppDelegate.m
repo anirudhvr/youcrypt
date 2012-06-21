@@ -19,6 +19,8 @@
 @implementation AppDelegate
 
 @synthesize window = _window;
+@synthesize encryptController;
+@synthesize decryptController;
 
 - (id) init
 {
@@ -29,11 +31,16 @@
     return self;
 }
 
++ (NSString *) getVolumeDirPath
+{
+
+
+}
+
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
     // Insert code here to initialize your application
     // Insert code here to initialize your application
-    NSLog(@"Hello!\n");
     YoucryptService *youcryptService = [[YoucryptService alloc] init];
     [youcryptService setApp:self];
     [NSApp setServicesProvider:youcryptService];

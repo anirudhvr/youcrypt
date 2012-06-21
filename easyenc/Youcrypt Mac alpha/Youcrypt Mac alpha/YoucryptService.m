@@ -20,7 +20,6 @@
               userData:(NSString *)data
                  error:(NSString **)error
 {
-
     return;
 }
 
@@ -39,29 +38,18 @@
         return;
     }
 
-    [mainApp showEncryptWindow:mainApp];
-    
-   /*
     NSURL *url = [NSURL URLFromPasteboard:pboard];
-    
-    NSFileHandle *file;
-    file = [NSFileHandle fileHandleForWritingAtPath: @"/tmp/foo.foo"];
-    
-    if (file == nil)
-        NSLog(@"Failed to open file %@", pboardString);
-    
-    
-    [file seekToEndOfFile];
-    NSData *dataToWrite = [[url path] dataUsingEncoding:NSUTF8StringEncoding];
-    [file writeData:dataToWrite];
-    
-    
-    [file closeFile];
-    */
+    NSString *path = [url path];
+    NSString *
+
+    Encrypt *ec = mainApp.encryptController;
+    [ec setSourceFolderPath: path];
+
+
+    [mainApp showEncryptWindow:mainApp];
     
     return;
 }
-
 
 
 /* This is an example of a service which doesn't return a value...

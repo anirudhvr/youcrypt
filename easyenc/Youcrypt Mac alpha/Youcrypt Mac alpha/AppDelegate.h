@@ -7,6 +7,7 @@
 //
 
 #import <Cocoa/Cocoa.h>
+
 @class PreferenceController;
 @class FileSystemsController;
 @class Decrypt;
@@ -32,12 +33,9 @@
     FileSystemsController *fc;
 
     // Toolbar
-
     IBOutlet NSToolbar *toolbar;
 
 }
-
-@property (assign) IBOutlet NSWindow *window;
 
 // Built in methods
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification;
@@ -55,7 +53,18 @@
 
 -(void)setFilesystems:(NSMutableArray*)f;
 
+// Setters and getters
+@property (assign) IBOutlet NSWindow *window;
+@property (strong, assign) Encrypt *encryptController;
+@property (assign) Decrypt *decryptController;
+
+// To find the dir to store youcrypt volumes and 
+// have tmp dirs to move shit around
++ (NSString *)getVolumeDirPath;
+
+
 // to implement
 - (IBAction)launchAgent:(id)sender;
+
 
 @end

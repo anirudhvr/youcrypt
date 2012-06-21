@@ -12,6 +12,12 @@
 
 @implementation Encrypt
 
+
+@synthesize sourceFolderPath;
+@synthesize destFolderPath;
+@synthesize lastEncryptionStatus;
+@synthesize encryptionInProcess;
+
 -(id)init
 {
 	self = [super init];
@@ -19,6 +25,8 @@
         return nil;
     return self;
 }
+
+
 
 /**
  
