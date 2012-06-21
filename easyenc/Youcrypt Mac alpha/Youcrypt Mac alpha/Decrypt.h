@@ -11,8 +11,13 @@
 @interface Decrypt : NSWindowController {
 	IBOutlet NSTextField *yourPassword;
 	IBOutlet NSTextField *errorMessage;
+    NSString *sourceFolderPath;
+    NSString *destFolderPath;
 }
 
 - (IBAction)decrypt:(id)sender;
+
+@property (atomic, strong) NSString *sourceFolderPath;
+@property (atomic, strong) NSString *destFolderPath;
 
 @end

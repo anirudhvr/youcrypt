@@ -69,5 +69,24 @@
 			<dict/>
 		</dict>
 	</array>
+	<key>CFBundleDocumentTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
+				<string>yc</string>
+			</array>
+			<key>CFBundleTypeIconFile</key>
+			<string>folder.icns</string>
+			<key>CFBundleTypeName</key>
+			<string>Youcrypt</string>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>LSHandlerRank</key>
+			<string>Owner</string>
+			<key>LSTypeIsPackage</key>
+			<true/>
+		</dict>
+	</array>
 </dict>
 </plist>

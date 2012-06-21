@@ -12,6 +12,8 @@
 @class FileSystemsController;
 @class Decrypt;
 @class Encrypt;
+@class YoucryptConfigDirectory;
+@class YoucryptService;
 
 @interface AppDelegate : NSObject <NSToolbarDelegate> { // changed from NSApplicationDelegate
     
@@ -24,7 +26,7 @@
     
     //Encrypt and Decrypt
     Decrypt *decryptController;
-    Encrypt *encryptController;
+    Encrypt  *encryptController;
     
     // Array of FileSystems
     NSMutableArray *filesystems;
@@ -34,6 +36,11 @@
 
     // Toolbar
     IBOutlet NSToolbar *toolbar;
+
+    // Config directory
+    YoucryptConfigDirectory *configDir;
+    
+    YoucryptService *youcryptService;
 
 }
 
@@ -55,8 +62,9 @@
 
 // Setters and getters
 @property (assign) IBOutlet NSWindow *window;
-@property (strong, assign) Encrypt *encryptController;
-@property (assign) Decrypt *decryptController;
+@property (atomic,strong) Encrypt *encryptController;
+@property (atomic,strong) Decrypt *decryptController;
+@property (atomic,strong) YoucryptConfigDirectory *configDir;
 
 // To find the dir to store youcrypt volumes and 
 // have tmp dirs to move shit around

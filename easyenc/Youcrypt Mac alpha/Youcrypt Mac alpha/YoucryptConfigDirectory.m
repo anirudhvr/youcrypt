@@ -7,7 +7,27 @@
 //
 
 #import "YoucryptConfigDirectory.h"
+#import "libFunctions.h"
 
 @implementation YoucryptConfigDirectory
+
+@synthesize youCryptVolDir;
+@synthesize youCryptTmpDir;
+
+-(id)init
+{
+	self = [super init];
+    
+    NSString *homedir = NSHomeDirectory();
+    
+    youCryptVolDir = [homedir stringByAppendingPathComponent:@"/.youcrypt/tmp"];
+    youCryptTmpDir = [homedir stringByAppendingPathComponent:@"/.youcrypt/volumes"];
+    
+    mkdirRecursive(youCryptVolDir);
+    mkdirRecursive(youCryptTmpDir);
+    
+    
+    return self;
+}
 
 @end

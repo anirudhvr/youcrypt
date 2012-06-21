@@ -12,8 +12,8 @@
     NSString *destFolderPath;
 }
 
-@property (atomic, assign) NSString *sourceFolderPath;
-@property (atomic, assign) NSString *destFolderPath;
+@property (atomic, strong) NSString *sourceFolderPath;
+@property (atomic, strong) NSString *destFolderPath;
 @property (atomic, assign) BOOL lastEncryptionStatus;
 @property (atomic, assign) BOOL encryptionInProcess;
 

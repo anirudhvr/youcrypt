@@ -8,6 +8,26 @@
 
 #import <Foundation/Foundation.h>
 
-@interface YoucryptConfigDirectory : NSObject
+#define YoucryptFolderName @".youcrypt"
+
+@interface YoucryptConfigDirectory : NSObject {
+
+    NSString *youCryptVolDir;
+    NSString *youCryptTmpDir;
+    NSString *youcryptLockfile;
+    BOOL needsCreation;
+    
+}
+
+@property (atomic,strong) NSString* youCryptVolDir;
+@property (atomic,strong) NSString* youCryptTmpDir;
+
+/*
+- (NSString*) getHomeDir;
+- (BOOL) isYoucryptRunning;
+- (BOOL) isYoucryptDirCreated;
+- (void) createLockFile;
+- (void) createHomeDir:(NSString*)path;
+*/
 
 @end

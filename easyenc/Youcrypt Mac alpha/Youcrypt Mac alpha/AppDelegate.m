@@ -12,6 +12,7 @@
 #import "Decrypt.h"
 #import "Encrypt.h"
 #import "YoucryptService.h"
+#import "YoucryptConfigDirectory.h"
 
 #define prefsToolbar @"Prefs"
 #define quitToolbar @"Quit"
@@ -21,6 +22,7 @@
 @synthesize window = _window;
 @synthesize encryptController;
 @synthesize decryptController;
+@synthesize configDir;
 
 - (id) init
 {
@@ -28,12 +30,16 @@
     if(self){
         filesystems = [[NSMutableArray alloc] init];
     }
+    
+    configDir = [[YoucryptConfigDirectory alloc] init];
+    youcryptService = [[YoucryptService alloc] init];
+    [youcryptService setApp:self];
+    
     return self;
 }
 
 + (NSString *) getVolumeDirPath
 {
-
 
 }
 
@@ -41,9 +47,29 @@
 {
     // Insert code here to initialize your application
     // Insert code here to initialize your application
-    YoucryptService *youcryptService = [[YoucryptService alloc] init];
-    [youcryptService setApp:self];
+   
     [NSApp setServicesProvider:youcryptService];
+    
+    NSLog(@"This happened!");
+}
+
+
+- (BOOL)application:(NSApplication *)theApplication openFile:(NSString *)filename
+{
+    return [self processFile:filename];
+}
+
+- (BOOL)processFile:(NSString *)file
+{
+    NSLog(@"The following file has been dropped or selected: %@",file);
+    
+    [self showDecryptWindow:self];
+  
+    decryptController.sourceFolderPath = file;
+    NSString *dest = [configDir.youCryptVolDir stringByAppendingPathComponent:file];
+    decryptController.destFolderPath = dest;
+    
+    return  YES; // Return YES when file processed succesfull, else return NO.
 }
 
 
@@ -82,7 +108,7 @@
         else type = @"M";
 	}
     
-    type = @"M";
+    type = @"X";
     
     if([type isEqualToString:@"M"])
         [self showMainApp:self];
@@ -93,7 +119,7 @@
     else if([type isEqualToString:@"D"])
         [self showDecryptWindow:self];
     
-    else
+    else if ([type isEqualToString:@"P"])
         [self showPreferencePanel:self];
     
 }

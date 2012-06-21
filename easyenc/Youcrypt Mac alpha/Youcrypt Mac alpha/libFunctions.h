@@ -14,5 +14,10 @@
 }
 
 extern NSString* systemCall(NSString *binary, NSArray *arguments);
+void mkdirRecursive(NSString *path);
+void mkdirRecursive2(NSString *path);
+void mkdir(NSString *path);
+void mvRecursive(NSString *pathFrom, NSString *pathTo);
+
 
 @end

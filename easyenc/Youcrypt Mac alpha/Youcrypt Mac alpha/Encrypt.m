@@ -38,63 +38,6 @@
  
 **/
 
-void mkdirRecursive(NSString *path)
-{
-	NSFileManager *fileManager = [NSFileManager defaultManager];
-	BOOL isDir;
-	NSString *directoryAbove = [path stringByDeletingLastPathComponent];
-	NSLog(@"Checking %@",directoryAbove);
-	if(![directoryAbove isEqualToString:@""]) {
-		if (![fileManager fileExistsAtPath:directoryAbove isDirectory:&isDir])
-		{
-			NSLog(@"Going to create %@",directoryAbove);
-			mkdirRecursive(directoryAbove);
-		}
-	} 
-	else {
-		NSLog(@"FATAL !!!");
-	}
-	
-	[fileManager createDirectoryAtPath:path attributes:nil];
-}
-
-void mkdir(NSString *path)
-{
-	NSFileManager *fileManager = [NSFileManager defaultManager];
-	[fileManager createDirectoryAtPath:path attributes:nil];
-}
-
-/**
- 
- mvRecursive
- 
- Recursively move contents of one directory to another
- 
- pathFrom - directory whose contents we're moving
- pathTo - directory to where we're moving the contents
- 
-**/
-
-void mvRecursive(NSString *pathFrom, NSString *pathTo) {
-	NSFileManager *manager = [NSFileManager defaultManager];
-	NSArray *files = [manager contentsOfDirectoryAtPath:pathFrom error:nil];
-	
-	for (NSString *file in files) {
-		NSString *fileFrom = [pathFrom stringByAppendingPathComponent:file];
-		NSString *fileTo = [pathTo stringByAppendingPathComponent:file];
-		
-		NSError  *error  = nil;
-		
-		NSLog(@"about to copy %@",fileFrom);
-		
-		[manager copyItemAtPath:fileFrom toPath:fileTo error:&error];
-		[manager removeItemAtPath:fileFrom error:&error];
-		if (error) {
-			NSLog(@"%@",[error localizedDescription]);
-		}
-	}
-}	
-
 /**
  
  apply
@@ -107,10 +50,12 @@ void mvRecursive(NSString *pathFrom, NSString *pathTo) {
 
 - (IBAction)encrypt:(id)sender
 {
-	NSArray *arguments = [[NSProcessInfo processInfo] arguments];
+//	NSArray *arguments = [[NSProcessInfo processInfo] arguments];
 	
-	NSMutableString *srcFolder = [arguments objectAtIndex:2];
-	NSMutableString *destFolder = [arguments objectAtIndex:3];
+//	NSMutableString *srcFolder = [arguments objectAtIndex:2];
+    	NSMutableString *srcFolder = sourceFolderPath;
+//	NSMutableString *destFolder = [arguments objectAtIndex:3];
+    	NSMutableString *destFolder = destFolderPath;
 	
 	/*** 
 	 PREPARATIONS
@@ -120,9 +65,10 @@ void mvRecursive(NSString *pathFrom, NSString *pathTo) {
 	 D rm -rf src/*
 	 ***/
 	
-	NSString *tempFolder = [NSString stringWithFormat:@"\"/tmp/easyenc%@\"",srcFolder];
+	NSString *tempFolder = [@"/tmp/easyenc/" stringByAppendingPathComponent:srcFolder];
 	
 	NSLog(@"Create destination %@ if it doesn't already exist",destFolder);
+    NSLog(@"mkdir tempfolder [%@]",tempFolder);
 	
 	/* A */
 	mkdirRecursive(destFolder);
@@ -130,12 +76,13 @@ void mvRecursive(NSString *pathFrom, NSString *pathTo) {
 	/* B */
 	mkdirRecursive(tempFolder);
 	
-	NSLog(@"mkdir %@",tempFolder);
 	
 	/* C+D */
 	mvRecursive(srcFolder, tempFolder);
-	
-	
+    
+    srcFolder = [srcFolder stringByAppendingPathComponent:@"/encrypted.yc"];
+    mkdirRecursive(srcFolder);
+    
 	/**** <!-- END PREP --> ***/
 	
 	

@@ -7,8 +7,12 @@
 //
 
 #import "YoucryptService.h"
+#import "Encrypt.h"
+#import "Decrypt.h"
+#import "YoucryptConfigDirectory.h"
 
 @implementation YoucryptService
+
 
 - (void)setApp:(AppDelegate*)x;
 {
@@ -20,7 +24,36 @@
               userData:(NSString *)data
                  error:(NSString **)error
 {
+    NSString *pboardString;
+    NSArray *types;
+    
+    types = [pboard types];
+    
+    if (![types containsObject:NSURLPboardType]) {
+        *error = NSLocalizedString(@"Error: Pasteboard deosn't contain URL", @"Pasteboard didn't give url");
+        return;
+    }
+    
+    NSURL *url = [NSURL URLFromPasteboard:pboard];
+    NSString *path = [url path];
+    
+    
+    [mainApp showDecryptWindow:mainApp];
+    
+    
+    Decrypt *dc = mainApp.decryptController;
+    dc.sourceFolderPath = path;
+    
+    
+    NSString *dest = [mainApp.configDir.youCryptVolDir stringByAppendingPathComponent:path];
+    
+    [dc setDestFolderPath:dest];
+    
+    NSLog(@"openDecryptWindow Path: [%@, %@]\n", path, dest); 
+
+    
     return;
+    
 }
 
 
@@ -40,14 +73,22 @@
 
     NSURL *url = [NSURL URLFromPasteboard:pboard];
     NSString *path = [url path];
-    NSString *
-
-    Encrypt *ec = mainApp.encryptController;
-    [ec setSourceFolderPath: path];
-
+    
 
     [mainApp showEncryptWindow:mainApp];
     
+    
+    Encrypt *ec = mainApp.encryptController;
+    ec.sourceFolderPath = path;
+    
+    
+    NSString *dest = [mainApp.configDir.youCryptVolDir stringByAppendingPathComponent:path];
+    
+    [ec setDestFolderPath:dest];
+    
+    NSLog(@"openEncryptWindow Path: [%@, %@]\n", path, dest); 
+    
+   
     return;
 }
 

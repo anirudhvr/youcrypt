@@ -11,6 +11,9 @@
 
 @implementation Decrypt
 
+@synthesize sourceFolderPath;
+@synthesize destFolderPath;
+
 -(id)init
 {
 	self = [super init];
@@ -32,12 +35,12 @@
 
 - (IBAction)decrypt:(id)sender
 {	
-	NSArray *arguments = [[NSProcessInfo processInfo] arguments];
-	
-	NSString *srcFolder = [arguments objectAtIndex:2];
-	NSString *destFolder = [arguments objectAtIndex:3];
+	NSString *srcFolder = sourceFolderPath;
+	NSString *destFolder = destFolderPath;
 	
 	NSString *yourPasswordString = [yourPassword stringValue];
+    
+    mkdirRecursive(destFolder);
 		
     systemCall(@"/usr/local/bin/encfs", [NSArray arrayWithObjects:
                                          srcFolder,
