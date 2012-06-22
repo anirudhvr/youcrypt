@@ -85,6 +85,7 @@ struct EncFS_Opts
     bool no_interactive_configuration; 
     int num_users;
     std::vector<std::string> passphrases;
+    int mangleFilename;
 
     EncFS_Opts()
     {

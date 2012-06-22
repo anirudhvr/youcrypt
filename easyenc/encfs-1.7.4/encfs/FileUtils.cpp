@@ -1092,7 +1092,10 @@ RootPtr createV6Config( EncFS_Context *ctx,
         keySize = 256;
         blockSize = DefaultBlockSize;
         alg = findCipherAlgorithm("AES", keySize);
-        nameIOIface = BlockNameIO::CurrentInterface();
+	if (opts->mangleFilename)
+	  nameIOIface = BlockNameIO::CurrentInterface();
+	else
+	  nameIOIface = NullNameIO::CurrentInterface();
         blockMACBytes = 8;
         blockMACRandBytes = 0; // using uniqueIV, so this isn't necessary
         uniqueIV = true;
@@ -1111,7 +1114,10 @@ RootPtr createV6Config( EncFS_Context *ctx,
         alg = findCipherAlgorithm("AES", keySize);
         blockMACBytes = 0;
         externalIV = false;
-        nameIOIface = BlockNameIO::CurrentInterface();
+	if (opts->mangleFilename)
+	  nameIOIface = BlockNameIO::CurrentInterface();
+	else
+	  nameIOIface = NullNameIO::CurrentInterface();
 
         if (reverseEncryption)
         {

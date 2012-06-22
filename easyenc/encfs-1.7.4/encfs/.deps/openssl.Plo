@@ -1,0 +1,232 @@
+openssl.lo .libs/openssl.o: openssl.cpp openssl.h /usr/include/pthread.h \
+  /usr/include/_types.h /usr/include/sys/_types.h \
+  /usr/include/sys/cdefs.h /usr/include/sys/_symbol_aliasing.h \
+  /usr/include/sys/_posix_availability.h /usr/include/machine/_types.h \
+  /usr/include/i386/_types.h /usr/include/pthread_impl.h \
+  /usr/include/sched.h /usr/include/time.h /usr/include/_structs.h \
+  /usr/include/sys/_structs.h /usr/include/Availability.h \
+  /usr/include/AvailabilityInternal.h /opt/local/include/rlog/rlog.h \
+  /opt/local/include/rlog/common.h /opt/local/include/rlog/rlog-c99.h \
+  /opt/local/include/openssl/ssl.h /opt/local/include/openssl/e_os2.h \
+  /opt/local/include/openssl/opensslconf.h \
+  /opt/local/include/openssl/comp.h /opt/local/include/openssl/crypto.h \
+  /usr/include/stdlib.h /usr/include/sys/wait.h /usr/include/sys/signal.h \
+  /usr/include/sys/appleapiopts.h /usr/include/machine/signal.h \
+  /usr/include/i386/signal.h /usr/include/i386/_structs.h \
+  /usr/include/machine/_structs.h /usr/include/mach/i386/_structs.h \
+  /usr/include/sys/resource.h /usr/include/machine/endian.h \
+  /usr/include/i386/endian.h /usr/include/sys/_endian.h \
+  /usr/include/libkern/_OSByteOrder.h \
+  /usr/include/libkern/i386/_OSByteOrder.h /usr/include/alloca.h \
+  /usr/include/machine/types.h /usr/include/i386/types.h \
+  /usr/include/i386/_types.h /usr/include/stdio.h \
+  /opt/local/include/openssl/stack.h \
+  /opt/local/include/openssl/safestack.h \
+  /opt/local/include/openssl/opensslv.h \
+  /opt/local/include/openssl/ossl_typ.h \
+  /opt/local/include/openssl/symhacks.h /opt/local/include/openssl/bio.h \
+  /usr/llvm-gcc-4.2/bin/../lib/gcc/i686-apple-darwin11/4.2.1/include/stdarg.h \
+  /opt/local/include/openssl/x509.h /opt/local/include/openssl/buffer.h \
+  /usr/llvm-gcc-4.2/bin/../lib/gcc/i686-apple-darwin11/4.2.1/include/stddef.h \
+  /usr/include/sys/types.h /opt/local/include/openssl/evp.h \
+  /opt/local/include/openssl/objects.h \
+  /opt/local/include/openssl/obj_mac.h /opt/local/include/openssl/asn1.h \
+  /opt/local/include/openssl/bn.h /opt/local/include/openssl/ec.h \
+  /opt/local/include/openssl/ecdsa.h /opt/local/include/openssl/ecdh.h \
+  /opt/local/include/openssl/rsa.h /opt/local/include/openssl/dsa.h \
+  /opt/local/include/openssl/dh.h /opt/local/include/openssl/sha.h \
+  /opt/local/include/openssl/x509_vfy.h \
+  /opt/local/include/openssl/lhash.h /opt/local/include/openssl/pkcs7.h \
+  /opt/local/include/openssl/pem.h /opt/local/include/openssl/pem2.h \
+  /opt/local/include/openssl/hmac.h /opt/local/include/openssl/kssl.h \
+  /opt/local/include/openssl/ssl2.h /opt/local/include/openssl/ssl3.h \
+  /opt/local/include/openssl/tls1.h /opt/local/include/openssl/dtls1.h \
+  /opt/local/include/openssl/pqueue.h /usr/include/string.h \
+  /usr/include/strings.h /usr/include/sys/time.h \
+  /usr/include/sys/_select.h /opt/local/include/openssl/ssl23.h \
+  /opt/local/include/openssl/srtp.h /opt/local/include/openssl/rand.h \
+  /opt/local/include/openssl/engine.h /opt/local/include/openssl/ui.h \
+  /opt/local/include/openssl/err.h /usr/include/errno.h \
+  /usr/include/sys/errno.h
+
+openssl.h:
+
+/usr/include/pthread.h:
+
+/usr/include/_types.h:
+
+/usr/include/sys/_types.h:
+
+/usr/include/sys/cdefs.h:
+
+/usr/include/sys/_symbol_aliasing.h:
+
+/usr/include/sys/_posix_availability.h:
+
+/usr/include/machine/_types.h:
+
+/usr/include/i386/_types.h:
+
+/usr/include/pthread_impl.h:
+
+/usr/include/sched.h:
+
+/usr/include/time.h:
+
+/usr/include/_structs.h:
+
+/usr/include/sys/_structs.h:
+
+/usr/include/Availability.h:
+
+/usr/include/AvailabilityInternal.h:
+
+/opt/local/include/rlog/rlog.h:
+
+/opt/local/include/rlog/common.h:
+
+/opt/local/include/rlog/rlog-c99.h:
+
+/opt/local/include/openssl/ssl.h:
+
+/opt/local/include/openssl/e_os2.h:
+
+/opt/local/include/openssl/opensslconf.h:
+
+/opt/local/include/openssl/comp.h:
+
+/opt/local/include/openssl/crypto.h:
+
+/usr/include/stdlib.h:
+
+/usr/include/sys/wait.h:
+
+/usr/include/sys/signal.h:
+
+/usr/include/sys/appleapiopts.h:
+
+/usr/include/machine/signal.h:
+
+/usr/include/i386/signal.h:
+
+/usr/include/i386/_structs.h:
+
+/usr/include/machine/_structs.h:
+
+/usr/include/mach/i386/_structs.h:
+
+/usr/include/sys/resource.h:
+
+/usr/include/machine/endian.h:
+
+/usr/include/i386/endian.h:
+
+/usr/include/sys/_endian.h:
+
+/usr/include/libkern/_OSByteOrder.h:
+
+/usr/include/libkern/i386/_OSByteOrder.h:
+
+/usr/include/alloca.h:
+
+/usr/include/machine/types.h:
+
+/usr/include/i386/types.h:
+
+/usr/include/i386/_types.h:
+
+/usr/include/stdio.h:
+
+/opt/local/include/openssl/stack.h:
+
+/opt/local/include/openssl/safestack.h:
+
+/opt/local/include/openssl/opensslv.h:
+
+/opt/local/include/openssl/ossl_typ.h:
+
+/opt/local/include/openssl/symhacks.h:
+
+/opt/local/include/openssl/bio.h:
+
+/usr/llvm-gcc-4.2/bin/../lib/gcc/i686-apple-darwin11/4.2.1/include/stdarg.h:
+
+/opt/local/include/openssl/x509.h:
+
+/opt/local/include/openssl/buffer.h:
+
+/usr/llvm-gcc-4.2/bin/../lib/gcc/i686-apple-darwin11/4.2.1/include/stddef.h:
+
+/usr/include/sys/types.h:
+
+/opt/local/include/openssl/evp.h:
+
+/opt/local/include/openssl/objects.h:
+
+/opt/local/include/openssl/obj_mac.h:
+
+/opt/local/include/openssl/asn1.h:
+
+/opt/local/include/openssl/bn.h:
+
+/opt/local/include/openssl/ec.h:
+
+/opt/local/include/openssl/ecdsa.h:
+
+/opt/local/include/openssl/ecdh.h:
+
+/opt/local/include/openssl/rsa.h:
+
+/opt/local/include/openssl/dsa.h:
+
+/opt/local/include/openssl/dh.h:
+
+/opt/local/include/openssl/sha.h:
+
+/opt/local/include/openssl/x509_vfy.h:
+
+/opt/local/include/openssl/lhash.h:
+
+/opt/local/include/openssl/pkcs7.h:
+
+/opt/local/include/openssl/pem.h:
+
+/opt/local/include/openssl/pem2.h:
+
+/opt/local/include/openssl/hmac.h:
+
+/opt/local/include/openssl/kssl.h:
+
+/opt/local/include/openssl/ssl2.h:
+
+/opt/local/include/openssl/ssl3.h:
+
+/opt/local/include/openssl/tls1.h:
+
+/opt/local/include/openssl/dtls1.h:
+
+/opt/local/include/openssl/pqueue.h:
+
+/usr/include/string.h:
+
+/usr/include/strings.h:
+
+/usr/include/sys/time.h:
+
+/usr/include/sys/_select.h:
+
+/opt/local/include/openssl/ssl23.h:
+
+/opt/local/include/openssl/srtp.h:
+
+/opt/local/include/openssl/rand.h:
+
+/opt/local/include/openssl/engine.h:
+
+/opt/local/include/openssl/ui.h:
+
+/opt/local/include/openssl/err.h:
+
+/usr/include/errno.h:
+
+/usr/include/sys/errno.h:
