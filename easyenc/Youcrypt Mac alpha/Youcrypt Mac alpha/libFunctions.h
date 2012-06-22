@@ -19,5 +19,7 @@ void mkdirRecursive2(NSString *path);
 void mkdir(NSString *path);
 void mvRecursive(NSString *pathFrom, NSString *pathTo);
 
++ (NSString*) getPassphraseFromKeychain;
++ (BOOL)registerWithKeychain:(NSString*)passphrase;
 
 @end

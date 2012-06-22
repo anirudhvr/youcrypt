@@ -17,13 +17,13 @@
     NSString *passphraseFromKeychain;
 }
 
-@property (atomic, strong) IBOutlet NSTextField *yourPassword;
+//@property (atomic, strong) IBOutlet NSTextField *yourPassword;
 @property (atomic, strong) NSString *sourceFolderPath;
 @property (atomic, strong) NSString *destFolderPath;
 @property (atomic, assign) BOOL lastEncryptionStatus;
 @property (atomic, assign) BOOL encryptionInProcess;
 @property (atomic, assign) BOOL keychainHasPassphrase;
-
+@property (atomic, strong) NSString *passphraseFromKeychain;
 
 -(IBAction)encrypt:(id)sender;
 -(void)createDirectoryRecursivelyAtPath:(NSString*)path;
@@ -31,7 +31,7 @@
 
 -(IBAction)shareCheckClicked:(id)sender;
 -(IBAction)startIt:(id)sender;
-- (NSString*) getPassphraseFromKeychain;
-- (BOOL)registerWithKeychain:(NSString*)passphrase;
+-(void)setPassphraseTextField:(NSString*)string;
+
 
 @end

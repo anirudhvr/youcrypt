@@ -23,6 +23,24 @@
 
 }
 
+-(void)awakeFromNib
+{
+    NSLog(@"Decrypt awake from nib called");
+    
+    if (keychainHasPassphrase == NO) {
+        passphraseFromKeychain = [libFunctions getPassphraseFromKeychain];
+        if (passphraseFromKeychain == nil) {
+            keychainHasPassphrase = NO;
+        } else {
+            keychainHasPassphrase = YES;
+            [yourPassword setStringValue:passphraseFromKeychain];
+        }
+    }
+    if (keychainHasPassphrase == YES) {
+        [yourPassword setStringValue:passphraseFromKeychain];
+    }
+}
+
 /**
  
  decrypt

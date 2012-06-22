@@ -7,9 +7,41 @@
 //
 
 #import "libFunctions.h"
-
+#import "SSKeychain.h"
 
 @implementation libFunctions
+
+
++ (NSString*) getPassphraseFromKeychain
+{
+    NSError *error = nil;
+    NSString *passphraseFromKeychain = [SSKeychain passwordForService:@"Youcrypt" account:@"avr" error:&error];
+    
+    if (error) {
+        NSLog(@"Did not get passphrase");
+        return nil;
+    } else {
+        NSLog(@"Got passphrase");
+        return passphraseFromKeychain;
+    }
+}
+
+
+/* Register password with Mac keychain */
++ (BOOL)registerWithKeychain:(NSString*)passphrase
+{
+    NSString *yourPasswordString = passphrase;
+    NSError *error = nil;
+    
+    if([SSKeychain setPassword:yourPasswordString forService:@"Youcrypt" account:@"avr" error:&error])
+        NSLog(@"Successfully registered passphrase wiht keychain");
+    if (error) {
+        NSLog(@"Error registering with Keychain");
+        NSLog(@"%@",[error localizedDescription]);
+        return NO;
+    }
+    return YES;
+}
 
 @end
 
@@ -112,4 +144,8 @@ void mvRecursive(NSString *pathFrom, NSString *pathTo) {
 		}
 	}
 }	
+
+
+
+
 

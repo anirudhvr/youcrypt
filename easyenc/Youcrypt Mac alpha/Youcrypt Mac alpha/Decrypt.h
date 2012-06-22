@@ -13,6 +13,8 @@
 	IBOutlet NSTextField *errorMessage;
     NSString *sourceFolderPath;
     NSString *destFolderPath;
+    BOOL keychainHasPassphrase;
+    NSString *passphraseFromKeychain;
 }
 
 - (IBAction)decrypt:(id)sender;

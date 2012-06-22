@@ -13,6 +13,7 @@
 #import "Encrypt.h"
 #import "YoucryptService.h"
 #import "YoucryptConfigDirectory.h"
+#import "libFunctions.h"
 
 #define prefsToolbar @"Prefs"
 #define quitToolbar @"Quit"
@@ -173,11 +174,19 @@
     // Is encryptController nil?
     if (!encryptController) {
         encryptController = [[Encrypt alloc] init];
-    }
-               
-    NSString *passphrase =[encryptController getPassphraseFromKeychain];
-    if ([encryptController keychainHasPassphrase] == YES) {
-        [encryptController.yourPassword setStringValue:passphrase];
+    } else {
+        /* other times, this code is called in awakefromNib */      
+        
+        if (encryptController.keychainHasPassphrase == NO) {
+            encryptController.passphraseFromKeychain = [libFunctions getPassphraseFromKeychain];
+            if (encryptController.passphraseFromKeychain != nil) {
+                encryptController.keychainHasPassphrase = YES;
+            }
+        }
+        NSString *passphrase =[libFunctions getPassphraseFromKeychain];
+        if ([encryptController keychainHasPassphrase] == YES) {
+            [encryptController setPassphraseTextField:passphrase];
+        }
     }
     
     NSLog(@"showing %@", encryptController);

@@ -9,7 +9,7 @@
 #import "Encrypt.h"
 #import "PreferenceController.h"
 #import "libFunctions.h"
-#import "SSKeychain.h"
+
 
 @implementation Encrypt
 
@@ -19,7 +19,8 @@
 @synthesize lastEncryptionStatus;
 @synthesize encryptionInProcess;
 @synthesize keychainHasPassphrase;
-@synthesize yourPassword;
+//@synthesize yourPassword;
+@synthesize passphraseFromKeychain;
 
 
 -(id)init
@@ -37,6 +38,16 @@
 {
     [shareCheckBox setState:0];
     NSLog(@"Awake from nib called");
+    
+    if (keychainHasPassphrase == NO) {
+        passphraseFromKeychain = [libFunctions getPassphraseFromKeychain];
+        if (passphraseFromKeychain == nil) {
+            keychainHasPassphrase = NO;
+        } else {
+            keychainHasPassphrase = YES;
+            [yourPassword setStringValue:passphraseFromKeychain];
+        }
+    }
 }
 
 - (IBAction)startIt:(id)sender {
@@ -109,40 +120,6 @@
 }
 
 
-- (NSString*) getPassphraseFromKeychain
-{
-     NSError *error = nil;
-     passphraseFromKeychain = [SSKeychain passwordForService:@"Youcrypt" account:@"avr" error:&error];
-    
-    if (error) {
-        NSLog(@"Did not get passphrase");
-        keychainHasPassphrase = NO;
-        return nil;
-    } else {
-        NSLog(@"Got passphrase");
-        keychainHasPassphrase = YES;
-        return passphraseFromKeychain;
-    }
-}
-
-
-/* Register password with Mac keychain */
-- (BOOL)registerWithKeychain:(NSString*)passphrase
-{
-    NSString *yourPasswordString = passphrase;
-    NSError *error = nil;
-    
-    if([SSKeychain setPassword:yourPasswordString forService:@"Youcrypt" account:@"avr" error:&error])
-        NSLog(@"Successfully registered passphrase wiht keychain");
-    if (error) {
-        NSLog(@"%@",[error localizedDescription]);
-    }
-    
-    if(error) {
-        NSLog(@"Error registering with Keychain");
-        NSLog(@"%@",[error localizedDescription]);
-    }
-}
 
 /**
  
@@ -196,7 +173,7 @@
     NSString *yourPasswordString = [yourPassword stringValue];
     
     if (!keychainHasPassphrase) {
-        [self registerWithKeychain:yourPasswordString];
+        [libFunctions registerWithKeychain:yourPasswordString];
         keychainHasPassphrase = YES;
     }
         
@@ -278,5 +255,13 @@
     [yourFriendsEmail setStringValue:@""];
     [self.window close];
 }
+
+-(void)setPassphraseTextField:(NSString*)string
+{
+    if (string != nil) {
+        [yourPassword setStringValue:string];
+    }
+}
+
 
 @end
