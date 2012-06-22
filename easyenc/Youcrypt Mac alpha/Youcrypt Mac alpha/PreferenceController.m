@@ -8,6 +8,7 @@
 
 #import "PreferenceController.h"
 #import "pipetest.h"
+#import "logging.h"
 
 @implementation PreferenceController
 
@@ -21,7 +22,7 @@
 
 - (void)awakeFromNib
 {	
-    NSLog(@"Nib file is loaded");
+    DDLogVerbose(@"Nib file is loaded");
     
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 
@@ -41,11 +42,11 @@
     
     if(dropboxDefault == nil) {
         if(run_command(shellFile, &out, &outlen, &err, &errlen))
-            NSLog(@"fail");
+            DDLogVerbose(@"fail");
         else {
             dropboxURL = [NSString stringWithFormat:@"%s",out];
             dropboxURL = [dropboxURL stringByReplacingOccurrencesOfString:@"\n" withString:@""];
-            NSLog(@"new: [%@] ",dropboxURL);
+            DDLogVerbose(@"new: [%@] ",dropboxURL);
         }
     }
     else {
@@ -78,7 +79,7 @@
 }
 - (BOOL)windowShouldClose:(id)sender
 {
-    NSLog(@"Window closing!! .. changed? %d",changed);
+    DDLogVerbose(@"Window closing!! .. changed? %d",changed);
     if(!changed){
         return YES;
     }
@@ -96,14 +97,14 @@
         stateBool = YES;
     else stateBool = NO;
     
-    NSLog(@"Writing %d",stateBool);
+    DDLogVerbose(@"Writing %d",stateBool);
     
     NSURL *dropboxURL = [dbLocation URL];
     [defaults setObject:[dropboxURL absoluteString] forKey:@"ycdropbox"];
     [defaults setBool:stateBool forKey:@"yccheck"];
     [defaults synchronize];
     
-    NSLog(@"Checkbox changed %d", state);
+    DDLogVerbose(@"Checkbox changed %d", state);
     
     changed = NO;
     [self close];
@@ -130,7 +131,7 @@ static NSArray *openFiles()
     NSArray *path = openFiles();
     
     if(!path){ 
-        NSLog(@"No path selected, return..."); 
+        DDLogVerbose(@"No path selected, return..."); 
         return; 
     }
    // NSURL *url = [NSURL URLWithString:((NSString*)[path objectAtIndex:0])];

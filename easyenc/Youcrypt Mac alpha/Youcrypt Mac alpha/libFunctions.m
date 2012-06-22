@@ -7,11 +7,9 @@
 //
 
 #import "libFunctions.h"
-
+#import "logging.h"
 
 @implementation libFunctions
-
-@end
 
 NSString* systemCall(NSString *binary, NSArray *arguments) {
     NSTask *task;   
@@ -33,7 +31,9 @@ NSString* systemCall(NSString *binary, NSArray *arguments) {
     
     NSString *string = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]; 
     
-    NSLog (@"got\n%@", string); 
+    //DDLogVerbose (@"got\n%@", string); 
     
     return string;
 }
+
+@end

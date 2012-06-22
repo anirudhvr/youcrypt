@@ -11,9 +11,18 @@
 #import "FileSystem.h"
 #import "Decrypt.h"
 #import "Encrypt.h"
+#import "DDLog.h"
+#import "DDTTYLogger.h"
+#import "DDASLLogger.h"
+#import "DDFileLogger.h"
+#import "CompressingLogFileManager.h"
+#import "logging.h"
+#import "YoucryptConfigDirectory.h"
 
 #define prefsToolbar @"Prefs"
 #define quitToolbar @"Quit"
+
+int ddLogLevel = LOG_LEVEL_VERBOSE;
 
 @implementation AppDelegate
 
@@ -31,6 +40,20 @@
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
     // Insert code here to initialize your application
+    // Logging
+   // NSString *logsDirectory = [NSString stringWithFormat:@"%@%@",NSHomeDirectory(),@"/.youcrypt/logs"];
+    YoucryptConfigDirectory *config = [[YoucryptConfigDirectory alloc] init];
+    CompressingLogFileManager *logFileManager = [[CompressingLogFileManager alloc] initWithLogsDirectory:config.youCryptLogDir];
+    
+    [DDLog addLogger:[DDASLLogger sharedInstance]];
+    [DDLog addLogger:[DDTTYLogger sharedInstance]];
+    
+    DDFileLogger *fileLogger = [[DDFileLogger alloc] initWithLogFileManager:logFileManager];
+    fileLogger.rollingFrequency = 60 * 60 * 24; // 24 hour rolling
+    fileLogger.logFileManager.maximumNumberOfLogFiles = 7;
+    [DDLog addLogger:fileLogger];
+    
+    DDLogVerbose(@"done !!!");
 }
 
 - (BOOL)application:(NSApplication *)theApplication openFile:(NSString *)filename
@@ -40,7 +63,7 @@
 
 - (BOOL)processFile:(NSString *)file
 {
-    NSLog(@"The following file has been dropped or selected: %@",file);
+    DDLogVerbose(@"The following file has been dropped or selected: %@",file);
     // Process file here
     return  YES; // Return YES when file processed succesfull, else return NO.
 }
@@ -80,7 +103,8 @@
         else type = @"M";
 	}
     
-    type = @"E";
+    type = @"M";
+    DDLogCVerbose(@"awake! %@",THIS_FILE);
     
     if([type isEqualToString:@"M"])
         [self showMainApp:self];
@@ -94,12 +118,14 @@
     else
         [self showPreferencePanel:self];
     
+  
+    
 }
 
 
 -(IBAction)windowShouldClose:(id)sender
 {
-    NSLog(@"Closing..");
+    DDLogVerbose(@"Closing..");
 }
 
 -(IBAction)showMainApp:(id)sender
@@ -127,7 +153,7 @@
     if (!preferenceController) {
         preferenceController = [[PreferenceController alloc] init];
     }
-    NSLog(@"showing %@", preferenceController);
+    DDLogVerbose(@"showing %@", preferenceController);
     [preferenceController showWindow:self];
 }
 
@@ -137,7 +163,7 @@
     if (!decryptController) {
         decryptController = [[Decrypt alloc] init];
     }
-    NSLog(@"showing %@", decryptController);
+    DDLogVerbose(@"showing %@", decryptController);
     [decryptController showWindow:self];
 }
 
@@ -147,7 +173,7 @@
     if (!encryptController) {
         encryptController = [[Encrypt alloc] init];
     }
-    NSLog(@"showing %@", encryptController);
+    DDLogVerbose(@"showing %@", encryptController);
     [encryptController showWindow:self];
 }
 

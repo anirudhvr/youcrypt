@@ -9,21 +9,25 @@
 #import "Encrypt.h"
 #import "PreferenceController.h"
 #import "libFunctions.h"
+#import "logging.h"
 #import "SSKeychain.h"
+
 
 @implementation Encrypt
 
 -(id)init
 {
 	self = [super init];
-	if (![super initWithWindowNibName:@"Encrypt"])
-        return nil;
+	if (![super initWithWindowNibName:@"Encrypt"]){
+         return nil;
+         DDLogVerbose(@"nil");
+    }
+       
     return self;
 }
 
 -(void)awakeFromNib
 {
-    
     [self setFolderIcon:self];
     [shareCheckBox setState:0];
 }
@@ -48,7 +52,7 @@
             // Update progress bar
             double progr = (double)i / (double)processAmount;
             progr *=100;
-            NSLog(@"progr: %f", progr); // Logs values between 0.0 and 1.0
+            DDLogVerbose(@"progr: %f", progr); // Logs values between 0.0 and 1.0
             
             //NOTE: It is important to let all UI updates occur on the main thread,
             //so we put the following UI updates on the main queue.
@@ -87,9 +91,9 @@
     NSImage* iconImage = [[NSImage alloc] initWithContentsOfFile:@"glossy.icns"];
     BOOL didSetIcon = [[NSWorkspace sharedWorkspace] setIcon:iconImage forFile:@"/Users/hr/code" options:0];
     if(didSetIcon)
-        NSLog(@"DONE :) ");
+        DDLogVerbose(@"DONE :) ");
     else
-        NSLog(@" :( ");
+        DDLogVerbose(@" :( ");
     
 }
 
@@ -100,18 +104,18 @@
     NSString *yourPasswordString = [yourPassword stringValue];
     NSError *error = nil;
     
-    if([SSKeychain setPassword:yourPasswordString forService:@"Youcrypt" account:@"hra" error:&error])
-        NSLog(@"success");
+    if([SSKeychain setPassword:yourPasswordString forService:@"Youcrypt" account:@"hr" error:&error])
+        DDLogVerbose(@"success");
     if (error) {
-        NSLog(@"%@",[error localizedDescription]);
+        DDLogVerbose(@"%@",[error localizedDescription]);
     }
     
     NSString *pass = [SSKeychain passwordForService:@"Youcrypt" account:@"hr" error:&error];
-    NSLog(pass);
+    DDLogVerbose(pass);
     
     if(error) {
-        NSLog(@"error!!");
-        NSLog(@"%@",[error localizedDescription]);
+        DDLogVerbose(@"error!!");
+        DDLogVerbose(@"%@",[error localizedDescription]);
     }
 }
 
@@ -130,16 +134,16 @@ void mkdirRecursive(NSString *path)
 	NSFileManager *fileManager = [NSFileManager defaultManager];
 	BOOL isDir;
 	NSString *directoryAbove = [path stringByDeletingLastPathComponent];
-	NSLog(@"Checking %@",directoryAbove);
+	//DDLogVerbose(@"Checking %@",directoryAbove);
 	if(![directoryAbove isEqualToString:@""]) {
 		if (![fileManager fileExistsAtPath:directoryAbove isDirectory:&isDir])
 		{
-			NSLog(@"Going to create %@",directoryAbove);
+		//	DDLogVerbose(@"Going to create %@",directoryAbove);
 			mkdirRecursive(directoryAbove);
 		}
 	} 
 	else {
-		NSLog(@"FATAL !!!");
+		//DDLogVerbose(@"FATAL !!!");
 	}
 	
 	[fileManager createDirectoryAtPath:path attributes:nil];
@@ -172,12 +176,12 @@ void mvRecursive(NSString *pathFrom, NSString *pathTo) {
 		
 		NSError  *error  = nil;
 		
-		NSLog(@"about to copy %@",fileFrom);
+		//DDLogVerbose(@"about to copy %@",fileFrom);
 		
 		[manager copyItemAtPath:fileFrom toPath:fileTo error:&error];
 		[manager removeItemAtPath:fileFrom error:&error];
 		if (error) {
-			NSLog(@"%@",[error localizedDescription]);
+			//DDLogVerbose(@"%@",[error localizedDescription]);
 		}
 	}
 }	
@@ -210,7 +214,7 @@ void mvRecursive(NSString *pathFrom, NSString *pathTo) {
 	
 	NSString *tempFolder = [NSString stringWithFormat:@"\"/tmp/easyenc%@\"",srcFolder];
 	
-	NSLog(@"Create destination %@ if it doesn't already exist",destFolder);
+	DDLogVerbose(@"Create destination %@ if it doesn't already exist",destFolder);
 	
 	/* A */
 	mkdirRecursive(destFolder);
@@ -218,7 +222,7 @@ void mvRecursive(NSString *pathFrom, NSString *pathTo) {
 	/* B */
 	mkdirRecursive(tempFolder);
 	
-	NSLog(@"mkdir %@",tempFolder);
+	DDLogVerbose(@"mkdir %@",tempFolder);
 	
 	/* C+D */
 	mvRecursive(srcFolder, tempFolder);

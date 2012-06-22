@@ -7,6 +7,7 @@
 //
 
 #import "FileSystem.h"
+#import "logging.h"
 
 @implementation FileSystem
 
@@ -18,6 +19,7 @@
 {
     self = [super init];
     return self;
+    DDLogVerbose(@"FS Init");
 }
 
 
