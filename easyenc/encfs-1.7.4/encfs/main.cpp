@@ -159,7 +159,6 @@ void usage(const char *name)
 
       // RM:  Option to disable filename encryption
 	 << _("   --enable-filename-encryption\n")
-	 << _("   --with-filename-encryption\n")
 	 << _("   --disable-filename-encryption\n")
 	// xgroup(usage)
 
@@ -261,7 +260,6 @@ bool processArgs(int argc, char *argv[], const shared_ptr<EncFS_Args> &out)
 	{"pw", 1, 0, 'w'}, // list of passphrases
 	{"nu", 1, 0, 'x'}, // number of users
 	{"enable-filename-encryption", 0, 0, 'F'},
-	{"with-filename-encryption", 0, 0, 'F'},
 	{"disable-filename-encryption", 0, 0, 'G'},
 	{0,0,0,0}
     };
