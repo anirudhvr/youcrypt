@@ -72,18 +72,6 @@
     return  YES; // Return YES when file processed succesfull, else return NO.
 }
 
-- (BOOL)application:(NSApplication *)theApplication openFile:(NSString *)filename
-{
-    return [self processFile:filename];
-}
-
-- (BOOL)processFile:(NSString *)file
-{
-    NSLog(@"The following file has been dropped or selected: %@",file);
-    // Process file here
-    return  YES; // Return YES when file processed succesfull, else return NO.
-}
-
 -(void)awakeFromNib{
     
     // status icon
@@ -186,6 +174,12 @@
     if (!encryptController) {
         encryptController = [[Encrypt alloc] init];
     }
+               
+    NSString *passphrase =[encryptController getPassphraseFromKeychain];
+    if ([encryptController keychainHasPassphrase] == YES) {
+        [encryptController.yourPassword setStringValue:passphrase];
+    }
+    
     NSLog(@"showing %@", encryptController);
     [encryptController showWindow:self];
 }
