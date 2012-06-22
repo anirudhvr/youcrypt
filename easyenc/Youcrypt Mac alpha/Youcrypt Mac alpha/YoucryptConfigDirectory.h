@@ -11,23 +11,26 @@
 #define YoucryptFolderName @".youcrypt"
 
 @interface YoucryptConfigDirectory : NSObject {
-
+    
     NSString *youCryptVolDir;
     NSString *youCryptTmpDir;
-    NSString *youcryptLockfile;
+    NSString *youCryptLockfile;
+    NSString *youCryptLogDir;
     BOOL needsCreation;
     
 }
 
 @property (atomic,strong) NSString* youCryptVolDir;
 @property (atomic,strong) NSString* youCryptTmpDir;
+@property (atomic,strong) NSString* youCryptLogDir;
 
 /*
-- (NSString*) getHomeDir;
-- (BOOL) isYoucryptRunning;
-- (BOOL) isYoucryptDirCreated;
-- (void) createLockFile;
-- (void) createHomeDir:(NSString*)path;
-*/
+ - (NSString*) getHomeDir;
+ - (BOOL) isYoucryptRunning;
+ - (BOOL) isYoucryptDirCreated;
+ - (void) createLockFile;
+ - (void) createHomeDir:(NSString*)path;
+ */
 
 @end
+

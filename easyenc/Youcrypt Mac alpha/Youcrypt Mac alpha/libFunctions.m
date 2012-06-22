@@ -8,6 +8,7 @@
 
 #import "libFunctions.h"
 #import "SSKeychain.h"
+#import "logging.h"
 
 @implementation libFunctions
 
@@ -43,7 +44,7 @@
     return YES;
 }
 
-@end
+
 
 NSString* systemCall(NSString *binary, NSArray *arguments) {
     NSTask *task;   
@@ -65,10 +66,11 @@ NSString* systemCall(NSString *binary, NSArray *arguments) {
     
     NSString *string = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]; 
     
-    NSLog (@"got\n%@", string); 
+    //DDLogVerbose (@"got\n%@", string); 
     
     return string;
 }
+
 
 void mkdirRecursive(NSString *path)
 {
@@ -148,4 +150,4 @@ void mvRecursive(NSString *pathFrom, NSString *pathTo) {
 
 
 
-
+@end

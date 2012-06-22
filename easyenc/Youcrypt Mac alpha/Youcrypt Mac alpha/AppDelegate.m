@@ -14,9 +14,18 @@
 #import "YoucryptService.h"
 #import "YoucryptConfigDirectory.h"
 #import "libFunctions.h"
+#import "DDLog.h"
+#import "DDTTYLogger.h"
+#import "DDASLLogger.h"
+#import "DDFileLogger.h"
+#import "CompressingLogFileManager.h"
+#import "logging.h"
+#import "YoucryptConfigDirectory.h"
 
 #define prefsToolbar @"Prefs"
 #define quitToolbar @"Quit"
+
+int ddLogLevel = LOG_LEVEL_VERBOSE;
 
 @implementation AppDelegate
 
@@ -47,11 +56,24 @@
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
     // Insert code here to initialize your application
-    // Insert code here to initialize your application
    
     [NSApp setServicesProvider:youcryptService];
     
     NSLog(@"This happened!");
+    // Logging
+   // NSString *logsDirectory = [NSString stringWithFormat:@"%@%@",NSHomeDirectory(),@"/.youcrypt/logs"];
+    YoucryptConfigDirectory *config = [[YoucryptConfigDirectory alloc] init];
+    CompressingLogFileManager *logFileManager = [[CompressingLogFileManager alloc] initWithLogsDirectory:config.youCryptLogDir];
+    
+    [DDLog addLogger:[DDASLLogger sharedInstance]];
+    [DDLog addLogger:[DDTTYLogger sharedInstance]];
+    
+    DDFileLogger *fileLogger = [[DDFileLogger alloc] initWithLogFileManager:logFileManager];
+    fileLogger.rollingFrequency = 60 * 60 * 24; // 24 hour rolling
+    fileLogger.logFileManager.maximumNumberOfLogFiles = 7;
+    [DDLog addLogger:fileLogger];
+    
+    DDLogVerbose(@"done !!!");
 }
 
 
@@ -61,15 +83,15 @@
 }
 
 - (BOOL)processFile:(NSString *)file
-{
-    NSLog(@"The following file has been dropped or selected: %@",file);
-    
+{   
     [self showDecryptWindow:self];
   
     decryptController.sourceFolderPath = file;
     NSString *dest = [configDir.youCryptVolDir stringByAppendingPathComponent:file];
     decryptController.destFolderPath = dest;
     
+    DDLogVerbose(@"The following file has been dropped or selected: %@",file);
+   
     return  YES; // Return YES when file processed succesfull, else return NO.
 }
 
@@ -109,6 +131,8 @@
 	}
     
     type = @"X";
+    DDLogCVerbose(@"awake! %@",THIS_FILE);
+
     
     if([type isEqualToString:@"M"])
         [self showMainApp:self];
@@ -122,12 +146,14 @@
     else if ([type isEqualToString:@"P"])
         [self showPreferencePanel:self];
     
+  
+    
 }
 
 
 -(IBAction)windowShouldClose:(id)sender
 {
-    NSLog(@"Closing..");
+    DDLogVerbose(@"Closing..");
 }
 
 -(IBAction)showMainApp:(id)sender
@@ -155,7 +181,7 @@
     if (!preferenceController) {
         preferenceController = [[PreferenceController alloc] init];
     }
-    NSLog(@"showing %@", preferenceController);
+    DDLogVerbose(@"showing %@", preferenceController);
     [preferenceController showWindow:self];
 }
 
@@ -165,7 +191,7 @@
     if (!decryptController) {
         decryptController = [[Decrypt alloc] init];
     }
-    NSLog(@"showing %@", decryptController);
+    DDLogVerbose(@"showing %@", decryptController);
     [decryptController showWindow:self];
 }
 
@@ -188,8 +214,8 @@
             [encryptController setPassphraseTextField:passphrase];
         }
     }
-    
-    NSLog(@"showing %@", encryptController);
+
+    DDLogVerbose(@"showing %@", encryptController);
     [encryptController showWindow:self];
 }
 

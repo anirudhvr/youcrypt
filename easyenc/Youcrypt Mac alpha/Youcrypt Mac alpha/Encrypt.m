@@ -9,6 +9,8 @@
 #import "Encrypt.h"
 #import "PreferenceController.h"
 #import "libFunctions.h"
+#import "logging.h"
+#import "SSKeychain.h"
 
 
 @implementation Encrypt
@@ -25,17 +27,17 @@
 
 -(id)init
 {
-	self = [super init];
-	if (![super initWithWindowNibName:@"Encrypt"])
-        return nil;
-    
     keychainHasPassphrase = NO;
-            
+	if (![super initWithWindowNibName:@"Encrypt"]){
+         return nil;
+         DDLogVerbose(@"nil");
+    }
     return self;
 }
 
 -(void)awakeFromNib
 {
+    [self setFolderIcon:self];
     [shareCheckBox setState:0];
     NSLog(@"Awake from nib called");
     
@@ -70,7 +72,7 @@
             // Update progress bar
             double progr = (double)i / (double)processAmount;
             progr *=100;
-          //  NSLog(@"progr: %f", progr); // Logs values between 0.0 and 1.0
+            DDLogVerbose(@"progr: %f", progr); // Logs values between 0.0 and 1.0
             
             //NOTE: It is important to let all UI updates occur on the main thread,
             //so we put the following UI updates on the main queue.
@@ -113,13 +115,11 @@
     BOOL didSetIcon = [[NSWorkspace sharedWorkspace] setIcon:iconImage forFile:[sourceFolderPath stringByAppendingPathComponent:@"/encrypted.yc"] options:0];
 
     if(didSetIcon)
-        NSLog(@"Icon set ");
+        DDLogVerbose(@"DONE :) ");
     else
-        NSLog(@"Setting icon failed");
+        DDLogVerbose(@" :( ");
     
 }
-
-
 
 /**
  
@@ -149,8 +149,8 @@
 	
 	NSString *tempFolder = [@"/tmp/easyenc/" stringByAppendingPathComponent:srcFolder];
 	
-	NSLog(@"Create destination %@ if it doesn't already exist",destFolder);
-    NSLog(@"mkdir tempfolder [%@]",tempFolder);
+	DDLogVerbose(@"Create destination %@ if it doesn't already exist",destFolder);
+
 	
 	/* A */
 	mkdirRecursive(destFolder);
@@ -158,6 +158,7 @@
 	/* B */
 	mkdirRecursive(tempFolder);
 	
+	DDLogVerbose(@"mkdir %@",tempFolder);
 	
 	/* C+D */
 	mvRecursive(srcFolder, tempFolder);

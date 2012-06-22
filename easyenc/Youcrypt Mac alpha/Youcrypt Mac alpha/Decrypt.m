@@ -8,6 +8,7 @@
 
 #import "Decrypt.h"
 #import "libFunctions.h"
+#import "logging.h"
 
 @implementation Decrypt
 
@@ -69,6 +70,7 @@
     systemCall(@"/usr/bin/open", [NSArray arrayWithObject:destFolder]);
 	
 	[NSApp terminate: nil];
+    DDLogVerbose(@"dfdsds");
 	
 }
 @end

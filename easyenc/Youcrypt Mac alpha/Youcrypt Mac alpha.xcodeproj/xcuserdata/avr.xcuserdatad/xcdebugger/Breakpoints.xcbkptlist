@@ -12,9 +12,7 @@
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "24"
-         endingLineNumber = "24"
-         landmarkName = "decryptController"
-         landmarkType = "19">
+         endingLineNumber = "24">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "No"
@@ -25,9 +23,7 @@
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "23"
-         endingLineNumber = "23"
-         landmarkName = "encryptController"
-         landmarkType = "19">
+         endingLineNumber = "23">
       </FileBreakpoint>
    </FileBreakpoints>
 </Bucket>
