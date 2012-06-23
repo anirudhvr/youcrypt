@@ -156,7 +156,12 @@ void usage(const char *name)
     << _("   --nu \t\t Number of users to share this folder with\n")
     << _("   --pw \t\t List of passwords for users separated by ','\n")
     << _("\t\t         (first pw is used for the main user)\n")
+
+      // RM:  Option to disable filename encryption
+	 << _("   --enable-filename-encryption\n")
+	 << _("   --disable-filename-encryption\n")
 	// xgroup(usage)
+
 	
 	// xgroup(usage)
 	<< _("For more information, see the man page encfs(1)") << "\n"
@@ -254,11 +259,14 @@ bool processArgs(int argc, char *argv[], const shared_ptr<EncFS_Args> &out)
         // easyenc
 	{"pw", 1, 0, 'w'}, // list of passphrases
 	{"nu", 1, 0, 'x'}, // number of users
+	{"enable-filename-encryption", 0, 0, 'F'},
+	{"disable-filename-encryption", 0, 0, 'G'},
 	{0,0,0,0}
     };
 
     out->opts->no_interactive_configuration = false;
-    out->opts->num_users = 0;
+    out->opts->num_users = 0;     
+    out->opts->mangleFilename = 0; // Don't encrypt filenames by default.
     string pps;
 
     while (1)
@@ -367,6 +375,14 @@ bool processArgs(int argc, char *argv[], const shared_ptr<EncFS_Args> &out)
         out->opts->num_users = strtol( optarg, (char**)NULL, 10);
         out->opts->no_interactive_configuration = true;
         break;
+
+	case 'F':
+	  out->opts->mangleFilename = 1;
+	  break;
+
+	case 'G':
+	  out->opts->mangleFilename = 0;
+	  break;
 
 	case '?':
 	    // invalid options..
