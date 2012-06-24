@@ -40,6 +40,12 @@
 		25F3D1511592435600E3383C /* libFunctions.m in Sources */ = {isa = PBXBuildFile; fileRef = 25F3D1501592435600E3383C /* libFunctions.m */; };
 		25F3D15A159244E800E3383C /* Encrypt.m in Sources */ = {isa = PBXBuildFile; fileRef = 25F3D158159244E800E3383C /* Encrypt.m */; };
 		25F3D15B159244E800E3383C /* Encrypt.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25F3D159159244E800E3383C /* Encrypt.xib */; };
+		E0BF0E911596B99D002F9FB9 /* ListDirectories.xib in Resources */ = {isa = PBXBuildFile; fileRef = E0BF0E901596B99D002F9FB9 /* ListDirectories.xib */; };
+		E0BF0E951596B9C8002F9FB9 /* YoucryptDirectory.m in Sources */ = {isa = PBXBuildFile; fileRef = E0BF0E941596B9C8002F9FB9 /* YoucryptDirectory.m */; };
+		E0BF0E9D1596D01F002F9FB9 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E0BF0E9C1596D01F002F9FB9 /* Foundation.framework */; };
+		E0BF0EA01596D01F002F9FB9 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E0BF0E9F1596D01F002F9FB9 /* main.m */; };
+		E0BF0EA41596D01F002F9FB9 /* TestBed.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = E0BF0EA31596D01F002F9FB9 /* TestBed.1 */; };
+		E0BF0EA81596D489002F9FB9 /* YoucryptConfigDirectory.m in Sources */ = {isa = PBXBuildFile; fileRef = E6822DEE159537C8005F1175 /* YoucryptConfigDirectory.m */; };
 		E6822DEF159537C8005F1175 /* YoucryptConfigDirectory.m in Sources */ = {isa = PBXBuildFile; fileRef = E6822DEE159537C8005F1175 /* YoucryptConfigDirectory.m */; };
 		E6E2A0BA15926C8C003E3F6C /* YoucryptService.m in Sources */ = {isa = PBXBuildFile; fileRef = E6E2A0B6159266F6003E3F6C /* YoucryptService.m */; };
 /* End PBXBuildFile section */
@@ -64,6 +70,16 @@
 				252C3A471593A35D0044EB3C /* Sparkle.framework in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E0BF0E981596D01F002F9FB9 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+				E0BF0EA41596D01F002F9FB9 /* TestBed.1 in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 1;
 		};
 /* End PBXCopyFilesBuildPhase section */
 
@@ -121,6 +137,14 @@
 		25F3D157159244E800E3383C /* Encrypt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Encrypt.h; path = "Youcrypt Mac alpha/Encrypt.h"; sourceTree = "<group>"; };
 		25F3D158159244E800E3383C /* Encrypt.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Encrypt.m; path = "Youcrypt Mac alpha/Encrypt.m"; sourceTree = "<group>"; };
 		25F3D159159244E800E3383C /* Encrypt.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = Encrypt.xib; path = "Youcrypt Mac alpha/Encrypt.xib"; sourceTree = "<group>"; };
+		E0BF0E901596B99D002F9FB9 /* ListDirectories.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ListDirectories.xib; sourceTree = "<group>"; };
+		E0BF0E931596B9C8002F9FB9 /* YoucryptDirectory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YoucryptDirectory.h; sourceTree = "<group>"; };
+		E0BF0E941596B9C8002F9FB9 /* YoucryptDirectory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YoucryptDirectory.m; sourceTree = "<group>"; };
+		E0BF0E9A1596D01F002F9FB9 /* TestBed */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = TestBed; sourceTree = BUILT_PRODUCTS_DIR; };
+		E0BF0E9C1596D01F002F9FB9 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		E0BF0E9F1596D01F002F9FB9 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		E0BF0EA21596D01F002F9FB9 /* TestBed-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TestBed-Prefix.pch"; sourceTree = "<group>"; };
+		E0BF0EA31596D01F002F9FB9 /* TestBed.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = TestBed.1; sourceTree = "<group>"; };
 		E6822DED159537C8005F1175 /* YoucryptConfigDirectory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = YoucryptConfigDirectory.h; path = "Youcrypt Mac alpha/YoucryptConfigDirectory.h"; sourceTree = "<group>"; };
 		E6822DEE159537C8005F1175 /* YoucryptConfigDirectory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = YoucryptConfigDirectory.m; path = "Youcrypt Mac alpha/YoucryptConfigDirectory.m"; sourceTree = "<group>"; };
 		E6E2A0B6159266F6003E3F6C /* YoucryptService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = YoucryptService.m; path = "Youcrypt Mac alpha/YoucryptService.m"; sourceTree = "<group>"; };
@@ -145,6 +169,14 @@
 				256C357E158EA75F00E2BEC4 /* SenTestingKit.framework in Frameworks */,
 				256C357F158EA75F00E2BEC4 /* Cocoa.framework in Frameworks */,
 				252C3A681593CAA10044EB3C /* Lumberjack.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E0BF0E971596D01F002F9FB9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E0BF0E9D1596D01F002F9FB9 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -174,6 +206,7 @@
 			children = (
 				256C3565158EA75F00E2BEC4 /* Youcrypt Mac alpha */,
 				256C3582158EA75F00E2BEC4 /* Youcrypt Mac alphaTests */,
+				E0BF0E9E1596D01F002F9FB9 /* TestBed */,
 				256C355E158EA75F00E2BEC4 /* Frameworks */,
 				256C355C158EA75F00E2BEC4 /* Products */,
 			);
@@ -184,6 +217,7 @@
 			children = (
 				256C355B158EA75F00E2BEC4 /* Youcrypt Mac alpha.app */,
 				256C357C158EA75F00E2BEC4 /* Youcrypt Mac alphaTests.octest */,
+				E0BF0E9A1596D01F002F9FB9 /* TestBed */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -196,6 +230,7 @@
 				25EE6A5815928D2C008A0DC8 /* Security.framework */,
 				256C355F158EA75F00E2BEC4 /* Cocoa.framework */,
 				256C357D158EA75F00E2BEC4 /* SenTestingKit.framework */,
+				E0BF0E9C1596D01F002F9FB9 /* Foundation.framework */,
 				256C3561158EA75F00E2BEC4 /* Other Frameworks */,
 			);
 			name = Frameworks;
@@ -263,6 +298,7 @@
 				256C35A8158EAF8700E2BEC4 /* Preferences.xib */,
 				25F3D14B15923FE800E3383C /* Decrypt.xib */,
 				256C3574158EA75F00E2BEC4 /* MainMenu.xib */,
+				E0BF0E901596B99D002F9FB9 /* ListDirectories.xib */,
 			);
 			name = UI;
 			path = ..;
@@ -299,10 +335,30 @@
 				E6822DEE159537C8005F1175 /* YoucryptConfigDirectory.m */,
 				25B1E4FC158FED9700CDBC46 /* FileSystem.h */,
 				25B1E4FD158FED9700CDBC46 /* FileSystem.m */,
+				E0BF0E931596B9C8002F9FB9 /* YoucryptDirectory.h */,
+				E0BF0E941596B9C8002F9FB9 /* YoucryptDirectory.m */,
 				252C3A621593C6B20044EB3C /* Logging */,
 			);
 			name = Classes;
 			path = ..;
+			sourceTree = "<group>";
+		};
+		E0BF0E9E1596D01F002F9FB9 /* TestBed */ = {
+			isa = PBXGroup;
+			children = (
+				E0BF0E9F1596D01F002F9FB9 /* main.m */,
+				E0BF0EA31596D01F002F9FB9 /* TestBed.1 */,
+				E0BF0EA11596D01F002F9FB9 /* Supporting Files */,
+			);
+			path = TestBed;
+			sourceTree = "<group>";
+		};
+		E0BF0EA11596D01F002F9FB9 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				E0BF0EA21596D01F002F9FB9 /* TestBed-Prefix.pch */,
+			);
+			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -345,6 +401,23 @@
 			productReference = 256C357C158EA75F00E2BEC4 /* Youcrypt Mac alphaTests.octest */;
 			productType = "com.apple.product-type.bundle";
 		};
+		E0BF0E991596D01F002F9FB9 /* TestBed */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E0BF0EA51596D01F002F9FB9 /* Build configuration list for PBXNativeTarget "TestBed" */;
+			buildPhases = (
+				E0BF0E961596D01F002F9FB9 /* Sources */,
+				E0BF0E971596D01F002F9FB9 /* Frameworks */,
+				E0BF0E981596D01F002F9FB9 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = TestBed;
+			productName = TestBed;
+			productReference = E0BF0E9A1596D01F002F9FB9 /* TestBed */;
+			productType = "com.apple.product-type.tool";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -367,6 +440,7 @@
 			targets = (
 				256C355A158EA75F00E2BEC4 /* Youcrypt Mac alpha */,
 				256C357B158EA75F00E2BEC4 /* Youcrypt Mac alphaTests */,
+				E0BF0E991596D01F002F9FB9 /* TestBed */,
 			);
 		};
 /* End PBXProject section */
@@ -385,6 +459,7 @@
 				25F3D14D15923FE800E3383C /* Decrypt.xib in Resources */,
 				25F3D15B159244E800E3383C /* Encrypt.xib in Resources */,
 				252C3A491593A5150044EB3C /* dsa_pub.pem in Resources */,
+				E0BF0E911596B99D002F9FB9 /* ListDirectories.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -436,6 +511,7 @@
 				252C3A981593E84F0044EB3C /* CompressingLogFileManager.m in Sources */,
 				252C3A9F1593F0500044EB3C /* logging.h in Sources */,
 				E6822DEF159537C8005F1175 /* YoucryptConfigDirectory.m in Sources */,
+				E0BF0E951596B9C8002F9FB9 /* YoucryptDirectory.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -444,6 +520,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				256C358A158EA75F00E2BEC4 /* Youcrypt_Mac_alphaTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E0BF0E961596D01F002F9FB9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E0BF0EA01596D01F002F9FB9 /* main.m in Sources */,
+				E0BF0EA81596D489002F9FB9 /* YoucryptConfigDirectory.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -607,6 +692,24 @@
 			};
 			name = Release;
 		};
+		E0BF0EA61596D01F002F9FB9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "TestBed/TestBed-Prefix.pch";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		E0BF0EA71596D01F002F9FB9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "TestBed/TestBed-Prefix.pch";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -636,6 +739,14 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
+		};
+		E0BF0EA51596D01F002F9FB9 /* Build configuration list for PBXNativeTarget "TestBed" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E0BF0EA61596D01F002F9FB9 /* Debug */,
+				E0BF0EA71596D01F002F9FB9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 /* End XCConfigurationList section */
 	};

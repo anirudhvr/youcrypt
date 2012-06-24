@@ -10,4 +10,7 @@
 
 @implementation YoucryptDirectory
 
+@dynamic path;
+@dynamic mountedPath;
+
 @end

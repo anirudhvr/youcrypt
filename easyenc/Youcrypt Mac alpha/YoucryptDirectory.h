@@ -8,6 +8,12 @@
 
 #import <Foundation/Foundation.h>
 
-@interface YoucryptDirectory : NSObject
+@interface YoucryptDirectory : NSManagedObject {
+}
+
+@property (nonatomic, strong) NSString *path;          // Path of the youcrypt directory.
+@property (nonatomic, strong) NSString *mountedPath;   // Path if the directory is mounted by us.
+// Add more if needed.
 
 @end
+

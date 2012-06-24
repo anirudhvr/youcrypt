@@ -7,9 +7,14 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "YoucryptDirectory.h"
+#import <stdio.h>
 
 int main(int argc, const char * argv[])
 {
+    // Read config directory here.
+    NSString dirConfigFile = "~/.youcrypt/config.plist";
+    NSU
 
     @autoreleasepool {
         
