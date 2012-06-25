@@ -40,12 +40,13 @@
 		25F3D1511592435600E3383C /* libFunctions.m in Sources */ = {isa = PBXBuildFile; fileRef = 25F3D1501592435600E3383C /* libFunctions.m */; };
 		25F3D15A159244E800E3383C /* Encrypt.m in Sources */ = {isa = PBXBuildFile; fileRef = 25F3D158159244E800E3383C /* Encrypt.m */; };
 		25F3D15B159244E800E3383C /* Encrypt.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25F3D159159244E800E3383C /* Encrypt.xib */; };
-		E0BF0E911596B99D002F9FB9 /* ListDirectories.xib in Resources */ = {isa = PBXBuildFile; fileRef = E0BF0E901596B99D002F9FB9 /* ListDirectories.xib */; };
 		E0BF0E951596B9C8002F9FB9 /* YoucryptDirectory.m in Sources */ = {isa = PBXBuildFile; fileRef = E0BF0E941596B9C8002F9FB9 /* YoucryptDirectory.m */; };
 		E0BF0E9D1596D01F002F9FB9 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E0BF0E9C1596D01F002F9FB9 /* Foundation.framework */; };
 		E0BF0EA01596D01F002F9FB9 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E0BF0E9F1596D01F002F9FB9 /* main.m */; };
 		E0BF0EA41596D01F002F9FB9 /* TestBed.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = E0BF0EA31596D01F002F9FB9 /* TestBed.1 */; };
-		E0BF0EA81596D489002F9FB9 /* YoucryptConfigDirectory.m in Sources */ = {isa = PBXBuildFile; fileRef = E6822DEE159537C8005F1175 /* YoucryptConfigDirectory.m */; };
+		E0BF0EB415980A72002F9FB9 /* YoucryptDirectory.m in Sources */ = {isa = PBXBuildFile; fileRef = E0BF0E941596B9C8002F9FB9 /* YoucryptDirectory.m */; };
+		E0BF0EBD159838DD002F9FB9 /* ListDirectoriesWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = E0BF0EBB159838DD002F9FB9 /* ListDirectoriesWindow.m */; };
+		E0BF0EBE159838DD002F9FB9 /* ListDirectoriesWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = E0BF0EBC159838DD002F9FB9 /* ListDirectoriesWindow.xib */; };
 		E6822DEF159537C8005F1175 /* YoucryptConfigDirectory.m in Sources */ = {isa = PBXBuildFile; fileRef = E6822DEE159537C8005F1175 /* YoucryptConfigDirectory.m */; };
 		E6E2A0BA15926C8C003E3F6C /* YoucryptService.m in Sources */ = {isa = PBXBuildFile; fileRef = E6E2A0B6159266F6003E3F6C /* YoucryptService.m */; };
 /* End PBXBuildFile section */
@@ -137,7 +138,6 @@
 		25F3D157159244E800E3383C /* Encrypt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Encrypt.h; path = "Youcrypt Mac alpha/Encrypt.h"; sourceTree = "<group>"; };
 		25F3D158159244E800E3383C /* Encrypt.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Encrypt.m; path = "Youcrypt Mac alpha/Encrypt.m"; sourceTree = "<group>"; };
 		25F3D159159244E800E3383C /* Encrypt.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = Encrypt.xib; path = "Youcrypt Mac alpha/Encrypt.xib"; sourceTree = "<group>"; };
-		E0BF0E901596B99D002F9FB9 /* ListDirectories.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ListDirectories.xib; sourceTree = "<group>"; };
 		E0BF0E931596B9C8002F9FB9 /* YoucryptDirectory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YoucryptDirectory.h; sourceTree = "<group>"; };
 		E0BF0E941596B9C8002F9FB9 /* YoucryptDirectory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YoucryptDirectory.m; sourceTree = "<group>"; };
 		E0BF0E9A1596D01F002F9FB9 /* TestBed */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = TestBed; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -145,6 +145,9 @@
 		E0BF0E9F1596D01F002F9FB9 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		E0BF0EA21596D01F002F9FB9 /* TestBed-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TestBed-Prefix.pch"; sourceTree = "<group>"; };
 		E0BF0EA31596D01F002F9FB9 /* TestBed.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = TestBed.1; sourceTree = "<group>"; };
+		E0BF0EBA159838DD002F9FB9 /* ListDirectoriesWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ListDirectoriesWindow.h; sourceTree = "<group>"; };
+		E0BF0EBB159838DD002F9FB9 /* ListDirectoriesWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ListDirectoriesWindow.m; sourceTree = "<group>"; };
+		E0BF0EBC159838DD002F9FB9 /* ListDirectoriesWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ListDirectoriesWindow.xib; sourceTree = "<group>"; };
 		E6822DED159537C8005F1175 /* YoucryptConfigDirectory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = YoucryptConfigDirectory.h; path = "Youcrypt Mac alpha/YoucryptConfigDirectory.h"; sourceTree = "<group>"; };
 		E6822DEE159537C8005F1175 /* YoucryptConfigDirectory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = YoucryptConfigDirectory.m; path = "Youcrypt Mac alpha/YoucryptConfigDirectory.m"; sourceTree = "<group>"; };
 		E6E2A0B6159266F6003E3F6C /* YoucryptService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = YoucryptService.m; path = "Youcrypt Mac alpha/YoucryptService.m"; sourceTree = "<group>"; };
@@ -295,10 +298,10 @@
 			isa = PBXGroup;
 			children = (
 				25F3D159159244E800E3383C /* Encrypt.xib */,
+				E0BF0EBC159838DD002F9FB9 /* ListDirectoriesWindow.xib */,
 				256C35A8158EAF8700E2BEC4 /* Preferences.xib */,
 				25F3D14B15923FE800E3383C /* Decrypt.xib */,
 				256C3574158EA75F00E2BEC4 /* MainMenu.xib */,
-				E0BF0E901596B99D002F9FB9 /* ListDirectories.xib */,
 			);
 			name = UI;
 			path = ..;
@@ -326,6 +329,8 @@
 				25F3D14915923FE800E3383C /* Decrypt.h */,
 				25F3D14A15923FE800E3383C /* Decrypt.m */,
 				25F3D14F1592435600E3383C /* libFunctions.h */,
+				E0BF0EBA159838DD002F9FB9 /* ListDirectoriesWindow.h */,
+				E0BF0EBB159838DD002F9FB9 /* ListDirectoriesWindow.m */,
 				25F3D1501592435600E3383C /* libFunctions.m */,
 				25B1E508158FF5D400CDBC46 /* pipetest.c */,
 				25B1E505158FF48B00CDBC46 /* pipetest.h */,
@@ -459,7 +464,7 @@
 				25F3D14D15923FE800E3383C /* Decrypt.xib in Resources */,
 				25F3D15B159244E800E3383C /* Encrypt.xib in Resources */,
 				252C3A491593A5150044EB3C /* dsa_pub.pem in Resources */,
-				E0BF0E911596B99D002F9FB9 /* ListDirectories.xib in Resources */,
+				E0BF0EBE159838DD002F9FB9 /* ListDirectoriesWindow.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -512,6 +517,7 @@
 				252C3A9F1593F0500044EB3C /* logging.h in Sources */,
 				E6822DEF159537C8005F1175 /* YoucryptConfigDirectory.m in Sources */,
 				E0BF0E951596B9C8002F9FB9 /* YoucryptDirectory.m in Sources */,
+				E0BF0EBD159838DD002F9FB9 /* ListDirectoriesWindow.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -528,7 +534,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E0BF0EA01596D01F002F9FB9 /* main.m in Sources */,
-				E0BF0EA81596D489002F9FB9 /* YoucryptConfigDirectory.m in Sources */,
+				E0BF0EB415980A72002F9FB9 /* YoucryptDirectory.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -747,6 +753,7 @@
 				E0BF0EA71596D01F002F9FB9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

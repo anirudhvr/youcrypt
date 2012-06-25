@@ -21,6 +21,7 @@
 #import "CompressingLogFileManager.h"
 #import "logging.h"
 #import "YoucryptConfigDirectory.h"
+#import "ListDirectoriesWindow.h"
 
 #define prefsToolbar @"Prefs"
 #define quitToolbar @"Quit"
@@ -32,6 +33,7 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
 @synthesize window = _window;
 @synthesize encryptController;
 @synthesize decryptController;
+@synthesize listDirectories;
 @synthesize configDir;
 
 - (id) init
@@ -48,22 +50,15 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
     return self;
 }
 
-+ (NSString *) getVolumeDirPath
-{
-
-}
-
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
     // Insert code here to initialize your application
    
     [NSApp setServicesProvider:youcryptService];
     
-    NSLog(@"This happened!");
     // Logging
    // NSString *logsDirectory = [NSString stringWithFormat:@"%@%@",NSHomeDirectory(),@"/.youcrypt/logs"];
-    YoucryptConfigDirectory *config = [[YoucryptConfigDirectory alloc] init];
-    CompressingLogFileManager *logFileManager = [[CompressingLogFileManager alloc] initWithLogsDirectory:config.youCryptLogDir];
+    CompressingLogFileManager *logFileManager = [[CompressingLogFileManager alloc] initWithLogsDirectory:configDir.youCryptLogDir];
     
     [DDLog addLogger:[DDASLLogger sharedInstance]];
     [DDLog addLogger:[DDTTYLogger sharedInstance]];
@@ -130,7 +125,7 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
         else type = @"M";
 	}
     
-    type = @"X";
+    type = @"L";
     DDLogCVerbose(@"awake! %@",THIS_FILE);
 
     
@@ -146,8 +141,9 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
     else if ([type isEqualToString:@"P"])
         [self showPreferencePanel:self];
     
-  
-    
+    else if ([type isEqualToString:@"L"])
+        [self showListDirectories:self];
+        
 }
 
 
@@ -174,6 +170,16 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
         return;
     filesystems = f;
 }
+
+- (IBAction)showListDirectories:(id)sender
+{
+    // Is list directories nil?
+    if (!listDirectories) {
+        listDirectories = [[ListDirectoriesWindow alloc] initWithListFile:configDir.youCryptListFile];
+    }
+    [listDirectories showWindow:self];
+}
+
 
 - (IBAction)showPreferencePanel:(id)sender
 {

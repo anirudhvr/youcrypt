@@ -14,12 +14,16 @@
 @class Encrypt;
 @class YoucryptConfigDirectory;
 @class YoucryptService;
+@class ListDirectoriesWindow;
 
 @interface AppDelegate : NSObject <NSToolbarDelegate> { // changed from NSApplicationDelegate
     
     // Status Bar for Agent
     IBOutlet NSMenu *statusMenu;
     NSStatusItem *statusItem;
+    
+    // Controller for ListDirectoriesWindow
+    ListDirectoriesWindow *listDirectories;
 
     // For preferences
     PreferenceController *preferenceController;
@@ -57,6 +61,7 @@
 // Enc and Dec
 - (IBAction)showEncryptWindow:(id)sender;
 - (IBAction)showDecryptWindow:(id)sender;
+- (IBAction)showListDirectories:(id)sender;
 
 -(void)setFilesystems:(NSMutableArray*)f;
 - (IBAction)resizeWindow:(id)sender;
@@ -66,6 +71,7 @@
 @property (atomic,strong) Encrypt *encryptController;
 @property (atomic,strong) Decrypt *decryptController;
 @property (atomic,strong) YoucryptConfigDirectory *configDir;
+@property (nonatomic,strong) ListDirectoriesWindow *listDirectories;
 
 // To find the dir to store youcrypt volumes and 
 // have tmp dirs to move shit around

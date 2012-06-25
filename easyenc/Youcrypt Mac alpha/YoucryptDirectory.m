@@ -10,7 +10,22 @@
 
 @implementation YoucryptDirectory
 
-@dynamic path;
-@dynamic mountedPath;
+@synthesize path;
+@synthesize mountedPath;
+
+- (id)initWithCoder:(NSCoder *)decoder {
+    self = [super init];
+    if (self != nil) {
+        path = [decoder decodeObjectForKey:@"path"];
+        mountedPath = [decoder decodeObjectForKey:@"mountedPath"];
+    }
+    return self;
+}   
+
+- (void)encodeWithCoder:(NSCoder *)encoder {
+    [encoder encodeObject:path forKey:@"path"];
+    [encoder encodeObject:mountedPath forKey:@"mountedPath"];
+}
 
 @end
+

@@ -15,6 +15,8 @@
 @synthesize youCryptVolDir;
 @synthesize youCryptTmpDir;
 @synthesize youCryptLogDir;
+@synthesize youCryptLockFile;
+@synthesize youCryptListFile;
 
 -(id)init
 {
@@ -25,11 +27,12 @@
     youCryptVolDir = [homedir stringByAppendingPathComponent:@"/.youcrypt/tmp"];
     youCryptTmpDir = [homedir stringByAppendingPathComponent:@"/.youcrypt/volumes"];
     youCryptLogDir = [homedir stringByAppendingFormat:@"/.youcrypt/logs"];
+    youCryptListFile = [homedir stringByAppendingPathComponent:@"/.youcrypt/dirs.plist"];
     
     mkdirRecursive(youCryptVolDir);
     mkdirRecursive(youCryptTmpDir);
     mkdirRecursive(youCryptLogDir);
-        return self;
+    return self;
 }
 
 -(NSString*)getLogDir
