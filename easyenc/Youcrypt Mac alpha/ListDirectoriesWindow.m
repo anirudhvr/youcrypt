@@ -108,5 +108,32 @@
 }
 
 
+- (IBAction)doEncrypt:(id)sender {
+}
+
+- (IBAction)doOpen:(id)sender {
+    int a = 10;
+    a ++;
+}
+
+- (IBAction)doProps:(id)sender {
+    int a = 10;
+    a ++;
+}
+
+- (IBAction)selectRow:(id)sender {
+
+}
+
+- (IBAction)addNew:(id)sender {
+    
+}
+
+- (IBAction)removeFS:(id)sender {
+    
+}
+
+
+
 
 @end

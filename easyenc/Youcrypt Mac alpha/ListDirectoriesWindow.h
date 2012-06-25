@@ -10,16 +10,22 @@
 #import "YoucryptDirectory.h"
 
 @interface ListDirectoriesWindow : NSWindowController <NSTableViewDataSource> {
-    NSMutableArray *directories;
-    
+    IBOutlet NSMutableArray *directories;    
     IBOutlet NSTableView *table;
+    IBOutlet NSTextField *dirName;          // The text field at the bottom.
 }
 
 @property (nonatomic, strong) NSString *directoriesListFile;
+@property (nonatomic, strong) NSMutableArray *directories;
 
 - (id)initWithListFile:(NSString *)dList;
 
-
+- (IBAction)doEncrypt:(id)sender;
+- (IBAction)doOpen:(id)sender;
+- (IBAction)doProps:(id)sender;
+- (IBAction)selectRow:(id)sender;
+- (IBAction)addNew:(id)sender;
+- (IBAction)removeFS:(id)sender;
 
 
 @end
