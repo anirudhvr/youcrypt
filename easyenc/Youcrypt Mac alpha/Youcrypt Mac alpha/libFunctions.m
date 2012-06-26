@@ -9,6 +9,7 @@
 #import "libFunctions.h"
 #import "SSKeychain.h"
 #import "logging.h"
+#import "pipetest.h"
 
 @implementation libFunctions
 
@@ -78,7 +79,7 @@ void mkdirRecursive(NSString *path)
     
     NSLog(@"mkdir -p this [%@]", command);
     
-    char *cmd = [command UTF8String];
+    const char *cmd = [command UTF8String];
     char *out, *err;
     int outlen,errlen;
     

@@ -13,6 +13,9 @@
 
 @property (nonatomic, strong) NSString *path;          // Path of the youcrypt directory.
 @property (nonatomic, strong) NSString *mountedPath;   // Path if the directory is mounted by us.
+@property (nonatomic, assign) BOOL mounted;            // Is this mounted somewhere?
+@property (nonatomic, strong) NSString *alias;         // Readable name (last path component?)
+
 // Add more if needed.
 
 @end

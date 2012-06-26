@@ -73,13 +73,5 @@
 @property (atomic,strong) YoucryptConfigDirectory *configDir;
 @property (nonatomic,strong) ListDirectoriesWindow *listDirectories;
 
-// To find the dir to store youcrypt volumes and 
-// have tmp dirs to move shit around
-+ (NSString *)getVolumeDirPath;
-
-
-// to implement
-- (IBAction)launchAgent:(id)sender;
-
 
 @end

@@ -24,7 +24,6 @@
               userData:(NSString *)data
                  error:(NSString **)error
 {
-    NSString *pboardString;
     NSArray *types;
     
     types = [pboard types];
@@ -61,7 +60,7 @@
               userData:(NSString *)data
                  error:(NSString **)error
 {
-    NSString *pboardString;
+//    NSString *pboardString;
     NSArray *types;
     
     types = [pboard types];

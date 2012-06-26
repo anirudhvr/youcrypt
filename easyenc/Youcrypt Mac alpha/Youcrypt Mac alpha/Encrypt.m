@@ -108,7 +108,7 @@
 /* Change Folder Icon */
 - (IBAction)setFolderIcon:(id)sender
 {
-    NSString *curDir = [[NSFileManager defaultManager] currentDirectoryPath];
+//    NSString *curDir = [[NSFileManager defaultManager] currentDirectoryPath];
     NSString *bundlepath =[[NSBundle mainBundle] resourcePath];
     NSString *iconPath = [bundlepath stringByAppendingPathComponent:@"/lockedfolder2.icns"]; 
     NSImage* iconImage = [[NSImage alloc] initWithContentsOfFile:iconPath];
@@ -135,16 +135,16 @@
 //	NSArray *arguments = [[NSProcessInfo processInfo] arguments];
 	
 //	NSMutableString *srcFolder = [arguments objectAtIndex:2];
-    	NSMutableString *srcFolder = sourceFolderPath;
+    NSString *srcFolder = sourceFolderPath;
 //	NSMutableString *destFolder = [arguments objectAtIndex:3];
-    	NSMutableString *destFolder = destFolderPath;
+    NSString *destFolder = destFolderPath;
 	
 	/*** 
 	 PREPARATIONS
 	 A mkdir -p $HOME/easyenc/src 
 	 B mkdir -p /tmp/easyenc/src
-	 C cp -r src/* /tmp/easyenc/src
-	 D rm -rf src/*
+	 C cp -r src/ * /tmp/easyenc/src
+	 D rm -rf src/ *
 	 ***/
 	
 	NSString *tempFolder = [@"/tmp/easyenc/" stringByAppendingPathComponent:srcFolder];
@@ -208,7 +208,7 @@
     
 	/*** 
 	 PREPARE ORIGINAL FOLDER
-	 cp -r /tmp/easyenc/src/* $HOME/easyenc/src
+	 cp -r /tmp/easyenc/src/ * $HOME/easyenc/src
 	 rm -rf /tmp/easyenc/src
 	***/
 	

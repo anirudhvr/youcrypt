@@ -14,7 +14,7 @@
 extern int errno;
 #define BUFSZ 2048
 
-int run_command(char *command, char **out_msg, int *out_len,
+int run_command(const char *command, char **out_msg, int *out_len,
                 char **err_msg, int *err_len);
 
 

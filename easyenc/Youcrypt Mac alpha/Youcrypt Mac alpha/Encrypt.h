@@ -26,9 +26,6 @@
 @property (atomic, strong) NSString *passphraseFromKeychain;
 
 -(IBAction)encrypt:(id)sender;
--(void)createDirectoryRecursivelyAtPath:(NSString*)path;
--(NSString*)createDestFolder:(NSString*)basepath sourcepath:(NSString*)srcpath;
-
 -(IBAction)shareCheckClicked:(id)sender;
 -(IBAction)startIt:(id)sender;
 -(void)setPassphraseTextField:(NSString*)string;
