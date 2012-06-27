@@ -9,9 +9,15 @@
 #import <Cocoa/Cocoa.h>
 
 @interface PreferenceController : NSWindowController {
+    
+    NSTabView *tabView;
+    // services stuff
     IBOutlet NSButton *checkbox;
     IBOutlet NSPathControl *dbLocation;
     BOOL changed;
+    
+    
+    
 }
 
 static NSArray *openFiles();
