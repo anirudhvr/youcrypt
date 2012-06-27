@@ -7,8 +7,9 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "BoxFSA.h"
 
-@interface PreferenceController : NSWindowController {
+@interface PreferenceController : NSWindowController <NSAlertDelegate,RKRequestDelegate> {
     
     NSTabView *tabView;
 
@@ -16,7 +17,9 @@
     
     
     // Account preferences
-    
+    IBOutlet NSButton *linkBox;
+    IBOutlet NSTextField *boxLinkStatus; 
+    BoxFSA *boxClient;
     
     // Services preferences
     IBOutlet NSButton *checkbox;
@@ -30,6 +33,13 @@
 static NSArray *openFiles();
 NSString* systemCall(NSString *binary, NSArray *arguments);
 
+@property (nonatomic) RKClient *client;
+@property (nonatomic, strong) BoxFSA *boxClient;
+
 - (IBAction)chooseDBLocation:(id)sender;
 - (IBAction)saveButton:(id)sender;
+
+- (IBAction)linkBoxAccount:(id)sender;
+-(void)boxAuthDone:(NSAlert *)alert returnCode:(NSInteger)returnCode;
+
 @end

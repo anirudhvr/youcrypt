@@ -4,6 +4,11 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>TestBed.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>1</integer>
+		</dict>
 		<key>Youcrypt Mac alpha.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
@@ -18,6 +23,11 @@
 			<true/>
 		</dict>
 		<key>256C357B158EA75F00E2BEC4</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>E0BF0E991596D01F002F9FB9</key>
 		<dict>
 			<key>primary</key>
 			<true/>

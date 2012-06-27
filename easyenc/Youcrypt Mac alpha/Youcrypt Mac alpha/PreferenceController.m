@@ -12,6 +12,10 @@
 
 @implementation PreferenceController
 
+@synthesize client = _client;
+@synthesize boxClient;
+
+
 - (id)init 
 {
     if (![super initWithWindowNibName:@"Preferences"])
@@ -22,6 +26,7 @@
 
 - (void)awakeFromNib
 {	
+    boxClient = [[BoxFSA alloc] init];
     DDLogVerbose(@"Nib file is loaded");
 
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -35,7 +40,7 @@
     
     // NSString *dropboxURL = systemCall(binary, arguments);
     
-    char *shellFile = "/Users/avr/Dropbox/get_dropbox_folder.sh";
+    char *shellFile = "/Users/hr/Dropbox/get_dropbox_folder.sh";
     char *out, *err;
     int outlen,errlen;
     
@@ -55,15 +60,66 @@
     else {
         dropboxURL = dropboxDefault;
     }
-                              
+                    
+    if([defaults objectForKey:@"ycbox"] == nil) {
+        [boxLinkStatus setTextColor:[NSColor redColor]];
+        [boxLinkStatus setStringValue:@"Unlinked"];
+
+    } else {
+        [linkBox setTitle:@"Unlink"];
+        [boxLinkStatus setTextColor:[NSColor greenColor]];
+        [boxLinkStatus setStringValue:@"Linked"];
+    }
     int state;
     state = val?1:0;
    
     NSURL *url = [NSURL URLWithString:((NSString*)dropboxURL)];
     
+    [dbLocation setHidden:NO];
+    
     [checkbox setState:state];
     [dbLocation setURL:url];
    
+}
+
+-(void)refreshBoxLinkStatus:(BOOL)linked
+{
+    if(linked){
+        [linkBox setTitle:@"Unlink"];
+        [boxLinkStatus setTextColor:[NSColor greenColor]];
+        [boxLinkStatus setStringValue:@"Linked"];
+    }
+    else {
+        [linkBox setTitle:@"Link"];
+        [boxLinkStatus setTextColor:[NSColor redColor]];
+        [boxLinkStatus setStringValue:@"Unlinked"];
+    }
+
+}
+
+-(IBAction)linkBoxAccount:(id)sender
+{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    if([defaults objectForKey:@"ycbox"] == nil) {
+        [boxClient auth];
+        NSAlert *alert = [[NSAlert alloc] init];
+        [alert addButtonWithTitle:@"OK"];
+        [alert setMessageText:@"When You have authorized us. please click OK."];
+        [alert setInformativeText:@"Please do not click OK before logging into Box."];
+        [alert setAlertStyle:NSWarningAlertStyle];
+        [alert beginSheetModalForWindow:self.window modalDelegate:self didEndSelector:@selector(boxAuthDone:returnCode:) contextInfo:nil];
+    }
+    else {
+        [defaults setObject:nil forKey:@"ycbox"];
+        [self refreshBoxLinkStatus:NO];
+    }
+    
+}
+
+-(void)boxAuthDone:(NSAlert *)alert returnCode:(NSInteger)returnCode
+{
+    [boxClient userGavePerms];
+    [self refreshBoxLinkStatus:YES];
 }
 
 -(IBAction)changeSetting:(id)sender
