@@ -11,7 +11,14 @@
 @interface PreferenceController : NSWindowController {
     
     NSTabView *tabView;
-    // services stuff
+
+    // General preferences
+    
+    
+    // Account preferences
+    
+    
+    // Services preferences
     IBOutlet NSButton *checkbox;
     IBOutlet NSPathControl *dbLocation;
     BOOL changed;

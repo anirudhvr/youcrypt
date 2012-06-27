@@ -23,17 +23,19 @@
 - (void)awakeFromNib
 {	
     DDLogVerbose(@"Nib file is loaded");
-    
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults removeObjectForKey:@"ycdropbox"];
+    
     BOOL val = [defaults boolForKey:@"yccheck"];
     
+     
     //NSString *binary = @"/bin/sh";
    // NSArray *arguments = [NSArray arrayWithObjects: @"/Users/hr/Dropbox/get_dropbox_folder.sh",nil];
     
     // NSString *dropboxURL = systemCall(binary, arguments);
     
-    char *shellFile = "/Users/hr/Dropbox/get_dropbox_folder.sh";
+    char *shellFile = "/Users/avr/Dropbox/get_dropbox_folder.sh";
     char *out, *err;
     int outlen,errlen;
     
@@ -41,9 +43,10 @@
     NSString *dropboxDefault = [defaults objectForKey:@"ycdropbox"];
     
     if(dropboxDefault == nil) {
-        if(run_command(shellFile, &out, &outlen, &err, &errlen))
+        if(run_command(shellFile, &out, &outlen, &err, &errlen)) {
             DDLogVerbose(@"fail");
-        else {
+            dropboxURL = NSHomeDirectory();
+        } else {
             dropboxURL = [NSString stringWithFormat:@"%s",out];
             dropboxURL = [dropboxURL stringByReplacingOccurrencesOfString:@"\n" withString:@""];
             DDLogVerbose(@"new: [%@] ",dropboxURL);
@@ -60,7 +63,7 @@
     
     [checkbox setState:state];
     [dbLocation setURL:url];
-    
+   
 }
 
 -(IBAction)changeSetting:(id)sender
