@@ -1,0 +1,3 @@
+[submodule "easyenc/Youcrypt Mac alpha/RestKit"]
+	path = easyenc/Youcrypt Mac alpha/RestKit
+	url = git://github.com/RestKit/RestKit.git
