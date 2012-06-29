@@ -47,6 +47,7 @@
 		E0BF0EB415980A72002F9FB9 /* YoucryptDirectory.m in Sources */ = {isa = PBXBuildFile; fileRef = E0BF0E941596B9C8002F9FB9 /* YoucryptDirectory.m */; };
 		E0BF0EBD159838DD002F9FB9 /* ListDirectoriesWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = E0BF0EBB159838DD002F9FB9 /* ListDirectoriesWindow.m */; };
 		E0BF0EBE159838DD002F9FB9 /* ListDirectoriesWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = E0BF0EBC159838DD002F9FB9 /* ListDirectoriesWindow.xib */; };
+		E0F9DCE9159BE99C00DBDD02 /* pipetest.c in Sources */ = {isa = PBXBuildFile; fileRef = 25B1E508158FF5D400CDBC46 /* pipetest.c */; };
 		E6822DEF159537C8005F1175 /* YoucryptConfigDirectory.m in Sources */ = {isa = PBXBuildFile; fileRef = E6822DEE159537C8005F1175 /* YoucryptConfigDirectory.m */; };
 		E6E2A0BA15926C8C003E3F6C /* YoucryptService.m in Sources */ = {isa = PBXBuildFile; fileRef = E6E2A0B6159266F6003E3F6C /* YoucryptService.m */; };
 /* End PBXBuildFile section */
@@ -535,6 +536,7 @@
 			files = (
 				E0BF0EA01596D01F002F9FB9 /* main.m in Sources */,
 				E0BF0EB415980A72002F9FB9 /* YoucryptDirectory.m in Sources */,
+				E0F9DCE9159BE99C00DBDD02 /* pipetest.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

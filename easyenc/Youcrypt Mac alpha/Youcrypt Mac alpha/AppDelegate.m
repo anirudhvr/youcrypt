@@ -82,7 +82,7 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
     [self showDecryptWindow:self];
   
     decryptController.sourceFolderPath = file;
-    NSString *dest = [configDir.youCryptVolDir stringByAppendingPathComponent:file];
+    NSString *dest = [[configDir.youCryptVolDir stringByAppendingPathComponent:file] stringByDeletingPathExtension];
     decryptController.destFolderPath = dest;
     
     DDLogVerbose(@"The following file has been dropped or selected: %@",file);

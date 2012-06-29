@@ -132,17 +132,23 @@ StreamNameIO.lo .libs/StreamNameIO.o: StreamNameIO.cpp StreamNameIO.h \
   /opt/local/include/boost/smart_ptr/detail/yield_k.hpp \
   /opt/local/include/boost/memory_order.hpp \
   /opt/local/include/boost/smart_ptr/detail/operator_bool.hpp Cipher.h \
-  encfs.h ../config.h /usr/local/include/osxfuse/fuse.h \
-  /usr/local/include/osxfuse/fuse/fuse.h \
-  /usr/local/include/osxfuse/fuse/fuse_common.h \
-  /usr/local/include/osxfuse/fuse/fuse_opt.h /usr/include/sys/stat.h \
+  encfs.h ../config.h /opt/local/include/fuse.h \
+  /opt/local/include/fuse/fuse.h /opt/local/include/fuse/fuse_common.h \
+  /opt/local/include/fuse/fuse_opt.h /usr/include/sys/stat.h \
   /usr/include/fcntl.h /usr/include/sys/fcntl.h /usr/include/utime.h \
   /usr/include/sys/types.h /usr/include/sys/statvfs.h \
-  /usr/include/c++/4.2.1/cerrno /usr/include/errno.h \
-  /usr/include/sys/errno.h Range.h base64.h \
+  /usr/include/sys/uio.h /usr/include/c++/4.2.1/cerrno \
+  /usr/include/errno.h /usr/include/sys/errno.h Range.h base64.h \
   /opt/local/include/rlog/rlog.h /opt/local/include/rlog/common.h \
   /opt/local/include/rlog/rlog-c99.h /opt/local/include/rlog/Error.h \
-  /usr/include/c++/4.2.1/stdexcept i18n.h
+  /usr/include/c++/4.2.1/stdexcept i18n.h ../intl/gettext.h \
+  /opt/local/include/libintl.h /usr/include/xlocale.h \
+  /usr/include/_xlocale.h /usr/include/xlocale/_ctype.h \
+  /usr/include/xlocale/__wctype.h /usr/include/xlocale/_inttypes.h \
+  /usr/include/xlocale/_stdio.h /usr/include/xlocale/_stdlib.h \
+  /usr/include/xlocale/_string.h /usr/include/xlocale/_time.h \
+  /usr/include/xlocale/_wchar.h /usr/include/xlocale/_wctype.h \
+  ../intl/autosprintf.h
 
 StreamNameIO.h:
 
@@ -518,13 +524,13 @@ encfs.h:
 
 ../config.h:
 
-/usr/local/include/osxfuse/fuse.h:
+/opt/local/include/fuse.h:
 
-/usr/local/include/osxfuse/fuse/fuse.h:
+/opt/local/include/fuse/fuse.h:
 
-/usr/local/include/osxfuse/fuse/fuse_common.h:
+/opt/local/include/fuse/fuse_common.h:
 
-/usr/local/include/osxfuse/fuse/fuse_opt.h:
+/opt/local/include/fuse/fuse_opt.h:
 
 /usr/include/sys/stat.h:
 
@@ -537,6 +543,8 @@ encfs.h:
 /usr/include/sys/types.h:
 
 /usr/include/sys/statvfs.h:
+
+/usr/include/sys/uio.h:
 
 /usr/include/c++/4.2.1/cerrno:
 
@@ -559,3 +567,31 @@ base64.h:
 /usr/include/c++/4.2.1/stdexcept:
 
 i18n.h:
+
+../intl/gettext.h:
+
+/opt/local/include/libintl.h:
+
+/usr/include/xlocale.h:
+
+/usr/include/_xlocale.h:
+
+/usr/include/xlocale/_ctype.h:
+
+/usr/include/xlocale/__wctype.h:
+
+/usr/include/xlocale/_inttypes.h:
+
+/usr/include/xlocale/_stdio.h:
+
+/usr/include/xlocale/_stdlib.h:
+
+/usr/include/xlocale/_string.h:
+
+/usr/include/xlocale/_time.h:
+
+/usr/include/xlocale/_wchar.h:
+
+/usr/include/xlocale/_wctype.h:
+
+../intl/autosprintf.h:
