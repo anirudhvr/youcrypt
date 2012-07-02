@@ -61,15 +61,13 @@
     
     mkdirRecursive(destFolder);
 		
-    systemCall(@"/usr/local/bin/encfs", [NSArray arrayWithObjects:
+    execWithSocket(@"/usr/local/bin/encfs", [NSArray arrayWithObjects:
+                                         @"/usr/local/bin/encfs",
                                          srcFolder,
                                          destFolder, 
                                          @"--pw", yourPasswordString, 
                                          nil]);
-    
-    systemCall(@"/usr/bin/open", [NSArray arrayWithObject:destFolder]);
-	
-	[NSApp terminate: nil];
+    [[NSWorkspace sharedWorkspace] openFile:destFolder];
     DDLogVerbose(@"dfdsds");
 	
 }

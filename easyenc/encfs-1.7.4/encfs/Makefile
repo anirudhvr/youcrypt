@@ -46,11 +46,11 @@ am__append_1 = -D__FreeBSD__=10
 
 # define a C macro LOCALEDIR indicating where catalogs will be installed
 #localedir = $(datadir)/locale
-#am__append_2 = -DLOCALEDIR=\"$(localedir)\"
-#am__append_3 = 
+am__append_2 = -DLOCALEDIR=\"$(localedir)\"
+am__append_3 = -L/opt/local/lib -lintl -liconv -lc  -Wl,-framework -Wl,CoreFoundation
 bin_PROGRAMS = encfs$(EXEEXT) encfsctl$(EXEEXT)
 noinst_PROGRAMS = test$(EXEEXT) makeKey$(EXEEXT)
-am__append_4 = SSL_Cipher.cpp
+#am__append_4 = SSL_Cipher.cpp
 subdir = encfs
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/m4-local/ax_boost_base.m4 \
@@ -103,8 +103,8 @@ am__libencfs_la_SOURCES_DIST = readpassphrase.cpp base64.cpp \
 	BlockNameIO.cpp NullNameIO.cpp Interface.cpp MemoryPool.cpp \
 	NullCipher.cpp DirNode.cpp FileNode.cpp FileUtils.cpp \
 	openssl.cpp ../intl/autosprintf.cpp SSL_Cipher.cpp
-am__objects_1 =  \
-	SSL_Cipher.lo
+#am__objects_1 =  \
+#	SSL_Cipher.lo
 am__objects_2 = autosprintf.lo $(am__objects_1)
 am_libencfs_la_OBJECTS = readpassphrase.lo base64.lo ConfigReader.lo \
 	ConfigVar.lo Context.lo Cipher.lo CipherKey.lo FileIO.lo \
@@ -168,23 +168,23 @@ HEADERS = $(noinst_HEADERS)
 ETAGS = etags
 CTAGS = ctags
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
-ACLOCAL = ${SHELL} /Users/hr/code/easyenc/easyenc/encfs-1.7.4/missing --run aclocal-1.11
-AMTAR = ${SHELL} /Users/hr/code/easyenc/easyenc/encfs-1.7.4/missing --run tar
+ACLOCAL = ${SHELL} /Users/rajsekar/work/encint/repos/easyenc/easyenc/encfs-1.7.4/missing --run aclocal-1.11
+AMTAR = ${SHELL} /Users/rajsekar/work/encint/repos/easyenc/easyenc/encfs-1.7.4/missing --run tar
 AR = ar
-AUTOCONF = ${SHELL} /Users/hr/code/easyenc/easyenc/encfs-1.7.4/missing --run autoconf
-AUTOHEADER = ${SHELL} /Users/hr/code/easyenc/easyenc/encfs-1.7.4/missing --run autoheader
-AUTOMAKE = ${SHELL} /Users/hr/code/easyenc/easyenc/encfs-1.7.4/missing --run automake-1.11
+AUTOCONF = ${SHELL} /Users/rajsekar/work/encint/repos/easyenc/easyenc/encfs-1.7.4/missing --run autoconf
+AUTOHEADER = ${SHELL} /Users/rajsekar/work/encint/repos/easyenc/easyenc/encfs-1.7.4/missing --run autoheader
+AUTOMAKE = ${SHELL} /Users/rajsekar/work/encint/repos/easyenc/easyenc/encfs-1.7.4/missing --run automake-1.11
 AWK = awk
-BOOST_CPPFLAGS = -I/usr/local/include
-BOOST_FILESYSTEM_LIB = -lboost_filesystem
-BOOST_LDFLAGS = -L/usr/local/lib
-BOOST_SERIALIZATION_LIB = -lboost_serialization
-BOOST_SYSTEM_LIB = -lboost_system
+BOOST_CPPFLAGS = -I/opt/local/include
+BOOST_FILESYSTEM_LIB = -lboost_filesystem-mt
+BOOST_LDFLAGS = -L/opt/local/lib
+BOOST_SERIALIZATION_LIB = -lboost_serialization-mt
+BOOST_SYSTEM_LIB = -lboost_system-mt
 CC = gcc
 CCDEPMODE = depmode=gcc3
-CFLAGS = -I/usr/local/include/ -I/opt/local/include
+CFLAGS = -g -O2
 CPP = gcc -E
-CPPFLAGS = -I/usr/local/include/ -I/opt/local/include -I/usr/local/include/osxfuse  -D_FILE_OFFSET_BITS=64 -DFUSE_USE_VERSION=26 -D__STDC_FORMAT_MACROS
+CPPFLAGS = -I/opt/local/include  -D_FILE_OFFSET_BITS=64 -DFUSE_USE_VERSION=26 -D__STDC_FORMAT_MACROS
 CXX = g++
 CXXCPP = g++ -E
 CXXDEPMODE = depmode=gcc3
@@ -202,8 +202,8 @@ EXEEXT =
 FGREP = /usr/bin/grep -F
 FUSE_LIBS = -lfuse_ino64
 GETTEXT_MACRO_VERSION = 0.17
-GMSGFMT = /opt/local/bin/msgfmt
-GMSGFMT_015 = /opt/local/bin/msgfmt
+GMSGFMT = :
+GMSGFMT_015 = :
 GREP = /usr/bin/grep
 HAVE_EVP_AES = 
 HAVE_EVP_BF = 
@@ -214,31 +214,31 @@ INSTALL_DATA = ${INSTALL} -m 644
 INSTALL_PROGRAM = ${INSTALL}
 INSTALL_SCRIPT = ${INSTALL}
 INSTALL_STRIP_PROGRAM = $(install_sh) -c -s
-INTLLIBS = 
+INTLLIBS = -L/opt/local/lib -lintl -liconv -lc  -Wl,-framework -Wl,CoreFoundation
 INTL_MACOSX_LIBS = -Wl,-framework -Wl,CoreFoundation
 LD = /usr/llvm-gcc-4.2/libexec/gcc/i686-apple-darwin11/4.2.1/ld
-LDFLAGS = -lintl -L/usr/local/lib -L/opt/local/lib   -L/opt/local/lib
-LIBICONV = -liconv
-LIBINTL = 
+LDFLAGS =    -L/opt/local/lib
+LIBICONV = -L/opt/local/lib -liconv
+LIBINTL = -L/opt/local/lib -lintl -liconv -lc  -Wl,-framework -Wl,CoreFoundation
 LIBOBJS = 
 LIBS =  
 LIBTOOL = $(SHELL) $(top_builddir)/libtool
 LIPO = lipo
 LN_S = ln -s
 LTLIBICONV = -L/opt/local/lib -liconv -R/opt/local/lib
-LTLIBINTL = 
+LTLIBINTL = -L/opt/local/lib -lintl -L/opt/local/lib -liconv -lc -R/opt/local/lib -Wl,-framework -Wl,CoreFoundation
 LTLIBOBJS = 
-MAKEINFO = ${SHELL} /Users/hr/code/easyenc/easyenc/encfs-1.7.4/missing --run makeinfo
+MAKEINFO = ${SHELL} /Users/rajsekar/work/encint/repos/easyenc/easyenc/encfs-1.7.4/missing --run makeinfo
 MKDIR_P = .././install-sh -c -d
-MSGFMT = /opt/local/bin/msgfmt
-MSGFMT_015 = /opt/local/bin/msgfmt
-MSGMERGE = /opt/local/bin/msgmerge
+MSGFMT = :
+MSGFMT_015 = :
+MSGMERGE = :
 NM = /usr/bin/nm
 NMEDIT = nmedit
 OBJDUMP = false
 OBJEXT = o
-OPENSSL_CFLAGS =  
-OPENSSL_LIBS = -lssl -lcrypto -lz  
+OPENSSL_CFLAGS = 
+OPENSSL_LIBS = -lssl
 OTOOL = otool
 OTOOL64 = :
 PACKAGE = encfs
@@ -249,12 +249,12 @@ PACKAGE_TARNAME =
 PACKAGE_URL = 
 PACKAGE_VERSION = 
 PATH_SEPARATOR = :
-PKG_CONFIG = /usr/local/bin/pkg-config
+PKG_CONFIG = 
 PKG_CONFIG_LIBDIR = 
 PKG_CONFIG_PATH = 
-POD2HTML = /opt/local/bin/pod2html
-POD2MAN = /opt/local/bin/pod2man
-POSUB = 
+POD2HTML = /usr/bin/pod2html
+POD2MAN = /usr/bin/pod2man
+POSUB = po
 PTHREAD_CC = gcc
 PTHREAD_CFLAGS = -D_THREAD_SAFE 
 PTHREAD_LIBS = 
@@ -265,15 +265,15 @@ SED = /usr/bin/sed
 SET_MAKE = 
 SHELL = /bin/sh
 STRIP = strip
-USE_NLS = no
+USE_NLS = yes
 VERSION = 1.7.4
-XGETTEXT = /opt/local/bin/xgettext
-XGETTEXT_015 = /opt/local/bin/xgettext
+XGETTEXT = :
+XGETTEXT_015 = :
 XGETTEXT_EXTRA_OPTIONS = 
-abs_builddir = /Users/hr/code/easyenc/easyenc/encfs-1.7.4/encfs
-abs_srcdir = /Users/hr/code/easyenc/easyenc/encfs-1.7.4/encfs
-abs_top_builddir = /Users/hr/code/easyenc/easyenc/encfs-1.7.4
-abs_top_srcdir = /Users/hr/code/easyenc/easyenc/encfs-1.7.4
+abs_builddir = /Users/rajsekar/work/encint/repos/easyenc/easyenc/encfs-1.7.4/encfs
+abs_srcdir = /Users/rajsekar/work/encint/repos/easyenc/easyenc/encfs-1.7.4/encfs
+abs_top_builddir = /Users/rajsekar/work/encint/repos/easyenc/easyenc/encfs-1.7.4
+abs_top_srcdir = /Users/rajsekar/work/encint/repos/easyenc/easyenc/encfs-1.7.4
 ac_ct_CC = gcc
 ac_ct_CXX = g++
 ac_ct_DUMPBIN = 
@@ -303,7 +303,7 @@ host_vendor = apple
 htmldir = ${docdir}
 includedir = ${prefix}/include
 infodir = ${datarootdir}/info
-install_sh = ${SHELL} /Users/hr/code/easyenc/easyenc/encfs-1.7.4/install-sh
+install_sh = ${SHELL} /Users/rajsekar/work/encint/repos/easyenc/easyenc/encfs-1.7.4/install-sh
 libdir = ${exec_prefix}/lib
 libexecdir = ${exec_prefix}/libexec
 localedir = ${datarootdir}/locale
@@ -312,7 +312,7 @@ mandir = ${datarootdir}/man
 mkdir_p = $(top_builddir)/./install-sh -c -d
 oldincludedir = /usr/include
 pdfdir = ${docdir}
-prefix = /usr/local
+prefix = /opt/local
 program_transform_name = s,x,x,
 psdir = ${docdir}
 sbindir = ${exec_prefix}/sbin
@@ -324,10 +324,10 @@ top_build_prefix = ../
 top_builddir = ..
 top_srcdir = ..
 KDE_OPTIONS = qtonly
-ALL_INCLUDES =    -I/usr/local/include
-ALL_LDFLAGS = -lrlog -lssl -lcrypto -lz   -lfuse_ino64 -L/usr/local/lib \
-	-lboost_serialization -lboost_filesystem \
-	-lboost_system $(am__append_3)
+ALL_INCLUDES =   -I/opt/local/include
+ALL_LDFLAGS = -lrlog -lssl -lfuse_ino64 -L/opt/local/lib \
+	-lboost_serialization-mt -lboost_filesystem-mt \
+	-lboost_system-mt $(am__append_3)
 INCLUDES = $(all_includes) -I../intl
 AM_CXXFLAGS = -DRLOG_COMPONENT="encfs" $(ALL_INCLUDES) $(am__append_1) \
 	$(am__append_2)
@@ -350,8 +350,8 @@ makeKey_LDADD = libencfs.la $(ALL_LDFLAGS)
 #
 libencfs_la_LDFLAGS = -version-info 6:1:0
 libencfs_la_LIBADD = -lrlog \
-	-lssl -lcrypto -lz   \
-	-lboost_serialization -lboost_filesystem -lboost_system
+	-lssl \
+	-lboost_serialization-mt -lboost_filesystem-mt -lboost_system-mt
 
 EXTRASRC = ../intl/autosprintf.cpp $(am__append_4)
 libencfs_la_SOURCES = \
@@ -934,10 +934,10 @@ uninstall-man: uninstall-man1
 all-local: encfs-man.html
 # since we have POD2MAN, we can specify how to rebuild encfs.1 if necessary
 .pod.1:
-	/opt/local/bin/pod2man --section=1 --release=1.7.4 --center="Encrypted Filesystem" $< $@
+	/usr/bin/pod2man --section=1 --release=1.7.4 --center="Encrypted Filesystem" $< $@
 
 encfs-man.html: encfs.pod
-	/opt/local/bin/pod2html encfs.pod > $@
+	/usr/bin/pod2html encfs.pod > $@
 
 tests:
 	perl -MTest::Harness -e '$$Test::Harness::verbose=0; runtests @ARGV;' *.t

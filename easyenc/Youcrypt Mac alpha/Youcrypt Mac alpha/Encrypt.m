@@ -197,13 +197,15 @@
 	}
 	
 	/* Actual encfs call */
-	systemCall(@"/usr/local/bin/encfs", [NSArray arrayWithObjects: 
+
+    execWithSocket(@"/usr/local/bin/encfs", [NSArray arrayWithObjects: 
 										 srcFolder, 
 										 destFolder, 
 										 @"--nu", numberOfUsers, 
 										 @"--pw", combinedPasswordString, 
 										 nil
 										 ]);
+
 	
     
 	/*** 

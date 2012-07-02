@@ -44,7 +44,7 @@
     dc.sourceFolderPath = path;
     
     
-    NSString *dest = [mainApp.configDir.youCryptVolDir stringByAppendingPathComponent:path];
+    NSString *dest = [[mainApp.configDir.youCryptVolDir stringByAppendingPathComponent:path] stringByDeletingPathExtension];
     
     [dc setDestFolderPath:dest];
     
@@ -81,7 +81,7 @@
     ec.sourceFolderPath = path;
     
     
-    NSString *dest = [mainApp.configDir.youCryptVolDir stringByAppendingPathComponent:path];
+    NSString *dest = [[mainApp.configDir.youCryptVolDir stringByAppendingPathComponent:path] stringByDeletingPathExtension];
     
     [ec setDestFolderPath:dest];
     
