@@ -12,7 +12,6 @@
 
 @implementation PreferenceController
 
-@synthesize client = _client;
 @synthesize boxClient;
 
 
@@ -79,6 +78,9 @@
     
     [checkbox setState:state];
     [dbLocation setURL:url];
+    
+    NSLog(@"Box FOLDER LOCATION : %@",[self locateBoxFolder]);
+    
    
     //[self sendEmail];
     
@@ -108,6 +110,21 @@
         [boxLinkStatus setStringValue:@"Unlinked"];
     }
 
+}
+
+-(NSString*)locateBoxFolder
+{
+    NSFileManager *filemgr;
+    NSData *databuffer;
+    NSString *boxXMLPath = [NSString stringWithFormat:@"%@/Library/Application Support/Box Sync/LastLoggedInUserInfo.xml",NSHomeDirectory()];
+    filemgr = [NSFileManager defaultManager];
+    
+    databuffer = [filemgr contentsAtPath: boxXMLPath];
+    
+    NSError *error = nil;
+    NSDictionary *boxXMLDict = [XMLReader dictionaryForXMLData:databuffer error:&error];
+    NSString *boxFolderPath = [[[boxXMLDict objectForKey:@"UserInfo"] objectForKey:@"Settings"] objectForKey:@"RootSyncFolderLocation"];
+    return boxFolderPath;
 }
 
 -(IBAction)linkBoxAccount:(id)sender
@@ -140,7 +157,8 @@
 
 -(void)boxAuthDone:(NSAlert *)alert returnCode:(NSInteger)returnCode
 {
-    [self sendEmail];
+    NSLog(@"BOX AUTH DONE!");
+    //[self sendEmail];
     [boxClient userGavePerms];
     [self refreshBoxLinkStatus:YES];
 }

@@ -7,11 +7,10 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "RestKit/RestKit.h"
 
 @class WebView; 
 
-@interface BoxFSA : NSWindowController <RKRequestDelegate>
+@interface BoxFSA : NSWindowController
 {
     NSString *state;
     NSString *apiKey;
@@ -20,7 +19,6 @@
     NSString *authToken;
     IBOutlet NSButton *button;
 }
-@property (nonatomic) RKClient *client;
 
 @property (atomic) NSString *apiKey;
 @property (atomic) NSString *baseURL;
@@ -31,6 +29,7 @@
 -(void) auth;
 -(void) getAuthToken;
 -(void) userGavePerms;
+-(NSString*)makeRestCall:(NSString*)reqURL:(BOOL)mutable;
 
 @end
 

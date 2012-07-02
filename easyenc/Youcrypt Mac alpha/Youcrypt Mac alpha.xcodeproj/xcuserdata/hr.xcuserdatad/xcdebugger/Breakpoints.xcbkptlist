@@ -8,11 +8,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Youcrypt Mac alpha/PreferenceController.h"
-         timestampString = "362615695.684332"
+         timestampString = "362953479.790724"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "25"
-         endingLineNumber = "25"
+         startingLineNumber = "26"
+         endingLineNumber = "26"
          landmarkName = "@interface PreferenceController"
          landmarkType = "2">
       </FileBreakpoint>

@@ -8,9 +8,10 @@
 
 #import <Cocoa/Cocoa.h>
 #import "BoxFSA.h"
+#import "XMLReader.h"
 #define MACOSX
 
-@interface PreferenceController : NSWindowController <NSAlertDelegate,RKRequestDelegate> {
+@interface PreferenceController : NSWindowController <NSAlertDelegate> {
     
     NSTabView *tabView;
 
@@ -34,7 +35,6 @@
 static NSArray *openFiles();
 NSString* systemCall(NSString *binary, NSArray *arguments);
 
-@property (nonatomic) RKClient *client;
 @property (nonatomic, strong) BoxFSA *boxClient;
 
 - (IBAction)chooseDBLocation:(id)sender;
@@ -42,6 +42,7 @@ NSString* systemCall(NSString *binary, NSArray *arguments);
 
 - (IBAction)linkBoxAccount:(id)sender;
 -(void)boxAuthDone:(NSAlert *)alert returnCode:(NSInteger)returnCode;
+-(NSString*)locateBoxFolder;
 
 - (void) sendEmail;
 @end

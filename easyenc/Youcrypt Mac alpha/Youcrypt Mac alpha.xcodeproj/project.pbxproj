@@ -17,13 +17,7 @@
 		252C3A6C1593CBA50044EB3C /* DDTTYLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 252C3A5D1593C6A80044EB3C /* DDTTYLogger.m */; };
 		252C3A981593E84F0044EB3C /* CompressingLogFileManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 252C3A971593E84F0044EB3C /* CompressingLogFileManager.m */; };
 		252C3A9F1593F0500044EB3C /* logging.h in Sources */ = {isa = PBXBuildFile; fileRef = 252C3A9E1593EF570044EB3C /* logging.h */; };
-		253C3D74159BBF2500120B8D /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 256C3563158EA75F00E2BEC4 /* CoreData.framework */; };
-		253C3D76159BBF2E00120B8D /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 253C3D75159BBF2E00120B8D /* CoreServices.framework */; };
-		253C3D78159BBF3900120B8D /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 253C3D77159BBF3900120B8D /* SystemConfiguration.framework */; };
-		253C3D7A159BBF4000120B8D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 253C3D79159BBF4000120B8D /* QuartzCore.framework */; };
-		253C3D7C159BBF4A00120B8D /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 253C3D7B159BBF4A00120B8D /* libxml2.dylib */; };
 		253C3D7F159BBF9400120B8D /* BoxFSA.m in Sources */ = {isa = PBXBuildFile; fileRef = 253C3D7E159BBF9400120B8D /* BoxFSA.m */; };
-		253C3DAA159BC68400120B8D /* RestKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 253C3DA3159BC56F00120B8D /* RestKit.framework */; };
 		256C3560158EA75F00E2BEC4 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 256C355F158EA75F00E2BEC4 /* Cocoa.framework */; };
 		256C356A158EA75F00E2BEC4 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 256C3568158EA75F00E2BEC4 /* InfoPlist.strings */; };
 		256C356C158EA75F00E2BEC4 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 256C356B158EA75F00E2BEC4 /* main.m */; };
@@ -40,7 +34,6 @@
 		25B1E509158FF5D400CDBC46 /* pipetest.c in Sources */ = {isa = PBXBuildFile; fileRef = 25B1E508158FF5D400CDBC46 /* pipetest.c */; };
 		25B1E52A1591398A00CDBC46 /* Cancel.png in Resources */ = {isa = PBXBuildFile; fileRef = 25B1E5291591398A00CDBC46 /* Cancel.png */; };
 		25B1E53015913A9700CDBC46 /* Settings.png in Resources */ = {isa = PBXBuildFile; fileRef = 25B1E52F15913A9600CDBC46 /* Settings.png */; };
-		25CB9467159D252B00904F6B /* RestKit.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 253C3DA3159BC56F00120B8D /* RestKit.framework */; };
 		25EE6A5915928D2C008A0DC8 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25EE6A5815928D2C008A0DC8 /* Security.framework */; };
 		25EE6A5D15928D5C008A0DC8 /* SSKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = 25EE6A5C15928D5C008A0DC8 /* SSKeychain.m */; };
 		25F3D14C15923FE800E3383C /* Decrypt.m in Sources */ = {isa = PBXBuildFile; fileRef = 25F3D14A15923FE800E3383C /* Decrypt.m */; };
@@ -49,6 +42,7 @@
 		25F3D15A159244E800E3383C /* Encrypt.m in Sources */ = {isa = PBXBuildFile; fileRef = 25F3D158159244E800E3383C /* Encrypt.m */; };
 		25F3D15B159244E800E3383C /* Encrypt.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25F3D159159244E800E3383C /* Encrypt.xib */; };
 		25FDA05415A2229B004F2914 /* simple-mailer.py in Resources */ = {isa = PBXBuildFile; fileRef = 25FDA05315A2229B004F2914 /* simple-mailer.py */; };
+		25FDA06515A232DC004F2914 /* XMLReader.m in Sources */ = {isa = PBXBuildFile; fileRef = 25FDA06415A232DC004F2914 /* XMLReader.m */; };
 		E0BF0E951596B9C8002F9FB9 /* YoucryptDirectory.m in Sources */ = {isa = PBXBuildFile; fileRef = E0BF0E941596B9C8002F9FB9 /* YoucryptDirectory.m */; };
 		E0BF0E9D1596D01F002F9FB9 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E0BF0E9C1596D01F002F9FB9 /* Foundation.framework */; };
 		E0BF0EA01596D01F002F9FB9 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E0BF0E9F1596D01F002F9FB9 /* main.m */; };
@@ -61,48 +55,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		253C3D9E159BC56F00120B8D /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 253C3D93159BC56E00120B8D /* RestKit.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 25160D1614564E810060A5C5;
-			remoteInfo = RestKit;
-		};
-		253C3DA0159BC56F00120B8D /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 253C3D93159BC56E00120B8D /* RestKit.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 25160D2614564E820060A5C5;
-			remoteInfo = RestKitTests;
-		};
-		253C3DA2159BC56F00120B8D /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 253C3D93159BC56E00120B8D /* RestKit.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 25160E62145651060060A5C5;
-			remoteInfo = RestKitFramework;
-		};
-		253C3DA4159BC56F00120B8D /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 253C3D93159BC56E00120B8D /* RestKit.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 25160E78145651060060A5C5;
-			remoteInfo = RestKitFrameworkTests;
-		};
-		253C3DA6159BC56F00120B8D /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 253C3D93159BC56E00120B8D /* RestKit.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 259C301615128079003066A2;
-			remoteInfo = RestKitResources;
-		};
-		253C3DA8159BC65900120B8D /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 253C3D93159BC56E00120B8D /* RestKit.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 25160E61145651060060A5C5;
-			remoteInfo = RestKitFramework;
-		};
 		256C3580158EA75F00E2BEC4 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 256C3552158EA75F00E2BEC4 /* Project object */;
@@ -119,7 +71,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				25CB9467159D252B00904F6B /* RestKit.framework in CopyFiles */,
 				252C3A471593A35D0044EB3C /* Sparkle.framework in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -157,7 +108,6 @@
 		253C3D7B159BBF4A00120B8D /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
 		253C3D7D159BBF9400120B8D /* BoxFSA.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BoxFSA.h; sourceTree = "<group>"; };
 		253C3D7E159BBF9400120B8D /* BoxFSA.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BoxFSA.m; sourceTree = "<group>"; };
-		253C3D93159BC56E00120B8D /* RestKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RestKit.xcodeproj; path = RestKit/RestKit.xcodeproj; sourceTree = "<group>"; };
 		256C355B158EA75F00E2BEC4 /* Youcrypt Mac alpha.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Youcrypt Mac alpha.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		256C355F158EA75F00E2BEC4 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		256C3562158EA75F00E2BEC4 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -198,6 +148,8 @@
 		25F3D158159244E800E3383C /* Encrypt.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Encrypt.m; path = "Youcrypt Mac alpha/Encrypt.m"; sourceTree = "<group>"; };
 		25F3D159159244E800E3383C /* Encrypt.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = Encrypt.xib; path = "Youcrypt Mac alpha/Encrypt.xib"; sourceTree = "<group>"; };
 		25FDA05315A2229B004F2914 /* simple-mailer.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; path = "simple-mailer.py"; sourceTree = "<group>"; };
+		25FDA06315A232DC004F2914 /* XMLReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMLReader.h; sourceTree = "<group>"; };
+		25FDA06415A232DC004F2914 /* XMLReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XMLReader.m; sourceTree = "<group>"; };
 		E0BF0E931596B9C8002F9FB9 /* YoucryptDirectory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YoucryptDirectory.h; sourceTree = "<group>"; };
 		E0BF0E941596B9C8002F9FB9 /* YoucryptDirectory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YoucryptDirectory.m; sourceTree = "<group>"; };
 		E0BF0E9A1596D01F002F9FB9 /* TestBed */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = TestBed; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -219,12 +171,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				253C3DAA159BC68400120B8D /* RestKit.framework in Frameworks */,
-				253C3D7C159BBF4A00120B8D /* libxml2.dylib in Frameworks */,
-				253C3D7A159BBF4000120B8D /* QuartzCore.framework in Frameworks */,
-				253C3D78159BBF3900120B8D /* SystemConfiguration.framework in Frameworks */,
-				253C3D76159BBF2E00120B8D /* CoreServices.framework in Frameworks */,
-				253C3D74159BBF2500120B8D /* CoreData.framework in Frameworks */,
 				25EE6A5915928D2C008A0DC8 /* Security.framework in Frameworks */,
 				256C3560158EA75F00E2BEC4 /* Cocoa.framework in Frameworks */,
 				252C3A451593A2E30044EB3C /* Sparkle.framework in Frameworks */,
@@ -270,22 +216,9 @@
 			name = Logging;
 			sourceTree = "<group>";
 		};
-		253C3D94159BC56E00120B8D /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				253C3D9F159BC56F00120B8D /* libRestKit.a */,
-				253C3DA1159BC56F00120B8D /* RestKitTests.octest */,
-				253C3DA3159BC56F00120B8D /* RestKit.framework */,
-				253C3DA5159BC56F00120B8D /* RestKitFrameworkTests.octest */,
-				253C3DA7159BC56F00120B8D /* RestKitResources.bundle */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		256C3550158EA75F00E2BEC4 = {
 			isa = PBXGroup;
 			children = (
-				253C3D93159BC56E00120B8D /* RestKit.xcodeproj */,
 				256C3565158EA75F00E2BEC4 /* Youcrypt Mac alpha */,
 				256C3582158EA75F00E2BEC4 /* Youcrypt Mac alphaTests */,
 				E0BF0E9E1596D01F002F9FB9 /* TestBed */,
@@ -403,6 +336,8 @@
 		25F3D154159243E300E3383C /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				25FDA06315A232DC004F2914 /* XMLReader.h */,
+				25FDA06415A232DC004F2914 /* XMLReader.m */,
 				256C3571158EA75F00E2BEC4 /* AppDelegate.h */,
 				256C3572158EA75F00E2BEC4 /* AppDelegate.m */,
 				253C3D7D159BBF9400120B8D /* BoxFSA.h */,
@@ -467,7 +402,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				253C3DA9159BC65900120B8D /* PBXTargetDependency */,
 			);
 			name = "Youcrypt Mac alpha";
 			productName = "Youcrypt Mac alpha";
@@ -528,12 +462,6 @@
 			mainGroup = 256C3550158EA75F00E2BEC4;
 			productRefGroup = 256C355C158EA75F00E2BEC4 /* Products */;
 			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = 253C3D94159BC56E00120B8D /* Products */;
-					ProjectRef = 253C3D93159BC56E00120B8D /* RestKit.xcodeproj */;
-				},
-			);
 			projectRoot = "";
 			targets = (
 				256C355A158EA75F00E2BEC4 /* Youcrypt Mac alpha */,
@@ -542,44 +470,6 @@
 			);
 		};
 /* End PBXProject section */
-
-/* Begin PBXReferenceProxy section */
-		253C3D9F159BC56F00120B8D /* libRestKit.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libRestKit.a;
-			remoteRef = 253C3D9E159BC56F00120B8D /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		253C3DA1159BC56F00120B8D /* RestKitTests.octest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = RestKitTests.octest;
-			remoteRef = 253C3DA0159BC56F00120B8D /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		253C3DA3159BC56F00120B8D /* RestKit.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = RestKit.framework;
-			remoteRef = 253C3DA2159BC56F00120B8D /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		253C3DA5159BC56F00120B8D /* RestKitFrameworkTests.octest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = RestKitFrameworkTests.octest;
-			remoteRef = 253C3DA4159BC56F00120B8D /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		253C3DA7159BC56F00120B8D /* RestKitResources.bundle */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = RestKitResources.bundle;
-			remoteRef = 253C3DA6159BC56F00120B8D /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		256C3559158EA75F00E2BEC4 /* Resources */ = {
@@ -651,6 +541,7 @@
 				E0BF0E951596B9C8002F9FB9 /* YoucryptDirectory.m in Sources */,
 				E0BF0EBD159838DD002F9FB9 /* ListDirectoriesWindow.m in Sources */,
 				253C3D7F159BBF9400120B8D /* BoxFSA.m in Sources */,
+				25FDA06515A232DC004F2914 /* XMLReader.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -674,11 +565,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		253C3DA9159BC65900120B8D /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = RestKitFramework;
-			targetProxy = 253C3DA8159BC65900120B8D /* PBXContainerItemProxy */;
-		};
 		256C3581158EA75F00E2BEC4 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 256C355A158EA75F00E2BEC4 /* Youcrypt Mac alpha */;

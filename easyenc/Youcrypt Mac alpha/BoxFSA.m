@@ -7,8 +7,7 @@
 //
 
 #import "BoxFSA.h"
-#import "RestKit/XMLReader.h"
-#import "RestKit/RestKit.h"
+#import "XMLReader.h"
 
 @implementation BoxFSA
 
@@ -18,7 +17,6 @@
 @synthesize ticket;
 @synthesize authToken;
 
-@synthesize client = _client;
 
 -(id) init
 {
@@ -28,14 +26,39 @@
     return self;
 }
 
+-(NSString*)makeRestCall:(NSString*)reqURL:(BOOL)mutable
+{
+    NSURLRequest *theRequest;
+    if(mutable){
+        NSMutableURLRequest *mutableRequest = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:reqURL]];
+        NSString *authHeader = [NSString stringWithFormat:@"BoxAuth api_key=%@&auth_token=%@",apiKey,authToken];
+        [mutableRequest addValue:authHeader forHTTPHeaderField:@"Authorization"];
+        theRequest = (NSURLRequest*)mutableRequest;
+    }
+    else {
+        theRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:reqURL]];
+    }
+    NSURLResponse *resp = nil;
+    NSError *error = nil;
+    NSData *response = [NSURLConnection sendSynchronousRequest: theRequest returningResponse: &resp error: &error];
+    NSString *responseString = [[NSString alloc] initWithData:response encoding:NSUTF8StringEncoding]; 
+    
+    NSLog(@"%@",responseString);
+    return responseString;
+}
 
 -(void) auth
 {
     NSLog(@"IN AUTH");
-    self.client = [RKClient clientWithBaseURL:[RKURL URLWithBaseURLString:baseURL]];
-    NSString *reqURL = [NSString stringWithFormat:@"/1.0/rest?action=get_ticket&api_key=%@",apiKey];
-    [self.client get:reqURL delegate:self];
-    
+    NSString *reqURL = [NSString stringWithFormat:@"%@/1.0/rest?action=get_ticket&api_key=%@",baseURL,apiKey];
+    NSString *response = [self makeRestCall:reqURL:NO];
+    NSError *error = nil;
+    NSDictionary *res = [XMLReader dictionaryForXMLString:response error:&error];
+    ticket = [[[res objectForKey:@"response"] objectForKey:@"ticket"] objectForKey:@"text"];
+    NSLog(@"TICKET: %@",ticket);
+    NSString *authURL = [NSString stringWithFormat:@"%@/1.0/auth/%@",baseURL,ticket];
+    [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:authURL]];
+ 
 }
 
 - (void) getAuthToken
@@ -50,63 +73,31 @@
 
 -(void)userGavePerms
 {
-    NSString *reqURL = [NSString stringWithFormat:@"/1.0/rest?action=get_auth_token&api_key=%@&ticket=%@",apiKey,ticket];
+    NSString *reqURL = [NSString stringWithFormat:@"%@/1.0/rest?action=get_auth_token&api_key=%@&ticket=%@",baseURL,apiKey,ticket];
 
-    [self.client get:reqURL delegate:self];
-
+    NSString *response = [self makeRestCall:reqURL:NO];
+    NSError *error = nil;
+    NSDictionary *res = [XMLReader dictionaryForXMLString:response error:&error];
+    authToken = [[[res objectForKey:@"response"] objectForKey:@"auth_token"] objectForKey:@"text"];
+    NSLog(@"AUTHTOKEN: %@",authToken);
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setObject:authToken forKey:@"ycbox"];
+    [defaults synchronize];
 }
 
 -(IBAction)getFolderList:(id)sender
 {
     NSString *reqURL = @"/2.0/folders/0.xml";
-    NSString *auth = [NSString stringWithFormat:@"BoxAuth api_key=%@&auth_token=%@",apiKey,authToken];
-    [self.client setValue:auth forHTTPHeaderField:@"Authorization"];
-    [self.client get:reqURL delegate:self];
+    
+    [self makeRestCall:reqURL:NO];
 
 }
 
 -(void)getFolderCollabs:(NSString*)folderID
 {
     NSString *reqURL = [NSString stringWithFormat:@"/1.0/rest?action=invite_collaborators&api_key=%@&auth_token=%@&target=folder&target_id=%@&user_ids[]=&emails[]=anirudhvr@gmail.com&item_role_name=editor&resend_invite=0&no_email=0&params[]=force_accept",apiKey,authToken,folderID];
-    [self.client get:reqURL delegate:self];
+    [self makeRestCall:reqURL:NO];
     
-}
-- (void)request:(RKRequest*)request didLoadResponse:(RKResponse *)response {
-    state = @"gotResponse";
-    NSLog(@"Loaded XML: %@", [response bodyAsString]);
-    NSError *error;
-    
-    NSDictionary *res = [XMLReader dictionaryForXMLString:[response bodyAsString] error:&error];
-    
-    if(error){
-       // NSLog(@"%@",[error localizedDescription]);
-    }
-    else NSLog(@"NO ERROR");
-    
-    NSString *responseType = [[res objectForKey:@"response"] objectForKey:@"status"];
-    //NSLog([[res objectForKey:@"response"] objectForKey:@"ticket"]);
-    if ([responseType isEqualToString:@"get_ticket_ok"]) {
-        state = @"gotTicket";
-        ticket = [[res objectForKey:@"response"] objectForKey:@"ticket"];
-        NSLog(@"TICKET: %@",ticket);
-        [self getAuthToken];
-    }
-    else if([responseType isEqualToString:@"get_auth_token_ok"]) {
-        state = @"gotAuthToken";
-        authToken = [[res objectForKey:@"response"] objectForKey:@"auth_token"];
-        NSLog(@"AUTHTOKEN: %@",authToken);
-        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-        [defaults setObject:authToken forKey:@"ycbox"];
-        [defaults synchronize];
-     //   [self getFolderCollabs:@"300572558"];
-    } 
-    else if([responseType isEqualToString:@"s_get_collaborations"]){
-        NSDictionary *collaborationsDict = [[res objectForKey:@"response"] objectForKey:@"collaborations"];
-        for( NSString *key in [collaborationsDict allKeys] )
-        {
-            NSLog(@"%@ : %@",key,[collaborationsDict objectForKey:key]);
-        }
-    }
 }
 
 @end
