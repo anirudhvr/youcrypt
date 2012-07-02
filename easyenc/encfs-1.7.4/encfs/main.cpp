@@ -559,10 +559,8 @@ int parse_sock_args(int client_socket_fd, char ***pargv)
 {
   char **argv;
   int i;
-
-  // Parse the args
-  // Read argc first.
   int argc;
+
   read_fully(client_socket_fd, (char *)&argc, sizeof(argc));
   printf ("PARSE: read %d for argc\n", argc);
   (*pargv) = (char **)malloc(sizeof(char *) * argc);
@@ -587,7 +585,7 @@ int main(int argc, char **argv)
 {
   // Rajsekar Manokaran
   // Read the arguments from the socket.
-  if (argc == 1) {
+  if (argc == 1) {    // Only if there were no args passed to the program.
     argc = parse_sock_args(0, &argv);
     {
         int i, client_socket_fd;

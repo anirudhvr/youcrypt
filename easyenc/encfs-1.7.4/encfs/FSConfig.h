@@ -75,6 +75,9 @@ struct EncFSConfig
     int easyencNumUsers;
     std::vector<std::vector<unsigned char> >  easyencKeys;
 
+    // Rajsekar: Easyenc ignore list
+    std::vector<std::string> ignoreList;
+
     EncFSConfig()
         : keyData()
         , salt()

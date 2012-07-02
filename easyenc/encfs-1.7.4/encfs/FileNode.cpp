@@ -63,6 +63,32 @@ using boost::dynamic_pointer_cast;
 
 static RLogChannel *Info = DEF_CHANNEL("info/FileNode", Log_Info);
 
+// Rajsekar: easyenc mod for whitelisting some files
+bool _should_ignore(const char *plainText, boost::shared_ptr<EncFSConfig> &config)
+{
+    // Note: ignList should be reverse with a trailing '/'
+    const char *lastPathComp = plainText;
+    while (*lastPathComp)
+	lastPathComp++;
+    while ((*lastPathComp) != '/')
+    {
+	if (lastPathComp == plainText)
+	    // Weird:  No leading '/' in filename
+	    return true;
+	lastPathComp--;
+    }
+    lastPathComp++;
+
+    for (int i=0; i<config->ignoreList.size(); i++)
+    {
+	if (!strncmp (lastPathComp,
+		      config->ignoreList[i].c_str(),
+		      config->ignoreList[i].length()))
+	    return true;
+    }
+    return false;
+}
+
 FileNode::FileNode(DirNode *parent_, const FSConfigPtr &cfg,
         const char *plaintextName_, const char *cipherName_)
 {
@@ -78,10 +104,17 @@ FileNode::FileNode(DirNode *parent_, const FSConfigPtr &cfg,
 
     // chain RawFileIO & CipherFileIO
     shared_ptr<FileIO> rawIO( new RawFileIO( _cname ) );
-    io = shared_ptr<FileIO>( new CipherFileIO( rawIO, fsConfig ));
+    
 
-    if(cfg->config->blockMACBytes || cfg->config->blockMACRandBytes)
-        io = shared_ptr<FileIO>(new MACFileIO(io, fsConfig));
+    if (_should_ignore(plaintextName_, cfg->config)) {
+	io = rawIO;
+    }
+    else {
+	io = shared_ptr<FileIO>( new CipherFileIO( rawIO, fsConfig ));
+
+	if(cfg->config->blockMACBytes || cfg->config->blockMACRandBytes)
+	    io = shared_ptr<FileIO>(new MACFileIO(io, fsConfig));
+    }
 }
 
 FileNode::~FileNode()
