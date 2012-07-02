@@ -24,7 +24,7 @@
 @interface PreferenceController : NSWindowController {
     
     // the tabview
-    NSTabView *tabView;    
+    IBOutlet NSTabView *tabView;    
 
     // the preference keys and the preferences array
     NSArray *preferencesKeys;
