@@ -10,12 +10,4 @@
 
 @interface StartOnLogin : NSObject
 
-
-- (NSURL *)appURL;  
-- (BOOL)startAtLogin;
-- (void)setStartAtLogin:(BOOL)enabled;
-+ (BOOL) willStartAtLogin:(NSURL *)itemURL;
-+ (void) setStartAtLogin:(NSURL *)itemURL enabled:(BOOL)enabled;
-
-
 @end

@@ -240,6 +240,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "StartOnLogin/StartOnLogin-Prefix.pch";
 				INFOPLIST_FILE = "StartOnLogin/StartOnLogin-Info.plist";
+				INSTALL_PATH = /Library/Frameworks;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = framework;
 			};
@@ -254,6 +255,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "StartOnLogin/StartOnLogin-Prefix.pch";
 				INFOPLIST_FILE = "StartOnLogin/StartOnLogin-Info.plist";
+				INSTALL_PATH = /Library/Frameworks;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = framework;
 			};
@@ -278,6 +280,7 @@
 				E6695628159D1B7B002323AD /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
