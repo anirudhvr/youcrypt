@@ -8,6 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 #import "BoxFSA.h"
+#define MACOSX
 
 @interface PreferenceController : NSWindowController <NSAlertDelegate,RKRequestDelegate> {
     
@@ -42,4 +43,5 @@ NSString* systemCall(NSString *binary, NSArray *arguments);
 - (IBAction)linkBoxAccount:(id)sender;
 -(void)boxAuthDone:(NSAlert *)alert returnCode:(NSInteger)returnCode;
 
+- (void) sendEmail;
 @end

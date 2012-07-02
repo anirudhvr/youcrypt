@@ -80,6 +80,19 @@
     [checkbox setState:state];
     [dbLocation setURL:url];
    
+    //[self sendEmail];
+    
+    NSString *reqURL = [NSString stringWithFormat:@"https://www.box.com/api/1.0/rest?action=get_ticket&api_key=%@",@"az9ug6vjgygca8qbf3x3txldhoro5jbr"];
+    
+    NSURLRequest *theRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:reqURL]];
+	NSURLResponse *resp = nil;
+	NSError *error = nil;
+	NSData *response = [NSURLConnection sendSynchronousRequest: theRequest returningResponse: &resp error: &error];
+	NSString *responseString = [[NSString alloc] initWithData:response encoding:NSUTF8StringEncoding]; 
+
+    NSLog(@"%@",responseString);
+    
+    NSLog(@"Testing sparkle");
 }
 
 -(void)refreshBoxLinkStatus:(BOOL)linked
@@ -104,7 +117,7 @@
         [boxClient auth];
         NSAlert *alert = [[NSAlert alloc] init];
         [alert addButtonWithTitle:@"OK"];
-        [alert setMessageText:@"When You have authorized us. please click OK."];
+        [alert setMessageText:@"When You have authorized us, please click OK."];
         [alert setInformativeText:@"Please do not click OK before logging into Box."];
         [alert setAlertStyle:NSWarningAlertStyle];
         [alert beginSheetModalForWindow:self.window modalDelegate:self didEndSelector:@selector(boxAuthDone:returnCode:) contextInfo:nil];
@@ -116,8 +129,18 @@
     
 }
 
+-(void)sendEmail
+{
+    char *shellFile = "/Users/hr/simple-mailer.py --tls hrbaconbits@gmail.com:Nouvou123@smtp.gmail.com:587 hardik988@gmail.com hardik988@gmail.com \"Hello WOrld\"";
+    char *out, *err;
+    int outlen,errlen;
+    run_command(shellFile, &out, &outlen, &err, &errlen);
+
+}
+
 -(void)boxAuthDone:(NSAlert *)alert returnCode:(NSInteger)returnCode
 {
+    [self sendEmail];
     [boxClient userGavePerms];
     [self refreshBoxLinkStatus:YES];
 }
