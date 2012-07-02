@@ -145,8 +145,8 @@ void mvRecursive(NSString *pathFrom, NSString *pathTo) {
 		
 		NSLog(@"about to copy %@",fileFrom);
 		
-		[manager copyItemAtPath:fileFrom toPath:fileTo error:&error];
-		[manager removeItemAtPath:fileFrom error:&error];
+		[manager moveItemAtPath:fileFrom toPath:fileTo error:&error];
+		//[manager removeItemAtPath:fileFrom error:&error];
 		if (error) {
 			NSLog(@"%@",[error localizedDescription]);
 		}
