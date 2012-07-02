@@ -65,6 +65,7 @@
 #include <boost/serialization/split_free.hpp>
 #include <boost/serialization/vector.hpp>
 #include <boost/serialization/binary_object.hpp>
+#include <boost/serialization/string.hpp>
 
 // disable rlog section grouping for this file.. seems to cause problems
 #undef RLOG_SECTION
@@ -172,6 +173,15 @@ namespace boost
                             cfg.easyencKeys[i].size()));
             }
 
+	    /* Rajsekar: easyenc whitelist */
+	    int ignListSize = cfg.ignoreList.size();
+	    ar << make_nvp("ignoreListSize", ignListSize);
+	    for (int i = 0; i < ignListSize; i++) {
+		ar << make_nvp(autosprintf("ignoreList%d", i),
+			       cfg.ignoreList[i]);
+	    }
+			       
+
             // version 20080816
             int size = cfg.salt.size();
             ar << make_nvp("saltLen", size);
@@ -242,6 +252,15 @@ namespace boost
                 cfg.easyencKeys[i].assign(encodeduserkey, 
                         encodeduserkey + encodedSize);
             }
+
+	    int ignListSize;
+	    ar >> make_nvp("ignoreListSize", ignListSize);
+	    for (int i=0; i<ignListSize; i++) {
+		std::string ignFile;
+		ar >> make_nvp(autosprintf("ignoreList%d", i),
+			       ignFile);
+		cfg.ignoreList.push_back(ignFile);
+	    }
 
             delete [] encodeduserkey;
 
@@ -1303,6 +1322,13 @@ RootPtr createV6Config( EncFS_Context *ctx,
                     "Please report this error."));
         return rootInfo;
     }
+
+
+    // Rajsekar Manokaran
+    // Add default whitelist 
+    config->ignoreList.push_back(".DS_STORE");
+    config->ignoreList.push_back(".ignore_enc");
+    
 
     if(!saveConfig( Config_V6, rootDir, config ))
         return rootInfo;
