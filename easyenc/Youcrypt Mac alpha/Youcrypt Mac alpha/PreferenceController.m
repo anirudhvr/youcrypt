@@ -172,6 +172,7 @@
     [self savePreferences];
     
     [self close];
+    return YES;
 }
 
 -(IBAction)changePassphrase:(id)sender

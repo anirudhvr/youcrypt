@@ -12,8 +12,7 @@
 
 
 - (NSURL *)appURL;  
-- (BOOL)startAtLogin;
-- (void)setStartAtLogin:(BOOL)enabled;
+- (BOOL) startAtLogin;
 + (BOOL) willStartAtLogin:(NSURL *)itemURL;
 + (void) setStartAtLogin:(NSURL *)itemURL enabled:(BOOL)enabled;
 

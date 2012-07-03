@@ -153,18 +153,18 @@
 
 	
 	/* A */
-	mkdirRecursive(destFolder);
+	[libFunctions mkdirRecursive:destFolder];
 	
 	/* B */
-	mkdirRecursive(tempFolder);
+    [libFunctions mkdirRecursive:tempFolder];
 	
 	DDLogVerbose(@"mkdir %@",tempFolder);
 	
 	/* C+D */
-	mvRecursive(srcFolder, tempFolder);
+    [libFunctions mvRecursive:srcFolder toPath:tempFolder];
     
     srcFolder = [srcFolder stringByAppendingPathComponent:@"/encrypted.yc"];
-    mkdirRecursive(srcFolder);
+    [libFunctions mkdirRecursive:srcFolder];
     
 	/**** <!-- END PREP --> ***/
 	
@@ -179,7 +179,8 @@
     }
         
 	NSString *yourFriendsEmailString = [yourFriendsEmail stringValue];	
-	NSString *combinedPasswordString, *numberOfUsers;	
+	NSString *combinedPasswordString;
+	int numberOfUsers;
 	int yourFriendsPassphrase;	
 	NSString *yourFriendsPassphraseString;
 	
@@ -188,24 +189,17 @@
 		yourFriendsPassphrase = arc4random() % 100000000;
 		yourFriendsPassphraseString = [NSString stringWithFormat:@"%d", yourFriendsPassphrase];
 		combinedPasswordString = [NSString stringWithFormat:@"%@%@%d", yourPasswordString, @",", yourFriendsPassphrase];
-		numberOfUsers = @"2";
+		numberOfUsers = 2;
 	} 
 	else {
 		// nope, no sharing
 		combinedPasswordString = yourPasswordString;
-		numberOfUsers = @"1";
+		numberOfUsers = 1;
 	}
 	
 	/* Actual encfs call */
 
-    execWithSocket(@"/usr/local/bin/encfs", [NSArray arrayWithObjects: 
-										 srcFolder, 
-										 destFolder, 
-										 @"--nu", numberOfUsers, 
-										 @"--pw", combinedPasswordString, 
-										 nil
-										 ]);
-
+    [libFunctions createEncFS:srcFolder decryptedFolder:destFolder numUsers:numberOfUsers combinedPassword:combinedPasswordString];
 	
     
 	/*** 
@@ -213,14 +207,12 @@
 	 cp -r /tmp/easyenc/src/ * $HOME/easyenc/src
 	 rm -rf /tmp/easyenc/src
 	***/
-	
-	
-	mvRecursive(tempFolder, destFolder);
+
+	[libFunctions mvRecursive:tempFolder toPath:destFolder];
 	
     // Unmount the destination folder containing decrypted files
-	systemCall(@"/sbin/umount", [NSArray arrayWithObjects: 
-								 destFolder, 
-                                 nil]);
+    [libFunctions execWithSocket:@"/sbin/umount" arguments:[NSArray arrayWithObject:destFolder]
+                             env:nil io:nil proc:nil];
     
     /**** FIXME -- need to check success status of encfs mount before
      doing other shit ******/
@@ -234,14 +226,15 @@
 	/*** <!-- ENCFS END --> ***/
 	
 	/* If sharing is required */
-	if([numberOfUsers isEqualToString:@"2"]) {
+    if (numberOfUsers == 2) {
 		
 		/***** MAILGUN TASK START ******/
 		
 		NSString *curlEmail = [NSString stringWithFormat:@"to=\"%@\"", yourFriendsEmailString];
 		NSString *curlKey   = [NSString stringWithFormat:@"text=\%@\"", yourFriendsPassphraseString];
-		
-		systemCall(@"/usr/bin/curl", [NSArray arrayWithObjects: 
+        
+        [libFunctions execWithSocket:@"/usr/bin/curl" 
+                           arguments:[NSArray arrayWithObjects: 
 									  @"-s", @"-k", 
 									  @"--user", @"api:key-67fgovcfrggd6y4l02ucpz-av4b22i26",
 									  @"https://api.mailgun.net/v2/cloudclear.mailgun.org/messages",
@@ -249,8 +242,8 @@
 									  @"-F", curlEmail,
 									  @"-F", @"subject='Your Temporary Passphrase'",
 									  @"-F", curlKey,
-									  nil]);
-		
+									  nil]
+                                 env:nil io:nil proc:nil];
 		/***** <!-- MAILGUN END --> ******/
 	}
 

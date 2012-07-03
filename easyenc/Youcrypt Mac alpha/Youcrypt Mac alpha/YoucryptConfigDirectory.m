@@ -29,9 +29,10 @@
     youCryptLogDir = [homedir stringByAppendingFormat:@"/.youcrypt/logs"];
     youCryptListFile = [homedir stringByAppendingPathComponent:@"/.youcrypt/dirs.plist"];
     
-    mkdirRecursive(youCryptVolDir);
-    mkdirRecursive(youCryptTmpDir);
-    mkdirRecursive(youCryptLogDir);
+    [libFunctions mkdirRecursive:youCryptLogDir];
+    [libFunctions mkdirRecursive:youCryptVolDir];
+    [libFunctions mkdirRecursive:youCryptTmpDir];
+    
     return self;
 }
 

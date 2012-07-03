@@ -27,11 +27,6 @@
         if ([alias isEqualToString:@""]) {
             alias = [path lastPathComponent];
         }
-        NSLog(@"\n;;");
-        NSLog(alias);
-        NSLog(@";;\n");
-        NSLog([path lastPathComponent]);
-        NSLog(@"\n");
     }
     return self;
 }   

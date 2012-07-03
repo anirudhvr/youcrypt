@@ -59,16 +59,9 @@
 	
 	NSString *yourPasswordString = [yourPassword stringValue];
     
-    mkdirRecursive(destFolder);
-		
-    execWithSocket(@"/usr/local/bin/encfs", [NSArray arrayWithObjects:
-                                         @"/usr/local/bin/encfs",
-                                         srcFolder,
-                                         destFolder, 
-                                         @"--pw", yourPasswordString, 
-                                         nil]);
-    [[NSWorkspace sharedWorkspace] openFile:destFolder];
-    DDLogVerbose(@"dfdsds");
-	
+    [libFunctions mkdirRecursive:destFolder]; 
+    
+    [libFunctions mountEncFS:srcFolder decryptedFolder:destFolder password:yourPasswordString];
+    [[NSWorkspace sharedWorkspace] openFile:destFolder];	
 }
 @end
