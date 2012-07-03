@@ -26,8 +26,7 @@
 
 -(void)awakeFromNib
 {
-    NSLog(@"Decrypt awake from nib called");
-    
+    NSLog(@"Decrypt awake from nib called");    
     if (keychainHasPassphrase == NO) {
         passphraseFromKeychain = [libFunctions getPassphraseFromKeychain];
         if (passphraseFromKeychain == nil) {
@@ -43,13 +42,10 @@
 }
 
 /**
- 
  decrypt
  
- Captures the action of the decrypt button, when clicked
- 
- sender: window that sent this action
- 
+ Captures the action of the decrypt button, when clicked 
+ sender: window that sent this action 
 **/
 
 - (IBAction)decrypt:(id)sender
@@ -59,16 +55,8 @@
 	
 	NSString *yourPasswordString = [yourPassword stringValue];
     
-    mkdirRecursive(destFolder);
-		
-    execWithSocket(@"/usr/local/bin/encfs", [NSArray arrayWithObjects:
-                                         @"/usr/local/bin/encfs",
-                                         srcFolder,
-                                         destFolder, 
-                                         @"--pw", yourPasswordString, 
-                                         nil]);
-    [[NSWorkspace sharedWorkspace] openFile:destFolder];
-    DDLogVerbose(@"dfdsds");
-	
+    [libFunctions mkdirRecursive:destFolder];     
+    [libFunctions mountEncFS:srcFolder decryptedFolder:destFolder password:yourPasswordString];
+    [[NSWorkspace sharedWorkspace] openFile:destFolder];	
 }
 @end

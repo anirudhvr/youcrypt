@@ -28,6 +28,11 @@
 
 int ddLogLevel = LOG_LEVEL_VERBOSE;
 
+
+/* Global Variables Accessible to everyone */
+/* These variables should be initialized */
+AppDelegate *theApp;
+
 @implementation AppDelegate
 
 @synthesize window = _window;
@@ -35,63 +40,77 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
 @synthesize decryptController;
 @synthesize listDirectories;
 @synthesize configDir;
+@synthesize directories;
 
 - (id) init
 {
     self = [super init];
-    if(self){
-        filesystems = [[NSMutableArray alloc] init];
-    }
     
     configDir = [[YoucryptConfigDirectory alloc] init];
     youcryptService = [[YoucryptService alloc] init];
-    [youcryptService setApp:self];
+
+    // TODO:  Load up directories array from the list file.
+    directories = [NSKeyedUnarchiver unarchiveObjectWithFile:configDir.youCryptListFile];
     
+    theApp = self;
     return self;
 }
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
     // Insert code here to initialize your application
-   
     [NSApp setServicesProvider:youcryptService];
     
     // Logging
-   // NSString *logsDirectory = [NSString stringWithFormat:@"%@%@",NSHomeDirectory(),@"/.youcrypt/logs"];
     CompressingLogFileManager *logFileManager = [[CompressingLogFileManager alloc] initWithLogsDirectory:configDir.youCryptLogDir];
-    
     [DDLog addLogger:[DDASLLogger sharedInstance]];
     [DDLog addLogger:[DDTTYLogger sharedInstance]];
     
     DDFileLogger *fileLogger = [[DDFileLogger alloc] initWithLogFileManager:logFileManager];
     fileLogger.rollingFrequency = 60 * 60 * 24; // 24 hour rolling
     fileLogger.logFileManager.maximumNumberOfLogFiles = 7;
-    [DDLog addLogger:fileLogger];
-    
-    DDLogVerbose(@"done !!!");
+    [DDLog addLogger:fileLogger];    
+    DDLogVerbose(@"App did, in fact, finish launching!!!");
 }
 
 
 - (BOOL)application:(NSApplication *)theApplication openFile:(NSString *)filename
-{
-    return [self processFile:filename];
+{    
+    return [self openEncryptedFolder:filename];
 }
 
-- (BOOL)processFile:(NSString *)file
+- (BOOL)openEncryptedFolder:(NSString *)path
 {   
+    //--------------------------------------------------------------------------------------------------
+    // 1.  Check if path is really a folder
+    // 2.  Check if the last component is encrypted.yc
+    // 3.  Check if it is already mounted
+    // 4.  o/w, mount and open it.
+    //--------------------------------------------------------------------------------------------------
     [self showDecryptWindow:self];
+    return YES;
   
-    decryptController.sourceFolderPath = file;
-    NSString *dest = [[configDir.youCryptVolDir stringByAppendingPathComponent:file] stringByDeletingPathExtension];
-    decryptController.destFolderPath = dest;
-    
-    DDLogVerbose(@"The following file has been dropped or selected: %@",file);
-   
-    return  YES; // Return YES when file processed succesfull, else return NO.
+//    decryptController.sourceFolderPath = file;
+//    NSString *dest = [[configDir.youCryptVolDir stringByAppendingPathComponent:file] stringByDeletingPathExtension];
+//    decryptController.destFolderPath = dest;
+//    
+//    DDLogVerbose(@"The following file has been dropped or selected: %@",file);
+//   
+//    return  YES; // Return YES when file processed succesfull, else return NO.
+}
+
+- (void)encryptFolder:(NSString *)path {
+    //--------------------------------------------------------------------------------------------------
+    // Lots of shit
+    //--------------------------------------------------------------------------------------------------    
 }
 
 -(void)awakeFromNib{
     
+    //--------------------------------------------------------------------------------------------------
+    // Add UI related initializations here.
+    //--------------------------------------------------------------------------------------------------
+
     // status icon
     statusItem = [[NSStatusBar systemStatusBar] statusItemWithLength:NSVariableStatusItemLength];
     [statusItem setMenu:statusMenu];
@@ -162,20 +181,11 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
     [NSApp terminate:nil];
 }
 
-- (void)setFilesystems:(NSMutableArray *)f
-{
-    // This is an unusual setter method.  We are going to add a lot
-    // of smarts to it in the next chapter.
-    if (f == filesystems)
-        return;
-    filesystems = f;
-}
-
 - (IBAction)showListDirectories:(id)sender
 {
     // Is list directories nil?
     if (!listDirectories) {
-        listDirectories = [[ListDirectoriesWindow alloc] initWithListFile:configDir.youCryptListFile];
+        listDirectories = [[ListDirectoriesWindow alloc] init];
     }
     [listDirectories showWindow:self];
 }
@@ -207,8 +217,7 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
     if (!encryptController) {
         encryptController = [[Encrypt alloc] init];
     } else {
-        /* other times, this code is called in awakefromNib */      
-        
+        /* other times, this code is called in awakefromNib */              
         if (encryptController.keychainHasPassphrase == NO) {
             encryptController.passphraseFromKeychain = [libFunctions getPassphraseFromKeychain];
             if (encryptController.passphraseFromKeychain != nil) {
@@ -341,6 +350,40 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
                                         quitToolbar,
             nil];
 }
+
+
+
+//--------------------------------------------------------------------------------------------------
+// The AppDelegate is also our tableview's data source.  It populates shit using the directories array.
+//--------------------------------------------------------------------------------------------------
+- (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView {
+    if (directories)
+        return directories.count;
+    else {
+        return 0;
+    }
+}
+
+- (id)tableView:(NSTableView *)tableView objectValueForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
+    
+    if (!directories)
+        return nil;
+    
+    YoucryptDirectory *dirAtRow = [directories objectAtIndex:row];
+    if (!dirAtRow)
+        return nil;
+    
+    NSString *colId = [tableColumn identifier];
+    if ([colId isEqualToString:@"alias"])
+        return dirAtRow.alias;
+    else if ([colId isEqualToString:@"mountedPath"])
+        return dirAtRow.mountedPath;    
+    else {
+        return nil;
+    }
+}
+
+
 
 
 

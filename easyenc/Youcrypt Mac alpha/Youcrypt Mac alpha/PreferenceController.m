@@ -177,12 +177,11 @@
     
     [self savePreferences];
     
-    [self close];
-
     // This should be set each tiem the window loads, but I have 
     // no idea what function is called each time the window is loaded
     [tabView selectTabViewItem:[tabView tabViewItemAtIndex:0]];
 
+    return YES;
 }
 
 -(IBAction)changePassphrase:(id)sender
