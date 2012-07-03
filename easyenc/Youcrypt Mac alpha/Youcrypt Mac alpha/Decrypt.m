@@ -51,8 +51,7 @@
 - (IBAction)decrypt:(id)sender
 {	
 	NSString *srcFolder = sourceFolderPath;
-	NSString *destFolder = destFolderPath;
-	
+	NSString *destFolder = destFolderPath;	
 	NSString *yourPasswordString = [yourPassword stringValue];
     
     [libFunctions mkdirRecursive:destFolder];     
