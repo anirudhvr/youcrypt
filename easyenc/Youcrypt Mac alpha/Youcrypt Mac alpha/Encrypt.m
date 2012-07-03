@@ -132,8 +132,7 @@
  **/
 - (IBAction)encrypt:(id)sender
 {
-//	NSArray *arguments = [[NSProcessInfo processInfo] arguments];
-	
+//	NSArray *arguments = [[NSProcessInfo processInfo] arguments];	
 //	NSMutableString *srcFolder = [arguments objectAtIndex:2];
     NSString *srcFolder = sourceFolderPath;
 //	NSMutableString *destFolder = [arguments objectAtIndex:3];

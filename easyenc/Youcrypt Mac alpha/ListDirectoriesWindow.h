@@ -9,16 +9,10 @@
 #import <Cocoa/Cocoa.h>
 #import "YoucryptDirectory.h"
 
-@interface ListDirectoriesWindow : NSWindowController <NSTableViewDataSource, NSWindowDelegate, NSDraggingDestination> {
-    IBOutlet NSMutableArray *directories;    
+@interface ListDirectoriesWindow : NSWindowController <NSWindowDelegate, NSDraggingDestination> {
     IBOutlet NSTableView *table;
     IBOutlet NSTextField *dirName;          // The text field at the bottom.
 }
-
-@property (nonatomic, strong) NSString *directoriesListFile;
-//@property (nonatomic, strong) NSMutableArray *directories;
-
-- (id)initWithListFile:(NSString *)dList;
 
 - (IBAction)doEncrypt:(id)sender;
 - (IBAction)doOpen:(id)sender;
