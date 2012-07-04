@@ -12,13 +12,13 @@
 #import <unistd.h>
 #import <sys/socket.h>
 #import <sys/un.h>
-#include <stdio.h>
-#include <stddef.h>
-#include <stdlib.h>
-#include <sys/socket.h>
-#include <sys/types.h>
-#include <sys/un.h>
-#include <string.h>
+#import <stdio.h>
+#import <stddef.h>
+#import <stdlib.h>
+#import <sys/socket.h>
+#import <sys/types.h>
+#import <sys/un.h>
+#import <string.h>
 
 
 
@@ -26,14 +26,24 @@
     
 }
 
-extern NSString* systemCall(NSString *binary, NSArray *arguments);
-void mkdirRecursive(NSString *path);
-void mkdirRecursive2(NSString *path);
-void mkdir(NSString *path);
-void mvRecursive(NSString *pathFrom, NSString *pathTo);
-int execWithSocket(NSString *path, NSArray *arguments);
++ (void) mkdirRecursive: (NSString *)path;
++ (void) mvRecursive:(NSString *)srcPath toPath:(NSString *)dstPath;
++ (BOOL) execWithSocket:(NSString *)path arguments:(NSArray *)arguments
+                    env:(NSDictionary *)env
+                     io:(NSFileHandle *)io 
+                   proc:(NSTask *)proc;
 
 + (NSString*)getPassphraseFromKeychain:(NSString*)service;
 + (BOOL)registerWithKeychain:(NSString*)passphrase:(NSString*)service;
+
++ (BOOL) createEncFS:(NSString *)encFolder
+     decryptedFolder:(NSString *)decFolder
+            numUsers:(int)numUsers
+    combinedPassword:(NSString *)pwd;
+
++ (BOOL) mountEncFS:(NSString *)encFolder
+    decryptedFolder:(NSString *)decFolder
+           password:(NSString *)password;
+
 
 @end

@@ -9,17 +9,23 @@
 #import <Cocoa/Cocoa.h>
 #import "YoucryptDirectory.h"
 
-@interface ListDirectoriesWindow : NSWindowController <NSTableViewDataSource, NSWindowDelegate, NSDraggingDestination> {
-    IBOutlet NSMutableArray *directories;    
+#define AddToolbarItemIdentifier @"Add"
+#define RemoveToolbarItemIdentifier @"Remove"
+#define PreferencesToolbarItemIdentifier @"Preferences"
+#define QuitToolbarItemIdentifier @"Quit"
+#define HelpToolbarItemIdentifier @"Help"
+
+
+@interface ListDirectoriesWindow : NSWindowController <NSWindowDelegate, NSDraggingDestination, NSToolbarDelegate> {
     IBOutlet NSTableView *table;
     IBOutlet NSTextField *dirName;          // The text field at the bottom.
+    // Toolbar
+    IBOutlet NSToolbar *toolbar;
+    NSArray *allowedToolbarItemKeys;
+    NSMutableDictionary *allowedToolbarItemDetails;
 }
 
-@property (nonatomic, strong) NSString *directoriesListFile;
-//@property (nonatomic, strong) NSMutableArray *directories;
-
-- (id)initWithListFile:(NSString *)dList;
-
+@property (atomic, strong) IBOutlet NSTableView *table;
 - (IBAction)doEncrypt:(id)sender;
 - (IBAction)doOpen:(id)sender;
 - (IBAction)doProps:(id)sender;
@@ -27,5 +33,15 @@
 - (IBAction)addNew:(id)sender;
 - (IBAction)removeFS:(id)sender;
 - (IBAction)windowWillClose:(NSNotification *)notification;
+
+
+// Toolbar / UI stuff
+- (IBAction)resizeWindow:(id)sender;
+- (void) initToolbarItems;
+
+
+- (void) showPreferencePanel;
+- (void) exitApp;
+- (void) showHelp;
 
 @end

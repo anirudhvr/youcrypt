@@ -104,6 +104,11 @@
     [passphrase setStringValue:@"somerandomvalue"];
     if([self getPreference:YC_USERREALNAME] == nil)
         NSLog(@"NIL!");
+
+    passphraseSheetController = [[PassphraseSheetController alloc] init];
+
+    [tabView selectTabViewItem:[tabView tabViewItemAtIndex:0]];
+    
     
     NSLog(@"%@ %@ %@",[self getPreference:YC_USEREMAIL],[self getPreference:YC_USERREALNAME],@"");
     NSLog(@"dbloc aw; %@",[self getPreference:YC_DROPBOXLOCATION]);
@@ -228,6 +233,11 @@
     NSLog(@"Windowdidload called");
 }
 
+-(IBAction)windowWillLoad:(id)sender
+{
+    NSLog(@"Windowwillload called");
+}
+
 - (void) readPreferences
 { 
     NSLog(@"Reading stored preferences");
@@ -261,7 +271,7 @@
     NSString *dropboxScript = [bundlepath stringByAppendingPathComponent:@"/get_dropbox_folder.sh"]; 
     const char *shellFile = NULL;
     char out[1000];
-    NSString *dropboxURL;
+    NSString *dropboxURL = nil;
       
     // check if dropbox script exists and fail otherwise
     if (![[NSFileManager defaultManager] fileExistsAtPath:dropboxScript]) {
@@ -269,7 +279,7 @@
         return @"";
     }
     shellFile = [dropboxScript cStringUsingEncoding:NSUTF8StringEncoding];  
-    
+    /*
     int fd;
     if ((fd = execWithSocket(dropboxScript, nil)) == -1)
     {
@@ -283,6 +293,20 @@
         dropboxURL = [dropboxURL stringByReplacingOccurrencesOfString:@"\n" withString:@""];
         DDLogVerbose(@"Found dropbox location: [%@] ", dropboxURL);
     }
+     */
+    
+    NSFileHandle *fh = [NSFileHandle alloc];
+    NSTask *dropboxTask = [NSTask alloc];
+    if ([libFunctions execWithSocket:dropboxScript arguments:nil env:nil io:fh proc:dropboxTask]) {
+        [dropboxTask waitUntilExit];
+        NSData *bytes = [fh availableData];
+        dropboxURL = [[NSString alloc] initWithData:bytes encoding:NSUTF8StringEncoding];
+
+        [fh closeFile];
+    } else {
+        DDLogVerbose(@"Could not exec dropbox location finder script");
+    }
+    
     
     NSLog(@"Dropbox folder loc: %@",dropboxURL);
     return dropboxURL;
@@ -299,6 +323,10 @@
     [self savePreferences];
     
    // [self close];
+    // This should be set each tiem the window loads, but I have 
+    // no idea what function is called each time the window is loaded
+    [tabView selectTabViewItem:[tabView tabViewItemAtIndex:0]];
+
     return YES;
 }
 
@@ -406,8 +434,6 @@ static NSArray *openFiles()
         }
     }
 }
-
-
 
 - (NSURL *)appURL
 {

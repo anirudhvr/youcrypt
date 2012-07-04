@@ -132,13 +132,8 @@
  **/
 - (IBAction)encrypt:(id)sender
 {
-//	NSArray *arguments = [[NSProcessInfo processInfo] arguments];
-	
-//	NSMutableString *srcFolder = [arguments objectAtIndex:2];
     NSString *srcFolder = sourceFolderPath;
-//	NSMutableString *destFolder = [arguments objectAtIndex:3];
-    NSString *destFolder = destFolderPath;
-	
+    NSString *destFolder;
 	/*** 
 	 PREPARATIONS
 	 A mkdir -p $HOME/easyenc/src 
@@ -146,40 +141,30 @@
 	 C cp -r src/ * /tmp/easyenc/src
 	 D rm -rf src/ *
 	 ***/
-	
-	NSString *tempFolder = [@"/tmp/easyenc/" stringByAppendingPathComponent:srcFolder];
-	
-	DDLogVerbose(@"Create destination %@ if it doesn't already exist",destFolder);
+    //-       
 
-	
-	/* A */
-	mkdirRecursive(destFolder);
-	
-	/* B */
-	mkdirRecursive(tempFolder);
-	
-	DDLogVerbose(@"mkdir %@",tempFolder);
-	
-	/* C+D */
-	mvRecursive(srcFolder, tempFolder);
-    
-    srcFolder = [srcFolder stringByAppendingPathComponent:@"/encrypted.yc"];
-    mkdirRecursive(srcFolder);
+	// The mount point is a temporary folder
+    NSString *tempFolder = NSTemporaryDirectory();
+    tempFolder = [tempFolder stringByAppendingPathComponent:[[NSProcessInfo processInfo] globallyUniqueString]];
+    [libFunctions mkdirRecursive:tempFolder];
+
+    // The destination of the encrypted files is just <sourcefolder>/encrypted.yc
+    destFolder = [srcFolder stringByAppendingPathComponent:@"/encrypted.yc"];
+    [libFunctions mkdirRecursive:destFolder];
+
     
 	/**** <!-- END PREP --> ***/
-	
-	
-	/*** ENCFS START ***/
-	
-    NSString *yourPasswordString = [yourPassword stringValue];
-    
+
+	// ---- Figure out the password, sharing options, etc. -----------------
+    NSString *yourPasswordString = [yourPassword stringValue];    
     if (!keychainHasPassphrase) {
         [libFunctions registerWithKeychain:yourPasswordString:@"Youcrypt"];
         keychainHasPassphrase = YES;
     }
         
 	NSString *yourFriendsEmailString = [yourFriendsEmail stringValue];	
-	NSString *combinedPasswordString, *numberOfUsers;	
+	NSString *combinedPasswordString;
+	int numberOfUsers;
 	int yourFriendsPassphrase;	
 	NSString *yourFriendsPassphraseString;
 	
@@ -188,60 +173,56 @@
 		yourFriendsPassphrase = arc4random() % 100000000;
 		yourFriendsPassphraseString = [NSString stringWithFormat:@"%d", yourFriendsPassphrase];
 		combinedPasswordString = [NSString stringWithFormat:@"%@%@%d", yourPasswordString, @",", yourFriendsPassphrase];
-		numberOfUsers = @"2";
+		numberOfUsers = 2;
 	} 
 	else {
 		// nope, no sharing
 		combinedPasswordString = yourPasswordString;
-		numberOfUsers = @"1";
+		numberOfUsers = 1;
 	}
+    // ---------------------------------------------------------------------
 	
-	/* Actual encfs call */
-
-    execWithSocket(@"/usr/local/bin/encfs", [NSArray arrayWithObjects: 
-										 srcFolder, 
-										 destFolder, 
-										 @"--nu", numberOfUsers, 
-										 @"--pw", combinedPasswordString, 
-										 nil
-										 ]);
-
-	
+    [libFunctions createEncFS:destFolder decryptedFolder:tempFolder numUsers:numberOfUsers combinedPassword:combinedPasswordString];
     
-	/*** 
-	 PREPARE ORIGINAL FOLDER
-	 cp -r /tmp/easyenc/src/ * $HOME/easyenc/src
-	 rm -rf /tmp/easyenc/src
-	***/
-	
-	
-	mvRecursive(tempFolder, destFolder);
-	
+    
+    // Now to move the contents of tempFolder into destFolder
+    // Unfortunately, a direct move won't work since both directories exist and
+    // stupid macOS thinks it is overwriting the mount point we just created
+    NSFileManager *fm = [NSFileManager defaultManager];
+    NSArray *files = [fm contentsOfDirectoryAtPath:srcFolder error:nil];
+    for (NSString *file in files) {
+        if (![file isEqualToString:@"encrypted.yc"]) {
+            [fm moveItemAtPath:[srcFolder stringByAppendingPathComponent:file] toPath:[tempFolder stringByAppendingPathComponent:file] error:nil];
+        }
+    }
+
     // Unmount the destination folder containing decrypted files
-	systemCall(@"/sbin/umount", [NSArray arrayWithObjects: 
-								 destFolder, 
-                                 nil]);
-    
-    /**** FIXME -- need to check success status of encfs mount before
-     doing other shit ******/
-    
-
+    [libFunctions execWithSocket:@"/sbin/umount" arguments:[NSArray arrayWithObject:tempFolder]
+                             env:nil io:nil proc:nil];
+    [fm removeItemAtPath:tempFolder error:nil];
     /* change folder icon of encrypted folder */
-    [self setFolderIcon:self];
-    
+    [self setFolderIcon:self];    
     /* Register password with keyring */
-	
+ 	
 	/*** <!-- ENCFS END --> ***/
+   
+    
+    
+    
+    
+    
+    
 	
 	/* If sharing is required */
-	if([numberOfUsers isEqualToString:@"2"]) {
+    if (numberOfUsers == 2) {
 		
 		/***** MAILGUN TASK START ******/
 		
 		NSString *curlEmail = [NSString stringWithFormat:@"to=\"%@\"", yourFriendsEmailString];
 		NSString *curlKey   = [NSString stringWithFormat:@"text=\%@\"", yourFriendsPassphraseString];
-		
-		systemCall(@"/usr/bin/curl", [NSArray arrayWithObjects: 
+        
+        [libFunctions execWithSocket:@"/usr/bin/curl" 
+                           arguments:[NSArray arrayWithObjects: 
 									  @"-s", @"-k", 
 									  @"--user", @"api:key-67fgovcfrggd6y4l02ucpz-av4b22i26",
 									  @"https://api.mailgun.net/v2/cloudclear.mailgun.org/messages",
@@ -249,8 +230,8 @@
 									  @"-F", curlEmail,
 									  @"-F", @"subject='Your Temporary Passphrase'",
 									  @"-F", curlKey,
-									  nil]);
-		
+									  nil]
+                                 env:nil io:nil proc:nil];
 		/***** <!-- MAILGUN END --> ******/
 	}
 

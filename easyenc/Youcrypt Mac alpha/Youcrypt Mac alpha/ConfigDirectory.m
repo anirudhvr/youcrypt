@@ -26,20 +26,15 @@
     firstRun = NO;
     NSString *homedir = NSHomeDirectory();
     
-    youCryptVolDir = [homedir stringByAppendingPathComponent:@"/.youcrypt/tmp"];
-    youCryptTmpDir = [homedir stringByAppendingPathComponent:@"/.youcrypt/volumes"];
+    youCryptVolDir = [homedir stringByAppendingPathComponent:@"/.youcrypt/volumes"];
+    youCryptTmpDir = [homedir stringByAppendingPathComponent:@"/.youcrypt/tmp"];
     youCryptLogDir = [homedir stringByAppendingFormat:@"/.youcrypt/logs"];
     youCryptListFile = [homedir stringByAppendingPathComponent:@"/.youcrypt/dirs.plist"];
     
+    [libFunctions mkdirRecursive:youCryptLogDir];
+    [libFunctions mkdirRecursive:youCryptVolDir];
+    [libFunctions mkdirRecursive:youCryptTmpDir];
     
-    if(![[NSFileManager alloc] fileExistsAtPath:[homedir stringByAppendingPathComponent:@"/.youcrypt"]]) {
-        firstRun = YES;
-    }
-    else {
-        mkdirRecursive(youCryptVolDir);
-        mkdirRecursive(youCryptTmpDir);
-        mkdirRecursive(youCryptLogDir);
-    }
     return self;
 }
 

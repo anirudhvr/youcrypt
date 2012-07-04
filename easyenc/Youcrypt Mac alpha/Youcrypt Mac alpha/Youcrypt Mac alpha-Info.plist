@@ -61,7 +61,7 @@
 			<key>NSPortName</key>
 			<string>YoucryptService</string>
 			<key>NSMessage</key>
-			<string>openEncryptWindow</string>
+			<string>doEncrypt</string>
 			<key>NSMenuItem</key>
 			<dict>
 				<key>default</key>
@@ -78,7 +78,7 @@
 			<key>NSPortName</key>
 			<string>YoucryptService</string>
 			<key>NSMessage</key>
-			<string>openDecryptWindow</string>
+			<string>doDecrypt</string>
 			<key>NSMenuItem</key>
 			<dict>
 				<key>default</key>

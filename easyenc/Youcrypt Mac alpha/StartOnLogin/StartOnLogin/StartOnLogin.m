@@ -28,12 +28,12 @@
     return [StartOnLogin willStartAtLogin:[self appURL]];
 }
 
-- (void)setStartAtLogin:(BOOL)enabled
-{
-    [self willChangeValueForKey:@"startAtLogin"];
-    [StartOnLogin setStartAtLogin:[self appURL] enabled:enabled];
-    [self didChangeValueForKey:@"startAtLogin"];
-}
+//- (void)setStartAtLogin:(BOOL)enabled
+//{
+//    [self willChangeValueForKey:@"startAtLogin"];
+//    [StartOnLogin setStartAtLogin:[self appURL] enabled:enabled];
+//    [self didChangeValueForKey:@"startAtLogin"];
+//}
 
 +(BOOL) willStartAtLogin:(NSURL *)itemURL
 {
@@ -61,7 +61,7 @@
     return (BOOL)foundIt;
 }
 
-+ (void) setStartAtLogin:(NSURL *)itemURL enabled:(BOOL)enabled
++(void) setStartAtLogin:(NSURL *)itemURL enabled:(BOOL)enabled
 {
     OSStatus status;
     LSSharedFileListItemRef existingItem = NULL;

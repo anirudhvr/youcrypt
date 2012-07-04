@@ -22,10 +22,13 @@
 #import "ConfigDirectory.h"
 #import "ListDirectoriesWindow.h"
 
-#define prefsToolbar @"Prefs"
-#define quitToolbar @"Quit"
 
 int ddLogLevel = LOG_LEVEL_VERBOSE;
+
+
+/* Global Variables Accessible to everyone */
+/* These variables should be initialized */
+AppDelegate *theApp;
 
 @implementation AppDelegate
 
@@ -34,76 +37,157 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
 @synthesize decryptController;
 @synthesize listDirectories;
 @synthesize configDir;
+@synthesize directories;
 
 - (id) init
 {
     self = [super init];
-    if(self){
-        filesystems = [[NSMutableArray alloc] init];
-    }
     
     configDir = [[ConfigDirectory alloc] init];
     youcryptService = [[YoucryptService alloc] init];
-    [youcryptService setApp:self];
+    //[youcryptService setApp:self];
+
+    // TODO:  Load up directories array from the list file.
+    directories = [NSKeyedUnarchiver unarchiveObjectWithFile:configDir.youCryptListFile];
+    if (directories == nil) {
+        directories = [[NSMutableArray alloc] init];
+    }
+    
+    theApp = self;
     return self;
 }
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
     // Insert code here to initialize your application
-   
     [NSApp setServicesProvider:youcryptService];
     
     // Logging
-   // NSString *logsDirectory = [NSString stringWithFormat:@"%@%@",NSHomeDirectory(),@"/.youcrypt/logs"];
     CompressingLogFileManager *logFileManager = [[CompressingLogFileManager alloc] initWithLogsDirectory:configDir.youCryptLogDir];
-    
     [DDLog addLogger:[DDASLLogger sharedInstance]];
     [DDLog addLogger:[DDTTYLogger sharedInstance]];
     
     DDFileLogger *fileLogger = [[DDFileLogger alloc] initWithLogFileManager:logFileManager];
     fileLogger.rollingFrequency = 60 * 60 * 24; // 24 hour rolling
     fileLogger.logFileManager.maximumNumberOfLogFiles = 7;
-    [DDLog addLogger:fileLogger];
-    
-    DDLogVerbose(@"done !!!");
+    [DDLog addLogger:fileLogger];    
+    DDLogVerbose(@"App did, in fact, finish launching!!!");
+}
+
+-(void)applicationWillTerminate:(NSNotification *)aNotification {
+    [NSKeyedArchiver archiveRootObject:directories toFile:configDir.youCryptListFile];
+
 }
 
 
 - (BOOL)application:(NSApplication *)theApplication openFile:(NSString *)filename
-{
-    return [self processFile:filename];
+{    
+    return [self openEncryptedFolder:filename];
 }
 
-- (BOOL)processFile:(NSString *)file
+- (BOOL)openEncryptedFolder:(NSString *)path
 {   
-    [self showDecryptWindow:self];
+    //--------------------------------------------------------------------------------------------------
+    // 1.  Check if path is really a folder
+    // 2.  Check if the last component is encrypted.yc   <---- TODO
+    // 3.  Check if it is already mounted                <---- TODO
+    // 4.  o/w, mount and open it.
+    // 5.  Make sure we maintain it in our list.
+    //--------------------------------------------------------------------------------------------------
+    NSFileManager *fm = [NSFileManager defaultManager];
+    BOOL isDir;
+    if ([fm fileExistsAtPath:path isDirectory:&isDir] && isDir && ([[path pathExtension] isEqualToString:@"yc"])) {
+        
+        // 1. Set up a new mount point
+        // 2. Set up decrypt controller with the path and the mount point
+        // 3. Open the decrypt window
+
+        NSString *mountPoint = [[path stringByDeletingLastPathComponent] lastPathComponent];
+        NSString *timeStr = [[NSDate date] descriptionWithCalendarFormat:nil timeZone:nil locale:nil];
+        mountPoint = [configDir.youCryptVolDir stringByAppendingPathComponent:
+                      [timeStr stringByAppendingPathComponent:mountPoint]];
+        
+        if (!decryptController) {
+            decryptController = [[Decrypt alloc] init];
+        }
+        decryptController.destFolderPath = mountPoint;
+        decryptController.sourceFolderPath = path;
+        
+        for (YoucryptDirectory *dir in directories) {
+            if ([path isEqualToString:dir.path]) {
+                dir.mountedPath = mountPoint;
+                dir.mounted = NO;                
+                goto FoundOne;
+            }
+        }
+        {
+            YoucryptDirectory *dir = [[YoucryptDirectory alloc] init];        
+            dir.path = path;
+            dir.mountedPath = mountPoint;
+            dir.alias = [[path stringByDeletingLastPathComponent] lastPathComponent];
+            dir.mounted = NO;
+            [directories addObject:dir];            
+        }
+    FoundOne:        
+        [self showDecryptWindow:self];        
+        return YES;
+    }
+    return NO;
   
-    decryptController.sourceFolderPath = file;
-    NSString *dest = [[configDir.youCryptVolDir stringByAppendingPathComponent:file] stringByDeletingPathExtension];
-    decryptController.destFolderPath = dest;
+//    decryptController.sourceFolderPath = file;
+//    NSString *dest = [[configDir.youCryptVolDir stringByAppendingPathComponent:file] stringByDeletingPathExtension];
+//    decryptController.destFolderPath = dest;
+//    
+//    DDLogVerbose(@"The following file has been dropped or selected: %@",file);
+//   
+//    return  YES; // Return YES when file processed succesfull, else return NO.
+}
+
+- (void)didDecrypt:(NSString *)path {
+    for (YoucryptDirectory *dir in directories) {
+        if ([path isEqualToString:dir.path]) {
+            dir.mounted = YES;
+        }
+    }
+    if (listDirectories != nil) {
+        [listDirectories.table reloadData];
+    }
+}
+
+- (void)didEncrypt:(NSString *)path {
     
-    DDLogVerbose(@"The following file has been dropped or selected: %@",file);
-   
-    return  YES; // Return YES when file processed succesfull, else return NO.
+}
+
+- (void)encryptFolder:(NSString *)path {
+    
+    //--------------------------------------------------------------------------------------------------
+    // Lots of shit
+    //--------------------------------------------------------------------------------------------------    
+    
+    NSFileManager *fm = [NSFileManager defaultManager];
+    BOOL isDir;
+    if ([fm fileExistsAtPath:path isDirectory:&isDir] && isDir) {
+        if (!encryptController) {
+            encryptController = [[Encrypt alloc] init];
+        }
+        encryptController.sourceFolderPath = path;
+        [self showEncryptWindow:self];
+    }
 }
 
 -(void)awakeFromNib{
     
+    //--------------------------------------------------------------------------------------------------
+    // Add UI related initializations here.
+    //--------------------------------------------------------------------------------------------------
+
     // status icon
     statusItem = [[NSStatusBar systemStatusBar] statusItemWithLength:NSVariableStatusItemLength];
     [statusItem setMenu:statusMenu];
     [statusItem setTitle:@"YC"];
     [statusItem setHighlightMode:YES];
 
-    // attach toolbar
-    toolbar = [[NSToolbar alloc] initWithIdentifier:@"tooltest"];
-    [toolbar setDelegate:self];
-    [toolbar setAllowsUserCustomization:YES];
-    [toolbar setAutosavesConfiguration:YES]; 
-    
-    [self.window setToolbar:toolbar];
-    
+      
     NSArray *arguments = [[NSProcessInfo processInfo] arguments];
 	NSString *type = [[NSString alloc] init];
     
@@ -163,20 +247,11 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
     [NSApp terminate:nil];
 }
 
-- (void)setFilesystems:(NSMutableArray *)f
-{
-    // This is an unusual setter method.  We are going to add a lot
-    // of smarts to it in the next chapter.
-    if (f == filesystems)
-        return;
-    filesystems = f;
-}
-
 - (IBAction)showListDirectories:(id)sender
 {
     // Is list directories nil?
     if (!listDirectories) {
-        listDirectories = [[ListDirectoriesWindow alloc] initWithListFile:configDir.youCryptListFile];
+        listDirectories = [[ListDirectoriesWindow alloc] init];
     }
     [listDirectories showWindow:self];
 }
@@ -221,8 +296,7 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
     if (!encryptController) {
         encryptController = [[Encrypt alloc] init];
     } else {
-        /* other times, this code is called in awakefromNib */      
-        
+        /* other times, this code is called in awakefromNib */              
         if (encryptController.keychainHasPassphrase == NO) {
             encryptController.passphraseFromKeychain = [libFunctions getPassphraseFromKeychain:@"Youcrypt"];
             if (encryptController.passphraseFromKeychain != nil) {
@@ -239,122 +313,79 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
     [encryptController showWindow:self];
 }
 
-/***
- ***
- 
- TOOLBAR FUNCTIONS 
- 
- ***
- ***/
 
-- (NSToolbarItem *)toolbarItemWithIdentifier:(NSString *)identifier
-                                       label:(NSString *)label
-                                 paleteLabel:(NSString *)paletteLabel
-                                     toolTip:(NSString *)toolTip
-                                      target:(id)target
-                                 itemContent:(id)imageOrView
-                                      action:(SEL)action
-{
-    // here we create the NSToolbarItem and setup its attributes in line with the parameters
-    NSToolbarItem *item = [[NSToolbarItem alloc] initWithItemIdentifier:identifier];
-    
-    [item setLabel:label];
-    [item setPaletteLabel:paletteLabel];
-    [item setToolTip:toolTip];
-    [item setTarget:target];
-    [item setAction:action];
-    
-    if([imageOrView isKindOfClass:[NSImage class]]){
-        [item setImage:imageOrView];
-    } 
-    else if ([imageOrView isKindOfClass:[NSView class]]){
-        [item setView:imageOrView];
-    }
+
+//--------------------------------------------------------------------------------------------------
+// The AppDelegate is also our tableview's data source.  It populates shit using the directories array.
+//--------------------------------------------------------------------------------------------------
+- (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView {
+    if (directories)
+        return directories.count;
     else {
-        assert(!"Invalid itemContent: object");
+        return 0;
     }
-    return item;
+}
+
+- (id)tableView:(NSTableView *)tableView objectValueForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
+    
+    if (!directories)
+        return nil;
+    
+    YoucryptDirectory *dirAtRow = [directories objectAtIndex:row];
+    if (!dirAtRow)
+        return nil;
+    
+    NSString *colId = [tableColumn identifier];
+    if ([colId isEqualToString:@"alias"])
+        return dirAtRow.alias;
+    else if ([colId isEqualToString:@"mountedPath"])
+        return dirAtRow.mountedPath;    
+    else {
+        return nil;
+    }
 }
 
 
 
-- (void)toolbarWillAddItem:(NSNotification *)notif
-{
-    NSToolbarItem *addedItem = [[notif userInfo] objectForKey:@"item"];
-    
-    // Is this the printing toolbar item?  If so, then we want to redirect it's action to ourselves
-    // so we can handle the printing properly; hence, we give it a new target.
-    //
-    if ([[addedItem itemIdentifier] isEqual: NSToolbarPrintItemIdentifier])
-    {
-        [addedItem setToolTip:@"Print your document"];
-        [addedItem setTarget:self];
-    }
-}  
-
-- (IBAction)resizeWindow:(id)sender
-{
-    NSRect myRect = NSMakeRect(1000,200,300,400);
-    [self.window setFrame:myRect display:YES animate:YES];
-    
-}
-
-- (NSToolbarItem *)toolbar:(NSToolbar *)toolbar 
-     itemForItemIdentifier:(NSString *)itemIdentifier 
- willBeInsertedIntoToolbar:(BOOL)flag
-
-{
-    NSToolbarItem *toolbarItem = nil;
-    
-    // We create and autorelease a new NSToolbarItem, and then go through the process of setting up its
-    // attributes from the master toolbar item matching that identifier in our dictionary of items.
-    if ([itemIdentifier isEqualToString:prefsToolbar]) {
-            toolbarItem = [self toolbarItemWithIdentifier:prefsToolbar
-                                                label:@"Preferences"
-                                          paleteLabel:@"Preferences"
-                                              toolTip:@"Open Preferences"
-                                               target:self
-                                          itemContent:[NSImage imageNamed:@"Settings.png"]
-                                               action:@selector(showPreferencePanel:)
-                           ];   
-    }
-    else if ([itemIdentifier isEqualToString:quitToolbar]) {
-            toolbarItem = [self toolbarItemWithIdentifier:quitToolbar 
-                                                label:@"Quit" 
-                                          paleteLabel:@"Quit" 
-                                              toolTip:@"Quit" 
-                                               target:self 
-                                          itemContent:[NSImage imageNamed:@"Cancel.png"] 
-                                               action:@selector(terminateApp:)
-                       ];
-    }
-    
-    return toolbarItem;
-}
 
 //--------------------------------------------------------------------------------------------------
-// This method is required of NSToolbar delegates.  It returns an array holding identifiers for the default
-// set of toolbar items.  It can also be called by the customization palette to display the default toolbar.  
+// The tableview's data source also does drag drop
 //--------------------------------------------------------------------------------------------------
-- (NSArray *)toolbarDefaultItemIdentifiers:(NSToolbar *)toolbar
-{
-    return [NSArray arrayWithObjects:   prefsToolbar, 
-                                        NSToolbarSeparatorItemIdentifier,
-                                        quitToolbar,
-            nil];
+- (NSDragOperation)tableView:(NSTableView *)tableView validateDrop:(id<NSDraggingInfo>)info proposedRow:(NSInteger)row proposedDropOperation:(NSTableViewDropOperation)dropOperation {
+    NSPasteboard *pb = [info draggingPasteboard];
+    
+    
+    // Check if the pboard contains a URL that's a diretory.
+    if ([[pb types] containsObject:NSURLPboardType]) {
+        NSString *path = [[NSURL URLFromPasteboard:pb] path];
+        NSFileManager *fm = [NSFileManager defaultManager];
+        BOOL isDir;
+        if ([fm fileExistsAtPath:path isDirectory:&isDir] && isDir) {
+            return NSDragOperationCopy;
+        }
+    }
+    return NSDragOperationNone;
 }
 
-//--------------------------------------------------------------------------------------------------
-// This method is required of NSToolbar delegates.  It returns an array holding identifiers for all allowed
-// toolbar items in this toolbar.  Any not listed here will not be available in the customization palette.
-//--------------------------------------------------------------------------------------------------
-- (NSArray *)toolbarAllowedItemIdentifiers:(NSToolbar *)toolbar
-{
-    return [NSArray arrayWithObjects:   prefsToolbar, 
-                                        NSToolbarSeparatorItemIdentifier,
-                                        quitToolbar,
-            nil];
+- (BOOL)tableView:(NSTableView *)tableView acceptDrop:(id<NSDraggingInfo>)info row:(NSInteger)row dropOperation:(NSTableViewDropOperation)dropOperation {
+    
+    NSPasteboard *pb = [info draggingPasteboard];
+    
+    // Check if the pboard contains a URL that's a diretory.
+    if ([[pb types] containsObject:NSURLPboardType]) {
+        NSString *path = [[NSURL URLFromPasteboard:pb] path];
+        NSFileManager *fm = [NSFileManager defaultManager];
+        
+        BOOL isDir;
+        if ([fm fileExistsAtPath:path isDirectory:&isDir] && isDir) {
+            [theApp encryptFolder:path];
+            [tableView reloadData];
+            return YES;
+        }
+    }
+    return NO;
 }
+
 
 
 

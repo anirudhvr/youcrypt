@@ -16,36 +16,27 @@
 @class YoucryptService;
 @class ListDirectoriesWindow;
 
-@interface AppDelegate : NSObject <NSToolbarDelegate> { // changed from NSApplicationDelegate
+@interface AppDelegate : NSObject <NSTableViewDataSource> { // changed from NSApplicationDelegate
     
     // Status Bar for Agent
     IBOutlet NSMenu *statusMenu;
     NSStatusItem *statusItem;
     
-    // Controller for ListDirectoriesWindow
+    // Controllers for various windows
     ListDirectoriesWindow *listDirectories;
-
-    // For preferences
     PreferenceController *preferenceController;
-    
-    //Encrypt and Decrypt
     Decrypt *decryptController;
     Encrypt  *encryptController;
-    
-    // Array of FileSystems
-    NSMutableArray *filesystems;
-    
-    // Proxies - to be implemented
-    FileSystemsController *fc;
-
-    // Toolbar
-    IBOutlet NSToolbar *toolbar;
+        
 
     // Config directory
     ConfigDirectory *configDir;
     
     YoucryptService *youcryptService;
-
+    
+    // List of directories maintained by us.
+    // Objects added should be (YoucryptDirectory *)
+    NSMutableArray *directories;
 }
 
 // Built in methods
@@ -53,7 +44,7 @@
 - (void)awakeFromNib;
 - (IBAction)windowShouldClose:(id)sender;
 
-// Implemented
+// Window Related Stuff:  show / close app, etc.
 - (IBAction)showMainApp:(id)sender;
 - (IBAction)showPreferencePanel:(id)sender;
 - (IBAction)terminateApp:(id)sender;
@@ -64,10 +55,15 @@
 - (IBAction)showDecryptWindow:(id)sender;
 - (IBAction)showListDirectories:(id)sender;
 
--(void)setFilesystems:(NSMutableArray*)f;
-- (IBAction)resizeWindow:(id)sender;
+
+-(void)encryptFolder:(NSString *)path;
+-(BOOL)openEncryptedFolder:(NSString *)path;
+-(void)didDecrypt:(NSString *)path;
+
+
 
 // Setters and getters
+@property (readonly) NSMutableArray *directories;
 @property (assign) IBOutlet NSWindow *window;
 @property (atomic,strong) Encrypt *encryptController;
 @property (atomic,strong) Decrypt *decryptController;
@@ -76,3 +72,6 @@
 
 
 @end
+
+extern AppDelegate *theApp;
+extern NSWindow *_window;

@@ -10,10 +10,7 @@
 #import "AppDelegate.h"
 
 @interface YoucryptService : NSObject{
- 
-    AppDelegate *mainApp;
 }
 
-- (void)setApp:(AppDelegate *)x;
 
 @end
