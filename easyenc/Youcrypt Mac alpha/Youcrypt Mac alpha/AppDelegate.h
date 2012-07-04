@@ -16,7 +16,7 @@
 @class YoucryptService;
 @class ListDirectoriesWindow;
 
-@interface AppDelegate : NSObject <NSToolbarDelegate, NSTableViewDataSource> { // changed from NSApplicationDelegate
+@interface AppDelegate : NSObject <NSTableViewDataSource> { // changed from NSApplicationDelegate
     
     // Status Bar for Agent
     IBOutlet NSMenu *statusMenu;
@@ -28,8 +28,6 @@
     Decrypt *decryptController;
     Encrypt  *encryptController;
         
-    // Toolbar
-    IBOutlet NSToolbar *toolbar;
 
     // Config directory
     YoucryptConfigDirectory *configDir;    
@@ -52,7 +50,6 @@
 - (IBAction)showEncryptWindow:(id)sender;
 - (IBAction)showDecryptWindow:(id)sender;
 - (IBAction)showListDirectories:(id)sender;
-- (IBAction)resizeWindow:(id)sender;
 
 
 -(void)encryptFolder:(NSString *)path;
@@ -71,3 +68,4 @@
 @end
 
 extern AppDelegate *theApp;
+extern NSWindow *_window;

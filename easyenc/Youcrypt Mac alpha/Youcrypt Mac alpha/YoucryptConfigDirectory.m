@@ -24,8 +24,8 @@
     
     NSString *homedir = NSHomeDirectory();
     
-    youCryptVolDir = [homedir stringByAppendingPathComponent:@"/.youcrypt/tmp"];
-    youCryptTmpDir = [homedir stringByAppendingPathComponent:@"/.youcrypt/volumes"];
+    youCryptTmpDir = [homedir stringByAppendingPathComponent:@"/.youcrypt/tmp"];
+    youCryptVolDir = [homedir stringByAppendingPathComponent:@"/.youcrypt/volumes"];
     youCryptLogDir = [homedir stringByAppendingFormat:@"/.youcrypt/logs"];
     youCryptListFile = [homedir stringByAppendingPathComponent:@"/.youcrypt/dirs.plist"];
     

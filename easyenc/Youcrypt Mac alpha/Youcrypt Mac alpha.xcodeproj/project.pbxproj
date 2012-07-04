@@ -31,8 +31,6 @@
 		256C35A9158EAF8700E2BEC4 /* Preferences.xib in Resources */ = {isa = PBXBuildFile; fileRef = 256C35A8158EAF8700E2BEC4 /* Preferences.xib */; };
 		25B1E4FE158FED9800CDBC46 /* FileSystem.m in Sources */ = {isa = PBXBuildFile; fileRef = 25B1E4FD158FED9700CDBC46 /* FileSystem.m */; };
 		25B1E509158FF5D400CDBC46 /* pipetest.c in Sources */ = {isa = PBXBuildFile; fileRef = 25B1E508158FF5D400CDBC46 /* pipetest.c */; };
-		25B1E52A1591398A00CDBC46 /* Cancel.png in Resources */ = {isa = PBXBuildFile; fileRef = 25B1E5291591398A00CDBC46 /* Cancel.png */; };
-		25B1E53015913A9700CDBC46 /* Settings.png in Resources */ = {isa = PBXBuildFile; fileRef = 25B1E52F15913A9600CDBC46 /* Settings.png */; };
 		25EE6A5915928D2C008A0DC8 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25EE6A5815928D2C008A0DC8 /* Security.framework */; };
 		25EE6A5D15928D5C008A0DC8 /* SSKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = 25EE6A5C15928D5C008A0DC8 /* SSKeychain.m */; };
 		25F3D14C15923FE800E3383C /* Decrypt.m in Sources */ = {isa = PBXBuildFile; fileRef = 25F3D14A15923FE800E3383C /* Decrypt.m */; };
@@ -54,6 +52,11 @@
 		E66988D9159E63BE002323AD /* JCSSheetController.m in Sources */ = {isa = PBXBuildFile; fileRef = E66988D8159E63BE002323AD /* JCSSheetController.m */; };
 		E66988DC159E63CF002323AD /* PassphraseSheetController.m in Sources */ = {isa = PBXBuildFile; fileRef = E66988DB159E63CF002323AD /* PassphraseSheetController.m */; };
 		E6822DEF159537C8005F1175 /* YoucryptConfigDirectory.m in Sources */ = {isa = PBXBuildFile; fileRef = E6822DEE159537C8005F1175 /* YoucryptConfigDirectory.m */; };
+		E6BEB6F015A4BB4F00878D4B /* Exit.png in Resources */ = {isa = PBXBuildFile; fileRef = E6BEB6EC15A4BB4F00878D4B /* Exit.png */; };
+		E6BEB6F115A4BB4F00878D4B /* Help.png in Resources */ = {isa = PBXBuildFile; fileRef = E6BEB6ED15A4BB4F00878D4B /* Help.png */; };
+		E6BEB6F215A4BB4F00878D4B /* Preferences.png in Resources */ = {isa = PBXBuildFile; fileRef = E6BEB6EE15A4BB4F00878D4B /* Preferences.png */; };
+		E6BEB6F315A4BB4F00878D4B /* Remove.png in Resources */ = {isa = PBXBuildFile; fileRef = E6BEB6EF15A4BB4F00878D4B /* Remove.png */; };
+		E6BEB6F515A4BB5F00878D4B /* Add.png in Resources */ = {isa = PBXBuildFile; fileRef = E6BEB6F415A4BB5F00878D4B /* Add.png */; };
 		E6CEDF81159B7B46007FB3B1 /* get_dropbox_folder.sh in Resources */ = {isa = PBXBuildFile; fileRef = E6CEDF80159B7B46007FB3B1 /* get_dropbox_folder.sh */; };
 		E6E2A0BA15926C8C003E3F6C /* YoucryptService.m in Sources */ = {isa = PBXBuildFile; fileRef = E6E2A0B6159266F6003E3F6C /* YoucryptService.m */; };
 /* End PBXBuildFile section */
@@ -147,8 +150,6 @@
 		25B1E4FD158FED9700CDBC46 /* FileSystem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FileSystem.m; path = "Youcrypt Mac alpha/FileSystem.m"; sourceTree = "<group>"; };
 		25B1E505158FF48B00CDBC46 /* pipetest.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = pipetest.h; path = "Youcrypt Mac alpha/pipetest.h"; sourceTree = "<group>"; };
 		25B1E508158FF5D400CDBC46 /* pipetest.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = pipetest.c; path = "Youcrypt Mac alpha/pipetest.c"; sourceTree = "<group>"; };
-		25B1E5291591398A00CDBC46 /* Cancel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Cancel.png; sourceTree = "<group>"; };
-		25B1E52F15913A9600CDBC46 /* Settings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Settings.png; sourceTree = "<group>"; };
 		25EE6A5815928D2C008A0DC8 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		25EE6A5B15928D5C008A0DC8 /* SSKeychain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSKeychain.h; sourceTree = "<group>"; };
 		25EE6A5C15928D5C008A0DC8 /* SSKeychain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSKeychain.m; sourceTree = "<group>"; };
@@ -178,6 +179,11 @@
 		E66988DB159E63CF002323AD /* PassphraseSheetController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PassphraseSheetController.m; sourceTree = "<group>"; };
 		E6822DED159537C8005F1175 /* YoucryptConfigDirectory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = YoucryptConfigDirectory.h; path = "Youcrypt Mac alpha/YoucryptConfigDirectory.h"; sourceTree = "<group>"; };
 		E6822DEE159537C8005F1175 /* YoucryptConfigDirectory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = YoucryptConfigDirectory.m; path = "Youcrypt Mac alpha/YoucryptConfigDirectory.m"; sourceTree = "<group>"; };
+		E6BEB6EC15A4BB4F00878D4B /* Exit.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Exit.png; sourceTree = "<group>"; };
+		E6BEB6ED15A4BB4F00878D4B /* Help.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Help.png; sourceTree = "<group>"; };
+		E6BEB6EE15A4BB4F00878D4B /* Preferences.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Preferences.png; sourceTree = "<group>"; };
+		E6BEB6EF15A4BB4F00878D4B /* Remove.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Remove.png; sourceTree = "<group>"; };
+		E6BEB6F415A4BB5F00878D4B /* Add.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Add.png; sourceTree = "<group>"; };
 		E6CEDF80159B7B46007FB3B1 /* get_dropbox_folder.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = get_dropbox_folder.sh; sourceTree = "<group>"; };
 		E6E2A0B6159266F6003E3F6C /* YoucryptService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = YoucryptService.m; path = "Youcrypt Mac alpha/YoucryptService.m"; sourceTree = "<group>"; };
 		E6E2A0B7159266F6003E3F6C /* YoucryptService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = YoucryptService.h; path = "Youcrypt Mac alpha/YoucryptService.h"; sourceTree = "<group>"; };
@@ -283,6 +289,7 @@
 		256C3565158EA75F00E2BEC4 /* Youcrypt Mac alpha */ = {
 			isa = PBXGroup;
 			children = (
+				E6BEB6C915A3A72000878D4B /* Images */,
 				25F3D154159243E300E3383C /* Classes */,
 				25F3D1531592437700E3383C /* Plists */,
 				25F3D1521592436000E3383C /* UI */,
@@ -298,8 +305,6 @@
 				252C3A481593A5150044EB3C /* dsa_pub.pem */,
 				25EE6A5B15928D5C008A0DC8 /* SSKeychain.h */,
 				25EE6A5C15928D5C008A0DC8 /* SSKeychain.m */,
-				25B1E52F15913A9600CDBC46 /* Settings.png */,
-				25B1E5291591398A00CDBC46 /* Cancel.png */,
 				256C356B158EA75F00E2BEC4 /* main.m */,
 				256C356D158EA75F00E2BEC4 /* Youcrypt Mac alpha-Prefix.pch */,
 				256C356E158EA75F00E2BEC4 /* Credits.rtf */,
@@ -419,6 +424,18 @@
 			name = Sheet;
 			sourceTree = "<group>";
 		};
+		E6BEB6C915A3A72000878D4B /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				E6BEB6F415A4BB5F00878D4B /* Add.png */,
+				E6BEB6EC15A4BB4F00878D4B /* Exit.png */,
+				E6BEB6ED15A4BB4F00878D4B /* Help.png */,
+				E6BEB6EE15A4BB4F00878D4B /* Preferences.png */,
+				E6BEB6EF15A4BB4F00878D4B /* Remove.png */,
+			);
+			name = Images;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -529,14 +546,17 @@
 				256C3570158EA75F00E2BEC4 /* Credits.rtf in Resources */,
 				256C3576158EA75F00E2BEC4 /* MainMenu.xib in Resources */,
 				256C35A9158EAF8700E2BEC4 /* Preferences.xib in Resources */,
-				25B1E52A1591398A00CDBC46 /* Cancel.png in Resources */,
-				25B1E53015913A9700CDBC46 /* Settings.png in Resources */,
 				25F3D14D15923FE800E3383C /* Decrypt.xib in Resources */,
 				25F3D15B159244E800E3383C /* Encrypt.xib in Resources */,
 				252C3A491593A5150044EB3C /* dsa_pub.pem in Resources */,
 				E0BF0EBE159838DD002F9FB9 /* ListDirectoriesWindow.xib in Resources */,
 				E6CEDF81159B7B46007FB3B1 /* get_dropbox_folder.sh in Resources */,
 				E66988D5159E62D8002323AD /* ChangePassphrase.xib in Resources */,
+				E6BEB6F015A4BB4F00878D4B /* Exit.png in Resources */,
+				E6BEB6F115A4BB4F00878D4B /* Help.png in Resources */,
+				E6BEB6F215A4BB4F00878D4B /* Preferences.png in Resources */,
+				E6BEB6F315A4BB4F00878D4B /* Remove.png in Resources */,
+				E6BEB6F515A4BB5F00878D4B /* Add.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

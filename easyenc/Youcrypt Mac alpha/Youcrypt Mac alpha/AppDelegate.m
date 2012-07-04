@@ -23,8 +23,6 @@
 #import "YoucryptConfigDirectory.h"
 #import "ListDirectoriesWindow.h"
 
-#define prefsToolbar @"Prefs"
-#define quitToolbar @"Quit"
 
 int ddLogLevel = LOG_LEVEL_VERBOSE;
 
@@ -117,14 +115,7 @@ AppDelegate *theApp;
     [statusItem setTitle:@"YC"];
     [statusItem setHighlightMode:YES];
 
-    // attach toolbar
-    toolbar = [[NSToolbar alloc] initWithIdentifier:@"tooltest"];
-    [toolbar setDelegate:self];
-    [toolbar setAllowsUserCustomization:YES];
-    [toolbar setAutosavesConfiguration:YES]; 
-    
-    [self.window setToolbar:toolbar];
-    
+      
     NSArray *arguments = [[NSProcessInfo processInfo] arguments];
 	NSString *type = [[NSString alloc] init];
     
@@ -232,123 +223,6 @@ AppDelegate *theApp;
 
     DDLogVerbose(@"showing %@", encryptController);
     [encryptController showWindow:self];
-}
-
-/***
- ***
- 
- TOOLBAR FUNCTIONS 
- 
- ***
- ***/
-
-- (NSToolbarItem *)toolbarItemWithIdentifier:(NSString *)identifier
-                                       label:(NSString *)label
-                                 paleteLabel:(NSString *)paletteLabel
-                                     toolTip:(NSString *)toolTip
-                                      target:(id)target
-                                 itemContent:(id)imageOrView
-                                      action:(SEL)action
-{
-    // here we create the NSToolbarItem and setup its attributes in line with the parameters
-    NSToolbarItem *item = [[NSToolbarItem alloc] initWithItemIdentifier:identifier];
-    
-    [item setLabel:label];
-    [item setPaletteLabel:paletteLabel];
-    [item setToolTip:toolTip];
-    [item setTarget:target];
-    [item setAction:action];
-    
-    if([imageOrView isKindOfClass:[NSImage class]]){
-        [item setImage:imageOrView];
-    } 
-    else if ([imageOrView isKindOfClass:[NSView class]]){
-        [item setView:imageOrView];
-    }
-    else {
-        assert(!"Invalid itemContent: object");
-    }
-    return item;
-}
-
-
-
-- (void)toolbarWillAddItem:(NSNotification *)notif
-{
-    NSToolbarItem *addedItem = [[notif userInfo] objectForKey:@"item"];
-    
-    // Is this the printing toolbar item?  If so, then we want to redirect it's action to ourselves
-    // so we can handle the printing properly; hence, we give it a new target.
-    //
-    if ([[addedItem itemIdentifier] isEqual: NSToolbarPrintItemIdentifier])
-    {
-        [addedItem setToolTip:@"Print your document"];
-        [addedItem setTarget:self];
-    }
-}  
-
-- (IBAction)resizeWindow:(id)sender
-{
-    NSRect myRect = NSMakeRect(1000,200,300,400);
-    [self.window setFrame:myRect display:YES animate:YES];
-    
-}
-
-- (NSToolbarItem *)toolbar:(NSToolbar *)toolbar 
-     itemForItemIdentifier:(NSString *)itemIdentifier 
- willBeInsertedIntoToolbar:(BOOL)flag
-
-{
-    NSToolbarItem *toolbarItem = nil;
-    
-    // We create and autorelease a new NSToolbarItem, and then go through the process of setting up its
-    // attributes from the master toolbar item matching that identifier in our dictionary of items.
-    if ([itemIdentifier isEqualToString:prefsToolbar]) {
-            toolbarItem = [self toolbarItemWithIdentifier:prefsToolbar
-                                                label:@"Preferences"
-                                          paleteLabel:@"Preferences"
-                                              toolTip:@"Open Preferences"
-                                               target:self
-                                          itemContent:[NSImage imageNamed:@"Settings.png"]
-                                               action:@selector(showPreferencePanel:)
-                           ];   
-    }
-    else if ([itemIdentifier isEqualToString:quitToolbar]) {
-            toolbarItem = [self toolbarItemWithIdentifier:quitToolbar 
-                                                label:@"Quit" 
-                                          paleteLabel:@"Quit" 
-                                              toolTip:@"Quit" 
-                                               target:self 
-                                          itemContent:[NSImage imageNamed:@"Cancel.png"] 
-                                               action:@selector(terminateApp:)
-                       ];
-    }
-    
-    return toolbarItem;
-}
-
-//--------------------------------------------------------------------------------------------------
-// This method is required of NSToolbar delegates.  It returns an array holding identifiers for the default
-// set of toolbar items.  It can also be called by the customization palette to display the default toolbar.  
-//--------------------------------------------------------------------------------------------------
-- (NSArray *)toolbarDefaultItemIdentifiers:(NSToolbar *)toolbar
-{
-    return [NSArray arrayWithObjects:   prefsToolbar, 
-                                        NSToolbarSeparatorItemIdentifier,
-                                        quitToolbar,
-            nil];
-}
-
-//--------------------------------------------------------------------------------------------------
-// This method is required of NSToolbar delegates.  It returns an array holding identifiers for all allowed
-// toolbar items in this toolbar.  Any not listed here will not be available in the customization palette.
-//--------------------------------------------------------------------------------------------------
-- (NSArray *)toolbarAllowedItemIdentifiers:(NSToolbar *)toolbar
-{
-    return [NSArray arrayWithObjects:   prefsToolbar, 
-                                        NSToolbarSeparatorItemIdentifier,
-                                        quitToolbar,
-            nil];
 }
 
 
