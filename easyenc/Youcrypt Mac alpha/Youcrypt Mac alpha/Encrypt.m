@@ -199,7 +199,7 @@
     // Unmount the destination folder containing decrypted files
     [libFunctions execWithSocket:@"/sbin/umount" arguments:[NSArray arrayWithObject:tempFolder]
                              env:nil io:nil proc:nil];
-    
+    [fm removeItemAtPath:tempFolder error:nil];
     /* change folder icon of encrypted folder */
     [self setFolderIcon:self];    
     /* Register password with keyring */

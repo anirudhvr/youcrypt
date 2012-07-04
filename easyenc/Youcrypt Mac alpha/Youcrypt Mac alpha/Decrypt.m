@@ -9,6 +9,7 @@
 #import "Decrypt.h"
 #import "libFunctions.h"
 #import "logging.h"
+#import "AppDelegate.h"
 
 @implementation Decrypt
 
@@ -56,6 +57,8 @@
     
     [libFunctions mkdirRecursive:destFolder];     
     [libFunctions mountEncFS:srcFolder decryptedFolder:destFolder password:yourPasswordString];
+    [theApp didDecrypt:sourceFolderPath];
+    [self close];
     [[NSWorkspace sharedWorkspace] openFile:destFolder];	
 }
 @end

@@ -11,6 +11,8 @@
 
 @implementation ListDirectoriesWindow
 
+@synthesize table;
+
 - (id)init
 {
     if (![super initWithWindowNibName:@"ListDirectoriesWindow"])
@@ -29,8 +31,7 @@
 
 - (void)windowDidLoad
 {
-    [super windowDidLoad];
-    
+    [super windowDidLoad];    
     // Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.    
 }
 
@@ -40,21 +41,22 @@
     [table registerForDraggedTypes:[NSArray arrayWithObject:NSFilenamesPboardType]];
 }
 
-
-
-
 - (IBAction)doEncrypt:(id)sender {
 }
 
 - (IBAction)doOpen:(id)sender {
+    YoucryptDirectory *dir = [theApp.directories objectAtIndex:[sender clickedRow]];
+    [theApp openEncryptedFolder:[dir path]];
 }
 
 - (IBAction)doProps:(id)sender {
 }
 
 - (IBAction)selectRow:(id)sender {
-    YoucryptDirectory *dir = [theApp.directories objectAtIndex:[sender clickedRow]];
-    [dirName setStringValue:dir.path];
+    if ([sender clickedRow] < [theApp.directories count]) {
+        YoucryptDirectory *dir = [theApp.directories objectAtIndex:[sender clickedRow]];
+        [dirName setStringValue:dir.path];
+    }
 }
 
 - (IBAction)addNew:(id)sender {
@@ -79,7 +81,7 @@
 
 - (IBAction)removeFS:(id)sender {
     NSInteger row = [table selectedRow];
-    if (row != -1) {
+    if (row != -1) {        
         [table reloadData];
     }
     

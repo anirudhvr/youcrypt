@@ -51,6 +51,9 @@ AppDelegate *theApp;
 
     // TODO:  Load up directories array from the list file.
     directories = [NSKeyedUnarchiver unarchiveObjectWithFile:configDir.youCryptListFile];
+    if (directories == nil) {
+        directories = [[NSMutableArray alloc] init];
+    }
     
     theApp = self;
     return self;
@@ -73,6 +76,11 @@ AppDelegate *theApp;
     DDLogVerbose(@"App did, in fact, finish launching!!!");
 }
 
+-(void)applicationWillTerminate:(NSNotification *)aNotification {
+    [NSKeyedArchiver archiveRootObject:directories toFile:configDir.youCryptListFile];
+
+}
+
 
 - (BOOL)application:(NSApplication *)theApplication openFile:(NSString *)filename
 {    
@@ -86,22 +94,43 @@ AppDelegate *theApp;
     // 2.  Check if the last component is encrypted.yc   <---- TODO
     // 3.  Check if it is already mounted                <---- TODO
     // 4.  o/w, mount and open it.
+    // 5.  Make sure we maintain it in our list.
     //--------------------------------------------------------------------------------------------------
     NSFileManager *fm = [NSFileManager defaultManager];
     BOOL isDir;
-    if ([fm fileExistsAtPath:path isDirectory:&isDir] && isDir) {
+    if ([fm fileExistsAtPath:path isDirectory:&isDir] && isDir && ([[path pathExtension] isEqualToString:@"yc"])) {
         
         // 1. Set up a new mount point
         // 2. Set up decrypt controller with the path and the mount point
         // 3. Open the decrypt window
-        
-        NSString *mountPoint = [configDir.youCryptVolDir stringByAppendingPathComponent:[[NSProcessInfo processInfo]globallyUniqueString]];
+
+        NSString *mountPoint = [[path stringByDeletingLastPathComponent] lastPathComponent];
+        NSString *timeStr = [[NSDate date] descriptionWithCalendarFormat:nil timeZone:nil locale:nil];
+        mountPoint = [configDir.youCryptVolDir stringByAppendingPathComponent:
+                      [timeStr stringByAppendingPathComponent:mountPoint]];
         
         if (!decryptController) {
             decryptController = [[Decrypt alloc] init];
         }
         decryptController.destFolderPath = mountPoint;
         decryptController.sourceFolderPath = path;
+        
+        for (YoucryptDirectory *dir in directories) {
+            if ([path isEqualToString:dir.path]) {
+                dir.mountedPath = mountPoint;
+                dir.mounted = NO;                
+                goto FoundOne;
+            }
+        }
+        {
+            YoucryptDirectory *dir = [[YoucryptDirectory alloc] init];        
+            dir.path = path;
+            dir.mountedPath = mountPoint;
+            dir.alias = [[path stringByDeletingLastPathComponent] lastPathComponent];
+            dir.mounted = NO;
+            [directories addObject:dir];            
+        }
+    FoundOne:        
         [self showDecryptWindow:self];        
         return YES;
     }
@@ -114,6 +143,21 @@ AppDelegate *theApp;
 //    DDLogVerbose(@"The following file has been dropped or selected: %@",file);
 //   
 //    return  YES; // Return YES when file processed succesfull, else return NO.
+}
+
+- (void)didDecrypt:(NSString *)path {
+    for (YoucryptDirectory *dir in directories) {
+        if ([path isEqualToString:dir.path]) {
+            dir.mounted = YES;
+        }
+    }
+    if (listDirectories != nil) {
+        [listDirectories.table reloadData];
+    }
+}
+
+- (void)didEncrypt:(NSString *)path {
+    
 }
 
 - (void)encryptFolder:(NSString *)path {
