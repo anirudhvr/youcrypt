@@ -152,8 +152,8 @@
     NSFileHandle *io = [NSFileHandle alloc];
     
     if ([libFunctions execWithSocket:@"/usr/local/bin/encfs" arguments:nil env:nil io:io proc:encfsProc]) {        
-        [io writeData:[[NSString stringWithFormat:@"7\nencfs\n%@\n%@\n--nu\n%d\n--pw\n%@\n", 
-                        encFolder, decFolder, numUsers, pwd] dataUsingEncoding:NSUTF8StringEncoding]];
+        [io writeData:[[NSString stringWithFormat:@"8\nencfs\n--nu\n%d\n--pw\n%@\n--\n%@\n%@\n",
+                        numUsers, pwd, encFolder, decFolder] dataUsingEncoding:NSUTF8StringEncoding]];
         [io closeFile];
         [encfsProc waitUntilExit];
         return YES;
@@ -171,8 +171,8 @@
     NSFileHandle *io = [NSFileHandle alloc];
     
     if ([libFunctions execWithSocket:@"/usr/local/bin/encfs" arguments:nil env:nil io:io proc:encfsProc]) {        
-        [io writeData:[[NSString stringWithFormat:@"5\nencfs\n%@\n%@\n--pw\n%@\n", 
-                        encFolder, decFolder, password] dataUsingEncoding:NSUTF8StringEncoding]];
+        [io writeData:[[NSString stringWithFormat:@"6\nencfs\n--pw\n%@\n--\n%@\n%@\n", 
+                        password, encFolder, decFolder] dataUsingEncoding:NSUTF8StringEncoding]];
         [io closeFile];
         [encfsProc waitUntilExit];
         return YES;
