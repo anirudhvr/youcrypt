@@ -20,10 +20,10 @@
 @implementation libFunctions
 
 
-+ (NSString*) getPassphraseFromKeychain
++ (NSString*)getPassphraseFromKeychain:(NSString*)service;
 {
     NSError *error = nil;
-    NSString *passphraseFromKeychain = [SSKeychain passwordForService:@"Youcrypt" account:@"avr" error:&error];
+    NSString *passphraseFromKeychain = [SSKeychain passwordForService:service account:NSUserName() error:&error];
     
     if (error) {
         NSLog(@"Did not get passphrase");
@@ -36,12 +36,12 @@
 
 
 /* Register password with Mac keychain */
-+ (BOOL)registerWithKeychain:(NSString*)passphrase
++ (BOOL)registerWithKeychain:(NSString*)passphrase:(NSString*)service;
 {
     NSString *yourPasswordString = passphrase;
     NSError *error = nil;
     
-    if([SSKeychain setPassword:yourPasswordString forService:@"Youcrypt" account:@"avr" error:&error])
+    if([SSKeychain setPassword:yourPasswordString forService:service account:NSUserName() error:&error])
         NSLog(@"Successfully registered passphrase wiht keychain");
     if (error) {
         NSLog(@"Error registering with Keychain");
@@ -123,12 +123,13 @@
     else {
         [proc init];
     }
-    if (arguments != nil)
+
+     if (arguments != nil)
         [proc setArguments:arguments];
     if (env != nil)
         [proc setEnvironment:env];
     [proc setStandardInput:childFD];
-    [proc setStandardInput:childFD];
+    [proc setStandardOutput:childFD];
     [proc setLaunchPath:path];
     
     @try {

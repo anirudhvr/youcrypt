@@ -1,0 +1,3 @@
+[submodule "easyenc/Youcrypt Mac alpha/MailCore"]
+	path = easyenc/Youcrypt Mac alpha/MailCore
+	url = git://github.com/mronge/MailCore.git

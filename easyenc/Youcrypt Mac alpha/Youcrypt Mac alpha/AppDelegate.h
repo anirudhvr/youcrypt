@@ -12,7 +12,7 @@
 @class FileSystemsController;
 @class Decrypt;
 @class Encrypt;
-@class YoucryptConfigDirectory;
+@class ConfigDirectory;
 @class YoucryptService;
 @class ListDirectoriesWindow;
 
@@ -30,7 +30,8 @@
         
 
     // Config directory
-    YoucryptConfigDirectory *configDir;    
+    ConfigDirectory *configDir;
+    
     YoucryptService *youcryptService;
     
     // List of directories maintained by us.
@@ -47,6 +48,9 @@
 - (IBAction)showMainApp:(id)sender;
 - (IBAction)showPreferencePanel:(id)sender;
 - (IBAction)terminateApp:(id)sender;
+- (void)showFirstRunSheet;
+
+// Enc and Dec
 - (IBAction)showEncryptWindow:(id)sender;
 - (IBAction)showDecryptWindow:(id)sender;
 - (IBAction)showListDirectories:(id)sender;
@@ -63,7 +67,7 @@
 @property (assign) IBOutlet NSWindow *window;
 @property (atomic,strong) Encrypt *encryptController;
 @property (atomic,strong) Decrypt *decryptController;
-@property (atomic,strong) YoucryptConfigDirectory *configDir;
+@property (atomic,strong) ConfigDirectory *configDir;
 @property (nonatomic,strong) ListDirectoriesWindow *listDirectories;
 
 

@@ -12,7 +12,6 @@
 #import "Decrypt.h"
 #import "Encrypt.h"
 #import "YoucryptService.h"
-#import "YoucryptConfigDirectory.h"
 #import "libFunctions.h"
 #import "DDLog.h"
 #import "DDTTYLogger.h"
@@ -20,7 +19,7 @@
 #import "DDFileLogger.h"
 #import "CompressingLogFileManager.h"
 #import "logging.h"
-#import "YoucryptConfigDirectory.h"
+#import "ConfigDirectory.h"
 #import "ListDirectoriesWindow.h"
 
 
@@ -44,8 +43,9 @@ AppDelegate *theApp;
 {
     self = [super init];
     
-    configDir = [[YoucryptConfigDirectory alloc] init];
+    configDir = [[ConfigDirectory alloc] init];
     youcryptService = [[YoucryptService alloc] init];
+    //[youcryptService setApp:self];
 
     // TODO:  Load up directories array from the list file.
     directories = [NSKeyedUnarchiver unarchiveObjectWithFile:configDir.youCryptListFile];
@@ -225,6 +225,9 @@ AppDelegate *theApp;
     
     else if ([type isEqualToString:@"L"])
         [self showListDirectories:self];
+    
+    if(configDir.firstRun)
+        [self showFirstRunSheet];
         
 }
 
@@ -264,6 +267,19 @@ AppDelegate *theApp;
     [preferenceController showWindow:self];
 }
 
+
+- (void)showFirstRunSheet
+{
+    // Is preferenceController nil?
+    if (!preferenceController) {
+        preferenceController = [[PreferenceController alloc] init];
+    }
+    DDLogVerbose(@"showing %@", preferenceController);
+    [preferenceController showFirstRun]; 
+    //[preferenceController showWindow:self];
+}
+
+
 - (IBAction)showDecryptWindow:(id)sender
 {
     // Is decryptController nil?
@@ -282,12 +298,12 @@ AppDelegate *theApp;
     } else {
         /* other times, this code is called in awakefromNib */              
         if (encryptController.keychainHasPassphrase == NO) {
-            encryptController.passphraseFromKeychain = [libFunctions getPassphraseFromKeychain];
+            encryptController.passphraseFromKeychain = [libFunctions getPassphraseFromKeychain:@"Youcrypt"];
             if (encryptController.passphraseFromKeychain != nil) {
                 encryptController.keychainHasPassphrase = YES;
             }
         }
-        NSString *passphrase =[libFunctions getPassphraseFromKeychain];
+        NSString *passphrase =[libFunctions getPassphraseFromKeychain:@"Youcrypt"];
         if ([encryptController keychainHasPassphrase] == YES) {
             [encryptController setPassphraseTextField:passphrase];
         }

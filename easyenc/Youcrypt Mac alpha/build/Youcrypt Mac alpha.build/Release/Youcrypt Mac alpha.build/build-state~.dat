@@ -1,0 +1,560 @@
+TYoucrypt Mac alpha
+v5
+r1
+cCheck dependencies
+cProcessInfoPlistFile "/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/build/Release/Youcrypt Mac alpha.app/Contents/Info.plist" "Youcrypt Mac alpha/Youcrypt Mac alpha-Info.plist"
+cProcessPCH "/var/folders/zs/h1x7z24n4sb6nlhf17k4h8lr0000gn/C/com.apple.Xcode.501/SharedPrecompiledHeaders/Youcrypt Mac alpha-Prefix-bhsbxjxaqacoidccqgwxfhngjphf/Youcrypt Mac alpha-Prefix.pch.pth" "Youcrypt Mac alpha/Youcrypt Mac alpha-Prefix.pch" normal x86_64 objective-c com.apple.compilers.llvm.clang.1_0.compiler
+cProcessPCH "/var/folders/zs/h1x7z24n4sb6nlhf17k4h8lr0000gn/C/com.apple.Xcode.501/SharedPrecompiledHeaders/Youcrypt Mac alpha-Prefix-bbktwkrpaummghbhkqbyzvtgmwch/Youcrypt Mac alpha-Prefix.pch.pth" "Youcrypt Mac alpha/Youcrypt Mac alpha-Prefix.pch" normal x86_64 c com.apple.compilers.llvm.clang.1_0.compiler
+cCompileC "build/Youcrypt Mac alpha.build/Release/Youcrypt Mac alpha.build/Objects-normal/x86_64/pipetest.o" "/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/Youcrypt Mac alpha/../Youcrypt Mac alpha/pipetest.c" normal x86_64 c com.apple.compilers.llvm.clang.1_0.compiler
+cCompileC "build/Youcrypt Mac alpha.build/Release/Youcrypt Mac alpha.build/Objects-normal/x86_64/main.o" "/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/Youcrypt Mac alpha/main.m" normal x86_64 objective-c com.apple.compilers.llvm.clang.1_0.compiler
+cCompileC "build/Youcrypt Mac alpha.build/Release/Youcrypt Mac alpha.build/Objects-normal/x86_64/AppDelegate.o" "/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/Youcrypt Mac alpha/../Youcrypt Mac alpha/AppDelegate.m" normal x86_64 objective-c com.apple.compilers.llvm.clang.1_0.compiler
+
+N/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.7.sdk
+c000000004F90F72900000000000000CC
+t1334900521
+s204
+
+N/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.7.sdk/System/Library/Frameworks/Cocoa.framework/Cocoa
+c000000004FD8F3250000000000002470
+t1339618085
+s9328
+
+N/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.7.sdk/System/Library/Frameworks/CoreData.framework/CoreData
+c000000004FD8F325000000000003D7A8
+t1339618085
+s251816
+
+N/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.7.sdk/System/Library/Frameworks/CoreServices.framework/CoreServices
+c000000004FD8F3250000000000007B40
+t1339618085
+s31552
+
+N/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.7.sdk/System/Library/Frameworks/QuartzCore.framework/QuartzCore
+c000000004FD8F32700000000000462F4
+t1339618087
+s287476
+
+N/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.7.sdk/System/Library/Frameworks/Security.framework/Security
+c000000004FD8F327000000000006A640
+t1339618087
+s435776
+
+N/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.7.sdk/System/Library/Frameworks/SystemConfiguration.framework/SystemConfiguration
+c000000004FD8F328000000000002B984
+t1339618088
+s178564
+
+N/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.7.sdk/usr/lib/libxml2.dylib
+c000000004FD8F32A00000000000389F4
+t1339618090
+s231924
+
+N/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/RestKit/build/Release/RestKit.framework
+c000000004FECF3A200000000000000CC
+t1340928930
+s204
+
+N/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/RestKit/build/Release/RestKit.framework/RestKit
+c000000004FECF3A100000000001060CC
+t1340928929
+s1073356
+
+N/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/Sparkle.framework
+c000000004FE50C3900000000000000CC
+t1340410937
+s204
+
+N/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/Sparkle.framework/Sparkle
+c000000004FE50C39000000000009A930
+t1340410937
+s633136
+
+N/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/Youcrypt Mac alpha/../BoxFSA.m
+c000000004FEB954F0000000000000D9F
+t1340839247
+s3487
+
+N/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/Youcrypt Mac alpha/../CompressingLogFileManager.m
+c000000004FE50C390000000000003BB5
+t1340410937
+s15285
+
+N/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/Youcrypt Mac alpha/../DDASLLogger.m
+c000000004FE50C390000000000000929
+t1340410937
+s2345
+
+N/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/Youcrypt Mac alpha/../DDFileLogger.m
+c000000004FE50C390000000000009158
+t1340410937
+s37208
+
+N/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/Youcrypt Mac alpha/../DDLog.m
+c000000004FE50C3900000000000077C7
+t1340410937
+s30663
+
+N/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/Youcrypt Mac alpha/../DDTTYLogger.m
+c000000004FE50C39000000000000B94C
+t1340410937
+s47436
+
+N/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/Youcrypt Mac alpha/../ListDirectoriesWindow.m
+c000000004FEB48D70000000000001725
+t1340819671
+s5925
+
+N/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/Youcrypt Mac alpha/../ListDirectoriesWindow.xib
+c000000004FEB48D7000000000000BA34
+t1340819671
+s47668
+
+N/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/Youcrypt Mac alpha/../Youcrypt Mac alpha/AppDelegate.m
+c000000004FE8A4D20000000000002ABD
+t1340646610
+s10941
+
+N/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/Youcrypt Mac alpha/../Youcrypt Mac alpha/Decrypt.m
+c000000004FE50C3A00000000000006AD
+t1340410938
+s1709
+
+N/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/Youcrypt Mac alpha/../Youcrypt Mac alpha/Decrypt.xib
+c000000004FE50C3A0000000000004B7D
+t1340410938
+s19325
+
+N/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/Youcrypt Mac alpha/../Youcrypt Mac alpha/Encrypt.m
+c000000004FEB48D70000000000001DD8
+t1340819671
+s7640
+
+N/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/Youcrypt Mac alpha/../Youcrypt Mac alpha/Encrypt.xib
+c000000004FE8A4CE0000000000007172
+t1340646606
+s29042
+
+N/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/Youcrypt Mac alpha/../Youcrypt Mac alpha/FileSystem.m
+c000000004FE50C3A000000000000018E
+t1340410938
+s398
+
+N/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/Youcrypt Mac alpha/../Youcrypt Mac alpha/PreferenceController.m
+c000000004FECECEB00000000000015D5
+t1340927211
+s5589
+
+N/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/Youcrypt Mac alpha/../Youcrypt Mac alpha/Preferences.xib
+c000000004FEB984A00000000000130A3
+t1340840010
+s77987
+
+N/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/Youcrypt Mac alpha/../Youcrypt Mac alpha/YoucryptConfigDirectory.m
+c000000004FE8A4D20000000000000417
+t1340646610
+s1047
+
+N/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/Youcrypt Mac alpha/../Youcrypt Mac alpha/YoucryptService.m
+c000000004FEB48D70000000000000B91
+t1340819671
+s2961
+
+N/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/Youcrypt Mac alpha/../Youcrypt Mac alpha/en.lproj/InfoPlist.strings
+c000000004FE50C3A000000000000002D
+t1340410938
+s45
+
+N/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/Youcrypt Mac alpha/../Youcrypt Mac alpha/en.lproj/MainMenu.xib
+c000000004FE8A4CE0000000000024FE4
+t1340646606
+s151524
+
+N/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/Youcrypt Mac alpha/../Youcrypt Mac alpha/libFunctions.m
+c000000004FEB48D80000000000000E73
+t1340819672
+s3699
+
+N/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/Youcrypt Mac alpha/../Youcrypt Mac alpha/pipetest.c
+c000000004FEB48D8000000000000064C
+t1340819672
+s1612
+
+N/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/Youcrypt Mac alpha/../YoucryptDirectory.m
+c000000004FEB48D800000000000004CD
+t1340819672
+s1229
+
+N/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/Youcrypt Mac alpha/Cancel.png
+c000000004FE50C3A0000000000000938
+t1340410938
+s2360
+
+N/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/Youcrypt Mac alpha/SSKeychain.m
+c000000004FE50C3A0000000000001F5C
+t1340410938
+s8028
+
+N/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/Youcrypt Mac alpha/Settings.png
+c000000004FE50C3A0000000000000C6A
+t1340410938
+s3178
+
+N/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/Youcrypt Mac alpha/Youcrypt Mac alpha-Prefix.pch
+c000000004FE50C3A00000000000000A7
+t1340410938
+s167
+
+N/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/Youcrypt Mac alpha/dsa_pub.pem
+c000000004FE50C3A000000000000028E
+t1340410938
+s654
+
+N/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/Youcrypt Mac alpha/en.lproj/Credits.rtf
+c000000004FE50C3A00000000000001D0
+t1340410938
+s464
+
+N/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/Youcrypt Mac alpha/main.m
+c000000004FE50C3A0000000000000146
+t1340410938
+s326
+
+N/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/build/Release/Youcrypt Mac alpha.app
+t2
+s0
+
+N/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/build/Release/Youcrypt Mac alpha.app.dSYM
+t2
+s0
+
+N/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/build/Release/Youcrypt Mac alpha.app/Contents/Frameworks/RestKit.framework
+t2
+s0
+
+N/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/build/Release/Youcrypt Mac alpha.app/Contents/Frameworks/Sparkle.framework
+t2
+s0
+
+N/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/build/Release/Youcrypt Mac alpha.app/Contents/Info.plist
+t2
+s0
+
+N/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/build/Release/Youcrypt Mac alpha.app/Contents/MacOS/Youcrypt Mac alpha
+t2
+s0
+
+N/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/build/Release/Youcrypt Mac alpha.app/Contents/PkgInfo
+t2
+s0
+
+N/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/build/Release/Youcrypt Mac alpha.app/Contents/Resources/Cancel.png
+t2
+s0
+
+N/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/build/Release/Youcrypt Mac alpha.app/Contents/Resources/Decrypt.nib
+t2
+s0
+
+N/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/build/Release/Youcrypt Mac alpha.app/Contents/Resources/Encrypt.nib
+t2
+s0
+
+N/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/build/Release/Youcrypt Mac alpha.app/Contents/Resources/ListDirectoriesWindow.nib
+t2
+s0
+
+N/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/build/Release/Youcrypt Mac alpha.app/Contents/Resources/Preferences.nib
+t2
+s0
+
+N/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/build/Release/Youcrypt Mac alpha.app/Contents/Resources/Settings.png
+t2
+s0
+
+N/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/build/Release/Youcrypt Mac alpha.app/Contents/Resources/dsa_pub.pem
+t2
+s0
+
+N/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/build/Release/Youcrypt Mac alpha.app/Contents/Resources/en.lproj/Credits.rtf
+t2
+s0
+
+N/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/build/Release/Youcrypt Mac alpha.app/Contents/Resources/en.lproj/InfoPlist.strings
+t2
+s0
+
+N/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/build/Release/Youcrypt Mac alpha.app/Contents/Resources/en.lproj/MainMenu.nib
+t2
+s0
+
+N/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/build/Youcrypt Mac alpha.build/Release/Youcrypt Mac alpha.build/Objects-normal/x86_64/AppDelegate.o
+t2
+s0
+
+N/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/build/Youcrypt Mac alpha.build/Release/Youcrypt Mac alpha.build/Objects-normal/x86_64/BoxFSA.o
+t2
+s0
+
+N/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/build/Youcrypt Mac alpha.build/Release/Youcrypt Mac alpha.build/Objects-normal/x86_64/CompressingLogFileManager.o
+t2
+s0
+
+N/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/build/Youcrypt Mac alpha.build/Release/Youcrypt Mac alpha.build/Objects-normal/x86_64/DDASLLogger.o
+t2
+s0
+
+N/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/build/Youcrypt Mac alpha.build/Release/Youcrypt Mac alpha.build/Objects-normal/x86_64/DDFileLogger.o
+t2
+s0
+
+N/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/build/Youcrypt Mac alpha.build/Release/Youcrypt Mac alpha.build/Objects-normal/x86_64/DDLog.o
+t2
+s0
+
+N/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/build/Youcrypt Mac alpha.build/Release/Youcrypt Mac alpha.build/Objects-normal/x86_64/DDTTYLogger.o
+t2
+s0
+
+N/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/build/Youcrypt Mac alpha.build/Release/Youcrypt Mac alpha.build/Objects-normal/x86_64/Decrypt.o
+t2
+s0
+
+N/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/build/Youcrypt Mac alpha.build/Release/Youcrypt Mac alpha.build/Objects-normal/x86_64/Encrypt.o
+t2
+s0
+
+N/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/build/Youcrypt Mac alpha.build/Release/Youcrypt Mac alpha.build/Objects-normal/x86_64/FileSystem.o
+t2
+s0
+
+N/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/build/Youcrypt Mac alpha.build/Release/Youcrypt Mac alpha.build/Objects-normal/x86_64/ListDirectoriesWindow.o
+t2
+s0
+
+N/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/build/Youcrypt Mac alpha.build/Release/Youcrypt Mac alpha.build/Objects-normal/x86_64/PreferenceController.o
+t2
+s0
+
+N/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/build/Youcrypt Mac alpha.build/Release/Youcrypt Mac alpha.build/Objects-normal/x86_64/SSKeychain.o
+t2
+s0
+
+N/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/build/Youcrypt Mac alpha.build/Release/Youcrypt Mac alpha.build/Objects-normal/x86_64/Youcrypt Mac alpha.LinkFileList
+c000000004FECF3A20000000000000B3C
+t1340928930
+s2876
+
+N/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/build/Youcrypt Mac alpha.build/Release/Youcrypt Mac alpha.build/Objects-normal/x86_64/YoucryptConfigDirectory.o
+t2
+s0
+
+N/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/build/Youcrypt Mac alpha.build/Release/Youcrypt Mac alpha.build/Objects-normal/x86_64/YoucryptDirectory.o
+t2
+s0
+
+N/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/build/Youcrypt Mac alpha.build/Release/Youcrypt Mac alpha.build/Objects-normal/x86_64/YoucryptService.o
+t2
+s0
+
+N/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/build/Youcrypt Mac alpha.build/Release/Youcrypt Mac alpha.build/Objects-normal/x86_64/libFunctions.o
+t2
+s0
+
+N/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/build/Youcrypt Mac alpha.build/Release/Youcrypt Mac alpha.build/Objects-normal/x86_64/main.o
+t2
+s0
+
+N/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/build/Youcrypt Mac alpha.build/Release/Youcrypt Mac alpha.build/Objects-normal/x86_64/pipetest.o
+t2
+s0
+
+N/var/folders/zs/h1x7z24n4sb6nlhf17k4h8lr0000gn/C/com.apple.Xcode.501/SharedPrecompiledHeaders/Youcrypt Mac alpha-Prefix-bbktwkrpaummghbhkqbyzvtgmwch/Youcrypt Mac alpha-Prefix.pch.pth
+t2
+s0
+
+N/var/folders/zs/h1x7z24n4sb6nlhf17k4h8lr0000gn/C/com.apple.Xcode.501/SharedPrecompiledHeaders/Youcrypt Mac alpha-Prefix-bhsbxjxaqacoidccqgwxfhngjphf/Youcrypt Mac alpha-Prefix.pch.pth
+t2
+s0
+
+NYoucrypt Mac alpha/Youcrypt Mac alpha-Info.plist
+c000000004FECEAED00000000000009F1
+t1340926701
+s2545
+
+CCheck dependencies
+r0
+lSLF05#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection18"Check dependenciescb645c222b9db541^eca363222b9db541^-129"warning: no rule to process file '$(PROJECT_DIR)/Youcrypt Mac alpha/../logging.h' of type sourcecode.c.h for architecture x86_641(21%IDEActivityLogMessage2@128"Warning: no rule to process file '$(PROJECT_DIR)/Youcrypt Mac alpha/../logging.h' of type sourcecode.c.h for architecture x86_64-362621730#18446744073709551615#0#-1#27"com.apple.dt.IDE.LogMessage-27"Dependency Analysis Warning--0#1#0#--18"Check dependencies36"01D2E1E0-4629-4D1D-B402-7D3512809EF9-
+
+CCompileC "build/Youcrypt Mac alpha.build/Release/Youcrypt Mac alpha.build/Objects-normal/x86_64/AppDelegate.o" "/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/Youcrypt Mac alpha/../Youcrypt Mac alpha/AppDelegate.m" normal x86_64 objective-c com.apple.compilers.llvm.clang.1_0.compiler
+s362621733.654806
+e362621734.339210
+r0
+xCompileC
+xbuild/Youcrypt Mac alpha.build/Release/Youcrypt Mac alpha.build/Objects-normal/x86_64/AppDelegate.o
+x/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/Youcrypt Mac alpha/../Youcrypt Mac alpha/AppDelegate.m
+xnormal
+xx86_64
+xobjective-c
+xcom.apple.compilers.llvm.clang.1_0.compiler
+oIn file included from /Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/Youcrypt Mac alpha/../Youcrypt Mac alpha/AppDelegate.m:10:
+oIn file included from /Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/Youcrypt Mac alpha/PreferenceController.h:10:
+o/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/Youcrypt Mac alpha/../BoxFSA.h:10:9: fatal error: 'RestKit/RestKit.h' file not found
+o#import "RestKit/RestKit.h"
+o        ^
+o1 error generated.
+lSLF05#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection112"Compile /Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/Youcrypt Mac alpha/../Youcrypt Mac alpha/AppDelegate.ma3cba7252b9db541^9d9d54262b9db541^-441"In file included from /Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/Youcrypt Mac alpha/../Youcrypt Mac alpha/AppDelegate.m:10:In file included from /Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/Youcrypt Mac alpha/PreferenceController.h:10:/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/Youcrypt Mac alpha/../BoxFSA.h:10:9: fatal error: 'RestKit/RestKit.h' file not found#import "RestKit/RestKit.h"        ^1 error generated.1(36%IDEClangDiagnosticActivityLogMessage2@34"'RestKit/RestKit.h' file not found-362621734#18446744073709551615#0#2(2@130"In file included from /Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/Youcrypt Mac alpha/../Youcrypt Mac alpha/AppDelegate.m:10:-362621734#18446744073709551615#0#-0#27"com.apple.dt.IDE.diagnostic23%DVTTextDocumentLocation3@106"file://localhost/Users/hr/code/easyenc/easyenc/Youcrypt%20Mac%20alpha/Youcrypt%20Mac%20alpha/AppDelegate.m0000000000000000^9#8#9#8#188#0#21"Clang LLVM 1.0 Notice--2@117"In file included from /Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/Youcrypt Mac alpha/PreferenceController.h:10:-362621734#18446744073709551615#0#-0#27"com.apple.dt.IDE.diagnostic3@115"file://localhost/Users/hr/code/easyenc/easyenc/Youcrypt%20Mac%20alpha/Youcrypt%20Mac%20alpha/PreferenceController.h0000000000000000^9#8#9#8#197#0#21"Clang LLVM 1.0 Notice--2#27"com.apple.dt.IDE.diagnostic3@78"file://localhost/Users/hr/code/easyenc/easyenc/Youcrypt%20Mac%20alpha/BoxFSA.h0000000000000000^9#8#9#8#183#0#29"Lexical or Preprocessor Issue--0#0#0#-19%DVTDocumentLocation4@132"file://localhost/Users/hr/code/easyenc/easyenc/Youcrypt%20Mac%20alpha/Youcrypt%20Mac%20alpha/../Youcrypt%20Mac%20alpha/AppDelegate.m0000000000000000^3359"CompileC "build/Youcrypt Mac alpha.build/Release/Youcrypt Mac alpha.build/Objects-normal/x86_64/AppDelegate.o" "Youcrypt Mac alpha/../Youcrypt Mac alpha/AppDelegate.m" normal x86_64 objective-c com.apple.compilers.llvm.clang.1_0.compiler    cd "/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha"    setenv LANG en_US.US-ASCII    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -x objective-c -arch x86_64 -fmessage-length=0 -std=gnu99 -fobjc-arc -Wno-trigraphs -fpascal-strings -Os -Wno-missing-field-initializers -Wno-missing-prototypes -Wreturn-type -Wno-implicit-atomic-properties -Wformat -Wno-missing-braces -Wparentheses -Wswitch -Wno-unused-function -Wno-unused-label -Wno-unused-parameter -Wunused-variable -Wunused-value -Wuninitialized -Wno-unknown-pragmas -Wno-shadow -Wno-four-char-constants -Wno-sign-compare -Wshorten-64-to-32 -Wpointer-sign -Wno-newline-eof -Wno-selector -Wno-strict-selector-match -Wno-undeclared-selector -Wno-deprecated-implementations -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.7.sdk -fasm-blocks -Wprotocol -Wdeprecated-declarations -mmacosx-version-min=10.7 -g -fvisibility=hidden -Wno-conversion -Wno-sign-conversion "-DIBOutlet=__attribute__((iboutlet))" "-DIBOutletCollection(ClassName)=__attribute__((iboutletcollection(ClassName)))" "-DIBAction=void)__attribute__((ibaction)" -iquote "/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/build/Youcrypt Mac alpha.build/Release/Youcrypt Mac alpha.build/Youcrypt Mac alpha-generated-files.hmap" "-I/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/build/Youcrypt Mac alpha.build/Release/Youcrypt Mac alpha.build/Youcrypt Mac alpha-own-target-headers.hmap" "-I/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/build/Youcrypt Mac alpha.build/Release/Youcrypt Mac alpha.build/Youcrypt Mac alpha-all-target-headers.hmap" -iquote "/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/build/Youcrypt Mac alpha.build/Release/Youcrypt Mac alpha.build/Youcrypt Mac alpha-project-headers.hmap" "-I/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/build/Release/include" "-I/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/build/Youcrypt Mac alpha.build/Release/Youcrypt Mac alpha.build/DerivedSources/x86_64" "-I/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/build/Youcrypt Mac alpha.build/Release/Youcrypt Mac alpha.build/DerivedSources" "-F/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/build/Release" "-F/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha" -include "/var/folders/zs/h1x7z24n4sb6nlhf17k4h8lr0000gn/C/com.apple.Xcode.501/SharedPrecompiledHeaders/Youcrypt Mac alpha-Prefix-bhsbxjxaqacoidccqgwxfhngjphf/Youcrypt Mac alpha-Prefix.pch" -MMD -MT dependencies -MF "/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/build/Youcrypt Mac alpha.build/Release/Youcrypt Mac alpha.build/Objects-normal/x86_64/AppDelegate.d" --serialize-diagnostics "/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/build/Youcrypt Mac alpha.build/Release/Youcrypt Mac alpha.build/Objects-normal/x86_64/AppDelegate.dia" -c "/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/Youcrypt Mac alpha/../Youcrypt Mac alpha/AppDelegate.m" -o "/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/build/Youcrypt Mac alpha.build/Release/Youcrypt Mac alpha.build/Objects-normal/x86_64/AppDelegate.o"36"80B330CF-6325-439A-B399-95C21E624228-
+
+CCompileC "build/Youcrypt Mac alpha.build/Release/Youcrypt Mac alpha.build/Objects-normal/x86_64/BoxFSA.o" "/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/Youcrypt Mac alpha/../BoxFSA.m" normal x86_64 objective-c com.apple.compilers.llvm.clang.1_0.compiler
+r0
+
+CCompileC "build/Youcrypt Mac alpha.build/Release/Youcrypt Mac alpha.build/Objects-normal/x86_64/CompressingLogFileManager.o" "/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/Youcrypt Mac alpha/../CompressingLogFileManager.m" normal x86_64 objective-c com.apple.compilers.llvm.clang.1_0.compiler
+r0
+
+CCompileC "build/Youcrypt Mac alpha.build/Release/Youcrypt Mac alpha.build/Objects-normal/x86_64/DDASLLogger.o" "/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/Youcrypt Mac alpha/../DDASLLogger.m" normal x86_64 objective-c com.apple.compilers.llvm.clang.1_0.compiler
+r0
+
+CCompileC "build/Youcrypt Mac alpha.build/Release/Youcrypt Mac alpha.build/Objects-normal/x86_64/DDFileLogger.o" "/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/Youcrypt Mac alpha/../DDFileLogger.m" normal x86_64 objective-c com.apple.compilers.llvm.clang.1_0.compiler
+r0
+
+CCompileC "build/Youcrypt Mac alpha.build/Release/Youcrypt Mac alpha.build/Objects-normal/x86_64/DDLog.o" "/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/Youcrypt Mac alpha/../DDLog.m" normal x86_64 objective-c com.apple.compilers.llvm.clang.1_0.compiler
+r0
+
+CCompileC "build/Youcrypt Mac alpha.build/Release/Youcrypt Mac alpha.build/Objects-normal/x86_64/DDTTYLogger.o" "/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/Youcrypt Mac alpha/../DDTTYLogger.m" normal x86_64 objective-c com.apple.compilers.llvm.clang.1_0.compiler
+r0
+
+CCompileC "build/Youcrypt Mac alpha.build/Release/Youcrypt Mac alpha.build/Objects-normal/x86_64/Decrypt.o" "/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/Youcrypt Mac alpha/../Youcrypt Mac alpha/Decrypt.m" normal x86_64 objective-c com.apple.compilers.llvm.clang.1_0.compiler
+r0
+
+CCompileC "build/Youcrypt Mac alpha.build/Release/Youcrypt Mac alpha.build/Objects-normal/x86_64/Encrypt.o" "/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/Youcrypt Mac alpha/../Youcrypt Mac alpha/Encrypt.m" normal x86_64 objective-c com.apple.compilers.llvm.clang.1_0.compiler
+r0
+
+CCompileC "build/Youcrypt Mac alpha.build/Release/Youcrypt Mac alpha.build/Objects-normal/x86_64/FileSystem.o" "/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/Youcrypt Mac alpha/../Youcrypt Mac alpha/FileSystem.m" normal x86_64 objective-c com.apple.compilers.llvm.clang.1_0.compiler
+r0
+
+CCompileC "build/Youcrypt Mac alpha.build/Release/Youcrypt Mac alpha.build/Objects-normal/x86_64/ListDirectoriesWindow.o" "/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/Youcrypt Mac alpha/../ListDirectoriesWindow.m" normal x86_64 objective-c com.apple.compilers.llvm.clang.1_0.compiler
+r0
+
+CCompileC "build/Youcrypt Mac alpha.build/Release/Youcrypt Mac alpha.build/Objects-normal/x86_64/PreferenceController.o" "/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/Youcrypt Mac alpha/../Youcrypt Mac alpha/PreferenceController.m" normal x86_64 objective-c com.apple.compilers.llvm.clang.1_0.compiler
+r0
+
+CCompileC "build/Youcrypt Mac alpha.build/Release/Youcrypt Mac alpha.build/Objects-normal/x86_64/SSKeychain.o" "/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/Youcrypt Mac alpha/SSKeychain.m" normal x86_64 objective-c com.apple.compilers.llvm.clang.1_0.compiler
+r0
+
+CCompileC "build/Youcrypt Mac alpha.build/Release/Youcrypt Mac alpha.build/Objects-normal/x86_64/YoucryptConfigDirectory.o" "/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/Youcrypt Mac alpha/../Youcrypt Mac alpha/YoucryptConfigDirectory.m" normal x86_64 objective-c com.apple.compilers.llvm.clang.1_0.compiler
+r0
+
+CCompileC "build/Youcrypt Mac alpha.build/Release/Youcrypt Mac alpha.build/Objects-normal/x86_64/YoucryptDirectory.o" "/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/Youcrypt Mac alpha/../YoucryptDirectory.m" normal x86_64 objective-c com.apple.compilers.llvm.clang.1_0.compiler
+r0
+
+CCompileC "build/Youcrypt Mac alpha.build/Release/Youcrypt Mac alpha.build/Objects-normal/x86_64/YoucryptService.o" "/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/Youcrypt Mac alpha/../Youcrypt Mac alpha/YoucryptService.m" normal x86_64 objective-c com.apple.compilers.llvm.clang.1_0.compiler
+r0
+
+CCompileC "build/Youcrypt Mac alpha.build/Release/Youcrypt Mac alpha.build/Objects-normal/x86_64/libFunctions.o" "/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/Youcrypt Mac alpha/../Youcrypt Mac alpha/libFunctions.m" normal x86_64 objective-c com.apple.compilers.llvm.clang.1_0.compiler
+r0
+
+CCompileC "build/Youcrypt Mac alpha.build/Release/Youcrypt Mac alpha.build/Objects-normal/x86_64/main.o" "/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/Youcrypt Mac alpha/main.m" normal x86_64 objective-c com.apple.compilers.llvm.clang.1_0.compiler
+s362621733.653674
+e362621733.889597
+r1
+xCompileC
+xbuild/Youcrypt Mac alpha.build/Release/Youcrypt Mac alpha.build/Objects-normal/x86_64/main.o
+x/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/Youcrypt Mac alpha/main.m
+xnormal
+xx86_64
+xobjective-c
+xcom.apple.compilers.llvm.clang.1_0.compiler
+lSLF05#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection83"Compile /Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/Youcrypt Mac alpha/main.mf183a7252b9db541^cadde3252b9db541^---0#0#0#-19%DVTDocumentLocation2@99"file://localhost/Users/hr/code/easyenc/easyenc/Youcrypt%20Mac%20alpha/Youcrypt%20Mac%20alpha/main.m0000000000000000^3273"CompileC "build/Youcrypt Mac alpha.build/Release/Youcrypt Mac alpha.build/Objects-normal/x86_64/main.o" "Youcrypt Mac alpha/main.m" normal x86_64 objective-c com.apple.compilers.llvm.clang.1_0.compiler    cd "/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha"    setenv LANG en_US.US-ASCII    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -x objective-c -arch x86_64 -fmessage-length=0 -std=gnu99 -fobjc-arc -Wno-trigraphs -fpascal-strings -Os -Wno-missing-field-initializers -Wno-missing-prototypes -Wreturn-type -Wno-implicit-atomic-properties -Wformat -Wno-missing-braces -Wparentheses -Wswitch -Wno-unused-function -Wno-unused-label -Wno-unused-parameter -Wunused-variable -Wunused-value -Wuninitialized -Wno-unknown-pragmas -Wno-shadow -Wno-four-char-constants -Wno-sign-compare -Wshorten-64-to-32 -Wpointer-sign -Wno-newline-eof -Wno-selector -Wno-strict-selector-match -Wno-undeclared-selector -Wno-deprecated-implementations -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.7.sdk -fasm-blocks -Wprotocol -Wdeprecated-declarations -mmacosx-version-min=10.7 -g -fvisibility=hidden -Wno-conversion -Wno-sign-conversion "-DIBOutlet=__attribute__((iboutlet))" "-DIBOutletCollection(ClassName)=__attribute__((iboutletcollection(ClassName)))" "-DIBAction=void)__attribute__((ibaction)" -iquote "/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/build/Youcrypt Mac alpha.build/Release/Youcrypt Mac alpha.build/Youcrypt Mac alpha-generated-files.hmap" "-I/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/build/Youcrypt Mac alpha.build/Release/Youcrypt Mac alpha.build/Youcrypt Mac alpha-own-target-headers.hmap" "-I/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/build/Youcrypt Mac alpha.build/Release/Youcrypt Mac alpha.build/Youcrypt Mac alpha-all-target-headers.hmap" -iquote "/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/build/Youcrypt Mac alpha.build/Release/Youcrypt Mac alpha.build/Youcrypt Mac alpha-project-headers.hmap" "-I/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/build/Release/include" "-I/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/build/Youcrypt Mac alpha.build/Release/Youcrypt Mac alpha.build/DerivedSources/x86_64" "-I/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/build/Youcrypt Mac alpha.build/Release/Youcrypt Mac alpha.build/DerivedSources" "-F/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/build/Release" "-F/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha" -include "/var/folders/zs/h1x7z24n4sb6nlhf17k4h8lr0000gn/C/com.apple.Xcode.501/SharedPrecompiledHeaders/Youcrypt Mac alpha-Prefix-bhsbxjxaqacoidccqgwxfhngjphf/Youcrypt Mac alpha-Prefix.pch" -MMD -MT dependencies -MF "/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/build/Youcrypt Mac alpha.build/Release/Youcrypt Mac alpha.build/Objects-normal/x86_64/main.d" --serialize-diagnostics "/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/build/Youcrypt Mac alpha.build/Release/Youcrypt Mac alpha.build/Objects-normal/x86_64/main.dia" -c "/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/Youcrypt Mac alpha/main.m" -o "/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/build/Youcrypt Mac alpha.build/Release/Youcrypt Mac alpha.build/Objects-normal/x86_64/main.o"36"D1B32143-C0C6-4EF8-AD87-E5114D29AE80-
+
+CCompileC "build/Youcrypt Mac alpha.build/Release/Youcrypt Mac alpha.build/Objects-normal/x86_64/pipetest.o" "/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/Youcrypt Mac alpha/../Youcrypt Mac alpha/pipetest.c" normal x86_64 c com.apple.compilers.llvm.clang.1_0.compiler
+s362621730.510108
+e362621730.623940
+r1
+xCompileC
+xbuild/Youcrypt Mac alpha.build/Release/Youcrypt Mac alpha.build/Objects-normal/x86_64/pipetest.o
+x/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/Youcrypt Mac alpha/../Youcrypt Mac alpha/pipetest.c
+xnormal
+xx86_64
+xc
+xcom.apple.compilers.llvm.clang.1_0.compiler
+lSLF05#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection109"Compile /Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/Youcrypt Mac alpha/../Youcrypt Mac alpha/pipetest.cdeae83222b9db541^bfb99f222b9db541^---0#0#0#-19%DVTDocumentLocation2@129"file://localhost/Users/hr/code/easyenc/easyenc/Youcrypt%20Mac%20alpha/Youcrypt%20Mac%20alpha/../Youcrypt%20Mac%20alpha/pipetest.c0000000000000000^3006"CompileC "build/Youcrypt Mac alpha.build/Release/Youcrypt Mac alpha.build/Objects-normal/x86_64/pipetest.o" "Youcrypt Mac alpha/../Youcrypt Mac alpha/pipetest.c" normal x86_64 c com.apple.compilers.llvm.clang.1_0.compiler    cd "/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha"    setenv LANG en_US.US-ASCII    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -x c -arch x86_64 -fmessage-length=0 -std=gnu99 -Wno-trigraphs -fpascal-strings -Os -Wno-missing-field-initializers -Wno-missing-prototypes -Wreturn-type -Wformat -Wno-missing-braces -Wparentheses -Wswitch -Wno-unused-function -Wno-unused-label -Wno-unused-parameter -Wunused-variable -Wunused-value -Wuninitialized -Wno-unknown-pragmas -Wno-shadow -Wno-four-char-constants -Wno-sign-compare -Wshorten-64-to-32 -Wpointer-sign -Wno-newline-eof -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.7.sdk -fasm-blocks -Wdeprecated-declarations -mmacosx-version-min=10.7 -g -fvisibility=hidden -Wno-conversion -Wno-sign-conversion -iquote "/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/build/Youcrypt Mac alpha.build/Release/Youcrypt Mac alpha.build/Youcrypt Mac alpha-generated-files.hmap" "-I/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/build/Youcrypt Mac alpha.build/Release/Youcrypt Mac alpha.build/Youcrypt Mac alpha-own-target-headers.hmap" "-I/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/build/Youcrypt Mac alpha.build/Release/Youcrypt Mac alpha.build/Youcrypt Mac alpha-all-target-headers.hmap" -iquote "/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/build/Youcrypt Mac alpha.build/Release/Youcrypt Mac alpha.build/Youcrypt Mac alpha-project-headers.hmap" "-I/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/build/Release/include" "-I/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/build/Youcrypt Mac alpha.build/Release/Youcrypt Mac alpha.build/DerivedSources/x86_64" "-I/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/build/Youcrypt Mac alpha.build/Release/Youcrypt Mac alpha.build/DerivedSources" "-F/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/build/Release" "-F/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha" -include "/var/folders/zs/h1x7z24n4sb6nlhf17k4h8lr0000gn/C/com.apple.Xcode.501/SharedPrecompiledHeaders/Youcrypt Mac alpha-Prefix-bbktwkrpaummghbhkqbyzvtgmwch/Youcrypt Mac alpha-Prefix.pch" -MMD -MT dependencies -MF "/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/build/Youcrypt Mac alpha.build/Release/Youcrypt Mac alpha.build/Objects-normal/x86_64/pipetest.d" --serialize-diagnostics "/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/build/Youcrypt Mac alpha.build/Release/Youcrypt Mac alpha.build/Objects-normal/x86_64/pipetest.dia" -c "/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/Youcrypt Mac alpha/../Youcrypt Mac alpha/pipetest.c" -o "/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/build/Youcrypt Mac alpha.build/Release/Youcrypt Mac alpha.build/Objects-normal/x86_64/pipetest.o"36"80A6817D-1CA9-40FC-8B4C-00D34EF64529-
+
+CCompileXIB "/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/Youcrypt Mac alpha/../ListDirectoriesWindow.xib"
+r0
+
+CCompileXIB "/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/Youcrypt Mac alpha/../Youcrypt Mac alpha/Decrypt.xib"
+r0
+
+CCompileXIB "/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/Youcrypt Mac alpha/../Youcrypt Mac alpha/Encrypt.xib"
+r0
+
+CCompileXIB "/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/Youcrypt Mac alpha/../Youcrypt Mac alpha/Preferences.xib"
+r0
+
+CCompileXIB "/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/Youcrypt Mac alpha/../Youcrypt Mac alpha/en.lproj/MainMenu.xib"
+r0
+
+CCopyStringsFile "/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/build/Release/Youcrypt Mac alpha.app/Contents/Resources/en.lproj/InfoPlist.strings" "Youcrypt Mac alpha/../Youcrypt Mac alpha/en.lproj/InfoPlist.strings"
+r0
+
+CCpResource "Youcrypt Mac alpha/Cancel.png" "build/Release/Youcrypt Mac alpha.app/Contents/Resources/Cancel.png"
+r0
+
+CCpResource "Youcrypt Mac alpha/Settings.png" "build/Release/Youcrypt Mac alpha.app/Contents/Resources/Settings.png"
+r0
+
+CCpResource "Youcrypt Mac alpha/dsa_pub.pem" "build/Release/Youcrypt Mac alpha.app/Contents/Resources/dsa_pub.pem"
+r0
+
+CCpResource "Youcrypt Mac alpha/en.lproj/Credits.rtf" "build/Release/Youcrypt Mac alpha.app/Contents/Resources/en.lproj/Credits.rtf"
+r0
+
+CGenerateDSYMFile "/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/build/Release/Youcrypt Mac alpha.app.dSYM" "/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/build/Release/Youcrypt Mac alpha.app/Contents/MacOS/Youcrypt Mac alpha"
+r0
+
+CLd "/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/build/Release/Youcrypt Mac alpha.app/Contents/MacOS/Youcrypt Mac alpha" normal x86_64
+r0
+
+CPBXCp RestKit/build/Release/RestKit.framework "build/Release/Youcrypt Mac alpha.app/Contents/Frameworks/RestKit.framework"
+r0
+
+CPBXCp Sparkle.framework "build/Release/Youcrypt Mac alpha.app/Contents/Frameworks/Sparkle.framework"
+r0
+
+CProcessInfoPlistFile "/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/build/Release/Youcrypt Mac alpha.app/Contents/Info.plist" "Youcrypt Mac alpha/Youcrypt Mac alpha-Info.plist"
+s362621730.400879
+e362621730.437615
+r1
+xProcessInfoPlistFile
+x/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/build/Release/Youcrypt Mac alpha.app/Contents/Info.plist
+xYoucrypt Mac alpha/Youcrypt Mac alpha-Info.plist
+lSLF05#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection56"Process Youcrypt Mac alpha/Youcrypt Mac alpha-Info.plist02b766222b9db541^6a1670222b9db541^---0#0#0#-19%DVTDocumentLocation2@126"file://localhost/Users/hr/code/easyenc/easyenc/Youcrypt%20Mac%20alpha/Youcrypt%20Mac%20alpha/Youcrypt%20Mac%20alpha-Info.plist0000000000000000^538"ProcessInfoPlistFile "build/Release/Youcrypt Mac alpha.app/Contents/Info.plist" "Youcrypt Mac alpha/Youcrypt Mac alpha-Info.plist"    cd "/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha"    builtin-infoPlistUtility "Youcrypt Mac alpha/Youcrypt Mac alpha-Info.plist" -genpkginfo "/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/build/Release/Youcrypt Mac alpha.app/Contents/PkgInfo" -expandbuildsettings -platform macosx -o "/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/build/Release/Youcrypt Mac alpha.app/Contents/Info.plist"36"733571C3-BD2A-4B8A-84D6-128AA142B0ED-
+
+CProcessPCH "/var/folders/zs/h1x7z24n4sb6nlhf17k4h8lr0000gn/C/com.apple.Xcode.501/SharedPrecompiledHeaders/Youcrypt Mac alpha-Prefix-bbktwkrpaummghbhkqbyzvtgmwch/Youcrypt Mac alpha-Prefix.pch.pth" "Youcrypt Mac alpha/Youcrypt Mac alpha-Prefix.pch" normal x86_64 c com.apple.compilers.llvm.clang.1_0.compiler
+s362621730.446360
+e362621730.502103
+r1
+xProcessPCH
+x/var/folders/zs/h1x7z24n4sb6nlhf17k4h8lr0000gn/C/com.apple.Xcode.501/SharedPrecompiledHeaders/Youcrypt Mac alpha-Prefix-bbktwkrpaummghbhkqbyzvtgmwch/Youcrypt Mac alpha-Prefix.pch.pth
+xYoucrypt Mac alpha/Youcrypt Mac alpha-Prefix.pch
+xnormal
+xx86_64
+xc
+xcom.apple.compilers.llvm.clang.1_0.compiler
+lSLF05#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection59"Precompile Youcrypt Mac alpha/Youcrypt Mac alpha-Prefix.pch116e72222b9db541^a48c80222b9db541^---0#0#0#-19%DVTDocumentLocation2@126"file://localhost/Users/hr/code/easyenc/easyenc/Youcrypt%20Mac%20alpha/Youcrypt%20Mac%20alpha/Youcrypt%20Mac%20alpha-Prefix.pch0000000000000000^3009"ProcessPCH "/var/folders/zs/h1x7z24n4sb6nlhf17k4h8lr0000gn/C/com.apple.Xcode.501/SharedPrecompiledHeaders/Youcrypt Mac alpha-Prefix-bbktwkrpaummghbhkqbyzvtgmwch/Youcrypt Mac alpha-Prefix.pch.pth" "Youcrypt Mac alpha/Youcrypt Mac alpha-Prefix.pch" normal x86_64 c com.apple.compilers.llvm.clang.1_0.compiler    cd "/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha"    setenv LANG en_US.US-ASCII    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -x c-header -arch x86_64 -fmessage-length=0 -std=gnu99 -Wno-trigraphs -fpascal-strings -Os -Wno-missing-field-initializers -Wno-missing-prototypes -Wreturn-type -Wformat -Wno-missing-braces -Wparentheses -Wswitch -Wno-unused-function -Wno-unused-label -Wno-unused-parameter -Wunused-variable -Wunused-value -Wuninitialized -Wno-unknown-pragmas -Wno-shadow -Wno-four-char-constants -Wno-sign-compare -Wshorten-64-to-32 -Wpointer-sign -Wno-newline-eof -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.7.sdk -fasm-blocks -Wdeprecated-declarations -mmacosx-version-min=10.7 -g -fvisibility=hidden -Wno-conversion -Wno-sign-conversion -iquote "/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/build/Youcrypt Mac alpha.build/Release/Youcrypt Mac alpha.build/Youcrypt Mac alpha-generated-files.hmap" "-I/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/build/Youcrypt Mac alpha.build/Release/Youcrypt Mac alpha.build/Youcrypt Mac alpha-own-target-headers.hmap" "-I/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/build/Youcrypt Mac alpha.build/Release/Youcrypt Mac alpha.build/Youcrypt Mac alpha-all-target-headers.hmap" -iquote "/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/build/Youcrypt Mac alpha.build/Release/Youcrypt Mac alpha.build/Youcrypt Mac alpha-project-headers.hmap" "-I/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/build/Release/include" "-I/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/build/Youcrypt Mac alpha.build/Release/Youcrypt Mac alpha.build/DerivedSources/x86_64" "-I/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/build/Youcrypt Mac alpha.build/Release/Youcrypt Mac alpha.build/DerivedSources" "-F/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/build/Release" "-F/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha" --serialize-diagnostics "/var/folders/zs/h1x7z24n4sb6nlhf17k4h8lr0000gn/C/com.apple.Xcode.501/SharedPrecompiledHeaders/Youcrypt Mac alpha-Prefix-bbktwkrpaummghbhkqbyzvtgmwch/Youcrypt Mac alpha-Prefix.pch.dia" -c "/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/Youcrypt Mac alpha/Youcrypt Mac alpha-Prefix.pch" -o "/var/folders/zs/h1x7z24n4sb6nlhf17k4h8lr0000gn/C/com.apple.Xcode.501/SharedPrecompiledHeaders/Youcrypt Mac alpha-Prefix-bbktwkrpaummghbhkqbyzvtgmwch/Youcrypt Mac alpha-Prefix.pch.pth" -MMD -MT dependencies -MF "/var/folders/zs/h1x7z24n4sb6nlhf17k4h8lr0000gn/C/com.apple.Xcode.501/SharedPrecompiledHeaders/Youcrypt Mac alpha-Prefix-bbktwkrpaummghbhkqbyzvtgmwch/Youcrypt Mac alpha-Prefix.pch.d"36"BBFA0687-C916-41BF-8502-8A71D89D85EB-
+
+CProcessPCH "/var/folders/zs/h1x7z24n4sb6nlhf17k4h8lr0000gn/C/com.apple.Xcode.501/SharedPrecompiledHeaders/Youcrypt Mac alpha-Prefix-bhsbxjxaqacoidccqgwxfhngjphf/Youcrypt Mac alpha-Prefix.pch.pth" "Youcrypt Mac alpha/Youcrypt Mac alpha-Prefix.pch" normal x86_64 objective-c com.apple.compilers.llvm.clang.1_0.compiler
+s362621730.446234
+e362621733.646843
+r1
+xProcessPCH
+x/var/folders/zs/h1x7z24n4sb6nlhf17k4h8lr0000gn/C/com.apple.Xcode.501/SharedPrecompiledHeaders/Youcrypt Mac alpha-Prefix-bhsbxjxaqacoidccqgwxfhngjphf/Youcrypt Mac alpha-Prefix.pch.pth
+xYoucrypt Mac alpha/Youcrypt Mac alpha-Prefix.pch
+xnormal
+xx86_64
+xobjective-c
+xcom.apple.compilers.llvm.clang.1_0.compiler
+lSLF05#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection59"Precompile Youcrypt Mac alpha/Youcrypt Mac alpha-Prefix.pch026672222b9db541^1fb9a5252b9db541^---0#0#0#-19%DVTDocumentLocation2@126"file://localhost/Users/hr/code/easyenc/easyenc/Youcrypt%20Mac%20alpha/Youcrypt%20Mac%20alpha/Youcrypt%20Mac%20alpha-Prefix.pch0000000000000000^3344"ProcessPCH "/var/folders/zs/h1x7z24n4sb6nlhf17k4h8lr0000gn/C/com.apple.Xcode.501/SharedPrecompiledHeaders/Youcrypt Mac alpha-Prefix-bhsbxjxaqacoidccqgwxfhngjphf/Youcrypt Mac alpha-Prefix.pch.pth" "Youcrypt Mac alpha/Youcrypt Mac alpha-Prefix.pch" normal x86_64 objective-c com.apple.compilers.llvm.clang.1_0.compiler    cd "/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha"    setenv LANG en_US.US-ASCII    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -x objective-c-header -arch x86_64 -fmessage-length=0 -std=gnu99 -fobjc-arc -Wno-trigraphs -fpascal-strings -Os -Wno-missing-field-initializers -Wno-missing-prototypes -Wreturn-type -Wno-implicit-atomic-properties -Wformat -Wno-missing-braces -Wparentheses -Wswitch -Wno-unused-function -Wno-unused-label -Wno-unused-parameter -Wunused-variable -Wunused-value -Wuninitialized -Wno-unknown-pragmas -Wno-shadow -Wno-four-char-constants -Wno-sign-compare -Wshorten-64-to-32 -Wpointer-sign -Wno-newline-eof -Wno-selector -Wno-strict-selector-match -Wno-undeclared-selector -Wno-deprecated-implementations -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.7.sdk -fasm-blocks -Wprotocol -Wdeprecated-declarations -mmacosx-version-min=10.7 -g -fvisibility=hidden -Wno-conversion -Wno-sign-conversion "-DIBOutlet=__attribute__((iboutlet))" "-DIBOutletCollection(ClassName)=__attribute__((iboutletcollection(ClassName)))" "-DIBAction=void)__attribute__((ibaction)" -iquote "/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/build/Youcrypt Mac alpha.build/Release/Youcrypt Mac alpha.build/Youcrypt Mac alpha-generated-files.hmap" "-I/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/build/Youcrypt Mac alpha.build/Release/Youcrypt Mac alpha.build/Youcrypt Mac alpha-own-target-headers.hmap" "-I/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/build/Youcrypt Mac alpha.build/Release/Youcrypt Mac alpha.build/Youcrypt Mac alpha-all-target-headers.hmap" -iquote "/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/build/Youcrypt Mac alpha.build/Release/Youcrypt Mac alpha.build/Youcrypt Mac alpha-project-headers.hmap" "-I/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/build/Release/include" "-I/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/build/Youcrypt Mac alpha.build/Release/Youcrypt Mac alpha.build/DerivedSources/x86_64" "-I/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/build/Youcrypt Mac alpha.build/Release/Youcrypt Mac alpha.build/DerivedSources" "-F/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/build/Release" "-F/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha" --serialize-diagnostics "/var/folders/zs/h1x7z24n4sb6nlhf17k4h8lr0000gn/C/com.apple.Xcode.501/SharedPrecompiledHeaders/Youcrypt Mac alpha-Prefix-bhsbxjxaqacoidccqgwxfhngjphf/Youcrypt Mac alpha-Prefix.pch.dia" -c "/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/Youcrypt Mac alpha/Youcrypt Mac alpha-Prefix.pch" -o "/var/folders/zs/h1x7z24n4sb6nlhf17k4h8lr0000gn/C/com.apple.Xcode.501/SharedPrecompiledHeaders/Youcrypt Mac alpha-Prefix-bhsbxjxaqacoidccqgwxfhngjphf/Youcrypt Mac alpha-Prefix.pch.pth" -MMD -MT dependencies -MF "/var/folders/zs/h1x7z24n4sb6nlhf17k4h8lr0000gn/C/com.apple.Xcode.501/SharedPrecompiledHeaders/Youcrypt Mac alpha-Prefix-bhsbxjxaqacoidccqgwxfhngjphf/Youcrypt Mac alpha-Prefix.pch.d"36"636BF29F-D17B-41B0-A7D9-E274821D0108-
+
+CTouch "/Users/hr/code/easyenc/easyenc/Youcrypt Mac alpha/build/Release/Youcrypt Mac alpha.app"
+r0
+

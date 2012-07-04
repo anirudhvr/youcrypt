@@ -33,8 +33,8 @@
                      io:(NSFileHandle *)io 
                    proc:(NSTask *)proc;
 
-+ (NSString*) getPassphraseFromKeychain;
-+ (BOOL)registerWithKeychain:(NSString*)passphrase;
++ (NSString*)getPassphraseFromKeychain:(NSString*)service;
++ (BOOL)registerWithKeychain:(NSString*)passphrase:(NSString*)service;
 
 + (BOOL) createEncFS:(NSString *)encFolder
      decryptedFolder:(NSString *)decFolder

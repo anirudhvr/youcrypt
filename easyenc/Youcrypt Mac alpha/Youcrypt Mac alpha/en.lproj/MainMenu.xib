@@ -717,6 +717,7 @@
 									<string key="NSKeyEquiv">t</string>
 									<int key="NSKeyEquivModMask">1572864</int>
 									<int key="NSMnemonicLoc">2147483647</int>
+									<int key="NSState">1</int>
 									<reference key="NSOnImage" ref="35465992"/>
 									<reference key="NSMixedImage" ref="502551668"/>
 								</object>
@@ -1300,9 +1301,11 @@
 				<nil key="NSViewClass"/>
 				<nil key="NSUserInterfaceItemIdentifier"/>
 				<object class="NSView" key="NSWindowView" id="439893737">
-					<nil key="NSNextResponder"/>
+					<reference key="NSNextResponder"/>
 					<int key="NSvFlags">256</int>
 					<string key="NSFrameSize">{457, 319}</string>
+					<reference key="NSSuperview"/>
+					<reference key="NSWindow"/>
 				</object>
 				<string key="NSScreenRect">{{0, 0}, {1920, 1058}}</string>
 				<string key="NSMaxSize">{10000000000000, 10000000000000}</string>
@@ -1333,17 +1336,17 @@
 						<reference key="NSOnImage" ref="35465992"/>
 						<reference key="NSMixedImage" ref="502551668"/>
 					</object>
-					<object class="NSMenuItem" id="538219721">
+					<object class="NSMenuItem" id="855045704">
 						<reference key="NSMenu" ref="442750754"/>
-						<string key="NSTitle">Quit</string>
+						<string key="NSTitle">Update</string>
 						<string key="NSKeyEquiv"/>
 						<int key="NSMnemonicLoc">2147483647</int>
 						<reference key="NSOnImage" ref="35465992"/>
 						<reference key="NSMixedImage" ref="502551668"/>
 					</object>
-					<object class="NSMenuItem" id="855045704">
+					<object class="NSMenuItem" id="538219721">
 						<reference key="NSMenu" ref="442750754"/>
-						<string key="NSTitle">Check for Updates</string>
+						<string key="NSTitle">Quit</string>
 						<string key="NSKeyEquiv"/>
 						<int key="NSMnemonicLoc">2147483647</int>
 						<reference key="NSOnImage" ref="35465992"/>
@@ -3093,8 +3096,8 @@
 						<reference key="object" ref="442750754"/>
 						<array class="NSMutableArray" key="children">
 							<reference ref="301348552"/>
-							<reference ref="538219721"/>
 							<reference ref="465427937"/>
+							<reference ref="538219721"/>
 							<reference ref="855045704"/>
 						</array>
 						<reference key="parent" ref="0"/>
@@ -3306,20 +3309,16 @@
 					<string key="className">AppDelegate</string>
 					<string key="superclassName">NSObject</string>
 					<dictionary class="NSMutableDictionary" key="actions">
-						<string key="launchAgent:">id</string>
 						<string key="resizeWindow:">id</string>
 						<string key="showDecryptWindow:">id</string>
 						<string key="showEncryptWindow:">id</string>
+						<string key="showListDirectories:">id</string>
 						<string key="showMainApp:">id</string>
 						<string key="showPreferencePanel:">id</string>
 						<string key="terminateApp:">id</string>
 						<string key="windowShouldClose:">id</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="actionInfosByName">
-						<object class="IBActionInfo" key="launchAgent:">
-							<string key="name">launchAgent:</string>
-							<string key="candidateClassName">id</string>
-						</object>
 						<object class="IBActionInfo" key="resizeWindow:">
 							<string key="name">resizeWindow:</string>
 							<string key="candidateClassName">id</string>
@@ -3330,6 +3329,10 @@
 						</object>
 						<object class="IBActionInfo" key="showEncryptWindow:">
 							<string key="name">showEncryptWindow:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="showListDirectories:">
+							<string key="name">showListDirectories:</string>
 							<string key="candidateClassName">id</string>
 						</object>
 						<object class="IBActionInfo" key="showMainApp:">
