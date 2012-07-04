@@ -43,38 +43,38 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "ListDirectoriesWindow.m"
-         timestampString = "363063157.323374"
+         timestampString = "363118537.896796"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "179"
-         endingLineNumber = "179"
-         landmarkName = "-toolbarItemWithIdentifier:label:paleteLabel:toolTip:target:itemContent:action:"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "ListDirectoriesWindow.m"
-         timestampString = "363063157.323374"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "113"
-         endingLineNumber = "113"
-         landmarkName = "-selectRow:"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "ListDirectoriesWindow.m"
-         timestampString = "363117325.503087"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "229"
-         endingLineNumber = "229"
+         startingLineNumber = "173"
+         endingLineNumber = "173"
          landmarkName = "-toolbar:itemForItemIdentifier:willBeInsertedIntoToolbar:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "ListDirectoriesWindow.m"
+         timestampString = "363118537.896796"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "107"
+         endingLineNumber = "107"
+         landmarkName = "@implementation ListDirectoriesWindow"
+         landmarkType = "3">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "ListDirectoriesWindow.m"
+         timestampString = "363118537.896796"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "223"
+         endingLineNumber = "223"
+         landmarkName = "-initToolbarItems"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>

@@ -42,7 +42,7 @@ int main_dirs_plis(int argc, const char * argv[])
 
 int main(int argc, const char *argv[]) {
     @autoreleasepool {
-        [libFunctions execEncFS:@"/tmp/enc" decryptedFolder:@"/tmp/dec" password:@"asdf"];
+        NSString *tmpFolder = NSTemporaryDirectory();
     }
     return 0;
 }

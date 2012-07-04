@@ -132,12 +132,8 @@
  **/
 - (IBAction)encrypt:(id)sender
 {
-//	NSArray *arguments = [[NSProcessInfo processInfo] arguments];	
-//	NSMutableString *srcFolder = [arguments objectAtIndex:2];
     NSString *srcFolder = sourceFolderPath;
-//	NSMutableString *destFolder = [arguments objectAtIndex:3];
-    NSString *destFolder = destFolderPath;
-	
+    NSString *destFolder;
 	/*** 
 	 PREPARATIONS
 	 A mkdir -p $HOME/easyenc/src 
@@ -145,33 +141,22 @@
 	 C cp -r src/ * /tmp/easyenc/src
 	 D rm -rf src/ *
 	 ***/
-	
-	NSString *tempFolder = [@"/tmp/easyenc/" stringByAppendingPathComponent:srcFolder];
-	
-	DDLogVerbose(@"Create destination %@ if it doesn't already exist",destFolder);
+    //-       
 
-	
-	/* A */
-	[libFunctions mkdirRecursive:destFolder];
-	
-	/* B */
+	// The mount point is a temporary folder
+    NSString *tempFolder = NSTemporaryDirectory();
+    tempFolder = [tempFolder stringByAppendingPathComponent:[[NSProcessInfo processInfo] globallyUniqueString]];
     [libFunctions mkdirRecursive:tempFolder];
-	
-	DDLogVerbose(@"mkdir %@",tempFolder);
-	
-	/* C+D */
-    [libFunctions mvRecursive:srcFolder toPath:tempFolder];
-    
-    srcFolder = [srcFolder stringByAppendingPathComponent:@"/encrypted.yc"];
-    [libFunctions mkdirRecursive:srcFolder];
+
+    // The destination of the encrypted files is just <sourcefolder>/encrypted.yc
+    destFolder = [srcFolder stringByAppendingPathComponent:@"/encrypted.yc"];
+    [libFunctions mkdirRecursive:destFolder];
+
     
 	/**** <!-- END PREP --> ***/
-	
-	
-	/*** ENCFS START ***/
-	
-    NSString *yourPasswordString = [yourPassword stringValue];
-    
+
+	// ---- Figure out the password, sharing options, etc. -----------------
+    NSString *yourPasswordString = [yourPassword stringValue];    
     if (!keychainHasPassphrase) {
         [libFunctions registerWithKeychain:yourPasswordString];
         keychainHasPassphrase = YES;
@@ -195,34 +180,38 @@
 		combinedPasswordString = yourPasswordString;
 		numberOfUsers = 1;
 	}
+    // ---------------------------------------------------------------------
 	
-	/* Actual encfs call */
-
-    [libFunctions createEncFS:srcFolder decryptedFolder:destFolder numUsers:numberOfUsers combinedPassword:combinedPasswordString];
-	
+    [libFunctions createEncFS:destFolder decryptedFolder:tempFolder numUsers:numberOfUsers combinedPassword:combinedPasswordString];
     
-	/*** 
-	 PREPARE ORIGINAL FOLDER
-	 cp -r /tmp/easyenc/src/ * $HOME/easyenc/src
-	 rm -rf /tmp/easyenc/src
-	***/
+    
+    // Now to move the contents of tempFolder into destFolder
+    // Unfortunately, a direct move won't work since both directories exist and
+    // stupid macOS thinks it is overwriting the mount point we just created
+    NSFileManager *fm = [NSFileManager defaultManager];
+    NSArray *files = [fm contentsOfDirectoryAtPath:srcFolder error:nil];
+    for (NSString *file in files) {
+        if (![file isEqualToString:@"encrypted.yc"]) {
+            [fm moveItemAtPath:[srcFolder stringByAppendingPathComponent:file] toPath:[tempFolder stringByAppendingPathComponent:file] error:nil];
+        }
+    }
 
-	[libFunctions mvRecursive:tempFolder toPath:destFolder];
-	
     // Unmount the destination folder containing decrypted files
-    [libFunctions execWithSocket:@"/sbin/umount" arguments:[NSArray arrayWithObject:destFolder]
+    [libFunctions execWithSocket:@"/sbin/umount" arguments:[NSArray arrayWithObject:tempFolder]
                              env:nil io:nil proc:nil];
-    
-    /**** FIXME -- need to check success status of encfs mount before
-     doing other shit ******/
-    
-
+    [fm removeItemAtPath:tempFolder error:nil];
     /* change folder icon of encrypted folder */
-    [self setFolderIcon:self];
-    
+    [self setFolderIcon:self];    
     /* Register password with keyring */
-	
+ 	
 	/*** <!-- ENCFS END --> ***/
+   
+    
+    
+    
+    
+    
+    
 	
 	/* If sharing is required */
     if (numberOfUsers == 2) {

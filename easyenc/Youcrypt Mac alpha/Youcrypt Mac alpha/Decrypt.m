@@ -9,6 +9,7 @@
 #import "Decrypt.h"
 #import "libFunctions.h"
 #import "logging.h"
+#import "AppDelegate.h"
 
 @implementation Decrypt
 
@@ -51,12 +52,13 @@
 - (IBAction)decrypt:(id)sender
 {	
 	NSString *srcFolder = sourceFolderPath;
-	NSString *destFolder = destFolderPath;
-	
+	NSString *destFolder = destFolderPath;	
 	NSString *yourPasswordString = [yourPassword stringValue];
     
     [libFunctions mkdirRecursive:destFolder];     
     [libFunctions mountEncFS:srcFolder decryptedFolder:destFolder password:yourPasswordString];
+    [theApp didDecrypt:sourceFolderPath];
+    [self close];
     [[NSWorkspace sharedWorkspace] openFile:destFolder];	
 }
 @end

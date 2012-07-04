@@ -11,6 +11,8 @@
 
 @implementation ListDirectoriesWindow
 
+@synthesize table;
+
 - (id)init
 {
     if (![super initWithWindowNibName:@"ListDirectoriesWindow"])
@@ -34,8 +36,7 @@
 
 - (void)windowDidLoad
 {
-    [super windowDidLoad];
-    
+    [super windowDidLoad];    
     // Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.    
 }
 
@@ -56,56 +57,22 @@
 
 }
 
-
-- (NSDragOperation)tableView:(NSTableView *)tableView validateDrop:(id<NSDraggingInfo>)info proposedRow:(NSInteger)row proposedDropOperation:(NSTableViewDropOperation)dropOperation {
-    NSPasteboard *pb = [info draggingPasteboard];
-    
-    
-    // Check if the pboard contains a URL that's a diretory.
-    if ([[pb types] containsObject:NSURLPboardType]) {
-        NSString *path = [[NSURL URLFromPasteboard:pb] path];
-        NSFileManager *fm = [NSFileManager defaultManager];
-        BOOL isDir;
-        if ([fm fileExistsAtPath:path isDirectory:&isDir] && isDir) {
-            return NSDragOperationCopy;
-        }
-    }
-    return NSDragOperationNone;
-}
-
-- (BOOL)tableView:(NSTableView *)tableView acceptDrop:(id<NSDraggingInfo>)info row:(NSInteger)row dropOperation:(NSTableViewDropOperation)dropOperation {
-    
-    NSPasteboard *pb = [info draggingPasteboard];
-    
-    // Check if the pboard contains a URL that's a diretory.
-    if ([[pb types] containsObject:NSURLPboardType]) {
-        NSString *path = [[NSURL URLFromPasteboard:pb] path];
-        NSFileManager *fm = [NSFileManager defaultManager];
-
-        BOOL isDir;
-        if ([fm fileExistsAtPath:path isDirectory:&isDir] && isDir) {
-            [theApp encryptFolder:path];
-            [table reloadData];
-            return YES;
-        }
-    }
-    return NO;
-}
-
-
 - (IBAction)doEncrypt:(id)sender {
 }
 
 - (IBAction)doOpen:(id)sender {
+    YoucryptDirectory *dir = [theApp.directories objectAtIndex:[sender clickedRow]];
+    [theApp openEncryptedFolder:[dir path]];
 }
 
 - (IBAction)doProps:(id)sender {
 }
 
 - (IBAction)selectRow:(id)sender {
-    YoucryptDirectory *dir = [theApp.directories objectAtIndex:[sender clickedRow]];
-    if (dir != nil) 
+   if ([sender clickedRow] < [theApp.directories count]) {
+        YoucryptDirectory *dir = [theApp.directories objectAtIndex:[sender clickedRow]];
         [dirName setStringValue:dir.path];
+    }
 }
 
 - (IBAction)addNew:(id)sender {
@@ -130,7 +97,7 @@
 
 - (IBAction)removeFS:(id)sender {
     NSInteger row = [table selectedRow];
-    if (row != -1) {
+    if (row != -1) {        
         [table reloadData];
     }
     

@@ -25,6 +25,7 @@
     NSMutableDictionary *allowedToolbarItemDetails;
 }
 
+@property (atomic, strong) IBOutlet NSTableView *table;
 - (IBAction)doEncrypt:(id)sender;
 - (IBAction)doOpen:(id)sender;
 - (IBAction)doProps:(id)sender;
