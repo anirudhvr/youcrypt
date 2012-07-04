@@ -28,7 +28,7 @@
 
 -(void) auth;
 -(void) getAuthToken;
--(void) userGavePerms;
+-(NSString*) userGavePerms;
 -(NSString*)makeRestCall:(NSString*)reqURL:(BOOL)mutable;
 
 @end

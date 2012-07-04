@@ -9,129 +9,163 @@
 #import "PreferenceController.h"
 #import "pipetest.h"
 #import "logging.h"
+#import "PassphraseSheetController.h"
+#import "GmailSheetController.h"
+#import "FirstRunSheetController.h"
+#import <StartOnLogin/StartOnLogin.h>
+#import "libFunctions.h"
+#import "XMLDictionary.h"
 
 @implementation PreferenceController
 
 @synthesize boxClient;
-
+@synthesize passphraseSheetController;
+@synthesize gmailSheetController;
+@synthesize changePassphraseButton;
+@synthesize firstRunSheetController;
 
 - (id)init 
 {
     if (![super initWithWindowNibName:@"Preferences"])
         return nil;
+    
+    /* initializing some arrays */
+    boxClient = [[BoxFSA alloc] init];
+
+    startOnLogin = [[StartOnLogin alloc] init];
+    preferences = [[NSMutableDictionary alloc] init];
+    passphraseSheetController = [[PassphraseSheetController alloc] init];
+    gmailSheetController = [[GmailSheetController alloc] init];
+    firstRunSheetController = [[FirstRunSheetController alloc] init];
     return self;
 }
 
+- (void)updatePreferences:(NSDictionary*)prefs
+{
+    for (NSString *key in prefs) {
+        if ([key isEqualToString:YC_STARTONBOOT]) {
+            [startOnBoot setState:[[prefs objectForKey:YC_STARTONBOOT] intValue]];
+        } else if ([key isEqualToString:YC_ENCRYPTFILENAMES]) {
+            [enableFilenameEncryption setState:[[prefs objectForKey:YC_ENCRYPTFILENAMES] intValue]];
+        } else if ([key isEqualToString:YC_DROPBOXLOCATION]) {
+            [dropboxLocation setStringValue:[prefs objectForKey:YC_DROPBOXLOCATION]];
+        } else if ([key isEqualToString:YC_BOXLOCATION]) {
+            [boxLocation setStringValue:[prefs objectForKey:YC_BOXLOCATION]];
+        } else if ([key isEqualToString:YC_USERREALNAME]) {
+            [realName setStringValue:[prefs objectForKey:YC_USERREALNAME]];
+        } else if ([key isEqualToString:YC_USEREMAIL]) {
+            [email setStringValue:[prefs objectForKey:YC_USEREMAIL]];
+        } else {
+            //DDLogError(@"key %@ not a valid preference", key);
+        }
+    }   
+}
+
+- (id)getPreference:(NSString*)key
+{
+    return [preferences objectForKey:key];
+}
+
+- (void)setPreference:(NSString*)key value:(id)val
+{
+    NSLog(@"setPref %@ %@",key,val);
+    [preferences setObject:val forKey:key];
+}
+
+- (void)removePreference:(NSString*)key
+{
+    [preferences removeObjectForKey:key];
+}
 
 - (void)awakeFromNib
 {	
-    boxClient = [[BoxFSA alloc] init];
-    DDLogVerbose(@"Nib file is loaded");
+    preferencesKeys = [NSArray arrayWithObjects:YC_DROPBOXLOCATION, 
+                       YC_BOXLOCATION, YC_ENCRYPTFILENAMES, YC_STARTONBOOT, 
+                       YC_USERREALNAME, YC_USEREMAIL, YC_GMAILUSERNAME, YC_BOXSTATUS, nil];
 
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults removeObjectForKey:@"ycdropbox"];
+    defaultPreferences = [[NSMutableDictionary alloc] initWithObjects:[NSArray arrayWithObjects:[self locateDropboxFolder], [self locateBoxFolder], [NSNumber numberWithInt:1], [NSNumber numberWithInt:1], @"", @"", @"", @"", nil] forKeys:preferencesKeys];
     
-    BOOL val = [defaults boolForKey:@"yccheck"];
+    NSLog(@"%@",defaultPreferences);
     
-     
-    //NSString *binary = @"/bin/sh";
-   // NSArray *arguments = [NSArray arrayWithObjects: @"/Users/hr/Dropbox/get_dropbox_folder.sh",nil];
     
-    // NSString *dropboxURL = systemCall(binary, arguments);
+    DDLogVerbose(@"Preferences awakeFromNib called");
+  
+     // load preferences from NSUserDefaults
+    [self readPreferences];
+    //[preferences addEntriesFromDictionary:defaultPreferences];
+
     
-    char *shellFile = "/Users/hr/Dropbox/get_dropbox_folder.sh";
-    char *out, *err;
-    int outlen,errlen;
+    NSLog(@"%@",preferences);
+
+    //[self updatePreferences:preferences];
     
-    NSString *dropboxURL;
-    NSString *dropboxDefault = [defaults objectForKey:@"ycdropbox"];
+    [realName setStringValue:[self getPreference:YC_USERREALNAME]];
+    [email setStringValue:[self getPreference:YC_USEREMAIL]];
+    [passphrase setStringValue:@"somerandomvalue"];
+    if([self getPreference:YC_USERREALNAME] == nil)
+        NSLog(@"NIL!");
     
-    if(dropboxDefault == nil) {
-        if(run_command(shellFile, &out, &outlen, &err, &errlen)) {
-            DDLogVerbose(@"fail");
-            dropboxURL = NSHomeDirectory();
-        } else {
-            dropboxURL = [NSString stringWithFormat:@"%s",out];
-            dropboxURL = [dropboxURL stringByReplacingOccurrencesOfString:@"\n" withString:@""];
-            DDLogVerbose(@"new: [%@] ",dropboxURL);
-        }
+    NSLog(@"%@ %@ %@",[self getPreference:YC_USEREMAIL],[self getPreference:YC_USERREALNAME],@"");
+    NSLog(@"dbloc aw; %@",[self getPreference:YC_DROPBOXLOCATION]);
+    
+    if([self getPreference:YC_DROPBOXLOCATION] == nil){
+        [dropboxLocation setHidden:YES];
+    } else {
+        [dropboxLocation setHidden:NO];
+        [dropboxLocation setURL:[NSURL URLWithString:[self getPreference:YC_DROPBOXLOCATION]]];
     }
-    else {
-        dropboxURL = dropboxDefault;
+    
+    if([self getPreference:YC_BOXSTATUS] == nil) {
+        [linkBox setTitle:@"Link Box Account"];
+        [boxLocation setHidden:YES];
+        
+    } else {
+        NSLog(@"box loc valid : %@",[self getPreference:YC_BOXLOCATION]);
+        [boxLocation setHidden:NO];
+        [boxLocation setURL:[NSURL URLWithString:[self getPreference:YC_BOXLOCATION]]];
+        [linkBox setTitle:@"Unlink Box Account"];
     }
-                    
-    if([defaults objectForKey:@"ycbox"] == nil) {
-        [boxLinkStatus setTextColor:[NSColor redColor]];
-        [boxLinkStatus setStringValue:@"Unlinked"];
+    
+    if(([self getPreference:YC_GMAILUSERNAME] == nil) || [self getPreference:YC_GMAILUSERNAME] == @"") {
+        [linkGmail setTitle:@"Set GMail Credentials"];
 
     } else {
-        [linkBox setTitle:@"Unlink"];
-        [boxLinkStatus setTextColor:[NSColor greenColor]];
-        [boxLinkStatus setStringValue:@"Linked"];
+        NSLog(@"gmail username valid : %@",[self getPreference:YC_GMAILUSERNAME]);
+        [linkGmail setTitle:@"Change GMail Credentials"];
     }
-    int state;
-    state = val?1:0;
-   
-    NSURL *url = [NSURL URLWithString:((NSString*)dropboxURL)];
     
-    [dbLocation setHidden:NO];
+    [db setImage:[[NSImage alloc] initByReferencingFile:@"DropBox.png"]];
+    [db setEditable:NO];
     
-    [checkbox setState:state];
-    [dbLocation setURL:url];
-    
-    NSLog(@"Box FOLDER LOCATION : %@",[self locateBoxFolder]);
-    
-   
-    //[self sendEmail];
-    
-    NSString *reqURL = [NSString stringWithFormat:@"https://www.box.com/api/1.0/rest?action=get_ticket&api_key=%@",@"az9ug6vjgygca8qbf3x3txldhoro5jbr"];
-    
-    NSURLRequest *theRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:reqURL]];
-	NSURLResponse *resp = nil;
-	NSError *error = nil;
-	NSData *response = [NSURLConnection sendSynchronousRequest: theRequest returningResponse: &resp error: &error];
-	NSString *responseString = [[NSString alloc] initWithData:response encoding:NSUTF8StringEncoding]; 
-
-    NSLog(@"%@",responseString);
-    
-    NSLog(@"Testing sparkle");
 }
 
+                    
 -(void)refreshBoxLinkStatus:(BOOL)linked
 {
     if(linked){
-        [linkBox setTitle:@"Unlink"];
-        [boxLinkStatus setTextColor:[NSColor greenColor]];
-        [boxLinkStatus setStringValue:@"Linked"];
+        [linkBox setTitle:@"Unlink Box Account"];
     }
     else {
-        [linkBox setTitle:@"Link"];
-        [boxLinkStatus setTextColor:[NSColor redColor]];
-        [boxLinkStatus setStringValue:@"Unlinked"];
+        [linkBox setTitle:@"Link Box Account"];
     }
 
 }
 
 -(NSString*)locateBoxFolder
 {
-    NSFileManager *filemgr;
-    NSData *databuffer;
     NSString *boxXMLPath = [NSString stringWithFormat:@"%@/Library/Application Support/Box Sync/LastLoggedInUserInfo.xml",NSHomeDirectory()];
-    filemgr = [NSFileManager defaultManager];
-    
-    databuffer = [filemgr contentsAtPath: boxXMLPath];
-    
-    NSError *error = nil;
-    NSDictionary *boxXMLDict = [XMLReader dictionaryForXMLData:databuffer error:&error];
-    NSString *boxFolderPath = [[[boxXMLDict objectForKey:@"UserInfo"] objectForKey:@"Settings"] objectForKey:@"RootSyncFolderLocation"];
+    NSDictionary *xmlDoc = [NSDictionary dictionaryWithXMLFile:boxXMLPath];
+    NSString *boxFolderPath = [[xmlDoc objectForKey:@"Settings"] objectForKey:@"_RootSyncFolderLocation"];
+    NSLog(@"Box folder loc : %@",boxFolderPath);
     return boxFolderPath;
 }
 
 -(IBAction)linkBoxAccount:(id)sender
 {
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    if([defaults objectForKey:@"ycbox"] == nil) {
+    NSLog(@"%@",[self getPreference:YC_BOXSTATUS]);
+    if(([self getPreference:YC_BOXSTATUS] == nil) || ([self getPreference:YC_BOXSTATUS] == @"") ) {
         [boxClient auth];
+        
         NSAlert *alert = [[NSAlert alloc] init];
         [alert addButtonWithTitle:@"OK"];
         [alert setMessageText:@"When You have authorized us, please click OK."];
@@ -140,10 +174,35 @@
         [alert beginSheetModalForWindow:self.window modalDelegate:self didEndSelector:@selector(boxAuthDone:returnCode:) contextInfo:nil];
     }
     else {
-        [defaults setObject:nil forKey:@"ycbox"];
+        [self removePreference:YC_BOXSTATUS];
         [self refreshBoxLinkStatus:NO];
     }
-    
+}
+
+-(IBAction)linkGmailAccount:(id)sender
+{
+        gmailSheetController.preferenceController = self;
+        [gmailSheetController beginSheetModalForWindow:self.window completionHandler:^(NSUInteger returnCode) {
+            if (returnCode == kSheetReturnedSave) {
+                NSLog(@"Gmail password saved");
+                [self refreshGmailLinkStatus:YES];
+            } else if (returnCode == kSheetReturnedCancel) {
+                NSLog(@"Gmail password cancelled");
+            } else {
+                NSLog(@"Unknown return code");
+            }
+        }];
+
+}
+
+-(void)refreshGmailLinkStatus:(BOOL)linked
+{
+    if(linked){
+        [linkGmail setTitle:@"Change GMail Credentials"];
+    }
+    else {
+        [linkGmail setTitle:@"Set GMail Credentials"];
+    }
 }
 
 -(void)sendEmail
@@ -159,56 +218,122 @@
 {
     NSLog(@"BOX AUTH DONE!");
     //[self sendEmail];
-    [boxClient userGavePerms];
+    NSString *boxAuthToken = [boxClient userGavePerms];
+    [self setPreference:YC_BOXSTATUS value:boxAuthToken];
     [self refreshBoxLinkStatus:YES];
 }
 
--(IBAction)changeSetting:(id)sender
+-(IBAction)windowDidLoad:(id)sender
 {
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    int state = [checkbox state];
-    BOOL stateBool;
-    if(state)
-        stateBool = YES;
-    else stateBool = NO;
-    
-    if(stateBool != [defaults boolForKey:@"yccheck"]){
-        changed = YES;
-    }
-    else changed = NO;
+    NSLog(@"Windowdidload called");
 }
-- (BOOL)windowShouldClose:(id)sender
-{
-    DDLogVerbose(@"Window closing!! .. changed? %d",changed);
-    if(!changed){
-        return YES;
-    }
-    else {
-        return NO;
+
+- (void) readPreferences
+{ 
+    NSLog(@"Reading stored preferences");
+    NSString *prefValue;
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    for (NSString *prefKey in preferencesKeys) {
+        prefValue = [defaults stringForKey:prefKey];
+
+        if(prefValue == nil){
+            [preferences setValue:[defaultPreferences objectForKey:prefKey] forKey:prefKey];
+            DDLogVerbose(@"WARNING: Setting %@ %@ was Nil in Defaults",prefKey,[defaultPreferences objectForKey:prefKey]);
+
+        }
+        else{
+            [preferences setValue:prefValue forKey:prefKey];
+        }
     }
 }
 
-- (IBAction)saveButton:(id)sender
+- (void) savePreferences
 {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    int state = [checkbox state];
-    BOOL stateBool;
-    if(state)
-        stateBool = YES;
-    else stateBool = NO;
-    
-    DDLogVerbose(@"Writing %d",stateBool);
-    
-    NSURL *dropboxURL = [dbLocation URL];
-    [defaults setObject:[dropboxURL absoluteString] forKey:@"ycdropbox"];
-    [defaults setBool:stateBool forKey:@"yccheck"];
+    [defaults setValuesForKeysWithDictionary:preferences];
     [defaults synchronize];
-    
-    DDLogVerbose(@"Checkbox changed %d", state);
-    
-    changed = NO;
-    [self close];
 }
+
+
+- (NSString*) locateDropboxFolder
+{
+    NSString *bundlepath =[[NSBundle mainBundle] resourcePath];
+    NSString *dropboxScript = [bundlepath stringByAppendingPathComponent:@"/get_dropbox_folder.sh"]; 
+    const char *shellFile = NULL;
+    char out[1000];
+    NSString *dropboxURL;
+      
+    // check if dropbox script exists and fail otherwise
+    if (![[NSFileManager defaultManager] fileExistsAtPath:dropboxScript]) {
+        DDLogVerbose(@"Cannot find dropbox locator script at %@", dropboxScript);
+        return @"";
+    }
+    shellFile = [dropboxScript cStringUsingEncoding:NSUTF8StringEncoding];  
+    
+    int fd;
+    if ((fd = execWithSocket(dropboxScript, nil)) == -1)
+    {
+        DDLogVerbose(@"Could not run dropbox locator script");
+        dropboxURL = [NSString stringWithFormat:@"%@/Dropbox", NSHomeDirectory()];
+    } else {
+        FILE *f = fdopen(fd, "r");
+        fgets(out, 900, f);
+        fclose(f);
+        dropboxURL = [NSString stringWithFormat:@"%s",out];
+        dropboxURL = [dropboxURL stringByReplacingOccurrencesOfString:@"\n" withString:@""];
+        DDLogVerbose(@"Found dropbox location: [%@] ", dropboxURL);
+    }
+    
+    NSLog(@"Dropbox folder loc: %@",dropboxURL);
+    return dropboxURL;
+}
+
+- (BOOL)windowShouldClose:(id)sender
+{
+    DDLogVerbose(@"Window closing");
+    
+    [self setPreference:YC_USERREALNAME value:[realName stringValue]];
+    [self setPreference:YC_USEREMAIL value:[email stringValue]];
+    [self setPreference:YC_BOXLOCATION value:[[boxLocation URL] absoluteString]];
+    [self setPreference:YC_DROPBOXLOCATION value:[[dropboxLocation URL] absoluteString]];
+    [self savePreferences];
+    
+   // [self close];
+    return YES;
+}
+
+-(IBAction)changePassphrase:(id)sender
+{
+    NSLog(@"ChangePassphrase clicked");
+
+    
+    [passphraseSheetController beginSheetModalForWindow:self.window completionHandler:^(NSUInteger returnCode) {
+        if (returnCode == kSheetReturnedSave) {
+            NSLog(@"Passphrase change saved");
+        } else if (returnCode == kSheetReturnedCancel) {
+            NSLog(@"Passphrase change cancelled");
+        } else {
+            NSLog(@"Unknown return code");
+        }
+    }];
+}
+
+
+-(void)showFirstRun
+{
+    [firstRunSheetController beginSheetModalForWindow:self.window completionHandler:^(NSUInteger returnCode) {
+        if (returnCode == kSheetReturnedSave) {
+            NSLog(@"First run done");
+            [self.window close];
+        } else if (returnCode == kSheetReturnedCancel) {
+            NSLog(@"First Run cancelled :( ");
+        } else {
+            NSLog(@"Unknown return code");
+        }
+    }];
+
+}
+
 
 static NSArray *openFiles()
 { 
@@ -226,7 +351,7 @@ static NSArray *openFiles()
     return nil;
 }   
 
-- (IBAction) chooseDBLocation:(id) sender;
+- (IBAction)chooseDBLocation:(id)sender
 {   
     NSArray *path = openFiles();
     
@@ -234,10 +359,59 @@ static NSArray *openFiles()
         DDLogVerbose(@"No path selected, return..."); 
         return; 
     }
-   // NSURL *url = [NSURL URLWithString:((NSString*)[path objectAtIndex:0])];
     NSURL *url = [path objectAtIndex:0];
-    [dbLocation setURL:url];
+    [dropboxLocation setURL:url];
 
+}
+
+- (IBAction)chooseBoxLocation:(id)sender
+{
+    NSArray *path = openFiles();
+    
+    if(!path){ 
+        DDLogVerbose(@"No path selected, return..."); 
+        return; 
+    }
+    NSURL *url = [path objectAtIndex:0];
+    [boxLocation setURL:url];
+
+}
+- (IBAction)filenameEncryptionChecked:(id)sender
+{
+    int encState = [enableFilenameEncryption state];
+    if (encState != [[preferences objectForKey:YC_ENCRYPTFILENAMES] intValue]) {
+        // NSDictionary* dict = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:encState], YC_ENCRYPTFILENAMES, nil];
+        DDLogVerbose(@"updating encstate to %d", encState);
+        //[self updatePreferences:dict];
+        [self setPreference:YC_ENCRYPTFILENAMES value:[NSNumber numberWithInt:encState]];
+    }
+}
+
+- (IBAction)startOnBootChecked:(id)sender
+{
+    int onBootState = [startOnBoot state];
+  //  NSLog(@"checkbox state: %d, stored state: %d", onBootState, [[preferences objectForKey:YC_STARTONBOOT] intValue]);
+    if (onBootState != [[preferences objectForKey:YC_STARTONBOOT] intValue]) {
+       // NSDictionary* dict = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:onBootState], YC_STARTONBOOT, nil];
+        [self setPreference:YC_STARTONBOOT value:[NSNumber numberWithInt:onBootState]];
+     //   DDLogVerbose(@"Setting onboot state to %d", onBootState);
+       // [self updatePreferences:dict];
+     //   NSLog(@"Stored prefs state: %d", [[self getPreference:YC_STARTONBOOT] intValue]);
+        if (onBootState == NSOnState) {
+            NSLog(@"Will start at login");
+            [StartOnLogin setStartAtLogin:[self appURL] enabled:YES];
+        } else {
+            NSLog(@"Will not start at login");
+            [StartOnLogin setStartAtLogin:[self appURL] enabled:NO];
+        }
+    }
+}
+
+
+
+- (NSURL *)appURL
+{
+    return [NSURL fileURLWithPath:[[NSBundle mainBundle] bundlePath]];
 }
 
 @end

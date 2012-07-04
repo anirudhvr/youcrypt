@@ -12,7 +12,6 @@
 #import "Decrypt.h"
 #import "Encrypt.h"
 #import "YoucryptService.h"
-#import "YoucryptConfigDirectory.h"
 #import "libFunctions.h"
 #import "DDLog.h"
 #import "DDTTYLogger.h"
@@ -20,7 +19,7 @@
 #import "DDFileLogger.h"
 #import "CompressingLogFileManager.h"
 #import "logging.h"
-#import "YoucryptConfigDirectory.h"
+#import "ConfigDirectory.h"
 #import "ListDirectoriesWindow.h"
 
 #define prefsToolbar @"Prefs"
@@ -43,10 +42,9 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
         filesystems = [[NSMutableArray alloc] init];
     }
     
-    configDir = [[YoucryptConfigDirectory alloc] init];
+    configDir = [[ConfigDirectory alloc] init];
     youcryptService = [[YoucryptService alloc] init];
     [youcryptService setApp:self];
-    
     return self;
 }
 
@@ -82,7 +80,7 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
     [self showDecryptWindow:self];
   
     decryptController.sourceFolderPath = file;
-    NSString *dest = [configDir.youCryptVolDir stringByAppendingPathComponent:file];
+    NSString *dest = [[configDir.youCryptVolDir stringByAppendingPathComponent:file] stringByDeletingPathExtension];
     decryptController.destFolderPath = dest;
     
     DDLogVerbose(@"The following file has been dropped or selected: %@",file);
@@ -143,6 +141,9 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
     
     else if ([type isEqualToString:@"L"])
         [self showListDirectories:self];
+    
+    if(configDir.firstRun)
+        [self showFirstRunSheet];
         
 }
 
@@ -191,6 +192,19 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
     [preferenceController showWindow:self];
 }
 
+
+- (void)showFirstRunSheet
+{
+    // Is preferenceController nil?
+    if (!preferenceController) {
+        preferenceController = [[PreferenceController alloc] init];
+    }
+    DDLogVerbose(@"showing %@", preferenceController);
+    [preferenceController showFirstRun]; 
+    //[preferenceController showWindow:self];
+}
+
+
 - (IBAction)showDecryptWindow:(id)sender
 {
     // Is decryptController nil?
@@ -210,12 +224,12 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
         /* other times, this code is called in awakefromNib */      
         
         if (encryptController.keychainHasPassphrase == NO) {
-            encryptController.passphraseFromKeychain = [libFunctions getPassphraseFromKeychain];
+            encryptController.passphraseFromKeychain = [libFunctions getPassphraseFromKeychain:@"Youcrypt"];
             if (encryptController.passphraseFromKeychain != nil) {
                 encryptController.keychainHasPassphrase = YES;
             }
         }
-        NSString *passphrase =[libFunctions getPassphraseFromKeychain];
+        NSString *passphrase =[libFunctions getPassphraseFromKeychain:@"Youcrypt"];
         if ([encryptController keychainHasPassphrase] == YES) {
             [encryptController setPassphraseTextField:passphrase];
         }

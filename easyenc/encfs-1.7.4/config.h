@@ -6,7 +6,7 @@
 
 /* Define to 1 if translation of program messages to the user's native
    language is requested. */
-/* #undef ENABLE_NLS */
+#define ENABLE_NLS 1
 
 /* Define to 1 if you have the <attr/xattr.h> header file. */
 /* #undef HAVE_ATTR_XATTR_H */
@@ -33,37 +33,37 @@
 
 /* Define if the GNU dcgettext() function is already present or preinstalled.
    */
-/* #undef HAVE_DCGETTEXT */
+#define HAVE_DCGETTEXT 1
 
 /* Define to 1 if you have the <dlfcn.h> header file. */
 #define HAVE_DLFCN_H 1
 
 /* Have EVP AES interfaces */
-#define HAVE_EVP_AES 1
+/* #undef HAVE_EVP_AES */
 
 /* Define to 1 if you have the `EVP_aes_128_cbc' function. */
-#define HAVE_EVP_AES_128_CBC 1
+/* #undef HAVE_EVP_AES_128_CBC */
 
 /* Define to 1 if you have the `EVP_aes_192_cbc' function. */
-#define HAVE_EVP_AES_192_CBC 1
+/* #undef HAVE_EVP_AES_192_CBC */
 
 /* Define to 1 if you have the `EVP_aes_256_cbc' function. */
-#define HAVE_EVP_AES_256_CBC 1
+/* #undef HAVE_EVP_AES_256_CBC */
 
 /* Have EVP Blowfish interfaces */
-#define HAVE_EVP_BF 1
+/* #undef HAVE_EVP_BF */
 
 /* Define to 1 if you have the `EVP_bf_cbc' function. */
-#define HAVE_EVP_BF_CBC 1
+/* #undef HAVE_EVP_BF_CBC */
 
 /* Define to 1 if you have the `EVP_CIPHER_CTX_set_padding' function. */
-#define HAVE_EVP_CIPHER_CTX_SET_PADDING 1
+/* #undef HAVE_EVP_CIPHER_CTX_SET_PADDING */
 
 /* Define if the GNU gettext() function is already present or preinstalled. */
-/* #undef HAVE_GETTEXT */
+#define HAVE_GETTEXT 1
 
 /* Define to 1 if you have the `HMAC_Init_ex' function. */
-#define HAVE_HMAC_INIT_EX 1
+/* #undef HAVE_HMAC_INIT_EX */
 
 /* Define if you have the iconv() function and it works. */
 /* #undef HAVE_ICONV */

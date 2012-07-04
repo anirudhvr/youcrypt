@@ -71,7 +71,7 @@
    
 }
 
--(void)userGavePerms
+-(NSString*)userGavePerms
 {
     NSString *reqURL = [NSString stringWithFormat:@"%@/1.0/rest?action=get_auth_token&api_key=%@&ticket=%@",baseURL,apiKey,ticket];
 
@@ -80,9 +80,7 @@
     NSDictionary *res = [XMLReader dictionaryForXMLString:response error:&error];
     authToken = [[[res objectForKey:@"response"] objectForKey:@"auth_token"] objectForKey:@"text"];
     NSLog(@"AUTHTOKEN: %@",authToken);
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults setObject:authToken forKey:@"ycbox"];
-    [defaults synchronize];
+    return authToken;
 }
 
 -(IBAction)getFolderList:(id)sender

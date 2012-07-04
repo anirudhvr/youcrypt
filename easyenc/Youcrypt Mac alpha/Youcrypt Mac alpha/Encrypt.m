@@ -42,7 +42,7 @@
     NSLog(@"Awake from nib called");
     
     if (keychainHasPassphrase == NO) {
-        passphraseFromKeychain = [libFunctions getPassphraseFromKeychain];
+        passphraseFromKeychain = [libFunctions getPassphraseFromKeychain:@"Youcrypt"];
         if (passphraseFromKeychain == nil) {
             keychainHasPassphrase = NO;
         } else {
@@ -174,7 +174,7 @@
     NSString *yourPasswordString = [yourPassword stringValue];
     
     if (!keychainHasPassphrase) {
-        [libFunctions registerWithKeychain:yourPasswordString];
+        [libFunctions registerWithKeychain:yourPasswordString:@"Youcrypt"];
         keychainHasPassphrase = YES;
     }
         
@@ -197,13 +197,15 @@
 	}
 	
 	/* Actual encfs call */
-	systemCall(@"/usr/local/bin/encfs", [NSArray arrayWithObjects: 
+
+    execWithSocket(@"/usr/local/bin/encfs", [NSArray arrayWithObjects: 
 										 srcFolder, 
 										 destFolder, 
 										 @"--nu", numberOfUsers, 
 										 @"--pw", combinedPasswordString, 
 										 nil
 										 ]);
+
 	
     
 	/*** 

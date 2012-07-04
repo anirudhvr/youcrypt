@@ -7,6 +7,7 @@
 //
 
 #import "libFunctions.h"
+
 #import "SSKeychain.h"
 #import "logging.h"
 #import "pipetest.h"
@@ -14,10 +15,10 @@
 @implementation libFunctions
 
 
-+ (NSString*) getPassphraseFromKeychain
++ (NSString*)getPassphraseFromKeychain:(NSString*)service;
 {
     NSError *error = nil;
-    NSString *passphraseFromKeychain = [SSKeychain passwordForService:@"Youcrypt" account:@"avr" error:&error];
+    NSString *passphraseFromKeychain = [SSKeychain passwordForService:service account:NSUserName() error:&error];
     
     if (error) {
         NSLog(@"Did not get passphrase");
@@ -30,12 +31,12 @@
 
 
 /* Register password with Mac keychain */
-+ (BOOL)registerWithKeychain:(NSString*)passphrase
++ (BOOL)registerWithKeychain:(NSString*)passphrase:(NSString*)service;
 {
     NSString *yourPasswordString = passphrase;
     NSError *error = nil;
     
-    if([SSKeychain setPassword:yourPasswordString forService:@"Youcrypt" account:@"avr" error:&error])
+    if([SSKeychain setPassword:yourPasswordString forService:service account:NSUserName() error:&error])
         NSLog(@"Successfully registered passphrase wiht keychain");
     if (error) {
         NSLog(@"Error registering with Keychain");
@@ -72,8 +73,12 @@ NSString* systemCall(NSString *binary, NSArray *arguments) {
     return string;
 }
 
+void mkdirRecursive(NSString *path) {
+    [[NSFileManager defaultManager] createDirectoryAtPath:path withIntermediateDirectories:YES attributes:nil error:nil];
+}
 
-void mkdirRecursive(NSString *path)
+
+void mkdirRecursive3(NSString *path)
 {
     NSString *command = [[@"mkdir -p \"" stringByAppendingString:path] stringByAppendingString:@"\""];
     
@@ -140,13 +145,66 @@ void mvRecursive(NSString *pathFrom, NSString *pathTo) {
 		
 		NSLog(@"about to copy %@",fileFrom);
 		
-		[manager copyItemAtPath:fileFrom toPath:fileTo error:&error];
-		[manager removeItemAtPath:fileFrom error:&error];
+		[manager moveItemAtPath:fileFrom toPath:fileTo error:&error];
+		//[manager removeItemAtPath:fileFrom error:&error];
 		if (error) {
 			NSLog(@"%@",[error localizedDescription]);
 		}
 	}
 }	
+
+
+int execWithSocket(NSString *path, NSArray *arguments) {
+    int sockDescriptors[2];
+    pid_t pid;
+    
+    if (socketpair(AF_LOCAL, SOCK_STREAM, 0, sockDescriptors) == -1)
+    {
+        perror("socketpair");
+        return -1;
+    }
+    
+    if ((pid = fork()) == -1)
+    {
+        perror("fork");
+        return -1;
+    }
+    else if (pid == 0) { 
+        // This is the child.  Use sockDescriptors[0] here.
+        close(0);
+        dup2(sockDescriptors[0], 0);
+        dup2(sockDescriptors[0], 1);
+
+        execl([path cStringUsingEncoding:NSUTF8StringEncoding],
+              [path cStringUsingEncoding:NSUTF8StringEncoding],
+//              [[NSString stringWithFormat:@"%d", sockDescriptors[0]] cStringUsingEncoding:NSUTF8StringEncoding],
+              (char *)0);
+        perror("execl");
+        return -1;
+    }
+    else { 
+        // This is the parent
+        // Write all the arguments to the socket.        
+        // Use sockDescriptors[1] here.
+        
+        int argc = [arguments count];
+        int sock = sockDescriptors[1];
+        int status;
+        write (sock, &argc, sizeof(argc));
+        for (int i=0; i<argc; i++) {
+            const char *arg = [[arguments objectAtIndex:i] cStringUsingEncoding:NSUTF8StringEncoding];
+            int len = strlen(arg);
+            write (sock, &len, sizeof(len));
+            write (sock, arg, len);
+        }        
+        waitpid(pid, &status, 0);
+        return sock;   
+    }
+}
+
+
+
+
 
 
 

@@ -4,12 +4,14 @@
 #include <errno.h>
 #include "pipetest.h"
 
+
 extern int errno;
 #define BUFSZ 2048
 
 int run_command(const char *command, char **out_msg, int *out_len,
         char **err_msg, int *err_len)
 {
+    
     int rc = 0, err;
     FILE *fp;
     int curlen, curalloc;
@@ -43,6 +45,9 @@ out_err:
     pclose(fp);
     return rc;
 }
+
+
+
 /*
 int main(int argc, char *argv[])
 {

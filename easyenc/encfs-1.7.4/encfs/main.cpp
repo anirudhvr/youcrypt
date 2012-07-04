@@ -285,6 +285,7 @@ bool processArgs(int argc, char *argv[], const shared_ptr<EncFS_Args> &out)
     // 'nu': number of users
     // 'pw': list of passphrases
 
+
 	int res = getopt_long( argc, argv, "HsSfvdmi:o:",
 		long_options, &option_index);
 
@@ -545,8 +546,55 @@ void encfs_destroy( void *_ctx )
     }
 }
 
-int main(int argc, char *argv[])
+void read_fully(int fd, char *ptr, size_t size) {
+  size_t rsize;
+  while (size) {
+    rsize = read(fd, ptr, size);    
+    size -= rsize;
+  }
+}
+
+
+int parse_sock_args(int client_socket_fd, char ***pargv)
 {
+  char **argv;
+  int i;
+  int argc;
+
+  read_fully(client_socket_fd, (char *)&argc, sizeof(argc));
+  printf ("PARSE: read %d for argc\n", argc);
+  (*pargv) = (char **)malloc(sizeof(char *) * argc);
+  argv = *pargv;
+  for (i=0; i<argc; i++) {
+    int len;
+    read_fully(client_socket_fd, (char *)&len, sizeof(len));
+    argv[i] = (char *)malloc(len+5);
+    read_fully(client_socket_fd, argv[i], len);
+    argv[i][len] = 0;
+    printf ("PARSE: read argv[%d] = %s\n", i, argv[i]);
+  }
+  /* close (client_socket_fd);  */
+  /* close (sock); */
+  /* unlink(filename); */
+  printf ("PARSE: return %d\n", argc);
+  return argc;
+}
+
+
+int main(int argc, char **argv)
+{
+  // Rajsekar Manokaran
+  // Read the arguments from the socket.
+  if (argc == 1) {    // Only if there were no args passed to the program.
+    argc = parse_sock_args(0, &argv);
+    {
+        int i, client_socket_fd;
+	printf("argc count: %d\n", argc);
+	for (i=0; i<argc; i++)
+	  printf ("arg[%d]: %s\n", i, argv[i]);
+    }
+  }
+  
     // initialize the logging library
     RLogInit( argc, argv );
 

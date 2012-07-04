@@ -1,8 +1,7 @@
 FileUtils.lo .libs/FileUtils.o: FileUtils.cpp encfs.h ../config.h \
-  /usr/local/include/osxfuse/fuse.h \
-  /usr/local/include/osxfuse/fuse/fuse.h \
-  /usr/local/include/osxfuse/fuse/fuse_common.h \
-  /usr/local/include/osxfuse/fuse/fuse_opt.h /usr/include/stdint.h \
+  /opt/local/include/fuse.h /opt/local/include/fuse/fuse.h \
+  /opt/local/include/fuse/fuse_common.h \
+  /opt/local/include/fuse/fuse_opt.h /usr/include/stdint.h \
   /usr/include/sys/stat.h /usr/include/sys/_types.h \
   /usr/include/sys/cdefs.h /usr/include/sys/_symbol_aliasing.h \
   /usr/include/sys/_posix_availability.h /usr/include/machine/_types.h \
@@ -16,7 +15,7 @@ FileUtils.lo .libs/FileUtils.o: FileUtils.cpp encfs.h ../config.h \
   /usr/include/i386/endian.h /usr/include/sys/_endian.h \
   /usr/include/libkern/_OSByteOrder.h \
   /usr/include/libkern/i386/_OSByteOrder.h /usr/include/sys/statvfs.h \
-  /usr/include/unistd.h /usr/include/sys/unistd.h \
+  /usr/include/sys/uio.h /usr/include/unistd.h /usr/include/sys/unistd.h \
   /usr/include/sys/select.h /usr/include/sys/_select.h \
   /usr/include/c++/4.2.1/cerrno /usr/include/errno.h \
   /usr/include/sys/errno.h readpassphrase.h ../intl/autosprintf.h \
@@ -155,7 +154,13 @@ FileUtils.lo .libs/FileUtils.o: FileUtils.cpp encfs.h ../config.h \
   /usr/include/c++/4.2.1/stdexcept /usr/include/sys/socket.h \
   /usr/include/machine/_param.h /usr/include/i386/_param.h \
   /usr/include/c++/4.2.1/sstream /usr/include/c++/4.2.1/bits/sstream.tcc \
-  i18n.h /opt/local/include/boost/version.hpp \
+  i18n.h ../intl/gettext.h /opt/local/include/libintl.h \
+  /usr/include/xlocale.h /usr/include/_xlocale.h \
+  /usr/include/xlocale/_ctype.h /usr/include/xlocale/__wctype.h \
+  /usr/include/xlocale/_inttypes.h /usr/include/xlocale/_stdio.h \
+  /usr/include/xlocale/_stdlib.h /usr/include/xlocale/_string.h \
+  /usr/include/xlocale/_time.h /usr/include/xlocale/_wchar.h \
+  /usr/include/xlocale/_wctype.h /opt/local/include/boost/version.hpp \
   /opt/local/include/boost/filesystem/fstream.hpp \
   /opt/local/include/boost/filesystem/v3/fstream.hpp \
   /opt/local/include/boost/filesystem/v3/path.hpp \
@@ -546,13 +551,13 @@ encfs.h:
 
 ../config.h:
 
-/usr/local/include/osxfuse/fuse.h:
+/opt/local/include/fuse.h:
 
-/usr/local/include/osxfuse/fuse/fuse.h:
+/opt/local/include/fuse/fuse.h:
 
-/usr/local/include/osxfuse/fuse/fuse_common.h:
+/opt/local/include/fuse/fuse_common.h:
 
-/usr/local/include/osxfuse/fuse/fuse_opt.h:
+/opt/local/include/fuse/fuse_opt.h:
 
 /usr/include/stdint.h:
 
@@ -609,6 +614,8 @@ encfs.h:
 /usr/include/libkern/i386/_OSByteOrder.h:
 
 /usr/include/sys/statvfs.h:
+
+/usr/include/sys/uio.h:
 
 /usr/include/unistd.h:
 
@@ -1013,6 +1020,32 @@ Context.h:
 /usr/include/c++/4.2.1/bits/sstream.tcc:
 
 i18n.h:
+
+../intl/gettext.h:
+
+/opt/local/include/libintl.h:
+
+/usr/include/xlocale.h:
+
+/usr/include/_xlocale.h:
+
+/usr/include/xlocale/_ctype.h:
+
+/usr/include/xlocale/__wctype.h:
+
+/usr/include/xlocale/_inttypes.h:
+
+/usr/include/xlocale/_stdio.h:
+
+/usr/include/xlocale/_stdlib.h:
+
+/usr/include/xlocale/_string.h:
+
+/usr/include/xlocale/_time.h:
+
+/usr/include/xlocale/_wchar.h:
+
+/usr/include/xlocale/_wctype.h:
 
 /opt/local/include/boost/version.hpp:
 

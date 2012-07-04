@@ -4,6 +4,11 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>StartOnLogin.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>2</integer>
+		</dict>
 		<key>TestBed.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
@@ -28,6 +33,11 @@
 			<true/>
 		</dict>
 		<key>E0BF0E991596D01F002F9FB9</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>E66988A9159D365C002323AD</key>
 		<dict>
 			<key>primary</key>
 			<true/>

@@ -185,7 +185,7 @@ func_exec_program ()
 
   if test -f "$progdir/$program"; then
     # Add our own library path to DYLD_LIBRARY_PATH
-    DYLD_LIBRARY_PATH="/Users/avr/code/youcrypt-tmp/easyenc/easyenc/encfs-1.7.4/encfs/.libs:$DYLD_LIBRARY_PATH"
+    DYLD_LIBRARY_PATH="/Users/rajsekar/work/encint/repos/easyenc/easyenc/encfs-1.7.4/encfs/.libs:$DYLD_LIBRARY_PATH"
 
     # Some systems cannot cope with colon-terminated DYLD_LIBRARY_PATH
     # The second colon is a workaround for a bug in BeOS R4 sed

@@ -17,7 +17,7 @@ old_library=''
 inherited_linker_flags=' '
 
 # Libraries that this one depends upon.
-dependency_libs=' -lintl -L/usr/local/lib -L/opt/local/lib -lrlog -lssl -lcrypto -lz -lboost_serialization -lboost_filesystem -lboost_system'
+dependency_libs=' -L/opt/local/lib /opt/local/lib/librlog.la -lssl -lboost_serialization-mt -lboost_filesystem-mt -lboost_system-mt'
 
 # Names of additional weak libraries provided by this library
 weak_library_names=''
@@ -38,4 +38,4 @@ dlopen=''
 dlpreopen=''
 
 # Directory that this library needs to be installed in:
-libdir='/usr/local/lib'
+libdir='/opt/local/lib'

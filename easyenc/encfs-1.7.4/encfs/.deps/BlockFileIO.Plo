@@ -1,8 +1,7 @@
 BlockFileIO.lo .libs/BlockFileIO.o: BlockFileIO.cpp BlockFileIO.h \
-  FileIO.h encfs.h ../config.h /usr/local/include/osxfuse/fuse.h \
-  /usr/local/include/osxfuse/fuse/fuse.h \
-  /usr/local/include/osxfuse/fuse/fuse_common.h \
-  /usr/local/include/osxfuse/fuse/fuse_opt.h /usr/include/stdint.h \
+  FileIO.h encfs.h ../config.h /opt/local/include/fuse.h \
+  /opt/local/include/fuse/fuse.h /opt/local/include/fuse/fuse_common.h \
+  /opt/local/include/fuse/fuse_opt.h /usr/include/stdint.h \
   /usr/include/sys/stat.h /usr/include/sys/_types.h \
   /usr/include/sys/cdefs.h /usr/include/sys/_symbol_aliasing.h \
   /usr/include/sys/_posix_availability.h /usr/include/machine/_types.h \
@@ -16,7 +15,7 @@ BlockFileIO.lo .libs/BlockFileIO.o: BlockFileIO.cpp BlockFileIO.h \
   /usr/include/i386/endian.h /usr/include/sys/_endian.h \
   /usr/include/libkern/_OSByteOrder.h \
   /usr/include/libkern/i386/_OSByteOrder.h /usr/include/sys/statvfs.h \
-  /usr/include/unistd.h /usr/include/sys/unistd.h \
+  /usr/include/sys/uio.h /usr/include/unistd.h /usr/include/sys/unistd.h \
   /usr/include/sys/select.h /usr/include/sys/_select.h \
   /usr/include/c++/4.2.1/cerrno /usr/include/errno.h \
   /usr/include/sys/errno.h /usr/include/inttypes.h Interface.h \
@@ -142,7 +141,14 @@ BlockFileIO.lo .libs/BlockFileIO.o: BlockFileIO.cpp BlockFileIO.h \
   /usr/include/c++/4.2.1/bits/stl_bvector.h \
   /usr/include/c++/4.2.1/bits/vector.tcc MemoryPool.h \
   /opt/local/include/rlog/rlog.h /opt/local/include/rlog/common.h \
-  /opt/local/include/rlog/rlog-c99.h i18n.h
+  /opt/local/include/rlog/rlog-c99.h i18n.h ../intl/gettext.h \
+  /opt/local/include/libintl.h /usr/include/xlocale.h \
+  /usr/include/_xlocale.h /usr/include/xlocale/_ctype.h \
+  /usr/include/xlocale/__wctype.h /usr/include/xlocale/_inttypes.h \
+  /usr/include/xlocale/_stdio.h /usr/include/xlocale/_stdlib.h \
+  /usr/include/xlocale/_string.h /usr/include/xlocale/_time.h \
+  /usr/include/xlocale/_wchar.h /usr/include/xlocale/_wctype.h \
+  ../intl/autosprintf.h
 
 BlockFileIO.h:
 
@@ -152,13 +158,13 @@ encfs.h:
 
 ../config.h:
 
-/usr/local/include/osxfuse/fuse.h:
+/opt/local/include/fuse.h:
 
-/usr/local/include/osxfuse/fuse/fuse.h:
+/opt/local/include/fuse/fuse.h:
 
-/usr/local/include/osxfuse/fuse/fuse_common.h:
+/opt/local/include/fuse/fuse_common.h:
 
-/usr/local/include/osxfuse/fuse/fuse_opt.h:
+/opt/local/include/fuse/fuse_opt.h:
 
 /usr/include/stdint.h:
 
@@ -215,6 +221,8 @@ encfs.h:
 /usr/include/libkern/i386/_OSByteOrder.h:
 
 /usr/include/sys/statvfs.h:
+
+/usr/include/sys/uio.h:
 
 /usr/include/unistd.h:
 
@@ -555,3 +563,31 @@ MemoryPool.h:
 /opt/local/include/rlog/rlog-c99.h:
 
 i18n.h:
+
+../intl/gettext.h:
+
+/opt/local/include/libintl.h:
+
+/usr/include/xlocale.h:
+
+/usr/include/_xlocale.h:
+
+/usr/include/xlocale/_ctype.h:
+
+/usr/include/xlocale/__wctype.h:
+
+/usr/include/xlocale/_inttypes.h:
+
+/usr/include/xlocale/_stdio.h:
+
+/usr/include/xlocale/_stdlib.h:
+
+/usr/include/xlocale/_string.h:
+
+/usr/include/xlocale/_time.h:
+
+/usr/include/xlocale/_wchar.h:
+
+/usr/include/xlocale/_wctype.h:
+
+../intl/autosprintf.h:
