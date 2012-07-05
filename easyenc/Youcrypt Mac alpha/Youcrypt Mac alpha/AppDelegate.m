@@ -332,6 +332,8 @@ AppDelegate *theApp;
 }
 
 - (id)tableView:(NSTableView *)tableView objectValueForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
+   
+    NSString *colId = [tableColumn identifier];
     
     if (!directories)
         return nil;
@@ -339,8 +341,7 @@ AppDelegate *theApp;
     YoucryptDirectory *dirAtRow = [directories objectAtIndex:row];
     if (!dirAtRow)
         return nil;
-    
-    NSString *colId = [tableColumn identifier];
+   
     if ([colId isEqualToString:@"alias"])
         return dirAtRow.alias;
     else if ([colId isEqualToString:@"mountedPath"])
@@ -398,20 +399,65 @@ AppDelegate *theApp;
 // Code to color mounted and unmounted folders separately
 //--------------------------------------------------------------------------------------------------
 - (void)tableView:(NSTableView*)tableView willDisplayCell:(id)cell forTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
-    NSLog(@"This code called");
+    NSString *colId = [tableColumn identifier];
 
-    
+   NSLog(@"This code called");
+					
     if (!directories)
         return;
     
     YoucryptDirectory *dirAtRow = [directories objectAtIndex:row];
     if (!dirAtRow)
         return;
-    if (dirAtRow.mounted) {
-        [cell setBackgroundStyle:NSBackgroundStyleRaised];
-    } else {
-        [cell setBackgroundStyle:NSBackgroundStyleLowered];
+    if (row == 0) {
+        if ([colId isEqualToString:@"alias"]) {
+            
+            NSFont *font = [NSFont fontWithName:@"Palatino-Roman" size:14.0];
+            NSDictionary *attrsDictionary =
+            [NSDictionary dictionaryWithObject:font
+                                        forKey:NSFontAttributeName];
+            [attrsDictionary setValue:[NSColor blueColor] forKey:NSBackgroundColorAttributeName];
+            NSAttributedString *attrString =
+            [[NSAttributedString alloc] initWithString:@"Folder name"
+                                            attributes:attrsDictionary];
+            if ([cell isKindOfClass:[NSTextFieldCell class]]) {
+                [cell setObjectValue:attrString];
+            }
+            
+        } else {
+            if ([cell isKindOfClass:[NSTextFieldCell class]]) {
+                [cell setObjectValue:@"Empty"];
+            }
+        }
+
     }
+
+    if (dirAtRow.mounted) {
+        if ([cell isKindOfClass:[NSTextFieldCell class]]) {
+            [cell setTextColor:[NSColor redColor]];
+            [cell setBackgroundColor:[NSColor blackColor]];
+        }
+    }
+    
+    /*
+
+    if (row == 0) {
+        if ([colId isEqualToString:@"alias"]) {
+            
+            NSFont *font = [NSFont fontWithName:@"Palatino-Roman" size:14.0];
+            NSDictionary *attrsDictionary =
+            [NSDictionary dictionaryWithObject:font
+                                        forKey:NSFontAttributeName];
+            [attrsDictionary setValue:[NSColor blueColor] forKey:NSBackgroundColorAttributeName];
+            NSAttributedString *attrString =
+            [[NSAttributedString alloc] initWithString:@"Folder name"
+                                            attributes:attrsDictionary];
+            
+        }
+    }
+   */   
+ 
+    
 }
 
 - (NSCell *)tableView:(NSTableView *)tableView dataCellForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
