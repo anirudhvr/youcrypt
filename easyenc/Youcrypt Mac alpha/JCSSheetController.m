@@ -24,6 +24,9 @@
     [self sheetWillDisplay];
     
     [NSApp beginSheet:self.window modalForWindow:window modalDelegate:self didEndSelector:@selector(sheetDidEnd:returnCode:contextInfo:) contextInfo:NULL];
+    
+    [self sheetDidDisplay];
+
 }
 
 - (void)endSheetWithReturnCode:(NSUInteger)result {
@@ -31,6 +34,11 @@
 }
 
 - (void)sheetWillDisplay {
+    // Default does nothing.
+    // Convenience for subclasses to override.
+}
+
+- (void)sheetDidDisplay {
     // Default does nothing.
     // Convenience for subclasses to override.
 }

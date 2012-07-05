@@ -6,10 +6,7 @@
 //  Copyright 2011 Jungle Candy Software. All rights reserved.
 //
 
-enum {
-    kSheetReturnedSave = 1,
-    kSheetReturnedCancel = 2
-};
+
 
 #import <Cocoa/Cocoa.h>
 #import "JCSSheetController.h"

@@ -17,6 +17,11 @@
 		252C3A6C1593CBA50044EB3C /* DDTTYLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 252C3A5D1593C6A80044EB3C /* DDTTYLogger.m */; };
 		252C3A981593E84F0044EB3C /* CompressingLogFileManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 252C3A971593E84F0044EB3C /* CompressingLogFileManager.m */; };
 		252C3A9F1593F0500044EB3C /* logging.h in Sources */ = {isa = PBXBuildFile; fileRef = 252C3A9E1593EF570044EB3C /* logging.h */; };
+		25300E8B15A385BE009CDA08 /* GmailSheetController.m in Sources */ = {isa = PBXBuildFile; fileRef = 25300E8915A385BE009CDA08 /* GmailSheetController.m */; };
+		25300E8C15A385BE009CDA08 /* Gmail.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25300E8A15A385BE009CDA08 /* Gmail.xib */; };
+		25300E9015A3BE74009CDA08 /* FirstRunSheetController.m in Sources */ = {isa = PBXBuildFile; fileRef = 25300E8E15A3BE73009CDA08 /* FirstRunSheetController.m */; };
+		25300E9115A3BE74009CDA08 /* FirstRun.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25300E8F15A3BE73009CDA08 /* FirstRun.xib */; };
+		253C3D7F159BBF9400120B8D /* BoxFSA.m in Sources */ = {isa = PBXBuildFile; fileRef = 253C3D7E159BBF9400120B8D /* BoxFSA.m */; };
 		256C3560158EA75F00E2BEC4 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 256C355F158EA75F00E2BEC4 /* Cocoa.framework */; };
 		256C356A158EA75F00E2BEC4 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 256C3568158EA75F00E2BEC4 /* InfoPlist.strings */; };
 		256C356C158EA75F00E2BEC4 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 256C356B158EA75F00E2BEC4 /* main.m */; };
@@ -38,6 +43,14 @@
 		25F3D1511592435600E3383C /* libFunctions.m in Sources */ = {isa = PBXBuildFile; fileRef = 25F3D1501592435600E3383C /* libFunctions.m */; };
 		25F3D15A159244E800E3383C /* Encrypt.m in Sources */ = {isa = PBXBuildFile; fileRef = 25F3D158159244E800E3383C /* Encrypt.m */; };
 		25F3D15B159244E800E3383C /* Encrypt.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25F3D159159244E800E3383C /* Encrypt.xib */; };
+		25F6997215A4C2FD00A67879 /* gmail-logo.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 25F6997115A4C2FD00A67879 /* gmail-logo.jpeg */; };
+		25F6997415A4C67100A67879 /* box-logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 25F6997315A4C67100A67879 /* box-logo.png */; };
+		25F6997615A4D00A00A67879 /* gmail-logo2.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 25F6997515A4D00A00A67879 /* gmail-logo2.jpeg */; };
+		25F6997815A4D26000A67879 /* gmaillogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 25F6997715A4D26000A67879 /* gmaillogo.png */; };
+		25F6997A15A4DA2B00A67879 /* DropBox.png in Resources */ = {isa = PBXBuildFile; fileRef = 25F6997915A4DA2B00A67879 /* DropBox.png */; };
+		25FDA05415A2229B004F2914 /* simple-mailer.py in Resources */ = {isa = PBXBuildFile; fileRef = 25FDA05315A2229B004F2914 /* simple-mailer.py */; };
+		25FDA06515A232DC004F2914 /* XMLReader.m in Sources */ = {isa = PBXBuildFile; fileRef = 25FDA06415A232DC004F2914 /* XMLReader.m */; };
+		25FDA07715A284CD004F2914 /* XMLDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = 25FDA07615A284CD004F2914 /* XMLDictionary.m */; };
 		E0BF0E951596B9C8002F9FB9 /* YoucryptDirectory.m in Sources */ = {isa = PBXBuildFile; fileRef = E0BF0E941596B9C8002F9FB9 /* YoucryptDirectory.m */; };
 		E0BF0E9D1596D01F002F9FB9 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E0BF0E9C1596D01F002F9FB9 /* Foundation.framework */; };
 		E0BF0EA01596D01F002F9FB9 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E0BF0E9F1596D01F002F9FB9 /* main.m */; };
@@ -51,12 +64,15 @@
 		E66988D5159E62D8002323AD /* ChangePassphrase.xib in Resources */ = {isa = PBXBuildFile; fileRef = E66988D4159E62D8002323AD /* ChangePassphrase.xib */; };
 		E66988D9159E63BE002323AD /* JCSSheetController.m in Sources */ = {isa = PBXBuildFile; fileRef = E66988D8159E63BE002323AD /* JCSSheetController.m */; };
 		E66988DC159E63CF002323AD /* PassphraseSheetController.m in Sources */ = {isa = PBXBuildFile; fileRef = E66988DB159E63CF002323AD /* PassphraseSheetController.m */; };
-		E6822DEF159537C8005F1175 /* YoucryptConfigDirectory.m in Sources */ = {isa = PBXBuildFile; fileRef = E6822DEE159537C8005F1175 /* YoucryptConfigDirectory.m */; };
 		E6BEB6F015A4BB4F00878D4B /* Exit.png in Resources */ = {isa = PBXBuildFile; fileRef = E6BEB6EC15A4BB4F00878D4B /* Exit.png */; };
 		E6BEB6F115A4BB4F00878D4B /* Help.png in Resources */ = {isa = PBXBuildFile; fileRef = E6BEB6ED15A4BB4F00878D4B /* Help.png */; };
 		E6BEB6F215A4BB4F00878D4B /* Preferences.png in Resources */ = {isa = PBXBuildFile; fileRef = E6BEB6EE15A4BB4F00878D4B /* Preferences.png */; };
 		E6BEB6F315A4BB4F00878D4B /* Remove.png in Resources */ = {isa = PBXBuildFile; fileRef = E6BEB6EF15A4BB4F00878D4B /* Remove.png */; };
 		E6BEB6F515A4BB5F00878D4B /* Add.png in Resources */ = {isa = PBXBuildFile; fileRef = E6BEB6F415A4BB5F00878D4B /* Add.png */; };
+		E6BEB71615A51BBA00878D4B /* ConfigDirectory.m in Sources */ = {isa = PBXBuildFile; fileRef = E6BEB71515A51BB900878D4B /* ConfigDirectory.m */; };
+		E6BEB71815A520FA00878D4B /* logo-16x16.tiff in Resources */ = {isa = PBXBuildFile; fileRef = E6BEB71715A520FA00878D4B /* logo-16x16.tiff */; };
+		E6BEB71A15A522A000878D4B /* logo-grayscale-alpha.png in Resources */ = {isa = PBXBuildFile; fileRef = E6BEB71915A522A000878D4B /* logo-grayscale-alpha.png */; };
+		E6BEB71C15A5290300878D4B /* logo-color-alpha.png in Resources */ = {isa = PBXBuildFile; fileRef = E6BEB71B15A5290300878D4B /* logo-color-alpha.png */; };
 		E6CEDF81159B7B46007FB3B1 /* get_dropbox_folder.sh in Resources */ = {isa = PBXBuildFile; fileRef = E6CEDF80159B7B46007FB3B1 /* get_dropbox_folder.sh */; };
 		E6E2A0BA15926C8C003E3F6C /* YoucryptService.m in Sources */ = {isa = PBXBuildFile; fileRef = E6E2A0B6159266F6003E3F6C /* YoucryptService.m */; };
 /* End PBXBuildFile section */
@@ -124,6 +140,18 @@
 		252C3A961593E84F0044EB3C /* CompressingLogFileManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CompressingLogFileManager.h; sourceTree = "<group>"; };
 		252C3A971593E84F0044EB3C /* CompressingLogFileManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CompressingLogFileManager.m; sourceTree = "<group>"; };
 		252C3A9E1593EF570044EB3C /* logging.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = logging.h; sourceTree = "<group>"; };
+		25300E8815A385BD009CDA08 /* GmailSheetController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GmailSheetController.h; sourceTree = "<group>"; };
+		25300E8915A385BE009CDA08 /* GmailSheetController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GmailSheetController.m; sourceTree = "<group>"; };
+		25300E8A15A385BE009CDA08 /* Gmail.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Gmail.xib; sourceTree = "<group>"; };
+		25300E8D15A3BE73009CDA08 /* FirstRunSheetController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FirstRunSheetController.h; sourceTree = "<group>"; };
+		25300E8E15A3BE73009CDA08 /* FirstRunSheetController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FirstRunSheetController.m; sourceTree = "<group>"; };
+		25300E8F15A3BE73009CDA08 /* FirstRun.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FirstRun.xib; sourceTree = "<group>"; };
+		253C3D75159BBF2E00120B8D /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = System/Library/Frameworks/CoreServices.framework; sourceTree = SDKROOT; };
+		253C3D77159BBF3900120B8D /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		253C3D79159BBF4000120B8D /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		253C3D7B159BBF4A00120B8D /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
+		253C3D7D159BBF9400120B8D /* BoxFSA.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BoxFSA.h; sourceTree = "<group>"; };
+		253C3D7E159BBF9400120B8D /* BoxFSA.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BoxFSA.m; sourceTree = "<group>"; };
 		256C355B158EA75F00E2BEC4 /* Youcrypt Mac alpha.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Youcrypt Mac alpha.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		256C355F158EA75F00E2BEC4 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		256C3562158EA75F00E2BEC4 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -161,6 +189,17 @@
 		25F3D157159244E800E3383C /* Encrypt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Encrypt.h; path = "Youcrypt Mac alpha/Encrypt.h"; sourceTree = "<group>"; };
 		25F3D158159244E800E3383C /* Encrypt.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Encrypt.m; path = "Youcrypt Mac alpha/Encrypt.m"; sourceTree = "<group>"; };
 		25F3D159159244E800E3383C /* Encrypt.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = Encrypt.xib; path = "Youcrypt Mac alpha/Encrypt.xib"; sourceTree = "<group>"; };
+		25F6997115A4C2FD00A67879 /* gmail-logo.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "gmail-logo.jpeg"; path = "../gmail-logo.jpeg"; sourceTree = "<group>"; };
+		25F6997315A4C67100A67879 /* box-logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "box-logo.png"; path = "../box-logo.png"; sourceTree = "<group>"; };
+		25F6997515A4D00A00A67879 /* gmail-logo2.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "gmail-logo2.jpeg"; path = "../gmail-logo2.jpeg"; sourceTree = "<group>"; };
+		25F6997715A4D26000A67879 /* gmaillogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = gmaillogo.png; path = ../gmaillogo.png; sourceTree = "<group>"; };
+		25F6997915A4DA2B00A67879 /* DropBox.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = DropBox.png; sourceTree = "<group>"; };
+		25FDA05315A2229B004F2914 /* simple-mailer.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; path = "simple-mailer.py"; sourceTree = "<group>"; };
+		25FDA06315A232DC004F2914 /* XMLReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMLReader.h; sourceTree = "<group>"; };
+		25FDA06415A232DC004F2914 /* XMLReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XMLReader.m; sourceTree = "<group>"; };
+		25FDA07015A269B1004F2914 /* Automator.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Automator.framework; path = System/Library/Frameworks/Automator.framework; sourceTree = SDKROOT; };
+		25FDA07515A284CD004F2914 /* XMLDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMLDictionary.h; sourceTree = "<group>"; };
+		25FDA07615A284CD004F2914 /* XMLDictionary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XMLDictionary.m; sourceTree = "<group>"; };
 		E0BF0E931596B9C8002F9FB9 /* YoucryptDirectory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YoucryptDirectory.h; sourceTree = "<group>"; };
 		E0BF0E941596B9C8002F9FB9 /* YoucryptDirectory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YoucryptDirectory.m; sourceTree = "<group>"; };
 		E0BF0E9A1596D01F002F9FB9 /* TestBed */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = TestBed; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -177,13 +216,16 @@
 		E66988D8159E63BE002323AD /* JCSSheetController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCSSheetController.m; sourceTree = "<group>"; };
 		E66988DA159E63CF002323AD /* PassphraseSheetController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PassphraseSheetController.h; sourceTree = "<group>"; };
 		E66988DB159E63CF002323AD /* PassphraseSheetController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PassphraseSheetController.m; sourceTree = "<group>"; };
-		E6822DED159537C8005F1175 /* YoucryptConfigDirectory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = YoucryptConfigDirectory.h; path = "Youcrypt Mac alpha/YoucryptConfigDirectory.h"; sourceTree = "<group>"; };
-		E6822DEE159537C8005F1175 /* YoucryptConfigDirectory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = YoucryptConfigDirectory.m; path = "Youcrypt Mac alpha/YoucryptConfigDirectory.m"; sourceTree = "<group>"; };
 		E6BEB6EC15A4BB4F00878D4B /* Exit.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Exit.png; sourceTree = "<group>"; };
 		E6BEB6ED15A4BB4F00878D4B /* Help.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Help.png; sourceTree = "<group>"; };
 		E6BEB6EE15A4BB4F00878D4B /* Preferences.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Preferences.png; sourceTree = "<group>"; };
 		E6BEB6EF15A4BB4F00878D4B /* Remove.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Remove.png; sourceTree = "<group>"; };
 		E6BEB6F415A4BB5F00878D4B /* Add.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Add.png; sourceTree = "<group>"; };
+		E6BEB71415A51BB900878D4B /* ConfigDirectory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ConfigDirectory.h; path = "Youcrypt Mac alpha/ConfigDirectory.h"; sourceTree = "<group>"; };
+		E6BEB71515A51BB900878D4B /* ConfigDirectory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ConfigDirectory.m; path = "Youcrypt Mac alpha/ConfigDirectory.m"; sourceTree = "<group>"; };
+		E6BEB71715A520FA00878D4B /* logo-16x16.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = "logo-16x16.tiff"; sourceTree = "<group>"; };
+		E6BEB71915A522A000878D4B /* logo-grayscale-alpha.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "logo-grayscale-alpha.png"; sourceTree = "<group>"; };
+		E6BEB71B15A5290300878D4B /* logo-color-alpha.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "logo-color-alpha.png"; sourceTree = "<group>"; };
 		E6CEDF80159B7B46007FB3B1 /* get_dropbox_folder.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = get_dropbox_folder.sh; sourceTree = "<group>"; };
 		E6E2A0B6159266F6003E3F6C /* YoucryptService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = YoucryptService.m; path = "Youcrypt Mac alpha/YoucryptService.m"; sourceTree = "<group>"; };
 		E6E2A0B7159266F6003E3F6C /* YoucryptService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = YoucryptService.h; path = "Youcrypt Mac alpha/YoucryptService.h"; sourceTree = "<group>"; };
@@ -265,6 +307,11 @@
 		256C355E158EA75F00E2BEC4 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				25FDA07015A269B1004F2914 /* Automator.framework */,
+				253C3D7B159BBF4A00120B8D /* libxml2.dylib */,
+				253C3D79159BBF4000120B8D /* QuartzCore.framework */,
+				253C3D77159BBF3900120B8D /* SystemConfiguration.framework */,
+				253C3D75159BBF2E00120B8D /* CoreServices.framework */,
 				252C3A671593CAA10044EB3C /* Lumberjack.framework */,
 				252C3A441593A2E30044EB3C /* Sparkle.framework */,
 				25EE6A5815928D2C008A0DC8 /* Security.framework */,
@@ -301,6 +348,11 @@
 		256C3566158EA75F00E2BEC4 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				25F6997915A4DA2B00A67879 /* DropBox.png */,
+				25F6997715A4D26000A67879 /* gmaillogo.png */,
+				25F6997515A4D00A00A67879 /* gmail-logo2.jpeg */,
+				25F6997315A4C67100A67879 /* box-logo.png */,
+				25F6997115A4C2FD00A67879 /* gmail-logo.jpeg */,
 				E6CEDF80159B7B46007FB3B1 /* get_dropbox_folder.sh */,
 				252C3A481593A5150044EB3C /* dsa_pub.pem */,
 				25EE6A5B15928D5C008A0DC8 /* SSKeychain.h */,
@@ -334,6 +386,8 @@
 		25F3D1521592436000E3383C /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				25300E8F15A3BE73009CDA08 /* FirstRun.xib */,
+				25300E8A15A385BE009CDA08 /* Gmail.xib */,
 				25F3D159159244E800E3383C /* Encrypt.xib */,
 				E0BF0EBC159838DD002F9FB9 /* ListDirectoriesWindow.xib */,
 				256C35A8158EAF8700E2BEC4 /* Preferences.xib */,
@@ -358,15 +412,26 @@
 		25F3D154159243E300E3383C /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				E66988D6159E639B002323AD /* Sheet */,
+				E6BEB71415A51BB900878D4B /* ConfigDirectory.h */,
+				E6BEB71515A51BB900878D4B /* ConfigDirectory.m */,
+				25FDA07515A284CD004F2914 /* XMLDictionary.h */,
+				25FDA07615A284CD004F2914 /* XMLDictionary.m */,
+				25FDA06315A232DC004F2914 /* XMLReader.h */,
+				25FDA06415A232DC004F2914 /* XMLReader.m */,
 				E6E2A0B6159266F6003E3F6C /* YoucryptService.m */,
 				E6E2A0B7159266F6003E3F6C /* YoucryptService.h */,
 				25F3D157159244E800E3383C /* Encrypt.h */,
 				25F3D158159244E800E3383C /* Encrypt.m */,
 				256C3571158EA75F00E2BEC4 /* AppDelegate.h */,
 				256C3572158EA75F00E2BEC4 /* AppDelegate.m */,
+				253C3D7D159BBF9400120B8D /* BoxFSA.h */,
+				253C3D7E159BBF9400120B8D /* BoxFSA.m */,
 				25F3D14915923FE800E3383C /* Decrypt.h */,
 				25F3D14A15923FE800E3383C /* Decrypt.m */,
+				25F3D157159244E800E3383C /* Encrypt.h */,
+				25F3D158159244E800E3383C /* Encrypt.m */,
+				25B1E4FC158FED9700CDBC46 /* FileSystem.h */,
+				25B1E4FD158FED9700CDBC46 /* FileSystem.m */,
 				25F3D14F1592435600E3383C /* libFunctions.h */,
 				25F3D1501592435600E3383C /* libFunctions.m */,
 				E0BF0EBA159838DD002F9FB9 /* ListDirectoriesWindow.h */,
@@ -375,12 +440,12 @@
 				25B1E505158FF48B00CDBC46 /* pipetest.h */,
 				256C359B158EA88700E2BEC4 /* PreferenceController.h */,
 				256C359C158EA88700E2BEC4 /* PreferenceController.m */,
-				E6822DED159537C8005F1175 /* YoucryptConfigDirectory.h */,
-				E6822DEE159537C8005F1175 /* YoucryptConfigDirectory.m */,
-				25B1E4FC158FED9700CDBC46 /* FileSystem.h */,
-				25B1E4FD158FED9700CDBC46 /* FileSystem.m */,
+				25FDA05315A2229B004F2914 /* simple-mailer.py */,
 				E0BF0E931596B9C8002F9FB9 /* YoucryptDirectory.h */,
 				E0BF0E941596B9C8002F9FB9 /* YoucryptDirectory.m */,
+				E6E2A0B7159266F6003E3F6C /* YoucryptService.h */,
+				E6E2A0B6159266F6003E3F6C /* YoucryptService.m */,
+				E66988D6159E639B002323AD /* Sheet */,
 				252C3A621593C6B20044EB3C /* Logging */,
 			);
 			name = Classes;
@@ -420,6 +485,10 @@
 				E66988DB159E63CF002323AD /* PassphraseSheetController.m */,
 				E66988D7159E63BE002323AD /* JCSSheetController.h */,
 				E66988D8159E63BE002323AD /* JCSSheetController.m */,
+				25300E8815A385BD009CDA08 /* GmailSheetController.h */,
+				25300E8915A385BE009CDA08 /* GmailSheetController.m */,
+				25300E8D15A3BE73009CDA08 /* FirstRunSheetController.h */,
+				25300E8E15A3BE73009CDA08 /* FirstRunSheetController.m */,
 			);
 			name = Sheet;
 			sourceTree = "<group>";
@@ -427,6 +496,9 @@
 		E6BEB6C915A3A72000878D4B /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				E6BEB71B15A5290300878D4B /* logo-color-alpha.png */,
+				E6BEB71915A522A000878D4B /* logo-grayscale-alpha.png */,
+				E6BEB71715A520FA00878D4B /* logo-16x16.tiff */,
 				E6BEB6F415A4BB5F00878D4B /* Add.png */,
 				E6BEB6EC15A4BB4F00878D4B /* Exit.png */,
 				E6BEB6ED15A4BB4F00878D4B /* Help.png */,
@@ -550,13 +622,24 @@
 				25F3D15B159244E800E3383C /* Encrypt.xib in Resources */,
 				252C3A491593A5150044EB3C /* dsa_pub.pem in Resources */,
 				E0BF0EBE159838DD002F9FB9 /* ListDirectoriesWindow.xib in Resources */,
+				25FDA05415A2229B004F2914 /* simple-mailer.py in Resources */,
 				E6CEDF81159B7B46007FB3B1 /* get_dropbox_folder.sh in Resources */,
 				E66988D5159E62D8002323AD /* ChangePassphrase.xib in Resources */,
+				25300E8C15A385BE009CDA08 /* Gmail.xib in Resources */,
+				25300E9115A3BE74009CDA08 /* FirstRun.xib in Resources */,
+				25F6997215A4C2FD00A67879 /* gmail-logo.jpeg in Resources */,
+				25F6997415A4C67100A67879 /* box-logo.png in Resources */,
+				25F6997615A4D00A00A67879 /* gmail-logo2.jpeg in Resources */,
+				25F6997815A4D26000A67879 /* gmaillogo.png in Resources */,
+				25F6997A15A4DA2B00A67879 /* DropBox.png in Resources */,
 				E6BEB6F015A4BB4F00878D4B /* Exit.png in Resources */,
 				E6BEB6F115A4BB4F00878D4B /* Help.png in Resources */,
 				E6BEB6F215A4BB4F00878D4B /* Preferences.png in Resources */,
 				E6BEB6F315A4BB4F00878D4B /* Remove.png in Resources */,
 				E6BEB6F515A4BB5F00878D4B /* Add.png in Resources */,
+				E6BEB71815A520FA00878D4B /* logo-16x16.tiff in Resources */,
+				E6BEB71A15A522A000878D4B /* logo-grayscale-alpha.png in Resources */,
+				E6BEB71C15A5290300878D4B /* logo-color-alpha.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -607,11 +690,16 @@
 				252C3A6C1593CBA50044EB3C /* DDTTYLogger.m in Sources */,
 				252C3A981593E84F0044EB3C /* CompressingLogFileManager.m in Sources */,
 				252C3A9F1593F0500044EB3C /* logging.h in Sources */,
-				E6822DEF159537C8005F1175 /* YoucryptConfigDirectory.m in Sources */,
 				E0BF0E951596B9C8002F9FB9 /* YoucryptDirectory.m in Sources */,
 				E0BF0EBD159838DD002F9FB9 /* ListDirectoriesWindow.m in Sources */,
+				253C3D7F159BBF9400120B8D /* BoxFSA.m in Sources */,
+				25FDA06515A232DC004F2914 /* XMLReader.m in Sources */,
 				E66988D9159E63BE002323AD /* JCSSheetController.m in Sources */,
 				E66988DC159E63CF002323AD /* PassphraseSheetController.m in Sources */,
+				25FDA07715A284CD004F2914 /* XMLDictionary.m in Sources */,
+				25300E8B15A385BE009CDA08 /* GmailSheetController.m in Sources */,
+				25300E9015A3BE74009CDA08 /* FirstRunSheetController.m in Sources */,
+				E6BEB71615A51BBA00878D4B /* ConfigDirectory.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -736,6 +824,7 @@
 		256C358E158EA75F00E2BEC4 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
@@ -743,10 +832,14 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Youcrypt Mac alpha/Youcrypt Mac alpha-Prefix.pch";
 				HEADER_SEARCH_PATHS = "\"$(SRCROOT)\"";
+				"HEADER_SEARCH_PATHS[arch=*]" = "\"$(SRCROOT)\"";
 				INFOPLIST_FILE = "Youcrypt Mac alpha/Youcrypt Mac alpha-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = /Library/Frameworks;
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				"OTHER_LDFLAGS[arch=*]" = "-lz";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				USER_HEADER_SEARCH_PATHS = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -754,6 +847,7 @@
 		256C358F158EA75F00E2BEC4 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
@@ -763,7 +857,10 @@
 				HEADER_SEARCH_PATHS = "\"$(SRCROOT)\"";
 				INFOPLIST_FILE = "Youcrypt Mac alpha/Youcrypt Mac alpha-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = /Library/Frameworks;
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				USER_HEADER_SEARCH_PATHS = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

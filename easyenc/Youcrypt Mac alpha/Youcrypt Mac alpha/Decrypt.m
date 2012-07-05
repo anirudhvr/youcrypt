@@ -29,7 +29,7 @@
 {
     NSLog(@"Decrypt awake from nib called");    
     if (keychainHasPassphrase == NO) {
-        passphraseFromKeychain = [libFunctions getPassphraseFromKeychain];
+        passphraseFromKeychain = [libFunctions getPassphraseFromKeychain:@"Youcrypt"];
         if (passphraseFromKeychain == nil) {
             keychainHasPassphrase = NO;
         } else {

@@ -717,6 +717,7 @@
 									<string key="NSKeyEquiv">t</string>
 									<int key="NSKeyEquivModMask">1572864</int>
 									<int key="NSMnemonicLoc">2147483647</int>
+									<int key="NSState">1</int>
 									<reference key="NSOnImage" ref="35465992"/>
 									<reference key="NSMixedImage" ref="502551668"/>
 								</object>
@@ -3111,8 +3112,8 @@
 						<reference key="object" ref="442750754"/>
 						<array class="NSMutableArray" key="children">
 							<reference ref="301348552"/>
-							<reference ref="538219721"/>
 							<reference ref="465427937"/>
+							<reference ref="538219721"/>
 							<reference ref="855045704"/>
 							<reference ref="286818973"/>
 						</array>

@@ -42,7 +42,7 @@
     NSLog(@"Awake from nib called");
     
     if (keychainHasPassphrase == NO) {
-        passphraseFromKeychain = [libFunctions getPassphraseFromKeychain];
+        passphraseFromKeychain = [libFunctions getPassphraseFromKeychain:@"Youcrypt"];
         if (passphraseFromKeychain == nil) {
             keychainHasPassphrase = NO;
         } else {
@@ -157,7 +157,7 @@
 	// ---- Figure out the password, sharing options, etc. -----------------
     NSString *yourPasswordString = [yourPassword stringValue];    
     if (!keychainHasPassphrase) {
-        [libFunctions registerWithKeychain:yourPasswordString];
+        [libFunctions registerWithKeychain:yourPasswordString:@"Youcrypt"];
         keychainHasPassphrase = YES;
     }
         

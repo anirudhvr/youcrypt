@@ -28,20 +28,29 @@
     [super windowDidLoad];
     
     // Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
-    [message setStringValue:@""];
+    
+    
     NSLog(@"Windowdidload called");
 }
 
+-(void) sheetDidDisplay
+{
+    [message setStringValue:@""];
+    [oldpassphrase setStringValue:@""];
+    [newpassphrase setStringValue:@""];
+    [verifynewpassphrase setStringValue:@""];
+    
+}
 // Mark: -
 // Mark: Action methods
 
 - (void)saveClicked:(id)sender {
     
-    storedpassphrase = [libFunctions getPassphraseFromKeychain];
+    storedpassphrase = [libFunctions getPassphraseFromKeychain:@"Youcrypt"];
     if (storedpassphrase == nil) {
-        [oldpassphrase setStringValue:@"No previous passphrase"];
-        [oldpassphrase setEditable:NO];
+
     } else {
+        [oldpassphrase setEditable:YES];
         NSLog(@"Got stored passphrase: %@", storedpassphrase);
         NSString *oldpp = [oldpassphrase stringValue];
         NSLog(@"value of oldpassphrase [%@],  storedpassphrase: [%@], isEqual: %d", oldpp, storedpassphrase,[oldpp isEqualToString:storedpassphrase]);
@@ -58,7 +67,7 @@
         return;
     } else {
         NSLog(@"Registering new passphrase %@ with keychain", [newpassphrase stringValue]);
-        [libFunctions registerWithKeychain:[newpassphrase stringValue]];
+        [libFunctions registerWithKeychain:[newpassphrase stringValue]:@"Youcrypt"];
         [self endSheetWithReturnCode:kSheetReturnedSave];
     }
 }
@@ -74,10 +83,7 @@
     [super sheetWillDisplay];
     NSLog(@"Change passphrase sheet will display");
    
-    [message setStringValue:[NSString stringWithFormat:@""]];
-    [oldpassphrase setStringValue:@""];
-    [newpassphrase setStringValue:@""];
-    [verifynewpassphrase setStringValue:@""];
+        
 }
 
 @end

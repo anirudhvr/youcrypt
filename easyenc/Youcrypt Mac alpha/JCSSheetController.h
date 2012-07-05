@@ -10,6 +10,11 @@
 
 #import <Cocoa/Cocoa.h>
 
+enum {
+    kSheetReturnedSave = 1,
+    kSheetReturnedCancel = 2
+};
+
 typedef void (^JCSCompletionHandler)(NSUInteger result);
 
 @interface JCSSheetController : NSWindowController 
@@ -21,5 +26,6 @@ typedef void (^JCSCompletionHandler)(NSUInteger result);
 // Convenience methods for subclasses to use
 - (void)endSheetWithReturnCode:(NSUInteger)result;
 - (void)sheetWillDisplay; // Default does nothing
+- (void)sheetDidDisplay; // Default does nothing
 
 @end
