@@ -59,6 +59,7 @@
 -(void)encryptFolder:(NSString *)path;
 -(BOOL)openEncryptedFolder:(NSString *)path;
 -(void)didDecrypt:(NSString *)path;
+-(void)didEncrypt:(NSString *)path;
 
 
 

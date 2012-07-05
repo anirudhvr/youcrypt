@@ -11,6 +11,7 @@
 #import "libFunctions.h"
 #import "logging.h"
 #import "SSKeychain.h"
+#import "AppDelegate.h"
 
 
 @implementation Encrypt
@@ -184,7 +185,7 @@
 	
     [libFunctions createEncFS:destFolder decryptedFolder:tempFolder numUsers:numberOfUsers combinedPassword:combinedPasswordString];
     
-    
+    	
     // Now to move the contents of tempFolder into destFolder
     // Unfortunately, a direct move won't work since both directories exist and
     // stupid macOS thinks it is overwriting the mount point we just created
@@ -196,12 +197,13 @@
         }
     }
 
-    // Unmount the destination folder containing decrypted files
-    [libFunctions execWithSocket:@"/sbin/umount" arguments:[NSArray arrayWithObject:tempFolder]
-                             env:nil io:nil proc:nil];
+    // Unmount the destination fol  der containing decrypted files
+    [libFunctions execCommand:@"/sbin/umount" arguments:[NSArray arrayWithObject:tempFolder]
+                             env:nil];
     [fm removeItemAtPath:tempFolder error:nil];
     /* change folder icon of encrypted folder */
     [self setFolderIcon:self];    
+    [theApp didEncrypt:srcFolder];
     /* Register password with keyring */
  	
 	/*** <!-- ENCFS END --> ***/
@@ -221,8 +223,8 @@
 		NSString *curlEmail = [NSString stringWithFormat:@"to=\"%@\"", yourFriendsEmailString];
 		NSString *curlKey   = [NSString stringWithFormat:@"text=\%@\"", yourFriendsPassphraseString];
         
-        [libFunctions execWithSocket:@"/usr/bin/curl" 
-                           arguments:[NSArray arrayWithObjects: 
+        [libFunctions execCommand:@"/usr/bin/curl" 
+                        arguments:[NSArray arrayWithObjects: 
 									  @"-s", @"-k", 
 									  @"--user", @"api:key-67fgovcfrggd6y4l02ucpz-av4b22i26",
 									  @"https://api.mailgun.net/v2/cloudclear.mailgun.org/messages",
@@ -231,7 +233,7 @@
 									  @"-F", @"subject='Your Temporary Passphrase'",
 									  @"-F", curlKey,
 									  nil]
-                                 env:nil io:nil proc:nil];
+                              env:nil];
 		/***** <!-- MAILGUN END --> ******/
 	}
 

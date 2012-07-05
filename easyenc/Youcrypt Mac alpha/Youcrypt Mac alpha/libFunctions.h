@@ -45,5 +45,8 @@
     decryptedFolder:(NSString *)decFolder
            password:(NSString *)password;
 
++ (BOOL) execCommand:(NSString *)path arguments:(NSArray *)arguments
+                 env:(NSDictionary *)env;
+
 
 @end
