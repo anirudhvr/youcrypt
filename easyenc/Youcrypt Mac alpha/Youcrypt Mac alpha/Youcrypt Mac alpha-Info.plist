@@ -26,7 +26,7 @@
 	<key>CFBundleExecutable</key>
 	<string>${EXECUTABLE_NAME}</string>
 	<key>CFBundleIconFile</key>
-	<string>logo-512x512-alpha.png</string>
+	<string>lockedfolder2</string>
 	<key>CFBundleIdentifier</key>
 	<string>com.youcrypt.${PRODUCT_NAME:rfc1034identifier}</string>
 	<key>CFBundleInfoDictionaryVersion</key>
