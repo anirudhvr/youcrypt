@@ -226,6 +226,7 @@ AppDelegate *theApp;
     else if ([type isEqualToString:@"L"])
         [self showListDirectories:self];
     
+    NSLog(@"%d",configDir.firstRun);
     if(configDir.firstRun)
         [self showFirstRunSheet];
         

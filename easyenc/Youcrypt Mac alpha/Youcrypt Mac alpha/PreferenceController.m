@@ -139,9 +139,10 @@
         [linkGmail setTitle:@"Change GMail Credentials"];
     }
     
-    [db setImage:[[NSImage alloc] initByReferencingFile:@"DropBox.png"]];
-    [db setEditable:NO];
-    
+    NSImage *dbLogo = [[NSImage alloc] initWithContentsOfFile:[[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"/DropBox.png"]];
+    NSImage *boxLogo = [[NSImage alloc] initWithContentsOfFile:[[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"/box-logo.png"]];
+    [dbIcon setImage:dbLogo];
+    [boxIcon setImage:boxLogo];
 }
 
                     
@@ -270,7 +271,7 @@
     NSString *bundlepath =[[NSBundle mainBundle] resourcePath];
     NSString *dropboxScript = [bundlepath stringByAppendingPathComponent:@"/get_dropbox_folder.sh"]; 
     const char *shellFile = NULL;
-    char out[1000];
+   // char out[1000];
     NSString *dropboxURL = nil;
       
     // check if dropbox script exists and fail otherwise
