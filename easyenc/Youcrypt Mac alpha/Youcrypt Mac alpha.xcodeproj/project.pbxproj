@@ -50,6 +50,7 @@
 		25FDA05415A2229B004F2914 /* simple-mailer.py in Resources */ = {isa = PBXBuildFile; fileRef = 25FDA05315A2229B004F2914 /* simple-mailer.py */; };
 		25FDA06515A232DC004F2914 /* XMLReader.m in Sources */ = {isa = PBXBuildFile; fileRef = 25FDA06415A232DC004F2914 /* XMLReader.m */; };
 		25FDA07715A284CD004F2914 /* XMLDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = 25FDA07615A284CD004F2914 /* XMLDictionary.m */; };
+		E0A2849815A61A26008A949A /* logo-512x512-alpha.icns in Resources */ = {isa = PBXBuildFile; fileRef = E0A2849715A61A26008A949A /* logo-512x512-alpha.icns */; };
 		E0BF0E951596B9C8002F9FB9 /* YoucryptDirectory.m in Sources */ = {isa = PBXBuildFile; fileRef = E0BF0E941596B9C8002F9FB9 /* YoucryptDirectory.m */; };
 		E0BF0E9D1596D01F002F9FB9 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E0BF0E9C1596D01F002F9FB9 /* Foundation.framework */; };
 		E0BF0EA01596D01F002F9FB9 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E0BF0E9F1596D01F002F9FB9 /* main.m */; };
@@ -199,6 +200,7 @@
 		25FDA07015A269B1004F2914 /* Automator.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Automator.framework; path = System/Library/Frameworks/Automator.framework; sourceTree = SDKROOT; };
 		25FDA07515A284CD004F2914 /* XMLDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = XMLDictionary.h; path = ../XMLDictionary.h; sourceTree = "<group>"; };
 		25FDA07615A284CD004F2914 /* XMLDictionary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = XMLDictionary.m; path = ../XMLDictionary.m; sourceTree = "<group>"; };
+		E0A2849715A61A26008A949A /* logo-512x512-alpha.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = "logo-512x512-alpha.icns"; sourceTree = "<group>"; };
 		E0BF0E931596B9C8002F9FB9 /* YoucryptDirectory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YoucryptDirectory.h; sourceTree = "<group>"; };
 		E0BF0E941596B9C8002F9FB9 /* YoucryptDirectory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YoucryptDirectory.m; sourceTree = "<group>"; };
 		E0BF0E9A1596D01F002F9FB9 /* TestBed */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = TestBed; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -507,6 +509,7 @@
 			isa = PBXGroup;
 			children = (
 				E6BEB71B15A5290300878D4B /* logo-color-alpha.png */,
+				E0A2849715A61A26008A949A /* logo-512x512-alpha.icns */,
 				E6BEB71915A522A000878D4B /* logo-grayscale-alpha.png */,
 				E6BEB71715A520FA00878D4B /* logo-16x16.tiff */,
 				E0C5ACAE15A56709000FC253 /* lockedfolder2.icns */,
@@ -654,6 +657,7 @@
 				E6BEB71C15A5290300878D4B /* logo-color-alpha.png in Resources */,
 				E0C5ACAF15A5670A000FC253 /* lockedfolder2.icns in Resources */,
 				E0C5ACB115A56D0D000FC253 /* logo-512x512-alpha.png in Resources */,
+				E0A2849815A61A26008A949A /* logo-512x512-alpha.icns in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
