@@ -116,15 +116,16 @@
     if (io == nil)
         io = [[NSFileHandle alloc] initWithFileDescriptor:sockDescriptors[1]];
     else {
-        [io initWithFileDescriptor:sockDescriptors[1] closeOnDealloc:NO];
+        io = [io initWithFileDescriptor:sockDescriptors[1] closeOnDealloc:NO];
+        NSLog(@"%d vs %d\n", [io fileDescriptor], sockDescriptors[1]);
     }
     if (proc == nil)
         proc = [[NSTask alloc] init];
     else {
-        [proc init];
+        proc = [proc init];
     }
 
-     if (arguments != nil)
+    if (arguments != nil)
         [proc setArguments:arguments];
     if (env != nil)
         [proc setEnvironment:env];
@@ -143,6 +144,16 @@
     return YES;
 }
 
++ (BOOL) execCommand:(NSString *)path arguments:(NSArray *)arguments
+                 env:(NSDictionary *)env {
+    NSTask *proc = [NSTask alloc];
+    if ([libFunctions execWithSocket:path arguments:arguments env:env io:nil proc:proc]) {
+        [proc waitUntilExit];
+        return YES;
+    }
+    return NO;
+}
+
 
 + (BOOL) createEncFS:(NSString *)encFolder
      decryptedFolder:(NSString *)decFolder
@@ -153,10 +164,10 @@
     NSFileHandle *io = [NSFileHandle alloc];
     
     if ([libFunctions execWithSocket:@"/usr/local/bin/encfs" arguments:nil env:nil io:io proc:encfsProc]) {        
-        [io writeData:[[NSString stringWithFormat:@"7\nencfs\n%@\n%@\n--nu\n%d\n--pw\n%@\n", 
-                        encFolder, decFolder, numUsers, pwd] dataUsingEncoding:NSUTF8StringEncoding]];
-        [io closeFile];
+        [io writeData:[[NSString stringWithFormat:@"8\nencfs\n--nu\n%d\n--pw\n%@\n--\n%@\n%@\n",
+                        numUsers, pwd, encFolder, decFolder] dataUsingEncoding:NSUTF8StringEncoding]];
         [encfsProc waitUntilExit];
+        [io closeFile];
         return YES;
     }
     else {
@@ -172,8 +183,8 @@
     NSFileHandle *io = [NSFileHandle alloc];
     
     if ([libFunctions execWithSocket:@"/usr/local/bin/encfs" arguments:nil env:nil io:io proc:encfsProc]) {        
-        [io writeData:[[NSString stringWithFormat:@"5\nencfs\n%@\n%@\n--pw\n%@\n", 
-                        encFolder, decFolder, password] dataUsingEncoding:NSUTF8StringEncoding]];
+        [io writeData:[[NSString stringWithFormat:@"6\nencfs\n--pw\n%@\n--\n%@\n%@\n", 
+                        password, encFolder, decFolder] dataUsingEncoding:NSUTF8StringEncoding]];
         [io closeFile];
         [encfsProc waitUntilExit];
         return YES;

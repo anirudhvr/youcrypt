@@ -19,6 +19,7 @@
 @interface ListDirectoriesWindow : NSWindowController <NSWindowDelegate, NSDraggingDestination, NSToolbarDelegate> {
     IBOutlet NSTableView *table;
     IBOutlet NSTextField *dirName;          // The text field at the bottom.
+
     // Toolbar
     IBOutlet NSToolbar *toolbar;
     NSArray *allowedToolbarItemKeys;

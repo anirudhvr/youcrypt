@@ -63,7 +63,8 @@
     IBOutlet NSPathControl *boxLocation;
     
     IBOutlet NSButton *linkGmail;
-    IBOutlet NSImageView *db;
+    IBOutlet NSImageView *dbIcon;
+    IBOutlet NSImageView *boxIcon;
 }
 
 // changing passphrase stuff
