@@ -39,14 +39,17 @@ AppDelegate *theApp;
 @synthesize configDir;
 @synthesize directories;
 
-- (id) init
-{
+
+// --------------------------------------------------------------------------------------
+// App events
+// --------------------------------------------------------------------------------------
+- (id) init {
     self = [super init];
     
     configDir = [[ConfigDirectory alloc] init];
     youcryptService = [[YoucryptService alloc] init];
     //[youcryptService setApp:self];
-
+    
     // TODO:  Load up directories array from the list file.
     directories = [NSKeyedUnarchiver unarchiveObjectWithFile:configDir.youCryptListFile];
     if (directories == nil) {
@@ -56,9 +59,7 @@ AppDelegate *theApp;
     theApp = self;
     return self;
 }
-
-- (void)applicationDidFinishLaunching:(NSNotification *)aNotification
-{
+- (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
     // Insert code here to initialize your application
     [NSApp setServicesProvider:youcryptService];
     
@@ -73,20 +74,76 @@ AppDelegate *theApp;
     [DDLog addLogger:fileLogger];    
     DDLogVerbose(@"App did, in fact, finish launching!!!");
 }
-
--(void)applicationWillTerminate:(NSNotification *)aNotification {
+- (void)applicationWillTerminate:(NSNotification *)aNotification {
     [NSKeyedArchiver archiveRootObject:directories toFile:configDir.youCryptListFile];
-
+    
 }
-
-
-- (BOOL)application:(NSApplication *)theApplication openFile:(NSString *)filename
-{    
+- (BOOL)application:(NSApplication *)theApplication openFile:(NSString *)filename {    
     return [self openEncryptedFolder:filename];
 }
+- (void)awakeFromNib{
+    
+    //--------------------------------------------------------------------------------------------------
+    // Add UI related initializations here.
+    //--------------------------------------------------------------------------------------------------
+    
+    // status icon
+    statusItem = [[NSStatusBar systemStatusBar] statusItemWithLength:NSVariableStatusItemLength];
+    [statusItem setMenu:statusMenu];
+    [statusItem setTitle:@"YC"];
+    [statusItem setHighlightMode:YES];
+    
+    
+    NSArray *arguments = [[NSProcessInfo processInfo] arguments];
+	NSString *type = [[NSString alloc] init];
+    
+	for (id arg in arguments) {
+		if([arg isEqualToString:@"-d"]) {
+			type = @"D"; // decrypt
+		}
+		else if([arg isEqualToString:@"-e"]) {
+			type = @"E"; // encrypt
+		}
+        else if([arg isEqualToString:@"-m"]) {
+            type = @"M";
+        }
+        else if([arg isEqualToString:@"-p"]) {
+            type = @"P";
+        }
+        else type = @"M";
+	}
+    
+    type = @"L";
+    DDLogCVerbose(@"awake! %@",THIS_FILE);
+    
+    
+    if([type isEqualToString:@"M"])
+        [self showMainApp:self];
+    
+    else if([type isEqualToString:@"E"])
+        [self showEncryptWindow:self];
+    
+    else if([type isEqualToString:@"D"])
+        [self showDecryptWindow:self];
+    
+    else if ([type isEqualToString:@"P"])
+        [self showPreferencePanel:self];
+    
+    else if ([type isEqualToString:@"L"])
+        [self showListDirectories:self];
+    
+    if(configDir.firstRun)
+        [self showFirstRunSheet];
+    
+}
+// --------------------------------------------------------------------------------------
 
-- (BOOL)openEncryptedFolder:(NSString *)path
-{   
+
+
+// --------------------------------------------------------------------------------------
+// Core Encrypt / Decrypt methods
+// --------------------------------------------------------------------------------------
+- (BOOL)openEncryptedFolder:(NSString *)path {   
     //--------------------------------------------------------------------------------------------------
     // 1.  Check if path is really a folder
     // 2.  Check if the last component is encrypted.yc   <---- TODO
@@ -101,7 +158,7 @@ AppDelegate *theApp;
         // 1. Set up a new mount point
         // 2. Set up decrypt controller with the path and the mount point
         // 3. Open the decrypt window
-
+        
         NSString *mountPoint = [[path stringByDeletingLastPathComponent] lastPathComponent];
         NSString *timeStr = [[NSDate date] descriptionWithCalendarFormat:nil timeZone:nil locale:nil];
         mountPoint = [configDir.youCryptVolDir stringByAppendingPathComponent:
@@ -133,36 +190,16 @@ AppDelegate *theApp;
         return YES;
     }
     return NO;
-  
-//    decryptController.sourceFolderPath = file;
-//    NSString *dest = [[configDir.youCryptVolDir stringByAppendingPathComponent:file] stringByDeletingPathExtension];
-//    decryptController.destFolderPath = dest;
-//    
-//    DDLogVerbose(@"The following file has been dropped or selected: %@",file);
-//   
-//    return  YES; // Return YES when file processed succesfull, else return NO.
-}
-
-- (void)didDecrypt:(NSString *)path {
-    for (YoucryptDirectory *dir in directories) {
-        if ([path isEqualToString:dir.path]) {
-            dir.mounted = YES;
-        }
-    }
-    if (listDirectories != nil) {
-        [listDirectories.table reloadData];
-    }
-}
-
-- (void)didEncrypt:(NSString *)path {
     
+    //    decryptController.sourceFolderPath = file;
+    //    NSString *dest = [[configDir.youCryptVolDir stringByAppendingPathComponent:file] stringByDeletingPathExtension];
+    //    decryptController.destFolderPath = dest;
+    //    
+    //    DDLogVerbose(@"The following file has been dropped or selected: %@",file);
+    //   
+    //    return  YES; // Return YES when file processed succesfull, else return NO.
 }
-
 - (void)encryptFolder:(NSString *)path {
-    
-    //--------------------------------------------------------------------------------------------------
-    // Lots of shit
-    //--------------------------------------------------------------------------------------------------    
     
     NSFileManager *fm = [NSFileManager defaultManager];
     BOOL isDir;
@@ -175,90 +212,52 @@ AppDelegate *theApp;
     }
 }
 
--(void)awakeFromNib{
-    
-    //--------------------------------------------------------------------------------------------------
-    // Add UI related initializations here.
-    //--------------------------------------------------------------------------------------------------
-
-    // status icon
-    statusItem = [[NSStatusBar systemStatusBar] statusItemWithLength:NSVariableStatusItemLength];
-    [statusItem setMenu:statusMenu];
-    [statusItem setTitle:@"YC"];
-    [statusItem setHighlightMode:YES];
-
-      
-    NSArray *arguments = [[NSProcessInfo processInfo] arguments];
-	NSString *type = [[NSString alloc] init];
-    
-	for (id arg in arguments) {
-		if([arg isEqualToString:@"-d"]) {
-			type = @"D"; // decrypt
-		}
-		else if([arg isEqualToString:@"-e"]) {
-			type = @"E"; // encrypt
-		}
-        else if([arg isEqualToString:@"-m"]) {
-            type = @"M";
+- (void)didDecrypt:(NSString *)path {
+    for (YoucryptDirectory *dir in directories) {
+        if ([path isEqualToString:dir.path]) {
+            dir.mounted = YES;
         }
-        else if([arg isEqualToString:@"-p"]) {
-            type = @"P";
-        }
-        else type = @"M";
-	}
-    
-    type = @"L";
-    DDLogCVerbose(@"awake! %@",THIS_FILE);
-
-    
-    if([type isEqualToString:@"M"])
-        [self showMainApp:self];
-    
-    else if([type isEqualToString:@"E"])
-        [self showEncryptWindow:self];
-    
-    else if([type isEqualToString:@"D"])
-        [self showDecryptWindow:self];
-    
-    else if ([type isEqualToString:@"P"])
-        [self showPreferencePanel:self];
-    
-    else if ([type isEqualToString:@"L"])
-        [self showListDirectories:self];
-    
-    if(configDir.firstRun)
-        [self showFirstRunSheet];
-        
+    }
+    if (listDirectories != nil) {
+        [listDirectories.table reloadData];
+    }
+}
+- (void)didEncrypt:(NSString *)path {
+    YoucryptDirectory *dir = [[YoucryptDirectory alloc] init];        
+    dir.path = [path stringByAppendingPathComponent:@"encrypted.yc"];
+    dir.mountedPath = @"";
+    dir.alias = [path lastPathComponent];
+    dir.mounted = NO;
+    [directories addObject:dir];            
+    if (listDirectories != nil) {
+        [listDirectories.table reloadData];
+    }
 }
 
 
--(IBAction)windowShouldClose:(id)sender
-{
+- (IBAction)windowShouldClose:(id)sender {
     DDLogVerbose(@"Closing..");
 }
-
--(IBAction)showMainApp:(id)sender
-{
-    [self.window makeKeyAndOrderFront:self];
-}
-
-- (IBAction)terminateApp:(id)sender
-{
+- (IBAction)terminateApp:(id)sender {
     [NSApp terminate:nil];
 }
 
-- (IBAction)showListDirectories:(id)sender
-{
+
+
+// --------------------------------------------------------------------------------------
+// Helper functions to show any window; you name it, we've it.
+// --------------------------------------------------------------------------------------
+- (IBAction)showMainApp:(id)sender {
+    [self.window makeKeyAndOrderFront:self];
+}
+- (IBAction)showListDirectories:(id)sender {
     // Is list directories nil?
     if (!listDirectories) {
         listDirectories = [[ListDirectoriesWindow alloc] init];
     }
     [listDirectories showWindow:self];
 }
-
-
-- (IBAction)showPreferencePanel:(id)sender
-{
+- (IBAction)showPreferencePanel:(id)sender {
     // Is preferenceController nil?
     if (!preferenceController) {
         preferenceController = [[PreferenceController alloc] init];
@@ -266,10 +265,7 @@ AppDelegate *theApp;
     DDLogVerbose(@"showing %@", preferenceController);
     [preferenceController showWindow:self];
 }
-
-
-- (void)showFirstRunSheet
-{
+- (void)showFirstRunSheet {
     // Is preferenceController nil?
     if (!preferenceController) {
         preferenceController = [[PreferenceController alloc] init];
@@ -278,10 +274,7 @@ AppDelegate *theApp;
     [preferenceController showFirstRun]; 
     //[preferenceController showWindow:self];
 }
-
-
-- (IBAction)showDecryptWindow:(id)sender
-{
+- (IBAction)showDecryptWindow:(id)sender {
     // Is decryptController nil?
     if (!decryptController) {
         decryptController = [[Decrypt alloc] init];
@@ -289,9 +282,7 @@ AppDelegate *theApp;
     DDLogVerbose(@"showing %@", decryptController);
     [decryptController showWindow:self];
 }
-
-- (IBAction)showEncryptWindow:(id)sender
-{
+- (IBAction)showEncryptWindow:(id)sender {
     // Is encryptController nil?
     if (!encryptController) {
         encryptController = [[Encrypt alloc] init];
@@ -308,7 +299,7 @@ AppDelegate *theApp;
             [encryptController setPassphraseTextField:passphrase];
         }
     }
-
+    
     DDLogVerbose(@"showing %@", encryptController);
     [encryptController showWindow:self];
 }
@@ -325,7 +316,6 @@ AppDelegate *theApp;
         return 0;
     }
 }
-
 - (id)tableView:(NSTableView *)tableView objectValueForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
     
     if (!directories)
@@ -344,7 +334,6 @@ AppDelegate *theApp;
         return nil;
     }
 }
-
 
 
 
@@ -377,16 +366,21 @@ AppDelegate *theApp;
         NSFileManager *fm = [NSFileManager defaultManager];
         
         BOOL isDir;
-        if ([fm fileExistsAtPath:path isDirectory:&isDir] && isDir) {
-            [theApp encryptFolder:path];
+        if ([fm fileExistsAtPath:path isDirectory:&isDir] && isDir) {            
+            // If it's a .yc file, we open it, otherwise, we encrypt it
+            if ([[path pathExtension] isEqualToString:@"yc"]) {
+                [theApp openEncryptedFolder:path];
+            }
+            else {
+                [theApp encryptFolder:path];
+            }
             [tableView reloadData];
             return YES;
         }
     }
     return NO;
 }
-
-
+                 
 
 
 
