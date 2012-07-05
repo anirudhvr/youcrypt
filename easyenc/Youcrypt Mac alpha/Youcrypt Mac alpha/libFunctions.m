@@ -183,7 +183,7 @@
     NSFileHandle *io = [NSFileHandle alloc];
     
     if ([libFunctions execWithSocket:@"/usr/local/bin/encfs" arguments:nil env:nil io:io proc:encfsProc]) {        
-        [io writeData:[[NSString stringWithFormat:@"6\nencfs\n--pw\n%@\n--\n%@\n%@\n", 
+        [io writeData:[[NSString stringWithFormat:@"8\nencfs\n--pw\n%@\n--\n%@\n%@\n-ofsname=YoucryptFS\n-ovolname=Youcrypt Volume\n", 
                         password, encFolder, decFolder] dataUsingEncoding:NSUTF8StringEncoding]];
         [io closeFile];
         [encfsProc waitUntilExit];

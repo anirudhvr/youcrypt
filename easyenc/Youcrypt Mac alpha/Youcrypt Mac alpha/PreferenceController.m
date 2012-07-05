@@ -162,6 +162,8 @@
     NSDictionary *xmlDoc = [NSDictionary dictionaryWithXMLFile:boxXMLPath];
     NSString *boxFolderPath = [[xmlDoc objectForKey:@"Settings"] objectForKey:@"_RootSyncFolderLocation"];
     NSLog(@"Box folder loc : %@",boxFolderPath);
+    if (boxFolderPath == nil)
+        boxFolderPath = [[NSString alloc] initWithString:@""];
     return boxFolderPath;
 }
 
