@@ -43,6 +43,7 @@
 
 - (void)awakeFromNib {
     [table setDataSource:theApp];
+//    [table setDelegate:theApp];
     [table registerForDraggedTypes:[NSArray arrayWithObject:NSFilenamesPboardType]];
     
        

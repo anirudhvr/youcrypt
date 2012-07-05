@@ -400,21 +400,21 @@ AppDelegate *theApp;
 - (void)tableView:(NSTableView*)tableView willDisplayCell:(id)cell forTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
     NSLog(@"This code called");
 
-    
     if (!directories)
         return;
     
     YoucryptDirectory *dirAtRow = [directories objectAtIndex:row];
     if (!dirAtRow)
         return;
-    if (dirAtRow.mounted) {
-        [cell setBackgroundStyle:NSBackgroundStyleRaised];
-    } else {
-        [cell setBackgroundStyle:NSBackgroundStyleLowered];
-    }
+//    if (dirAtRow.mounted) {
+//        [cell setBackgroundStyle:NSBackgroundStyleRaised];
+//    } else {
+//        [cell setBackgroundStyle:NSBackgroundStyleLowered];
+//    }
 }
 
 - (NSCell *)tableView:(NSTableView *)tableView dataCellForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
+    NSLog(@"This one too!");
     return nil;
     
 }

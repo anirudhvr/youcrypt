@@ -58,6 +58,8 @@
 		E0BF0EBD159838DD002F9FB9 /* ListDirectoriesWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = E0BF0EBB159838DD002F9FB9 /* ListDirectoriesWindow.m */; };
 		E0BF0EBE159838DD002F9FB9 /* ListDirectoriesWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = E0BF0EBC159838DD002F9FB9 /* ListDirectoriesWindow.xib */; };
 		E0C5ACA315A50BC1000FC253 /* ConfigDirectory.m in Sources */ = {isa = PBXBuildFile; fileRef = E0C5ACA215A50BC1000FC253 /* ConfigDirectory.m */; };
+		E0C5ACAF15A5670A000FC253 /* lockedfolder2.icns in Resources */ = {isa = PBXBuildFile; fileRef = E0C5ACAE15A56709000FC253 /* lockedfolder2.icns */; };
+		E0C5ACB115A56D0D000FC253 /* logo-512x512-alpha.png in Resources */ = {isa = PBXBuildFile; fileRef = E0C5ACB015A56D0C000FC253 /* logo-512x512-alpha.png */; };
 		E0F9DCE9159BE99C00DBDD02 /* pipetest.c in Sources */ = {isa = PBXBuildFile; fileRef = 25B1E508158FF5D400CDBC46 /* pipetest.c */; };
 		E6649C7A15A53CD80096886F /* Encrypt.m in Sources */ = {isa = PBXBuildFile; fileRef = E6649C7915A53CD80096886F /* Encrypt.m */; };
 		E66988CE159D4099002323AD /* StartOnLogin.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E66988CB159D403B002323AD /* StartOnLogin.framework */; };
@@ -209,6 +211,9 @@
 		E0BF0EBC159838DD002F9FB9 /* ListDirectoriesWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ListDirectoriesWindow.xib; sourceTree = "<group>"; };
 		E0C5AC9F15A50B5B000FC253 /* ConfigDirectory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ConfigDirectory.h; path = "Youcrypt Mac alpha/ConfigDirectory.h"; sourceTree = "<group>"; };
 		E0C5ACA215A50BC1000FC253 /* ConfigDirectory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ConfigDirectory.m; path = "Youcrypt Mac alpha/ConfigDirectory.m"; sourceTree = "<group>"; };
+		E0C5ACAE15A56709000FC253 /* lockedfolder2.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = lockedfolder2.icns; path = "Youcrypt Mac alpha/images/lockedfolder2.icns"; sourceTree = "<group>"; };
+		E0C5ACB015A56D0C000FC253 /* logo-512x512-alpha.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "logo-512x512-alpha.png"; sourceTree = "<group>"; };
+		E0C5ACB215A56D52000FC253 /* Youcrypt Mac alpha.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "Youcrypt Mac alpha.entitlements"; sourceTree = "<group>"; };
 		E6649C7915A53CD80096886F /* Encrypt.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Encrypt.m; path = "Youcrypt Mac alpha/Encrypt.m"; sourceTree = "<group>"; };
 		E6649C7B15A53CE40096886F /* Encrypt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Encrypt.h; path = "Youcrypt Mac alpha/Encrypt.h"; sourceTree = "<group>"; };
 		E6649C7C15A53CFC0096886F /* libFunctions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = libFunctions.h; path = "Youcrypt Mac alpha/libFunctions.h"; sourceTree = "<group>"; };
@@ -285,6 +290,7 @@
 		256C3550158EA75F00E2BEC4 = {
 			isa = PBXGroup;
 			children = (
+				E0C5ACAE15A56709000FC253 /* lockedfolder2.icns */,
 				E66988C3159D403B002323AD /* StartOnLogin.xcodeproj */,
 				256C3565158EA75F00E2BEC4 /* Youcrypt Mac alpha */,
 				256C3582158EA75F00E2BEC4 /* Youcrypt Mac alphaTests */,
@@ -336,6 +342,7 @@
 		256C3565158EA75F00E2BEC4 /* Youcrypt Mac alpha */ = {
 			isa = PBXGroup;
 			children = (
+				E0C5ACB215A56D52000FC253 /* Youcrypt Mac alpha.entitlements */,
 				25F3D154159243E300E3383C /* Classes */,
 				25F3D1521592436000E3383C /* UI */,
 				25F3D1531592437700E3383C /* Plists */,
@@ -506,6 +513,7 @@
 				E6BEB71915A522A000878D4B /* logo-grayscale-alpha.png */,
 				E6BEB71715A520FA00878D4B /* logo-16x16.tiff */,
 				E6BEB6F415A4BB5F00878D4B /* Add.png */,
+				E0C5ACB015A56D0C000FC253 /* logo-512x512-alpha.png */,
 				E6BEB6EC15A4BB4F00878D4B /* Exit.png */,
 				E6BEB6ED15A4BB4F00878D4B /* Help.png */,
 				E6BEB6EE15A4BB4F00878D4B /* Preferences.png */,
@@ -646,6 +654,8 @@
 				E6BEB71815A520FA00878D4B /* logo-16x16.tiff in Resources */,
 				E6BEB71A15A522A000878D4B /* logo-grayscale-alpha.png in Resources */,
 				E6BEB71C15A5290300878D4B /* logo-color-alpha.png in Resources */,
+				E0C5ACAF15A5670A000FC253 /* lockedfolder2.icns in Resources */,
+				E0C5ACB115A56D0D000FC253 /* logo-512x512-alpha.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
