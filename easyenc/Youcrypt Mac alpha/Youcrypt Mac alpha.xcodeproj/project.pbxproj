@@ -65,7 +65,6 @@
 		E66988D9159E63BE002323AD /* JCSSheetController.m in Sources */ = {isa = PBXBuildFile; fileRef = E66988D8159E63BE002323AD /* JCSSheetController.m */; };
 		E66988DC159E63CF002323AD /* PassphraseSheetController.m in Sources */ = {isa = PBXBuildFile; fileRef = E66988DB159E63CF002323AD /* PassphraseSheetController.m */; };
 		E6822DEF159537C8005F1175 /* ConfigDirectory.m in Sources */ = {isa = PBXBuildFile; fileRef = E6822DEE159537C8005F1175 /* ConfigDirectory.m */; };
-		E6822DEF159537C8005F1175 /* YoucryptConfigDirectory.m in Sources */ = {isa = PBXBuildFile; fileRef = E6822DEE159537C8005F1175 /* YoucryptConfigDirectory.m */; };
 		E6BEB6F015A4BB4F00878D4B /* Exit.png in Resources */ = {isa = PBXBuildFile; fileRef = E6BEB6EC15A4BB4F00878D4B /* Exit.png */; };
 		E6BEB6F115A4BB4F00878D4B /* Help.png in Resources */ = {isa = PBXBuildFile; fileRef = E6BEB6ED15A4BB4F00878D4B /* Help.png */; };
 		E6BEB6F215A4BB4F00878D4B /* Preferences.png in Resources */ = {isa = PBXBuildFile; fileRef = E6BEB6EE15A4BB4F00878D4B /* Preferences.png */; };
@@ -216,8 +215,6 @@
 		E66988DB159E63CF002323AD /* PassphraseSheetController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PassphraseSheetController.m; sourceTree = "<group>"; };
 		E6822DED159537C8005F1175 /* ConfigDirectory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ConfigDirectory.h; path = "Youcrypt Mac alpha/ConfigDirectory.h"; sourceTree = "<group>"; };
 		E6822DEE159537C8005F1175 /* ConfigDirectory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ConfigDirectory.m; path = "Youcrypt Mac alpha/ConfigDirectory.m"; sourceTree = "<group>"; };
-		E6822DED159537C8005F1175 /* YoucryptConfigDirectory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = YoucryptConfigDirectory.h; path = "Youcrypt Mac alpha/YoucryptConfigDirectory.h"; sourceTree = "<group>"; };
-		E6822DEE159537C8005F1175 /* YoucryptConfigDirectory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = YoucryptConfigDirectory.m; path = "Youcrypt Mac alpha/YoucryptConfigDirectory.m"; sourceTree = "<group>"; };
 		E6BEB6EC15A4BB4F00878D4B /* Exit.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Exit.png; sourceTree = "<group>"; };
 		E6BEB6ED15A4BB4F00878D4B /* Help.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Help.png; sourceTree = "<group>"; };
 		E6BEB6EE15A4BB4F00878D4B /* Preferences.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Preferences.png; sourceTree = "<group>"; };
