@@ -16,7 +16,7 @@
 @class YoucryptService;
 @class ListDirectoriesWindow;
 
-@interface AppDelegate : NSObject <NSTableViewDataSource> { // changed from NSApplicationDelegate
+@interface AppDelegate : NSObject <NSTableViewDataSource, NSApplicationDelegate> { // changed from NSApplicationDelegate
     
     // Status Bar for Agent
     IBOutlet NSMenu *statusMenu;
@@ -47,6 +47,7 @@
 - (IBAction)showMainApp:(id)sender;
 - (IBAction)showPreferencePanel:(id)sender;
 - (IBAction)terminateApp:(id)sender;
+- (IBAction)openFeedbackPage:(id)sender;
 - (IBAction)showEncryptWindow:(id)sender;
 - (IBAction)showDecryptWindow:(id)sender;
 - (IBAction)showListDirectories:(id)sender;

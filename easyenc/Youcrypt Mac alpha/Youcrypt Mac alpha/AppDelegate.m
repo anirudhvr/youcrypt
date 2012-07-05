@@ -26,7 +26,6 @@
 
 int ddLogLevel = LOG_LEVEL_VERBOSE;
 
-
 /* Global Variables Accessible to everyone */
 /* These variables should be initialized */
 AppDelegate *theApp;
@@ -76,7 +75,6 @@ AppDelegate *theApp;
 
 -(void)applicationWillTerminate:(NSNotification *)aNotification {
     [NSKeyedArchiver archiveRootObject:directories toFile:configDir.youCryptListFile];
-
 }
 
 
@@ -236,7 +234,7 @@ AppDelegate *theApp;
 
 -(IBAction)showMainApp:(id)sender
 {
-    [self.window makeKeyAndOrderFront:self];
+    [self.listDirectories.window makeKeyAndOrderFront:self];
 }
 
 - (IBAction)terminateApp:(id)sender
@@ -279,24 +277,27 @@ AppDelegate *theApp;
     // Is encryptController nil?
     if (!encryptController) {
         encryptController = [[Encrypt alloc] init];
-    } else {
+    } 
+    else {
+        NSString *pp =[libFunctions getPassphraseFromKeychain];
         /* other times, this code is called in awakefromNib */              
         if (encryptController.keychainHasPassphrase == NO) {
-            encryptController.passphraseFromKeychain = [libFunctions getPassphraseFromKeychain];
+            encryptController.passphraseFromKeychain = pp;
             if (encryptController.passphraseFromKeychain != nil) {
                 encryptController.keychainHasPassphrase = YES;
             }
-        }
-        NSString *passphrase =[libFunctions getPassphraseFromKeychain];
-        if ([encryptController keychainHasPassphrase] == YES) {
-            [encryptController setPassphraseTextField:passphrase];
+        } else {
+            [encryptController setPassphraseTextField:pp];
         }
     }
 
     DDLogVerbose(@"showing %@", encryptController);
     [encryptController showWindow:self];
 }
-
+- (IBAction)openFeedbackPage:(id)sender
+{
+    [[NSWorkspace sharedWorkspace] openURL: [NSURL URLWithString:@"http://youcrypt.com"]];
+}
 
 
 //--------------------------------------------------------------------------------------------------
@@ -328,8 +329,6 @@ AppDelegate *theApp;
         return nil;
     }
 }
-
-
 
 
 //--------------------------------------------------------------------------------------------------

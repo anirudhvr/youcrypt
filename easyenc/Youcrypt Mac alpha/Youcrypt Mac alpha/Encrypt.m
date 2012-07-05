@@ -115,10 +115,9 @@
     BOOL didSetIcon = [[NSWorkspace sharedWorkspace] setIcon:iconImage forFile:[sourceFolderPath stringByAppendingPathComponent:@"/encrypted.yc"] options:0];
 
     if(didSetIcon)
-        DDLogVerbose(@"DONE :) ");
+        DDLogVerbose(@"Set Folder icon");
     else
-        DDLogVerbose(@" :( ");
-    
+        DDLogVerbose(@"Could not set Folder Icon");
 }
 
 /**

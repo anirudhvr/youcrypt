@@ -81,7 +81,7 @@
     // NO files, YES directories and knock yourself out[TM] with as many as you want
     [openDlg setCanChooseFiles:NO];
     [openDlg setCanChooseDirectories:YES];
-    [openDlg setAllowsMultipleSelection:YES];
+    [openDlg setAllowsMultipleSelection:NO];
     
     if ( [openDlg runModal] == NSOKButton )
     {
