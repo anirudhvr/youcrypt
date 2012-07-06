@@ -42,7 +42,7 @@ int main_dirs_plis(int argc, const char * argv[])
 }
 
 
-int main(int argc, const char *argv[]) {
+int mainCheckEncfsPasswd(int argc, const char *argv[]) {
     char passwd[1000];
     @autoreleasepool {
         do {
@@ -55,6 +55,27 @@ int main(int argc, const char *argv[]) {
 
     }
     return 0;
+}
+
+
+int main(int argc, const char *argv[]) {
+    @autoreleasepool {
+        char passwd[1000], newpasswd[1000];
+        do {
+            printf("Enter passwd:");
+            fgets(passwd, 900, stdin);
+            int len = strlen(passwd);
+            if (passwd[len-1] == '\n') passwd[len-1]=0;
+            printf("Enter new passwd:");
+            fgets(newpasswd, 900, stdin);
+            len = strlen(newpasswd);
+            if (newpasswd[len-1] == '\n') newpasswd[len-1]=0;
+        }
+        while (![libFunctions changeEncFSPasswd:@"/Users/rajsekar/tmp/a"
+                                      oldPasswd:[NSString stringWithCString:passwd  encoding:NSUTF8StringEncoding]
+                                      newPasswd:[NSString stringWithCString:newpasswd encoding:NSUTF8StringEncoding]]);
+
+    }
 }
 
 

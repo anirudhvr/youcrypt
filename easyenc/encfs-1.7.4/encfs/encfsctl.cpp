@@ -746,6 +746,7 @@ static int do_chpasswd( bool useStdin, int argc, char **argv )
     else
         userKey = config->getNewUserKey();
 
+
     // re-encode the volume key using the new user key and write it out..
     int result = EXIT_FAILURE;
     if(userKey)

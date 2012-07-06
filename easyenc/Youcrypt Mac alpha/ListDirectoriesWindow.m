@@ -21,6 +21,7 @@
     allowedToolbarItemKeys = [[NSArray alloc] initWithObjects:AddToolbarItemIdentifier, RemoveToolbarItemIdentifier, PreferencesToolbarItemIdentifier, QuitToolbarItemIdentifier, HelpToolbarItemIdentifier, nil];
     allowedToolbarItemDetails = [NSMutableDictionary dictionary];
     
+    volumePropsSheet = [[VolumePropertiesSheetController alloc] init];
     return self;
     
 }
@@ -40,12 +41,19 @@
     // Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.    
 }
 
+- (void) handleDoubleClick:(id)sender
+{
+    if (dirName != nil)
+        NSLog(@"Doubleclicked %@", [dirName stringValue]);
+    [self doOpen:self.table];
+}
 
 - (void)awakeFromNib {
     [table setDataSource:theApp];
-//    [table setDelegate:theApp];
+    [table setDelegate:theApp];
+
     [table registerForDraggedTypes:[NSArray arrayWithObject:NSFilenamesPboardType]];
-    
+    [table setDoubleAction:@selector(handleDoubleClick:)];
        
     toolbar = [[NSToolbar alloc] initWithIdentifier:@"ListDirectoriesToolbar"];
     [toolbar setDelegate:self];
@@ -62,11 +70,28 @@
 }
 
 - (IBAction)doOpen:(id)sender {
-    YoucryptDirectory *dir = [theApp.directories objectAtIndex:[sender clickedRow]];
-    [theApp openEncryptedFolder:[dir path]];
+    if ([table clickedRow] < [theApp.directories count]) {
+        YoucryptDirectory *dir = [theApp.directories objectAtIndex:[table clickedRow]];
+        [theApp openEncryptedFolder:[dir path]];
+    }
 }
 
 - (IBAction)doProps:(id)sender {
+    
+    if ([table clickedRow] < [theApp.directories count]) {
+        YoucryptDirectory *dir = [theApp.directories objectAtIndex:[table clickedRow]];
+        volumePropsSheet.sp = dir.path;
+        volumePropsSheet.mp = dir.mountedPath;
+        volumePropsSheet.stat = dir.mounted == YES ? @"Mounted" : @"Not Mounted";
+        [volumePropsSheet beginSheetModalForWindow:self.window completionHandler:^(NSUInteger returnCode) {
+            if (returnCode == 0) {
+                NSLog(@"sheet returned success");
+            }
+        }];
+    }
+    
+    
+   
 }
 
 - (IBAction)selectRow:(id)sender {

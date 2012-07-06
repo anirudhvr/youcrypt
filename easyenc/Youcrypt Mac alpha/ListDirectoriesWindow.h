@@ -8,6 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 #import "YoucryptDirectory.h"
+#import "VolumePropertiesSheetController.h"
 
 #define AddToolbarItemIdentifier @"Add"
 #define RemoveToolbarItemIdentifier @"Remove"
@@ -24,6 +25,8 @@
     IBOutlet NSToolbar *toolbar;
     NSArray *allowedToolbarItemKeys;
     NSMutableDictionary *allowedToolbarItemDetails;
+    VolumePropertiesSheetController *volumePropsSheet;
+    
 }
 
 @property (atomic, strong) IBOutlet NSTableView *table;

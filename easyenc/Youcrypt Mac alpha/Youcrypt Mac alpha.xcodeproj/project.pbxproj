@@ -53,6 +53,7 @@
 		E007C09D15A646B500D60802 /* libFunctions.m in Sources */ = {isa = PBXBuildFile; fileRef = 25F3D1501592435600E3383C /* libFunctions.m */; };
 		E007C09E15A646CF00D60802 /* SSKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = 25EE6A5C15928D5C008A0DC8 /* SSKeychain.m */; };
 		E007C09F15A646DC00D60802 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25EE6A5815928D2C008A0DC8 /* Security.framework */; };
+		E06E2B4115A76ABE00E52B2D /* ListRightClick.xib in Resources */ = {isa = PBXBuildFile; fileRef = E06E2B4015A76ABE00E52B2D /* ListRightClick.xib */; };
 		E0A2849815A61A26008A949A /* logo-512x512-alpha.icns in Resources */ = {isa = PBXBuildFile; fileRef = E0A2849715A61A26008A949A /* logo-512x512-alpha.icns */; };
 		E0BF0E951596B9C8002F9FB9 /* YoucryptDirectory.m in Sources */ = {isa = PBXBuildFile; fileRef = E0BF0E941596B9C8002F9FB9 /* YoucryptDirectory.m */; };
 		E0BF0E9D1596D01F002F9FB9 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E0BF0E9C1596D01F002F9FB9 /* Foundation.framework */; };
@@ -66,6 +67,12 @@
 		E0C5ACB115A56D0D000FC253 /* logo-512x512-alpha.png in Resources */ = {isa = PBXBuildFile; fileRef = E0C5ACB015A56D0C000FC253 /* logo-512x512-alpha.png */; };
 		E0F9DCE9159BE99C00DBDD02 /* pipetest.c in Sources */ = {isa = PBXBuildFile; fileRef = 25B1E508158FF5D400CDBC46 /* pipetest.c */; };
 		E6649C7A15A53CD80096886F /* Encrypt.m in Sources */ = {isa = PBXBuildFile; fileRef = E6649C7915A53CD80096886F /* Encrypt.m */; };
+		E6649C8815A642DA0096886F /* logo-513x560-alpha.icns in Resources */ = {isa = PBXBuildFile; fileRef = E6649C8715A642DA0096886F /* logo-513x560-alpha.icns */; };
+		E6649C8E15A706D40096886F /* locked-24x24.png in Resources */ = {isa = PBXBuildFile; fileRef = E6649C8D15A706D40096886F /* locked-24x24.png */; };
+		E6649C9115A707270096886F /* error-22x22.png in Resources */ = {isa = PBXBuildFile; fileRef = E6649C8F15A707270096886F /* error-22x22.png */; };
+		E6649C9215A707270096886F /* unlocked-24x24.png in Resources */ = {isa = PBXBuildFile; fileRef = E6649C9015A707270096886F /* unlocked-24x24.png */; };
+		E6649C9615A70FB00096886F /* VolumePropertiesSheetController.m in Sources */ = {isa = PBXBuildFile; fileRef = E6649C9415A70FB00096886F /* VolumePropertiesSheetController.m */; };
+		E6649C9715A70FB00096886F /* VolumePropertiesSheetController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E6649C9515A70FB00096886F /* VolumePropertiesSheetController.xib */; };
 		E66988CE159D4099002323AD /* StartOnLogin.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E66988CB159D403B002323AD /* StartOnLogin.framework */; };
 		E66988CF159D40A1002323AD /* StartOnLogin.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = E66988CB159D403B002323AD /* StartOnLogin.framework */; };
 		E66988D5159E62D8002323AD /* ChangePassphrase.xib in Resources */ = {isa = PBXBuildFile; fileRef = E66988D4159E62D8002323AD /* ChangePassphrase.xib */; };
@@ -203,6 +210,8 @@
 		25FDA07015A269B1004F2914 /* Automator.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Automator.framework; path = System/Library/Frameworks/Automator.framework; sourceTree = SDKROOT; };
 		25FDA07515A284CD004F2914 /* XMLDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = XMLDictionary.h; path = ../XMLDictionary.h; sourceTree = "<group>"; };
 		25FDA07615A284CD004F2914 /* XMLDictionary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = XMLDictionary.m; path = ../XMLDictionary.m; sourceTree = "<group>"; };
+		E06E2B3F15A7671B00E52B2D /* errors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = errors.h; sourceTree = "<group>"; };
+		E06E2B4015A76ABE00E52B2D /* ListRightClick.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ListRightClick.xib; sourceTree = "<group>"; };
 		E0A2849715A61A26008A949A /* logo-512x512-alpha.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = "logo-512x512-alpha.icns"; sourceTree = "<group>"; };
 		E0BF0E931596B9C8002F9FB9 /* YoucryptDirectory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YoucryptDirectory.h; sourceTree = "<group>"; };
 		E0BF0E941596B9C8002F9FB9 /* YoucryptDirectory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YoucryptDirectory.m; sourceTree = "<group>"; };
@@ -221,6 +230,13 @@
 		E6649C7915A53CD80096886F /* Encrypt.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Encrypt.m; path = "Youcrypt Mac alpha/Encrypt.m"; sourceTree = "<group>"; };
 		E6649C7B15A53CE40096886F /* Encrypt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Encrypt.h; path = "Youcrypt Mac alpha/Encrypt.h"; sourceTree = "<group>"; };
 		E6649C7C15A53CFC0096886F /* libFunctions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = libFunctions.h; path = "Youcrypt Mac alpha/libFunctions.h"; sourceTree = "<group>"; };
+		E6649C8715A642DA0096886F /* logo-513x560-alpha.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = "logo-513x560-alpha.icns"; sourceTree = "<group>"; };
+		E6649C8D15A706D40096886F /* locked-24x24.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "locked-24x24.png"; path = "images/locked-24x24.png"; sourceTree = "<group>"; };
+		E6649C8F15A707270096886F /* error-22x22.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "error-22x22.png"; path = "images/error-22x22.png"; sourceTree = "<group>"; };
+		E6649C9015A707270096886F /* unlocked-24x24.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "unlocked-24x24.png"; path = "images/unlocked-24x24.png"; sourceTree = "<group>"; };
+		E6649C9315A70FB00096886F /* VolumePropertiesSheetController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VolumePropertiesSheetController.h; sourceTree = "<group>"; };
+		E6649C9415A70FB00096886F /* VolumePropertiesSheetController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VolumePropertiesSheetController.m; sourceTree = "<group>"; };
+		E6649C9515A70FB00096886F /* VolumePropertiesSheetController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VolumePropertiesSheetController.xib; sourceTree = "<group>"; };
 		E66988C3159D403B002323AD /* StartOnLogin.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = StartOnLogin.xcodeproj; path = StartOnLogin/StartOnLogin.xcodeproj; sourceTree = "<group>"; };
 		E66988D4159E62D8002323AD /* ChangePassphrase.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChangePassphrase.xib; sourceTree = "<group>"; };
 		E66988D7159E63BE002323AD /* JCSSheetController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCSSheetController.h; sourceTree = "<group>"; };
@@ -295,6 +311,7 @@
 		256C3550158EA75F00E2BEC4 = {
 			isa = PBXGroup;
 			children = (
+				E06E2B3F15A7671B00E52B2D /* errors.h */,
 				E66988C3159D403B002323AD /* StartOnLogin.xcodeproj */,
 				256C3565158EA75F00E2BEC4 /* Youcrypt Mac alpha */,
 				256C3582158EA75F00E2BEC4 /* Youcrypt Mac alphaTests */,
@@ -396,6 +413,7 @@
 		25F3D1521592436000E3383C /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				E06E2B4015A76ABE00E52B2D /* ListRightClick.xib */,
 				25300E8F15A3BE73009CDA08 /* FirstRun.xib */,
 				25300E8A15A385BE009CDA08 /* Gmail.xib */,
 				25F3D159159244E800E3383C /* Encrypt.xib */,
@@ -505,6 +523,9 @@
 				25300E8915A385BE009CDA08 /* GmailSheetController.m */,
 				25300E8D15A3BE73009CDA08 /* FirstRunSheetController.h */,
 				25300E8E15A3BE73009CDA08 /* FirstRunSheetController.m */,
+				E6649C9315A70FB00096886F /* VolumePropertiesSheetController.h */,
+				E6649C9415A70FB00096886F /* VolumePropertiesSheetController.m */,
+				E6649C9515A70FB00096886F /* VolumePropertiesSheetController.xib */,
 			);
 			name = Sheet;
 			sourceTree = "<group>";
@@ -512,6 +533,10 @@
 		E6BEB6C915A3A72000878D4B /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				E6649C8F15A707270096886F /* error-22x22.png */,
+				E6649C9015A707270096886F /* unlocked-24x24.png */,
+				E6649C8D15A706D40096886F /* locked-24x24.png */,
+				E6649C8715A642DA0096886F /* logo-513x560-alpha.icns */,
 				E6BEB71B15A5290300878D4B /* logo-color-alpha.png */,
 				E0A2849715A61A26008A949A /* logo-512x512-alpha.icns */,
 				E6BEB71915A522A000878D4B /* logo-grayscale-alpha.png */,
@@ -591,7 +616,9 @@
 		256C3552158EA75F00E2BEC4 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				CLASSPREFIX = com.youcrypt;
 				LastUpgradeCheck = 0430;
+				ORGANIZATIONNAME = "Nouvou Inc.";
 			};
 			buildConfigurationList = 256C3555158EA75F00E2BEC4 /* Build configuration list for PBXProject "Youcrypt Mac alpha" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -662,6 +689,12 @@
 				E0C5ACAF15A5670A000FC253 /* lockedfolder2.icns in Resources */,
 				E0C5ACB115A56D0D000FC253 /* logo-512x512-alpha.png in Resources */,
 				E0A2849815A61A26008A949A /* logo-512x512-alpha.icns in Resources */,
+				E6649C8815A642DA0096886F /* logo-513x560-alpha.icns in Resources */,
+				E6649C8E15A706D40096886F /* locked-24x24.png in Resources */,
+				E6649C9115A707270096886F /* error-22x22.png in Resources */,
+				E6649C9215A707270096886F /* unlocked-24x24.png in Resources */,
+				E6649C9715A70FB00096886F /* VolumePropertiesSheetController.xib in Resources */,
+				E06E2B4115A76ABE00E52B2D /* ListRightClick.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -722,6 +755,7 @@
 				25300E9015A3BE74009CDA08 /* FirstRunSheetController.m in Sources */,
 				E0C5ACA315A50BC1000FC253 /* ConfigDirectory.m in Sources */,
 				E6649C7A15A53CD80096886F /* Encrypt.m in Sources */,
+				E6649C9615A70FB00096886F /* VolumePropertiesSheetController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

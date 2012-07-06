@@ -17,6 +17,9 @@
 #import "DDFileLogger.h"
 #import <errno.h>
 
+#define ENCFS @"/usr/local/bin/encfs"
+#define ENCFSCTL @"/opt/local/bin/encfsctl"
+
 @implementation libFunctions
 
 
@@ -128,8 +131,11 @@
         [proc setArguments:arguments];
     if (env != nil)
         [proc setEnvironment:env];
+    
+    
     [proc setStandardInput:childFD];
     [proc setStandardOutput:childFD];
+    [proc setStandardError:[NSFileHandle fileHandleWithNullDevice]];
     [proc setLaunchPath:path];
     
     @try {
@@ -143,14 +149,14 @@
     return YES;
 }
 
-+ (BOOL) execCommand:(NSString *)path arguments:(NSArray *)arguments
++ (int) execCommand:(NSString *)path arguments:(NSArray *)arguments
                  env:(NSDictionary *)env {
     NSTask *proc = [NSTask alloc];
     if ([libFunctions execWithSocket:path arguments:arguments env:env io:nil proc:proc]) {
         [proc waitUntilExit];
-        return YES;
+        return [proc terminationStatus];
     }
-    return NO;
+    return -1;
 }
 
 
@@ -162,7 +168,7 @@
     NSTask *encfsProc = [NSTask alloc];
     NSFileHandle *io = [NSFileHandle alloc];
     
-    if ([libFunctions execWithSocket:@"/usr/local/bin/encfs" arguments:nil env:nil io:io proc:encfsProc]) {        
+    if ([libFunctions execWithSocket:ENCFS arguments:nil env:nil io:io proc:encfsProc]) {        
         [io writeData:[[NSString stringWithFormat:@"8\nencfs\n--nu\n%d\n--pw\n%@\n--\n%@\n%@\n",
                         numUsers, pwd, encFolder, decFolder] dataUsingEncoding:NSUTF8StringEncoding]];
         [encfsProc waitUntilExit];
@@ -181,7 +187,7 @@
     NSTask *encfsProc = [NSTask alloc];
     NSFileHandle *io = [NSFileHandle alloc];
     
-    if ([libFunctions execWithSocket:@"/usr/local/bin/encfs" arguments:nil env:nil io:io proc:encfsProc]) {        
+    if ([libFunctions execWithSocket:ENCFS arguments:nil env:nil io:io proc:encfsProc]) {        
         [io writeData:[[NSString stringWithFormat:@"8\nencfs\n--pw\n%@\n--\n%@\n%@\n-ofsname=YoucryptFS\n-ovolname=Youcrypt Volume\n", 
                         password, encFolder, decFolder] dataUsingEncoding:NSUTF8StringEncoding]];
         [encfsProc waitUntilExit];
@@ -196,5 +202,40 @@
     }
 
 }
+
+
++ (BOOL)fileHandleIsReadable:(NSFileHandle*)fh
+{
+    int fd = [fh fileDescriptor];
+    fd_set fdset;
+    struct timeval tmout = { 0, 0 }; // return immediately
+    FD_ZERO(&fdset);
+    FD_SET(fd, &fdset);
+    return (select(fd + 1, &fdset, NULL, NULL, &tmout) > 0);
+}
+
+
+
++ (BOOL) changeEncFSPasswd:(NSString *)path
+                 oldPasswd:(NSString *)oldPasswd
+                 newPasswd:(NSString *)newPasswd {
+    NSTask *encfsProc = [NSTask alloc];
+    NSFileHandle *io = [NSFileHandle alloc];
+    
+    if ([libFunctions execWithSocket:ENCFSCTL arguments:[NSArray arrayWithObjects:@"autopasswd", path, nil] env:nil io:io proc:encfsProc]) {
+        [io writeData:[[NSString stringWithFormat:@"%@\n%@\n", oldPasswd, newPasswd] dataUsingEncoding:NSUTF8StringEncoding]];
+        [encfsProc waitUntilExit];
+        if ([encfsProc terminationStatus] == 0) {
+            return YES;
+        }
+        else {
+            return NO;
+        }
+    }
+    else {
+        return NO;
+    }
+}
+
 
 @end
