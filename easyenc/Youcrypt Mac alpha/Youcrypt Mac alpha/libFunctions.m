@@ -117,7 +117,6 @@
         io = [[NSFileHandle alloc] initWithFileDescriptor:sockDescriptors[1]];
     else {
         io = [io initWithFileDescriptor:sockDescriptors[1] closeOnDealloc:NO];
-        NSLog(@"%d vs %d\n", [io fileDescriptor], sockDescriptors[1]);
     }
     if (proc == nil)
         proc = [[NSTask alloc] init];
@@ -185,9 +184,12 @@
     if ([libFunctions execWithSocket:@"/usr/local/bin/encfs" arguments:nil env:nil io:io proc:encfsProc]) {        
         [io writeData:[[NSString stringWithFormat:@"8\nencfs\n--pw\n%@\n--\n%@\n%@\n-ofsname=YoucryptFS\n-ovolname=Youcrypt Volume\n", 
                         password, encFolder, decFolder] dataUsingEncoding:NSUTF8StringEncoding]];
-        [io closeFile];
         [encfsProc waitUntilExit];
-        return YES;
+        [io closeFile];
+        if ([encfsProc terminationStatus])
+            return NO;
+        else 
+            return YES;
     }
     else {
         return NO;

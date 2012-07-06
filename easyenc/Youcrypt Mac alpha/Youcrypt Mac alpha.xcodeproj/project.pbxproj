@@ -50,6 +50,9 @@
 		25FDA05415A2229B004F2914 /* simple-mailer.py in Resources */ = {isa = PBXBuildFile; fileRef = 25FDA05315A2229B004F2914 /* simple-mailer.py */; };
 		25FDA06515A232DC004F2914 /* XMLReader.m in Sources */ = {isa = PBXBuildFile; fileRef = 25FDA06415A232DC004F2914 /* XMLReader.m */; };
 		25FDA07715A284CD004F2914 /* XMLDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = 25FDA07615A284CD004F2914 /* XMLDictionary.m */; };
+		E007C09D15A646B500D60802 /* libFunctions.m in Sources */ = {isa = PBXBuildFile; fileRef = 25F3D1501592435600E3383C /* libFunctions.m */; };
+		E007C09E15A646CF00D60802 /* SSKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = 25EE6A5C15928D5C008A0DC8 /* SSKeychain.m */; };
+		E007C09F15A646DC00D60802 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25EE6A5815928D2C008A0DC8 /* Security.framework */; };
 		E0A2849815A61A26008A949A /* logo-512x512-alpha.icns in Resources */ = {isa = PBXBuildFile; fileRef = E0A2849715A61A26008A949A /* logo-512x512-alpha.icns */; };
 		E0BF0E951596B9C8002F9FB9 /* YoucryptDirectory.m in Sources */ = {isa = PBXBuildFile; fileRef = E0BF0E941596B9C8002F9FB9 /* YoucryptDirectory.m */; };
 		E0BF0E9D1596D01F002F9FB9 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E0BF0E9C1596D01F002F9FB9 /* Foundation.framework */; };
@@ -264,6 +267,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E0BF0E9D1596D01F002F9FB9 /* Foundation.framework in Frameworks */,
+				E007C09F15A646DC00D60802 /* Security.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -736,6 +740,8 @@
 				E0BF0EA01596D01F002F9FB9 /* main.m in Sources */,
 				E0BF0EB415980A72002F9FB9 /* YoucryptDirectory.m in Sources */,
 				E0F9DCE9159BE99C00DBDD02 /* pipetest.c in Sources */,
+				E007C09D15A646B500D60802 /* libFunctions.m in Sources */,
+				E007C09E15A646CF00D60802 /* SSKeychain.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

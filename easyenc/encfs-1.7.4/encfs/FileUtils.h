@@ -86,6 +86,7 @@ struct EncFS_Opts
     int num_users;
     std::vector<std::string> passphrases;
     int mangleFilename;
+    int talkbackMode;
 
     EncFS_Opts()
     {
@@ -98,6 +99,11 @@ struct EncFS_Opts
         ownerCreate = false;
         reverseEncryption = false;
         configMode = Config_Prompt;
+
+	mangleFilename = 0;
+	num_users = 0;
+	no_interactive_configuration = false;
+	talkbackMode = 1;
     }
 };
 

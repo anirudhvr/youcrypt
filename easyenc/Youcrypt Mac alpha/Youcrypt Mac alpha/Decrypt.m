@@ -55,10 +55,11 @@
 	NSString *destFolder = destFolderPath;	
 	NSString *yourPasswordString = [yourPassword stringValue];
     
-    [libFunctions mkdirRecursive:destFolder];     
-    [libFunctions mountEncFS:srcFolder decryptedFolder:destFolder password:yourPasswordString];
-    [theApp didDecrypt:sourceFolderPath];
-    [self close];
-    [[NSWorkspace sharedWorkspace] openFile:destFolder];	
+    [libFunctions mkdirRecursive:destFolder]; 
+    if ([libFunctions mountEncFS:srcFolder decryptedFolder:destFolder password:yourPasswordString] == YES) {
+        [theApp didDecrypt:sourceFolderPath];
+        [self close];
+        [[NSWorkspace sharedWorkspace] openFile:destFolder];	
+    }
 }
 @end

@@ -37,15 +37,22 @@ int main_dirs_plis(int argc, const char * argv[])
         youcryptDirectories = [NSKeyedUnarchiver unarchiveObjectWithFile:dirConfigPath];
 
          */
-        printf ("Count: %lu\n", youcryptDirectories.count);
     }
     return 0;
 }
 
 
 int main(int argc, const char *argv[]) {
+    char passwd[1000];
     @autoreleasepool {
-        NSString *tmpFolder = NSTemporaryDirectory();
+        do {
+            printf("Enter passwd:");
+            fgets(passwd, 900, stdin);
+            int len = strlen(passwd);
+            if (passwd[len-1] == '\n') passwd[len-1]=0;
+        }
+        while (![libFunctions mountEncFS:@"/Users/rajsekar/tmp/a" decryptedFolder:@"/Users/rajsekar/tmp/b" password:[NSString stringWithCString:passwd encoding:NSUTF8StringEncoding]]);
+
     }
     return 0;
 }
