@@ -327,8 +327,8 @@
     
     [self setPreference:YC_USERREALNAME value:[realName stringValue]];
     [self setPreference:YC_USEREMAIL value:[email stringValue]];
-    [self setPreference:YC_BOXLOCATION value:[[boxLocation URL] absoluteString]];
-    [self setPreference:YC_DROPBOXLOCATION value:[[dropboxLocation URL] absoluteString]];
+    //[self setPreference:YC_BOXLOCATION value:[[boxLocation URL] absoluteString]];
+    //[self setPreference:YC_DROPBOXLOCATION value:[[dropboxLocation URL] absoluteString]];
     [self savePreferences];
     
    // [self close];
