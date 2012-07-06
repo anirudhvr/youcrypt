@@ -136,7 +136,7 @@ static int minRefreshTime = 5; // at most every 30 seconds
 
     NSMutableArray * mountLines = [[NSMutableArray alloc] initWithArray:[mountOutput componentsSeparatedByString:@"\r\n"] copyItems: YES];
     
-    NSLog(@"Got %lu lines from mount", [mountLines count]);
+    //NSLog(@"Got %lu lines from mount", [mountLines count]);
     
     for (NSString *line in mountLines) {
         NSError *error = NULL;
@@ -145,7 +145,7 @@ static int minRefreshTime = 5; // at most every 30 seconds
                                       options:NSRegularExpressionCaseInsensitive
                                       error:&error];
         [regex enumerateMatchesInString:line options:0 range:NSMakeRange(0, [line length]) usingBlock:^(NSTextCheckingResult *match, NSMatchingFlags flags, BOOL *stop){
-             NSLog(@"Matched Volume [%@]", [line substringWithRange:[match rangeAtIndex:1]]);
+           //  NSLog(@"Matched Volume [%@]", [line substringWithRange:[match rangeAtIndex:1]]);
             [mountedFuseVolumes addObject:[line substringWithRange:[match rangeAtIndex:1]]];
         }];
     }

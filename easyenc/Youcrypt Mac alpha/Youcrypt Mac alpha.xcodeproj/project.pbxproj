@@ -231,7 +231,7 @@
 		E6649C8D15A706D40096886F /* locked-24x24.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "locked-24x24.png"; path = "images/locked-24x24.png"; sourceTree = "<group>"; };
 		E6649C8F15A707270096886F /* error-22x22.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "error-22x22.png"; path = "images/error-22x22.png"; sourceTree = "<group>"; };
 		E6649C9015A707270096886F /* unlocked-24x24.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "unlocked-24x24.png"; path = "images/unlocked-24x24.png"; sourceTree = "<group>"; };
-		E6649C9315A70FB00096886F /* VolumePropertiesSheetController.h */ = {isa = PBXFileReference; fileEncoding = 4; path = VolumePropertiesSheetController.h; sourceTree = "<group>"; };
+		E6649C9315A70FB00096886F /* VolumePropertiesSheetController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VolumePropertiesSheetController.h; sourceTree = "<group>"; };
 		E6649C9415A70FB00096886F /* VolumePropertiesSheetController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VolumePropertiesSheetController.m; sourceTree = "<group>"; };
 		E6649C9515A70FB00096886F /* VolumePropertiesSheetController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VolumePropertiesSheetController.xib; sourceTree = "<group>"; };
 		E66988C3159D403B002323AD /* StartOnLogin.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = StartOnLogin.xcodeproj; path = StartOnLogin/StartOnLogin.xcodeproj; sourceTree = "<group>"; };

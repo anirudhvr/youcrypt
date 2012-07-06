@@ -45,7 +45,7 @@
 {
     if (dirName != nil)
         NSLog(@"Doubleclicked %@", [dirName stringValue]);
-    [self doOpen:self.table];
+    [self doOpen:table];
 }
 
 - (void)awakeFromNib {
@@ -70,16 +70,17 @@
 }
 
 - (IBAction)doOpen:(id)sender {
-    if ([sender clickedRow] < [theApp.directories count]) {
-        YoucryptDirectory *dir = [theApp.directories objectAtIndex:[sender clickedRow]];
+    if ([table clickedRow] < [theApp.directories count]) {
+        YoucryptDirectory *dir = [theApp.directories objectAtIndex:[table clickedRow]];
         [theApp openEncryptedFolder:[dir path]];
+
     }
 }
 
 - (IBAction)doProps:(id)sender {
     
-    if ([sender clickedRow] < [theApp.directories count]) {
-        YoucryptDirectory *dir = [theApp.directories objectAtIndex:[sender clickedRow]];
+    if ([table clickedRow] < [theApp.directories count]) {
+        YoucryptDirectory *dir = [theApp.directories objectAtIndex:[table clickedRow]];
         volumePropsSheet.sp = dir.path;
         volumePropsSheet.mp = dir.mountedPath;
         volumePropsSheet.stat = dir.mounted == YES ? @"Mounted" : @"Not Mounted";
@@ -123,11 +124,23 @@
 
 - (IBAction)removeFS:(id)sender {
     NSInteger row = [table selectedRow];
-    if (row != -1) {        
-        [table reloadData];
+    if (row < [theApp.directories count] && row != -1) {
+        YoucryptDirectory *dir = [theApp.directories objectAtIndex:row];
+        if (dir.status == YoucryptDirectoryStatusError || 
+            dir.status == YoucryptDirectoryStatusNotFound) {
+            [table beginUpdates];
+            [table removeRowsAtIndexes:[[NSIndexSet alloc] initWithIndex:row] withAnimation:NSTableViewAnimationSlideUp];
+            [table endUpdates];
+            [theApp.directories removeObjectAtIndex:row];
+        } else if (dir.status == YoucryptDirectoryStatusMounted) {
+            [NSAlert alertWithMessageText:@"Cannot remove a mounted directory" defaultButton:@"Okay" alternateButton:@"Cancel" otherButton:@"" informativeTextWithFormat:@""]; 
+        } else if (dir.status == YoucryptDirectoryStatusUnmounted) {
+             [NSAlert alertWithMessageText:@"Cannot even remove a directory that is unmounted" defaultButton:@"Okay" alternateButton:@"Cancel" otherButton:@"" informativeTextWithFormat:@""]; 
+        }
     }
-    
+    [table reloadData];
 }
+ 
 
 
 /***
