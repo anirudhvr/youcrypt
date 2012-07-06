@@ -328,9 +328,9 @@ AppDelegate *theApp;
         if (encryptController.passphraseFromKeychain != nil) {
             encryptController.keychainHasPassphrase = YES;
         }
-    } else {
-        [encryptController setPassphraseTextField:pp];
     }
+    
+    [encryptController setPassphraseTextField:pp];
     
     DDLogVerbose(@"showing %@", encryptController);
     [encryptController showWindow:self];
