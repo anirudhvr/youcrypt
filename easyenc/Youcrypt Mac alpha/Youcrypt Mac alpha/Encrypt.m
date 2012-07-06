@@ -113,7 +113,8 @@
     NSString *bundlepath =[[NSBundle mainBundle] resourcePath];
     NSString *iconPath = [bundlepath stringByAppendingPathComponent:@"/lockedfolder2.icns"]; 
     NSImage* iconImage = [[NSImage alloc] initWithContentsOfFile:iconPath];
-    BOOL didSetIcon = [[NSWorkspace sharedWorkspace] setIcon:iconImage forFile:[sourceFolderPath stringByAppendingPathComponent:@"/encrypted.yc"] options:0];
+    BOOL didSetIcon = NO;
+    //[[NSWorkspace sharedWorkspace] setIcon:iconImage forFile:[sourceFolderPath stringByAppendingPathComponent:@"/encrypted.yc"] options:0];
 
     if(didSetIcon)
         DDLogVerbose(@"Set Folder icon");
@@ -151,6 +152,7 @@
 
     // The destination of the encrypted files is just <sourcefolder>/encrypted.yc
     destFolder = [srcFolder stringByAppendingPathComponent:@"/encrypted.yc"];
+    // We want to hide the extension of this folder for extra oomph
     [libFunctions mkdirRecursive:destFolder];
 
     
@@ -201,8 +203,17 @@
     [libFunctions execCommand:@"/sbin/umount" arguments:[NSArray arrayWithObject:tempFolder]
                              env:nil];
     [fm removeItemAtPath:tempFolder error:nil];
+    
     /* change folder icon of encrypted folder */
     [self setFolderIcon:self];    
+    {
+        NSNumber *num = [NSNumber numberWithBool:YES];
+        NSDictionary *attribs = [NSDictionary dictionaryWithObjectsAndKeys:num, NSFileExtensionHidden, nil];        
+        [[NSFileManager defaultManager] setAttributes:attribs ofItemAtPath:destFolder error:nil];
+    }
+    
+//    - (BOOL)setAttributes:(NSDictionary *)attributes ofItemAtPath:(NSString *)path error:(NSError **)error
+
     [theApp didEncrypt:srcFolder];
     /* Register password with keyring */
  	
