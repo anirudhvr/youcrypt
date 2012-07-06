@@ -60,6 +60,9 @@
         [theApp didDecrypt:sourceFolderPath];
         [self close];
         [[NSWorkspace sharedWorkspace] openFile:destFolder];	
+    } else {
+        NSAlert *alert = [NSAlert alertWithMessageText:@"Incorrect passphrase" defaultButton:nil alternateButton:nil otherButton:nil informativeTextWithFormat:@"The passphrase does not decrypt %@", [srcFolder stringByDeletingLastPathComponent]];
+        [alert runModal];
     }
 }
 @end

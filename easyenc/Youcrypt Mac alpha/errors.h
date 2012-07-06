@@ -1,0 +1,7 @@
+#define YOUCRYPT_ERROR_DOMAIN @"com.youcrypt"
+
+#define YOUCRYPT_DECRYPT_INCORRECT_PASSWD 1
+
+
+
+

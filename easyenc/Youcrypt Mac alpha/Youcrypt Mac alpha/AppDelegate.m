@@ -74,6 +74,20 @@ AppDelegate *theApp;
     fileLogger.rollingFrequency = 60 * 60 * 24; // 24 hour rolling
     fileLogger.logFileManager.maximumNumberOfLogFiles = 7;
     [DDLog addLogger:fileLogger];    
+    
+    NSArray *apps = [[NSWorkspace sharedWorkspace] runningApplications]; 
+    int ycAppCount = 0;
+    
+    for(NSRunningApplication *app in apps) {
+        if([[app localizedName] isEqualToString:@"Youcrypt Mac alpha"]) {
+            ycAppCount++;
+            if(ycAppCount > 1) {
+                DDLogVerbose(@"FATAL. Cannot run multiple instances. Terminating!!");
+                [self terminateApp:self];
+            }
+        }
+    }
+
     DDLogVerbose(@"App did, in fact, finish launching!!!");
 }
 - (void)applicationWillTerminate:(NSNotification *)aNotification {
@@ -175,23 +189,28 @@ AppDelegate *theApp;
         decryptController.destFolderPath = mountPoint;
         decryptController.sourceFolderPath = path;
         
-        for (YoucryptDirectory *dir in directories) {
+        YoucryptDirectory *dir;
+        for (dir in directories) {
             if ([path isEqualToString:dir.path]) {
-                dir.mountedPath = mountPoint;
-                dir.mounted = NO;                
+                if (dir.mounted == NO)
+                    dir.mountedPath = mountPoint;
                 goto FoundOne;
             }
+        }        
+        dir = [[YoucryptDirectory alloc] init];
+        dir.path = path;
+        dir.mountedPath = mountPoint;
+        dir.alias = [[path stringByDeletingLastPathComponent] lastPathComponent];
+        dir.mounted = NO;
+        [directories addObject:dir];                
+    FoundOne:      
+        if (dir.mounted == YES) {
+            // Just need to open the folder in this case
+            [[NSWorkspace sharedWorkspace] openFile:dir.mountedPath];	
+
+        } else {
+            [self showDecryptWindow:self];
         }
-        {
-            YoucryptDirectory *dir = [[YoucryptDirectory alloc] init];        
-            dir.path = path;
-            dir.mountedPath = mountPoint;
-            dir.alias = [[path stringByDeletingLastPathComponent] lastPathComponent];
-            dir.mounted = NO;
-            [directories addObject:dir];            
-        }
-    FoundOne:        
-        [self showDecryptWindow:self];        
         return YES;
     }
     return NO;
