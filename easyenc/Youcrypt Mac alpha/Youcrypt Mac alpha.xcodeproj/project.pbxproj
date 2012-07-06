@@ -53,6 +53,7 @@
 		E007C09D15A646B500D60802 /* libFunctions.m in Sources */ = {isa = PBXBuildFile; fileRef = 25F3D1501592435600E3383C /* libFunctions.m */; };
 		E007C09E15A646CF00D60802 /* SSKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = 25EE6A5C15928D5C008A0DC8 /* SSKeychain.m */; };
 		E007C09F15A646DC00D60802 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25EE6A5815928D2C008A0DC8 /* Security.framework */; };
+		E06E2B4115A76ABE00E52B2D /* ListRightClick.xib in Resources */ = {isa = PBXBuildFile; fileRef = E06E2B4015A76ABE00E52B2D /* ListRightClick.xib */; };
 		E0A2849815A61A26008A949A /* logo-512x512-alpha.icns in Resources */ = {isa = PBXBuildFile; fileRef = E0A2849715A61A26008A949A /* logo-512x512-alpha.icns */; };
 		E0BF0E951596B9C8002F9FB9 /* YoucryptDirectory.m in Sources */ = {isa = PBXBuildFile; fileRef = E0BF0E941596B9C8002F9FB9 /* YoucryptDirectory.m */; };
 		E0BF0E9D1596D01F002F9FB9 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E0BF0E9C1596D01F002F9FB9 /* Foundation.framework */; };
@@ -209,6 +210,8 @@
 		25FDA07015A269B1004F2914 /* Automator.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Automator.framework; path = System/Library/Frameworks/Automator.framework; sourceTree = SDKROOT; };
 		25FDA07515A284CD004F2914 /* XMLDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = XMLDictionary.h; path = ../XMLDictionary.h; sourceTree = "<group>"; };
 		25FDA07615A284CD004F2914 /* XMLDictionary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = XMLDictionary.m; path = ../XMLDictionary.m; sourceTree = "<group>"; };
+		E06E2B3F15A7671B00E52B2D /* errors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = errors.h; sourceTree = "<group>"; };
+		E06E2B4015A76ABE00E52B2D /* ListRightClick.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ListRightClick.xib; sourceTree = "<group>"; };
 		E0A2849715A61A26008A949A /* logo-512x512-alpha.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = "logo-512x512-alpha.icns"; sourceTree = "<group>"; };
 		E0BF0E931596B9C8002F9FB9 /* YoucryptDirectory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YoucryptDirectory.h; sourceTree = "<group>"; };
 		E0BF0E941596B9C8002F9FB9 /* YoucryptDirectory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YoucryptDirectory.m; sourceTree = "<group>"; };
@@ -231,7 +234,7 @@
 		E6649C8D15A706D40096886F /* locked-24x24.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "locked-24x24.png"; path = "images/locked-24x24.png"; sourceTree = "<group>"; };
 		E6649C8F15A707270096886F /* error-22x22.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "error-22x22.png"; path = "images/error-22x22.png"; sourceTree = "<group>"; };
 		E6649C9015A707270096886F /* unlocked-24x24.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "unlocked-24x24.png"; path = "images/unlocked-24x24.png"; sourceTree = "<group>"; };
-		E6649C9315A70FB00096886F /* VolumePropertiesSheetController.h */ = {isa = PBXFileReference; fileEncoding = 4; path = VolumePropertiesSheetController.h; sourceTree = "<group>"; };
+		E6649C9315A70FB00096886F /* VolumePropertiesSheetController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VolumePropertiesSheetController.h; sourceTree = "<group>"; };
 		E6649C9415A70FB00096886F /* VolumePropertiesSheetController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VolumePropertiesSheetController.m; sourceTree = "<group>"; };
 		E6649C9515A70FB00096886F /* VolumePropertiesSheetController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VolumePropertiesSheetController.xib; sourceTree = "<group>"; };
 		E66988C3159D403B002323AD /* StartOnLogin.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = StartOnLogin.xcodeproj; path = StartOnLogin/StartOnLogin.xcodeproj; sourceTree = "<group>"; };
@@ -308,6 +311,7 @@
 		256C3550158EA75F00E2BEC4 = {
 			isa = PBXGroup;
 			children = (
+				E06E2B3F15A7671B00E52B2D /* errors.h */,
 				E66988C3159D403B002323AD /* StartOnLogin.xcodeproj */,
 				256C3565158EA75F00E2BEC4 /* Youcrypt Mac alpha */,
 				256C3582158EA75F00E2BEC4 /* Youcrypt Mac alphaTests */,
@@ -409,6 +413,7 @@
 		25F3D1521592436000E3383C /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				E06E2B4015A76ABE00E52B2D /* ListRightClick.xib */,
 				25300E8F15A3BE73009CDA08 /* FirstRun.xib */,
 				25300E8A15A385BE009CDA08 /* Gmail.xib */,
 				25F3D159159244E800E3383C /* Encrypt.xib */,
@@ -689,6 +694,7 @@
 				E6649C9115A707270096886F /* error-22x22.png in Resources */,
 				E6649C9215A707270096886F /* unlocked-24x24.png in Resources */,
 				E6649C9715A70FB00096886F /* VolumePropertiesSheetController.xib in Resources */,
+				E06E2B4115A76ABE00E52B2D /* ListRightClick.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

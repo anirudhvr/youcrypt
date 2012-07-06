@@ -70,16 +70,16 @@
 }
 
 - (IBAction)doOpen:(id)sender {
-    if ([sender clickedRow] < [theApp.directories count]) {
-        YoucryptDirectory *dir = [theApp.directories objectAtIndex:[sender clickedRow]];
+    if ([table clickedRow] < [theApp.directories count]) {
+        YoucryptDirectory *dir = [theApp.directories objectAtIndex:[table clickedRow]];
         [theApp openEncryptedFolder:[dir path]];
     }
 }
 
 - (IBAction)doProps:(id)sender {
     
-    if ([sender clickedRow] < [theApp.directories count]) {
-        YoucryptDirectory *dir = [theApp.directories objectAtIndex:[sender clickedRow]];
+    if ([table clickedRow] < [theApp.directories count]) {
+        YoucryptDirectory *dir = [theApp.directories objectAtIndex:[table clickedRow]];
         volumePropsSheet.sp = dir.path;
         volumePropsSheet.mp = dir.mountedPath;
         volumePropsSheet.stat = dir.mounted == YES ? @"Mounted" : @"Not Mounted";
