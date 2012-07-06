@@ -72,6 +72,20 @@ AppDelegate *theApp;
     fileLogger.rollingFrequency = 60 * 60 * 24; // 24 hour rolling
     fileLogger.logFileManager.maximumNumberOfLogFiles = 7;
     [DDLog addLogger:fileLogger];    
+    
+    NSArray *apps = [[NSWorkspace sharedWorkspace] runningApplications]; 
+    int ycAppCount = 0;
+    
+    for(NSRunningApplication *app in apps) {
+        if([[app localizedName] isEqualToString:@"Youcrypt Mac alpha"]) {
+            ycAppCount++;
+            if(ycAppCount > 1) {
+                DDLogVerbose(@"FATAL. Cannot run multiple instances. Terminating!!");
+                [self terminateApp:self];
+            }
+        }
+    }
+
     DDLogVerbose(@"App did, in fact, finish launching!!!");
 }
 - (void)applicationWillTerminate:(NSNotification *)aNotification {
