@@ -119,7 +119,7 @@
         [dropboxLocation setURL:[NSURL URLWithString:[self getPreference:YC_DROPBOXLOCATION]]];
     }
     
-    if([self getPreference:YC_BOXSTATUS] == nil) {
+    if(([self getPreference:YC_BOXSTATUS] == nil) ||([[self getPreference:YC_BOXSTATUS] isEqualToString:@""])) {
         [linkBox setTitle:@"Link Box Account"];
         [boxLocation setHidden:YES];
         
@@ -162,24 +162,29 @@
     NSDictionary *xmlDoc = [NSDictionary dictionaryWithXMLFile:boxXMLPath];
     NSString *boxFolderPath = [[xmlDoc objectForKey:@"Settings"] objectForKey:@"_RootSyncFolderLocation"];
     NSLog(@"Box folder loc : %@",boxFolderPath);
+    if (boxFolderPath == nil)
+        boxFolderPath = [[NSString alloc] initWithString:@""];
     return boxFolderPath;
 }
 
 -(IBAction)linkBoxAccount:(id)sender
 {
     NSLog(@"%@",[self getPreference:YC_BOXSTATUS]);
-    if(([self getPreference:YC_BOXSTATUS] == nil) || ([self getPreference:YC_BOXSTATUS] == @"") ) {
+    if(([self getPreference:YC_BOXSTATUS] == nil) || ([[self getPreference:YC_BOXSTATUS] isEqualToString:@""]) ) {
         [boxClient auth];
         
         NSAlert *alert = [[NSAlert alloc] init];
         [alert addButtonWithTitle:@"OK"];
-        [alert setMessageText:@"When You have authorized us, please click OK."];
-        [alert setInformativeText:@"Please do not click OK before logging into Box."];
+        [alert addButtonWithTitle:@"Cancel"];
+        [alert setMessageText:@"After logging in and authorizing with Box, please click OK."];
+        [alert setInformativeText:@"If you do not wish to continue, please click Cancel."];
         [alert setAlertStyle:NSWarningAlertStyle];
         [alert beginSheetModalForWindow:self.window modalDelegate:self didEndSelector:@selector(boxAuthDone:returnCode:) contextInfo:nil];
     }
     else {
-        [self removePreference:YC_BOXSTATUS];
+        NSLog(@"removing boxstatus pref");
+        //[self removePreference:YC_BOXSTATUS];
+        [self setPreference:YC_BOXSTATUS value:@""];
         [self refreshBoxLinkStatus:NO];
     }
 }
@@ -221,11 +226,15 @@
 
 -(void)boxAuthDone:(NSAlert *)alert returnCode:(NSInteger)returnCode
 {
-    NSLog(@"BOX AUTH DONE!");
-    //[self sendEmail];
-    NSString *boxAuthToken = [boxClient userGavePerms];
-    [self setPreference:YC_BOXSTATUS value:boxAuthToken];
-    [self refreshBoxLinkStatus:YES];
+    if (returnCode == NSAlertFirstButtonReturn) {
+        NSLog(@"BOX AUTH DONE!");
+        //[self sendEmail];
+        NSString *boxAuthToken = [boxClient userGavePerms];
+        if(![boxAuthToken isEqualToString:@""]) {
+            [self setPreference:YC_BOXSTATUS value:boxAuthToken];
+            [self refreshBoxLinkStatus:YES];    
+        }
+    }
 }
 
 -(IBAction)windowDidLoad:(id)sender

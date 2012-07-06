@@ -145,6 +145,7 @@
 
 	// The mount point is a temporary folder
     NSString *tempFolder = NSTemporaryDirectory();
+    [libFunctions mkdirRecursive:tempFolder];
     tempFolder = [tempFolder stringByAppendingPathComponent:[[NSProcessInfo processInfo] globallyUniqueString]];
     [libFunctions mkdirRecursive:tempFolder];
 

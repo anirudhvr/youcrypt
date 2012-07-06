@@ -57,8 +57,9 @@
 - (IBAction)showEncryptWindow:(id)sender;
 - (IBAction)showDecryptWindow:(id)sender;
 - (IBAction)showListDirectories:(id)sender;
-
 - (IBAction)openFeedbackPage:(id)sender;
+- (IBAction)openHelpPage:(id)sender;
+
 -(void)encryptFolder:(NSString *)path;
 -(BOOL)openEncryptedFolder:(NSString *)path;
 -(void)didDecrypt:(NSString *)path;

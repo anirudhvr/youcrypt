@@ -74,10 +74,12 @@
 -(NSString*)userGavePerms
 {
     NSString *reqURL = [NSString stringWithFormat:@"%@/1.0/rest?action=get_auth_token&api_key=%@&ticket=%@",baseURL,apiKey,ticket];
-
     NSString *response = [self makeRestCall:reqURL:NO];
     NSError *error = nil;
     NSDictionary *res = [XMLReader dictionaryForXMLString:response error:&error];
+    if([[[[res objectForKey:@"response"] objectForKey:@"status"] objectForKey:@"text"] isEqualToString:@"not_logged_in"]) {
+        return @"";
+    }
     authToken = [[[res objectForKey:@"response"] objectForKey:@"auth_token"] objectForKey:@"text"];
     NSLog(@"AUTHTOKEN: %@",authToken);
     return authToken;

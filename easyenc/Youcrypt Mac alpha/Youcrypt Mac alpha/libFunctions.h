@@ -48,5 +48,8 @@
 + (BOOL) execCommand:(NSString *)path arguments:(NSArray *)arguments
                  env:(NSDictionary *)env;
 
++ (BOOL)fileHandleIsReadable:(NSFileHandle*)fh;
+
+
 
 @end

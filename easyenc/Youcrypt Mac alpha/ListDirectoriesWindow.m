@@ -40,13 +40,19 @@
     // Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.    
 }
 
+- (void) handleDoubleClick:(id)sender
+{
+    if (dirName != nil)
+        NSLog(@"Doubleclicked %@", [dirName stringValue]);
+    [self doOpen:self.table];
+}
 
 - (void)awakeFromNib {
     [table setDataSource:theApp];
     [table setDelegate:theApp];
 
     [table registerForDraggedTypes:[NSArray arrayWithObject:NSFilenamesPboardType]];
-    
+    [table setDoubleAction:@selector(handleDoubleClick:)];
        
     toolbar = [[NSToolbar alloc] initWithIdentifier:@"ListDirectoriesToolbar"];
     [toolbar setDelegate:self];
@@ -63,8 +69,10 @@
 }
 
 - (IBAction)doOpen:(id)sender {
-    YoucryptDirectory *dir = [theApp.directories objectAtIndex:[sender clickedRow]];
-    [theApp openEncryptedFolder:[dir path]];
+    if ([sender clickedRow] < [theApp.directories count]) {
+        YoucryptDirectory *dir = [theApp.directories objectAtIndex:[sender clickedRow]];
+        [theApp openEncryptedFolder:[dir path]];
+    }
 }
 
 - (IBAction)doProps:(id)sender {

@@ -54,6 +54,8 @@ AppDelegate *theApp;
     directories = [NSKeyedUnarchiver unarchiveObjectWithFile:configDir.youCryptListFile];
     if (directories == nil) {
         directories = [[NSMutableArray alloc] init];
+    } else {
+        
     }
     
     theApp = self;
@@ -163,6 +165,7 @@ AppDelegate *theApp;
         
         NSString *mountPoint = [[path stringByDeletingLastPathComponent] lastPathComponent];
         NSString *timeStr = [[NSDate date] descriptionWithCalendarFormat:nil timeZone:nil locale:nil];
+        timeStr = [timeStr stringByReplacingOccurrencesOfString:@" " withString:@"_"];
         mountPoint = [configDir.youCryptVolDir stringByAppendingPathComponent:
                       [timeStr stringByAppendingPathComponent:mountPoint]];
         
@@ -226,6 +229,7 @@ AppDelegate *theApp;
         [listDirectories.table reloadData];
     }
 }
+
 - (void)didEncrypt:(NSString *)path {
     YoucryptDirectory *dir = [[YoucryptDirectory alloc] init];        
     dir.path = [path stringByAppendingPathComponent:@"encrypted.yc"];
@@ -319,6 +323,11 @@ AppDelegate *theApp;
     [[NSWorkspace sharedWorkspace] openURL: [NSURL URLWithString:@"http://youcrypt.com"]];
 }
 
+- (IBAction)openHelpPage:(id)sender
+{
+    [[NSWorkspace sharedWorkspace] openURL: [NSURL URLWithString:@"http://youcrypt.com"]];
+}
+
 
 //--------------------------------------------------------------------------------------------------
 // The AppDelegate is also our tableview's data source.  It populates shit using the directories array.
@@ -341,9 +350,21 @@ AppDelegate *theApp;
     YoucryptDirectory *dirAtRow = [directories objectAtIndex:row];
     if (!dirAtRow)
         return nil;
-   
-    if ([colId isEqualToString:@"alias"])
-        return dirAtRow.alias;
+    
+    NSMutableAttributedString *str = [NSMutableAttributedString alloc];
+    
+    if ([colId isEqualToString:@"alias"]) {
+        [str initWithString:dirAtRow.alias];
+        NSRange selectedRange = NSRangeFromString(dirAtRow.alias);
+        [str addAttribute:NSForegroundColorAttributeName
+                       value:[NSColor blueColor]
+                       range:selectedRange];
+        [str addAttribute:NSUnderlineStyleAttributeName
+                       value:[NSNumber numberWithInt:NSSingleUnderlineStyle]
+                       range:selectedRange];
+        
+        return str;
+    } 
     else if ([colId isEqualToString:@"mountedPath"])
         return dirAtRow.mountedPath;    
     else {
@@ -401,7 +422,7 @@ AppDelegate *theApp;
 - (void)tableView:(NSTableView*)tableView willDisplayCell:(id)cell forTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
     NSString *colId = [tableColumn identifier];
 
-   NSLog(@"This code called");
+ //  NSLog(@"This code called");
 					
     if (!directories)
         return;
@@ -409,60 +430,37 @@ AppDelegate *theApp;
     YoucryptDirectory *dirAtRow = [directories objectAtIndex:row];
     if (!dirAtRow)
         return;
-    if (row == 0) {
-        if ([colId isEqualToString:@"alias"]) {
-            
-            NSFont *font = [NSFont fontWithName:@"Palatino-Roman" size:14.0];
-            NSDictionary *attrsDictionary =
-            [NSDictionary dictionaryWithObject:font
-                                        forKey:NSFontAttributeName];
-            [attrsDictionary setValue:[NSColor blueColor] forKey:NSBackgroundColorAttributeName];
-            NSAttributedString *attrString =
-            [[NSAttributedString alloc] initWithString:@"Folder name"
-                                            attributes:attrsDictionary];
-            if ([cell isKindOfClass:[NSTextFieldCell class]]) {
-                [cell setObjectValue:attrString];
-            }
-            
-        } else {
-            if ([cell isKindOfClass:[NSTextFieldCell class]]) {
-                [cell setObjectValue:@"Empty"];
-            }
-        }
-
-    }
-
-    if (dirAtRow.mounted) {
+        
+    [dirAtRow checkIfStillMounted];
+    
+    if (dirAtRow.mounted) { // mounted => unlocked
         if ([cell isKindOfClass:[NSTextFieldCell class]]) {
             [cell setTextColor:[NSColor redColor]];
-            [cell setBackgroundColor:[NSColor blackColor]];
+            [cell setBackgroundColor:[NSColor grayColor]];
+        } else if ([cell isKindOfClass:[NSButtonCell class]] && [colId isEqualToString:@"status"]) {
+            NSButtonCell *c = (NSButtonCell*) cell;
+            [c setImage:[NSImage imageNamed:@"unlocked-24x24.png"]];
+        }
+    } else { // unmounted => locked
+        if ([cell isKindOfClass:[NSTextFieldCell class]]) {
+            [cell setTextColor:[NSColor blackColor]];
+            [cell setBackgroundColor:[NSColor darkGrayColor]];
+        } else if ([cell isKindOfClass:[NSButtonCell class]] && [colId isEqualToString:@"status"]) {
+            NSButtonCell *c = (NSButtonCell*) cell;
+            if (dirAtRow.status == YoucryptDirectoryStatusUnmounted) 
+                [c setImage:[NSImage imageNamed:@"locked-24x24.png"]];
+            else if (dirAtRow.status == YoucryptDirectoryStatusError) 
+                [c setImage:[NSImage imageNamed:@"error-22x22.png"]];
         }
     }
-    
-    /*
 
-    if (row == 0) {
-        if ([colId isEqualToString:@"alias"]) {
-            
-            NSFont *font = [NSFont fontWithName:@"Palatino-Roman" size:14.0];
-            NSDictionary *attrsDictionary =
-            [NSDictionary dictionaryWithObject:font
-                                        forKey:NSFontAttributeName];
-            [attrsDictionary setValue:[NSColor blueColor] forKey:NSBackgroundColorAttributeName];
-            NSAttributedString *attrString =
-            [[NSAttributedString alloc] initWithString:@"Folder name"
-                                            attributes:attrsDictionary];
-            
-        }
-    }
-   */   
  
-    
+
 }
 
 - (NSCell *)tableView:(NSTableView *)tableView dataCellForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
+   // NSLog(@"This one too!");
     return nil;
-    
 }
    
 
