@@ -14,7 +14,6 @@
 
 @synthesize path;
 @synthesize mountedPath;
-@synthesize mounted;
 @synthesize alias;
 @synthesize mountedDateAsString;
 @synthesize status;
@@ -30,7 +29,6 @@ static int minRefreshTime = 5; // at most every 30 seconds
     if (self != nil) {
         path = [decoder decodeObjectForKey:@"path"];
         mountedPath = [decoder decodeObjectForKey:@"mountedPath"];
-        mounted = [decoder decodeBoolForKey:@"mounted"];
         alias = [decoder decodeObjectForKey:@"alias"];
         mountedDateAsString = [decoder decodeObjectForKey:@"mountedDateAsString"];
         status = [decoder decodeIntegerForKey:@"status"];
@@ -58,7 +56,6 @@ static int minRefreshTime = 5; // at most every 30 seconds
 - (void)encodeWithCoder:(NSCoder *)encoder {
     [encoder encodeObject:path forKey:@"path"];
     [encoder encodeObject:mountedPath forKey:@"mountedPath"];
-    [encoder encodeBool:mounted forKey:@"mounted"];
     [encoder encodeObject:alias forKey:@"alias"];
     [encoder encodeObject:mountedDateAsString forKey:@"mountedDateAsString"];
     [encoder encodeInteger:status forKey:@"status"];
@@ -74,7 +71,7 @@ static int minRefreshTime = 5; // at most every 30 seconds
     BOOL isDir = NO;
     BOOL dirExists = [[NSFileManager defaultManager] fileExistsAtPath:mountedPath isDirectory:&isDir];
     
-    if (mounted) { // This dir is marked as mounted
+    if (status == YoucryptDirectoryStatusMounted) {
         if (indexOfPath == NSNotFound) {
             if (!dirExists) {
                 // mount point has been removed
@@ -82,20 +79,17 @@ static int minRefreshTime = 5; // at most every 30 seconds
             } else {
                 // mount point exists, but is just not mounted
                 status = isDir ? YoucryptDirectoryStatusUnmounted : YoucryptDirectoryStatusMounted;
-                mounted = NO;
             }
         }
     } else {
         if (indexOfPath != NSNotFound) {
             // Surprise -- an umounted folder has been surprisingly mounted
             status = YoucryptDirectoryStatusMounted;
-            mounted = YES;
         } else {
             if (!dirExists || !isDir) 
                 status = YoucryptDirectoryStatusError;
             else
                 status = YoucryptDirectoryStatusUnmounted;
-            mounted = NO;
         }
     }
 }
