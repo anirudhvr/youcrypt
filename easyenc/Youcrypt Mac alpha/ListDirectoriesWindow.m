@@ -83,7 +83,7 @@
         YoucryptDirectory *dir = [theApp.directories objectAtIndex:[table clickedRow]];
         volumePropsSheet.sp = dir.path;
         volumePropsSheet.mp = dir.mountedPath;
-        volumePropsSheet.stat = dir.mounted == YES ? @"Mounted" : @"Not Mounted";
+        volumePropsSheet.stat = ((dir.status == YoucryptDirectoryStatusMounted) ? @"Mounted" : @"Not Mounted");
         [volumePropsSheet beginSheetModalForWindow:self.window completionHandler:^(NSUInteger returnCode) {
             if (returnCode == 0) {
                 NSLog(@"sheet returned success");

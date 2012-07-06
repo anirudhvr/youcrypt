@@ -38,7 +38,6 @@
 
 -(void)awakeFromNib
 {
-    [self setFolderIcon:self];
     [shareCheckBox setState:0];
     NSLog(@"Awake from nib called");
     
@@ -110,16 +109,17 @@
 - (IBAction)setFolderIcon:(id)sender
 {
 //    NSString *curDir = [[NSFileManager defaultManager] currentDirectoryPath];
-    NSString *bundlepath =[[NSBundle mainBundle] resourcePath];
-    NSString *iconPath = [bundlepath stringByAppendingPathComponent:@"/lockedfolder2.icns"]; 
-    NSImage* iconImage = [[NSImage alloc] initWithContentsOfFile:iconPath];
-    BOOL didSetIcon = NO;
-    //[[NSWorkspace sharedWorkspace] setIcon:iconImage forFile:[sourceFolderPath stringByAppendingPathComponent:@"/encrypted.yc"] options:0];
-
-    if(didSetIcon)
-        DDLogVerbose(@"Set Folder icon");
-    else
-        DDLogVerbose(@"Could not set Folder Icon");
+    return;
+//    NSString *bundlepath =[[NSBundle mainBundle] resourcePath];
+//    NSString *iconPath = [bundlepath stringByAppendingPathComponent:@"/lockedfolder2.icns"]; 
+//    NSImage* iconImage = [[NSImage alloc] initWithContentsOfFile:iconPath];
+//    BOOL didSetIcon = NO;
+//    //[[NSWorkspace sharedWorkspace] setIcon:iconImage forFile:[sourceFolderPath stringByAppendingPathComponent:@"/encrypted.yc"] options:0];
+//
+//    if(didSetIcon)
+//        DDLogVerbose(@"Set Folder icon");
+//    else
+//        DDLogVerbose(@"Could not set Folder Icon");
 }
 
 /**
