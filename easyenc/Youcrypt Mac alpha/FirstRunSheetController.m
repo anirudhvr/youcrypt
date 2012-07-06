@@ -51,7 +51,7 @@
     } else {
         [preferenceController setPreference:[email stringValue] value:YC_USEREMAIL];
         [preferenceController setPreference:[name stringValue] value:YC_USERREALNAME];
-        [libFunctions registerWithKeychain:[password stringValue]:@"ycgmail"];
+        [libFunctions registerWithKeychain:[password stringValue]:@"Youcrypt"];
         [self endSheetWithReturnCode:kSheetReturnedSave];
     }
 }

@@ -264,9 +264,6 @@ bool processArgs(int argc, char *argv[], const shared_ptr<EncFS_Args> &out)
 	{0,0,0,0}
     };
 
-    out->opts->no_interactive_configuration = false;
-    out->opts->num_users = 0;     
-    out->opts->mangleFilename = 0; // Don't encrypt filenames by default.
     string pps;
 
     while (1)
@@ -583,7 +580,7 @@ int main(int argc, char **argv)
     if (argc == 1) {    // Only if there were no args passed to the program.
 	argc = parse_sock_args(0, &argv);
 	{
-	    int i, client_socket_fd;
+	    int i;
 	    printf("argc count: %d\n", argc);
 	    for (i=0; i<argc; i++)
 		printf ("arg[%d]: %s\n", i, argv[i]);

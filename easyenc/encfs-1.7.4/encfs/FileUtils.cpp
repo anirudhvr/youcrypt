@@ -1805,6 +1805,12 @@ RootPtr initFS( EncFS_Context *ctx, const shared_ptr<EncFS_Opts> &opts )
             }
         }
 
+	// If we're here, some passwd worked.
+	if (opts->talkbackMode) {
+	    cout << autosprintf("Passwd OK\n");
+	    close(0);
+	    close(1);
+	}
         userKey.reset();
 
 
