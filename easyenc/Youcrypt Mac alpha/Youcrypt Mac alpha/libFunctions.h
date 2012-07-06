@@ -32,6 +32,9 @@
                     env:(NSDictionary *)env
                      io:(NSFileHandle *)io 
                    proc:(NSTask *)proc;
++ (int) execCommand:(NSString *)path arguments:(NSArray *)arguments
+                env:(NSDictionary *)env;
+
 
 + (NSString*)getPassphraseFromKeychain:(NSString*)service;
 + (BOOL)registerWithKeychain:(NSString*)passphrase:(NSString*)service;
@@ -45,8 +48,9 @@
     decryptedFolder:(NSString *)decFolder
            password:(NSString *)password;
 
-+ (BOOL) execCommand:(NSString *)path arguments:(NSArray *)arguments
-                 env:(NSDictionary *)env;
 
++ (BOOL) changeEncFSPasswd:(NSString *)path
+                 oldPasswd:(NSString *)oldPasswd
+                 newPasswd:(NSString *)newPasswd;
 
 @end
