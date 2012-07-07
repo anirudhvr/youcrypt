@@ -83,7 +83,7 @@
         YoucryptDirectory *dir = [theApp.directories objectAtIndex:[table clickedRow]];
         volumePropsSheet.sp = dir.path;
         volumePropsSheet.mp = dir.mountedPath;
-        volumePropsSheet.stat = ((dir.status == YoucryptDirectoryStatusMounted) ? @"Mounted" : @"Not Mounted");
+        volumePropsSheet.stat = [YoucryptDirectory statusToString:dir.status];
         [volumePropsSheet beginSheetModalForWindow:self.window completionHandler:^(NSUInteger returnCode) {
             if (returnCode == 0) {
                 NSLog(@"sheet returned success");
@@ -96,9 +96,10 @@
 }
 
 - (IBAction)selectRow:(id)sender {
-   if ([sender clickedRow] < [theApp.directories count]) {
+    NSLog(@"Selected row %d", [sender selectedRow]);
+    if ([sender clickedRow] < [theApp.directories count]) {
         YoucryptDirectory *dir = [theApp.directories objectAtIndex:[sender clickedRow]];
-        [dirName setStringValue:dir.path];
+        [dirName setStringValue:[NSString stringWithFormat:@"   %@: %@", [YoucryptDirectory statusToString:dir.status], dir.path]];
     }
 }
 
@@ -126,7 +127,7 @@
     NSInteger row = [table selectedRow];
     if (row < [theApp.directories count] && row != -1) {
         YoucryptDirectory *dir = [theApp.directories objectAtIndex:row];
-        if (dir.status == YoucryptDirectoryStatusError || 
+        if (dir.status == YoucryptDirectoryStatusSourceNotFound || 
             dir.status == YoucryptDirectoryStatusNotFound) {
             [table beginUpdates];
             [table removeRowsAtIndexes:[[NSIndexSet alloc] initWithIndex:row] withAnimation:NSTableViewAnimationSlideUp];
