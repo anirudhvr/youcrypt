@@ -90,6 +90,7 @@
 - (IBAction)startOnBootChecked:(id)sender;
 - (IBAction)saveGeneralPrefs:(id)sender;
 
+- (void) savePreferences;
 
 // Account tab methods
 - (IBAction)changePassphrase:(id)sender;
