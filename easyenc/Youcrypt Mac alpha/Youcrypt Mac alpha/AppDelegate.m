@@ -201,7 +201,7 @@ AppDelegate *theApp;
         YoucryptDirectory *dir;
         for (dir in directories) {
             if ([path isEqualToString:dir.path]) {
-                if (dir.mounted == NO)
+                if (dir.status == YoucryptDirectoryStatusUnmounted)
                     dir.mountedPath = mountPoint;
                 goto FoundOne;
             }
@@ -210,10 +210,10 @@ AppDelegate *theApp;
         dir.path = path;
         dir.mountedPath = mountPoint;
         dir.alias = [[path stringByDeletingLastPathComponent] lastPathComponent];
-        dir.mounted = NO;
+        dir.status = YoucryptDirectoryStatusUnmounted;
         [directories addObject:dir];                
     FoundOne:      
-        if (dir.mounted == YES) {
+        if (dir.status == YoucryptDirectoryStatusMounted == YES) {
             // Just need to open the folder in this case
             [[NSWorkspace sharedWorkspace] openFile:dir.mountedPath];	
 
@@ -248,8 +248,7 @@ AppDelegate *theApp;
 - (void)didDecrypt:(NSString *)path {
     for (YoucryptDirectory *dir in directories) {
         if ([path isEqualToString:dir.path]) {
-            dir.mounted = YES;
-            
+            dir.status = YoucryptDirectoryStatusMounted;
         }
         
     }
@@ -263,7 +262,7 @@ AppDelegate *theApp;
     dir.path = [path stringByAppendingPathComponent:@"encrypted.yc"];
     dir.mountedPath = @"";
     dir.alias = [path lastPathComponent];
-    dir.mounted = NO;
+    dir.status = YoucryptDirectoryStatusUnmounted;
     [directories addObject:dir];            
     if (listDirectories != nil) {
         [listDirectories.table reloadData];
@@ -462,6 +461,22 @@ AppDelegate *theApp;
             if ([[path pathExtension] isEqualToString:@"yc"]) {
                 [theApp openEncryptedFolder:path];
             }
+            else if ([fm fileExistsAtPath:[path stringByAppendingPathComponent:@"encrypted.yc"]
+                              isDirectory:&isDir] && isDir) {
+                NSAlert *alert = [NSAlert alertWithMessageText:@"Decrypt?"
+                                                 defaultButton:@"Decrypt"
+                                               alternateButton:@"Cancel"
+                                                   otherButton:nil
+                                     informativeTextWithFormat:@"This folder already contains encrypted content.  Decrypt and open?"];
+                if ([alert runModal] == NSAlertDefaultReturn) {
+                    [theApp openEncryptedFolder:[path stringByAppendingPathComponent:@"encrypted.yc"]];
+                    [tableView reloadData];
+                    return YES;
+                }              
+                else {
+                    return  NO;
+                }
+            }                                           
             else {
                 [theApp encryptFolder:path];
             }
@@ -489,7 +504,7 @@ AppDelegate *theApp;
         
     [dirAtRow checkIfStillMounted];
     
-    if (dirAtRow.mounted) { // mounted => unlocked
+    if (dirAtRow.status == YoucryptDirectoryStatusMounted) { // mounted => unlocked
         if ([cell isKindOfClass:[NSTextFieldCell class]]) {
             [cell setTextColor:[NSColor redColor]];
             [cell setBackgroundColor:[NSColor grayColor]];
@@ -497,7 +512,7 @@ AppDelegate *theApp;
             NSButtonCell *c = (NSButtonCell*) cell;
             [c setImage:[NSImage imageNamed:@"unlocked-24x24.png"]];
         }
-    } else { // unmounted => locked
+    } else  { // unmounted => locked
         if ([cell isKindOfClass:[NSTextFieldCell class]]) {
             [cell setTextColor:[NSColor blackColor]];
             [cell setBackgroundColor:[NSColor darkGrayColor]];
@@ -507,6 +522,8 @@ AppDelegate *theApp;
                 [c setImage:[NSImage imageNamed:@"locked-24x24.png"]];
             else if (dirAtRow.status == YoucryptDirectoryStatusError) 
                 [c setImage:[NSImage imageNamed:@"error-22x22.png"]];
+            if (dirAtRow.status == YoucryptDirectoryStatusProcessing)
+                [c setImage:[NSImage imageNamed:@"logo-color-alpha.png"]];
         }
     }
 
