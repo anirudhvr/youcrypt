@@ -259,6 +259,19 @@ AppDelegate *theApp;
     }
 }
 
+- (void)didRestore:(NSString *)path {
+    for (YoucryptDirectory *dir in directories) {
+        if ([path isEqualToString:dir.path]) {
+            [directories removeObject:dir];
+        }
+        
+    }
+    if (listDirectories != nil) {
+        [listDirectories.table reloadData];
+    }
+}
+
+
 
 - (IBAction)windowShouldClose:(id)sender {
     DDLogVerbose(@"Closing..");
@@ -497,7 +510,9 @@ AppDelegate *theApp;
 }
 
 - (void) removeFSAtRow:(int) row {
+    YoucryptDirectory *dir = [directories objectAtIndex:row];
     [self showRestoreWindow:self];
+    restoreController.path = dir.path;
 }
 
 @end

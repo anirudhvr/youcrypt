@@ -66,6 +66,8 @@
 -(BOOL)openEncryptedFolder:(NSString *)path;
 -(void)didDecrypt:(NSString *)path;
 -(void)didEncrypt:(NSString *)path;
+-(void)didRestore:(NSString *)path;
+
 -(void) removeFSAtRow:(int) row ;
 
 
