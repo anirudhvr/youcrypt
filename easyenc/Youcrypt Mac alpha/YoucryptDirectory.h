@@ -12,8 +12,8 @@ enum {
     YoucryptDirectoryStatusNotFound = 0,
     YoucryptDirectoryStatusMounted = 1,
     YoucryptDirectoryStatusUnmounted = 2,
-    YoucryptDirectoryStatusError = 3,
-    YoucryptDirectoryStatusProcessing = 4
+    YoucryptDirectoryStatusSourceNotFound = 3,
+    YoucryptDirectoryStatusProcessing = 4,
 } YoucryptDirectoryStatus;
 
 @interface YoucryptDirectory : NSObject <NSCoding> {
@@ -26,8 +26,10 @@ enum {
 @property (nonatomic, assign) NSUInteger status; // status description
 
 
-- (void) checkIfStillMounted;
+- (void) updateInfo;
+- (BOOL) checkYoucryptDirectoryStatus;
 + (void) refreshMountedFuseVolumes;
++ (NSString*) statusToString:(NSUInteger)status;
 
 
 // Add more if needed.

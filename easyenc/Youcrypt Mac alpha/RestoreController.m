@@ -16,7 +16,7 @@
 
 - (id)initWithWindow:(NSWindow *)window
 {
-    self = [super initWithWindow:window];
+    self = [super initWithWindowNibName:@"Restore"];
     if (self) {
         // Initialization code here.
     }

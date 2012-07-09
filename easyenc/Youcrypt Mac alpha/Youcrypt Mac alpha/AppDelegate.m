@@ -92,8 +92,8 @@ AppDelegate *theApp;
 }
 - (void)applicationWillTerminate:(NSNotification *)aNotification {
     [NSKeyedArchiver archiveRootObject:directories toFile:configDir.youCryptListFile];
-    
 }
+
 - (BOOL)application:(NSApplication *)theApplication openFile:(NSString *)filename {    
     return [self openEncryptedFolder:filename];
 }
@@ -204,10 +204,9 @@ AppDelegate *theApp;
         dir.status = YoucryptDirectoryStatusUnmounted;
         [directories addObject:dir];                
     FoundOne:      
-        if (dir.status == YoucryptDirectoryStatusMounted == YES) {
+        if (dir.status == YoucryptDirectoryStatusMounted) {
             // Just need to open the folder in this case
             [[NSWorkspace sharedWorkspace] openFile:dir.mountedPath];	
-
         } else {
             [self showDecryptWindow:self];
         }
@@ -313,6 +312,14 @@ AppDelegate *theApp;
     [decryptController showWindow:self];
 }
 
+- (IBAction)showRestoreWindow:(id)sender {
+    if (!restoreController) {
+        restoreController = [[RestoreController alloc] init];
+    }
+    [restoreController showWindow:self];
+}
+
+
 - (IBAction)showEncryptWindow:(id)sender {
     // Is encryptController nil?
     if (!encryptController) {
@@ -327,9 +334,9 @@ AppDelegate *theApp;
         if (encryptController.passphraseFromKeychain != nil) {
             encryptController.keychainHasPassphrase = YES;
         }
-    } else {
-        [encryptController setPassphraseTextField:pp];
     }
+    
+    [encryptController setPassphraseTextField:pp];
     
     DDLogVerbose(@"showing %@", encryptController);
     [encryptController showWindow:self];
@@ -368,6 +375,8 @@ AppDelegate *theApp;
     YoucryptDirectory *dirAtRow = [directories objectAtIndex:row];
     if (!dirAtRow)
         return nil;
+    
+    [dirAtRow updateInfo];
     
     NSMutableAttributedString *str = [NSMutableAttributedString alloc];
     
@@ -463,35 +472,32 @@ AppDelegate *theApp;
     if (!dirAtRow)
         return;
         
-    [dirAtRow checkIfStillMounted];
+    [dirAtRow updateInfo];
     
     if (dirAtRow.status == YoucryptDirectoryStatusMounted) { // mounted => unlocked
         if ([cell isKindOfClass:[NSTextFieldCell class]]) {
             [cell setTextColor:[NSColor redColor]];
             [cell setBackgroundColor:[NSColor grayColor]];
         } else if ([cell isKindOfClass:[NSButtonCell class]] && [colId isEqualToString:@"status"]) {
-            NSButtonCell *c = (NSButtonCell*) cell;
-            [c setImage:[NSImage imageNamed:@"unlocked-24x24.png"]];
+            [cell setImage:[NSImage imageNamed:@"unlocked-24x24.png"]];
         }
     } else  { // unmounted => locked
         if ([cell isKindOfClass:[NSTextFieldCell class]]) {
             [cell setTextColor:[NSColor blackColor]];
             [cell setBackgroundColor:[NSColor darkGrayColor]];
         } else if ([cell isKindOfClass:[NSButtonCell class]] && [colId isEqualToString:@"status"]) {
-            NSButtonCell *c = (NSButtonCell*) cell;
-//            if (dirAtRow.status == YoucryptDirectoryStatusUnmounted) 
-//                [c setImage:[NSImage imageNamed:@"locked-24x24.png"]];
-//            else if (dirAtRow.status == YoucryptDirectoryStatusError) 
-//                [c setImage:[NSImage imageNamed:@"error-22x22.png"]];
-//            if (dirAtRow.status == YoucryptDirectoryStatusProcessing)
-//                [c setImage:[NSImage imageNamed:@"logo-color-alpha.png"]];
+            if (dirAtRow.status == YoucryptDirectoryStatusUnmounted) 
+                [cell setImage:[NSImage imageNamed:@"locked-24x24.png"]];
+            else if (dirAtRow.status == YoucryptDirectoryStatusSourceNotFound) 
+                [cell setImage:[NSImage imageNamed:@"error-22x22.png"]];
+            if (dirAtRow.status == YoucryptDirectoryStatusProcessing)
+                [cell setImage:[NSImage imageNamed:@"logo-color-alpha.png"]];
         }
     }
-
- 
-
 }
 
-   
+- (void) removeFSAtRow:(int) row {
+    [self showRestoreWindow:self];
+}
 
 @end

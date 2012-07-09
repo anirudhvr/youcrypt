@@ -56,7 +56,7 @@
 	NSString *yourPasswordString = [yourPassword stringValue];
     
     [libFunctions mkdirRecursive:destFolder]; 
-    if ([libFunctions mountEncFS:srcFolder decryptedFolder:destFolder password:yourPasswordString] == YES) {
+    if ([libFunctions mountEncFS:srcFolder decryptedFolder:destFolder password:yourPasswordString volumeName:[[srcFolder stringByDeletingLastPathComponent] lastPathComponent]] == YES) {
         [theApp didDecrypt:sourceFolderPath];
         [self close];
         [[NSWorkspace sharedWorkspace] openFile:destFolder];	

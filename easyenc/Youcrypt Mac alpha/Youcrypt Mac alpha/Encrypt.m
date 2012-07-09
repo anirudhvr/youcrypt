@@ -207,9 +207,12 @@
     /* change folder icon of encrypted folder */
     [self setFolderIcon:self];    
     {
+        NSError *err;
         NSNumber *num = [NSNumber numberWithBool:YES];
         NSDictionary *attribs = [NSDictionary dictionaryWithObjectsAndKeys:num, NSFileExtensionHidden, nil];        
-        [[NSFileManager defaultManager] setAttributes:attribs ofItemAtPath:destFolder error:nil];
+        [[NSFileManager defaultManager] setAttributes:attribs ofItemAtPath:destFolder error:&err];
+       // NSAlert *alert = [NSAlert alertWithError:err];
+      //  [alert runModal];
     }
     
 //    - (BOOL)setAttributes:(NSDictionary *)attributes ofItemAtPath:(NSString *)path error:(NSError **)error

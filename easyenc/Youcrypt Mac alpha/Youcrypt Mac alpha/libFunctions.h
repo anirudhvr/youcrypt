@@ -46,7 +46,8 @@
 
 + (BOOL) mountEncFS:(NSString *)encFolder
     decryptedFolder:(NSString *)decFolder
-           password:(NSString *)password;
+           password:(NSString *)password
+         volumeName:(NSString*) volname;
 
 
 
