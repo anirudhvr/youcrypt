@@ -60,21 +60,23 @@ static int minRefreshTime = 5; // at most every 30 seconds
 
 - (void) updateInfo
 {
-    [self checkYoucryptDirectoryStatus];
+    [self checkYoucryptDirectoryStatus:NO];
     
-    if (status == YoucryptDirectoryStatusSourceNotFound) {
-        path = mountedPath = [NSString stringWithString:@""];
-    } else if (status == YoucryptDirectoryStatusNotFound) {
-        mountedPath = [NSString stringWithString:@""];
-        status = YoucryptDirectoryStatusUnmounted; // source exists, just not mounted
+    if (status != YoucryptDirectoryStatusProcessing) {
+        if (status == YoucryptDirectoryStatusSourceNotFound) {
+            path = mountedPath = [NSString stringWithString:@""];
+        } else if (status == YoucryptDirectoryStatusNotFound) {
+            mountedPath = [NSString stringWithString:@""];
+            status = YoucryptDirectoryStatusUnmounted; // source exists, just not mounted
+        }
     }
 }
 
-- (BOOL)checkYoucryptDirectoryStatus
+- (BOOL)checkYoucryptDirectoryStatus:(BOOL)forceRefresh
 {  
     @synchronized(self) {
         
-        if ([timer timerElapsed]) {
+        if (forceRefresh || [timer timerElapsed]) {
             [YoucryptDirectory refreshMountedFuseVolumes];
         }
         

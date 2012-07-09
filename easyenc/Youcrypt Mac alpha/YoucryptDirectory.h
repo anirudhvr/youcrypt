@@ -28,7 +28,7 @@ enum {
 
 
 - (void) updateInfo;
-- (BOOL) checkYoucryptDirectoryStatus;
+- (BOOL) checkYoucryptDirectoryStatus:(BOOL)forceRefresh;
 + (void) refreshMountedFuseVolumes;
 + (NSString*) statusToString:(NSUInteger)status;
 
