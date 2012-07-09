@@ -95,6 +95,7 @@
 }
 
 - (IBAction)selectRow:(id)sender {
+    return;
    if ([sender clickedRow] < [theApp.directories count]) {
         YoucryptDirectory *dir = [theApp.directories objectAtIndex:[sender clickedRow]];
         [dirName setStringValue:dir.path];
@@ -116,16 +117,11 @@
         NSArray* files = [openDlg filenames];
         for( int i = 0; i < [files count]; i++ )
             [theApp encryptFolder:[files objectAtIndex:i]];
-        [table reloadData];
     }
 
 }
 
 - (IBAction)removeFS:(id)sender {
-    NSInteger row = [table selectedRow];
-    if (row != -1) {        
-        [table reloadData];
-    }
     
 }
 

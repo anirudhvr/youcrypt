@@ -433,7 +433,6 @@ AppDelegate *theApp;
                                      informativeTextWithFormat:@"This folder already contains encrypted content.  Decrypt and open?"];
                 if ([alert runModal] == NSAlertDefaultReturn) {
                     [theApp openEncryptedFolder:[path stringByAppendingPathComponent:@"encrypted.yc"]];
-                    [tableView reloadData];
                     return YES;
                 }              
                 else {
@@ -443,7 +442,6 @@ AppDelegate *theApp;
             else {
                 [theApp encryptFolder:path];
             }
-            [tableView reloadData];
             return YES;
         }
     }
@@ -481,12 +479,12 @@ AppDelegate *theApp;
             [cell setBackgroundColor:[NSColor darkGrayColor]];
         } else if ([cell isKindOfClass:[NSButtonCell class]] && [colId isEqualToString:@"status"]) {
             NSButtonCell *c = (NSButtonCell*) cell;
-            if (dirAtRow.status == YoucryptDirectoryStatusUnmounted) 
-                [c setImage:[NSImage imageNamed:@"locked-24x24.png"]];
-            else if (dirAtRow.status == YoucryptDirectoryStatusError) 
-                [c setImage:[NSImage imageNamed:@"error-22x22.png"]];
-            if (dirAtRow.status == YoucryptDirectoryStatusProcessing)
-                [c setImage:[NSImage imageNamed:@"logo-color-alpha.png"]];
+//            if (dirAtRow.status == YoucryptDirectoryStatusUnmounted) 
+//                [c setImage:[NSImage imageNamed:@"locked-24x24.png"]];
+//            else if (dirAtRow.status == YoucryptDirectoryStatusError) 
+//                [c setImage:[NSImage imageNamed:@"error-22x22.png"]];
+//            if (dirAtRow.status == YoucryptDirectoryStatusProcessing)
+//                [c setImage:[NSImage imageNamed:@"logo-color-alpha.png"]];
         }
     }
 
@@ -494,10 +492,6 @@ AppDelegate *theApp;
 
 }
 
-- (NSCell *)tableView:(NSTableView *)tableView dataCellForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
-   // NSLog(@"This one too!");
-    return nil;
-}
    
 
 @end
