@@ -158,7 +158,7 @@
     
 	/**** <!-- END PREP --> ***/
 
-	// ---- Figure out the password, sharing options, etc. -----------------
+	// -------------------------- Figure out the password, sharing options, etc. ------------------------------------
     NSString *yourPasswordString = [yourPassword stringValue];    
     if (!keychainHasPassphrase) {
         [libFunctions registerWithKeychain:yourPasswordString:@"Youcrypt"];
@@ -255,6 +255,10 @@
     [yourFriendsEmail setStringValue:@""];
     [self.window close];
 }
+
+
+
+
 
 -(void)setPassphraseTextField:(NSString*)string
 {

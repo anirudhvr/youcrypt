@@ -259,6 +259,19 @@ AppDelegate *theApp;
     }
 }
 
+- (void)didRestore:(NSString *)path {
+    for (YoucryptDirectory *dir in directories) {
+        if ([path isEqualToString:dir.path]) {
+            [directories removeObject:dir];
+        }
+        
+    }
+    if (listDirectories != nil) {
+        [listDirectories.table reloadData];
+    }
+}
+
+
 
 - (IBAction)windowShouldClose:(id)sender {
     DDLogVerbose(@"Closing..");
@@ -311,6 +324,14 @@ AppDelegate *theApp;
     DDLogVerbose(@"showing %@", decryptController);
     [decryptController showWindow:self];
 }
+
+- (IBAction)showRestoreWindow:(id)sender {
+    if (!restoreController) {
+        restoreController = [[RestoreController alloc] init];
+    }
+    [restoreController showWindow:self];
+}
+
 
 - (IBAction)showEncryptWindow:(id)sender {
     // Is encryptController nil?
@@ -434,7 +455,6 @@ AppDelegate *theApp;
                                      informativeTextWithFormat:@"This folder already contains encrypted content.  Decrypt and open?"];
                 if ([alert runModal] == NSAlertDefaultReturn) {
                     [theApp openEncryptedFolder:[path stringByAppendingPathComponent:@"encrypted.yc"]];
-                    [tableView reloadData];
                     return YES;
                 }              
                 else {
@@ -444,7 +464,6 @@ AppDelegate *theApp;
             else {
                 [theApp encryptFolder:path];
             }
-            [tableView reloadData];
             return YES;
         }
     }
@@ -488,15 +507,12 @@ AppDelegate *theApp;
                 [cell setImage:[NSImage imageNamed:@"logo-color-alpha.png"]];
         }
     }
-    
-    
-
 }
 
-- (NSCell *)tableView:(NSTableView *)tableView dataCellForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
-   // NSLog(@"This one too!");
-    return nil;
+- (void) removeFSAtRow:(int) row {
+    YoucryptDirectory *dir = [directories objectAtIndex:row];
+    [self showRestoreWindow:self];
+    restoreController.path = dir.path;
 }
-   
 
 @end
