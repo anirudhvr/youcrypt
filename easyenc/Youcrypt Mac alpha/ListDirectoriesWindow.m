@@ -118,7 +118,6 @@
         NSArray* files = [openDlg filenames];
         for( int i = 0; i < [files count]; i++ )
             [theApp encryptFolder:[files objectAtIndex:i]];
-        [table reloadData];
     }
 
 }
@@ -134,9 +133,11 @@
             [table endUpdates];
             [theApp.directories removeObjectAtIndex:row];
         } else if (dir.status == YoucryptDirectoryStatusMounted) {
-            [NSAlert alertWithMessageText:@"Cannot remove a mounted directory" defaultButton:@"Okay" alternateButton:@"Cancel" otherButton:@"" informativeTextWithFormat:@""]; 
+            [[NSAlert alertWithMessageText:@"Cannot remove a mounted directory" defaultButton:@"Okay" alternateButton:nil  otherButton:nil informativeTextWithFormat:@""] runModal];             
         } else if (dir.status == YoucryptDirectoryStatusUnmounted) {
-             [NSAlert alertWithMessageText:@"Cannot even remove a directory that is unmounted" defaultButton:@"Okay" alternateButton:@"Cancel" otherButton:@"" informativeTextWithFormat:@""]; 
+            if([[NSAlert alertWithMessageText:@"Restore and Remove" defaultButton:@"Yes" alternateButton:@"No, just remove it" otherButton:@"" informativeTextWithFormat:@"You have chosen to remove the youcrypted folder at %@.  Restore contents?", [dir.path stringByDeletingLastPathComponent]] runModal] == NSAlertDefaultReturn) {
+                [theApp removeFSAtRow:row];
+            }
         }
     }
     [table reloadData];

@@ -7,6 +7,7 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "RestoreController.h"
 
 @class PreferenceController;
 @class FileSystemsController;
@@ -28,6 +29,7 @@
     PreferenceController *preferenceController;
     Decrypt *decryptController;
     Encrypt  *encryptController;
+    RestoreController *restoreController;
         
 
     // Config directory
@@ -67,6 +69,10 @@
 -(BOOL)openEncryptedFolder:(NSString *)path;
 -(void)didDecrypt:(NSString *)path;
 -(void)didEncrypt:(NSString *)path;
+-(void)didRestore:(NSString *)path;
+
+-(void) removeFSAtRow:(int) row ;
+
 
 
 
