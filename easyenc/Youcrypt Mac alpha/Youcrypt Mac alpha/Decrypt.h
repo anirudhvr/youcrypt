@@ -21,5 +21,7 @@
 
 @property (atomic, strong) NSString *sourceFolderPath;
 @property (atomic, strong) NSString *destFolderPath;
+@property (atomic, copy) NSString *passphraseFromKeychain;
+@property (atomic, assign) BOOL keychainHasPassphrase;
 
 @end

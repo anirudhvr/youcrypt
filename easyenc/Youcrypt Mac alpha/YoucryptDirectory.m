@@ -32,6 +32,9 @@ static int minRefreshTime = 2; // at most every 30 seconds
         alias = [decoder decodeObjectForKey:@"alias"];
         mountedDateAsString = [decoder decodeObjectForKey:@"mountedDateAsString"];
         status = [decoder decodeIntegerForKey:@"status"];
+//        if (status == YoucryptDirectoryStatusProcessing)
+//            status = YoucryptDirectoryStatusNotFound;
+
         if (!alias)
             alias = [[NSString alloc] init];
         
@@ -144,7 +147,7 @@ static int minRefreshTime = 2; // at most every 30 seconds
     }
         
 
-    NSMutableArray *mountLines = [[NSMutableArray alloc] initWithArray:[mountOutput componentsSeparatedByString:@"\r\n"]];
+    NSMutableArray *mountLines = [[NSMutableArray alloc] initWithArray:[mountOutput componentsSeparatedByString:@"\n"]];
     
     //NSLog(@"Got %lu lines from mount", [mountLines count]);
     
