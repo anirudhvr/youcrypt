@@ -227,8 +227,10 @@ AppDelegate *theApp;
         YoucryptDirectory *dir;
         for (dir in directories) {
             if ([path isEqualToString:dir.path]) {
-                if (dir.status == YoucryptDirectoryStatusUnmounted)
+                if (dir.status == YoucryptDirectoryStatusUnmounted) {
                     dir.mountedPath = mountPoint;
+                    dir.status =  YoucryptDirectoryStatusProcessing;
+                }
                 goto FoundOne;
             }
         }        
@@ -236,7 +238,8 @@ AppDelegate *theApp;
         dir.path = path;
         dir.mountedPath = mountPoint;
         dir.alias = [[path stringByDeletingLastPathComponent] lastPathComponent];
-        dir.status = YoucryptDirectoryStatusUnmounted;
+//        dir.status = YoucryptDirectoryStatusUnmounted;
+        dir.status = YoucryptDirectoryStatusProcessing;
         [directories addObject:dir];                
     FoundOne:      
         if (dir.status == YoucryptDirectoryStatusMounted) {
@@ -274,9 +277,10 @@ AppDelegate *theApp;
     for (YoucryptDirectory *dir in directories) {
         if ([path isEqualToString:dir.path]) {
             dir.status = YoucryptDirectoryStatusMounted;
+            [dir checkYoucryptDirectoryStatus:YES];
         }
-        
     }
+
     if (listDirectories != nil) {
         [listDirectories.table reloadData];
     }
@@ -519,7 +523,7 @@ AppDelegate *theApp;
             else if (dirAtRow.status == YoucryptDirectoryStatusSourceNotFound) 
                 [cell setImage:[NSImage imageNamed:@"error-22x22.png"]];
             if (dirAtRow.status == YoucryptDirectoryStatusProcessing)
-                [cell setImage:[NSImage imageNamed:@"logo-color-alpha.png"]];
+                [cell setImage:[NSImage imageNamed:@"loading-24x24.gif"]];
         }
     }
     
