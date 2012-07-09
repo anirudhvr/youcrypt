@@ -511,7 +511,7 @@ AppDelegate *theApp;
 }
 
 //--------------------------------------------------------------------------------------------------
-// Code to color mounted and unmounted folders separately
+// Code to color mounted and unmounted folders separately and change their icons
 //--------------------------------------------------------------------------------------------------
 - (void)tableView:(NSTableView*)tableView willDisplayCell:(id)cell forTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
     NSString *colId = [tableColumn identifier];
@@ -533,11 +533,16 @@ AppDelegate *theApp;
             [cell setBackgroundColor:[NSColor grayColor]];
         } else if ([cell isKindOfClass:[NSButtonCell class]] && [colId isEqualToString:@"status"]) {
             [cell setImage:[NSImage imageNamed:@"unlocked-24x24.png"]];
+        } else if ([cell isKindOfClass:[NSPopUpButtonCell class]] && [colId isEqualToString:@"props"]) {
+            NSPopUpButtonCell *dataTypeDropDownCell = [tableColumn dataCell];
+            [[dataTypeDropDownCell itemAtIndex:1] setTitle:@"Close"];
+            
         }
     } else  { // unmounted => locked
         if ([cell isKindOfClass:[NSTextFieldCell class]]) {
             [cell setTextColor:[NSColor blackColor]];
             [cell setBackgroundColor:[NSColor darkGrayColor]];
+            
         } else if ([cell isKindOfClass:[NSButtonCell class]] && [colId isEqualToString:@"status"]) {
             if (dirAtRow.status == YoucryptDirectoryStatusUnmounted) 
                 [cell setImage:[NSImage imageNamed:@"locked-24x24.png"]];
@@ -545,6 +550,10 @@ AppDelegate *theApp;
                 [cell setImage:[NSImage imageNamed:@"error-22x22.png"]];
             if (dirAtRow.status == YoucryptDirectoryStatusProcessing)
                 [cell setImage:[NSImage imageNamed:@"loading-24x24.gif"]];
+        } else if ([cell isKindOfClass:[NSPopUpButtonCell class]] && [colId isEqualToString:@"props"]) {
+            NSPopUpButtonCell *dataTypeDropDownCell = [tableColumn dataCell];
+            [[dataTypeDropDownCell itemAtIndex:1] setTitle:@"Open"];
+            
         }
     }
 }
@@ -553,6 +562,25 @@ AppDelegate *theApp;
     YoucryptDirectory *dir = [directories objectAtIndex:row];
     [self showRestoreWindow:self];
     restoreController.path = dir.path;
+}
+
+- (id) tableView:(NSTableView*)tableView dataCellForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row
+{
+    NSString *colId = [tableColumn identifier];
+ 
+    /*
+    if ([colId isEqualToString:@"props"]) {
+        NSPopUpButtonCell *dataTypeDropDownCell = [[NSPopUpButtonCell alloc] initTextCell:@"Actions..." pullsDown:YES];
+        [dataTypeDropDownCell setBordered:NO];
+        [dataTypeDropDownCell setEditable:YES];
+        NSArray *dataTypeNames = [NSArray arrayWithObjects:@"NULLOrignal", @"String", @"Money", @"Date", @"Int", nil];
+        [dataTypeDropDownCell addItemsWithTitles:dataTypeNames];
+        return dataTypeDropDownCell;
+    } else {
+        return nil;
+    }
+     */
+    return nil;
 }
 
 @end
