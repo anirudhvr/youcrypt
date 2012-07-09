@@ -14,6 +14,7 @@
 
 @property (readwrite,copy) IBOutlet NSString *path;
 @property (readwrite,copy) NSString *passwd;
+@property (readwrite,assign) BOOL keychainHasPassphrase;
 
 - (IBAction) restore:(id)sender;
 

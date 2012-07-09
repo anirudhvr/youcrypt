@@ -176,8 +176,8 @@ AppDelegate *theApp;
     else if([type isEqualToString:@"E"])
         [self showEncryptWindow:self];
     
-    else if([type isEqualToString:@"D"])
-        [self showDecryptWindow:self];
+//    else if([type isEqualToString:@"D"])
+//        [self showDecryptWindow:self];
     
     else if ([type isEqualToString:@"P"])
         [self showPreferencePanel:self];
@@ -218,35 +218,30 @@ AppDelegate *theApp;
         mountPoint = [configDir.youCryptVolDir stringByAppendingPathComponent:
                       [timeStr stringByAppendingPathComponent:mountPoint]];
         
-        if (!decryptController) {
-            decryptController = [[Decrypt alloc] init];
-        }
-        decryptController.destFolderPath = mountPoint;
-        decryptController.sourceFolderPath = path;
         
         YoucryptDirectory *dir;
         for (dir in directories) {
             if ([path isEqualToString:dir.path]) {
                 if (dir.status == YoucryptDirectoryStatusUnmounted) {
-                    dir.mountedPath = mountPoint;
                     dir.status =  YoucryptDirectoryStatusProcessing;
+                    dir.mountedPath = mountPoint;
                 }
                 goto FoundOne;
             }
         }        
         dir = [[YoucryptDirectory alloc] init];
         dir.path = path;
-        dir.mountedPath = mountPoint;
         dir.alias = [[path stringByDeletingLastPathComponent] lastPathComponent];
 //        dir.status = YoucryptDirectoryStatusUnmounted;
         dir.status = YoucryptDirectoryStatusProcessing;
+        dir.mountedPath = mountPoint;
         [directories addObject:dir];                
     FoundOne:      
         if (dir.status == YoucryptDirectoryStatusMounted) {
             // Just need to open the folder in this case
             [[NSWorkspace sharedWorkspace] openFile:dir.mountedPath];	
         } else {
-            [self showDecryptWindow:self];
+            [self showDecryptWindow:self path:path mountPoint:mountPoint];
         }
         return YES;
     }
@@ -274,6 +269,7 @@ AppDelegate *theApp;
 }
 
 - (void)didDecrypt:(NSString *)path {
+    NSLog(@"did decrypt %@\n", path);
     for (YoucryptDirectory *dir in directories) {
         if ([path isEqualToString:dir.path]) {
             NSLog(@"Setting it to mounted\n");
@@ -303,6 +299,7 @@ AppDelegate *theApp;
     for (YoucryptDirectory *dir in directories) {
         if ([path isEqualToString:dir.path]) {
             [directories removeObject:dir];
+            break;
         }
         
     }
@@ -356,20 +353,49 @@ AppDelegate *theApp;
     //[preferenceController showWindow:self];
 }
 
-- (IBAction)showDecryptWindow:(id)sender {
+- (IBAction)showDecryptWindow:(id)sender path:(NSString *)path mountPoint:(NSString *)mountPath {
     // Is decryptController nil?
     if (!decryptController) {
         decryptController = [[Decrypt alloc] init];
     }
+    
+    NSString *pp =[libFunctions getPassphraseFromKeychain:@"Youcrypt"];
     DDLogVerbose(@"showing %@", decryptController);
-    [decryptController showWindow:self];
+    DDLogVerbose(@"password from keychain = %@\n", pp);
+
+    decryptController.passphraseFromKeychain = pp;
+    decryptController.keychainHasPassphrase = YES;        
+    decryptController.sourceFolderPath = path;
+    decryptController.destFolderPath = mountPath;
+    
+    if ((pp != nil) && !([pp isEqualToString:@""])) {
+        // If we have a password, try running decrypting without showing the window.
+        DDLogVerbose(@"trying auto decrypt\n");
+        [decryptController decrypt:self];
+    }
+    else {                
+        [decryptController showWindow:self];
+    }
 }
 
-- (IBAction)showRestoreWindow:(id)sender {
+- (IBAction)showRestoreWindow:(id)sender path:(NSString *)path {
     if (!restoreController) {
         restoreController = [[RestoreController alloc] init];
     }
-    [restoreController showWindow:self];
+    
+    NSString *pp =[libFunctions getPassphraseFromKeychain:@"Youcrypt"];
+    restoreController.passwd = pp;
+    restoreController.keychainHasPassphrase = YES;        
+    restoreController.path = path;
+    
+    if ((pp != nil) && !([pp isEqualToString:@""])) {
+        // If we have a password, try running decrypting without showing the window.
+        [restoreController restore:self];
+    }
+    else {                
+        [restoreController showWindow:self];
+    }
+
 }
 
 
@@ -550,8 +576,7 @@ AppDelegate *theApp;
 
 - (void) removeFSAtRow:(int) row {
     YoucryptDirectory *dir = [directories objectAtIndex:row];
-    [self showRestoreWindow:self];
-    restoreController.path = dir.path;
+    [self showRestoreWindow:self path:dir.path];
 }
 
 @end

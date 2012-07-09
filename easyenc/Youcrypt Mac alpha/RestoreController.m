@@ -15,6 +15,7 @@
 
 @synthesize path;
 @synthesize passwd;
+@synthesize keychainHasPassphrase;
 
 - (id)init //WithWindow:(NSWindow *)window
 {
@@ -35,7 +36,8 @@
 
 - (IBAction) restore:(id)sender
 {
-    passwd = [passwordField stringValue];
+    if (!self.keychainHasPassphrase)
+        passwd = [passwordField stringValue];
     
     
     NSString *tempFolder = NSTemporaryDirectory();
@@ -43,14 +45,25 @@
     tempFolder = [tempFolder stringByAppendingPathComponent:[[NSProcessInfo processInfo] globallyUniqueString]];
     [libFunctions mkdirRecursive:tempFolder];
         
-    
-    [[NSAlert alertWithMessageText:@"HI" defaultButton:nil alternateButton:nil otherButton:nil informativeTextWithFormat:@"About to take care of %@", path] runModal];
-    
+    NSLog(@"Restoring %@: tmpDir = %@\n", path, tempFolder);
+        
 //    [libFunctions createEncFS:destFolder decryptedFolder:tempFolder numUsers:numberOfUsers combinedPassword:combinedPasswordString];
-    [libFunctions mountEncFS:path decryptedFolder:tempFolder password:passwd volumeName:path];
+    if (![libFunctions mountEncFS:path decryptedFolder:tempFolder password:passwd volumeName:path]) {
+        if (self.keychainHasPassphrase) {
+            // The error wasn't the user's fault.
+            // His keychain couldn't unlock it.
+            [self showWindow:nil];
+            self.keychainHasPassphrase = NO;
+            return;
+        }
+        else {
+            NSAlert *alert = [NSAlert alertWithMessageText:@"Incorrect passphrase" defaultButton:nil alternateButton:nil otherButton:nil informativeTextWithFormat:@"The passphrase does not decrypt %@", [path stringByDeletingLastPathComponent]];
+            [alert runModal];
+        }
+
+    }
     
     NSString *backPath = [path stringByDeletingLastPathComponent];
-    
     
     // Now to move the contents of tempFolder into backPath
     // Unfortunately, a direct move won't work since both directories exist and

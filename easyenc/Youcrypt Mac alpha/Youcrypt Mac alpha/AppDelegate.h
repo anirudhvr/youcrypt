@@ -60,7 +60,7 @@
 
 // Enc and Dec
 - (IBAction)showEncryptWindow:(id)sender;
-- (IBAction)showDecryptWindow:(id)sender;
+- (IBAction)showDecryptWindow:(id)sender path:(NSString *)path mountPoint:(NSString *)mountPath;
 - (IBAction)showListDirectories:(id)sender;
 - (IBAction)openFeedbackPage:(id)sender;
 - (IBAction)openHelpPage:(id)sender;
