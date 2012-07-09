@@ -21,7 +21,7 @@
 
 static BOOL globalsAllocated = NO;
 static NSMutableArray *mountedFuseVolumes;
-static int minRefreshTime = 5; // at most every 30 seconds
+static int minRefreshTime = 2; // at most every 30 seconds
 
 
 - (id)initWithCoder:(NSCoder *)decoder {

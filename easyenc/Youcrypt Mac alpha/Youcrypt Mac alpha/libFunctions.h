@@ -55,10 +55,9 @@
 
 
 
-+ (void) archiveDirectoryList:directories 
-                       toFile:file;
-+ (void) unarchiveDirectoryList:directories
-                       fromFile:file;
++ (void) archiveDirectoryList:(id)directories 
+                       toFile:(NSString*)file;
++ (id) unarchiveDirectoryListFromFile:(NSString*)file;
 
 
 + (BOOL)fileHandleIsReadable:(NSFileHandle*)fh;

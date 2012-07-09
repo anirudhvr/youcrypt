@@ -207,17 +207,6 @@
 }
 
 
-+ (BOOL)fileHandleIsReadable:(NSFileHandle*)fh
-{
-    int fd = [fh fileDescriptor];
-    fd_set fdset;
-    struct timeval tmout = { 0, 0 }; // return immediately
-    FD_ZERO(&fdset);
-    FD_SET(fd, &fdset);
-    return (select(fd + 1, &fdset, NULL, NULL, &tmout) > 0);
-}
-
-
 
 + (BOOL) changeEncFSPasswd:(NSString *)path
                  oldPasswd:(NSString *)oldPasswd
@@ -239,6 +228,32 @@
         return NO;
     }
 }
+
+
+
++ (BOOL)fileHandleIsReadable:(NSFileHandle*)fh
+{
+    int fd = [fh fileDescriptor];
+    fd_set fdset;
+    struct timeval tmout = { 0, 0 }; // return immediately
+    FD_ZERO(&fdset);
+    FD_SET(fd, &fdset);
+    return (select(fd + 1, &fdset, NULL, NULL, &tmout) > 0);
+}
+
++ (void) archiveDirectoryList:(id)directories 
+                       toFile:(NSString*)file 
+{
+    [NSKeyedArchiver archiveRootObject:directories toFile:file];
+
+}
+
++ (id) unarchiveDirectoryListFromFile:(NSString*)file
+{
+    return [NSKeyedUnarchiver unarchiveObjectWithFile:file];    
+}
+
+
 
 
 @end

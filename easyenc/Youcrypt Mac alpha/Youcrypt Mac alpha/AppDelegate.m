@@ -52,7 +52,7 @@ AppDelegate *theApp;
     //[youcryptService setApp:self];
     
     // TODO:  Load up directories array from the list file.
-    directories = [NSKeyedUnarchiver unarchiveObjectWithFile:configDir.youCryptListFile];
+    directories = [libFunctions unarchiveDirectoryListFromFile:configDir.youCryptListFile];
     if (directories == nil) {
         directories = [[NSMutableArray alloc] init];
     } else {
@@ -85,7 +85,8 @@ AppDelegate *theApp;
         NSLog(@"Syncing current state to disk");
         // XXX break this off into a new thread?
         /// XX might want to use a dispatch queue here instead
-        [NSKeyedArchiver archiveRootObject:directories toFile:configDir.youCryptListFile];
+        [libFunctions archiveDirectoryList:directories toFile:configDir.youCryptListFile];
+//        [NSKeyedArchiver archiveRootObject:directories toFile:configDir.youCryptListFile];
         
         configDirBeingSynced = NO;
     }
@@ -125,7 +126,7 @@ AppDelegate *theApp;
     DDLogVerbose(@"App did, in fact, finish launching!!!");
 }
 - (void)applicationWillTerminate:(NSNotification *)aNotification {
-    [NSKeyedArchiver archiveRootObject:directories toFile:configDir.youCryptListFile];
+    //[NSKeyedArchiver archiveRootObject:directories toFile:configDir.youCryptListFile];
     [libFunctions archiveDirectoryList:directories toFile:configDir.youCryptListFile];
 }
 
