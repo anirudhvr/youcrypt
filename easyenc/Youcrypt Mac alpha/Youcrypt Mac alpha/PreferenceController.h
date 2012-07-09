@@ -88,7 +88,6 @@
 // General tab methods
 - (IBAction)filenameEncryptionChecked:(id)sender;
 - (IBAction)startOnBootChecked:(id)sender;
-- (IBAction)saveGeneralPrefs:(id)sender;
 
 
 // Account tab methods

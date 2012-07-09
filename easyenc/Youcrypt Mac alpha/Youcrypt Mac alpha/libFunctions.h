@@ -49,14 +49,21 @@
            password:(NSString *)password
          volumeName:(NSString*) volname;
 
++ (BOOL) changeEncFSPasswd:(NSString *)path
+                 oldPasswd:(NSString *)oldPasswd
+                 newPasswd:(NSString *)newPasswd;
+
+
+
++ (void) archiveDirectoryList:directories 
+                       toFile:file;
++ (void) unarchiveDirectoryList:directories
+                       fromFile:file;
 
 
 + (BOOL)fileHandleIsReadable:(NSFileHandle*)fh;
 
 
 
-+ (BOOL) changeEncFSPasswd:(NSString *)path
-                 oldPasswd:(NSString *)oldPasswd
-                 newPasswd:(NSString *)newPasswd;
 
 @end

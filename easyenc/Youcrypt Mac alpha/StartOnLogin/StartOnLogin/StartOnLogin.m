@@ -63,7 +63,6 @@
 
 +(void) setStartAtLogin:(NSURL *)itemURL enabled:(BOOL)enabled
 {
-    OSStatus status;
     LSSharedFileListItemRef existingItem = NULL;
     
     LSSharedFileListRef loginItems = LSSharedFileListCreate(NULL, kLSSharedFileListSessionLoginItems, NULL);

@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-
+@class PeriodicActionTimer;
 enum {
     YoucryptDirectoryStatusNotFound = 0,
     YoucryptDirectoryStatusMounted = 1,
@@ -17,6 +17,7 @@ enum {
 } YoucryptDirectoryStatus;
 
 @interface YoucryptDirectory : NSObject <NSCoding> {
+    PeriodicActionTimer *timer;
 }
 
 @property (nonatomic, strong) NSString *path;          // Path of the youcrypt directory.

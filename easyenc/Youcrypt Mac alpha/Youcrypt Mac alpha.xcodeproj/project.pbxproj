@@ -79,6 +79,7 @@
 		E66988D5159E62D8002323AD /* ChangePassphrase.xib in Resources */ = {isa = PBXBuildFile; fileRef = E66988D4159E62D8002323AD /* ChangePassphrase.xib */; };
 		E66988D9159E63BE002323AD /* JCSSheetController.m in Sources */ = {isa = PBXBuildFile; fileRef = E66988D8159E63BE002323AD /* JCSSheetController.m */; };
 		E66988DC159E63CF002323AD /* PassphraseSheetController.m in Sources */ = {isa = PBXBuildFile; fileRef = E66988DB159E63CF002323AD /* PassphraseSheetController.m */; };
+		E67FF2F215A8D5190033A63A /* PeriodicActionTimer.m in Sources */ = {isa = PBXBuildFile; fileRef = E67FF2F115A8D5190033A63A /* PeriodicActionTimer.m */; };
 		E6BEB6F015A4BB4F00878D4B /* Exit.png in Resources */ = {isa = PBXBuildFile; fileRef = E6BEB6EC15A4BB4F00878D4B /* Exit.png */; };
 		E6BEB6F115A4BB4F00878D4B /* Help.png in Resources */ = {isa = PBXBuildFile; fileRef = E6BEB6ED15A4BB4F00878D4B /* Help.png */; };
 		E6BEB6F215A4BB4F00878D4B /* Preferences.png in Resources */ = {isa = PBXBuildFile; fileRef = E6BEB6EE15A4BB4F00878D4B /* Preferences.png */; };
@@ -245,6 +246,8 @@
 		E66988D8159E63BE002323AD /* JCSSheetController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCSSheetController.m; sourceTree = "<group>"; };
 		E66988DA159E63CF002323AD /* PassphraseSheetController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PassphraseSheetController.h; sourceTree = "<group>"; };
 		E66988DB159E63CF002323AD /* PassphraseSheetController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PassphraseSheetController.m; sourceTree = "<group>"; };
+		E67FF2F015A8D5180033A63A /* PeriodicActionTimer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PeriodicActionTimer.h; sourceTree = "<group>"; };
+		E67FF2F115A8D5190033A63A /* PeriodicActionTimer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PeriodicActionTimer.m; sourceTree = "<group>"; };
 		E6BEB6EC15A4BB4F00878D4B /* Exit.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Exit.png; sourceTree = "<group>"; };
 		E6BEB6ED15A4BB4F00878D4B /* Help.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Help.png; sourceTree = "<group>"; };
 		E6BEB6EE15A4BB4F00878D4B /* Preferences.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Preferences.png; sourceTree = "<group>"; };
@@ -468,6 +471,8 @@
 				E6E2A0B6159266F6003E3F6C /* YoucryptService.m */,
 				25B1E508158FF5D400CDBC46 /* pipetest.c */,
 				25B1E505158FF48B00CDBC46 /* pipetest.h */,
+				E67FF2F015A8D5180033A63A /* PeriodicActionTimer.h */,
+				E67FF2F115A8D5190033A63A /* PeriodicActionTimer.m */,
 				E66988D6159E639B002323AD /* Sheet */,
 				252C3A621593C6B20044EB3C /* Logging */,
 			);
@@ -760,6 +765,7 @@
 				E0C5ACA315A50BC1000FC253 /* ConfigDirectory.m in Sources */,
 				E6649C7A15A53CD80096886F /* Encrypt.m in Sources */,
 				E6649C9615A70FB00096886F /* VolumePropertiesSheetController.m in Sources */,
+				E67FF2F215A8D5190033A63A /* PeriodicActionTimer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

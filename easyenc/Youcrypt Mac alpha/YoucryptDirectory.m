@@ -9,6 +9,7 @@
 #import "YoucryptDirectory.h"
 #import "logging.h"
 #import "libFunctions.h"
+#import "PeriodicActionTimer.h"
 
 @implementation YoucryptDirectory
 
@@ -20,7 +21,6 @@
 
 static BOOL globalsAllocated = NO;
 static NSMutableArray *mountedFuseVolumes;
-static NSDate *lastRefreshDate;
 static int minRefreshTime = 5; // at most every 30 seconds
 
 
@@ -38,11 +38,10 @@ static int minRefreshTime = 5; // at most every 30 seconds
         if ([alias isEqualToString:@""]) {
             alias = [path lastPathComponent];
         }
+        timer = [[PeriodicActionTimer alloc] initWithMinRefreshTime:minRefreshTime];
         @synchronized(self) {
             if (globalsAllocated == NO) {
                 mountedFuseVolumes = [[NSMutableArray alloc] init];
-                // Some date that is well before now
-                lastRefreshDate = [NSDate date];
                 [YoucryptDirectory refreshMountedFuseVolumes];
                 globalsAllocated = YES;
             } 
@@ -74,16 +73,11 @@ static int minRefreshTime = 5; // at most every 30 seconds
 - (BOOL)checkYoucryptDirectoryStatus
 {  
     @synchronized(self) {
-        // Return if we have already checekd in the last minRefreshTime seconds
-        NSUInteger secs_now = [[NSDate date] timeIntervalSince1970];
-        NSUInteger lastrefresh = [lastRefreshDate timeIntervalSince1970];
-
-        if (lastRefreshDate != nil &&
-            (secs_now - lastrefresh < minRefreshTime))
-            return YES;
         
-        [YoucryptDirectory refreshMountedFuseVolumes];
-        lastRefreshDate = [NSDate date];
+        if ([timer timerElapsed]) {
+            [YoucryptDirectory refreshMountedFuseVolumes];
+        }
+        
     }
     
     NSUInteger indexOfPath = [mountedFuseVolumes indexOfObject:mountedPath];
@@ -163,9 +157,6 @@ static int minRefreshTime = 5; // at most every 30 seconds
             [mountedFuseVolumes addObject:[line substringWithRange:[match rangeAtIndex:1]]];
         }];
     }
-	    
-    lastRefreshDate = [NSDate date];
- 
 }
 
 + (NSString*) statusToString:(NSUInteger)status
@@ -184,7 +175,7 @@ static int minRefreshTime = 5; // at most every 30 seconds
             return [NSString stringWithString:@"Processing"];
             break;
         case YoucryptDirectoryStatusSourceNotFound:
-            return [NSString stringWithString:@"Source directory not found!"];
+            return [NSString stringWithString:@"Source directory not found"];
             break;
         default:
             return nil;
