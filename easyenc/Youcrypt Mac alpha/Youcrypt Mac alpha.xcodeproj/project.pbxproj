@@ -53,6 +53,8 @@
 		E007C09D15A646B500D60802 /* libFunctions.m in Sources */ = {isa = PBXBuildFile; fileRef = 25F3D1501592435600E3383C /* libFunctions.m */; };
 		E007C09E15A646CF00D60802 /* SSKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = 25EE6A5C15928D5C008A0DC8 /* SSKeychain.m */; };
 		E007C09F15A646DC00D60802 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25EE6A5815928D2C008A0DC8 /* Security.framework */; };
+		E054042315AB1CE10011E5CC /* RestoreController.m in Sources */ = {isa = PBXBuildFile; fileRef = E054042115AB1CE10011E5CC /* RestoreController.m */; };
+		E054042415AB1CE10011E5CC /* Restore.xib in Resources */ = {isa = PBXBuildFile; fileRef = E054042215AB1CE10011E5CC /* Restore.xib */; };
 		E06E2B4115A76ABE00E52B2D /* ListRightClick.xib in Resources */ = {isa = PBXBuildFile; fileRef = E06E2B4015A76ABE00E52B2D /* ListRightClick.xib */; };
 		E0A2849815A61A26008A949A /* logo-512x512-alpha.icns in Resources */ = {isa = PBXBuildFile; fileRef = E0A2849715A61A26008A949A /* logo-512x512-alpha.icns */; };
 		E0BF0E951596B9C8002F9FB9 /* YoucryptDirectory.m in Sources */ = {isa = PBXBuildFile; fileRef = E0BF0E941596B9C8002F9FB9 /* YoucryptDirectory.m */; };
@@ -210,6 +212,9 @@
 		25FDA07015A269B1004F2914 /* Automator.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Automator.framework; path = System/Library/Frameworks/Automator.framework; sourceTree = SDKROOT; };
 		25FDA07515A284CD004F2914 /* XMLDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = XMLDictionary.h; path = ../XMLDictionary.h; sourceTree = "<group>"; };
 		25FDA07615A284CD004F2914 /* XMLDictionary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = XMLDictionary.m; path = ../XMLDictionary.m; sourceTree = "<group>"; };
+		E054042015AB1CE10011E5CC /* RestoreController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RestoreController.h; sourceTree = "<group>"; };
+		E054042115AB1CE10011E5CC /* RestoreController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RestoreController.m; sourceTree = "<group>"; };
+		E054042215AB1CE10011E5CC /* Restore.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Restore.xib; sourceTree = "<group>"; };
 		E06E2B3F15A7671B00E52B2D /* errors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = errors.h; sourceTree = "<group>"; };
 		E06E2B4015A76ABE00E52B2D /* ListRightClick.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ListRightClick.xib; sourceTree = "<group>"; };
 		E0A2849715A61A26008A949A /* logo-512x512-alpha.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = "logo-512x512-alpha.icns"; sourceTree = "<group>"; };
@@ -416,6 +421,7 @@
 				E06E2B4015A76ABE00E52B2D /* ListRightClick.xib */,
 				25300E8F15A3BE73009CDA08 /* FirstRun.xib */,
 				25300E8A15A385BE009CDA08 /* Gmail.xib */,
+				E054042215AB1CE10011E5CC /* Restore.xib */,
 				25F3D159159244E800E3383C /* Encrypt.xib */,
 				E0BF0EBC159838DD002F9FB9 /* ListDirectoriesWindow.xib */,
 				256C35A8158EAF8700E2BEC4 /* Preferences.xib */,
@@ -460,6 +466,8 @@
 				E6E2A0B7159266F6003E3F6C /* YoucryptService.h */,
 				253C3D7D159BBF9400120B8D /* BoxFSA.h */,
 				253C3D7E159BBF9400120B8D /* BoxFSA.m */,
+				E054042015AB1CE10011E5CC /* RestoreController.h */,
+				E054042115AB1CE10011E5CC /* RestoreController.m */,
 				E0BF0E931596B9C8002F9FB9 /* YoucryptDirectory.h */,
 				E0BF0E941596B9C8002F9FB9 /* YoucryptDirectory.m */,
 				E6E2A0B7159266F6003E3F6C /* YoucryptService.h */,
@@ -695,6 +703,7 @@
 				E6649C9215A707270096886F /* unlocked-24x24.png in Resources */,
 				E6649C9715A70FB00096886F /* VolumePropertiesSheetController.xib in Resources */,
 				E06E2B4115A76ABE00E52B2D /* ListRightClick.xib in Resources */,
+				E054042415AB1CE10011E5CC /* Restore.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -756,6 +765,7 @@
 				E0C5ACA315A50BC1000FC253 /* ConfigDirectory.m in Sources */,
 				E6649C7A15A53CD80096886F /* Encrypt.m in Sources */,
 				E6649C9615A70FB00096886F /* VolumePropertiesSheetController.m in Sources */,
+				E054042315AB1CE10011E5CC /* RestoreController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
