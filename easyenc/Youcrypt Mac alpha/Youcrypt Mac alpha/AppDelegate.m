@@ -21,6 +21,7 @@
 #import "logging.h"
 #import "ConfigDirectory.h"
 #import "ListDirectoriesWindow.h"
+#import "PeriodicActionTimer.h"
 
 
 int ddLogLevel = LOG_LEVEL_VERBOSE;
@@ -55,12 +56,45 @@ AppDelegate *theApp;
     if (directories == nil) {
         directories = [[NSMutableArray alloc] init];
     } else {
-        
+        // Do stuff here to check if dirs are all 
     }
+    
+    // Notifiers to indicate when app gains and loses focus
+    // This is to do background stuffl ike syncing the config directory to disk
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(applicationDidResignActive:)
+                                                 name:NSApplicationDidResignActiveNotification
+                                               object:nil ];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(applicationDidBecomeActive:)
+                                                 name:NSApplicationDidBecomeActiveNotification
+                                               object:nil ];
+    timer = [[PeriodicActionTimer alloc] initWithMinRefreshTime:5];
+    configDirBeingSynced = NO;
     
     theApp = self;
     return self;
 }
+
+- (void) applicationDidResignActive:(NSNotification *)notification
+{
+    NSLog(@"Resigned active");
+
+    if (configDirBeingSynced == NO && [timer timerElapsed]) {
+        configDirBeingSynced = YES;
+        NSLog(@"Syncing current state to disk");
+        // XXX break this off into a new thread?
+        /// XX might want to use a dispatch queue here instead
+        [NSKeyedArchiver archiveRootObject:directories toFile:configDir.youCryptListFile];
+        
+        configDirBeingSynced = NO;
+    }
+}
+- (void) applicationDidBecomeActive:(NSNotification *)notification
+{
+    NSLog(@"Became active");
+}
+
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
     // Insert code here to initialize your application
     [NSApp setServicesProvider:youcryptService];
@@ -92,6 +126,7 @@ AppDelegate *theApp;
 }
 - (void)applicationWillTerminate:(NSNotification *)aNotification {
     [NSKeyedArchiver archiveRootObject:directories toFile:configDir.youCryptListFile];
+    [libFunctions archiveDirectoryList:directories toFile:configDir.youCryptListFile];
 }
 
 - (BOOL)application:(NSApplication *)theApplication openFile:(NSString *)filename {    
@@ -238,6 +273,7 @@ AppDelegate *theApp;
 - (void)didDecrypt:(NSString *)path {
     for (YoucryptDirectory *dir in directories) {
         if ([path isEqualToString:dir.path]) {
+            NSLog(@"Setting it to mounted\n");
             dir.status = YoucryptDirectoryStatusMounted;
         }
         
@@ -286,7 +322,7 @@ AppDelegate *theApp;
 // Helper functions to show any window; you name it, we've it.
 // --------------------------------------------------------------------------------------
 - (IBAction)showMainApp:(id)sender {
-    [self.window makeKeyAndOrderFront:self];
+    [listDirectories.window makeKeyAndOrderFront:self];
 }
 
 - (IBAction)showListDirectories:(id)sender {
@@ -391,10 +427,9 @@ AppDelegate *theApp;
     
     [dirAtRow updateInfo];
     
-    NSMutableAttributedString *str = [NSMutableAttributedString alloc];
     
     if ([colId isEqualToString:@"alias"]) {
-        [str initWithString:dirAtRow.alias];
+        NSMutableAttributedString *str = [[NSMutableAttributedString alloc] initWithString:dirAtRow.alias];
         NSRange selectedRange = NSRangeFromString(dirAtRow.alias);
         [str addAttribute:NSForegroundColorAttributeName
                        value:[NSColor blueColor]

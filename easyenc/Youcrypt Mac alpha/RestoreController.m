@@ -59,6 +59,10 @@
     NSArray *files = [fm contentsOfDirectoryAtPath:tempFolder error:nil];
     for (NSString *file in files) {
         [fm moveItemAtPath:[tempFolder stringByAppendingPathComponent:file] toPath:[backPath stringByAppendingPathComponent:file] error:nil];
+        NSLog(@"Moving %@ to %@", 
+              [tempFolder stringByAppendingPathComponent:file],
+              [backPath stringByAppendingPathComponent:file]
+              );
     }    
     
     // Unmount the destination folder containing decrypted files

@@ -16,6 +16,7 @@
 @class ConfigDirectory;
 @class YoucryptService;
 @class ListDirectoriesWindow;
+@class PeriodicActionTimer;
 
 @interface AppDelegate : NSObject <NSTableViewDataSource, NSTableViewDelegate, NSApplicationDelegate> { // changed from NSApplicationDelegate
     
@@ -33,6 +34,8 @@
 
     // Config directory
     ConfigDirectory *configDir;
+    BOOL configDirBeingSynced;
+    PeriodicActionTimer *timer;
     
     YoucryptService *youcryptService;
     
