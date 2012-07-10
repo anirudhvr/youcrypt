@@ -23,10 +23,13 @@
 
 - (void) keyDown:(NSEvent *)theEvent;
 {
+    [super keyDown:theEvent];			
+
     NSLog(@"KEY! : %d",theEvent.keyCode);
     switch (theEvent.keyCode) {
         case 125: // down
         case 126: // up
+            NSLog(@"ROW: %ld",[listDirObj.table selectedRow]);
             [listDirObj setStatusToSelectedRow:[listDirObj.table selectedRow]];
             break;
         case 117: // delete
@@ -39,7 +42,6 @@
             break;
         
 	}    
-   [super keyDown:theEvent];			
 }
 
 @end

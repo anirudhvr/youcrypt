@@ -41,6 +41,7 @@ AppDelegate *theApp;
 @synthesize configDir;
 @synthesize directories;
 @synthesize firstRunSheetController;
+@synthesize feedbackSheetController;
 @synthesize keyDown;
 @synthesize preferenceController;
 

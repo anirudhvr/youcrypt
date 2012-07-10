@@ -63,8 +63,8 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "113"
          endingLineNumber = "113"
-         landmarkName = "@interface PreferenceController"
-         landmarkType = "2">
+         landmarkName = "-linkBoxAccount:"
+         landmarkType = "4">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "No"
@@ -128,7 +128,7 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "201"
          endingLineNumber = "201"
-         landmarkName = "-encrypt:"
+         landmarkName = "-didMount:"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -136,13 +136,13 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Youcrypt Mac alpha/AppDelegate.m"
-         timestampString = "363310970.409896"
+         timestampString = "363651917.503522"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "87"
-         endingLineNumber = "87"
-         landmarkName = "-applicationDidFinishLaunching:"
-         landmarkType = "5">
+         startingLineNumber = "86"
+         endingLineNumber = "86"
+         landmarkName = "@implementation AppDelegate"
+         landmarkType = "3">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "No"
@@ -162,12 +162,12 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Youcrypt Mac alpha/AppDelegate.m"
-         timestampString = "363310970.409896"
+         timestampString = "363651917.503522"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "320"
-         endingLineNumber = "320"
-         landmarkName = "-showFirstRun"
+         startingLineNumber = "319"
+         endingLineNumber = "319"
+         landmarkName = "-showListDirectories:"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -194,6 +194,71 @@
          startingLineNumber = "55"
          endingLineNumber = "55"
          landmarkName = "-send:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "ListDirectoriesWindow.h"
+         timestampString = "363640071.88929"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "38"
+         endingLineNumber = "38"
+         landmarkName = "@interface ListDirectoriesWindow"
+         landmarkType = "2">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "ListDirectoriesWindow.m"
+         timestampString = "363640442.890767"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "17"
+         endingLineNumber = "17"
+         landmarkName = "passphraseSheet"
+         landmarkType = "19">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "ListDirectoriesWindow.m"
+         timestampString = "363645817.214169"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "371"
+         endingLineNumber = "371"
+         landmarkName = "-showHelp"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "Youcrypt Mac alpha/Encrypt.m"
+         timestampString = "363646728.417196"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "136"
+         endingLineNumber = "136"
+         landmarkName = "-encrypt:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "PassphraseSheetController.m"
+         timestampString = "363651029.333011"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "79"
+         endingLineNumber = "79"
+         landmarkName = "-saveClicked:"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>
