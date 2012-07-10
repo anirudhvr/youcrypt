@@ -40,14 +40,20 @@
         passwd = [passwordField stringValue];
     
     
-    NSString *tempFolder = NSTemporaryDirectory();
+    tempFolder = NSTemporaryDirectory();
     [libFunctions mkdirRecursive:tempFolder];
     tempFolder = [tempFolder stringByAppendingPathComponent:[[NSProcessInfo processInfo] globallyUniqueString]];
     [libFunctions mkdirRecursive:tempFolder];
         
-    NSLog(@"Restoring %@: tmpDir = %@\n", path, tempFolder);
+//    NSLog(@"Restoring %@: tmpDir = %@\n", path, tempFolder);
         
 //    [libFunctions createEncFS:destFolder decryptedFolder:tempFolder numUsers:numberOfUsers combinedPassword:combinedPasswordString];
+    
+    NSNotificationCenter *nCenter = [[NSWorkspace sharedWorkspace] notificationCenter];
+    [nCenter removeObserver:self];
+    [nCenter addObserver:self selector:@selector(didMount:) name:NSWorkspaceDidMountNotification object:nil];
+    
+    
     if (![libFunctions mountEncFS:path decryptedFolder:tempFolder password:passwd volumeName:path]) {
         NSLog(@"Restoring failed at mountEncFs %@: tmpDir = %@\n", path, tempFolder);
         if (self.keychainHasPassphrase) {
@@ -64,6 +70,10 @@
         }
 
     }
+    return;
+}
+
+-(IBAction)didMount:(id)sender {
     
     NSString *backPath = [path stringByDeletingLastPathComponent];
     NSLog(@"Backpath is %@\n", backPath);
@@ -74,8 +84,10 @@
     NSFileManager *fm = [NSFileManager defaultManager];
     NSError *err;
     NSArray *files = [fm contentsOfDirectoryAtPath:tempFolder error:&err];
-    if (err != nil) 
+    if (err != nil) {        
         [[NSAlert alertWithError:err] runModal];
+        // FIXME
+    }
     
     NSLog(@"files = %@\n", files);
     
@@ -84,7 +96,7 @@
         if (([file isEqualToString:@".DS_Store"]) || ([file isEqualToString:@".encfs6.xml"]))
             continue;
         if (![fm moveItemAtPath:[tempFolder stringByAppendingPathComponent:file] toPath:[backPath stringByAppendingPathComponent:file] error:&err]) {
-//            [[NSAlert alertWithError:err] runModal];
+            //            [[NSAlert alertWithError:err] runModal];
         }
         NSLog(@"Moving %@ to %@", 
               [tempFolder stringByAppendingPathComponent:file],
@@ -102,6 +114,7 @@
     [fm removeItemAtPath:path error:nil];
     [theApp didRestore:path];
     [self.window close];
+
 }
 
 

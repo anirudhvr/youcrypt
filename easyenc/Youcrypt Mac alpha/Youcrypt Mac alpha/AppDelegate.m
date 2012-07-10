@@ -24,7 +24,6 @@
 #import "FirstRunSheetController.h"
 #import "FeedbackSheetController.h"
 #import "PeriodicActionTimer.h"
-#import "keyDownView.h"
 
 int ddLogLevel = LOG_LEVEL_VERBOSE;
 
@@ -128,12 +127,17 @@ AppDelegate *theApp;
             }
         }
     }
+    
+    
+    [[[NSWorkspace sharedWorkspace] notificationCenter] addObserver:self selector:@selector(someUnMount:) name:NSWorkspaceDidUnmountNotification object:nil];
+    [self someUnMount:nil];
 
     DDLogVerbose(@"App did, in fact, finish launching!!!");
 }
 - (void)applicationWillTerminate:(NSNotification *)aNotification {
     //[NSKeyedArchiver archiveRootObject:directories toFile:configDir.youCryptListFile];
     [libFunctions archiveDirectoryList:directories toFile:configDir.youCryptListFile];
+    [[[NSWorkspace sharedWorkspace] notificationCenter] removeObserver:self];
 }
 
 - (BOOL)application:(NSApplication *)theApplication openFile:(NSString *)filename {    
@@ -285,7 +289,7 @@ AppDelegate *theApp;
         if ([path isEqualToString:dir.path]) {
             NSLog(@"Setting it to mounted\n");
             dir.status = YoucryptDirectoryStatusMounted;
-            [dir checkYoucryptDirectoryStatus:YES];
+//            [dir checkYoucryptDirectoryStatus:YES];
         }
     }
 
@@ -501,7 +505,7 @@ AppDelegate *theApp;
     if (!dirAtRow)
         return nil;
     
-    [dirAtRow updateInfo];
+//    [dirAtRow updateInfo];
     
     
     if ([colId isEqualToString:@"alias"]) {
@@ -596,7 +600,7 @@ AppDelegate *theApp;
     if (!dirAtRow)
         return;
         
-    [dirAtRow updateInfo];
+//    [dirAtRow updateInfo];
     
     if (dirAtRow.status == YoucryptDirectoryStatusMounted) { // mounted => unlocked
         if ([cell isKindOfClass:[NSTextFieldCell class]]) {
@@ -652,6 +656,19 @@ AppDelegate *theApp;
         return nil;
     }
      */
+    return nil;
+}
+
+-(id) someUnMount:(id) sender {
+    // Someone unmount us a bomb.
+    NSLog(@"Something unmounted\n");
+    [YoucryptDirectory refreshMountedFuseVolumes];
+    YoucryptDirectory *dir;
+    for (dir in directories) {
+        [dir checkYoucryptDirectoryStatus:NO];
+    }
+    if (listDirectories != nil)
+        [listDirectories.table reloadData];
     return nil;
 }
 

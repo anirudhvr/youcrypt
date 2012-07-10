@@ -62,10 +62,14 @@
         yourPasswordString = [yourPassword stringValue];
     
     [libFunctions mkdirRecursive:destFolder]; 
+    
+    NSNotificationCenter *nCenter = [[NSWorkspace sharedWorkspace] notificationCenter];
+    [nCenter removeObserver:self];
+    [nCenter addObserver:self selector:@selector(didMount:) name:NSWorkspaceDidMountNotification object:nil];
+
+    
     if ([libFunctions mountEncFS:srcFolder decryptedFolder:destFolder password:yourPasswordString volumeName:[[srcFolder stringByDeletingLastPathComponent] lastPathComponent]] == YES) {
-        [theApp didDecrypt:sourceFolderPath];
-        [self close];
-        [[NSWorkspace sharedWorkspace] openFile:destFolder];	
+        return;
     } else {
         if (keychainHasPassphrase) {
             // The error wasn't the user's fault.
@@ -80,5 +84,15 @@
             return;
         }
     }
+}
+
+- (IBAction)didMount:(id)sender {
+    NSString *destFolder = destFolderPath;	
+    
+    [[[NSWorkspace sharedWorkspace] notificationCenter] removeObserver:self];
+    
+    [[NSWorkspace sharedWorkspace] openFile:destFolder];	
+    [theApp didDecrypt:sourceFolderPath];
+    [self close];
 }
 @end

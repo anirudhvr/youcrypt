@@ -77,13 +77,13 @@ static int minRefreshTime = 2; // at most every 30 seconds
 
 - (BOOL)checkYoucryptDirectoryStatus:(BOOL)forceRefresh
 {  
-    @synchronized(self) {
-        
-        if (forceRefresh || [timer timerElapsed]) {
-            [YoucryptDirectory refreshMountedFuseVolumes];
-        }
-        
-    }
+//    @synchronized(self) {
+//        
+//        if (forceRefresh || [timer timerElapsed]) {
+//            [YoucryptDirectory refreshMountedFuseVolumes];
+//        }
+//        
+//    }
     
     NSUInteger indexOfPath = [mountedFuseVolumes indexOfObject:mountedPath];
     BOOL isDir = NO;

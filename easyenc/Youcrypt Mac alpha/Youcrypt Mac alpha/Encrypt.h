@@ -15,6 +15,14 @@
     IBOutlet NSProgressIndicator *encryptProgress;
     BOOL keychainHasPassphrase;
     NSString *passphraseFromKeychain;
+    
+    NSString *tempFolder;
+    NSString *yourFriendsEmailString;
+	NSString *combinedPasswordString;
+	int numberOfUsers;
+	int yourFriendsPassphrase;	
+	NSString *yourFriendsPassphraseString;
+
 }
 
 //@property (atomic, strong) IBOutlet NSTextField *yourPassword;

@@ -145,7 +145,7 @@
     //-       
 
 	// The mount point is a temporary folder
-    NSString *tempFolder = NSTemporaryDirectory();
+    tempFolder = NSTemporaryDirectory();
     [libFunctions mkdirRecursive:tempFolder];
     tempFolder = [tempFolder stringByAppendingPathComponent:[[NSProcessInfo processInfo] globallyUniqueString]];
     [libFunctions mkdirRecursive:tempFolder];
@@ -165,11 +165,7 @@
         keychainHasPassphrase = YES;
     }
         
-	NSString *yourFriendsEmailString = [yourFriendsEmail stringValue];	
-	NSString *combinedPasswordString;
-	int numberOfUsers;
-	int yourFriendsPassphrase;	
-	NSString *yourFriendsPassphraseString;
+	yourFriendsEmailString = [yourFriendsEmail stringValue];	
 	
 	// check if user wants to share with a friend
 	if(![yourFriendsEmailString isEqualToString:@""]) {
@@ -185,9 +181,26 @@
 	}
     // ---------------------------------------------------------------------
 	
-    [libFunctions createEncFS:destFolder decryptedFolder:tempFolder numUsers:numberOfUsers combinedPassword:combinedPasswordString];
+    NSNotificationCenter *nCenter = [[NSWorkspace sharedWorkspace] notificationCenter];
+    [nCenter removeObserver:self];
+    [nCenter addObserver:self selector:@selector(didMount:) name:NSWorkspaceDidMountNotification object:nil];
+     
+
+    if (![libFunctions createEncFS:destFolder decryptedFolder:tempFolder numUsers:numberOfUsers combinedPassword:combinedPasswordString]) {
+        // Error while encrypting.
+        // TODO.        
+    }
+    return;
+}
+
+
+-(IBAction)didMount:(id)sender {
+    NSString *srcFolder = sourceFolderPath;
+    NSString *destFolder;
     
-    	
+    [[[NSWorkspace sharedWorkspace] notificationCenter] removeObserver:self];
+    
+    
     // Now to move the contents of tempFolder into destFolder
     // Unfortunately, a direct move won't work since both directories exist and
     // stupid macOS thinks it is overwriting the mount point we just created
@@ -198,10 +211,10 @@
             [fm moveItemAtPath:[srcFolder stringByAppendingPathComponent:file] toPath:[tempFolder stringByAppendingPathComponent:file] error:nil];
         }
     }
-
+    
     // Unmount the destination fol  der containing decrypted files
     [libFunctions execCommand:@"/sbin/umount" arguments:[NSArray arrayWithObject:tempFolder]
-                             env:nil];
+                          env:nil];
     [fm removeItemAtPath:tempFolder error:nil];
     
     /* change folder icon of encrypted folder */
@@ -211,24 +224,16 @@
         NSNumber *num = [NSNumber numberWithBool:YES];
         NSDictionary *attribs = [NSDictionary dictionaryWithObjectsAndKeys:num, NSFileExtensionHidden, nil];        
         [[NSFileManager defaultManager] setAttributes:attribs ofItemAtPath:destFolder error:&err];
-       // NSAlert *alert = [NSAlert alertWithError:err];
-      //  [alert runModal];
+        // NSAlert *alert = [NSAlert alertWithError:err];
+        //  [alert runModal];
     }
     
-//    - (BOOL)setAttributes:(NSDictionary *)attributes ofItemAtPath:(NSString *)path error:(NSError **)error
-
+    //    - (BOOL)setAttributes:(NSDictionary *)attributes ofItemAtPath:(NSString *)path error:(NSError **)error
+    
     [theApp didEncrypt:srcFolder];
     /* Register password with keyring */
  	
 	/*** <!-- ENCFS END --> ***/
-   
-    
-    
-    
-    
-    
-    
-	
 	/* If sharing is required */
     if (numberOfUsers == 2) {
 		
@@ -239,24 +244,23 @@
         
         [libFunctions execCommand:@"/usr/bin/curl" 
                         arguments:[NSArray arrayWithObjects: 
-									  @"-s", @"-k", 
-									  @"--user", @"api:key-67fgovcfrggd6y4l02ucpz-av4b22i26",
-									  @"https://api.mailgun.net/v2/cloudclear.mailgun.org/messages",
-									  @"-F", @"from='YouCrypt <postmaster@cloudclear.mailgun.org>'",
-									  @"-F", curlEmail,
-									  @"-F", @"subject='Your Temporary Passphrase'",
-									  @"-F", curlKey,
-									  nil]
+                                   @"-s", @"-k", 
+                                   @"--user", @"api:key-67fgovcfrggd6y4l02ucpz-av4b22i26",
+                                   @"https://api.mailgun.net/v2/cloudclear.mailgun.org/messages",
+                                   @"-F", @"from='YouCrypt <postmaster@cloudclear.mailgun.org>'",
+                                   @"-F", curlEmail,
+                                   @"-F", @"subject='Your Temporary Passphrase'",
+                                   @"-F", curlKey,
+                                   nil]
                               env:nil];
 		/***** <!-- MAILGUN END --> ******/
 	}
-
+    
     [yourPassword setStringValue:@""];
     [yourFriendsEmail setStringValue:@""];
     [self.window close];
+
 }
-
-
 
 
 

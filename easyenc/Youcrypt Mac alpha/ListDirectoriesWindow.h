@@ -10,7 +10,6 @@
 #import "YoucryptDirectory.h"
 #import "VolumePropertiesSheetController.h"
 #import "ListDirTable.h"
-#import "keyDownView.h"
 
 #define AddToolbarItemIdentifier @"Add"
 #define RemoveToolbarItemIdentifier @"Remove"

@@ -8,7 +8,6 @@
 
 #import "ListDirectoriesWindow.h"
 #import "AppDelegate.h"
-#import "keyDownView.h"
 #import "ListDirTable.h"
 
 @implementation ListDirectoriesWindow
