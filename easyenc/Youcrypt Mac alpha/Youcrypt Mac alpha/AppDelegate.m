@@ -21,6 +21,8 @@
 #import "logging.h"
 #import "ConfigDirectory.h"
 #import "ListDirectoriesWindow.h"
+#import "FirstRunSheetController.h"
+#import "FeedbackSheetController.h"
 #import "PeriodicActionTimer.h"
 
 
@@ -39,7 +41,7 @@ AppDelegate *theApp;
 @synthesize listDirectories;
 @synthesize configDir;
 @synthesize directories;
-
+@synthesize firstRunSheetController;
 
 // --------------------------------------------------------------------------------------
 // App events
@@ -49,6 +51,9 @@ AppDelegate *theApp;
     
     configDir = [[ConfigDirectory alloc] init];
     youcryptService = [[YoucryptService alloc] init];
+    firstRunSheetController = [[FirstRunSheetController alloc] init];
+    feedbackSheetController = [[FeedbackSheetController alloc] init];
+    
     //[youcryptService setApp:self];
     
     // TODO:  Load up directories array from the list file.
@@ -186,8 +191,12 @@ AppDelegate *theApp;
     else if ([type isEqualToString:@"L"])
         [self showListDirectories:self];
     
-    if(configDir.firstRun)
+    if(configDir.firstRun) {
+        NSLog(@"FIRST RUN ! ");
         [self showFirstRunSheet];
+        
+    }
+        
     
 }
 // --------------------------------------------------------------------------------------
@@ -349,10 +358,28 @@ AppDelegate *theApp;
     if (!preferenceController) {
         preferenceController = [[PreferenceController alloc] init];
     }
-    DDLogVerbose(@"showing %@", preferenceController);
-    [preferenceController showFirstRun]; 
-    //[preferenceController showWindow:self];
+    [self showFirstRun]; 
 }
+
+-(void)showFirstRun
+{    
+    NSLog(@"in show first run !");
+    if(self.window == nil)
+        NSLog(@"NIL WINDOW ____________ ");
+    [firstRunSheetController beginSheetModalForWindow:theApp.listDirectories.window completionHandler:^(NSUInteger returnCode) {
+        if (returnCode == kSheetReturnedSave) {
+            NSLog(@"First run done");
+            [self.window close];
+        } else if (returnCode == kSheetReturnedCancel) {
+            NSLog(@"First Run cancelled :( ");
+        } else {
+            NSLog(@"Unknown return code");
+        }
+    }];
+    
+}
+
+
 
 - (IBAction)showDecryptWindow:(id)sender path:(NSString *)path mountPoint:(NSString *)mountPath {
     // Is decryptController nil?
@@ -425,7 +452,18 @@ AppDelegate *theApp;
 
 - (IBAction)openFeedbackPage:(id)sender
 {
-    [[NSWorkspace sharedWorkspace] openURL: [NSURL URLWithString:@"http://youcrypt.com"]];
+    //[[NSWorkspace sharedWorkspace] openURL: [NSURL URLWithString:@"http://youcrypt.com"]];
+    [feedbackSheetController beginSheetModalForWindow:theApp.listDirectories.window completionHandler:^(NSUInteger returnCode) {
+        if (returnCode == kSheetReturnedSave) {
+            NSLog(@"Feedback run done");
+            [self.window close];
+        } else if (returnCode == kSheetReturnedCancel) {
+            NSLog(@"Feedback cancelled :( ");
+        } else {
+            NSLog(@"Unknown return code");
+        }
+    }];
+
 }
 
 - (IBAction)openHelpPage:(id)sender

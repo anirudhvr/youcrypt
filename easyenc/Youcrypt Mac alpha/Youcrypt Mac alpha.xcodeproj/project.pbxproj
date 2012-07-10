@@ -35,6 +35,8 @@
 		256C359E158EA88700E2BEC4 /* PreferenceController.m in Sources */ = {isa = PBXBuildFile; fileRef = 256C359C158EA88700E2BEC4 /* PreferenceController.m */; };
 		256C35A9158EAF8700E2BEC4 /* Preferences.xib in Resources */ = {isa = PBXBuildFile; fileRef = 256C35A8158EAF8700E2BEC4 /* Preferences.xib */; };
 		25B1E509158FF5D400CDBC46 /* pipetest.c in Sources */ = {isa = PBXBuildFile; fileRef = 25B1E508158FF5D400CDBC46 /* pipetest.c */; };
+		25C3FE4515A7A805006606DF /* FeedbackSheetController.m in Sources */ = {isa = PBXBuildFile; fileRef = 25C3FE4315A7A804006606DF /* FeedbackSheetController.m */; };
+		25C3FE4615A7A805006606DF /* Feedback.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25C3FE4415A7A804006606DF /* Feedback.xib */; };
 		25EE6A5915928D2C008A0DC8 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25EE6A5815928D2C008A0DC8 /* Security.framework */; };
 		25EE6A5D15928D5C008A0DC8 /* SSKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = 25EE6A5C15928D5C008A0DC8 /* SSKeychain.m */; };
 		25F3D14C15923FE800E3383C /* Decrypt.m in Sources */ = {isa = PBXBuildFile; fileRef = 25F3D14A15923FE800E3383C /* Decrypt.m */; };
@@ -192,6 +194,9 @@
 		256C35A8158EAF8700E2BEC4 /* Preferences.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = Preferences.xib; path = "Youcrypt Mac alpha/Preferences.xib"; sourceTree = "<group>"; };
 		25B1E505158FF48B00CDBC46 /* pipetest.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = pipetest.h; path = "Youcrypt Mac alpha/pipetest.h"; sourceTree = "<group>"; };
 		25B1E508158FF5D400CDBC46 /* pipetest.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = pipetest.c; path = "Youcrypt Mac alpha/pipetest.c"; sourceTree = "<group>"; };
+		25C3FE4215A7A803006606DF /* FeedbackSheetController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeedbackSheetController.h; sourceTree = "<group>"; };
+		25C3FE4315A7A804006606DF /* FeedbackSheetController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeedbackSheetController.m; sourceTree = "<group>"; };
+		25C3FE4415A7A804006606DF /* Feedback.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Feedback.xib; sourceTree = "<group>"; };
 		25EE6A5815928D2C008A0DC8 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		25EE6A5B15928D5C008A0DC8 /* SSKeychain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSKeychain.h; sourceTree = "<group>"; };
 		25EE6A5C15928D5C008A0DC8 /* SSKeychain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSKeychain.m; sourceTree = "<group>"; };
@@ -421,6 +426,8 @@
 		25F3D1521592436000E3383C /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				25C3FE4415A7A804006606DF /* Feedback.xib */,
+				E6649C9515A70FB00096886F /* VolumePropertiesSheetController.xib */,
 				E06E2B4015A76ABE00E52B2D /* ListRightClick.xib */,
 				25300E8F15A3BE73009CDA08 /* FirstRun.xib */,
 				25300E8A15A385BE009CDA08 /* Gmail.xib */,
@@ -536,7 +543,8 @@
 				25300E8E15A3BE73009CDA08 /* FirstRunSheetController.m */,
 				E6649C9315A70FB00096886F /* VolumePropertiesSheetController.h */,
 				E6649C9415A70FB00096886F /* VolumePropertiesSheetController.m */,
-				E6649C9515A70FB00096886F /* VolumePropertiesSheetController.xib */,
+				25C3FE4215A7A803006606DF /* FeedbackSheetController.h */,
+				25C3FE4315A7A804006606DF /* FeedbackSheetController.m */,
 			);
 			name = Sheet;
 			sourceTree = "<group>";
@@ -708,6 +716,7 @@
 				E6649C9215A707270096886F /* unlocked-24x24.png in Resources */,
 				E6649C9715A70FB00096886F /* VolumePropertiesSheetController.xib in Resources */,
 				E06E2B4115A76ABE00E52B2D /* ListRightClick.xib in Resources */,
+				25C3FE4615A7A805006606DF /* Feedback.xib in Resources */,
 				E054042415AB1CE10011E5CC /* Restore.xib in Resources */,
 				E65C4B5515ABAD9F00AF9D8E /* processing-22x22.png in Resources */,
 			);
@@ -770,6 +779,7 @@
 				E0C5ACA315A50BC1000FC253 /* ConfigDirectory.m in Sources */,
 				E6649C7A15A53CD80096886F /* Encrypt.m in Sources */,
 				E6649C9615A70FB00096886F /* VolumePropertiesSheetController.m in Sources */,
+				25C3FE4515A7A805006606DF /* FeedbackSheetController.m in Sources */,
 				E054042315AB1CE10011E5CC /* RestoreController.m in Sources */,
 				E67FF2F215A8D5190033A63A /* PeriodicActionTimer.m in Sources */,
 			);

@@ -36,21 +36,28 @@
 }
 
 
-- (void)windowDidLoad
+- (void)windowDidLoad                                               
 {
     [super windowDidLoad];
     
+   // [name setStringValue:[preferenceController getPreference:YC_USERREALNAME]];
+   // [email setStringValue:[preferenceController getPreference:YC_USEREMAIL]];
     // Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
 }
 
 - (void)saveClicked:(id)sender {
+    NSLog(@" username %@",[preferenceController getPreference:YC_USERREALNAME]);
     if(![[password stringValue] isEqualToString:[confirmPassword stringValue]]) {
         [message setTextColor:[NSColor redColor]];
         [message setStringValue:@"Passwords do not match"];
         return;
     } else {
-        [preferenceController setPreference:[email stringValue] value:YC_USEREMAIL];
-        [preferenceController setPreference:[name stringValue] value:YC_USERREALNAME];
+        //[preferenceController setPreference:[email stringValue] value:YC_USEREMAIL];
+        //[preferenceController setPreference:[name stringValue] value:YC_USERREALNAME];
+        [[NSUserDefaults standardUserDefaults] setValue:[name stringValue] forKey:YC_USERREALNAME];
+        [[NSUserDefaults standardUserDefaults] setValue:[email stringValue] forKey:YC_USEREMAIL];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+
         [libFunctions registerWithKeychain:[password stringValue]:@"Youcrypt"];
         [self endSheetWithReturnCode:kSheetReturnedSave];
     }

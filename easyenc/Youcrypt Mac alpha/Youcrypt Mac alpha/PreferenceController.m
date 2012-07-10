@@ -102,6 +102,7 @@
     [realName setStringValue:[self getPreference:YC_USERREALNAME]];
     [email setStringValue:[self getPreference:YC_USEREMAIL]];
     [passphrase setStringValue:@"somerandomvalue"];
+    [passphrase setEditable:NO];
     if([self getPreference:YC_USERREALNAME] == nil)
         NSLog(@"NIL!");
 
@@ -270,6 +271,7 @@
 {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults setValuesForKeysWithDictionary:preferences];
+    NSLog(@"SAVING:  %@",preferences);
     [defaults synchronize];
 }
 
