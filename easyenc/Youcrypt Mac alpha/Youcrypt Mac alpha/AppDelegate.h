@@ -16,7 +16,11 @@
 @class ConfigDirectory;
 @class YoucryptService;
 @class ListDirectoriesWindow;
+@class FirstRunSheetController;
+@class FeedbackSheetController;
 @class PeriodicActionTimer;
+@class keyDownView;
+
 
 @interface AppDelegate : NSObject <NSTableViewDataSource, NSTableViewDelegate, NSApplicationDelegate> { // changed from NSApplicationDelegate
     
@@ -39,10 +43,16 @@
     
     YoucryptService *youcryptService;
     
+    FirstRunSheetController *firstRunSheetController;
+    FeedbackSheetController *feedbackSheetController;
+    keyDownView *keyDown;
+
     // List of directories maintained by us.
     // Objects added should be (YoucryptDirectory *)
     NSMutableArray *directories;
 }
+
+
 
 // Built in methods
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification;
@@ -74,6 +84,8 @@
 -(void) removeFSAtRow:(int) row ;
 
 
+- (void) showFirstRun;
+
 
 
 // Setters and getters
@@ -83,7 +95,9 @@
 @property (atomic,strong) Decrypt *decryptController;
 @property (atomic,strong) ConfigDirectory *configDir;
 @property (nonatomic,strong) ListDirectoriesWindow *listDirectories;
-
+@property (nonatomic, strong) FirstRunSheetController *firstRunSheetController;
+@property (nonatomic, strong) FeedbackSheetController *feedbackSheetController;
+@property (nonatomic, strong) keyDownView *keyDown;
 
 @end
 

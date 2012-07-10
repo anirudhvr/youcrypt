@@ -21,8 +21,10 @@
 #import "logging.h"
 #import "ConfigDirectory.h"
 #import "ListDirectoriesWindow.h"
+#import "FirstRunSheetController.h"
+#import "FeedbackSheetController.h"
 #import "PeriodicActionTimer.h"
-
+#import "keyDownView.h"
 
 int ddLogLevel = LOG_LEVEL_VERBOSE;
 
@@ -39,7 +41,8 @@ AppDelegate *theApp;
 @synthesize listDirectories;
 @synthesize configDir;
 @synthesize directories;
-
+@synthesize firstRunSheetController;
+@synthesize keyDown;
 
 // --------------------------------------------------------------------------------------
 // App events
@@ -49,10 +52,13 @@ AppDelegate *theApp;
     
     configDir = [[ConfigDirectory alloc] init];
     youcryptService = [[YoucryptService alloc] init];
+    firstRunSheetController = [[FirstRunSheetController alloc] init];
+    feedbackSheetController = [[FeedbackSheetController alloc] init];
+    
     //[youcryptService setApp:self];
     
     // TODO:  Load up directories array from the list file.
-    directories = [NSKeyedUnarchiver unarchiveObjectWithFile:configDir.youCryptListFile];
+    directories = [libFunctions unarchiveDirectoryListFromFile:configDir.youCryptListFile];
     if (directories == nil) {
         directories = [[NSMutableArray alloc] init];
     } else {
@@ -85,7 +91,8 @@ AppDelegate *theApp;
         NSLog(@"Syncing current state to disk");
         // XXX break this off into a new thread?
         /// XX might want to use a dispatch queue here instead
-        [NSKeyedArchiver archiveRootObject:directories toFile:configDir.youCryptListFile];
+        [libFunctions archiveDirectoryList:directories toFile:configDir.youCryptListFile];
+//        [NSKeyedArchiver archiveRootObject:directories toFile:configDir.youCryptListFile];
         
         configDirBeingSynced = NO;
     }
@@ -125,7 +132,7 @@ AppDelegate *theApp;
     DDLogVerbose(@"App did, in fact, finish launching!!!");
 }
 - (void)applicationWillTerminate:(NSNotification *)aNotification {
-    [NSKeyedArchiver archiveRootObject:directories toFile:configDir.youCryptListFile];
+    //[NSKeyedArchiver archiveRootObject:directories toFile:configDir.youCryptListFile];
     [libFunctions archiveDirectoryList:directories toFile:configDir.youCryptListFile];
 }
 
@@ -185,8 +192,12 @@ AppDelegate *theApp;
     else if ([type isEqualToString:@"L"])
         [self showListDirectories:self];
     
-    if(configDir.firstRun)
+    if(configDir.firstRun) {
+        NSLog(@"FIRST RUN ! ");
         [self showFirstRunSheet];
+        
+    }
+        
     
 }
 // --------------------------------------------------------------------------------------
@@ -348,10 +359,28 @@ AppDelegate *theApp;
     if (!preferenceController) {
         preferenceController = [[PreferenceController alloc] init];
     }
-    DDLogVerbose(@"showing %@", preferenceController);
-    [preferenceController showFirstRun]; 
-    //[preferenceController showWindow:self];
+    [self showFirstRun]; 
 }
+
+-(void)showFirstRun
+{    
+    NSLog(@"in show first run !");
+    if(self.window == nil)
+        NSLog(@"NIL WINDOW ____________ ");
+    [firstRunSheetController beginSheetModalForWindow:theApp.listDirectories.window completionHandler:^(NSUInteger returnCode) {
+        if (returnCode == kSheetReturnedSave) {
+            NSLog(@"First run done");
+            [self.window close];
+        } else if (returnCode == kSheetReturnedCancel) {
+            NSLog(@"First Run cancelled :( ");
+        } else {
+            NSLog(@"Unknown return code");
+        }
+    }];
+    
+}
+
+
 
 - (IBAction)showDecryptWindow:(id)sender path:(NSString *)path mountPoint:(NSString *)mountPath {
     // Is decryptController nil?
@@ -424,7 +453,18 @@ AppDelegate *theApp;
 
 - (IBAction)openFeedbackPage:(id)sender
 {
-    [[NSWorkspace sharedWorkspace] openURL: [NSURL URLWithString:@"http://youcrypt.com"]];
+    //[[NSWorkspace sharedWorkspace] openURL: [NSURL URLWithString:@"http://youcrypt.com"]];
+    [feedbackSheetController beginSheetModalForWindow:theApp.listDirectories.window completionHandler:^(NSUInteger returnCode) {
+        if (returnCode == kSheetReturnedSave) {
+            NSLog(@"Feedback run done");
+            [self.window close];
+        } else if (returnCode == kSheetReturnedCancel) {
+            NSLog(@"Feedback cancelled :( ");
+        } else {
+            NSLog(@"Unknown return code");
+        }
+    }];
+
 }
 
 - (IBAction)openHelpPage:(id)sender
@@ -443,6 +483,12 @@ AppDelegate *theApp;
         return 0;
     }
 }
+
+- (void)keyDown:(NSEvent *)theEvent
+{
+    NSLog(@"KEY: %d",theEvent.keyCode);
+}
+
 
 - (id)tableView:(NSTableView *)tableView objectValueForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
    
@@ -536,7 +582,7 @@ AppDelegate *theApp;
 }
 
 //--------------------------------------------------------------------------------------------------
-// Code to color mounted and unmounted folders separately
+// Code to color mounted and unmounted folders separately and change their icons
 //--------------------------------------------------------------------------------------------------
 - (void)tableView:(NSTableView*)tableView willDisplayCell:(id)cell forTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
     NSString *colId = [tableColumn identifier];
@@ -558,11 +604,16 @@ AppDelegate *theApp;
             [cell setBackgroundColor:[NSColor grayColor]];
         } else if ([cell isKindOfClass:[NSButtonCell class]] && [colId isEqualToString:@"status"]) {
             [cell setImage:[NSImage imageNamed:@"unlocked-24x24.png"]];
+        } else if ([cell isKindOfClass:[NSPopUpButtonCell class]] && [colId isEqualToString:@"props"]) {
+            NSPopUpButtonCell *dataTypeDropDownCell = [tableColumn dataCell];
+            [[dataTypeDropDownCell itemAtIndex:1] setTitle:@"Close"];
+            
         }
     } else  { // unmounted => locked
         if ([cell isKindOfClass:[NSTextFieldCell class]]) {
             [cell setTextColor:[NSColor blackColor]];
             [cell setBackgroundColor:[NSColor darkGrayColor]];
+            
         } else if ([cell isKindOfClass:[NSButtonCell class]] && [colId isEqualToString:@"status"]) {
             if (dirAtRow.status == YoucryptDirectoryStatusUnmounted) 
                 [cell setImage:[NSImage imageNamed:@"locked-24x24.png"]];
@@ -570,13 +621,38 @@ AppDelegate *theApp;
                 [cell setImage:[NSImage imageNamed:@"error-22x22.png"]];
             if (dirAtRow.status == YoucryptDirectoryStatusProcessing)
                 [cell setImage:[NSImage imageNamed:@"loading-24x24.gif"]];
+        } else if ([cell isKindOfClass:[NSPopUpButtonCell class]] && [colId isEqualToString:@"props"]) {
+            NSPopUpButtonCell *dataTypeDropDownCell = [tableColumn dataCell];
+            [[dataTypeDropDownCell itemAtIndex:1] setTitle:@"Open"];
+            
         }
     }
 }
 
+
+
 - (void) removeFSAtRow:(int) row {
     YoucryptDirectory *dir = [directories objectAtIndex:row];
     [self showRestoreWindow:self path:dir.path];
+}
+
+- (id) tableView:(NSTableView*)tableView dataCellForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row
+{
+    NSString *colId = [tableColumn identifier];
+ 
+    /*
+    if ([colId isEqualToString:@"props"]) {
+        NSPopUpButtonCell *dataTypeDropDownCell = [[NSPopUpButtonCell alloc] initTextCell:@"Actions..." pullsDown:YES];
+        [dataTypeDropDownCell setBordered:NO];
+        [dataTypeDropDownCell setEditable:YES];
+        NSArray *dataTypeNames = [NSArray arrayWithObjects:@"NULLOrignal", @"String", @"Money", @"Date", @"Int", nil];
+        [dataTypeDropDownCell addItemsWithTitles:dataTypeNames];
+        return dataTypeDropDownCell;
+    } else {
+        return nil;
+    }
+     */
+    return nil;
 }
 
 @end

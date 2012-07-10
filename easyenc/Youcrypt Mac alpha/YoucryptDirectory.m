@@ -21,7 +21,7 @@
 
 static BOOL globalsAllocated = NO;
 static NSMutableArray *mountedFuseVolumes;
-static int minRefreshTime = 5; // at most every 30 seconds
+static int minRefreshTime = 2; // at most every 30 seconds
 
 
 - (id)initWithCoder:(NSCoder *)decoder {
@@ -101,11 +101,14 @@ static int minRefreshTime = 5; // at most every 30 seconds
                 status = YoucryptDirectoryStatusNotFound;
             } else {                                        // mount point exists, but is just not mounted
                 status = isDir ? YoucryptDirectoryStatusUnmounted : YoucryptDirectoryStatusSourceNotFound;
+                DDLogVerbose(@"Mounted %@ being set to %@", path, [YoucryptDirectory statusToString:status]);
+
             }
         }
     } else if (status == YoucryptDirectoryStatusUnmounted) {// Directory was umounted/closed 
         if (indexOfPath != NSNotFound) {                    // Surprise -- an umounted folder has been surprisingly mounted
             status = YoucryptDirectoryStatusMounted;
+            DDLogVerbose(@"Unounted %@ being set to %@", path, [YoucryptDirectory statusToString:status]);
         } else {                                            // Still not mounted
             if (!mountpathExists)                                 // If dir is missing
                 status = YoucryptDirectoryStatusNotFound;    
@@ -129,8 +132,8 @@ static int minRefreshTime = 5; // at most every 30 seconds
     NSString *mountcmd = [[NSString alloc] initWithString:@"/sbin/mount"];
     NSArray *argsArray = [NSArray arrayWithObjects:@"-t", @"osxfusefs", nil];
     NSString *mountOutput;
+    NSMutableArray *tmpMountedFuseVolumes = [[NSMutableArray alloc] init];
     
-    [mountedFuseVolumes removeAllObjects]; // clear existing array
     
     if ([libFunctions execWithSocket:mountcmd arguments:argsArray env:nil io:fh proc:mountTask]) {
         [mountTask waitUntilExit];
@@ -159,9 +162,12 @@ static int minRefreshTime = 5; // at most every 30 seconds
                                       error:&error];
         [regex enumerateMatchesInString:line options:0 range:NSMakeRange(0, [line length]) usingBlock:^(NSTextCheckingResult *match, NSMatchingFlags flags, BOOL *stop){
            //  NSLog(@"Matched Volume [%@]", [line substringWithRange:[match rangeAtIndex:1]]);
-            [mountedFuseVolumes addObject:[line substringWithRange:[match rangeAtIndex:1]]];
+            [tmpMountedFuseVolumes addObject:[line substringWithRange:[match rangeAtIndex:1]]];
         }];
+     
     }
+    [mountedFuseVolumes removeAllObjects]; // clear existing array
+    mountedFuseVolumes = tmpMountedFuseVolumes;
 }
 
 + (NSString*) statusToString:(NSUInteger)status
