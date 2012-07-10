@@ -181,12 +181,16 @@
 	}
     // ---------------------------------------------------------------------
 	
+    BOOL encfnames = NO;
+    if ([[theApp.preferenceController getPreference:YC_ENCRYPTFILENAMES] intValue] != 0)
+        encfnames = YES;
+    
     NSNotificationCenter *nCenter = [[NSWorkspace sharedWorkspace] notificationCenter];
     [nCenter removeObserver:self];
     [nCenter addObserver:self selector:@selector(didMount:) name:NSWorkspaceDidMountNotification object:nil];
      
 
-    if (![libFunctions createEncFS:destFolder decryptedFolder:tempFolder numUsers:numberOfUsers combinedPassword:combinedPasswordString]) {
+    if (![libFunctions createEncFS:destFolder decryptedFolder:tempFolder numUsers:numberOfUsers combinedPassword:combinedPasswordString encryptFilenames:encfnames]) {
         // Error while encrypting.
         // TODO.        
     }

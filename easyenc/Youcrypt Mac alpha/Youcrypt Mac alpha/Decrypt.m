@@ -10,6 +10,7 @@
 #import "libFunctions.h"
 #import "logging.h"
 #import "AppDelegate.h"
+#import "PreferenceController.h"
 
 @implementation Decrypt
 
@@ -34,11 +35,13 @@
         passphraseFromKeychain = [libFunctions getPassphraseFromKeychain:@"Youcrypt"];
         if (passphraseFromKeychain == nil) {
             keychainHasPassphrase = NO;
+            passphraseFromKeychain = [NSString stringWithString:@""];
         } else {
             keychainHasPassphrase = YES;
             [yourPassword setStringValue:passphraseFromKeychain];
         }
     }
+    
     if (keychainHasPassphrase == YES) {
         [yourPassword setStringValue:passphraseFromKeychain];
     }
@@ -63,12 +66,24 @@
     
     [libFunctions mkdirRecursive:destFolder]; 
     
+    NSString *volname = [[srcFolder stringByDeletingLastPathComponent] lastPathComponent];
+    
+    NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:@"logo-512x512-alpha.icns", @"volicon", volname, @"volname", nil];
+    
+    BOOL encfnames = NO;
+    if ([[theApp.preferenceController getPreference:YC_ENCRYPTFILENAMES] intValue] != 0)
+        encfnames = YES;
+    
+    int idletime = [[theApp.preferenceController getPreference:YC_IDLETIME] intValue];
+
+    
     NSNotificationCenter *nCenter = [[NSWorkspace sharedWorkspace] notificationCenter];
     [nCenter removeObserver:self];
     [nCenter addObserver:self selector:@selector(didMount:) name:NSWorkspaceDidMountNotification object:nil];
-
     
-    if ([libFunctions mountEncFS:srcFolder decryptedFolder:destFolder password:yourPasswordString volumeName:[[srcFolder stringByDeletingLastPathComponent] lastPathComponent]] == YES) {
+    BOOL res = [libFunctions mountEncFS:srcFolder decryptedFolder:destFolder password:yourPasswordString fuseOptions:dict idleTime:idletime ];
+
+    if (res == YES) {
         return;
     } else {
         if (keychainHasPassphrase) {

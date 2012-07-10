@@ -16,6 +16,7 @@
 @synthesize newpassphrase;
 @synthesize verifynewpassphrase;
 @synthesize message;
+@synthesize arr;
 
 - (id)init {
     if (!(self = [super initWithWindowNibName:@"ChangePassphrase"])) {
@@ -28,7 +29,6 @@
     [super windowDidLoad];
     
     // Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
-    
     
     NSLog(@"Windowdidload called");
 }
@@ -66,8 +66,17 @@
         [message setStringValue:@"New passwords do not match"];
         return;
     } else {
+        [message setStringValue:@"Please Wait. It may take a while."];
         NSLog(@"Registering new passphrase %@ with keychain", [newpassphrase stringValue]);
         [libFunctions registerWithKeychain:[newpassphrase stringValue]:@"Youcrypt"];
+        int count = arr.count;
+        for(int i=0;i<count;i++) {
+            NSLog(@"Updating dir %d",i+1);
+            NSString *path = [[arr objectAtIndex:i] path];
+            [message setStringValue:[NSString stringWithFormat:@"Updating %d%%",((i+1)/count)*100]];
+            BOOL ret = [libFunctions changeEncFSPasswd:path oldPasswd:[oldpassphrase stringValue] newPasswd:[newpassphrase stringValue]];
+            NSLog(@"Return value : %d",ret);
+        }
         [self endSheetWithReturnCode:kSheetReturnedSave];
     }
 }

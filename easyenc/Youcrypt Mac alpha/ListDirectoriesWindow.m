@@ -359,13 +359,13 @@
 
 - (void)showPreferencePanel
 {
-        NSLog(@"Called showPreferences");
+    NSLog(@"Called showPreferences");
     [theApp showPreferencePanel:theApp];
 }
 
 - (void) exitApp 
 {
-        NSLog(@"Called terminate");
+    NSLog(@"Called terminate");
     [theApp terminateApp:self];
 }
 - (void) showHelp 
@@ -377,6 +377,8 @@
 
 - (void) showChangePassphraseSheet 
 {
+    [passphraseSheet.message setStringValue:@"HELLO!"];
+    passphraseSheet.arr = theApp.directories;
     [passphraseSheet beginSheetModalForWindow:theApp.listDirectories.window completionHandler:^(NSUInteger returnCode) {
         if (returnCode == kSheetReturnedSave) {
             NSLog(@"Change Passphrase done");

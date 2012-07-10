@@ -15,7 +15,7 @@
 #import <StartOnLogin/StartOnLogin.h>
 #import "libFunctions.h"
 #import "XMLDictionary.h"
-
+#import "AppDelegate.h"
 @implementation PreferenceController
 
 @synthesize boxClient;
@@ -344,7 +344,7 @@
 -(IBAction)changePassphrase:(id)sender
 {
     NSLog(@"ChangePassphrase clicked");
-    
+    passphraseSheetController.arr = theApp.directories;
     [passphraseSheetController beginSheetModalForWindow:self.window completionHandler:^(NSUInteger returnCode) {
         if (returnCode == kSheetReturnedSave) {
             NSLog(@"Passphrase change saved");
@@ -445,6 +445,12 @@ static NSArray *openFiles()
             [StartOnLogin setStartAtLogin:[self appURL] enabled:NO];
         }
     }
+}
+
+- (IBAction)idleTimeChanged:(id)sender
+{
+    NSLog(@"idle time changed to %@", [idleTime stringValue]);
+    [self setPreference:YC_IDLETIME value:[idleTime stringValue]];
 }
 
 - (NSURL *)appURL

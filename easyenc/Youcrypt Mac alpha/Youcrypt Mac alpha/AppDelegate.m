@@ -42,6 +42,8 @@ AppDelegate *theApp;
 @synthesize directories;
 @synthesize firstRunSheetController;
 @synthesize keyDown;
+@synthesize preferenceController;
+
 
 // --------------------------------------------------------------------------------------
 // App events
@@ -158,45 +160,8 @@ AppDelegate *theApp;
     [statusItem setHighlightMode:YES];
     
     
-    NSArray *arguments = [[NSProcessInfo processInfo] arguments];
-	NSString *type = [[NSString alloc] init];
-    
-	for (id arg in arguments) {
-		if([arg isEqualToString:@"-d"]) {
-			type = @"D"; // decrypt
-		}
-		else if([arg isEqualToString:@"-e"]) {
-			type = @"E"; // encrypt
-		}
-        else if([arg isEqualToString:@"-m"]) {
-            type = @"M";
-        }
-        else if([arg isEqualToString:@"-p"]) {
-            type = @"P";
-        }
-        else type = @"M";
-	}
-    
-    type = @"L";
-    DDLogCVerbose(@"awake! %@",THIS_FILE);
-    
-    
-    if([type isEqualToString:@"M"])
-        [self showMainApp:self];
-    
-    else if([type isEqualToString:@"E"])
-        [self showEncryptWindow:self];
-    
-//    else if([type isEqualToString:@"D"])
-//        [self showDecryptWindow:self];
-    
-    else if ([type isEqualToString:@"P"])
-        [self showPreferencePanel:self];
-    
-    else if ([type isEqualToString:@"L"])
-        [self showListDirectories:self];
-    
     if(configDir.firstRun) {
+        [self showListDirectories:self];
         NSLog(@"FIRST RUN ! ");
         [self showFirstRunSheet];
         
@@ -346,6 +311,7 @@ AppDelegate *theApp;
     if (!listDirectories) {
         listDirectories = [[ListDirectoriesWindow alloc] init];
     }
+    [listDirectories.window makeKeyAndOrderFront:self];
     [listDirectories showWindow:self];
 }
 
@@ -364,6 +330,7 @@ AppDelegate *theApp;
         preferenceController = [[PreferenceController alloc] init];
     }
     [self showFirstRun]; 
+    
 }
 
 -(void)showFirstRun
@@ -380,8 +347,7 @@ AppDelegate *theApp;
         } else {
             NSLog(@"Unknown return code");
         }
-    }];
-    
+    }];    
 }
 
 
@@ -623,7 +589,7 @@ AppDelegate *theApp;
             else if (dirAtRow.status == YoucryptDirectoryStatusSourceNotFound) 
                 [cell setImage:[NSImage imageNamed:@"error-22x22.png"]];
             if (dirAtRow.status == YoucryptDirectoryStatusProcessing)
-                [cell setImage:[NSImage imageNamed:@"loading-24x24.gif"]];
+                [cell setImage:[NSImage imageNamed:@"processing-22x22.gif"]];
         } else if ([cell isKindOfClass:[NSPopUpButtonCell class]] && [colId isEqualToString:@"props"]) {
             NSPopUpButtonCell *dataTypeDropDownCell = [tableColumn dataCell];
             [[dataTypeDropDownCell itemAtIndex:1] setTitle:@"Open"];
@@ -641,9 +607,10 @@ AppDelegate *theApp;
 
 - (id) tableView:(NSTableView*)tableView dataCellForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row
 {
-    NSString *colId = [tableColumn identifier];
- 
+    
     /*
+    NSString *colId = [tableColumn identifier];
+
     if ([colId isEqualToString:@"props"]) {
         NSPopUpButtonCell *dataTypeDropDownCell = [[NSPopUpButtonCell alloc] initTextCell:@"Actions..." pullsDown:YES];
         [dataTypeDropDownCell setBordered:NO];

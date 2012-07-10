@@ -21,7 +21,7 @@
 
 static BOOL globalsAllocated = NO;
 static NSMutableArray *mountedFuseVolumes;
-static int minRefreshTime = 2; // at most every 30 seconds
+static int minRefreshTime = 5; // at most every 30 seconds
 
 
 - (id)initWithCoder:(NSCoder *)decoder {
@@ -116,6 +116,10 @@ static int minRefreshTime = 2; // at most every 30 seconds
                 status = YoucryptDirectoryStatusSourceNotFound;
             else                                            // Path still exists; no change in status
                 status = YoucryptDirectoryStatusUnmounted;
+        }
+    } else if (status == YoucryptDirectoryStatusProcessing) {
+        if (indexOfPath == NSNotFound) { // not mounted
+            status = YoucryptDirectoryStatusUnmounted;
         }
     }
     return YES;

@@ -20,6 +20,7 @@
 @property (nonatomic, weak) IBOutlet NSSecureTextField *newpassphrase;
 @property (nonatomic, weak) IBOutlet NSSecureTextField *verifynewpassphrase;
 @property (nonatomic, weak) IBOutlet NSTextField *message;
+@property (nonatomic, weak) NSArray *arr;
 
 - (IBAction)saveClicked:(id)sender;
 - (IBAction)cancelClicked:(id)sender;
