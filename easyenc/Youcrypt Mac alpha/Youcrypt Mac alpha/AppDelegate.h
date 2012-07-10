@@ -98,6 +98,8 @@
 @property (nonatomic, strong) FirstRunSheetController *firstRunSheetController;
 @property (nonatomic, strong) FeedbackSheetController *feedbackSheetController;
 @property (nonatomic, strong) keyDownView *keyDown;
+@property (nonatomic, strong) PreferenceController *preferenceController;
+
 
 @end
 

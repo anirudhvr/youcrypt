@@ -47,9 +47,14 @@
 
 - (void)saveClicked:(id)sender {
     NSLog(@" username %@",[preferenceController getPreference:YC_USERREALNAME]);
-    if(![[password stringValue] isEqualToString:[confirmPassword stringValue]]) {
+    if([[password stringValue] isEqualToString:@""] || 
+       [[password stringValue] isNotEqualTo:[confirmPassword stringValue]]) {
+        
         [message setTextColor:[NSColor redColor]];
         [message setStringValue:@"Passwords do not match"];
+        [confirmPassword setFocusRingType:NSFocusRingTypeExterior];
+        [password setFocusRingType:NSFocusRingTypeExterior];
+        
         return;
     } else {
         //[preferenceController setPreference:[email stringValue] value:YC_USEREMAIL];

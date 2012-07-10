@@ -257,7 +257,7 @@
     return [NSArray arrayWithObjects:AddToolbarItemIdentifier,NSToolbarSeparatorItemIdentifier,
             RemoveToolbarItemIdentifier, NSToolbarSeparatorItemIdentifier,
             PreferencesToolbarItemIdentifier, NSToolbarFlexibleSpaceItemIdentifier,
-            HelpToolbarItemIdentifier, NSToolbarSpaceItemIdentifier,
+            HelpToolbarItemIdentifier, NSToolbarSeparatorItemIdentifier,
             QuitToolbarItemIdentifier, nil];
 }
 
@@ -270,7 +270,7 @@
     return [NSArray arrayWithObjects:AddToolbarItemIdentifier,NSToolbarSeparatorItemIdentifier,
             RemoveToolbarItemIdentifier, NSToolbarSeparatorItemIdentifier,
             PreferencesToolbarItemIdentifier, NSToolbarSpaceItemIdentifier,
-            HelpToolbarItemIdentifier, NSToolbarFlexibleSpaceItemIdentifier,
+            HelpToolbarItemIdentifier, NSToolbarSeparatorItemIdentifier,
             QuitToolbarItemIdentifier, nil];
 }
 

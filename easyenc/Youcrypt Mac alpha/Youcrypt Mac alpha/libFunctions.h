@@ -42,7 +42,14 @@
 + (BOOL) createEncFS:(NSString *)encFolder
      decryptedFolder:(NSString *)decFolder
             numUsers:(int)numUsers
-    combinedPassword:(NSString *)pwd;
+    combinedPassword:(NSString *)pwd
+    encryptFilenames:(BOOL)encryptfilenames;
+
++ (BOOL) mountEncFS:(NSString *)encFolder 
+    decryptedFolder:(NSString *)decFolder 
+           password:(NSString*)password 
+        fuseOptions:(NSDictionary*)fuseOpts
+           idleTime:(int)idletime;
 
 + (BOOL) mountEncFS:(NSString *)encFolder
     decryptedFolder:(NSString *)decFolder
@@ -62,7 +69,7 @@
 
 + (BOOL)fileHandleIsReadable:(NSFileHandle*)fh;
 
-
++ (NSString*) appBundlePath;
 
 
 @end
