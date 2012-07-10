@@ -22,6 +22,7 @@
 		25300E9015A3BE74009CDA08 /* FirstRunSheetController.m in Sources */ = {isa = PBXBuildFile; fileRef = 25300E8E15A3BE73009CDA08 /* FirstRunSheetController.m */; };
 		25300E9115A3BE74009CDA08 /* FirstRun.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25300E8F15A3BE73009CDA08 /* FirstRun.xib */; };
 		253C3D7F159BBF9400120B8D /* BoxFSA.m in Sources */ = {isa = PBXBuildFile; fileRef = 253C3D7E159BBF9400120B8D /* BoxFSA.m */; };
+		25617DC715ABD54B00EED7F7 /* ListDirTable.m in Sources */ = {isa = PBXBuildFile; fileRef = 25617DC615ABD54B00EED7F7 /* ListDirTable.m */; };
 		256C3560158EA75F00E2BEC4 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 256C355F158EA75F00E2BEC4 /* Cocoa.framework */; };
 		256C356A158EA75F00E2BEC4 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 256C3568158EA75F00E2BEC4 /* InfoPlist.strings */; };
 		256C356C158EA75F00E2BEC4 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 256C356B158EA75F00E2BEC4 /* main.m */; };
@@ -170,6 +171,8 @@
 		253C3D7B159BBF4A00120B8D /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
 		253C3D7D159BBF9400120B8D /* BoxFSA.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BoxFSA.h; sourceTree = "<group>"; };
 		253C3D7E159BBF9400120B8D /* BoxFSA.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BoxFSA.m; sourceTree = "<group>"; };
+		25617DC515ABD54A00EED7F7 /* ListDirTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ListDirTable.h; sourceTree = "<group>"; };
+		25617DC615ABD54B00EED7F7 /* ListDirTable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ListDirTable.m; sourceTree = "<group>"; };
 		256C355B158EA75F00E2BEC4 /* Youcrypt Mac alpha.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Youcrypt Mac alpha.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		256C355F158EA75F00E2BEC4 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		256C3562158EA75F00E2BEC4 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -484,6 +487,8 @@
 				25B1E505158FF48B00CDBC46 /* pipetest.h */,
 				E67FF2F015A8D5180033A63A /* PeriodicActionTimer.h */,
 				E67FF2F115A8D5190033A63A /* PeriodicActionTimer.m */,
+				25617DC515ABD54A00EED7F7 /* ListDirTable.h */,
+				25617DC615ABD54B00EED7F7 /* ListDirTable.m */,
 				E66988D6159E639B002323AD /* Sheet */,
 				252C3A621593C6B20044EB3C /* Logging */,
 			);
@@ -782,6 +787,7 @@
 				25C3FE4515A7A805006606DF /* FeedbackSheetController.m in Sources */,
 				E054042315AB1CE10011E5CC /* RestoreController.m in Sources */,
 				E67FF2F215A8D5190033A63A /* PeriodicActionTimer.m in Sources */,
+				25617DC715ABD54B00EED7F7 /* ListDirTable.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

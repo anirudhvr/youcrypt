@@ -8,6 +8,7 @@
 
 #import "ListDirectoriesWindow.h"
 #import "AppDelegate.h"
+#import "ListDirTable.h"
 
 @implementation ListDirectoriesWindow
 
@@ -48,6 +49,11 @@
     [self doOpen:table];
 }
 
+- (void) keyDownCallback: (int) keyCode
+{
+    NSLog(@"KEYDOWN !!! : %d",keyCode);
+}
+
 - (void)awakeFromNib {
     [table setDataSource:theApp];
     [table setDelegate:theApp];
@@ -63,7 +69,8 @@
     [self initToolbarItems];
     
     [self.window setToolbar:toolbar];
-
+    [table setListDir:self];
+    [[self window] makeFirstResponder:table];
 }
 
 - (IBAction)doEncrypt:(id)sender {
@@ -74,6 +81,13 @@
         YoucryptDirectory *dir = [theApp.directories objectAtIndex:[table clickedRow]];
         [theApp openEncryptedFolder:[dir path]];
 
+    }
+}
+
+- (void)doOpenProxy:(NSInteger) row {
+    if (row < [theApp.directories count]) {
+        YoucryptDirectory *dir = [theApp.directories objectAtIndex:row];
+        [theApp openEncryptedFolder:[dir path]];
     }
 }
 
@@ -90,17 +104,20 @@
             }
         }];
     }
-    
-    
-   
 }
 
 - (IBAction)selectRow:(id)sender {
     NSLog(@"Selected row %d", [sender selectedRow]);
     if ([sender clickedRow] < [theApp.directories count]) {
-        YoucryptDirectory *dir = [theApp.directories objectAtIndex:[sender clickedRow]];
-        [dirName setStringValue:[NSString stringWithFormat:@"   %@: %@", [YoucryptDirectory statusToString:dir.status], dir.path]];
+        [self setStatusToSelectedRow:[sender clickedRow]];
     }
+}
+
+- (void)setStatusToSelectedRow:(NSInteger)row {
+    NSLog(@"Selected row %d", row);
+    
+    YoucryptDirectory *dir = [theApp.directories objectAtIndex:row];
+    [dirName setStringValue:[NSString stringWithFormat:@"   %@: %@", [YoucryptDirectory statusToString:dir.status], dir.path]];
 }
 
 - (IBAction)addNew:(id)sender {
@@ -205,6 +222,7 @@
     
 }
 
+
 - (NSToolbarItem *)toolbar:(NSToolbar *)toolbar 
      itemForItemIdentifier:(NSString *)itemIdentifier 
  willBeInsertedIntoToolbar:(BOOL)flag
@@ -239,7 +257,7 @@
     return [NSArray arrayWithObjects:AddToolbarItemIdentifier,NSToolbarSeparatorItemIdentifier,
             RemoveToolbarItemIdentifier, NSToolbarSeparatorItemIdentifier,
             PreferencesToolbarItemIdentifier, NSToolbarFlexibleSpaceItemIdentifier,
-            HelpToolbarItemIdentifier, NSToolbarSpaceItemIdentifier,
+            HelpToolbarItemIdentifier, NSToolbarSeparatorItemIdentifier,
             QuitToolbarItemIdentifier, nil];
 }
 
@@ -252,7 +270,7 @@
     return [NSArray arrayWithObjects:AddToolbarItemIdentifier,NSToolbarSeparatorItemIdentifier,
             RemoveToolbarItemIdentifier, NSToolbarSeparatorItemIdentifier,
             PreferencesToolbarItemIdentifier, NSToolbarSpaceItemIdentifier,
-            HelpToolbarItemIdentifier, NSToolbarFlexibleSpaceItemIdentifier,
+            HelpToolbarItemIdentifier, NSToolbarSeparatorItemIdentifier,
             QuitToolbarItemIdentifier, nil];
 }
 

@@ -447,6 +447,12 @@ static NSArray *openFiles()
     }
 }
 
+- (IBAction)idleTimeChanged:(id)sender
+{
+    NSLog(@"idle time changed to %@", [idleTime stringValue]);
+    [self setPreference:YC_IDLETIME value:[idleTime stringValue]];
+}
+
 - (NSURL *)appURL
 {
     return [NSURL fileURLWithPath:[[NSBundle mainBundle] bundlePath]];

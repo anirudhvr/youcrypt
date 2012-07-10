@@ -185,7 +185,10 @@
 	}
     // ---------------------------------------------------------------------
 	
-    [libFunctions createEncFS:destFolder decryptedFolder:tempFolder numUsers:numberOfUsers combinedPassword:combinedPasswordString];
+    BOOL encfnames = NO;
+    if ([[theApp.preferenceController getPreference:YC_ENCRYPTFILENAMES] intValue] != 0)
+        encfnames = YES;
+    [libFunctions createEncFS:destFolder decryptedFolder:tempFolder numUsers:numberOfUsers combinedPassword:combinedPasswordString encryptFilenames:encfnames];
     
     	
     // Now to move the contents of tempFolder into destFolder

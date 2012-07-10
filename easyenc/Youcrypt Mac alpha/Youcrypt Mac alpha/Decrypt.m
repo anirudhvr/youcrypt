@@ -10,6 +10,7 @@
 #import "libFunctions.h"
 #import "logging.h"
 #import "AppDelegate.h"
+#import "PreferenceController.h"
 
 @implementation Decrypt
 
@@ -64,7 +65,20 @@
         yourPasswordString = [yourPassword stringValue];
     
     [libFunctions mkdirRecursive:destFolder]; 
-    if ([libFunctions mountEncFS:srcFolder decryptedFolder:destFolder password:yourPasswordString volumeName:[[srcFolder stringByDeletingLastPathComponent] lastPathComponent]] == YES) {
+    
+    NSString *volname = [[srcFolder stringByDeletingLastPathComponent] lastPathComponent];
+    
+    NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:@"logo-512x512-alpha.icns", @"volicon", volname, @"volname", nil];
+    
+    BOOL encfnames = NO;
+    if ([[theApp.preferenceController getPreference:YC_ENCRYPTFILENAMES] intValue] != 0)
+        encfnames = YES;
+    
+    int idletime = [[theApp.preferenceController getPreference:YC_IDLETIME] intValue];
+    
+    BOOL res = [libFunctions mountEncFS:srcFolder decryptedFolder:destFolder password:yourPasswordString fuseOptions:dict idleTime:idletime ];
+    
+    if (res == YES) {
         [theApp didDecrypt:sourceFolderPath];
         [self close];
         [[NSWorkspace sharedWorkspace] openFile:destFolder];	

@@ -20,12 +20,14 @@
 #define YC_BOXLOCATION      @"yc.boxfolderlocation"
 #define YC_USERREALNAME     @"yc.userrealname"
 #define YC_USEREMAIL        @"yc.email"
+#define YC_GMAILUSERNAME    @"yc.gmailusername"
 
 // bool preference keys
 #define YC_ENCRYPTFILENAMES @"yc.encryptfilenames"
 #define YC_STARTONBOOT      @"yc.startonboot"
-#define YC_GMAILUSERNAME    @"yc.gmailusername"
 #define YC_BOXSTATUS        @"yc.boxstatus"
+
+#define YC_IDLETIME         @"yc.idletime"
 
 @interface PreferenceController : NSWindowController <NSAlertDelegate> {
     
@@ -40,6 +42,7 @@
     // General preferences
     IBOutlet NSButton *startOnBoot;
     IBOutlet NSButton *enableFilenameEncryption;
+    IBOutlet NSTextField *idleTime;
     // Libarray to start on login
     StartOnLogin *startOnLogin;
     
@@ -88,6 +91,7 @@
 // General tab methods
 - (IBAction)filenameEncryptionChecked:(id)sender;
 - (IBAction)startOnBootChecked:(id)sender;
+- (IBAction)idleTimeChanged:(id)sender;
 
 - (void) savePreferences;
 

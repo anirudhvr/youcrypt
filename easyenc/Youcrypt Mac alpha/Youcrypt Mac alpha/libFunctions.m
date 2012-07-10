@@ -163,14 +163,24 @@
 + (BOOL) createEncFS:(NSString *)encFolder
      decryptedFolder:(NSString *)decFolder
             numUsers:(int)numUsers
-    combinedPassword:(NSString *)pwd {
+    combinedPassword:(NSString *)pwd
+    encryptFilenames:(BOOL)encryptfilenames
+{
 
     NSTask *encfsProc = [NSTask alloc];
     NSFileHandle *io = [NSFileHandle alloc];
     
     if ([libFunctions execWithSocket:ENCFS arguments:nil env:nil io:io proc:encfsProc]) {        
-        [io writeData:[[NSString stringWithFormat:@"8\nencfs\n--nu\n%d\n--pw\n%@\n--\n%@\n%@\n",
-                        numUsers, pwd, encFolder, decFolder] dataUsingEncoding:NSUTF8StringEncoding]];
+        int count = 8;
+        
+        NSString *encryptfilenames_s = [[NSString alloc] initWithString:@""];
+        if (encryptfilenames) {
+            encryptfilenames_s = [encryptfilenames_s stringByAppendingString:@"--enable-filename-encryption\n"];
+            count++;
+        }
+        
+        [io writeData:[[NSString stringWithFormat:@"8\nencfs\n--nu\n%d\n--pw\n%@\n%@--\n%@\n%@\n",
+                        numUsers, pwd, encryptfilenames_s, encFolder, decFolder] dataUsingEncoding:NSUTF8StringEncoding]];
         [encfsProc waitUntilExit];
         [io closeFile];
         return YES;
@@ -179,6 +189,60 @@
         return NO;
     }
     
+}
+
+
++ (BOOL) mountEncFS:(NSString *)encFolder 
+    decryptedFolder:(NSString *)decFolder 
+           password:(NSString*)password 
+            fuseOptions:(NSDictionary*)fuseOpts
+           idleTime:(int)idletime
+
+{
+    NSTask *encfsProc = [NSTask alloc];
+    NSFileHandle *io = [NSFileHandle alloc];
+
+    
+    NSMutableArray *fuseopts = [[NSMutableArray alloc] init];
+    
+    for (NSString *key in [fuseOpts allKeys]) {
+        if ([key isEqualToString:@"volname"]) {
+            [fuseopts addObject:[NSString stringWithFormat:@"-ovolname=%@", [fuseOpts objectForKey:key]]];
+        } else if ([key isEqualToString:@"volicon"]) {
+            [fuseopts addObject:[NSString stringWithFormat:@"-ovolicon=%@/Contents/Resources/%@", [libFunctions appBundlePath], [fuseOpts objectForKey:key]]];
+        } else { 
+            [fuseopts addObject:[NSString stringWithFormat:@"-o%@=%@", key, [fuseOpts objectForKey:key]]];
+        }
+    }
+    [fuseopts addObject:[NSString stringWithString:@"-ofsname=YouCryptFS"]];
+
+    if ([libFunctions execWithSocket:ENCFS arguments:nil env:nil io:io proc:encfsProc]) { 
+        int count = 6 + [fuseopts count];
+        
+        NSString *idletime_s = [[NSString alloc] initWithString:@""];
+        if (idletime > 0) {
+            idletime_s = [idletime_s stringByAppendingFormat:@"--idle=%d\n", idletime];
+            count++;
+        }
+                
+        NSString *str = [NSString stringWithFormat:@"%d\nencfs\n--pw\n%@\n%@--\n%@\n%@\n%@\n", 
+                         count, password, idletime_s, encFolder, decFolder, [fuseopts componentsJoinedByString:@"\n"]];
+        NSData *data = [str dataUsingEncoding:NSUTF8StringEncoding];
+                        
+        NSFileHandle *err = [encfsProc standardError];
+        [io writeData:data];
+        [encfsProc waitUntilExit];
+        [io closeFile];
+        if ([encfsProc terminationStatus]) {
+            NSLog([NSString stringWithUTF8String:[[err availableData] bytes]]);
+            return NO;
+        } else  {
+            return YES;
+        }
+    }
+    else {
+        return NO;
+    }
 }
 
 + (BOOL) mountEncFS:(NSString *)encFolder
@@ -253,6 +317,10 @@
     return [NSKeyedUnarchiver unarchiveObjectWithFile:file];    
 }
 
++ (NSString*) appBundlePath 
+{
+    return [[NSURL fileURLWithPath:[[NSBundle mainBundle] bundlePath]] path];
+}
 
 
 
