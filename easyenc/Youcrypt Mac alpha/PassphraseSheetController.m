@@ -73,7 +73,7 @@
         for(int i=0;i<count;i++) {
             NSLog(@"Updating dir %d",i+1);
             NSString *path = [[arr objectAtIndex:i] path];
-            [message setStringValue:[NSString stringWithFormat:@"Updating %d%%",((i+1)/count)*100]];
+            [message setStringValue:[NSString stringWithFormat:@"Updating %d%%",((i+1)*100)/count]];
             BOOL ret = [libFunctions changeEncFSPasswd:path oldPasswd:[oldpassphrase stringValue] newPasswd:[newpassphrase stringValue]];
             NSLog(@"Return value : %d",ret);
         }
