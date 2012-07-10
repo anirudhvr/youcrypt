@@ -67,6 +67,7 @@
 		E0C5ACAF15A5670A000FC253 /* lockedfolder2.icns in Resources */ = {isa = PBXBuildFile; fileRef = E0C5ACAE15A56709000FC253 /* lockedfolder2.icns */; };
 		E0C5ACB115A56D0D000FC253 /* logo-512x512-alpha.png in Resources */ = {isa = PBXBuildFile; fileRef = E0C5ACB015A56D0C000FC253 /* logo-512x512-alpha.png */; };
 		E0F9DCE9159BE99C00DBDD02 /* pipetest.c in Sources */ = {isa = PBXBuildFile; fileRef = 25B1E508158FF5D400CDBC46 /* pipetest.c */; };
+		E65C4B5515ABAD9F00AF9D8E /* processing-22x22.png in Resources */ = {isa = PBXBuildFile; fileRef = E65C4B5415ABAD9F00AF9D8E /* processing-22x22.png */; };
 		E6649C7A15A53CD80096886F /* Encrypt.m in Sources */ = {isa = PBXBuildFile; fileRef = E6649C7915A53CD80096886F /* Encrypt.m */; };
 		E6649C8815A642DA0096886F /* logo-513x560-alpha.icns in Resources */ = {isa = PBXBuildFile; fileRef = E6649C8715A642DA0096886F /* logo-513x560-alpha.icns */; };
 		E6649C8E15A706D40096886F /* locked-24x24.png in Resources */ = {isa = PBXBuildFile; fileRef = E6649C8D15A706D40096886F /* locked-24x24.png */; };
@@ -230,6 +231,7 @@
 		E0C5ACA215A50BC1000FC253 /* ConfigDirectory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ConfigDirectory.m; path = "Youcrypt Mac alpha/ConfigDirectory.m"; sourceTree = "<group>"; };
 		E0C5ACAE15A56709000FC253 /* lockedfolder2.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = lockedfolder2.icns; path = images/lockedfolder2.icns; sourceTree = "<group>"; };
 		E0C5ACB015A56D0C000FC253 /* logo-512x512-alpha.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "logo-512x512-alpha.png"; sourceTree = "<group>"; };
+		E65C4B5415ABAD9F00AF9D8E /* processing-22x22.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "processing-22x22.png"; path = "images/processing-22x22.png"; sourceTree = "<group>"; };
 		E6649C7915A53CD80096886F /* Encrypt.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Encrypt.m; path = "Youcrypt Mac alpha/Encrypt.m"; sourceTree = "<group>"; };
 		E6649C7B15A53CE40096886F /* Encrypt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Encrypt.h; path = "Youcrypt Mac alpha/Encrypt.h"; sourceTree = "<group>"; };
 		E6649C7C15A53CFC0096886F /* libFunctions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = libFunctions.h; path = "Youcrypt Mac alpha/libFunctions.h"; sourceTree = "<group>"; };
@@ -542,6 +544,7 @@
 		E6BEB6C915A3A72000878D4B /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				E65C4B5415ABAD9F00AF9D8E /* processing-22x22.png */,
 				E6649CAC15A78E0E0096886F /* loading-24x24.gif */,
 				E6649C8F15A707270096886F /* error-22x22.png */,
 				E6649C9015A707270096886F /* unlocked-24x24.png */,
@@ -706,6 +709,7 @@
 				E6649C9715A70FB00096886F /* VolumePropertiesSheetController.xib in Resources */,
 				E06E2B4115A76ABE00E52B2D /* ListRightClick.xib in Resources */,
 				E054042415AB1CE10011E5CC /* Restore.xib in Resources */,
+				E65C4B5515ABAD9F00AF9D8E /* processing-22x22.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

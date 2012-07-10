@@ -575,7 +575,7 @@ AppDelegate *theApp;
             else if (dirAtRow.status == YoucryptDirectoryStatusSourceNotFound) 
                 [cell setImage:[NSImage imageNamed:@"error-22x22.png"]];
             if (dirAtRow.status == YoucryptDirectoryStatusProcessing)
-                [cell setImage:[NSImage imageNamed:@"loading-24x24.gif"]];
+                [cell setImage:[NSImage imageNamed:@"processing-22x22.gif"]];
         } else if ([cell isKindOfClass:[NSPopUpButtonCell class]] && [colId isEqualToString:@"props"]) {
             NSPopUpButtonCell *dataTypeDropDownCell = [tableColumn dataCell];
             [[dataTypeDropDownCell itemAtIndex:1] setTitle:@"Open"];
@@ -591,9 +591,10 @@ AppDelegate *theApp;
 
 - (id) tableView:(NSTableView*)tableView dataCellForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row
 {
-    NSString *colId = [tableColumn identifier];
- 
+    
     /*
+    NSString *colId = [tableColumn identifier];
+
     if ([colId isEqualToString:@"props"]) {
         NSPopUpButtonCell *dataTypeDropDownCell = [[NSPopUpButtonCell alloc] initTextCell:@"Actions..." pullsDown:YES];
         [dataTypeDropDownCell setBordered:NO];
