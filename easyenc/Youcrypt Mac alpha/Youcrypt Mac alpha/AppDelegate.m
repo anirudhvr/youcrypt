@@ -169,11 +169,8 @@ AppDelegate *theApp;
     if(configDir.firstRun) {
         [self showListDirectories:self];
         NSLog(@"FIRST RUN ! ");
-        [self showFirstRunSheet];
-        
-    }
-        
-    
+        [self showFirstRunSheet];        
+    }    
 }
 // --------------------------------------------------------------------------------------
 
@@ -295,6 +292,28 @@ AppDelegate *theApp;
     if (listDirectories != nil) {
         [listDirectories.table reloadData];
     }
+}
+
+-(void) cancelRestore:(NSString *)path {
+    for (YoucryptDirectory *dir in directories) {
+        if ([path isEqualToString:dir.path]) {
+            dir.status = YoucryptDirectoryStatusUnmounted;
+            [dir updateInfo];
+            break;
+        }
+        
+    }    
+}
+
+-(void) cancelDecrypt:(NSString *)path {
+    for (YoucryptDirectory *dir in directories) {
+        if ([path isEqualToString:dir.path]) {
+            dir.status = YoucryptDirectoryStatusUnmounted;
+            [dir updateInfo];
+            break;
+        }
+        
+    }    
 }
 
 
@@ -646,4 +665,6 @@ AppDelegate *theApp;
         [listDirectories.table reloadData];
     return nil;
 }
+
+
 @end

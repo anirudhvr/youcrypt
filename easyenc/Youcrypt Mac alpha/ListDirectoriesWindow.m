@@ -155,8 +155,12 @@
         } else if (dir.status == YoucryptDirectoryStatusMounted) {
             [[NSAlert alertWithMessageText:@"Cannot remove a mounted directory" defaultButton:@"Okay" alternateButton:nil  otherButton:nil informativeTextWithFormat:@""] runModal];             
         } else if (dir.status == YoucryptDirectoryStatusUnmounted) {
-            if([[NSAlert alertWithMessageText:@"Restore and Remove" defaultButton:@"Yes" alternateButton:@"No, just remove it" otherButton:@"" informativeTextWithFormat:@"You have chosen to remove the youcrypted folder at %@.  Restore contents?", [dir.path stringByDeletingLastPathComponent]] runModal] == NSAlertDefaultReturn) {
+            int retCode;
+            if((retCode = [[NSAlert alertWithMessageText:@"Restore and Remove" defaultButton:@"Yes" alternateButton:@"No, just remove it" otherButton:@"Cancel" informativeTextWithFormat:@"You have chosen to remove the youcrypted folder at %@.  Restore contents?", [dir.path stringByDeletingLastPathComponent]] runModal]) == NSAlertDefaultReturn) {
                 [theApp removeFSAtRow:row];
+            }
+            else if (retCode == NSAlertAlternateReturn) {
+                [theApp.directories removeObject:dir];
             }
         }
     }
