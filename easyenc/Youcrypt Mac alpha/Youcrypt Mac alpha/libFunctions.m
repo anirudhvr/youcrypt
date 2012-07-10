@@ -43,7 +43,6 @@
 {
     NSString *yourPasswordString = passphrase;
     NSError *error = nil;
-    
     if([SSKeychain setPassword:yourPasswordString forService:service account:NSUserName() error:&error])
         NSLog(@"Successfully registered passphrase wiht keychain");
     if (error) {

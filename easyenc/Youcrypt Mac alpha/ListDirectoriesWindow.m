@@ -9,20 +9,23 @@
 #import "ListDirectoriesWindow.h"
 #import "AppDelegate.h"
 #import "ListDirTable.h"
+#import "PassphraseSheetController.h"
 
 @implementation ListDirectoriesWindow
 
 @synthesize table;
+@synthesize passphraseSheet;
 
 - (id)init
 {
     if (![super initWithWindowNibName:@"ListDirectoriesWindow"])
         return nil;
     
-    allowedToolbarItemKeys = [[NSArray alloc] initWithObjects:AddToolbarItemIdentifier, RemoveToolbarItemIdentifier, PreferencesToolbarItemIdentifier, QuitToolbarItemIdentifier, HelpToolbarItemIdentifier, nil];
+    allowedToolbarItemKeys = [[NSArray alloc] initWithObjects:AddToolbarItemIdentifier, RemoveToolbarItemIdentifier, PreferencesToolbarItemIdentifier, ChangePassphraseToolbarIdentifier, QuitToolbarItemIdentifier, HelpToolbarItemIdentifier, nil];
     allowedToolbarItemDetails = [NSMutableDictionary dictionary];
     
     volumePropsSheet = [[VolumePropertiesSheetController alloc] init];
+    passphraseSheet = [[PassphraseSheetController alloc] init];
     return self;
     
 }
@@ -159,7 +162,6 @@
     }
     [table reloadData];
 }
- 
 
 
 /***
@@ -256,7 +258,8 @@
 {
     return [NSArray arrayWithObjects:AddToolbarItemIdentifier,NSToolbarSeparatorItemIdentifier,
             RemoveToolbarItemIdentifier, NSToolbarSeparatorItemIdentifier,
-            PreferencesToolbarItemIdentifier, NSToolbarFlexibleSpaceItemIdentifier,
+            PreferencesToolbarItemIdentifier, NSToolbarSeparatorItemIdentifier,
+            ChangePassphraseToolbarIdentifier, NSToolbarFlexibleSpaceItemIdentifier,
             HelpToolbarItemIdentifier, NSToolbarSpaceItemIdentifier,
             QuitToolbarItemIdentifier, nil];
 }
@@ -270,6 +273,7 @@
     return [NSArray arrayWithObjects:AddToolbarItemIdentifier,NSToolbarSeparatorItemIdentifier,
             RemoveToolbarItemIdentifier, NSToolbarSeparatorItemIdentifier,
             PreferencesToolbarItemIdentifier, NSToolbarSpaceItemIdentifier,
+            ChangePassphraseToolbarIdentifier, NSToolbarSpaceItemIdentifier,
             HelpToolbarItemIdentifier, NSToolbarFlexibleSpaceItemIdentifier,
             QuitToolbarItemIdentifier, nil];
 }
@@ -322,6 +326,17 @@
                                   forKey:[allowedToolbarItemKeys objectAtIndex:2]];
     
     [allowedToolbarItemDetails setObject:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:
+                                                                              @"Change Passphrase" /* label */, 
+                                                                              @"Change Passphrase" /* palletelabel */,
+                                                                              @"Change Passphrase" /* Tooltip */,
+                                                                              self           /* target */,
+                                                                              @"Key.png" /* image file */,
+                                                                              NSStringFromSelector(@selector(showChangePassphraseSheet)) /* selector */, nil]
+                                                                     forKeys:toolbarItemKeys] 
+                                  forKey:[allowedToolbarItemKeys objectAtIndex:3]];
+
+    
+    [allowedToolbarItemDetails setObject:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:
                                                                               @"Exit" /* label */, 
                                                                               @"Exit" /* palletelabel */,
                                                                               @"Exit Youcrypt" /* Tooltip */,
@@ -329,7 +344,7 @@
                                                                               @"Exit.png" /* image file */,
                                                                               NSStringFromSelector(@selector(exitApp)) /* selector */, nil]
                                                                      forKeys:toolbarItemKeys] 
-                                  forKey:[allowedToolbarItemKeys objectAtIndex:3]];
+                                  forKey:[allowedToolbarItemKeys objectAtIndex:4]];
     
     [allowedToolbarItemDetails setObject:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:
                                                                               @"Help" /* label */, 
@@ -339,7 +354,7 @@
                                                                               @"Help.png" /* image file */,
                                                                               NSStringFromSelector(@selector(showHelp)) /* selector */, nil]
                                                                      forKeys:toolbarItemKeys] 
-                                  forKey:[allowedToolbarItemKeys objectAtIndex:4]];
+                                  forKey:[allowedToolbarItemKeys objectAtIndex:5]];
 }
 
 - (void)showPreferencePanel
@@ -359,5 +374,18 @@
     [[NSWorkspace sharedWorkspace] openURL: [NSURL URLWithString:@"http://youcrypt.com"]];
 }
 
+
+- (void) showChangePassphraseSheet 
+{
+    [passphraseSheet beginSheetModalForWindow:theApp.listDirectories.window completionHandler:^(NSUInteger returnCode) {
+        if (returnCode == kSheetReturnedSave) {
+            NSLog(@"Change Passphrase done");
+        } else if (returnCode == kSheetReturnedCancel) {
+            NSLog(@"Change Passphrase cancelled :( ");
+        } else {
+            NSLog(@"Unknown return code");
+        }
+    }];
+}
 
 @end

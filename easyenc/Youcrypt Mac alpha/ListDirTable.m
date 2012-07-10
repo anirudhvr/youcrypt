@@ -32,7 +32,7 @@
         case 117: // delete
             [listDirObj removeFS:listDirObj.window];
             break;
-        case 36:
+        case 36: // enter
             [listDirObj doOpenProxy:[listDirObj.table selectedRow]];
             break;
         default:

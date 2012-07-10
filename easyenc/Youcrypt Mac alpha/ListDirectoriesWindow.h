@@ -13,9 +13,11 @@
 #define AddToolbarItemIdentifier @"Add"
 #define RemoveToolbarItemIdentifier @"Remove"
 #define PreferencesToolbarItemIdentifier @"Preferences"
+#define ChangePassphraseToolbarIdentifier @"Change Passphrase"
 #define QuitToolbarItemIdentifier @"Quit"
 #define HelpToolbarItemIdentifier @"Help"
 
+@class PassphraseSheetController;
 
 @interface ListDirectoriesWindow : NSWindowController <NSWindowDelegate, NSDraggingDestination, NSToolbarDelegate> {
     IBOutlet ListDirTable *table;
@@ -27,9 +29,14 @@
     NSMutableDictionary *allowedToolbarItemDetails;
     VolumePropertiesSheetController *volumePropsSheet;
     
+    PassphraseSheetController *passphraseSheet;
+    
 }
 
 @property (atomic, strong) IBOutlet NSTableView *table;
+
+@property (nonatomic, strong) PassphraseSheetController *passphraseSheet;
+
 - (IBAction)doEncrypt:(id)sender;
 - (IBAction)doOpen:(id)sender;
 - (IBAction)doProps:(id)sender;
@@ -49,6 +56,7 @@
 - (void) showPreferencePanel;
 - (void) exitApp;
 - (void) showHelp;
+- (void) showChangePassphraseSheet;
 
 - (void) keyDownCallback: (int) keyCode;
 
