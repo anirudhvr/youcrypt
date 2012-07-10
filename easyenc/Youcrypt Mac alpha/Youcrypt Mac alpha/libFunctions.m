@@ -32,7 +32,7 @@
         NSLog(@"Did not get passphrase");
         return nil;
     } else {
-        NSLog(@"Got passphrase");
+        NSLog(@"Got passphrase from keychain %", passphraseFromKeychain);
         return passphraseFromKeychain;
     }
 }

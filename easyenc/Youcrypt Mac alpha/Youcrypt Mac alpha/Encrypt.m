@@ -39,17 +39,9 @@
 -(void)awakeFromNib
 {
     [shareCheckBox setState:0];
-    NSLog(@"Awake from nib called");
+    NSLog(@"Encrypt awake from nib called");
     
-    if (keychainHasPassphrase == NO) {
-        passphraseFromKeychain = [libFunctions getPassphraseFromKeychain:@"Youcrypt"];
-        if (passphraseFromKeychain == nil) {
-            keychainHasPassphrase = NO;
-        } else {
-            keychainHasPassphrase = YES;
-            [yourPassword setStringValue:passphraseFromKeychain];
-        }
-    }
+    
 }
 
 - (IBAction)startIt:(id)sender {
@@ -159,10 +151,12 @@
 	/**** <!-- END PREP --> ***/
 
 	// -------------------------- Figure out the password, sharing options, etc. ------------------------------------
-    NSString *yourPasswordString = [yourPassword stringValue];    
-    if (!keychainHasPassphrase) {
-        [libFunctions registerWithKeychain:yourPasswordString:@"Youcrypt"];
-        keychainHasPassphrase = YES;
+
+    NSString *yourPasswordString =  nil;
+    if (keychainHasPassphrase) {
+        yourPasswordString = passphraseFromKeychain;
+    } else {
+        yourPasswordString = [yourPassword stringValue];
     }
         
 	yourFriendsEmailString = [yourFriendsEmail stringValue];	

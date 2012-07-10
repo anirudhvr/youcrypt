@@ -170,11 +170,8 @@ AppDelegate *theApp;
     if(configDir.firstRun) {
         [self showListDirectories:self];
         NSLog(@"FIRST RUN ! ");
-        [self showFirstRunSheet];
-        
-    }
-        
-    
+        [self showFirstRunSheet];        
+    }    
 }
 // --------------------------------------------------------------------------------------
 
@@ -298,6 +295,28 @@ AppDelegate *theApp;
     }
 }
 
+-(void) cancelRestore:(NSString *)path {
+    for (YoucryptDirectory *dir in directories) {
+        if ([path isEqualToString:dir.path]) {
+            dir.status = YoucryptDirectoryStatusUnmounted;
+            [dir updateInfo];
+            break;
+        }
+        
+    }    
+}
+
+-(void) cancelDecrypt:(NSString *)path {
+    for (YoucryptDirectory *dir in directories) {
+        if ([path isEqualToString:dir.path]) {
+            dir.status = YoucryptDirectoryStatusUnmounted;
+            [dir updateInfo];
+            break;
+        }
+        
+    }    
+}
+
 
 
 - (IBAction)windowShouldClose:(id)sender {
@@ -414,19 +433,18 @@ AppDelegate *theApp;
     } 
     
     NSString *pp =[libFunctions getPassphraseFromKeychain:@"Youcrypt"];
-    
-    /* other times, this code is called in awakefromNib */              
-    if (encryptController.keychainHasPassphrase == NO) {
+    if (pp != nil && [pp isNotEqualTo:@""]) {
         encryptController.passphraseFromKeychain = pp;
-        if (encryptController.passphraseFromKeychain != nil) {
-            encryptController.keychainHasPassphrase = YES;
-        }
+        encryptController.keychainHasPassphrase = YES;
+        //[encryptController setPassphraseTextField:pp];
+        [encryptController encrypt:self];
+    } else { 
+        encryptController.passphraseFromKeychain = nil;
+        encryptController.keychainHasPassphrase = NO;
+        DDLogVerbose(@"showing %@", encryptController);
+        [encryptController showWindow:self];
+        
     }
-    
-    [encryptController setPassphraseTextField:pp];
-    
-    DDLogVerbose(@"showing %@", encryptController);
-    [encryptController showWindow:self];
 }
 
 
@@ -648,4 +666,6 @@ AppDelegate *theApp;
         [listDirectories.table reloadData];
     return nil;
 }
+
+
 @end

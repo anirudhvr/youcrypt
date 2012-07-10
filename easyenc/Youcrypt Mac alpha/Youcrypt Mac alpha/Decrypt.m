@@ -101,6 +101,11 @@
     }
 }
 
+- (IBAction)cancel:(id)sender {
+    [theApp cancelDecrypt:sourceFolderPath];
+    [self close];
+}
+
 - (IBAction)didMount:(id)sender {
     NSString *destFolder = destFolderPath;	
     

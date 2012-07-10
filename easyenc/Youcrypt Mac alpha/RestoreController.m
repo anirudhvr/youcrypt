@@ -117,5 +117,10 @@
 
 }
 
+- (IBAction)cancel:(id)sender {
+    [theApp cancelRestore:path];
+    [self.window close];
+}
+
 
 @end

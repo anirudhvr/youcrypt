@@ -81,6 +81,11 @@
 -(void)didEncrypt:(NSString *)path;
 -(void)didRestore:(NSString *)path;
 
+-(void) cancelDecrypt:(NSString *)path;
+-(void) cancelRestore:(NSString *)path;
+
+
+
 -(void) removeFSAtRow:(int) row ;
 
 
