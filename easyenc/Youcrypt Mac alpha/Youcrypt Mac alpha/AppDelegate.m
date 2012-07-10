@@ -24,7 +24,7 @@
 #import "FirstRunSheetController.h"
 #import "FeedbackSheetController.h"
 #import "PeriodicActionTimer.h"
-
+#import "keyDownView.h"
 
 int ddLogLevel = LOG_LEVEL_VERBOSE;
 
@@ -42,6 +42,7 @@ AppDelegate *theApp;
 @synthesize configDir;
 @synthesize directories;
 @synthesize firstRunSheetController;
+@synthesize keyDown;
 
 // --------------------------------------------------------------------------------------
 // App events
@@ -483,6 +484,12 @@ AppDelegate *theApp;
     }
 }
 
+- (void)keyDown:(NSEvent *)theEvent
+{
+    NSLog(@"KEY: %d",theEvent.keyCode);
+}
+
+
 - (id)tableView:(NSTableView *)tableView objectValueForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
    
     NSString *colId = [tableColumn identifier];
@@ -621,6 +628,8 @@ AppDelegate *theApp;
         }
     }
 }
+
+
 
 - (void) removeFSAtRow:(int) row {
     YoucryptDirectory *dir = [directories objectAtIndex:row];

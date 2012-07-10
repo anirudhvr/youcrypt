@@ -9,6 +9,8 @@
 #import <Cocoa/Cocoa.h>
 #import "YoucryptDirectory.h"
 #import "VolumePropertiesSheetController.h"
+#import "ListDirTable.h"
+#import "keyDownView.h"
 
 #define AddToolbarItemIdentifier @"Add"
 #define RemoveToolbarItemIdentifier @"Remove"
@@ -18,7 +20,7 @@
 
 
 @interface ListDirectoriesWindow : NSWindowController <NSWindowDelegate, NSDraggingDestination, NSToolbarDelegate> {
-    IBOutlet NSTableView *table;
+    IBOutlet ListDirTable *table;
     IBOutlet NSTextField *dirName;          // The text field at the bottom.
 
     // Toolbar
@@ -38,6 +40,8 @@
 - (IBAction)removeFS:(id)sender;
 - (IBAction)windowWillClose:(NSNotification *)notification;
 
+- (void)setStatusToSelectedRow:(NSInteger)row;
+- (void)doOpenProxy:(NSInteger)row ;
 
 // Toolbar / UI stuff
 - (IBAction)resizeWindow:(id)sender;
@@ -47,5 +51,7 @@
 - (void) showPreferencePanel;
 - (void) exitApp;
 - (void) showHelp;
+
+- (void) keyDownCallback: (int) keyCode;
 
 @end
