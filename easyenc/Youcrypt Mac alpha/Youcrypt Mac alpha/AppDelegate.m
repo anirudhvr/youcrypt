@@ -128,6 +128,12 @@ AppDelegate *theApp;
         }
     }
     
+    YoucryptDirectory *dir;
+    for (dir in directories) {
+        if (dir.status == YoucryptDirectoryStatusProcessing)
+            dir.status = YoucryptDirectoryStatusSourceNotFound;
+    }
+    
     
     [[[NSWorkspace sharedWorkspace] notificationCenter] addObserver:self selector:@selector(someUnMount:) name:NSWorkspaceDidUnmountNotification object:nil];
     [self someUnMount:nil];
@@ -252,10 +258,13 @@ AppDelegate *theApp;
         dir.mountedPath = mountPoint;
         [directories addObject:dir];                
     FoundOne:      
+        [dir checkYoucryptDirectoryStatus:YES]; // Check that it's actually mounted.
         if (dir.status == YoucryptDirectoryStatusMounted) {
-            // Just need to open the folder in this case
+            // Just need to open the folder in this case            
             [[NSWorkspace sharedWorkspace] openFile:dir.mountedPath];	
         } else {
+            dir.status = YoucryptDirectoryStatusProcessing;
+            dir.mountedPath = mountPoint;
             [self showDecryptWindow:self path:path mountPoint:mountPoint];
         }
         return YES;
@@ -665,7 +674,7 @@ AppDelegate *theApp;
     [YoucryptDirectory refreshMountedFuseVolumes];
     YoucryptDirectory *dir;
     for (dir in directories) {
-        [dir checkYoucryptDirectoryStatus:NO];
+        [dir updateInfo];
     }
     if (listDirectories != nil)
         [listDirectories.table reloadData];

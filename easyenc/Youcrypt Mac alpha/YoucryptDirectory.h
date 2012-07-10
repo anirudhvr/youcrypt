@@ -17,7 +17,7 @@ enum {
 } YoucryptDirectoryStatus;
 
 @interface YoucryptDirectory : NSObject <NSCoding> {
-    PeriodicActionTimer *timer;
+//    PeriodicActionTimer *timer;
 }
 
 @property (nonatomic, strong) NSString *path;          // Path of the youcrypt directory.
