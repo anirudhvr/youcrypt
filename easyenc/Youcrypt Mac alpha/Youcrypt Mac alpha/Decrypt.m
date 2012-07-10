@@ -72,10 +72,12 @@
             // His keychain couldn't unlock it.
             [self showWindow:nil];
             keychainHasPassphrase = NO;
+            return;
         }
         else {
             NSAlert *alert = [NSAlert alertWithMessageText:@"Incorrect passphrase" defaultButton:nil alternateButton:nil otherButton:nil informativeTextWithFormat:@"The passphrase does not decrypt %@", [srcFolder stringByDeletingLastPathComponent]];
             [alert runModal];
+            return;
         }
     }
 }
