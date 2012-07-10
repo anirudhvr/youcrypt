@@ -58,7 +58,7 @@ int mainCheckEncfsPasswd(int argc, const char *argv[]) {
 }
 
 
-int main(int argc, const char *argv[]) {
+int mainChangeEncFSPasswd(int argc, const char *argv[]) {
     @autoreleasepool {
         char passwd[1000], newpasswd[1000];
         do {
@@ -77,5 +77,17 @@ int main(int argc, const char *argv[]) {
 
     }
 }
+
+
+
+int main(int argc, const char *argv[]) {
+    
+}
+
+
+
+
+
+
 
 

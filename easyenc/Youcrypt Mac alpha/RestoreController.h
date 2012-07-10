@@ -10,6 +10,7 @@
 
 @interface RestoreController : NSWindowController {
     IBOutlet NSSecureTextField *passwordField;
+    NSString *tempFolder;
 }
 
 @property (readwrite,copy) IBOutlet NSString *path;

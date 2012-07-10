@@ -234,7 +234,6 @@
         [encfsProc waitUntilExit];
         [io closeFile];
         if ([encfsProc terminationStatus]) {
-            NSLog([NSString stringWithUTF8String:[[err availableData] bytes]]);
             return NO;
         } else  {
             return YES;

@@ -40,15 +40,22 @@
         passwd = [passwordField stringValue];
     
     
-    NSString *tempFolder = NSTemporaryDirectory();
+    tempFolder = NSTemporaryDirectory();
     [libFunctions mkdirRecursive:tempFolder];
     tempFolder = [tempFolder stringByAppendingPathComponent:[[NSProcessInfo processInfo] globallyUniqueString]];
     [libFunctions mkdirRecursive:tempFolder];
         
-    NSLog(@"Restoring %@: tmpDir = %@\n", path, tempFolder);
+//    NSLog(@"Restoring %@: tmpDir = %@\n", path, tempFolder);
         
 //    [libFunctions createEncFS:destFolder decryptedFolder:tempFolder numUsers:numberOfUsers combinedPassword:combinedPasswordString];
+    
+    NSNotificationCenter *nCenter = [[NSWorkspace sharedWorkspace] notificationCenter];
+    [nCenter removeObserver:self];
+    [nCenter addObserver:self selector:@selector(didMount:) name:NSWorkspaceDidMountNotification object:nil];
+    
+    
     if (![libFunctions mountEncFS:path decryptedFolder:tempFolder password:passwd volumeName:path]) {
+        NSLog(@"Restoring failed at mountEncFs %@: tmpDir = %@\n", path, tempFolder);
         if (self.keychainHasPassphrase) {
             // The error wasn't the user's fault.
             // His keychain couldn't unlock it.
@@ -59,19 +66,38 @@
         else {
             NSAlert *alert = [NSAlert alertWithMessageText:@"Incorrect passphrase" defaultButton:nil alternateButton:nil otherButton:nil informativeTextWithFormat:@"The passphrase does not decrypt %@", [path stringByDeletingLastPathComponent]];
             [alert runModal];
+            return;
         }
 
     }
+    return;
+}
+
+-(IBAction)didMount:(id)sender {
     
     NSString *backPath = [path stringByDeletingLastPathComponent];
+    NSLog(@"Backpath is %@\n", backPath);
     
     // Now to move the contents of tempFolder into backPath
     // Unfortunately, a direct move won't work since both directories exist and
     // stupid macOS thinks it is overwriting the mount point we just created
     NSFileManager *fm = [NSFileManager defaultManager];
-    NSArray *files = [fm contentsOfDirectoryAtPath:tempFolder error:nil];
+    NSError *err;
+    NSArray *files = [fm contentsOfDirectoryAtPath:tempFolder error:&err];
+    if (err != nil) {        
+        [[NSAlert alertWithError:err] runModal];
+        // FIXME
+    }
+    
+    NSLog(@"files = %@\n", files);
+    
     for (NSString *file in files) {
-        [fm moveItemAtPath:[tempFolder stringByAppendingPathComponent:file] toPath:[backPath stringByAppendingPathComponent:file] error:nil];
+        NSError *err;
+        if (([file isEqualToString:@".DS_Store"]) || ([file isEqualToString:@".encfs6.xml"]))
+            continue;
+        if (![fm moveItemAtPath:[tempFolder stringByAppendingPathComponent:file] toPath:[backPath stringByAppendingPathComponent:file] error:&err]) {
+            //            [[NSAlert alertWithError:err] runModal];
+        }
         NSLog(@"Moving %@ to %@", 
               [tempFolder stringByAppendingPathComponent:file],
               [backPath stringByAppendingPathComponent:file]
@@ -79,12 +105,16 @@
     }    
     
     // Unmount the destination folder containing decrypted files
-    [libFunctions execCommand:@"/sbin/umount" arguments:[NSArray arrayWithObject:tempFolder]
-                          env:nil];
+    
+    if ([libFunctions execCommand:@"/sbin/umount" arguments:[NSArray arrayWithObject:tempFolder]
+                              env:nil]) {
+        NSLog(@"Umount failed.\nAborting\n");
+    }
     [fm removeItemAtPath:tempFolder error:nil];
     [fm removeItemAtPath:path error:nil];
     [theApp didRestore:path];
     [self.window close];
+
 }
 
 

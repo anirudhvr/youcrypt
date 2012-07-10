@@ -44,6 +44,7 @@ AppDelegate *theApp;
 @synthesize keyDown;
 @synthesize preferenceController;
 
+
 // --------------------------------------------------------------------------------------
 // App events
 // --------------------------------------------------------------------------------------
@@ -128,12 +129,17 @@ AppDelegate *theApp;
             }
         }
     }
+    
+    
+    [[[NSWorkspace sharedWorkspace] notificationCenter] addObserver:self selector:@selector(someUnMount:) name:NSWorkspaceDidUnmountNotification object:nil];
+    [self someUnMount:nil];
 
     DDLogVerbose(@"App did, in fact, finish launching!!!");
 }
 - (void)applicationWillTerminate:(NSNotification *)aNotification {
     //[NSKeyedArchiver archiveRootObject:directories toFile:configDir.youCryptListFile];
     [libFunctions archiveDirectoryList:directories toFile:configDir.youCryptListFile];
+    [[[NSWorkspace sharedWorkspace] notificationCenter] removeObserver:self];
 }
 
 - (BOOL)application:(NSApplication *)theApplication openFile:(NSString *)filename {    
@@ -154,45 +160,8 @@ AppDelegate *theApp;
     [statusItem setHighlightMode:YES];
     
     
-    NSArray *arguments = [[NSProcessInfo processInfo] arguments];
-	NSString *type = [[NSString alloc] init];
-    
-	for (id arg in arguments) {
-		if([arg isEqualToString:@"-d"]) {
-			type = @"D"; // decrypt
-		}
-		else if([arg isEqualToString:@"-e"]) {
-			type = @"E"; // encrypt
-		}
-        else if([arg isEqualToString:@"-m"]) {
-            type = @"M";
-        }
-        else if([arg isEqualToString:@"-p"]) {
-            type = @"P";
-        }
-        else type = @"M";
-	}
-    
-    type = @"L";
-    DDLogCVerbose(@"awake! %@",THIS_FILE);
-    
-    
-    if([type isEqualToString:@"M"])
-        [self showMainApp:self];
-    
-    else if([type isEqualToString:@"E"])
-        [self showEncryptWindow:self];
-    
-//    else if([type isEqualToString:@"D"])
-//        [self showDecryptWindow:self];
-    
-    else if ([type isEqualToString:@"P"])
-        [self showPreferencePanel:self];
-    
-    else if ([type isEqualToString:@"L"])
-        [self showListDirectories:self];
-    
     if(configDir.firstRun) {
+        [self showListDirectories:self];
         NSLog(@"FIRST RUN ! ");
         [self showFirstRunSheet];
         
@@ -285,7 +254,7 @@ AppDelegate *theApp;
         if ([path isEqualToString:dir.path]) {
             NSLog(@"Setting it to mounted\n");
             dir.status = YoucryptDirectoryStatusMounted;
-            [dir checkYoucryptDirectoryStatus:YES];
+//            [dir checkYoucryptDirectoryStatus:YES];
         }
     }
 
@@ -342,6 +311,7 @@ AppDelegate *theApp;
     if (!listDirectories) {
         listDirectories = [[ListDirectoriesWindow alloc] init];
     }
+    [listDirectories.window makeKeyAndOrderFront:self];
     [listDirectories showWindow:self];
 }
 
@@ -360,6 +330,7 @@ AppDelegate *theApp;
         preferenceController = [[PreferenceController alloc] init];
     }
     [self showFirstRun]; 
+    
 }
 
 -(void)showFirstRun
@@ -376,10 +347,8 @@ AppDelegate *theApp;
         } else {
             NSLog(@"Unknown return code");
         }
-    }];
-    
+    }];    
 }
-
 
 
 - (IBAction)showDecryptWindow:(id)sender path:(NSString *)path mountPoint:(NSString *)mountPath {
@@ -501,7 +470,7 @@ AppDelegate *theApp;
     if (!dirAtRow)
         return nil;
     
-    [dirAtRow updateInfo];
+//    [dirAtRow updateInfo];
     
     
     if ([colId isEqualToString:@"alias"]) {
@@ -596,7 +565,7 @@ AppDelegate *theApp;
     if (!dirAtRow)
         return;
         
-    [dirAtRow updateInfo];
+//    [dirAtRow updateInfo];
     
     if (dirAtRow.status == YoucryptDirectoryStatusMounted) { // mounted => unlocked
         if ([cell isKindOfClass:[NSTextFieldCell class]]) {
@@ -656,4 +625,17 @@ AppDelegate *theApp;
     return nil;
 }
 
+
+-(id) someUnMount:(id) sender {
+    // Someone unmount us a bomb.
+    NSLog(@"Something unmounted\n");
+    [YoucryptDirectory refreshMountedFuseVolumes];
+    YoucryptDirectory *dir;
+    for (dir in directories) {
+        [dir checkYoucryptDirectoryStatus:NO];
+    }
+    if (listDirectories != nil)
+        [listDirectories.table reloadData];
+    return nil;
+}
 @end

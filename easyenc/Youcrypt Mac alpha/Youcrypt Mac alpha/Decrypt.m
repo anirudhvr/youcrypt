@@ -75,24 +75,39 @@
         encfnames = YES;
     
     int idletime = [[theApp.preferenceController getPreference:YC_IDLETIME] intValue];
+
+    
+    NSNotificationCenter *nCenter = [[NSWorkspace sharedWorkspace] notificationCenter];
+    [nCenter removeObserver:self];
+    [nCenter addObserver:self selector:@selector(didMount:) name:NSWorkspaceDidMountNotification object:nil];
     
     BOOL res = [libFunctions mountEncFS:srcFolder decryptedFolder:destFolder password:yourPasswordString fuseOptions:dict idleTime:idletime ];
-    
+
     if (res == YES) {
-        [theApp didDecrypt:sourceFolderPath];
-        [self close];
-        [[NSWorkspace sharedWorkspace] openFile:destFolder];	
+        return;
     } else {
         if (keychainHasPassphrase) {
             // The error wasn't the user's fault.
             // His keychain couldn't unlock it.
             [self showWindow:nil];
             keychainHasPassphrase = NO;
+            return;
         }
         else {
             NSAlert *alert = [NSAlert alertWithMessageText:@"Incorrect passphrase" defaultButton:nil alternateButton:nil otherButton:nil informativeTextWithFormat:@"The passphrase does not decrypt %@", [srcFolder stringByDeletingLastPathComponent]];
             [alert runModal];
+            return;
         }
     }
+}
+
+- (IBAction)didMount:(id)sender {
+    NSString *destFolder = destFolderPath;	
+    
+    [[[NSWorkspace sharedWorkspace] notificationCenter] removeObserver:self];
+    
+    [[NSWorkspace sharedWorkspace] openFile:destFolder];	
+    [theApp didDecrypt:sourceFolderPath];
+    [self close];
 }
 @end
