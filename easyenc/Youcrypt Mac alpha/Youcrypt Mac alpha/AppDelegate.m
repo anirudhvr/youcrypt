@@ -385,7 +385,6 @@ AppDelegate *theApp;
 }
 
 
-
 - (IBAction)showDecryptWindow:(id)sender path:(NSString *)path mountPoint:(NSString *)mountPath {
     // Is decryptController nil?
     if (!decryptController) {
@@ -659,6 +658,7 @@ AppDelegate *theApp;
     return nil;
 }
 
+
 -(id) someUnMount:(id) sender {
     // Someone unmount us a bomb.
     NSLog(@"Something unmounted\n");
@@ -671,5 +671,4 @@ AppDelegate *theApp;
         [listDirectories.table reloadData];
     return nil;
 }
-
 @end
