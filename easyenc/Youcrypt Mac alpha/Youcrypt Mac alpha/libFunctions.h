@@ -46,16 +46,23 @@
 
 + (BOOL) mountEncFS:(NSString *)encFolder
     decryptedFolder:(NSString *)decFolder
-           password:(NSString *)password;
+           password:(NSString *)password
+         volumeName:(NSString*) volname;
 
++ (BOOL) changeEncFSPasswd:(NSString *)path
+                 oldPasswd:(NSString *)oldPasswd
+                 newPasswd:(NSString *)newPasswd;
+
+
+
++ (void) archiveDirectoryList:(id)directories 
+                       toFile:(NSString*)file;
++ (id) unarchiveDirectoryListFromFile:(NSString*)file;
 
 
 + (BOOL)fileHandleIsReadable:(NSFileHandle*)fh;
 
 
 
-+ (BOOL) changeEncFSPasswd:(NSString *)path
-                 oldPasswd:(NSString *)oldPasswd
-                 newPasswd:(NSString *)newPasswd;
 
 @end

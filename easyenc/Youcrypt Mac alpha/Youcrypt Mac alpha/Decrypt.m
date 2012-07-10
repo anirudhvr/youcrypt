@@ -15,6 +15,8 @@
 
 @synthesize sourceFolderPath;
 @synthesize destFolderPath;
+@synthesize passphraseFromKeychain;
+@synthesize keychainHasPassphrase;
 
 -(id)init
 {
@@ -53,16 +55,28 @@
 {	
 	NSString *srcFolder = sourceFolderPath;
 	NSString *destFolder = destFolderPath;	
-	NSString *yourPasswordString = [yourPassword stringValue];
+	NSString *yourPasswordString;
+    if (keychainHasPassphrase)
+        yourPasswordString = passphraseFromKeychain;
+    else
+        yourPasswordString = [yourPassword stringValue];
     
     [libFunctions mkdirRecursive:destFolder]; 
-    if ([libFunctions mountEncFS:srcFolder decryptedFolder:destFolder password:yourPasswordString] == YES) {
+    if ([libFunctions mountEncFS:srcFolder decryptedFolder:destFolder password:yourPasswordString volumeName:[[srcFolder stringByDeletingLastPathComponent] lastPathComponent]] == YES) {
         [theApp didDecrypt:sourceFolderPath];
         [self close];
         [[NSWorkspace sharedWorkspace] openFile:destFolder];	
     } else {
-        NSAlert *alert = [NSAlert alertWithMessageText:@"Incorrect passphrase" defaultButton:nil alternateButton:nil otherButton:nil informativeTextWithFormat:@"The passphrase does not decrypt %@", [srcFolder stringByDeletingLastPathComponent]];
-        [alert runModal];
+        if (keychainHasPassphrase) {
+            // The error wasn't the user's fault.
+            // His keychain couldn't unlock it.
+            [self showWindow:nil];
+            keychainHasPassphrase = NO;
+        }
+        else {
+            NSAlert *alert = [NSAlert alertWithMessageText:@"Incorrect passphrase" defaultButton:nil alternateButton:nil otherButton:nil informativeTextWithFormat:@"The passphrase does not decrypt %@", [srcFolder stringByDeletingLastPathComponent]];
+            [alert runModal];
+        }
     }
 }
 @end

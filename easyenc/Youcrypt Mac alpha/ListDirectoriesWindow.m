@@ -45,7 +45,7 @@
 {
     if (dirName != nil)
         NSLog(@"Doubleclicked %@", [dirName stringValue]);
-    [self doOpen:self.table];
+    [self doOpen:table];
 }
 
 - (void)awakeFromNib {
@@ -73,6 +73,7 @@
     if ([table clickedRow] < [theApp.directories count]) {
         YoucryptDirectory *dir = [theApp.directories objectAtIndex:[table clickedRow]];
         [theApp openEncryptedFolder:[dir path]];
+
     }
 }
 
@@ -82,7 +83,7 @@
         YoucryptDirectory *dir = [theApp.directories objectAtIndex:[table clickedRow]];
         volumePropsSheet.sp = dir.path;
         volumePropsSheet.mp = dir.mountedPath;
-        volumePropsSheet.stat = ((dir.status == YoucryptDirectoryStatusMounted) ? @"Mounted" : @"Not Mounted");
+        volumePropsSheet.stat = [YoucryptDirectory statusToString:dir.status];
         [volumePropsSheet beginSheetModalForWindow:self.window completionHandler:^(NSUInteger returnCode) {
             if (returnCode == 0) {
                 NSLog(@"sheet returned success");
@@ -95,9 +96,10 @@
 }
 
 - (IBAction)selectRow:(id)sender {
-   if ([sender clickedRow] < [theApp.directories count]) {
+    NSLog(@"Selected row %d", [sender selectedRow]);
+    if ([sender clickedRow] < [theApp.directories count]) {
         YoucryptDirectory *dir = [theApp.directories objectAtIndex:[sender clickedRow]];
-        [dirName setStringValue:dir.path];
+        [dirName setStringValue:[NSString stringWithFormat:@"   %@: %@", [YoucryptDirectory statusToString:dir.status], dir.path]];
     }
 }
 
@@ -116,18 +118,31 @@
         NSArray* files = [openDlg filenames];
         for( int i = 0; i < [files count]; i++ )
             [theApp encryptFolder:[files objectAtIndex:i]];
-        [table reloadData];
     }
 
 }
 
 - (IBAction)removeFS:(id)sender {
     NSInteger row = [table selectedRow];
-    if (row != -1) {        
-        [table reloadData];
+    if (row < [theApp.directories count] && row != -1) {
+        YoucryptDirectory *dir = [theApp.directories objectAtIndex:row];
+        if (dir.status == YoucryptDirectoryStatusSourceNotFound || 
+            dir.status == YoucryptDirectoryStatusNotFound) {
+            [table beginUpdates];
+            [table removeRowsAtIndexes:[[NSIndexSet alloc] initWithIndex:row] withAnimation:NSTableViewAnimationSlideUp];
+            [table endUpdates];
+            [theApp.directories removeObjectAtIndex:row];
+        } else if (dir.status == YoucryptDirectoryStatusMounted) {
+            [[NSAlert alertWithMessageText:@"Cannot remove a mounted directory" defaultButton:@"Okay" alternateButton:nil  otherButton:nil informativeTextWithFormat:@""] runModal];             
+        } else if (dir.status == YoucryptDirectoryStatusUnmounted) {
+            if([[NSAlert alertWithMessageText:@"Restore and Remove" defaultButton:@"Yes" alternateButton:@"No, just remove it" otherButton:@"" informativeTextWithFormat:@"You have chosen to remove the youcrypted folder at %@.  Restore contents?", [dir.path stringByDeletingLastPathComponent]] runModal] == NSAlertDefaultReturn) {
+                [theApp removeFSAtRow:row];
+            }
+        }
     }
-    
+    [table reloadData];
 }
+ 
 
 
 /***

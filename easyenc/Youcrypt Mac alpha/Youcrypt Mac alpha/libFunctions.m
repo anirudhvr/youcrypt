@@ -183,13 +183,16 @@
 
 + (BOOL) mountEncFS:(NSString *)encFolder
     decryptedFolder:(NSString *)decFolder
-           password:(NSString *)password {
+           password:(NSString *)password
+         volumeName:(NSString*) volname         {
+    
     NSTask *encfsProc = [NSTask alloc];
     NSFileHandle *io = [NSFileHandle alloc];
+    NSString *vol = [NSString stringWithString:(volname == nil ? @"Youcrypt Volume" : volname)];
     
     if ([libFunctions execWithSocket:ENCFS arguments:nil env:nil io:io proc:encfsProc]) {        
-        [io writeData:[[NSString stringWithFormat:@"8\nencfs\n--pw\n%@\n--\n%@\n%@\n-ofsname=YoucryptFS\n-ovolname=Youcrypt Volume\n", 
-                        password, encFolder, decFolder] dataUsingEncoding:NSUTF8StringEncoding]];
+        [io writeData:[[NSString stringWithFormat:@"8\nencfs\n--pw\n%@\n--\n%@\n%@\n-ofsname=YoucryptFS\n-ovolname=%@\n", 
+                        password, encFolder, decFolder, vol] dataUsingEncoding:NSUTF8StringEncoding]];
         [encfsProc waitUntilExit];
         [io closeFile];
         if ([encfsProc terminationStatus])
@@ -201,17 +204,6 @@
         return NO;
     }
 
-}
-
-
-+ (BOOL)fileHandleIsReadable:(NSFileHandle*)fh
-{
-    int fd = [fh fileDescriptor];
-    fd_set fdset;
-    struct timeval tmout = { 0, 0 }; // return immediately
-    FD_ZERO(&fdset);
-    FD_SET(fd, &fdset);
-    return (select(fd + 1, &fdset, NULL, NULL, &tmout) > 0);
 }
 
 
@@ -236,6 +228,32 @@
         return NO;
     }
 }
+
+
+
++ (BOOL)fileHandleIsReadable:(NSFileHandle*)fh
+{
+    int fd = [fh fileDescriptor];
+    fd_set fdset;
+    struct timeval tmout = { 0, 0 }; // return immediately
+    FD_ZERO(&fdset);
+    FD_SET(fd, &fdset);
+    return (select(fd + 1, &fdset, NULL, NULL, &tmout) > 0);
+}
+
++ (void) archiveDirectoryList:(id)directories 
+                       toFile:(NSString*)file 
+{
+    [NSKeyedArchiver archiveRootObject:directories toFile:file];
+
+}
+
++ (id) unarchiveDirectoryListFromFile:(NSString*)file
+{
+    return [NSKeyedUnarchiver unarchiveObjectWithFile:file];    
+}
+
+
 
 
 @end

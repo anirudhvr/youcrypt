@@ -23,6 +23,7 @@
 #import "ListDirectoriesWindow.h"
 #import "FirstRunSheetController.h"
 #import "FeedbackSheetController.h"
+#import "PeriodicActionTimer.h"
 
 
 int ddLogLevel = LOG_LEVEL_VERBOSE;
@@ -56,16 +57,50 @@ AppDelegate *theApp;
     //[youcryptService setApp:self];
     
     // TODO:  Load up directories array from the list file.
-    directories = [NSKeyedUnarchiver unarchiveObjectWithFile:configDir.youCryptListFile];
+    directories = [libFunctions unarchiveDirectoryListFromFile:configDir.youCryptListFile];
     if (directories == nil) {
         directories = [[NSMutableArray alloc] init];
     } else {
-        
+        // Do stuff here to check if dirs are all 
     }
+    
+    // Notifiers to indicate when app gains and loses focus
+    // This is to do background stuffl ike syncing the config directory to disk
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(applicationDidResignActive:)
+                                                 name:NSApplicationDidResignActiveNotification
+                                               object:nil ];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(applicationDidBecomeActive:)
+                                                 name:NSApplicationDidBecomeActiveNotification
+                                               object:nil ];
+    timer = [[PeriodicActionTimer alloc] initWithMinRefreshTime:5];
+    configDirBeingSynced = NO;
     
     theApp = self;
     return self;
 }
+
+- (void) applicationDidResignActive:(NSNotification *)notification
+{
+    NSLog(@"Resigned active");
+
+    if (configDirBeingSynced == NO && [timer timerElapsed]) {
+        configDirBeingSynced = YES;
+        NSLog(@"Syncing current state to disk");
+        // XXX break this off into a new thread?
+        /// XX might want to use a dispatch queue here instead
+        [libFunctions archiveDirectoryList:directories toFile:configDir.youCryptListFile];
+//        [NSKeyedArchiver archiveRootObject:directories toFile:configDir.youCryptListFile];
+        
+        configDirBeingSynced = NO;
+    }
+}
+- (void) applicationDidBecomeActive:(NSNotification *)notification
+{
+    NSLog(@"Became active");
+}
+
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
     // Insert code here to initialize your application
     [NSApp setServicesProvider:youcryptService];
@@ -96,9 +131,10 @@ AppDelegate *theApp;
     DDLogVerbose(@"App did, in fact, finish launching!!!");
 }
 - (void)applicationWillTerminate:(NSNotification *)aNotification {
-    [NSKeyedArchiver archiveRootObject:directories toFile:configDir.youCryptListFile];
-    
+    //[NSKeyedArchiver archiveRootObject:directories toFile:configDir.youCryptListFile];
+    [libFunctions archiveDirectoryList:directories toFile:configDir.youCryptListFile];
 }
+
 - (BOOL)application:(NSApplication *)theApplication openFile:(NSString *)filename {    
     return [self openEncryptedFolder:filename];
 }
@@ -146,8 +182,8 @@ AppDelegate *theApp;
     else if([type isEqualToString:@"E"])
         [self showEncryptWindow:self];
     
-    else if([type isEqualToString:@"D"])
-        [self showDecryptWindow:self];
+//    else if([type isEqualToString:@"D"])
+//        [self showDecryptWindow:self];
     
     else if ([type isEqualToString:@"P"])
         [self showPreferencePanel:self];
@@ -192,33 +228,30 @@ AppDelegate *theApp;
         mountPoint = [configDir.youCryptVolDir stringByAppendingPathComponent:
                       [timeStr stringByAppendingPathComponent:mountPoint]];
         
-        if (!decryptController) {
-            decryptController = [[Decrypt alloc] init];
-        }
-        decryptController.destFolderPath = mountPoint;
-        decryptController.sourceFolderPath = path;
         
         YoucryptDirectory *dir;
         for (dir in directories) {
             if ([path isEqualToString:dir.path]) {
-                if (dir.status == YoucryptDirectoryStatusUnmounted)
+                if (dir.status == YoucryptDirectoryStatusUnmounted) {
+                    dir.status =  YoucryptDirectoryStatusProcessing;
                     dir.mountedPath = mountPoint;
+                }
                 goto FoundOne;
             }
         }        
         dir = [[YoucryptDirectory alloc] init];
         dir.path = path;
-        dir.mountedPath = mountPoint;
         dir.alias = [[path stringByDeletingLastPathComponent] lastPathComponent];
-        dir.status = YoucryptDirectoryStatusUnmounted;
+//        dir.status = YoucryptDirectoryStatusUnmounted;
+        dir.status = YoucryptDirectoryStatusProcessing;
+        dir.mountedPath = mountPoint;
         [directories addObject:dir];                
     FoundOne:      
-        if (dir.status == YoucryptDirectoryStatusMounted == YES) {
+        if (dir.status == YoucryptDirectoryStatusMounted) {
             // Just need to open the folder in this case
             [[NSWorkspace sharedWorkspace] openFile:dir.mountedPath];	
-
         } else {
-            [self showDecryptWindow:self];
+            [self showDecryptWindow:self path:path mountPoint:mountPoint];
         }
         return YES;
     }
@@ -246,12 +279,15 @@ AppDelegate *theApp;
 }
 
 - (void)didDecrypt:(NSString *)path {
+    NSLog(@"did decrypt %@\n", path);
     for (YoucryptDirectory *dir in directories) {
         if ([path isEqualToString:dir.path]) {
+            NSLog(@"Setting it to mounted\n");
             dir.status = YoucryptDirectoryStatusMounted;
+            [dir checkYoucryptDirectoryStatus:YES];
         }
-        
     }
+
     if (listDirectories != nil) {
         [listDirectories.table reloadData];
     }
@@ -269,6 +305,20 @@ AppDelegate *theApp;
     }
 }
 
+- (void)didRestore:(NSString *)path {
+    for (YoucryptDirectory *dir in directories) {
+        if ([path isEqualToString:dir.path]) {
+            [directories removeObject:dir];
+            break;
+        }
+        
+    }
+    if (listDirectories != nil) {
+        [listDirectories.table reloadData];
+    }
+}
+
+
 
 - (IBAction)windowShouldClose:(id)sender {
     DDLogVerbose(@"Closing..");
@@ -283,7 +333,7 @@ AppDelegate *theApp;
 // Helper functions to show any window; you name it, we've it.
 // --------------------------------------------------------------------------------------
 - (IBAction)showMainApp:(id)sender {
-    [self.window makeKeyAndOrderFront:self];
+    [listDirectories.window makeKeyAndOrderFront:self];
 }
 
 - (IBAction)showListDirectories:(id)sender {
@@ -330,14 +380,52 @@ AppDelegate *theApp;
 }
 
 
-- (IBAction)showDecryptWindow:(id)sender {
+
+- (IBAction)showDecryptWindow:(id)sender path:(NSString *)path mountPoint:(NSString *)mountPath {
     // Is decryptController nil?
     if (!decryptController) {
         decryptController = [[Decrypt alloc] init];
     }
+    
+    NSString *pp =[libFunctions getPassphraseFromKeychain:@"Youcrypt"];
     DDLogVerbose(@"showing %@", decryptController);
-    [decryptController showWindow:self];
+    DDLogVerbose(@"password from keychain = %@\n", pp);
+
+    decryptController.passphraseFromKeychain = pp;
+    decryptController.keychainHasPassphrase = YES;        
+    decryptController.sourceFolderPath = path;
+    decryptController.destFolderPath = mountPath;
+    
+    if ((pp != nil) && !([pp isEqualToString:@""])) {
+        // If we have a password, try running decrypting without showing the window.
+        DDLogVerbose(@"trying auto decrypt\n");
+        [decryptController decrypt:self];
+    }
+    else {                
+        [decryptController showWindow:self];
+    }
 }
+
+- (IBAction)showRestoreWindow:(id)sender path:(NSString *)path {
+    if (!restoreController) {
+        restoreController = [[RestoreController alloc] init];
+    }
+    
+    NSString *pp =[libFunctions getPassphraseFromKeychain:@"Youcrypt"];
+    restoreController.passwd = pp;
+    restoreController.keychainHasPassphrase = YES;        
+    restoreController.path = path;
+    
+    if ((pp != nil) && !([pp isEqualToString:@""])) {
+        // If we have a password, try running decrypting without showing the window.
+        [restoreController restore:self];
+    }
+    else {                
+        [restoreController showWindow:self];
+    }
+
+}
+
 
 - (IBAction)showEncryptWindow:(id)sender {
     // Is encryptController nil?
@@ -353,9 +441,9 @@ AppDelegate *theApp;
         if (encryptController.passphraseFromKeychain != nil) {
             encryptController.keychainHasPassphrase = YES;
         }
-    } else {
-        [encryptController setPassphraseTextField:pp];
     }
+    
+    [encryptController setPassphraseTextField:pp];
     
     DDLogVerbose(@"showing %@", encryptController);
     [encryptController showWindow:self];
@@ -406,10 +494,11 @@ AppDelegate *theApp;
     if (!dirAtRow)
         return nil;
     
-    NSMutableAttributedString *str = [NSMutableAttributedString alloc];
+    [dirAtRow updateInfo];
+    
     
     if ([colId isEqualToString:@"alias"]) {
-        [str initWithString:dirAtRow.alias];
+        NSMutableAttributedString *str = [[NSMutableAttributedString alloc] initWithString:dirAtRow.alias];
         NSRange selectedRange = NSRangeFromString(dirAtRow.alias);
         [str addAttribute:NSForegroundColorAttributeName
                        value:[NSColor blueColor]
@@ -470,7 +559,6 @@ AppDelegate *theApp;
                                      informativeTextWithFormat:@"This folder already contains encrypted content.  Decrypt and open?"];
                 if ([alert runModal] == NSAlertDefaultReturn) {
                     [theApp openEncryptedFolder:[path stringByAppendingPathComponent:@"encrypted.yc"]];
-                    [tableView reloadData];
                     return YES;
                 }              
                 else {
@@ -480,7 +568,6 @@ AppDelegate *theApp;
             else {
                 [theApp encryptFolder:path];
             }
-            [tableView reloadData];
             return YES;
         }
     }
@@ -488,7 +575,7 @@ AppDelegate *theApp;
 }
 
 //--------------------------------------------------------------------------------------------------
-// Code to color mounted and unmounted folders separately
+// Code to color mounted and unmounted folders separately and change their icons
 //--------------------------------------------------------------------------------------------------
 - (void)tableView:(NSTableView*)tableView willDisplayCell:(id)cell forTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
     NSString *colId = [tableColumn identifier];
@@ -502,39 +589,61 @@ AppDelegate *theApp;
     if (!dirAtRow)
         return;
         
-    [dirAtRow checkIfStillMounted];
+    [dirAtRow updateInfo];
     
     if (dirAtRow.status == YoucryptDirectoryStatusMounted) { // mounted => unlocked
         if ([cell isKindOfClass:[NSTextFieldCell class]]) {
             [cell setTextColor:[NSColor redColor]];
             [cell setBackgroundColor:[NSColor grayColor]];
         } else if ([cell isKindOfClass:[NSButtonCell class]] && [colId isEqualToString:@"status"]) {
-            NSButtonCell *c = (NSButtonCell*) cell;
-            [c setImage:[NSImage imageNamed:@"unlocked-24x24.png"]];
+            [cell setImage:[NSImage imageNamed:@"unlocked-24x24.png"]];
+        } else if ([cell isKindOfClass:[NSPopUpButtonCell class]] && [colId isEqualToString:@"props"]) {
+            NSPopUpButtonCell *dataTypeDropDownCell = [tableColumn dataCell];
+            [[dataTypeDropDownCell itemAtIndex:1] setTitle:@"Close"];
+            
         }
     } else  { // unmounted => locked
         if ([cell isKindOfClass:[NSTextFieldCell class]]) {
             [cell setTextColor:[NSColor blackColor]];
             [cell setBackgroundColor:[NSColor darkGrayColor]];
+            
         } else if ([cell isKindOfClass:[NSButtonCell class]] && [colId isEqualToString:@"status"]) {
-            NSButtonCell *c = (NSButtonCell*) cell;
             if (dirAtRow.status == YoucryptDirectoryStatusUnmounted) 
-                [c setImage:[NSImage imageNamed:@"locked-24x24.png"]];
-            else if (dirAtRow.status == YoucryptDirectoryStatusError) 
-                [c setImage:[NSImage imageNamed:@"error-22x22.png"]];
+                [cell setImage:[NSImage imageNamed:@"locked-24x24.png"]];
+            else if (dirAtRow.status == YoucryptDirectoryStatusSourceNotFound) 
+                [cell setImage:[NSImage imageNamed:@"error-22x22.png"]];
             if (dirAtRow.status == YoucryptDirectoryStatusProcessing)
-                [c setImage:[NSImage imageNamed:@"logo-color-alpha.png"]];
+                [cell setImage:[NSImage imageNamed:@"loading-24x24.gif"]];
+        } else if ([cell isKindOfClass:[NSPopUpButtonCell class]] && [colId isEqualToString:@"props"]) {
+            NSPopUpButtonCell *dataTypeDropDownCell = [tableColumn dataCell];
+            [[dataTypeDropDownCell itemAtIndex:1] setTitle:@"Open"];
+            
         }
     }
-
- 
-
 }
 
-- (NSCell *)tableView:(NSTableView *)tableView dataCellForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
-   // NSLog(@"This one too!");
+- (void) removeFSAtRow:(int) row {
+    YoucryptDirectory *dir = [directories objectAtIndex:row];
+    [self showRestoreWindow:self path:dir.path];
+}
+
+- (id) tableView:(NSTableView*)tableView dataCellForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row
+{
+    NSString *colId = [tableColumn identifier];
+ 
+    /*
+    if ([colId isEqualToString:@"props"]) {
+        NSPopUpButtonCell *dataTypeDropDownCell = [[NSPopUpButtonCell alloc] initTextCell:@"Actions..." pullsDown:YES];
+        [dataTypeDropDownCell setBordered:NO];
+        [dataTypeDropDownCell setEditable:YES];
+        NSArray *dataTypeNames = [NSArray arrayWithObjects:@"NULLOrignal", @"String", @"Money", @"Date", @"Int", nil];
+        [dataTypeDropDownCell addItemsWithTitles:dataTypeNames];
+        return dataTypeDropDownCell;
+    } else {
+        return nil;
+    }
+     */
     return nil;
 }
-   
 
 @end

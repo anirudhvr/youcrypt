@@ -7,6 +7,7 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "RestoreController.h"
 
 @class PreferenceController;
 @class FileSystemsController;
@@ -17,6 +18,7 @@
 @class ListDirectoriesWindow;
 @class FirstRunSheetController;
 @class FeedbackSheetController;
+@class PeriodicActionTimer;
 
 @interface AppDelegate : NSObject <NSTableViewDataSource, NSTableViewDelegate, NSApplicationDelegate> { // changed from NSApplicationDelegate
     
@@ -29,10 +31,13 @@
     PreferenceController *preferenceController;
     Decrypt *decryptController;
     Encrypt  *encryptController;
+    RestoreController *restoreController;
         
 
     // Config directory
     ConfigDirectory *configDir;
+    BOOL configDirBeingSynced;
+    PeriodicActionTimer *timer;
     
     YoucryptService *youcryptService;
     
@@ -62,7 +67,7 @@
 
 // Enc and Dec
 - (IBAction)showEncryptWindow:(id)sender;
-- (IBAction)showDecryptWindow:(id)sender;
+- (IBAction)showDecryptWindow:(id)sender path:(NSString *)path mountPoint:(NSString *)mountPath;
 - (IBAction)showListDirectories:(id)sender;
 - (IBAction)openFeedbackPage:(id)sender;
 - (IBAction)openHelpPage:(id)sender;
@@ -71,6 +76,10 @@
 -(BOOL)openEncryptedFolder:(NSString *)path;
 -(void)didDecrypt:(NSString *)path;
 -(void)didEncrypt:(NSString *)path;
+-(void)didRestore:(NSString *)path;
+
+-(void) removeFSAtRow:(int) row ;
+
 
 - (void) showFirstRun;
 

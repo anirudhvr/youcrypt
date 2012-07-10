@@ -7,16 +7,17 @@
 //
 
 #import <Foundation/Foundation.h>
-
+@class PeriodicActionTimer;
 enum {
     YoucryptDirectoryStatusNotFound = 0,
     YoucryptDirectoryStatusMounted = 1,
     YoucryptDirectoryStatusUnmounted = 2,
-    YoucryptDirectoryStatusError = 3,
-    YoucryptDirectoryStatusProcessing = 4
+    YoucryptDirectoryStatusSourceNotFound = 3,
+    YoucryptDirectoryStatusProcessing = 4,
 } YoucryptDirectoryStatus;
 
 @interface YoucryptDirectory : NSObject <NSCoding> {
+    PeriodicActionTimer *timer;
 }
 
 @property (nonatomic, strong) NSString *path;          // Path of the youcrypt directory.
@@ -26,8 +27,10 @@ enum {
 @property (nonatomic, assign) NSUInteger status; // status description
 
 
-- (void) checkIfStillMounted;
+- (void) updateInfo;
+- (BOOL) checkYoucryptDirectoryStatus:(BOOL)forceRefresh;
 + (void) refreshMountedFuseVolumes;
++ (NSString*) statusToString:(NSUInteger)status;
 
 
 // Add more if needed.
