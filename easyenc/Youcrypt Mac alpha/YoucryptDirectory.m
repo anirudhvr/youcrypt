@@ -41,7 +41,7 @@ static int minRefreshTime = 5; // at most every 30 seconds
         if ([alias isEqualToString:@""]) {
             alias = [path lastPathComponent];
         }
-        timer = [[PeriodicActionTimer alloc] initWithMinRefreshTime:minRefreshTime];
+//        timer = [[PeriodicActionTimer alloc] initWithMinRefreshTime:minRefreshTime];
         @synchronized(self) {
             if (globalsAllocated == NO) {
                 mountedFuseVolumes = [[NSMutableArray alloc] init];
@@ -64,15 +64,6 @@ static int minRefreshTime = 5; // at most every 30 seconds
 - (void) updateInfo
 {
     [self checkYoucryptDirectoryStatus:NO];
-    
-    if (status != YoucryptDirectoryStatusProcessing) {
-        if (status == YoucryptDirectoryStatusSourceNotFound) {
-            path = mountedPath = [NSString stringWithString:@""];
-        } else if (status == YoucryptDirectoryStatusNotFound) {
-            mountedPath = [NSString stringWithString:@""];
-            status = YoucryptDirectoryStatusUnmounted; // source exists, just not mounted
-        }
-    }
 }
 
 - (BOOL)checkYoucryptDirectoryStatus:(BOOL)forceRefresh
@@ -84,44 +75,62 @@ static int minRefreshTime = 5; // at most every 30 seconds
 //        }
 //        
 //    }
+    if (forceRefresh)
+        [YoucryptDirectory refreshMountedFuseVolumes];
     
     NSUInteger indexOfPath = [mountedFuseVolumes indexOfObject:mountedPath];
     BOOL isDir = NO;
     BOOL sourcedirExists = [[NSFileManager defaultManager] fileExistsAtPath:path isDirectory:nil];
     BOOL mountpathExists = [[NSFileManager defaultManager] fileExistsAtPath:mountedPath isDirectory:&isDir];
     
-    if (!sourcedirExists) {
+    if (status == YoucryptDirectoryStatusProcessing) // We don't handle this.
+        return YES;    
+    else if (!sourcedirExists) {
         status = YoucryptDirectoryStatusSourceNotFound;
-        return NO;
+        return YES;
+    }
+    else if (mountpathExists && indexOfPath != NSNotFound) {        
+        status = YoucryptDirectoryStatusMounted;
+        return YES;
+    }
+    else {
+        status = YoucryptDirectoryStatusUnmounted;
+        mountedPath = @"";
+        return YES;
     }
     
-    if (status == YoucryptDirectoryStatusMounted) {         // Directory was mounted last we checked
-        if (indexOfPath == NSNotFound) {                    // Not mounted any more 
-            if (!mountpathExists) {                               // mount point has been removed
-                status = YoucryptDirectoryStatusNotFound;
-            } else {                                        // mount point exists, but is just not mounted
-                status = isDir ? YoucryptDirectoryStatusUnmounted : YoucryptDirectoryStatusSourceNotFound;
-                DDLogVerbose(@"Mounted %@ being set to %@", path, [YoucryptDirectory statusToString:status]);
-
-            }
-        }
-    } else if (status == YoucryptDirectoryStatusUnmounted) {// Directory was umounted/closed 
-        if (indexOfPath != NSNotFound) {                    // Surprise -- an umounted folder has been surprisingly mounted
-            status = YoucryptDirectoryStatusMounted;
-            DDLogVerbose(@"Unounted %@ being set to %@", path, [YoucryptDirectory statusToString:status]);
-        } else {                                            // Still not mounted
-            if (!mountpathExists)                                 // If dir is missing
-                status = YoucryptDirectoryStatusNotFound;    
-            else if (!isDir)                                // mountedPath is not a dir (!)
-                status = YoucryptDirectoryStatusSourceNotFound;
-            else                                            // Path still exists; no change in status
-                status = YoucryptDirectoryStatusUnmounted;
-        }
-    } else if (status == YoucryptDirectoryStatusProcessing) {
-        if (indexOfPath == NSNotFound) { // not mounted
-            status = YoucryptDirectoryStatusUnmounted;
-        }
-    }
+//    
+//    if (!sourcedirExists) {
+//        status = YoucryptDirectoryStatusSourceNotFound;
+//        return NO;
+//    }
+//    
+//    if (status == YoucryptDirectoryStatusMounted) {         // Directory was mounted last we checked
+//        if (indexOfPath == NSNotFound) {                    // Not mounted any more 
+//            if (!mountpathExists) {                               // mount point has been removed
+//                status = YoucryptDirectoryStatusNotFound;
+//            } else {                                        // mount point exists, but is just not mounted
+//                status = isDir ? YoucryptDirectoryStatusUnmounted : YoucryptDirectoryStatusSourceNotFound;
+//                DDLogVerbose(@"Mounted %@ being set to %@", path, [YoucryptDirectory statusToString:status]);
+//
+//            }
+//        }
+//    } else if (status == YoucryptDirectoryStatusUnmounted) {// Directory was umounted/closed 
+//        if (indexOfPath != NSNotFound) {                    // Surprise -- an umounted folder has been surprisingly mounted
+//            status = YoucryptDirectoryStatusMounted;
+//            DDLogVerbose(@"Unounted %@ being set to %@", path, [YoucryptDirectory statusToString:status]);
+//        } else {                                            // Still not mounted
+//            if (!mountpathExists)                                 // If dir is missing
+//                status = YoucryptDirectoryStatusNotFound;    
+//            else if (!isDir)                                // mountedPath is not a dir (!)
+//                status = YoucryptDirectoryStatusSourceNotFound;
+//            else                                            // Path still exists; no change in status
+//                status = YoucryptDirectoryStatusUnmounted;
+//        }
+//    } else if (status != YoucryptDirectoryStatusProcessing) {
+//        if (sourcedirExists)
+//            status = YoucryptDirectoryStatusUnmounted;
+//    }
     return YES;
 }
 
@@ -141,8 +150,10 @@ static int minRefreshTime = 5; // at most every 30 seconds
     
     if ([libFunctions execWithSocket:mountcmd arguments:argsArray env:nil io:fh proc:mountTask]) {
         [mountTask waitUntilExit];
-        if (![libFunctions fileHandleIsReadable:fh])
-            return; // mount returned no matching lines
+        if (![libFunctions fileHandleIsReadable:fh]) {
+            [mountedFuseVolumes removeAllObjects]; // clear existing array
+            return;
+        }
 
         NSData *bytes = [fh availableData];
         mountOutput = [[NSString alloc] initWithData:bytes encoding:NSUTF8StringEncoding];
@@ -172,6 +183,11 @@ static int minRefreshTime = 5; // at most every 30 seconds
     }
     [mountedFuseVolumes removeAllObjects]; // clear existing array
     mountedFuseVolumes = tmpMountedFuseVolumes;
+    NSString *mnted;
+    NSLog(@"Mounted fuse volumes:\n");
+    for (mnted in mountedFuseVolumes) {
+        NSLog(@"%@\n", mnted);
+    }
 }
 
 + (NSString*) statusToString:(NSUInteger)status
