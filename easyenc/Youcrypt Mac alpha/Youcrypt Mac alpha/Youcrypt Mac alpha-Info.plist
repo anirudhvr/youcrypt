@@ -57,7 +57,7 @@
 			<key>NSMenuItem</key>
 			<dict>
 				<key>default</key>
-				<string>Encrypt</string>
+				<string>Encrypt with YouCrypt</string>
 			</dict>
 			<key>NSMessage</key>
 			<string>doEncrypt</string>
@@ -74,7 +74,7 @@
 			<key>NSMenuItem</key>
 			<dict>
 				<key>default</key>
-				<string>Decrypt</string>
+				<string>Open with Youcrypt</string>
 			</dict>
 			<key>NSMessage</key>
 			<string>doDecrypt</string>
