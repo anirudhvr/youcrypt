@@ -24,6 +24,7 @@
 #import "FirstRunSheetController.h"
 #import "FeedbackSheetController.h"
 #import "PeriodicActionTimer.h"
+#import "TourController.h"
 
 int ddLogLevel = LOG_LEVEL_VERBOSE;
 
@@ -44,6 +45,8 @@ AppDelegate *theApp;
 @synthesize feedbackSheetController;
 @synthesize keyDown;
 @synthesize preferenceController;
+@synthesize tourController;
+
 
 
 // --------------------------------------------------------------------------------------
@@ -174,9 +177,10 @@ AppDelegate *theApp;
     
     
     if(configDir.firstRun) {
-        [self showListDirectories:self];
+        //[self showListDirectories:self];
         NSLog(@"FIRST RUN ! ");
-        [self showFirstRunSheet];        
+        //[self showFirstRunSheet];
+        [self showTour];
     }    
 }
 // --------------------------------------------------------------------------------------
@@ -368,11 +372,20 @@ AppDelegate *theApp;
     
 }
 
+-(void) showTour {
+    if (!tourController) {
+        tourController = [[TourController alloc] init];
+    }
+    DDLogVerbose(@"showing %@", tourController);
+    [tourController showWindow:self];
+}
+
 -(void)showFirstRun
 {    
     NSLog(@"in show first run !");
     if(self.window == nil)
         NSLog(@"NIL WINDOW ____________ ");
+    [self showListDirectories:self];
     [firstRunSheetController beginSheetModalForWindow:theApp.listDirectories.window completionHandler:^(NSUInteger returnCode) {
         if (returnCode == kSheetReturnedSave) {
             NSLog(@"First run done");

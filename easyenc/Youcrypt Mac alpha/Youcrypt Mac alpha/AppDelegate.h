@@ -20,6 +20,8 @@
 @class FeedbackSheetController;
 @class PeriodicActionTimer;
 @class keyDownView;
+@class TourController;
+
 
 
 @interface AppDelegate : NSObject <NSTableViewDataSource, NSTableViewDelegate, NSApplicationDelegate> { // changed from NSApplicationDelegate
@@ -34,6 +36,7 @@
     Decrypt *decryptController;
     Encrypt  *encryptController;
     RestoreController *restoreController;
+    TourController *tourController;
         
 
     // Config directory
@@ -90,7 +93,7 @@
 
 
 - (void) showFirstRun;
-
+- (void) showTour;
 
 
 // Setters and getters
@@ -104,6 +107,7 @@
 @property (nonatomic, strong) FeedbackSheetController *feedbackSheetController;
 @property (nonatomic, strong) keyDownView *keyDown;
 @property (nonatomic, strong) PreferenceController *preferenceController;
+@property (nonatomic, strong) TourController *tourController;
 
 
 @end
