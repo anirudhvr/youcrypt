@@ -280,7 +280,7 @@
 {
     NSString *bundlepath =[[NSBundle mainBundle] resourcePath];
     NSString *dropboxScript = [bundlepath stringByAppendingPathComponent:@"/get_dropbox_folder.sh"]; 
-    const char *shellFile = NULL;
+    //const char *shellFile = NULL;
    // char out[1000];
     NSString *dropboxURL = nil;
       
@@ -289,7 +289,7 @@
         DDLogVerbose(@"Cannot find dropbox locator script at %@", dropboxScript);
         return @"";
     }
-    shellFile = [dropboxScript cStringUsingEncoding:NSUTF8StringEncoding];  
+    //shellFile = [dropboxScript cStringUsingEncoding:NSUTF8StringEncoding];  
     /*
     int fd;
     if ((fd = execWithSocket(dropboxScript, nil)) == -1)

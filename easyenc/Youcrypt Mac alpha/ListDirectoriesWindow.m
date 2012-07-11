@@ -110,14 +110,14 @@
 }
 
 - (IBAction)selectRow:(id)sender {
-    NSLog(@"Selected row %d", [sender selectedRow]);
+    NSLog(@"Selected row %ld", [sender selectedRow]);
     if ([sender clickedRow] < [theApp.directories count]) {
         [self setStatusToSelectedRow:[sender clickedRow]];
     }
 }
 
 - (void)setStatusToSelectedRow:(NSInteger)row {
-    NSLog(@"Selected row %d", row);
+    NSLog(@"Selected row %ld", row);
     
     YoucryptDirectory *dir = [theApp.directories objectAtIndex:row];
     [dirName setStringValue:[NSString stringWithFormat:@"   %@: %@", [YoucryptDirectory statusToString:dir.status], dir.path]];
@@ -135,9 +135,9 @@
     {
         // Get an array containing the full filenames of all
         // files and directories selected.
-        NSArray* files = [openDlg filenames];
+        NSArray* files = [openDlg URLs];
         for( int i = 0; i < [files count]; i++ )
-            [theApp encryptFolder:[files objectAtIndex:i]];
+            [theApp encryptFolder:[[files objectAtIndex:i] path]];
     }
 
 }

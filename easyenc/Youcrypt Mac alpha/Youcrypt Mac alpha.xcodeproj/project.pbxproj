@@ -84,7 +84,6 @@
 		E66988D5159E62D8002323AD /* ChangePassphrase.xib in Resources */ = {isa = PBXBuildFile; fileRef = E66988D4159E62D8002323AD /* ChangePassphrase.xib */; };
 		E66988D9159E63BE002323AD /* JCSSheetController.m in Sources */ = {isa = PBXBuildFile; fileRef = E66988D8159E63BE002323AD /* JCSSheetController.m */; };
 		E66988DC159E63CF002323AD /* PassphraseSheetController.m in Sources */ = {isa = PBXBuildFile; fileRef = E66988DB159E63CF002323AD /* PassphraseSheetController.m */; };
-		E66AA0B415ACB15B003BD8AE /* Key.png in Resources */ = {isa = PBXBuildFile; fileRef = E66AA0B315ACB15B003BD8AE /* Key.png */; };
 		E67FF2F215A8D5190033A63A /* PeriodicActionTimer.m in Sources */ = {isa = PBXBuildFile; fileRef = E67FF2F115A8D5190033A63A /* PeriodicActionTimer.m */; };
 		E6BEB6F015A4BB4F00878D4B /* Exit.png in Resources */ = {isa = PBXBuildFile; fileRef = E6BEB6EC15A4BB4F00878D4B /* Exit.png */; };
 		E6BEB6F115A4BB4F00878D4B /* Help.png in Resources */ = {isa = PBXBuildFile; fileRef = E6BEB6ED15A4BB4F00878D4B /* Help.png */; };
@@ -260,7 +259,6 @@
 		E66988D8159E63BE002323AD /* JCSSheetController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCSSheetController.m; sourceTree = "<group>"; };
 		E66988DA159E63CF002323AD /* PassphraseSheetController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PassphraseSheetController.h; sourceTree = "<group>"; };
 		E66988DB159E63CF002323AD /* PassphraseSheetController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PassphraseSheetController.m; sourceTree = "<group>"; };
-		E66AA0B315ACB15B003BD8AE /* Key.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Key.png; path = images/Key.png; sourceTree = "<group>"; };
 		E67FF2F015A8D5180033A63A /* PeriodicActionTimer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PeriodicActionTimer.h; sourceTree = "<group>"; };
 		E67FF2F115A8D5190033A63A /* PeriodicActionTimer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PeriodicActionTimer.m; sourceTree = "<group>"; };
 		E6BEB6EC15A4BB4F00878D4B /* Exit.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Exit.png; sourceTree = "<group>"; };
@@ -562,7 +560,6 @@
 			isa = PBXGroup;
 			children = (
 				2516C38E15ACCAA10075984B /* Key.png */,
-				E66AA0B315ACB15B003BD8AE /* Key.png */,
 				E65C4B5415ABAD9F00AF9D8E /* processing-22x22.png */,
 				E6649CAC15A78E0E0096886F /* loading-24x24.gif */,
 				E6649C8F15A707270096886F /* error-22x22.png */,
@@ -731,7 +728,6 @@
 				E054042415AB1CE10011E5CC /* Restore.xib in Resources */,
 				2516C38F15ACCAA10075984B /* Key.png in Resources */,
 				E65C4B5515ABAD9F00AF9D8E /* processing-22x22.png in Resources */,
-				E66AA0B415ACB15B003BD8AE /* Key.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
