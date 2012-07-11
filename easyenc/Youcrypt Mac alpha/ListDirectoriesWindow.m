@@ -10,6 +10,7 @@
 #import "AppDelegate.h"
 #import "ListDirTable.h"
 #import "PassphraseSheetController.h"
+#import "libFunctions.h"
 
 @implementation ListDirectoriesWindow
 
@@ -110,14 +111,14 @@
 }
 
 - (IBAction)selectRow:(id)sender {
-    NSLog(@"Selected row %d", [sender selectedRow]);
+    NSLog(@"Selected row %ld", [sender selectedRow]);
     if ([sender clickedRow] < [theApp.directories count]) {
         [self setStatusToSelectedRow:[sender clickedRow]];
     }
 }
 
 - (void)setStatusToSelectedRow:(NSInteger)row {
-    NSLog(@"Selected row %d", row);
+    NSLog(@"Selected row %ld", row);
     
     YoucryptDirectory *dir = [theApp.directories objectAtIndex:row];
     [dirName setStringValue:[NSString stringWithFormat:@"   %@: %@", [YoucryptDirectory statusToString:dir.status], dir.path]];
@@ -135,9 +136,9 @@
     {
         // Get an array containing the full filenames of all
         // files and directories selected.
-        NSArray* files = [openDlg filenames];
+        NSArray* files = [openDlg URLs];
         for( int i = 0; i < [files count]; i++ )
-            [theApp encryptFolder:[files objectAtIndex:i]];
+            [theApp encryptFolder:[[files objectAtIndex:i] path]];
     }
 
 }
@@ -155,10 +156,24 @@
         } else if (dir.status == YoucryptDirectoryStatusMounted) {
             [[NSAlert alertWithMessageText:@"Cannot remove a mounted directory" defaultButton:@"Okay" alternateButton:nil  otherButton:nil informativeTextWithFormat:@""] runModal];             
         } else if (dir.status == YoucryptDirectoryStatusUnmounted) {
-            if([[NSAlert alertWithMessageText:@"Restore and Remove" defaultButton:@"Yes" alternateButton:@"No, just remove it" otherButton:@"" informativeTextWithFormat:@"You have chosen to remove the youcrypted folder at %@.  Restore contents?", [dir.path stringByDeletingLastPathComponent]] runModal] == NSAlertDefaultReturn) {
+            int retCode;
+            if((retCode = [[NSAlert alertWithMessageText:@"Restore and Remove" defaultButton:@"Yes" alternateButton:@"No, just remove it" otherButton:@"Cancel" informativeTextWithFormat:@"You have chosen to remove the youcrypted folder at %@.  Restore contents?", [dir.path stringByDeletingLastPathComponent]] runModal]) == NSAlertDefaultReturn) {
                 [theApp removeFSAtRow:row];
             }
+            else if (retCode == NSAlertAlternateReturn) {
+                [theApp.directories removeObject:dir];
+            }
         }
+    }
+    [table reloadData];
+}
+
+- (IBAction)close:(id)sender {
+    NSInteger row = [table selectedRow];
+    if (row < [theApp.directories count] && row != -1) {
+        NSString *mountedPath = [[theApp.directories objectAtIndex:row] mountedPath];
+        NSLog(@"Trying to unmount %@",mountedPath);
+        [libFunctions execCommand:@"/sbin/umount" arguments:[NSArray arrayWithObject:mountedPath] env:nil];
     }
     [table reloadData];
 }

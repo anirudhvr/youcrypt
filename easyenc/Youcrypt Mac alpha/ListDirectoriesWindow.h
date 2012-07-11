@@ -43,6 +43,7 @@
 - (IBAction)doProps:(id)sender;
 - (IBAction)selectRow:(id)sender;
 - (IBAction)addNew:(id)sender;
+- (IBAction)close:(id)sender;
 - (IBAction)removeFS:(id)sender;
 - (IBAction)windowWillClose:(NSNotification *)notification;
 

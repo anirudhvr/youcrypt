@@ -32,7 +32,7 @@
         NSLog(@"Did not get passphrase");
         return nil;
     } else {
-        NSLog(@"Got passphrase from keychain %", passphraseFromKeychain);
+        NSLog(@"Got passphrase from keychain %@", passphraseFromKeychain);
         return passphraseFromKeychain;
     }
 }
@@ -228,7 +228,7 @@
                          count, password, idletime_s, encFolder, decFolder, [fuseopts componentsJoinedByString:@"\n"]];
         NSData *data = [str dataUsingEncoding:NSUTF8StringEncoding];
                         
-        NSFileHandle *err = [encfsProc standardError];
+        //NSFileHandle *err = [encfsProc standardError];
         [io writeData:data];
         [encfsProc waitUntilExit];
         [io closeFile];

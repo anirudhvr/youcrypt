@@ -24,6 +24,7 @@
 #import "FirstRunSheetController.h"
 #import "FeedbackSheetController.h"
 #import "PeriodicActionTimer.h"
+#import "TourController.h"
 
 int ddLogLevel = LOG_LEVEL_VERBOSE;
 
@@ -41,8 +42,11 @@ AppDelegate *theApp;
 @synthesize configDir;
 @synthesize directories;
 @synthesize firstRunSheetController;
+@synthesize feedbackSheetController;
 @synthesize keyDown;
 @synthesize preferenceController;
+@synthesize tourController;
+
 
 
 // --------------------------------------------------------------------------------------
@@ -142,9 +146,15 @@ AppDelegate *theApp;
 
     DDLogVerbose(@"App did, in fact, finish launching!!!");
 }
+
 - (void)applicationWillTerminate:(NSNotification *)aNotification {
     //[NSKeyedArchiver archiveRootObject:directories toFile:configDir.youCryptListFile];
     [libFunctions archiveDirectoryList:directories toFile:configDir.youCryptListFile];
+    for (id dir in directories) {
+        NSLog(@"Trying to unmount %@",[dir path]);
+        [libFunctions execCommand:@"/sbin/umount" arguments:[NSArray arrayWithObject:[dir mountedPath]]
+                              env:nil];
+    }
     [[[NSWorkspace sharedWorkspace] notificationCenter] removeObserver:self];
 }
 
@@ -167,13 +177,11 @@ AppDelegate *theApp;
     
     
     if(configDir.firstRun) {
-        [self showListDirectories:self];
+        //[self showListDirectories:self];
         NSLog(@"FIRST RUN ! ");
-        [self showFirstRunSheet];
-        
-    }
-        
-    
+        //[self showFirstRunSheet];
+        [self showTour];
+    }    
 }
 // --------------------------------------------------------------------------------------
 
@@ -297,6 +305,28 @@ AppDelegate *theApp;
     }
 }
 
+-(void) cancelRestore:(NSString *)path {
+    for (YoucryptDirectory *dir in directories) {
+        if ([path isEqualToString:dir.path]) {
+            dir.status = YoucryptDirectoryStatusUnmounted;
+            [dir updateInfo];
+            break;
+        }
+        
+    }    
+}
+
+-(void) cancelDecrypt:(NSString *)path {
+    for (YoucryptDirectory *dir in directories) {
+        if ([path isEqualToString:dir.path]) {
+            dir.status = YoucryptDirectoryStatusUnmounted;
+            [dir updateInfo];
+            break;
+        }
+        
+    }    
+}
+
 
 
 - (IBAction)windowShouldClose:(id)sender {
@@ -342,11 +372,20 @@ AppDelegate *theApp;
     
 }
 
+-(void) showTour {
+    if (!tourController) {
+        tourController = [[TourController alloc] init];
+    }
+    DDLogVerbose(@"showing %@", tourController);
+    [tourController showWindow:self];
+}
+
 -(void)showFirstRun
 {    
     NSLog(@"in show first run !");
     if(self.window == nil)
         NSLog(@"NIL WINDOW ____________ ");
+    [self showListDirectories:self];
     [firstRunSheetController beginSheetModalForWindow:theApp.listDirectories.window completionHandler:^(NSUInteger returnCode) {
         if (returnCode == kSheetReturnedSave) {
             NSLog(@"First run done");
@@ -582,9 +621,9 @@ AppDelegate *theApp;
         } else if ([cell isKindOfClass:[NSButtonCell class]] && [colId isEqualToString:@"status"]) {
             [cell setImage:[NSImage imageNamed:@"unlocked-24x24.png"]];
         } else if ([cell isKindOfClass:[NSPopUpButtonCell class]] && [colId isEqualToString:@"props"]) {
-            NSPopUpButtonCell *dataTypeDropDownCell = [tableColumn dataCell];
-            [[dataTypeDropDownCell itemAtIndex:1] setTitle:@"Close"];
-            
+            /*NSPopUpButtonCell *dataTypeDropDownCell = [tableColumn dataCell];
+            [[dataTypeDropDownCell itemAtIndex:1] setTitle:@"Close"];*/
+            [[[tableColumn dataCell] itemAtIndex:2] setHidden:NO];
         }
     } else  { // unmounted => locked
         if ([cell isKindOfClass:[NSTextFieldCell class]]) {
@@ -599,8 +638,9 @@ AppDelegate *theApp;
             if (dirAtRow.status == YoucryptDirectoryStatusProcessing)
                 [cell setImage:[NSImage imageNamed:@"processing-22x22.gif"]];
         } else if ([cell isKindOfClass:[NSPopUpButtonCell class]] && [colId isEqualToString:@"props"]) {
-            NSPopUpButtonCell *dataTypeDropDownCell = [tableColumn dataCell];
-            [[dataTypeDropDownCell itemAtIndex:1] setTitle:@"Open"];
+            //NSPopUpButtonCell *dataTypeDropDownCell = [tableColumn dataCell];
+            NSLog(@"Trying to disable close");
+            [[[tableColumn dataCell] itemAtIndex:2] setHidden:YES];
             
         }
     }
@@ -646,4 +686,6 @@ AppDelegate *theApp;
         [listDirectories.table reloadData];
     return nil;
 }
+
+
 @end

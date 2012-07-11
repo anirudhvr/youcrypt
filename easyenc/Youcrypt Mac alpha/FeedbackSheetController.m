@@ -36,7 +36,7 @@
 
 -(IBAction)send:(id)sender
 {
-    NSLog(@"%d",[anonymize state]);
+    NSLog(@"%ld",[anonymize state]);
     
     NSString *curlEmail;
     if([anonymize state]) {
@@ -73,7 +73,7 @@
                      @"-F", @"subject='Your Temporary Passphrase'",
                      @"-F", curlText,
                      nil];
-    NSString *feedbackCall = [NSString stringWithFormat:@"/usr/bin/curl -s -k --user api:key-67fgovcfrggd6y4l02ucpz-av4b22i26 https://api.mailgun.net/v2/cloudclear.mailgun.org/messages -F %@ -F to='hardik988@gmail.com' -F subject='test' -F %@",curlEmail,curlText];
+   // NSString *feedbackCall = [NSString stringWithFormat:@"/usr/bin/curl -s -k --user api:key-67fgovcfrggd6y4l02ucpz-av4b22i26 https://api.mailgun.net/v2/cloudclear.mailgun.org/messages -F %@ -F to='hardik988@gmail.com' -F subject='test' -F %@",curlEmail,curlText];
     
     NSFileHandle *fh = [NSFileHandle alloc];
     NSString *reply;
