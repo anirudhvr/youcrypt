@@ -162,11 +162,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Youcrypt Mac alpha/AppDelegate.m"
-         timestampString = "363651917.503522"
+         timestampString = "363663893.058894"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "319"
-         endingLineNumber = "319"
+         startingLineNumber = "325"
+         endingLineNumber = "325"
          landmarkName = "@implementation AppDelegate"
          landmarkType = "3">
       </FileBreakpoint>
@@ -214,11 +214,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "ListDirectoriesWindow.m"
-         timestampString = "363640442.890767"
+         timestampString = "363665348.956382"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "17"
-         endingLineNumber = "17"
+         startingLineNumber = "18"
+         endingLineNumber = "18"
          landmarkName = "passphraseSheet"
          landmarkType = "19">
       </FileBreakpoint>
@@ -227,11 +227,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "ListDirectoriesWindow.m"
-         timestampString = "363645817.214169"
+         timestampString = "363665410.968367"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "371"
-         endingLineNumber = "371"
+         startingLineNumber = "382"
+         endingLineNumber = "382"
          landmarkName = "-exitApp"
          landmarkType = "5">
       </FileBreakpoint>

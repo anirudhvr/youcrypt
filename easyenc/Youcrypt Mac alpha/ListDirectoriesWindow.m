@@ -10,6 +10,7 @@
 #import "AppDelegate.h"
 #import "ListDirTable.h"
 #import "PassphraseSheetController.h"
+#import "libFunctions.h"
 
 @implementation ListDirectoriesWindow
 
@@ -163,6 +164,16 @@
                 [theApp.directories removeObject:dir];
             }
         }
+    }
+    [table reloadData];
+}
+
+- (IBAction)close:(id)sender {
+    NSInteger row = [table selectedRow];
+    if (row < [theApp.directories count] && row != -1) {
+        NSString *mountedPath = [[theApp.directories objectAtIndex:row] mountedPath];
+        NSLog(@"Trying to unmount %@",mountedPath);
+        [libFunctions execCommand:@"/sbin/umount" arguments:[NSArray arrayWithObject:mountedPath] env:nil];
     }
     [table reloadData];
 }

@@ -143,9 +143,15 @@ AppDelegate *theApp;
 
     DDLogVerbose(@"App did, in fact, finish launching!!!");
 }
+
 - (void)applicationWillTerminate:(NSNotification *)aNotification {
     //[NSKeyedArchiver archiveRootObject:directories toFile:configDir.youCryptListFile];
     [libFunctions archiveDirectoryList:directories toFile:configDir.youCryptListFile];
+    for (id dir in directories) {
+        NSLog(@"Trying to unmount %@",[dir path]);
+        [libFunctions execCommand:@"/sbin/umount" arguments:[NSArray arrayWithObject:[dir mountedPath]]
+                              env:nil];
+    }
     [[[NSWorkspace sharedWorkspace] notificationCenter] removeObserver:self];
 }
 
@@ -602,9 +608,9 @@ AppDelegate *theApp;
         } else if ([cell isKindOfClass:[NSButtonCell class]] && [colId isEqualToString:@"status"]) {
             [cell setImage:[NSImage imageNamed:@"unlocked-24x24.png"]];
         } else if ([cell isKindOfClass:[NSPopUpButtonCell class]] && [colId isEqualToString:@"props"]) {
-            NSPopUpButtonCell *dataTypeDropDownCell = [tableColumn dataCell];
-            [[dataTypeDropDownCell itemAtIndex:1] setTitle:@"Close"];
-            
+            /*NSPopUpButtonCell *dataTypeDropDownCell = [tableColumn dataCell];
+            [[dataTypeDropDownCell itemAtIndex:1] setTitle:@"Close"];*/
+            [[[tableColumn dataCell] itemAtIndex:2] setHidden:NO];
         }
     } else  { // unmounted => locked
         if ([cell isKindOfClass:[NSTextFieldCell class]]) {
@@ -619,8 +625,9 @@ AppDelegate *theApp;
             if (dirAtRow.status == YoucryptDirectoryStatusProcessing)
                 [cell setImage:[NSImage imageNamed:@"processing-22x22.gif"]];
         } else if ([cell isKindOfClass:[NSPopUpButtonCell class]] && [colId isEqualToString:@"props"]) {
-            NSPopUpButtonCell *dataTypeDropDownCell = [tableColumn dataCell];
-            [[dataTypeDropDownCell itemAtIndex:1] setTitle:@"Open"];
+            //NSPopUpButtonCell *dataTypeDropDownCell = [tableColumn dataCell];
+            NSLog(@"Trying to disable close");
+            [[[tableColumn dataCell] itemAtIndex:2] setHidden:YES];
             
         }
     }
