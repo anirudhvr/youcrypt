@@ -1178,8 +1178,6 @@
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
 					"\"$(SRCROOT)/frameworks\"",
-					"\"$(SRCROOT)/../../../../Library/Developer/Xcode/DerivedData/Youcrypt-ggysqscodtvhathjsipjtpfuvepf/Build/Products/Debug\"",
-					"\"$(SRCROOT)/../../../../../../Library/Developer/Xcode/DerivedData/Youcrypt-fdubftqonqnypceknpzofarcidfz/Build/Products/Debug\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "sources/Youcrypt-Prefix.pch";
@@ -1207,8 +1205,6 @@
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
 					"\"$(SRCROOT)/frameworks\"",
-					"\"$(SRCROOT)/../../../../Library/Developer/Xcode/DerivedData/Youcrypt-ggysqscodtvhathjsipjtpfuvepf/Build/Products/Debug\"",
-					"\"$(SRCROOT)/../../../../../../Library/Developer/Xcode/DerivedData/Youcrypt-fdubftqonqnypceknpzofarcidfz/Build/Products/Debug\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "sources/Youcrypt-Prefix.pch";
