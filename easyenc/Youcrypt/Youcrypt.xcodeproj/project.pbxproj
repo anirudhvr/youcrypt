@@ -40,6 +40,15 @@
 		25F3D15B159244E800E3383C /* Encrypt.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25F3D159159244E800E3383C /* Encrypt.xib */; };
 		E007C09D15A646B500D60802 /* libFunctions.m in Sources */ = {isa = PBXBuildFile; fileRef = 25F3D1501592435600E3383C /* libFunctions.m */; };
 		E007C09F15A646DC00D60802 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25EE6A5815928D2C008A0DC8 /* Security.framework */; };
+		E01A6CD215AE2F95004F442C /* StartOnLogin.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E01A6CD115AE2F95004F442C /* StartOnLogin.framework */; };
+		E01A6CD315AE3D1F004F442C /* SSKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = E6C046DA15AE29AA004B52E5 /* SSKeychain.m */; };
+		E01A6CD415AE3D25004F442C /* CompressingLogFileManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 252C3A971593E84F0044EB3C /* CompressingLogFileManager.m */; };
+		E01A6CD515AE3D33004F442C /* DDASLLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 252C3A571593C6A70044EB3C /* DDASLLogger.m */; };
+		E01A6CD615AE3D37004F442C /* DDFileLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 252C3A591593C6A70044EB3C /* DDFileLogger.m */; };
+		E01A6CD715AE3D3A004F442C /* DDLog.m in Sources */ = {isa = PBXBuildFile; fileRef = 252C3A5B1593C6A70044EB3C /* DDLog.m */; };
+		E01A6CD815AE3D3D004F442C /* DDTTYLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 252C3A5D1593C6A80044EB3C /* DDTTYLogger.m */; };
+		E01A6CD915AE3ED3004F442C /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 256C355F158EA75F00E2BEC4 /* Cocoa.framework */; };
+		E01A6CDB15AE57A9004F442C /* libcommonCrypto.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E01A6CDA15AE57A9004F442C /* libcommonCrypto.dylib */; };
 		E054042315AB1CE10011E5CC /* RestoreController.m in Sources */ = {isa = PBXBuildFile; fileRef = E054042115AB1CE10011E5CC /* RestoreController.m */; };
 		E054042415AB1CE10011E5CC /* Restore.xib in Resources */ = {isa = PBXBuildFile; fileRef = E054042215AB1CE10011E5CC /* Restore.xib */; };
 		E06E2B4115A76ABE00E52B2D /* ListRightClick.xib in Resources */ = {isa = PBXBuildFile; fileRef = E06E2B4015A76ABE00E52B2D /* ListRightClick.xib */; };
@@ -100,14 +109,12 @@
 		E6C046C015AE1A84004B52E5 /* Synchronize.png in Resources */ = {isa = PBXBuildFile; fileRef = E6C046B015AE1A84004B52E5 /* Synchronize.png */; };
 		E6C046C115AE1A84004B52E5 /* twitter.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = E6C046B115AE1A84004B52E5 /* twitter.jpeg */; };
 		E6C046C615AE1F24004B52E5 /* Youcrypt.plist in Resources */ = {isa = PBXBuildFile; fileRef = E6C046C515AE1F24004B52E5 /* Youcrypt.plist */; };
-		E6C046CC15AE22C3004B52E5 /* StartOnLogin.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E6C046CA15AE22A5004B52E5 /* StartOnLogin.framework */; };
 		E6C046D115AE2321004B52E5 /* XMLDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = E6C046CE15AE2321004B52E5 /* XMLDictionary.m */; };
 		E6C046D215AE2321004B52E5 /* XMLReader.m in Sources */ = {isa = PBXBuildFile; fileRef = E6C046D015AE2321004B52E5 /* XMLReader.m */; };
 		E6C046D415AE236A004B52E5 /* YoucryptService.m in Sources */ = {isa = PBXBuildFile; fileRef = E6E2A0B6159266F6003E3F6C /* YoucryptService.m */; };
 		E6C046D615AE2817004B52E5 /* CompressingLogFileManager.h in Sources */ = {isa = PBXBuildFile; fileRef = 252C3A961593E84F0044EB3C /* CompressingLogFileManager.h */; };
 		E6C046D715AE2846004B52E5 /* CompressingLogFileManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 252C3A971593E84F0044EB3C /* CompressingLogFileManager.m */; };
 		E6C046DB15AE29AA004B52E5 /* SSKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = E6C046DA15AE29AA004B52E5 /* SSKeychain.m */; };
-		E6C046DC15AE2B55004B52E5 /* StartOnLogin.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = E6C046CA15AE22A5004B52E5 /* StartOnLogin.framework */; };
 		E6C046DD15AE2B63004B52E5 /* Sparkle.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = E6C0468015AE1733004B52E5 /* Sparkle.framework */; };
 /* End PBXBuildFile section */
 
@@ -135,7 +142,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				E6C046DC15AE2B55004B52E5 /* StartOnLogin.framework in CopyFiles */,
 				E6C046DD15AE2B63004B52E5 /* Sparkle.framework in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -165,7 +171,7 @@
 		252C3A5B1593C6A70044EB3C /* DDLog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDLog.m; sourceTree = "<group>"; };
 		252C3A5C1593C6A70044EB3C /* DDTTYLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDTTYLogger.h; sourceTree = "<group>"; };
 		252C3A5D1593C6A80044EB3C /* DDTTYLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDTTYLogger.m; sourceTree = "<group>"; };
-		252C3A671593CAA10044EB3C /* Lumberjack.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Lumberjack.framework; path = contrib/Lumberjack/Lumberjack.framework; sourceTree = "<group>"; };
+		252C3A671593CAA10044EB3C /* Lumberjack.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Lumberjack.framework; path = ../contrib/Lumberjack/Lumberjack.framework; sourceTree = "<group>"; };
 		252C3A961593E84F0044EB3C /* CompressingLogFileManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CompressingLogFileManager.h; sourceTree = "<group>"; };
 		252C3A971593E84F0044EB3C /* CompressingLogFileManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CompressingLogFileManager.m; sourceTree = "<group>"; };
 		252C3A9E1593EF570044EB3C /* logging.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = logging.h; sourceTree = "<group>"; };
@@ -212,6 +218,8 @@
 		25F3D1501592435600E3383C /* libFunctions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = libFunctions.m; path = sources/libFunctions.m; sourceTree = "<group>"; };
 		25F3D159159244E800E3383C /* Encrypt.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Encrypt.xib; sourceTree = "<group>"; };
 		25FDA07015A269B1004F2914 /* Automator.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Automator.framework; path = System/Library/Frameworks/Automator.framework; sourceTree = SDKROOT; };
+		E01A6CD115AE2F95004F442C /* StartOnLogin.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StartOnLogin.framework; path = "../../../../../../../Library/Developer/Xcode/DerivedData/Youcrypt-fdubftqonqnypceknpzofarcidfz/Build/Products/Debug/StartOnLogin.framework"; sourceTree = "<group>"; };
+		E01A6CDA15AE57A9004F442C /* libcommonCrypto.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcommonCrypto.dylib; path = usr/lib/system/libcommonCrypto.dylib; sourceTree = SDKROOT; };
 		E054042015AB1CE10011E5CC /* RestoreController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RestoreController.h; path = sources/RestoreController.h; sourceTree = "<group>"; };
 		E054042115AB1CE10011E5CC /* RestoreController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RestoreController.m; path = sources/RestoreController.m; sourceTree = "<group>"; };
 		E054042215AB1CE10011E5CC /* Restore.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Restore.xib; sourceTree = "<group>"; };
@@ -260,7 +268,7 @@
 		E6BEB71715A520FA00878D4B /* logo-16x16.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = "logo-16x16.tiff"; sourceTree = "<group>"; };
 		E6BEB71915A522A000878D4B /* logo-grayscale-alpha.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "logo-grayscale-alpha.png"; sourceTree = "<group>"; };
 		E6BEB71B15A5290300878D4B /* logo-color-alpha.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "logo-color-alpha.png"; sourceTree = "<group>"; };
-		E6C0468015AE1733004B52E5 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Sparkle.framework; path = frameworks/Sparkle.framework; sourceTree = "<group>"; };
+		E6C0468015AE1733004B52E5 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Sparkle.framework; sourceTree = "<group>"; };
 		E6C0468A15AE18B4004B52E5 /* FirstRunSheetController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FirstRunSheetController.xib; sourceTree = "<group>"; };
 		E6C0468B15AE18B4004B52E5 /* GmailSheetController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GmailSheetController.xib; sourceTree = "<group>"; };
 		E6C0468C15AE18B4004B52E5 /* MainMenu.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainMenu.xib; sourceTree = "<group>"; };
@@ -286,13 +294,12 @@
 		E6C046B015AE1A84004B52E5 /* Synchronize.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Synchronize.png; sourceTree = "<group>"; };
 		E6C046B115AE1A84004B52E5 /* twitter.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = twitter.jpeg; sourceTree = "<group>"; };
 		E6C046C515AE1F24004B52E5 /* Youcrypt.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Youcrypt.plist; sourceTree = "<group>"; };
-		E6C046CA15AE22A5004B52E5 /* StartOnLogin.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StartOnLogin.framework; path = "../../../../Library/Developer/Xcode/DerivedData/Youcrypt-ggysqscodtvhathjsipjtpfuvepf/Build/Products/Debug/StartOnLogin.framework"; sourceTree = "<group>"; };
 		E6C046CD15AE2321004B52E5 /* XMLDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = XMLDictionary.h; path = contrib/XMLReader/XMLDictionary.h; sourceTree = SOURCE_ROOT; };
 		E6C046CE15AE2321004B52E5 /* XMLDictionary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = XMLDictionary.m; path = contrib/XMLReader/XMLDictionary.m; sourceTree = SOURCE_ROOT; };
 		E6C046CF15AE2321004B52E5 /* XMLReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = XMLReader.h; path = contrib/XMLReader/XMLReader.h; sourceTree = SOURCE_ROOT; };
 		E6C046D015AE2321004B52E5 /* XMLReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = XMLReader.m; path = contrib/XMLReader/XMLReader.m; sourceTree = SOURCE_ROOT; };
-		E6C046D915AE29AA004B52E5 /* SSKeychain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SSKeychain.h; path = SSKeychain/SSKeychain.h; sourceTree = "<group>"; };
-		E6C046DA15AE29AA004B52E5 /* SSKeychain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SSKeychain.m; path = SSKeychain/SSKeychain.m; sourceTree = "<group>"; };
+		E6C046D915AE29AA004B52E5 /* SSKeychain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSKeychain.h; sourceTree = "<group>"; };
+		E6C046DA15AE29AA004B52E5 /* SSKeychain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSKeychain.m; sourceTree = "<group>"; };
 		E6E2A0B6159266F6003E3F6C /* YoucryptService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = YoucryptService.m; path = sources/YoucryptService.m; sourceTree = "<group>"; };
 		E6E2A0B7159266F6003E3F6C /* YoucryptService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = YoucryptService.h; path = sources/YoucryptService.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -302,10 +309,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E6C046CC15AE22C3004B52E5 /* StartOnLogin.framework in Frameworks */,
 				E6C0468115AE1733004B52E5 /* Sparkle.framework in Frameworks */,
 				25EE6A5915928D2C008A0DC8 /* Security.framework in Frameworks */,
 				256C3560158EA75F00E2BEC4 /* Cocoa.framework in Frameworks */,
+				E01A6CD215AE2F95004F442C /* StartOnLogin.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -323,6 +330,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E01A6CDB15AE57A9004F442C /* libcommonCrypto.dylib in Frameworks */,
+				E01A6CD915AE3ED3004F442C /* Cocoa.framework in Frameworks */,
 				E0BF0E9D1596D01F002F9FB9 /* Foundation.framework in Frameworks */,
 				E007C09F15A646DC00D60802 /* Security.framework in Frameworks */,
 			);
@@ -365,13 +374,14 @@
 		256C355E158EA75F00E2BEC4 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				E6C046CA15AE22A5004B52E5 /* StartOnLogin.framework */,
+				E01A6CDA15AE57A9004F442C /* libcommonCrypto.dylib */,
+				253C3D7B159BBF4A00120B8D /* libxml2.dylib */,
+				E01A6CD115AE2F95004F442C /* StartOnLogin.framework */,
 				256C3564158EA75F00E2BEC4 /* Foundation.framework */,
 				256C3563158EA75F00E2BEC4 /* CoreData.framework */,
 				256C3562158EA75F00E2BEC4 /* AppKit.framework */,
 				E6C0468015AE1733004B52E5 /* Sparkle.framework */,
 				25FDA07015A269B1004F2914 /* Automator.framework */,
-				253C3D7B159BBF4A00120B8D /* libxml2.dylib */,
 				253C3D79159BBF4000120B8D /* QuartzCore.framework */,
 				253C3D77159BBF3900120B8D /* SystemConfiguration.framework */,
 				253C3D75159BBF2E00120B8D /* CoreServices.framework */,
@@ -382,6 +392,7 @@
 				E0BF0E9C1596D01F002F9FB9 /* Foundation.framework */,
 			);
 			name = Frameworks;
+			path = frameworks;
 			sourceTree = "<group>";
 		};
 		256C3566158EA75F00E2BEC4 /* Supporting Files */ = {
@@ -500,15 +511,16 @@
 			children = (
 				E0BF0E9F1596D01F002F9FB9 /* main.m */,
 				E0BF0EA31596D01F002F9FB9 /* TestBed.1 */,
+				E0BF0EA21596D01F002F9FB9 /* TestBed-Prefix.pch */,
 				E0BF0EA11596D01F002F9FB9 /* Supporting Files */,
 			);
-			path = TestBed;
+			name = TestBed;
+			path = sources/TestBed;
 			sourceTree = "<group>";
 		};
 		E0BF0EA11596D01F002F9FB9 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				E0BF0EA21596D01F002F9FB9 /* TestBed-Prefix.pch */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -643,7 +655,7 @@
 				E6C046D915AE29AA004B52E5 /* SSKeychain.h */,
 				E6C046DA15AE29AA004B52E5 /* SSKeychain.m */,
 			);
-			name = SSKeychain;
+			path = SSKeychain;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -890,6 +902,12 @@
 				E0BF0EA01596D01F002F9FB9 /* main.m in Sources */,
 				E0BF0EB415980A72002F9FB9 /* YoucryptDirectory.m in Sources */,
 				E007C09D15A646B500D60802 /* libFunctions.m in Sources */,
+				E01A6CD315AE3D1F004F442C /* SSKeychain.m in Sources */,
+				E01A6CD415AE3D25004F442C /* CompressingLogFileManager.m in Sources */,
+				E01A6CD515AE3D33004F442C /* DDASLLogger.m in Sources */,
+				E01A6CD615AE3D37004F442C /* DDFileLogger.m in Sources */,
+				E01A6CD715AE3D3A004F442C /* DDLog.m in Sources */,
+				E01A6CD815AE3D3D004F442C /* DDTTYLogger.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -992,6 +1010,7 @@
 					"\"$(SRCROOT)\"",
 					"\"$(SRCROOT)/frameworks\"",
 					"\"$(SRCROOT)/../../../../Library/Developer/Xcode/DerivedData/Youcrypt-ggysqscodtvhathjsipjtpfuvepf/Build/Products/Debug\"",
+					"\"$(SRCROOT)/../../../../../../Library/Developer/Xcode/DerivedData/Youcrypt-fdubftqonqnypceknpzofarcidfz/Build/Products/Debug\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "sources/Youcrypt-Prefix.pch";
@@ -1017,6 +1036,7 @@
 					"\"$(SRCROOT)\"",
 					"\"$(SRCROOT)/frameworks\"",
 					"\"$(SRCROOT)/../../../../Library/Developer/Xcode/DerivedData/Youcrypt-ggysqscodtvhathjsipjtpfuvepf/Build/Products/Debug\"",
+					"\"$(SRCROOT)/../../../../../../Library/Developer/Xcode/DerivedData/Youcrypt-fdubftqonqnypceknpzofarcidfz/Build/Products/Debug\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "sources/Youcrypt-Prefix.pch";
@@ -1070,7 +1090,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "TestBed/TestBed-Prefix.pch";
+				GCC_PREFIX_HEADER = "sources/TestBed/TestBed-Prefix.pch";
+				HEADER_SEARCH_PATHS = "\"$(SRCROOT)\"/**";
+				"HEADER_SEARCH_PATHS[arch=*]" = "\"$(SRCROOT)\"/";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SDKROOT)/usr/lib/system\"",
+				);
+				OTHER_LDFLAGS = "-lz";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -1079,7 +1106,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "TestBed/TestBed-Prefix.pch";
+				GCC_PREFIX_HEADER = "sources/TestBed/TestBed-Prefix.pch";
+				HEADER_SEARCH_PATHS = "\"$(SRCROOT)\"/**";
+				"HEADER_SEARCH_PATHS[arch=*]" = "\"$(SRCROOT)\"/";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SDKROOT)/usr/lib/system\"",
+				);
+				OTHER_LDFLAGS = "-lz";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;

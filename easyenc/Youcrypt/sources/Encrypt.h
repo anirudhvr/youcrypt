@@ -16,7 +16,7 @@
     BOOL keychainHasPassphrase;
     NSString *passphraseFromKeychain;
     
-    NSString *tempFolder;
+    NSString *tempFolder, *testFolder;
     NSString *yourFriendsEmailString;
 	NSString *combinedPasswordString;
 	int numberOfUsers;

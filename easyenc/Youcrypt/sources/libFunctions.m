@@ -8,9 +8,10 @@
 
 #import "libFunctions.h"
 
-#import "Contrib/SSKeychain/SSKeychain.h"
-#import "Contrib/Lumberjack/logging.h"
+#import "contrib/SSKeychain/SSKeychain.h"
+#import "contrib/Lumberjack/logging.h"
 #import <errno.h>
+#import <CommonCrypto/CommonDigest.h>
 
 #define ENCFS @"/usr/local/bin/encfs"
 #define ENCFSCTL @"/usr/local/bin/encfsctl"
@@ -50,6 +51,7 @@
 
 
 
+
 //NSString* systemCall(NSString *binary, NSArray *arguments) {
 //    NSTask *task;   
 //    task = [[NSTask alloc] init];
@@ -75,8 +77,8 @@
 //    return string;
 //}
 
-+ (void) mkdirRecursive:(NSString *)path {
-    [[NSFileManager defaultManager] createDirectoryAtPath:path withIntermediateDirectories:YES attributes:nil error:nil];
++ (BOOL) mkdirRecursive:(NSString *)path {
+    return [[NSFileManager defaultManager] createDirectoryAtPath:path withIntermediateDirectories:YES attributes:nil error:nil];
 }
 
 
@@ -92,8 +94,9 @@
  
  **/
 
-+(void) mvRecursive:(NSString *)srcPath toPath:(NSString *)dstPath {
++(BOOL) mvRecursive:(NSString *)srcPath toPath:(NSString *)dstPath {
     [[NSFileManager defaultManager] moveItemAtPath:srcPath toPath:dstPath error:nil];
+    
 }
 
 
