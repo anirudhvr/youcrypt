@@ -154,7 +154,7 @@
             [table endUpdates];
             [theApp.directories removeObjectAtIndex:row];
         } else if (dir.status == YoucryptDirectoryStatusMounted) {
-            [[NSAlert alertWithMessageText:@"Cannot remove a mounted directory" defaultButton:@"Okay" alternateButton:nil  otherButton:nil informativeTextWithFormat:@""] runModal];             
+            [[NSAlert alertWithMessageText:@"Cannot remove a mounted directory" defaultButton:@"OK" alternateButton:nil  otherButton:nil informativeTextWithFormat:@""] runModal];             
         } else if (dir.status == YoucryptDirectoryStatusUnmounted) {
             int retCode;
             if((retCode = [[NSAlert alertWithMessageText:@"Restore and Remove" defaultButton:@"Yes" alternateButton:@"No, just remove it" otherButton:@"Cancel" informativeTextWithFormat:@"You have chosen to remove the youcrypted folder at %@.  Restore contents?", [dir.path stringByDeletingLastPathComponent]] runModal]) == NSAlertDefaultReturn) {
@@ -163,8 +163,13 @@
             else if (retCode == NSAlertAlternateReturn) {
                 [theApp.directories removeObject:dir];
             }
+            NSImage *generic = [[NSWorkspace sharedWorkspace] iconForFileType:NSFileTypeForHFSTypeCode(kGenericFolderIcon)];
+            BOOL didSetIcon = [[NSWorkspace sharedWorkspace] setIcon:generic forFile:[[dir path] stringByDeletingLastPathComponent] options:0];
+            NSLog(@"Icon reset : %d for %@",didSetIcon,[[dir path] stringByDeletingLastPathComponent]);
         }
     }
+    
+
     [table reloadData];
 }
 

@@ -43,6 +43,7 @@
 		25E8BC3415AE4F7200A323D8 /* libencfs.la in Resources */ = {isa = PBXBuildFile; fileRef = 25E8BC3115AE4F7200A323D8 /* libencfs.la */; };
 		25E8BC3515AE516300A323D8 /* libencfs.6.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 25E8BC2F15AE4F7200A323D8 /* libencfs.6.dylib */; };
 		25E8BC3615AE516300A323D8 /* libencfs.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 25E8BC3015AE4F7200A323D8 /* libencfs.dylib */; };
+		25E8BC4815AE6D7F00A323D8 /* youcrypt-overlay.icns in Resources */ = {isa = PBXBuildFile; fileRef = 25E8BC4715AE6D7F00A323D8 /* youcrypt-overlay.icns */; };
 		25EE6A5915928D2C008A0DC8 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25EE6A5815928D2C008A0DC8 /* Security.framework */; };
 		25F3D14C15923FE800E3383C /* Decrypt.m in Sources */ = {isa = PBXBuildFile; fileRef = 25F3D14A15923FE800E3383C /* Decrypt.m */; };
 		25F3D14D15923FE800E3383C /* Decrypt.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25F3D14B15923FE800E3383C /* Decrypt.xib */; };
@@ -222,6 +223,7 @@
 		25E8BC2F15AE4F7200A323D8 /* libencfs.6.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libencfs.6.dylib; sourceTree = "<group>"; };
 		25E8BC3015AE4F7200A323D8 /* libencfs.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libencfs.dylib; sourceTree = "<group>"; };
 		25E8BC3115AE4F7200A323D8 /* libencfs.la */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = libencfs.la; sourceTree = "<group>"; };
+		25E8BC4715AE6D7F00A323D8 /* youcrypt-overlay.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = "youcrypt-overlay.icns"; sourceTree = "<group>"; };
 		25EE6A5815928D2C008A0DC8 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		25F3D14915923FE800E3383C /* Decrypt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Decrypt.h; path = sources/Decrypt.h; sourceTree = "<group>"; };
 		25F3D14A15923FE800E3383C /* Decrypt.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Decrypt.m; path = sources/Decrypt.m; sourceTree = "<group>"; };
@@ -353,13 +355,13 @@
 		256C3550158EA75F00E2BEC4 = {
 			isa = PBXGroup;
 			children = (
-				25E8BC2E15AE4F7200A323D8 /* lib */,
-				25E8BC2115AE4F5E00A323D8 /* bin */,
 				E66988C3159D403B002323AD /* StartOnLogin.xcodeproj */,
 				256C356B158EA75F00E2BEC4 /* main.m */,
 				E06E2B3F15A7671B00E52B2D /* errors.h */,
 				256C356D158EA75F00E2BEC4 /* Youcrypt-Prefix.pch */,
 				256C356E158EA75F00E2BEC4 /* Credits.rtf */,
+				25E8BC2E15AE4F7200A323D8 /* lib */,
+				25E8BC2115AE4F5E00A323D8 /* bin */,
 				25F3D154159243E300E3383C /* Classes */,
 				25F3D1521592436000E3383C /* UI */,
 				25F3D1531592437700E3383C /* Plists */,
@@ -578,6 +580,7 @@
 		E6BEB6C915A3A72000878D4B /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				25E8BC4715AE6D7F00A323D8 /* youcrypt-overlay.icns */,
 				E6C046A215AE1A83004B52E5 /* ActionGear.png */,
 				E6C046A315AE1A83004B52E5 /* box-logo.png */,
 				E6C046A415AE1A83004B52E5 /* Cancel.png */,
@@ -858,6 +861,7 @@
 				25E8BC2C15AE4F5F00A323D8 /* yc-encfsctl in Resources */,
 				25E8BC2D15AE4F5F00A323D8 /* yc-encfssh in Resources */,
 				25E8BC3415AE4F7200A323D8 /* libencfs.la in Resources */,
+				25E8BC4815AE6D7F00A323D8 /* youcrypt-overlay.icns in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

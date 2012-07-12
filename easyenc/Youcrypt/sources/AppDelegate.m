@@ -275,6 +275,10 @@ AppDelegate *theApp;
 }
 
 - (void)didEncrypt:(NSString *)path {
+    NSImage *overlay = [[NSImage alloc] initWithContentsOfFile:[[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"/youcrypt-overlay.icns"]];
+    BOOL didSetIcon = [[NSWorkspace sharedWorkspace] setIcon:overlay forFile:path options:0];
+    NSLog(@"Icon set : %d for %@",didSetIcon,path);
+    NSLog(@"%d", didSetIcon);
     YoucryptDirectory *dir = [[YoucryptDirectory alloc] init];        
     dir.path = [path stringByAppendingPathComponent:@"encrypted.yc"];
     dir.mountedPath = @"";
