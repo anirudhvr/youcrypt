@@ -16,12 +16,13 @@
 
 @synthesize table;
 @synthesize passphraseSheet;
+@synthesize backgroundImageView;
 
 - (id)init
 {
     if (![super initWithWindowNibName:@"ListDirectoriesWindow"])
         return nil;
-    
+
     allowedToolbarItemKeys = [[NSArray alloc] initWithObjects:AddToolbarItemIdentifier, RemoveToolbarItemIdentifier, PreferencesToolbarItemIdentifier, ChangePassphraseToolbarIdentifier, QuitToolbarItemIdentifier, HelpToolbarItemIdentifier, nil];
     allowedToolbarItemDetails = [NSMutableDictionary dictionary];
     
@@ -75,6 +76,7 @@
     [self.window setToolbar:toolbar];
     [table setListDir:self];
     [[self window] makeFirstResponder:table];
+    
 }
 
 - (IBAction)doEncrypt:(id)sender {
@@ -272,11 +274,9 @@
 - (NSArray *)toolbarDefaultItemIdentifiers:(NSToolbar *)toolbar
 {
     return [NSArray arrayWithObjects:AddToolbarItemIdentifier,NSToolbarSeparatorItemIdentifier,
-            RemoveToolbarItemIdentifier, NSToolbarSeparatorItemIdentifier,
+            RemoveToolbarItemIdentifier, NSToolbarFlexibleSpaceItemIdentifier,
             PreferencesToolbarItemIdentifier, NSToolbarSeparatorItemIdentifier,
-            ChangePassphraseToolbarIdentifier, NSToolbarFlexibleSpaceItemIdentifier,
-            HelpToolbarItemIdentifier, NSToolbarSpaceItemIdentifier,
-            QuitToolbarItemIdentifier, nil];
+            HelpToolbarItemIdentifier, nil];
 }
 
 //--------------------------------------------------------------------------------------------------
@@ -311,50 +311,50 @@
                                 nil];
     
     [allowedToolbarItemDetails setObject:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:
-                                                                              @"Add" /* label */, 
-                                                                              @"Add" /* palletelabel */,
-                                                                              @"Add Folder" /* Tooltip */,
+                                                                              @"Encrypt" /* label */, 
+                                                                              @"Create" /* palletelabel */,
+                                                                              @"Create an encrypted folder, or encrypt the contents of an existing folder" /* Tooltip */,
                                                                               self           /* target */,
-                                                                              @"Add.png" /* image file */,
+                                                                              @"encrypt.png" /* image file */,
                                                                               NSStringFromSelector(@selector(addNew:)) /* selector */, nil]
                                                                      forKeys:toolbarItemKeys] 
                                   forKey:[allowedToolbarItemKeys objectAtIndex:0]];
     
     [allowedToolbarItemDetails setObject:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:
-                                                                              @"Remove" /* label */, 
+                                                                              @"Decrypt" /* label */, 
                                                                               @"Remove" /* palletelabel */,
-                                                                              @"Remove Folder" /* Tooltip */,
+                                                                              @"Permanently decrypt the contents of an encrypted folder" /* Tooltip */,
                                                                               self           /* target */,
-                                                                              @"Remove.png" /* image file */,
+                                                                              @"decrypt.png" /* image file */,
                                                                               NSStringFromSelector(@selector(removeFS:)) /* selector */, nil]
                                                                      forKeys:toolbarItemKeys] 
                                   forKey:[allowedToolbarItemKeys objectAtIndex:1]];
     
     [allowedToolbarItemDetails setObject:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:
-                                                                              @"Preferences" /* label */, 
-                                                                              @"Preferences" /* palletelabel */,
-                                                                              @"Show Preferences" /* Tooltip */,
+                                                                              @"Settings" /* label */, 
+                                                                              @"Settings" /* palletelabel */,
+                                                                              @"Change YouCrypt settings" /* Tooltip */,
                                                                               self           /* target */,
                                                                               @"Preferences.png" /* image file */,
                                                                               NSStringFromSelector(@selector(showPreferencePanel)) /* selector */, nil]
                                                                      forKeys:toolbarItemKeys] 
                                   forKey:[allowedToolbarItemKeys objectAtIndex:2]];
     
+
     [allowedToolbarItemDetails setObject:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:
                                                                               @"Change Passphrase" /* label */, 
                                                                               @"Change Passphrase" /* palletelabel */,
-                                                                              @"Change Passphrase" /* Tooltip */,
+                                                                              @"Change your YouCrypt passphrase" /* Tooltip */,
                                                                               self           /* target */,
                                                                               @"Key.png" /* image file */,
                                                                               NSStringFromSelector(@selector(showChangePassphraseSheet)) /* selector */, nil]
                                                                      forKeys:toolbarItemKeys] 
                                   forKey:[allowedToolbarItemKeys objectAtIndex:3]];
-
     
     [allowedToolbarItemDetails setObject:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:
                                                                               @"Exit" /* label */, 
                                                                               @"Exit" /* palletelabel */,
-                                                                              @"Exit Youcrypt" /* Tooltip */,
+                                                                              @"Quit Youcrypt" /* Tooltip */,
                                                                               self           /* target */,
                                                                               @"Exit.png" /* image file */,
                                                                               NSStringFromSelector(@selector(exitApp)) /* selector */, nil]
@@ -364,7 +364,7 @@
     [allowedToolbarItemDetails setObject:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:
                                                                               @"Help" /* label */, 
                                                                               @"Help" /* palletelabel */,
-                                                                              @"Find Help" /* Tooltip */,
+                                                                              @"Learn to use YouCrypt" /* Tooltip */,
                                                                               self           /* target */,
                                                                               @"Help.png" /* image file */,
                                                                               NSStringFromSelector(@selector(showHelp)) /* selector */, nil]

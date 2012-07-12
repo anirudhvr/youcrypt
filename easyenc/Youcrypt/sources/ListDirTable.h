@@ -7,10 +7,11 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "contrib/AMToolTipTableView/AMToolTipTableView.h"
 
 @class ListDirectoriesWindow;
 
-@interface ListDirTable : NSTableView {
+@interface ListDirTable : AMToolTipTableView {
     ListDirectoriesWindow *listDirObj;
 }
 

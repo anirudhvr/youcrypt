@@ -613,7 +613,7 @@ AppDelegate *theApp;
             [cell setTextColor:[NSColor redColor]];
             [cell setBackgroundColor:[NSColor grayColor]];
         } else if ([cell isKindOfClass:[NSButtonCell class]] && [colId isEqualToString:@"status"]) {
-            [cell setImage:[NSImage imageNamed:@"unlocked-24x24.png"]];
+            [cell setImage:[NSImage imageNamed:@"box_open_48x48.png"]];
         } else if ([cell isKindOfClass:[NSPopUpButtonCell class]] && [colId isEqualToString:@"props"]) {
             /*NSPopUpButtonCell *dataTypeDropDownCell = [tableColumn dataCell];
             [[dataTypeDropDownCell itemAtIndex:1] setTitle:@"Close"];*/
@@ -626,19 +626,37 @@ AppDelegate *theApp;
             
         } else if ([cell isKindOfClass:[NSButtonCell class]] && [colId isEqualToString:@"status"]) {
             if (dirAtRow.status == YoucryptDirectoryStatusUnmounted) 
-                [cell setImage:[NSImage imageNamed:@"locked-24x24.png"]];
+                [cell setImage:[NSImage imageNamed:@"box_closed_48x48.png"]];
             else if (dirAtRow.status == YoucryptDirectoryStatusSourceNotFound) 
                 [cell setImage:[NSImage imageNamed:@"error-22x22.png"]];
             if (dirAtRow.status == YoucryptDirectoryStatusProcessing)
                 [cell setImage:[NSImage imageNamed:@"processing-22x22.gif"]];
         } else if ([cell isKindOfClass:[NSPopUpButtonCell class]] && [colId isEqualToString:@"props"]) {
             //NSPopUpButtonCell *dataTypeDropDownCell = [tableColumn dataCell];
-            NSLog(@"Trying to disable close");
+            //NSLog(@"Trying to disable close");
             [[[tableColumn dataCell] itemAtIndex:2] setHidden:YES];
             
         }
     }
 }
+
+- (NSString *)tableView:(NSTableView *)aTableView toolTipForTableColumn:(NSTableColumn *)aTableColumn row:(NSInteger)rowIndex
+{   
+    NSString *tooltip;
+    NSLog(@"%d", rowIndex);
+    if (rowIndex >= 0) {
+        YoucryptDirectory *dir = [directories objectAtIndex:rowIndex];
+        tooltip = [NSString stringWithFormat:@"Source folder: %@\n\n"
+                             "Status: %@"
+                             "%@", dir.path, [YoucryptDirectory statusToString:dir.status],
+                             (dir.status == YoucryptDirectoryStatusMounted ? [NSString stringWithFormat:@"\n\nMounted at %@", dir.mountedPath] : @"")];
+    } else {
+        tooltip = [NSString stringWithString:@"Drag folders here to encrypt them with YouCrypt"];
+    }
+
+    return tooltip;
+}
+
 
 
 
