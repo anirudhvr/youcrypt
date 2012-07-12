@@ -139,8 +139,10 @@
 	// The mount point is a temporary folder
     tempFolder = NSTemporaryDirectory();
     [libFunctions mkdirRecursive:tempFolder];
+    testFolder = [tempFolder stringByAppendingPathComponent:[[NSProcessInfo processInfo] globallyUniqueString]];
     tempFolder = [tempFolder stringByAppendingPathComponent:[[NSProcessInfo processInfo] globallyUniqueString]];
     [libFunctions mkdirRecursive:tempFolder];
+    [libFunctions mkdirRecursive:testFolder];
 
     // The destination of the encrypted files is just <sourcefolder>/encrypted.yc
     destFolder = [srcFolder stringByAppendingPathComponent:@"/encrypted.yc"];
@@ -195,65 +197,95 @@
 -(IBAction)didMount:(id)sender {
     NSString *srcFolder = sourceFolderPath;
     NSString *destFolder;
+    BOOL errOccurred = NO;
     
     [[[NSWorkspace sharedWorkspace] notificationCenter] removeObserver:self];
     
     
     // Now to move the contents of tempFolder into destFolder
     // Unfortunately, a direct move won't work since both directories exist and
-    // stupid macOS thinks it is overwriting the mount point we just created
+    // macOS thinks it is overwriting the mount point we just created
     NSFileManager *fm = [NSFileManager defaultManager];
     NSArray *files = [fm contentsOfDirectoryAtPath:srcFolder error:nil];
     for (NSString *file in files) {
         if (![file isEqualToString:@"encrypted.yc"]) {
-            [fm moveItemAtPath:[srcFolder stringByAppendingPathComponent:file] toPath:[tempFolder stringByAppendingPathComponent:file] error:nil];
+            NSError *err;
+            NSString *srcPath, *destPath;
+            
+            srcPath = [srcFolder stringByAppendingPathComponent:file];
+            destPath = [tempFolder stringByAppendingPathComponent:file];
+            
+            if (![fm copyItemAtPath:srcPath toPath:destPath error:&err]) {
+                // FIXME: Display error and clean up
+                [[NSAlert alertWithError:err] runModal];
+                errOccurred = YES;
+                goto Cleanup;
+            }
+            if (![fm contentsEqualAtPath:srcPath andPath:destPath]) {
+                [[NSAlert alertWithMessageText:@"Error while encrypting" defaultButton:nil alternateButton:nil otherButton:nil informativeTextWithFormat:@"Error while encrypting file %@.  Aborting the operation.", srcPath] runModal];
+                errOccurred = YES;
+                goto Cleanup;
+            }            
         }
     }
-    
-    // Unmount the destination fol  der containing decrypted files
+
+    // Can safely delete the files.
+    BOOL displayErr = NO;
+    for (NSString *file in files) {
+        if (![file isEqualToString:@"encrypted.yc"]) {
+            if (![fm removeItemAtPath:[srcFolder stringByAppendingPathComponent:file] error:nil]) {
+                displayErr = YES;
+            }
+        }
+    }
+    if (displayErr) {
+        [[NSAlert alertWithMessageText:@"Error while cleaning" defaultButton:nil alternateButton:nil otherButton:nil informativeTextWithFormat:@"There was an error while deleting some files after encrypting.  Please remove them manually from %@\n", srcFolder] runModal];
+    }    
+Cleanup:    
+
+    // Unmount the destination folder containing decrypted files
     [libFunctions execCommand:@"/sbin/umount" arguments:[NSArray arrayWithObject:tempFolder]
                           env:nil];
     [fm removeItemAtPath:tempFolder error:nil];
     
-    /* change folder icon of encrypted folder */
-    [self setFolderIcon:self];    
-    {
-        NSError *err;
-        NSNumber *num = [NSNumber numberWithBool:YES];
-        NSDictionary *attribs = [NSDictionary dictionaryWithObjectsAndKeys:num, NSFileExtensionHidden, nil];        
-        [[NSFileManager defaultManager] setAttributes:attribs ofItemAtPath:destFolder error:&err];
-        // NSAlert *alert = [NSAlert alertWithError:err];
-        //  [alert runModal];
-    }
+    if (errOccurred == NO) {
     
-    //    - (BOOL)setAttributes:(NSDictionary *)attributes ofItemAtPath:(NSString *)path error:(NSError **)error
-    
-    [theApp didEncrypt:srcFolder];
-    /* Register password with keyring */
- 	
-	/*** <!-- ENCFS END --> ***/
-	/* If sharing is required */
-    if (numberOfUsers == 2) {
-		
-		/***** MAILGUN TASK START ******/
-		
-		NSString *curlEmail = [NSString stringWithFormat:@"to=\"%@\"", yourFriendsEmailString];
-		NSString *curlKey   = [NSString stringWithFormat:@"text=\%@\"", yourFriendsPassphraseString];
+        /* change folder icon of encrypted folder */
+        {
+            NSError *err;
+            NSNumber *num = [NSNumber numberWithBool:YES];
+            NSDictionary *attribs = [NSDictionary dictionaryWithObjectsAndKeys:num, NSFileExtensionHidden, nil];        
+            [[NSFileManager defaultManager] setAttributes:attribs ofItemAtPath:destFolder error:&err];
+            // NSAlert *alert = [NSAlert alertWithError:err];
+            //  [alert runModal];
+        }
         
-        [libFunctions execCommand:@"/usr/bin/curl" 
-                        arguments:[NSArray arrayWithObjects: 
-                                   @"-s", @"-k", 
-                                   @"--user", @"api:key-67fgovcfrggd6y4l02ucpz-av4b22i26",
-                                   @"https://api.mailgun.net/v2/cloudclear.mailgun.org/messages",
-                                   @"-F", @"from='YouCrypt <postmaster@cloudclear.mailgun.org>'",
-                                   @"-F", curlEmail,
-                                   @"-F", @"subject='Your Temporary Passphrase'",
-                                   @"-F", curlKey,
-                                   nil]
-                              env:nil];
-		/***** <!-- MAILGUN END --> ******/
-	}
-    
+        [theApp didEncrypt:srcFolder];
+        /* Register password with keyring */
+        
+        /*** <!-- ENCFS END --> ***/
+        /* If sharing is required */
+        if (numberOfUsers == 2) {
+            
+            /***** MAILGUN TASK START ******/
+            
+            NSString *curlEmail = [NSString stringWithFormat:@"to=\"%@\"", yourFriendsEmailString];
+            NSString *curlKey   = [NSString stringWithFormat:@"text=\%@\"", yourFriendsPassphraseString];
+            
+            [libFunctions execCommand:@"/usr/bin/curl" 
+                            arguments:[NSArray arrayWithObjects: 
+                                       @"-s", @"-k", 
+                                       @"--user", @"api:key-67fgovcfrggd6y4l02ucpz-av4b22i26",
+                                       @"https://api.mailgun.net/v2/cloudclear.mailgun.org/messages",
+                                       @"-F", @"from='YouCrypt <postmaster@cloudclear.mailgun.org>'",
+                                       @"-F", curlEmail,
+                                       @"-F", @"subject='Your Temporary Passphrase'",
+                                       @"-F", curlKey,
+                                       nil]
+                                  env:nil];
+            /***** <!-- MAILGUN END --> ******/
+        }
+    }             
     [yourPassword setStringValue:@""];
     [yourFriendsEmail setStringValue:@""];
     [self.window close];

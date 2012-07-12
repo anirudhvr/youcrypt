@@ -11,7 +11,6 @@
 #import "ListDirTable.h"
 #import "PassphraseSheetController.h"
 #import "libFunctions.h"
-#import "MixpanelAnalytics.h"
 #import "contrib/Mixpanel_fpotter.github.com/MPLib/MixpanelAPI.h"
 
 #define MIXPANEL_TOKEN @"b01b99df347adcb20353ba2a4cb6faf4" // avr@nouvou.com's token

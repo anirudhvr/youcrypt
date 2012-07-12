@@ -8,12 +8,13 @@
 
 #import "libFunctions.h"
 
-#import "Contrib/SSKeychain/SSKeychain.h"
-#import "Contrib/Lumberjack/logging.h"
+#import "contrib/SSKeychain/SSKeychain.h"
+#import "contrib/Lumberjack/logging.h"
 #import <errno.h>
+#import <CommonCrypto/CommonDigest.h>
 
-#define ENCFS @"/usr/local/bin/encfs"
-#define ENCFSCTL @"/usr/local/bin/encfsctl"
+#define ENCFS @"/yc-encfs"
+#define ENCFSCTL @"/yc-encfsctl"
 
 @implementation libFunctions
 
@@ -50,6 +51,7 @@
 
 
 
+
 //NSString* systemCall(NSString *binary, NSArray *arguments) {
 //    NSTask *task;   
 //    task = [[NSTask alloc] init];
@@ -75,8 +77,8 @@
 //    return string;
 //}
 
-+ (void) mkdirRecursive:(NSString *)path {
-    [[NSFileManager defaultManager] createDirectoryAtPath:path withIntermediateDirectories:YES attributes:nil error:nil];
++ (BOOL) mkdirRecursive:(NSString *)path {
+    return [[NSFileManager defaultManager] createDirectoryAtPath:path withIntermediateDirectories:YES attributes:nil error:nil];
 }
 
 
@@ -92,8 +94,9 @@
  
  **/
 
-+(void) mvRecursive:(NSString *)srcPath toPath:(NSString *)dstPath {
++(BOOL) mvRecursive:(NSString *)srcPath toPath:(NSString *)dstPath {
     [[NSFileManager defaultManager] moveItemAtPath:srcPath toPath:dstPath error:nil];
+    
 }
 
 
@@ -163,8 +166,10 @@
 
     NSTask *encfsProc = [NSTask alloc];
     NSFileHandle *io = [NSFileHandle alloc];
-    
-    if ([libFunctions execWithSocket:ENCFS arguments:nil env:nil io:io proc:encfsProc]) {        
+    NSString *encfsPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:ENCFS];
+    NSLog(@"ENCFSPATH : %@",encfsPath);
+    if ([libFunctions execWithSocket:encfsPath arguments:nil env:nil io:io proc:encfsProc]) {    
+        NSLog(@"SUCCESS");
         int count = 8;
         
         NSString *encryptfilenames_s = [[NSString alloc] initWithString:@""];
@@ -173,13 +178,16 @@
             count++;
         }
         
-        [io writeData:[[NSString stringWithFormat:@"8\nencfs\n--nu\n%d\n--pw\n%@\n%@--\n%@\n%@\n",
-                        numUsers, pwd, encryptfilenames_s, encFolder, decFolder] dataUsingEncoding:NSUTF8StringEncoding]];
+        NSString *encfsArgs = [NSString stringWithFormat:@"8\nencfs\n--nu\n%d\n--pw\n%@\n%@--\n%@\n%@\n",
+                               numUsers, pwd, encryptfilenames_s, encFolder, decFolder];
+        
+        [io writeData:[encfsArgs dataUsingEncoding:NSUTF8StringEncoding]];
         [encfsProc waitUntilExit];
         [io closeFile];
         return YES;
     }
     else {
+        NSLog(@"FAIL");
         return NO;
     }
     
@@ -209,8 +217,8 @@
         }
     }
     [fuseopts addObject:[NSString stringWithString:@"-ofsname=YouCryptFS"]];
-
-    if ([libFunctions execWithSocket:ENCFS arguments:nil env:nil io:io proc:encfsProc]) { 
+    NSString *encfsPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:ENCFS]; 
+    if ([libFunctions execWithSocket:encfsPath arguments:nil env:nil io:io proc:encfsProc]) { 
         int count = 6 + [fuseopts count];
         
         NSString *idletime_s = [[NSString alloc] initWithString:@""];
@@ -246,8 +254,8 @@
     NSTask *encfsProc = [NSTask alloc];
     NSFileHandle *io = [NSFileHandle alloc];
     NSString *vol = [NSString stringWithString:(volname == nil ? @"Youcrypt Volume" : volname)];
-    
-    if ([libFunctions execWithSocket:ENCFS arguments:nil env:nil io:io proc:encfsProc]) {        
+    NSString *encfsPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:ENCFS]; 
+    if ([libFunctions execWithSocket:encfsPath arguments:nil env:nil io:io proc:encfsProc]) {        
         [io writeData:[[NSString stringWithFormat:@"8\nencfs\n--pw\n%@\n--\n%@\n%@\n-ofsname=YoucryptFS\n-ovolname=%@\n", 
                         password, encFolder, decFolder, vol] dataUsingEncoding:NSUTF8StringEncoding]];
         [encfsProc waitUntilExit];
@@ -270,8 +278,9 @@
                  newPasswd:(NSString *)newPasswd {
     NSTask *encfsProc = [NSTask alloc];
     NSFileHandle *io = [NSFileHandle alloc];
-    
-    if ([libFunctions execWithSocket:ENCFSCTL arguments:[NSArray arrayWithObjects:@"autopasswd", path, nil] env:nil io:io proc:encfsProc]) {
+    NSString *encfsctlPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:ENCFSCTL]; 
+    NSLog(@"ENCFSCTL Path : %@",encfsctlPath);
+    if ([libFunctions execWithSocket:encfsctlPath arguments:[NSArray arrayWithObjects:@"autopasswd", path, nil] env:nil io:io proc:encfsProc]) {
         [io writeData:[[NSString stringWithFormat:@"%@\n%@\n", oldPasswd, newPasswd] dataUsingEncoding:NSUTF8StringEncoding]];
         [encfsProc waitUntilExit];
         if ([encfsProc terminationStatus] == 0) {

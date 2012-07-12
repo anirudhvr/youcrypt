@@ -213,38 +213,6 @@ static NSMutableArray *mountedFuseVolumes;
     }
 }
 
-//#include <stdio.h>
-//#include <fstab.h>
-//+ (NSArray*) getFSEnt
-//{
-//    NSMutableArray *output = [[NSMutableArray alloc] init];
-//
-//    struct fstab *f = NULL;
-//    
-//    if (setfsent() == 0) 
-//        return nil;
-//    
-//    while (1) {
-//        f = getfsspec("osxfusefs");
-//        if (f == NULL) break;
-//        
-//        printf("fs_spec: %s, "
-//               "fs_file: %s, "
-//               "fs_vfstype: %s, "
-//               "fs_mntops: %s, "
-//               "fs_type: %s, "
-//               "fs_freq: %d, "
-//               "fs_passno: %d\n", 
-//               f->fs_spec, f->fs_file, f->fs_vfstype,
-//               f->fs_mntops, f->fs_type, f->fs_freq, 
-//               f->fs_passno);
-//        [output addObject:[NSString stringWithCString:f->fs_file encoding:NSASCIIStringEncoding]];
-//    }
-//    endfsent();
-//    
-//    return output;
-//
-//}
 
 @end
 

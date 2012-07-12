@@ -74,9 +74,12 @@
 }
 
 -(IBAction)didMount:(id)sender {
-    
+        
     NSString *backPath = [path stringByDeletingLastPathComponent];
     NSLog(@"Backpath is %@\n", backPath);
+    
+    [[[NSWorkspace sharedWorkspace] notificationCenter] removeObserver:self];
+
     
     // Now to move the contents of tempFolder into backPath
     // Unfortunately, a direct move won't work since both directories exist and
@@ -84,13 +87,12 @@
     NSFileManager *fm = [NSFileManager defaultManager];
     NSError *err;
     NSArray *files = [fm contentsOfDirectoryAtPath:tempFolder error:&err];
-    if (err != nil) {        
-        [[NSAlert alertWithError:err] runModal];
-        // FIXME
-    }
+//    if (err != nil) {        
+//        [[NSAlert alertWithError:err] runModal];
+//        // FIXME
+//    }
     
-    NSLog(@"files = %@\n", files);
-    
+    NSLog(@"files = %@\n", files);    
     for (NSString *file in files) {
         NSError *err;
         if (([file isEqualToString:@".DS_Store"]) || ([file isEqualToString:@".encfs6.xml"]))
@@ -104,8 +106,7 @@
               );
     }    
     
-    // Unmount the destination folder containing decrypted files
-    
+    // Unmount the destination folder containing decrypted files    
     if ([libFunctions execCommand:@"/sbin/umount" arguments:[NSArray arrayWithObject:tempFolder]
                               env:nil]) {
         NSLog(@"Umount failed.\nAborting\n");

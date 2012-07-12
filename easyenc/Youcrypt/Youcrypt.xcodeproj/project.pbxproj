@@ -33,6 +33,14 @@
 		256C35A9158EAF8700E2BEC4 /* Preferences.xib in Resources */ = {isa = PBXBuildFile; fileRef = 256C35A8158EAF8700E2BEC4 /* Preferences.xib */; };
 		25C3FE4515A7A805006606DF /* FeedbackSheetController.m in Sources */ = {isa = PBXBuildFile; fileRef = 25C3FE4315A7A804006606DF /* FeedbackSheetController.m */; };
 		25C3FE4615A7A805006606DF /* Feedback.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25C3FE4415A7A804006606DF /* Feedback.xib */; };
+		25E8BC2B15AE4F5F00A323D8 /* yc-encfs in Resources */ = {isa = PBXBuildFile; fileRef = 25E8BC2515AE4F5F00A323D8 /* yc-encfs */; };
+		25E8BC2C15AE4F5F00A323D8 /* yc-encfsctl in Resources */ = {isa = PBXBuildFile; fileRef = 25E8BC2615AE4F5F00A323D8 /* yc-encfsctl */; };
+		25E8BC2D15AE4F5F00A323D8 /* yc-encfssh in Resources */ = {isa = PBXBuildFile; fileRef = 25E8BC2715AE4F5F00A323D8 /* yc-encfssh */; };
+		25E8BC3215AE4F7200A323D8 /* libencfs.6.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 25E8BC2F15AE4F7200A323D8 /* libencfs.6.dylib */; };
+		25E8BC3315AE4F7200A323D8 /* libencfs.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 25E8BC3015AE4F7200A323D8 /* libencfs.dylib */; };
+		25E8BC3415AE4F7200A323D8 /* libencfs.la in Resources */ = {isa = PBXBuildFile; fileRef = 25E8BC3115AE4F7200A323D8 /* libencfs.la */; };
+		25E8BC3515AE516300A323D8 /* libencfs.6.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 25E8BC2F15AE4F7200A323D8 /* libencfs.6.dylib */; };
+		25E8BC3615AE516300A323D8 /* libencfs.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 25E8BC3015AE4F7200A323D8 /* libencfs.dylib */; };
 		25EE6A5915928D2C008A0DC8 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25EE6A5815928D2C008A0DC8 /* Security.framework */; };
 		25F3D14C15923FE800E3383C /* Decrypt.m in Sources */ = {isa = PBXBuildFile; fileRef = 25F3D14A15923FE800E3383C /* Decrypt.m */; };
 		25F3D14D15923FE800E3383C /* Decrypt.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25F3D14B15923FE800E3383C /* Decrypt.xib */; };
@@ -40,6 +48,15 @@
 		25F3D15B159244E800E3383C /* Encrypt.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25F3D159159244E800E3383C /* Encrypt.xib */; };
 		E007C09D15A646B500D60802 /* libFunctions.m in Sources */ = {isa = PBXBuildFile; fileRef = 25F3D1501592435600E3383C /* libFunctions.m */; };
 		E007C09F15A646DC00D60802 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25EE6A5815928D2C008A0DC8 /* Security.framework */; };
+		E01A6CD215AE2F95004F442C /* StartOnLogin.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E01A6CD115AE2F95004F442C /* StartOnLogin.framework */; };
+		E01A6CD315AE3D1F004F442C /* SSKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = E6C046DA15AE29AA004B52E5 /* SSKeychain.m */; };
+		E01A6CD415AE3D25004F442C /* CompressingLogFileManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 252C3A971593E84F0044EB3C /* CompressingLogFileManager.m */; };
+		E01A6CD515AE3D33004F442C /* DDASLLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 252C3A571593C6A70044EB3C /* DDASLLogger.m */; };
+		E01A6CD615AE3D37004F442C /* DDFileLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 252C3A591593C6A70044EB3C /* DDFileLogger.m */; };
+		E01A6CD715AE3D3A004F442C /* DDLog.m in Sources */ = {isa = PBXBuildFile; fileRef = 252C3A5B1593C6A70044EB3C /* DDLog.m */; };
+		E01A6CD815AE3D3D004F442C /* DDTTYLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 252C3A5D1593C6A80044EB3C /* DDTTYLogger.m */; };
+		E01A6CD915AE3ED3004F442C /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 256C355F158EA75F00E2BEC4 /* Cocoa.framework */; };
+		E01A6CDB15AE57A9004F442C /* libcommonCrypto.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E01A6CDA15AE57A9004F442C /* libcommonCrypto.dylib */; };
 		E054042315AB1CE10011E5CC /* RestoreController.m in Sources */ = {isa = PBXBuildFile; fileRef = E054042115AB1CE10011E5CC /* RestoreController.m */; };
 		E054042415AB1CE10011E5CC /* Restore.xib in Resources */ = {isa = PBXBuildFile; fileRef = E054042215AB1CE10011E5CC /* Restore.xib */; };
 		E06E2B4115A76ABE00E52B2D /* ListRightClick.xib in Resources */ = {isa = PBXBuildFile; fileRef = E06E2B4015A76ABE00E52B2D /* ListRightClick.xib */; };
@@ -72,7 +89,6 @@
 		E64B309315AEE9C300827591 /* NSData+MPBase64.m in Sources */ = {isa = PBXBuildFile; fileRef = E64B308B15AEE9C300827591 /* NSData+MPBase64.m */; };
 		E64B309415AEE9C300827591 /* MixpanelAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = E64B308D15AEE9C300827591 /* MixpanelAPI.m */; };
 		E64B309515AEE9C300827591 /* MixpanelEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = E64B308F15AEE9C300827591 /* MixpanelEvent.m */; };
-		E64B309B15AEEB1D00827591 /* MixpanelAnalytics.m in Sources */ = {isa = PBXBuildFile; fileRef = E64B309A15AEEB1D00827591 /* MixpanelAnalytics.m */; };
 		E65C4B5515ABAD9F00AF9D8E /* processing-22x22.png in Resources */ = {isa = PBXBuildFile; fileRef = E65C4B5415ABAD9F00AF9D8E /* processing-22x22.png */; };
 		E6649C7A15A53CD80096886F /* Encrypt.m in Sources */ = {isa = PBXBuildFile; fileRef = E6649C7915A53CD80096886F /* Encrypt.m */; };
 		E6649C8815A642DA0096886F /* logo-513x560-alpha.icns in Resources */ = {isa = PBXBuildFile; fileRef = E6649C8715A642DA0096886F /* logo-513x560-alpha.icns */; };
@@ -99,7 +115,6 @@
 		E6C0468F15AE18B4004B52E5 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = E6C0468C15AE18B4004B52E5 /* MainMenu.xib */; };
 		E6C0469315AE1972004B52E5 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = E6C0469115AE1972004B52E5 /* InfoPlist.strings */; };
 		E6C0469915AE1A35004B52E5 /* dsa_pub.pem in Resources */ = {isa = PBXBuildFile; fileRef = E6C0469815AE1A35004B52E5 /* dsa_pub.pem */; };
-		E6C0469F15AE1A58004B52E5 /* email.pyc in Resources */ = {isa = PBXBuildFile; fileRef = E6C0469B15AE1A58004B52E5 /* email.pyc */; };
 		E6C046A015AE1A58004B52E5 /* get_dropbox_folder.sh in Resources */ = {isa = PBXBuildFile; fileRef = E6C0469C15AE1A58004B52E5 /* get_dropbox_folder.sh */; };
 		E6C046A115AE1A58004B52E5 /* simple-mailer.py in Resources */ = {isa = PBXBuildFile; fileRef = E6C0469D15AE1A58004B52E5 /* simple-mailer.py */; };
 		E6C046B215AE1A84004B52E5 /* ActionGear.png in Resources */ = {isa = PBXBuildFile; fileRef = E6C046A215AE1A83004B52E5 /* ActionGear.png */; };
@@ -119,14 +134,12 @@
 		E6C046C015AE1A84004B52E5 /* Synchronize.png in Resources */ = {isa = PBXBuildFile; fileRef = E6C046B015AE1A84004B52E5 /* Synchronize.png */; };
 		E6C046C115AE1A84004B52E5 /* twitter.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = E6C046B115AE1A84004B52E5 /* twitter.jpeg */; };
 		E6C046C615AE1F24004B52E5 /* Youcrypt.plist in Resources */ = {isa = PBXBuildFile; fileRef = E6C046C515AE1F24004B52E5 /* Youcrypt.plist */; };
-		E6C046CC15AE22C3004B52E5 /* StartOnLogin.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E6C046CA15AE22A5004B52E5 /* StartOnLogin.framework */; };
 		E6C046D115AE2321004B52E5 /* XMLDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = E6C046CE15AE2321004B52E5 /* XMLDictionary.m */; };
 		E6C046D215AE2321004B52E5 /* XMLReader.m in Sources */ = {isa = PBXBuildFile; fileRef = E6C046D015AE2321004B52E5 /* XMLReader.m */; };
 		E6C046D415AE236A004B52E5 /* YoucryptService.m in Sources */ = {isa = PBXBuildFile; fileRef = E6E2A0B6159266F6003E3F6C /* YoucryptService.m */; };
 		E6C046D615AE2817004B52E5 /* CompressingLogFileManager.h in Sources */ = {isa = PBXBuildFile; fileRef = 252C3A961593E84F0044EB3C /* CompressingLogFileManager.h */; };
 		E6C046D715AE2846004B52E5 /* CompressingLogFileManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 252C3A971593E84F0044EB3C /* CompressingLogFileManager.m */; };
 		E6C046DB15AE29AA004B52E5 /* SSKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = E6C046DA15AE29AA004B52E5 /* SSKeychain.m */; };
-		E6C046DC15AE2B55004B52E5 /* StartOnLogin.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = E6C046CA15AE22A5004B52E5 /* StartOnLogin.framework */; };
 		E6C046DD15AE2B63004B52E5 /* Sparkle.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = E6C0468015AE1733004B52E5 /* Sparkle.framework */; };
 /* End PBXBuildFile section */
 
@@ -154,7 +167,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				E6C046DC15AE2B55004B52E5 /* StartOnLogin.framework in CopyFiles */,
 				E6C046DD15AE2B63004B52E5 /* Sparkle.framework in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -184,7 +196,7 @@
 		252C3A5B1593C6A70044EB3C /* DDLog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDLog.m; sourceTree = "<group>"; };
 		252C3A5C1593C6A70044EB3C /* DDTTYLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDTTYLogger.h; sourceTree = "<group>"; };
 		252C3A5D1593C6A80044EB3C /* DDTTYLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDTTYLogger.m; sourceTree = "<group>"; };
-		252C3A671593CAA10044EB3C /* Lumberjack.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Lumberjack.framework; path = contrib/Lumberjack/Lumberjack.framework; sourceTree = "<group>"; };
+		252C3A671593CAA10044EB3C /* Lumberjack.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Lumberjack.framework; path = ../contrib/Lumberjack/Lumberjack.framework; sourceTree = "<group>"; };
 		252C3A961593E84F0044EB3C /* CompressingLogFileManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CompressingLogFileManager.h; sourceTree = "<group>"; };
 		252C3A971593E84F0044EB3C /* CompressingLogFileManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CompressingLogFileManager.m; sourceTree = "<group>"; };
 		252C3A9E1593EF570044EB3C /* logging.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = logging.h; sourceTree = "<group>"; };
@@ -224,6 +236,14 @@
 		25C3FE4215A7A803006606DF /* FeedbackSheetController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FeedbackSheetController.h; path = sources/FeedbackSheetController.h; sourceTree = "<group>"; };
 		25C3FE4315A7A804006606DF /* FeedbackSheetController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FeedbackSheetController.m; path = sources/FeedbackSheetController.m; sourceTree = "<group>"; };
 		25C3FE4415A7A804006606DF /* Feedback.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Feedback.xib; sourceTree = "<group>"; };
+		25E8BC2315AE4F5F00A323D8 /* get_dropbox_folder.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = get_dropbox_folder.sh; sourceTree = "<group>"; };
+		25E8BC2415AE4F5F00A323D8 /* simple-mailer.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; path = "simple-mailer.py"; sourceTree = "<group>"; };
+		25E8BC2515AE4F5F00A323D8 /* yc-encfs */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = "yc-encfs"; sourceTree = "<group>"; };
+		25E8BC2615AE4F5F00A323D8 /* yc-encfsctl */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = "yc-encfsctl"; sourceTree = "<group>"; };
+		25E8BC2715AE4F5F00A323D8 /* yc-encfssh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = "yc-encfssh"; sourceTree = "<group>"; };
+		25E8BC2F15AE4F7200A323D8 /* libencfs.6.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libencfs.6.dylib; sourceTree = "<group>"; };
+		25E8BC3015AE4F7200A323D8 /* libencfs.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libencfs.dylib; sourceTree = "<group>"; };
+		25E8BC3115AE4F7200A323D8 /* libencfs.la */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = libencfs.la; sourceTree = "<group>"; };
 		25EE6A5815928D2C008A0DC8 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		25F3D14915923FE800E3383C /* Decrypt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Decrypt.h; path = sources/Decrypt.h; sourceTree = "<group>"; };
 		25F3D14A15923FE800E3383C /* Decrypt.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Decrypt.m; path = sources/Decrypt.m; sourceTree = "<group>"; };
@@ -231,6 +251,8 @@
 		25F3D1501592435600E3383C /* libFunctions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = libFunctions.m; path = sources/libFunctions.m; sourceTree = "<group>"; };
 		25F3D159159244E800E3383C /* Encrypt.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Encrypt.xib; sourceTree = "<group>"; };
 		25FDA07015A269B1004F2914 /* Automator.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Automator.framework; path = System/Library/Frameworks/Automator.framework; sourceTree = SDKROOT; };
+		E01A6CD115AE2F95004F442C /* StartOnLogin.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StartOnLogin.framework; path = "../../../../../../../Library/Developer/Xcode/DerivedData/Youcrypt-fdubftqonqnypceknpzofarcidfz/Build/Products/Debug/StartOnLogin.framework"; sourceTree = "<group>"; };
+		E01A6CDA15AE57A9004F442C /* libcommonCrypto.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcommonCrypto.dylib; path = usr/lib/system/libcommonCrypto.dylib; sourceTree = SDKROOT; };
 		E054042015AB1CE10011E5CC /* RestoreController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RestoreController.h; path = sources/RestoreController.h; sourceTree = "<group>"; };
 		E054042115AB1CE10011E5CC /* RestoreController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RestoreController.m; path = sources/RestoreController.m; sourceTree = "<group>"; };
 		E054042215AB1CE10011E5CC /* Restore.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Restore.xib; sourceTree = "<group>"; };
@@ -306,7 +328,7 @@
 		E6BEB71715A520FA00878D4B /* logo-16x16.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = "logo-16x16.tiff"; sourceTree = "<group>"; };
 		E6BEB71915A522A000878D4B /* logo-grayscale-alpha.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "logo-grayscale-alpha.png"; sourceTree = "<group>"; };
 		E6BEB71B15A5290300878D4B /* logo-color-alpha.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "logo-color-alpha.png"; sourceTree = "<group>"; };
-		E6C0468015AE1733004B52E5 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Sparkle.framework; path = frameworks/Sparkle.framework; sourceTree = "<group>"; };
+		E6C0468015AE1733004B52E5 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Sparkle.framework; sourceTree = "<group>"; };
 		E6C0468A15AE18B4004B52E5 /* FirstRunSheetController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FirstRunSheetController.xib; sourceTree = "<group>"; };
 		E6C0468B15AE18B4004B52E5 /* GmailSheetController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GmailSheetController.xib; sourceTree = "<group>"; };
 		E6C0468C15AE18B4004B52E5 /* MainMenu.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainMenu.xib; sourceTree = "<group>"; };
@@ -332,13 +354,12 @@
 		E6C046B015AE1A84004B52E5 /* Synchronize.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Synchronize.png; sourceTree = "<group>"; };
 		E6C046B115AE1A84004B52E5 /* twitter.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = twitter.jpeg; sourceTree = "<group>"; };
 		E6C046C515AE1F24004B52E5 /* Youcrypt.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Youcrypt.plist; sourceTree = "<group>"; };
-		E6C046CA15AE22A5004B52E5 /* StartOnLogin.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StartOnLogin.framework; path = "../../../../Library/Developer/Xcode/DerivedData/Youcrypt-ggysqscodtvhathjsipjtpfuvepf/Build/Products/Debug/StartOnLogin.framework"; sourceTree = "<group>"; };
 		E6C046CD15AE2321004B52E5 /* XMLDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = XMLDictionary.h; path = contrib/XMLReader/XMLDictionary.h; sourceTree = SOURCE_ROOT; };
 		E6C046CE15AE2321004B52E5 /* XMLDictionary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = XMLDictionary.m; path = contrib/XMLReader/XMLDictionary.m; sourceTree = SOURCE_ROOT; };
 		E6C046CF15AE2321004B52E5 /* XMLReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = XMLReader.h; path = contrib/XMLReader/XMLReader.h; sourceTree = SOURCE_ROOT; };
 		E6C046D015AE2321004B52E5 /* XMLReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = XMLReader.m; path = contrib/XMLReader/XMLReader.m; sourceTree = SOURCE_ROOT; };
-		E6C046D915AE29AA004B52E5 /* SSKeychain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SSKeychain.h; path = SSKeychain/SSKeychain.h; sourceTree = "<group>"; };
-		E6C046DA15AE29AA004B52E5 /* SSKeychain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SSKeychain.m; path = SSKeychain/SSKeychain.m; sourceTree = "<group>"; };
+		E6C046D915AE29AA004B52E5 /* SSKeychain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSKeychain.h; sourceTree = "<group>"; };
+		E6C046DA15AE29AA004B52E5 /* SSKeychain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSKeychain.m; sourceTree = "<group>"; };
 		E6E2A0B6159266F6003E3F6C /* YoucryptService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = YoucryptService.m; path = sources/YoucryptService.m; sourceTree = "<group>"; };
 		E6E2A0B7159266F6003E3F6C /* YoucryptService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = YoucryptService.h; path = sources/YoucryptService.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -348,10 +369,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E6C046CC15AE22C3004B52E5 /* StartOnLogin.framework in Frameworks */,
 				E6C0468115AE1733004B52E5 /* Sparkle.framework in Frameworks */,
 				25EE6A5915928D2C008A0DC8 /* Security.framework in Frameworks */,
 				256C3560158EA75F00E2BEC4 /* Cocoa.framework in Frameworks */,
+				E01A6CD215AE2F95004F442C /* StartOnLogin.framework in Frameworks */,
+				25E8BC3215AE4F7200A323D8 /* libencfs.6.dylib in Frameworks */,
+				25E8BC3315AE4F7200A323D8 /* libencfs.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -369,6 +392,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E01A6CDB15AE57A9004F442C /* libcommonCrypto.dylib in Frameworks */,
+				E01A6CD915AE3ED3004F442C /* Cocoa.framework in Frameworks */,
 				E0BF0E9D1596D01F002F9FB9 /* Foundation.framework in Frameworks */,
 				E007C09F15A646DC00D60802 /* Security.framework in Frameworks */,
 			);
@@ -411,13 +436,14 @@
 		256C355E158EA75F00E2BEC4 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				E6C046CA15AE22A5004B52E5 /* StartOnLogin.framework */,
+				E01A6CDA15AE57A9004F442C /* libcommonCrypto.dylib */,
+				253C3D7B159BBF4A00120B8D /* libxml2.dylib */,
+				E01A6CD115AE2F95004F442C /* StartOnLogin.framework */,
 				256C3564158EA75F00E2BEC4 /* Foundation.framework */,
 				256C3563158EA75F00E2BEC4 /* CoreData.framework */,
 				256C3562158EA75F00E2BEC4 /* AppKit.framework */,
 				E6C0468015AE1733004B52E5 /* Sparkle.framework */,
 				25FDA07015A269B1004F2914 /* Automator.framework */,
-				253C3D7B159BBF4A00120B8D /* libxml2.dylib */,
 				253C3D79159BBF4000120B8D /* QuartzCore.framework */,
 				253C3D77159BBF3900120B8D /* SystemConfiguration.framework */,
 				253C3D75159BBF2E00120B8D /* CoreServices.framework */,
@@ -428,6 +454,7 @@
 				E0BF0E9C1596D01F002F9FB9 /* Foundation.framework */,
 			);
 			name = Frameworks;
+			path = frameworks;
 			sourceTree = "<group>";
 		};
 		256C3566158EA75F00E2BEC4 /* Supporting Files */ = {
@@ -548,15 +575,16 @@
 			children = (
 				E0BF0E9F1596D01F002F9FB9 /* main.m */,
 				E0BF0EA31596D01F002F9FB9 /* TestBed.1 */,
+				E0BF0EA21596D01F002F9FB9 /* TestBed-Prefix.pch */,
 				E0BF0EA11596D01F002F9FB9 /* Supporting Files */,
 			);
-			path = TestBed;
+			name = TestBed;
+			path = sources/TestBed;
 			sourceTree = "<group>";
 		};
 		E0BF0EA11596D01F002F9FB9 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				E0BF0EA21596D01F002F9FB9 /* TestBed-Prefix.pch */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -708,6 +736,11 @@
 			isa = PBXGroup;
 			children = (
 				E6C0469B15AE1A58004B52E5 /* email.pyc */,
+				25E8BC2315AE4F5F00A323D8 /* get_dropbox_folder.sh */,
+				25E8BC2415AE4F5F00A323D8 /* simple-mailer.py */,
+				25E8BC2515AE4F5F00A323D8 /* yc-encfs */,
+				25E8BC2615AE4F5F00A323D8 /* yc-encfsctl */,
+				25E8BC2715AE4F5F00A323D8 /* yc-encfssh */,
 				E6C0469C15AE1A58004B52E5 /* get_dropbox_folder.sh */,
 				E6C0469D15AE1A58004B52E5 /* simple-mailer.py */,
 			);
@@ -717,6 +750,9 @@
 		E6C0469E15AE1A58004B52E5 /* lib */ = {
 			isa = PBXGroup;
 			children = (
+				25E8BC2F15AE4F7200A323D8 /* libencfs.6.dylib */,
+				25E8BC3015AE4F7200A323D8 /* libencfs.dylib */,
+				25E8BC3115AE4F7200A323D8 /* libencfs.la */,
 			);
 			path = lib;
 			sourceTree = SOURCE_ROOT;
@@ -765,7 +801,7 @@
 				E6C046D915AE29AA004B52E5 /* SSKeychain.h */,
 				E6C046DA15AE29AA004B52E5 /* SSKeychain.m */,
 			);
-			name = SSKeychain;
+			path = SSKeychain;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -875,6 +911,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				25E8BC3515AE516300A323D8 /* libencfs.6.dylib in Resources */,
+				25E8BC3615AE516300A323D8 /* libencfs.dylib in Resources */,
 				256C3570158EA75F00E2BEC4 /* Credits.rtf in Resources */,
 				256C35A9158EAF8700E2BEC4 /* Preferences.xib in Resources */,
 				25F3D14D15923FE800E3383C /* Decrypt.xib in Resources */,
@@ -910,7 +948,6 @@
 				E6C0468E15AE18B4004B52E5 /* GmailSheetController.xib in Resources */,
 				E6C0468F15AE18B4004B52E5 /* MainMenu.xib in Resources */,
 				E6C0469915AE1A35004B52E5 /* dsa_pub.pem in Resources */,
-				E6C0469F15AE1A58004B52E5 /* email.pyc in Resources */,
 				E6C046A015AE1A58004B52E5 /* get_dropbox_folder.sh in Resources */,
 				E6C046A115AE1A58004B52E5 /* simple-mailer.py in Resources */,
 				E6C046B215AE1A84004B52E5 /* ActionGear.png in Resources */,
@@ -941,6 +978,10 @@
 				E603DBB115AEC5C400ABB170 /* box_closed_48x48.png in Resources */,
 				E603DBB215AEC5C400ABB170 /* box_open_48x48.png in Resources */,
 				E64B307115AEE1A600827591 /* tableview-background.png in Resources */,
+				25E8BC2B15AE4F5F00A323D8 /* yc-encfs in Resources */,
+				25E8BC2C15AE4F5F00A323D8 /* yc-encfsctl in Resources */,
+				25E8BC2D15AE4F5F00A323D8 /* yc-encfssh in Resources */,
+				25E8BC3415AE4F7200A323D8 /* libencfs.la in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1012,7 +1053,6 @@
 				E64B309315AEE9C300827591 /* NSData+MPBase64.m in Sources */,
 				E64B309415AEE9C300827591 /* MixpanelAPI.m in Sources */,
 				E64B309515AEE9C300827591 /* MixpanelEvent.m in Sources */,
-				E64B309B15AEEB1D00827591 /* MixpanelAnalytics.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1031,6 +1071,12 @@
 				E0BF0EA01596D01F002F9FB9 /* main.m in Sources */,
 				E0BF0EB415980A72002F9FB9 /* YoucryptDirectory.m in Sources */,
 				E007C09D15A646B500D60802 /* libFunctions.m in Sources */,
+				E01A6CD315AE3D1F004F442C /* SSKeychain.m in Sources */,
+				E01A6CD415AE3D25004F442C /* CompressingLogFileManager.m in Sources */,
+				E01A6CD515AE3D33004F442C /* DDASLLogger.m in Sources */,
+				E01A6CD615AE3D37004F442C /* DDFileLogger.m in Sources */,
+				E01A6CD715AE3D3A004F442C /* DDLog.m in Sources */,
+				E01A6CD815AE3D3D004F442C /* DDTTYLogger.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1133,6 +1179,7 @@
 					"\"$(SRCROOT)\"",
 					"\"$(SRCROOT)/frameworks\"",
 					"\"$(SRCROOT)/../../../../Library/Developer/Xcode/DerivedData/Youcrypt-ggysqscodtvhathjsipjtpfuvepf/Build/Products/Debug\"",
+					"\"$(SRCROOT)/../../../../../../Library/Developer/Xcode/DerivedData/Youcrypt-fdubftqonqnypceknpzofarcidfz/Build/Products/Debug\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "sources/Youcrypt-Prefix.pch";
@@ -1140,7 +1187,10 @@
 				"HEADER_SEARCH_PATHS[arch=*]" = "\"$(SRCROOT)\"";
 				INFOPLIST_FILE = sources/Youcrypt.plist;
 				LD_RUNPATH_SEARCH_PATHS = /Library/Frameworks;
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/lib\"",
+				);
 				"OTHER_LDFLAGS[arch=*]" = "-lz";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
@@ -1158,13 +1208,17 @@
 					"\"$(SRCROOT)\"",
 					"\"$(SRCROOT)/frameworks\"",
 					"\"$(SRCROOT)/../../../../Library/Developer/Xcode/DerivedData/Youcrypt-ggysqscodtvhathjsipjtpfuvepf/Build/Products/Debug\"",
+					"\"$(SRCROOT)/../../../../../../Library/Developer/Xcode/DerivedData/Youcrypt-fdubftqonqnypceknpzofarcidfz/Build/Products/Debug\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "sources/Youcrypt-Prefix.pch";
 				HEADER_SEARCH_PATHS = "\"$(SRCROOT)\"";
 				INFOPLIST_FILE = sources/Youcrypt.plist;
 				LD_RUNPATH_SEARCH_PATHS = /Library/Frameworks;
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/lib\"",
+				);
 				"OTHER_LDFLAGS[arch=*]" = "-lz";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
@@ -1211,7 +1265,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "TestBed/TestBed-Prefix.pch";
+				GCC_PREFIX_HEADER = "sources/TestBed/TestBed-Prefix.pch";
+				HEADER_SEARCH_PATHS = "\"$(SRCROOT)\"/**";
+				"HEADER_SEARCH_PATHS[arch=*]" = "\"$(SRCROOT)\"/";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SDKROOT)/usr/lib/system\"",
+				);
+				OTHER_LDFLAGS = "-lz";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -1220,7 +1281,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "TestBed/TestBed-Prefix.pch";
+				GCC_PREFIX_HEADER = "sources/TestBed/TestBed-Prefix.pch";
+				HEADER_SEARCH_PATHS = "\"$(SRCROOT)\"/**";
+				"HEADER_SEARCH_PATHS[arch=*]" = "\"$(SRCROOT)\"/";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SDKROOT)/usr/lib/system\"",
+				);
+				OTHER_LDFLAGS = "-lz";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
