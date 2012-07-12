@@ -11,6 +11,10 @@
 #import "ListDirTable.h"
 #import "PassphraseSheetController.h"
 #import "libFunctions.h"
+#import "MixpanelAnalytics.h"
+#import "contrib/Mixpanel_fpotter.github.com/MPLib/MixpanelAPI.h"
+
+#define MIXPANEL_TOKEN @"b01b99df347adcb20353ba2a4cb6faf4" // avr@nouvou.com's token
 
 @implementation ListDirectoriesWindow
 
@@ -28,6 +32,7 @@
     
     volumePropsSheet = [[VolumePropertiesSheetController alloc] init];
     passphraseSheet = [[PassphraseSheetController alloc] init];
+    mixpanel = [MixpanelAPI sharedAPIWithToken:MIXPANEL_TOKEN];
     return self;
     
 }
@@ -83,6 +88,12 @@
 }
 
 - (IBAction)doOpen:(id)sender {
+    
+//    [mixpanel track:@"Youcrypt_test" 
+//         properties:[NSDictionary dictionaryWithObjectsAndKeys:
+//                     @"Open", @"Button",
+//                     nil]];
+//    
     if ([table clickedRow] < [theApp.directories count]) {
         YoucryptDirectory *dir = [theApp.directories objectAtIndex:[table clickedRow]];
         [theApp openEncryptedFolder:[dir path]];
@@ -98,6 +109,14 @@
 }
 
 - (IBAction)doProps:(id)sender {
+    
+    
+//    [mixpanel track:@"Youcrypt_test" 
+//         properties:[NSDictionary dictionaryWithObjectsAndKeys:
+//                     @"Properties", @"Button",
+//                     nil]];
+
+    
     
     if ([table clickedRow] < [theApp.directories count]) {
         YoucryptDirectory *dir = [theApp.directories objectAtIndex:[table clickedRow]];

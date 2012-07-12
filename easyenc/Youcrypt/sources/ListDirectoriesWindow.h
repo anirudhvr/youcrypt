@@ -19,6 +19,7 @@
 #define HelpToolbarItemIdentifier @"Help"
 
 @class PassphraseSheetController;
+@class MixpanelAPI;
 
 @interface ListDirectoriesWindow : NSWindowController <NSWindowDelegate, NSDraggingDestination, NSToolbarDelegate> {
     IBOutlet ListDirTable *table;
@@ -32,6 +33,8 @@
     VolumePropertiesSheetController *volumePropsSheet;
     
     PassphraseSheetController *passphraseSheet;
+    
+    MixpanelAPI *mixpanel;
     
 }
 
