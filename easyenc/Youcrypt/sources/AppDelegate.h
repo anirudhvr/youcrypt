@@ -72,7 +72,7 @@
 - (void)showFirstRunSheet;
 
 // Enc and Dec
-- (IBAction)showEncryptWindow:(id)sender;
+- (IBAction)showEncryptWindow:(id)sender path:(NSString *)path;
 - (IBAction)showDecryptWindow:(id)sender path:(NSString *)path mountPoint:(NSString *)mountPath;
 - (IBAction)showListDirectories:(id)sender;
 - (IBAction)openFeedbackPage:(id)sender;

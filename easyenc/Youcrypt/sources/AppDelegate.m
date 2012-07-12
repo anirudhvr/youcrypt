@@ -232,6 +232,9 @@ AppDelegate *theApp;
         } else {
             dir.status = YoucryptDirectoryStatusProcessing;
             dir.mountedPath = mountPoint;
+            
+            // Check if the keychain contains a password.
+            
             [self showDecryptWindow:self path:path mountPoint:mountPoint];
         }
         return YES;
@@ -251,11 +254,7 @@ AppDelegate *theApp;
     NSFileManager *fm = [NSFileManager defaultManager];
     BOOL isDir;
     if ([fm fileExistsAtPath:path isDirectory:&isDir] && isDir) {
-        if (!encryptController) {
-            encryptController = [[Encrypt alloc] init];
-        }
-        encryptController.sourceFolderPath = path;
-        [self showEncryptWindow:self];
+        [self showEncryptWindow:self path:path];
     }
 }
 
@@ -399,21 +398,19 @@ AppDelegate *theApp;
         decryptController = [[Decrypt alloc] init];
     }
     
-    NSString *pp =[libFunctions getPassphraseFromKeychain:@"Youcrypt"];
-    DDLogVerbose(@"showing %@", decryptController);
-    DDLogVerbose(@"password from keychain = %@\n", pp);
-
-    decryptController.passphraseFromKeychain = pp;
-    decryptController.keychainHasPassphrase = YES;        
     decryptController.sourceFolderPath = path;
     decryptController.destFolderPath = mountPath;
+        
+    NSString *pp =[libFunctions getPassphraseFromKeychain:@"Youcrypt"];
+    DDLogVerbose(@"showing %@", decryptController);
     
     if ((pp != nil) && !([pp isEqualToString:@""])) {
-        // If we have a password, try running decrypting without showing the window.
-        DDLogVerbose(@"trying auto decrypt\n");
+        decryptController.passphraseFromKeychain = pp;
+        decryptController.keychainHasPassphrase = YES;
         [decryptController decrypt:self];
     }
-    else {                
+    else {
+        decryptController.keychainHasPassphrase = NO;
         [decryptController showWindow:self];
     }
 }
@@ -422,34 +419,32 @@ AppDelegate *theApp;
     if (!restoreController) {
         restoreController = [[RestoreController alloc] init];
     }
-    
-    NSString *pp =[libFunctions getPassphraseFromKeychain:@"Youcrypt"];
-    restoreController.passwd = pp;
-    restoreController.keychainHasPassphrase = YES;        
+
     restoreController.path = path;
-    
-    if ((pp != nil) && !([pp isEqualToString:@""])) {
-        // If we have a password, try running decrypting without showing the window.
+    NSString *pp =[libFunctions getPassphraseFromKeychain:@"Youcrypt"];
+    if (pp != nil && !([pp isEqualToString:@""])) {
+        restoreController.passwd = pp;
+        restoreController.keychainHasPassphrase = YES;
         [restoreController restore:self];
     }
-    else {                
+    else {
+        restoreController.keychainHasPassphrase = NO;
         [restoreController showWindow:self];
     }
-
 }
 
 
-- (IBAction)showEncryptWindow:(id)sender {
+- (IBAction)showEncryptWindow:(id)sender path:(NSString *)path {
     // Is encryptController nil?
     if (!encryptController) {
         encryptController = [[Encrypt alloc] init];
     } 
     
     NSString *pp =[libFunctions getPassphraseFromKeychain:@"Youcrypt"];
+    encryptController.sourceFolderPath = path;
     if (pp != nil && [pp isNotEqualTo:@""]) {
         encryptController.passphraseFromKeychain = pp;
         encryptController.keychainHasPassphrase = YES;
-        //[encryptController setPassphraseTextField:pp];
         [encryptController encrypt:self];
     } else { 
         encryptController.passphraseFromKeychain = nil;

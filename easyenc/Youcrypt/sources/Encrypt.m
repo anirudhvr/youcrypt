@@ -239,7 +239,7 @@
         }
     }
     if (displayErr) {
-        [[NSAlert alertWithMessageText:@"Error while Cleaning" defaultButton:nil alternateButton:nil otherButton:nil informativeTextWithFormat:@"There was an error while deleting some files after encrypting.  Please manually remove encrypted files at %@\n", srcFolder] runModal];
+        [[NSAlert alertWithMessageText:@"Error while cleaning" defaultButton:nil alternateButton:nil otherButton:nil informativeTextWithFormat:@"There was an error while deleting some files after encrypting.  Please remove them manually from %@\n", srcFolder] runModal];
     }    
 Cleanup:    
 
