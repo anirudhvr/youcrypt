@@ -33,6 +33,16 @@
 		256C35A9158EAF8700E2BEC4 /* Preferences.xib in Resources */ = {isa = PBXBuildFile; fileRef = 256C35A8158EAF8700E2BEC4 /* Preferences.xib */; };
 		25C3FE4515A7A805006606DF /* FeedbackSheetController.m in Sources */ = {isa = PBXBuildFile; fileRef = 25C3FE4315A7A804006606DF /* FeedbackSheetController.m */; };
 		25C3FE4615A7A805006606DF /* Feedback.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25C3FE4415A7A804006606DF /* Feedback.xib */; };
+		25E8BC2915AE4F5F00A323D8 /* get_dropbox_folder.sh in Resources */ = {isa = PBXBuildFile; fileRef = 25E8BC2315AE4F5F00A323D8 /* get_dropbox_folder.sh */; };
+		25E8BC2A15AE4F5F00A323D8 /* simple-mailer.py in Resources */ = {isa = PBXBuildFile; fileRef = 25E8BC2415AE4F5F00A323D8 /* simple-mailer.py */; };
+		25E8BC2B15AE4F5F00A323D8 /* yc-encfs in Resources */ = {isa = PBXBuildFile; fileRef = 25E8BC2515AE4F5F00A323D8 /* yc-encfs */; };
+		25E8BC2C15AE4F5F00A323D8 /* yc-encfsctl in Resources */ = {isa = PBXBuildFile; fileRef = 25E8BC2615AE4F5F00A323D8 /* yc-encfsctl */; };
+		25E8BC2D15AE4F5F00A323D8 /* yc-encfssh in Resources */ = {isa = PBXBuildFile; fileRef = 25E8BC2715AE4F5F00A323D8 /* yc-encfssh */; };
+		25E8BC3215AE4F7200A323D8 /* libencfs.6.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 25E8BC2F15AE4F7200A323D8 /* libencfs.6.dylib */; };
+		25E8BC3315AE4F7200A323D8 /* libencfs.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 25E8BC3015AE4F7200A323D8 /* libencfs.dylib */; };
+		25E8BC3415AE4F7200A323D8 /* libencfs.la in Resources */ = {isa = PBXBuildFile; fileRef = 25E8BC3115AE4F7200A323D8 /* libencfs.la */; };
+		25E8BC3515AE516300A323D8 /* libencfs.6.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 25E8BC2F15AE4F7200A323D8 /* libencfs.6.dylib */; };
+		25E8BC3615AE516300A323D8 /* libencfs.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 25E8BC3015AE4F7200A323D8 /* libencfs.dylib */; };
 		25EE6A5915928D2C008A0DC8 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25EE6A5815928D2C008A0DC8 /* Security.framework */; };
 		25F3D14C15923FE800E3383C /* Decrypt.m in Sources */ = {isa = PBXBuildFile; fileRef = 25F3D14A15923FE800E3383C /* Decrypt.m */; };
 		25F3D14D15923FE800E3383C /* Decrypt.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25F3D14B15923FE800E3383C /* Decrypt.xib */; };
@@ -89,7 +99,6 @@
 		E6C0468F15AE18B4004B52E5 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = E6C0468C15AE18B4004B52E5 /* MainMenu.xib */; };
 		E6C0469315AE1972004B52E5 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = E6C0469115AE1972004B52E5 /* InfoPlist.strings */; };
 		E6C0469915AE1A35004B52E5 /* dsa_pub.pem in Resources */ = {isa = PBXBuildFile; fileRef = E6C0469815AE1A35004B52E5 /* dsa_pub.pem */; };
-		E6C0469F15AE1A58004B52E5 /* email.pyc in Resources */ = {isa = PBXBuildFile; fileRef = E6C0469B15AE1A58004B52E5 /* email.pyc */; };
 		E6C046A015AE1A58004B52E5 /* get_dropbox_folder.sh in Resources */ = {isa = PBXBuildFile; fileRef = E6C0469C15AE1A58004B52E5 /* get_dropbox_folder.sh */; };
 		E6C046A115AE1A58004B52E5 /* simple-mailer.py in Resources */ = {isa = PBXBuildFile; fileRef = E6C0469D15AE1A58004B52E5 /* simple-mailer.py */; };
 		E6C046B215AE1A84004B52E5 /* ActionGear.png in Resources */ = {isa = PBXBuildFile; fileRef = E6C046A215AE1A83004B52E5 /* ActionGear.png */; };
@@ -211,6 +220,14 @@
 		25C3FE4215A7A803006606DF /* FeedbackSheetController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FeedbackSheetController.h; path = sources/FeedbackSheetController.h; sourceTree = "<group>"; };
 		25C3FE4315A7A804006606DF /* FeedbackSheetController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FeedbackSheetController.m; path = sources/FeedbackSheetController.m; sourceTree = "<group>"; };
 		25C3FE4415A7A804006606DF /* Feedback.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Feedback.xib; sourceTree = "<group>"; };
+		25E8BC2315AE4F5F00A323D8 /* get_dropbox_folder.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = get_dropbox_folder.sh; sourceTree = "<group>"; };
+		25E8BC2415AE4F5F00A323D8 /* simple-mailer.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; path = "simple-mailer.py"; sourceTree = "<group>"; };
+		25E8BC2515AE4F5F00A323D8 /* yc-encfs */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = "yc-encfs"; sourceTree = "<group>"; };
+		25E8BC2615AE4F5F00A323D8 /* yc-encfsctl */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = "yc-encfsctl"; sourceTree = "<group>"; };
+		25E8BC2715AE4F5F00A323D8 /* yc-encfssh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = "yc-encfssh"; sourceTree = "<group>"; };
+		25E8BC2F15AE4F7200A323D8 /* libencfs.6.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libencfs.6.dylib; sourceTree = "<group>"; };
+		25E8BC3015AE4F7200A323D8 /* libencfs.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libencfs.dylib; sourceTree = "<group>"; };
+		25E8BC3115AE4F7200A323D8 /* libencfs.la */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = libencfs.la; sourceTree = "<group>"; };
 		25EE6A5815928D2C008A0DC8 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		25F3D14915923FE800E3383C /* Decrypt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Decrypt.h; path = sources/Decrypt.h; sourceTree = "<group>"; };
 		25F3D14A15923FE800E3383C /* Decrypt.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Decrypt.m; path = sources/Decrypt.m; sourceTree = "<group>"; };
@@ -313,6 +330,8 @@
 				25EE6A5915928D2C008A0DC8 /* Security.framework in Frameworks */,
 				256C3560158EA75F00E2BEC4 /* Cocoa.framework in Frameworks */,
 				E01A6CD215AE2F95004F442C /* StartOnLogin.framework in Frameworks */,
+				25E8BC3215AE4F7200A323D8 /* libencfs.6.dylib in Frameworks */,
+				25E8BC3315AE4F7200A323D8 /* libencfs.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -343,6 +362,8 @@
 		256C3550158EA75F00E2BEC4 = {
 			isa = PBXGroup;
 			children = (
+				25E8BC2E15AE4F7200A323D8 /* lib */,
+				25E8BC2115AE4F5E00A323D8 /* bin */,
 				E66988C3159D403B002323AD /* StartOnLogin.xcodeproj */,
 				256C356B158EA75F00E2BEC4 /* main.m */,
 				E06E2B3F15A7671B00E52B2D /* errors.h */,
@@ -424,6 +445,28 @@
 				256C3585158EA75F00E2BEC4 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		25E8BC2115AE4F5E00A323D8 /* bin */ = {
+			isa = PBXGroup;
+			children = (
+				25E8BC2315AE4F5F00A323D8 /* get_dropbox_folder.sh */,
+				25E8BC2415AE4F5F00A323D8 /* simple-mailer.py */,
+				25E8BC2515AE4F5F00A323D8 /* yc-encfs */,
+				25E8BC2615AE4F5F00A323D8 /* yc-encfsctl */,
+				25E8BC2715AE4F5F00A323D8 /* yc-encfssh */,
+			);
+			path = bin;
+			sourceTree = "<group>";
+		};
+		25E8BC2E15AE4F7200A323D8 /* lib */ = {
+			isa = PBXGroup;
+			children = (
+				25E8BC2F15AE4F7200A323D8 /* libencfs.6.dylib */,
+				25E8BC3015AE4F7200A323D8 /* libencfs.dylib */,
+				25E8BC3115AE4F7200A323D8 /* libencfs.la */,
+			);
+			path = lib;
 			sourceTree = "<group>";
 		};
 		25F3D1521592436000E3383C /* UI */ = {
@@ -765,6 +808,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				25E8BC3515AE516300A323D8 /* libencfs.6.dylib in Resources */,
+				25E8BC3615AE516300A323D8 /* libencfs.dylib in Resources */,
 				256C3570158EA75F00E2BEC4 /* Credits.rtf in Resources */,
 				256C35A9158EAF8700E2BEC4 /* Preferences.xib in Resources */,
 				25F3D14D15923FE800E3383C /* Decrypt.xib in Resources */,
@@ -800,7 +845,6 @@
 				E6C0468E15AE18B4004B52E5 /* GmailSheetController.xib in Resources */,
 				E6C0468F15AE18B4004B52E5 /* MainMenu.xib in Resources */,
 				E6C0469915AE1A35004B52E5 /* dsa_pub.pem in Resources */,
-				E6C0469F15AE1A58004B52E5 /* email.pyc in Resources */,
 				E6C046A015AE1A58004B52E5 /* get_dropbox_folder.sh in Resources */,
 				E6C046A115AE1A58004B52E5 /* simple-mailer.py in Resources */,
 				E6C046B215AE1A84004B52E5 /* ActionGear.png in Resources */,
@@ -820,6 +864,12 @@
 				E6C046C015AE1A84004B52E5 /* Synchronize.png in Resources */,
 				E6C046C115AE1A84004B52E5 /* twitter.jpeg in Resources */,
 				E6C046C615AE1F24004B52E5 /* Youcrypt.plist in Resources */,
+				25E8BC2915AE4F5F00A323D8 /* get_dropbox_folder.sh in Resources */,
+				25E8BC2A15AE4F5F00A323D8 /* simple-mailer.py in Resources */,
+				25E8BC2B15AE4F5F00A323D8 /* yc-encfs in Resources */,
+				25E8BC2C15AE4F5F00A323D8 /* yc-encfsctl in Resources */,
+				25E8BC2D15AE4F5F00A323D8 /* yc-encfssh in Resources */,
+				25E8BC3415AE4F7200A323D8 /* libencfs.la in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1018,7 +1068,10 @@
 				"HEADER_SEARCH_PATHS[arch=*]" = "\"$(SRCROOT)\"";
 				INFOPLIST_FILE = sources/Youcrypt.plist;
 				LD_RUNPATH_SEARCH_PATHS = /Library/Frameworks;
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/lib\"",
+				);
 				"OTHER_LDFLAGS[arch=*]" = "-lz";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
@@ -1043,7 +1096,10 @@
 				HEADER_SEARCH_PATHS = "\"$(SRCROOT)\"";
 				INFOPLIST_FILE = sources/Youcrypt.plist;
 				LD_RUNPATH_SEARCH_PATHS = /Library/Frameworks;
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/lib\"",
+				);
 				"OTHER_LDFLAGS[arch=*]" = "-lz";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
