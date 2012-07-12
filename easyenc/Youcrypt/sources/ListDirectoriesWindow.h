@@ -19,10 +19,12 @@
 #define HelpToolbarItemIdentifier @"Help"
 
 @class PassphraseSheetController;
+@class MixpanelAPI;
 
 @interface ListDirectoriesWindow : NSWindowController <NSWindowDelegate, NSDraggingDestination, NSToolbarDelegate> {
     IBOutlet ListDirTable *table;
     IBOutlet NSTextField *dirName;          // The text field at the bottom.
+    IBOutlet NSImageView *backgroundImageView;
 
     // Toolbar
     IBOutlet NSToolbar *toolbar;
@@ -32,9 +34,12 @@
     
     PassphraseSheetController *passphraseSheet;
     
+    MixpanelAPI *mixpanel;
+    
 }
 
 @property (atomic, strong) IBOutlet NSTableView *table;
+@property (atomic, strong) IBOutlet NSImageView *backgroundImageView;
 
 @property (nonatomic, strong) PassphraseSheetController *passphraseSheet;
 

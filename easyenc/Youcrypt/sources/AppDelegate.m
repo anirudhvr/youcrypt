@@ -118,8 +118,9 @@ AppDelegate *theApp;
     NSArray *apps = [[NSWorkspace sharedWorkspace] runningApplications]; 
     int ycAppCount = 0;
     
+    NSLog(@"App name is : %@", [[NSProcessInfo processInfo] processName]);
     for(NSRunningApplication *app in apps) {
-        if([[app localizedName] isEqualToString:@"Youcrypt Mac alpha"]) {
+        if([[app localizedName] isEqualToString:[[NSProcessInfo processInfo] processName]]) {
             ycAppCount++;
             if(ycAppCount > 1) {
                 DDLogVerbose(@"FATAL. Cannot run multiple instances. Terminating!!");
@@ -232,6 +233,9 @@ AppDelegate *theApp;
         } else {
             dir.status = YoucryptDirectoryStatusProcessing;
             dir.mountedPath = mountPoint;
+            
+            // Check if the keychain contains a password.
+            
             [self showDecryptWindow:self path:path mountPoint:mountPoint];
         }
         return YES;
@@ -251,11 +255,7 @@ AppDelegate *theApp;
     NSFileManager *fm = [NSFileManager defaultManager];
     BOOL isDir;
     if ([fm fileExistsAtPath:path isDirectory:&isDir] && isDir) {
-        if (!encryptController) {
-            encryptController = [[Encrypt alloc] init];
-        }
-        encryptController.sourceFolderPath = path;
-        [self showEncryptWindow:self];
+        [self showEncryptWindow:self path:path];
     }
 }
 
@@ -403,21 +403,19 @@ AppDelegate *theApp;
         decryptController = [[Decrypt alloc] init];
     }
     
-    NSString *pp =[libFunctions getPassphraseFromKeychain:@"Youcrypt"];
-    DDLogVerbose(@"showing %@", decryptController);
-    DDLogVerbose(@"password from keychain = %@\n", pp);
-
-    decryptController.passphraseFromKeychain = pp;
-    decryptController.keychainHasPassphrase = YES;        
     decryptController.sourceFolderPath = path;
     decryptController.destFolderPath = mountPath;
+        
+    NSString *pp =[libFunctions getPassphraseFromKeychain:@"Youcrypt"];
+    DDLogVerbose(@"showing %@", decryptController);
     
     if ((pp != nil) && !([pp isEqualToString:@""])) {
-        // If we have a password, try running decrypting without showing the window.
-        DDLogVerbose(@"trying auto decrypt\n");
+        decryptController.passphraseFromKeychain = pp;
+        decryptController.keychainHasPassphrase = YES;
         [decryptController decrypt:self];
     }
-    else {                
+    else {
+        decryptController.keychainHasPassphrase = NO;
         [decryptController showWindow:self];
     }
 }
@@ -426,34 +424,32 @@ AppDelegate *theApp;
     if (!restoreController) {
         restoreController = [[RestoreController alloc] init];
     }
-    
-    NSString *pp =[libFunctions getPassphraseFromKeychain:@"Youcrypt"];
-    restoreController.passwd = pp;
-    restoreController.keychainHasPassphrase = YES;        
+
     restoreController.path = path;
-    
-    if ((pp != nil) && !([pp isEqualToString:@""])) {
-        // If we have a password, try running decrypting without showing the window.
+    NSString *pp =[libFunctions getPassphraseFromKeychain:@"Youcrypt"];
+    if (pp != nil && !([pp isEqualToString:@""])) {
+        restoreController.passwd = pp;
+        restoreController.keychainHasPassphrase = YES;
         [restoreController restore:self];
     }
-    else {                
+    else {
+        restoreController.keychainHasPassphrase = NO;
         [restoreController showWindow:self];
     }
-
 }
 
 
-- (IBAction)showEncryptWindow:(id)sender {
+- (IBAction)showEncryptWindow:(id)sender path:(NSString *)path {
     // Is encryptController nil?
     if (!encryptController) {
         encryptController = [[Encrypt alloc] init];
     } 
     
     NSString *pp =[libFunctions getPassphraseFromKeychain:@"Youcrypt"];
+    encryptController.sourceFolderPath = path;
     if (pp != nil && [pp isNotEqualTo:@""]) {
         encryptController.passphraseFromKeychain = pp;
         encryptController.keychainHasPassphrase = YES;
-        //[encryptController setPassphraseTextField:pp];
         [encryptController encrypt:self];
     } else { 
         encryptController.passphraseFromKeychain = nil;
@@ -617,7 +613,7 @@ AppDelegate *theApp;
             [cell setTextColor:[NSColor redColor]];
             [cell setBackgroundColor:[NSColor grayColor]];
         } else if ([cell isKindOfClass:[NSButtonCell class]] && [colId isEqualToString:@"status"]) {
-            [cell setImage:[NSImage imageNamed:@"unlocked-24x24.png"]];
+            [cell setImage:[NSImage imageNamed:@"box_open_48x48.png"]];
         } else if ([cell isKindOfClass:[NSPopUpButtonCell class]] && [colId isEqualToString:@"props"]) {
             /*NSPopUpButtonCell *dataTypeDropDownCell = [tableColumn dataCell];
             [[dataTypeDropDownCell itemAtIndex:1] setTitle:@"Close"];*/
@@ -630,19 +626,37 @@ AppDelegate *theApp;
             
         } else if ([cell isKindOfClass:[NSButtonCell class]] && [colId isEqualToString:@"status"]) {
             if (dirAtRow.status == YoucryptDirectoryStatusUnmounted) 
-                [cell setImage:[NSImage imageNamed:@"locked-24x24.png"]];
+                [cell setImage:[NSImage imageNamed:@"box_closed_48x48.png"]];
             else if (dirAtRow.status == YoucryptDirectoryStatusSourceNotFound) 
                 [cell setImage:[NSImage imageNamed:@"error-22x22.png"]];
             if (dirAtRow.status == YoucryptDirectoryStatusProcessing)
                 [cell setImage:[NSImage imageNamed:@"processing-22x22.gif"]];
         } else if ([cell isKindOfClass:[NSPopUpButtonCell class]] && [colId isEqualToString:@"props"]) {
             //NSPopUpButtonCell *dataTypeDropDownCell = [tableColumn dataCell];
-            NSLog(@"Trying to disable close");
+            //NSLog(@"Trying to disable close");
             [[[tableColumn dataCell] itemAtIndex:2] setHidden:YES];
             
         }
     }
 }
+
+- (NSString *)tableView:(NSTableView *)aTableView toolTipForTableColumn:(NSTableColumn *)aTableColumn row:(NSInteger)rowIndex
+{   
+    NSString *tooltip;
+    NSLog(@"%d", rowIndex);
+    if (rowIndex >= 0) {
+        YoucryptDirectory *dir = [directories objectAtIndex:rowIndex];
+        tooltip = [NSString stringWithFormat:@"Source folder: %@\n\n"
+                             "Status: %@"
+                             "%@", dir.path, [YoucryptDirectory statusToString:dir.status],
+                             (dir.status == YoucryptDirectoryStatusMounted ? [NSString stringWithFormat:@"\n\nMounted at %@", dir.mountedPath] : @"")];
+    } else {
+        tooltip = [NSString stringWithString:@"Drag folders here to encrypt them with YouCrypt"];
+    }
+
+    return tooltip;
+}
+
 
 
 

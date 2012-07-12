@@ -9,6 +9,10 @@
 #import <Foundation/Foundation.h>
 #import "YoucryptDirectory.h"
 #import "libFunctions.h"
+#import "Contrib/Lumberjack/logging.h"
+
+
+int ddLogLevel = LOG_LEVEL_VERBOSE;
 
 
 
@@ -51,7 +55,7 @@ int mainCheckEncfsPasswd(int argc, const char *argv[]) {
             int len = strlen(passwd);
             if (passwd[len-1] == '\n') passwd[len-1]=0;
         }
-        while (![libFunctions mountEncFS:@"/Users/rajsekar/tmp/a" decryptedFolder:@"/Users/rajsekar/tmp/b" password:[NSString stringWithCString:passwd encoding:NSUTF8StringEncoding]]);
+        while (![libFunctions mountEncFS:@"/Users/rajsekar/tmp/a" decryptedFolder:@"/Users/rajsekar/tmp/b" password:[NSString stringWithCString:passwd encoding:NSUTF8StringEncoding] volumeName:@"Vol" ]);
 
     }
     return 0;
@@ -81,7 +85,10 @@ int mainChangeEncFSPasswd(int argc, const char *argv[]) {
 
 
 int main(int argc, const char *argv[]) {
-    
+    @autoreleasepool {
+        printf ("Hey!\n");
+    }
+    return 0;
 }
 
 

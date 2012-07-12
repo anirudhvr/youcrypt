@@ -26,8 +26,8 @@
     
 }
 
-+ (void) mkdirRecursive: (NSString *)path;
-+ (void) mvRecursive:(NSString *)srcPath toPath:(NSString *)dstPath;
++ (BOOL) mkdirRecursive: (NSString *)path;
++ (BOOL) mvRecursive:(NSString *)srcPath toPath:(NSString *)dstPath;
 + (BOOL) execWithSocket:(NSString *)path arguments:(NSArray *)arguments
                     env:(NSDictionary *)env
                      io:(NSFileHandle *)io 
