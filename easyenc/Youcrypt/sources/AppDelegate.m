@@ -236,7 +236,15 @@ CompressingLogFileManager *logFileManager;
         [dir checkYoucryptDirectoryStatus:YES]; // Check that it's actually mounted.
         if (dir.status == YoucryptDirectoryStatusMounted) {
             // Just need to open the folder in this case            
-            [[NSWorkspace sharedWorkspace] openFile:dir.mountedPath];	
+//            [[NSWorkspace sharedWorkspace] openFile:dir.mountedPath];	
+            NSString *source=[NSString stringWithFormat:@"tell application \"Finder\"\n"
+                              "activate\n"
+                              "set target of Finder window 1 to disk \"%@\"\n"
+                              "set current view of Finder window 1 to icon view\n"
+                              "end tell\n", dir.alias];
+            NSAppleScript *update=[[NSAppleScript alloc] initWithSource:source];
+            NSDictionary *err;
+            [update executeAndReturnError:&err];
         } else {
             dir.status = YoucryptDirectoryStatusProcessing;
             dir.mountedPath = mountPoint;
