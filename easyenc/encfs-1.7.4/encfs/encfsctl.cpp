@@ -213,6 +213,12 @@ static int showInfo( int argc, char **argv )
             "created by %s (revision %i)\n"), config->creator.c_str(),
                 config->subVersion);
 	break;
+    case Config_YC:
+	cout << "\n" << autosprintf(_("Youcrypt FS configuration; "
+				      "created by %s (revision %i)\n"), 
+				    config->creator.c_str(),
+				    config->subVersion);
+	break;
     }
 
     showFSInfo( config );

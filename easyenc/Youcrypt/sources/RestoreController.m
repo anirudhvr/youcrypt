@@ -95,7 +95,7 @@
     NSLog(@"files = %@\n", files);    
     for (NSString *file in files) {
         NSError *err;
-        if (([file isEqualToString:@".DS_Store"]) || ([file isEqualToString:@".encfs6.xml"]))
+        if (([file isEqualToString:@".DS_Store"]) || ([file isEqualToString:@".youcryptfs.xml"]))
             continue;
         if (![fm moveItemAtPath:[tempFolder stringByAppendingPathComponent:file] toPath:[backPath stringByAppendingPathComponent:file] error:&err]) {
             //            [[NSAlert alertWithError:err] runModal];

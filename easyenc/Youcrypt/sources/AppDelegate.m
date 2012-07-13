@@ -196,8 +196,6 @@ CompressingLogFileManager *logFileManager;
 - (BOOL)openEncryptedFolder:(NSString *)path {   
     //--------------------------------------------------------------------------------------------------
     // 1.  Check if path is really a folder
-    // 2.  Check if the last component is encrypted.yc   <---- TODO
-    // 3.  Check if it is already mounted                <---- TODO
     // 4.  o/w, mount and open it.
     // 5.  Make sure we maintain it in our list.
     //--------------------------------------------------------------------------------------------------
@@ -209,7 +207,7 @@ CompressingLogFileManager *logFileManager;
         // 2. Set up decrypt controller with the path and the mount point
         // 3. Open the decrypt window
         
-        NSString *mountPoint = [[path stringByDeletingLastPathComponent] lastPathComponent];
+        NSString *mountPoint = [[path stringByDeletingPathExtension] lastPathComponent];
         NSString *timeStr = [[NSDate date] descriptionWithCalendarFormat:nil timeZone:nil locale:nil];
         timeStr = [timeStr stringByReplacingOccurrencesOfString:@" " withString:@"_"];
         mountPoint = [configDir.youCryptVolDir stringByAppendingPathComponent:
@@ -228,7 +226,7 @@ CompressingLogFileManager *logFileManager;
         }        
         dir = [[YoucryptDirectory alloc] init];
         dir.path = path;
-        dir.alias = [[path stringByDeletingLastPathComponent] lastPathComponent];
+        dir.alias = [[path stringByDeletingPathExtension] lastPathComponent];
 //        dir.status = YoucryptDirectoryStatusUnmounted;
         dir.status = YoucryptDirectoryStatusProcessing;
         dir.mountedPath = mountPoint;
@@ -252,7 +250,7 @@ CompressingLogFileManager *logFileManager;
             
             // Check if the keychain contains a password.
             
-            [self showDecryptWindow:self path:path mountPoint:mountPoint];
+            [self showDecryptWindow:self path:dir.path mountPoint:mountPoint];
         }
         return YES;
     }
@@ -295,10 +293,11 @@ CompressingLogFileManager *logFileManager;
     BOOL didSetIcon = [[NSWorkspace sharedWorkspace] setIcon:overlay forFile:path options:0];
     NSLog(@"Icon set : %d for %@",didSetIcon,path);
     NSLog(@"%d", didSetIcon);
-    YoucryptDirectory *dir = [[YoucryptDirectory alloc] init];        
-    dir.path = [path stringByAppendingPathComponent:@"encrypted.yc"];
+    
+    YoucryptDirectory *dir = [[YoucryptDirectory alloc] init];       
+    dir.path = path;
     dir.mountedPath = @"";
-    dir.alias = [path lastPathComponent];
+    dir.alias = [[path stringByDeletingPathExtension] lastPathComponent];
     dir.status = YoucryptDirectoryStatusUnmounted;
     [directories addObject:dir];            
     if (listDirectories != nil) {
@@ -322,7 +321,7 @@ CompressingLogFileManager *logFileManager;
 -(void) cancelRestore:(NSString *)path {
     for (YoucryptDirectory *dir in directories) {
         if ([path isEqualToString:dir.path]) {
-            dir.status = YoucryptDirectoryStatusUnmounted;
+            dir.status = YoucryptDirectoryStatusUnmounted; // Should've been processing
             [dir updateInfo];
             break;
         }
@@ -333,7 +332,7 @@ CompressingLogFileManager *logFileManager;
 -(void) cancelDecrypt:(NSString *)path {
     for (YoucryptDirectory *dir in directories) {
         if ([path isEqualToString:dir.path]) {
-            dir.status = YoucryptDirectoryStatusUnmounted;
+            dir.status = YoucryptDirectoryStatusUnmounted; // Should've been processing
             [dir updateInfo];
             break;
         }
@@ -605,26 +604,27 @@ CompressingLogFileManager *logFileManager;
         BOOL isDir;
         if ([fm fileExistsAtPath:path isDirectory:&isDir] && isDir) {  
             
+            //FIXME:  If it's a .yc file but not in our list file.
             
             // If it's a .yc file, we open it, otherwise, we encrypt it
             if ([[path pathExtension] isEqualToString:@"yc"]) {
                 [theApp openEncryptedFolder:path];
             }
-            else if ([fm fileExistsAtPath:[path stringByAppendingPathComponent:@"encrypted.yc"]
-                              isDirectory:&isDir] && isDir) {
-                NSAlert *alert = [NSAlert alertWithMessageText:@"Decrypt?"
-                                                 defaultButton:@"Decrypt"
-                                               alternateButton:@"Cancel"
-                                                   otherButton:nil
-                                     informativeTextWithFormat:@"This folder already contains encrypted content.  Decrypt and open?"];
-                if ([alert runModal] == NSAlertDefaultReturn) {
-                    [theApp openEncryptedFolder:[path stringByAppendingPathComponent:@"encrypted.yc"]];
-                    return YES;
-                }              
-                else {
-                    return  NO;
-                }
-            }                                           
+//            else if ([fm fileExistsAtPath:[path stringByAppendingPathComponent:@"encrypted.yc"]
+//                              isDirectory:&isDir] && isDir) {
+//                NSAlert *alert = [NSAlert alertWithMessageText:@"Decrypt?"
+//                                                 defaultButton:@"Decrypt"
+//                                               alternateButton:@"Cancel"
+//                                                   otherButton:nil
+//                                     informativeTextWithFormat:@"This folder already contains encrypted content.  Decrypt and open?"];
+//                if ([alert runModal] == NSAlertDefaultReturn) {
+//                    [theApp openEncryptedFolder:[path stringByAppendingPathComponent:@"encrypted.yc"]];
+//                    return YES;
+//                }              
+//                else {
+//                    return  NO;
+//                }
+//            }                                           
             else {
                 [theApp encryptFolder:path];
             }

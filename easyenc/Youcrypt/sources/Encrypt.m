@@ -125,8 +125,7 @@
  **/
 - (IBAction)encrypt:(id)sender
 {
-    NSString *srcFolder = sourceFolderPath;
-    NSString *destFolder;
+    srcFolder = sourceFolderPath;
 	/*** 
 	 PREPARATIONS
 	 A mkdir -p $HOME/easyenc/src 
@@ -146,8 +145,9 @@
 
     // The destination of the encrypted files is just <sourcefolder>/encrypted.yc
     destFolder = [srcFolder stringByAppendingPathComponent:@"/encrypted.yc"];
-    // We want to hide the extension of this folder for extra oomph
     [libFunctions mkdirRecursive:destFolder];
+    
+    //FIXME:  Multiple folders
 
     
 	/**** <!-- END PREP --> ***/
@@ -164,7 +164,7 @@
 	yourFriendsEmailString = [yourFriendsEmail stringValue];	
 	
 	// check if user wants to share with a friend
-	if(![yourFriendsEmailString isEqualToString:@""]) {
+	if((yourFriendsEmailString != nil) && ![yourFriendsEmailString isEqualToString:@""]) {
 		yourFriendsPassphrase = arc4random() % 100000000;
 		yourFriendsPassphraseString = [NSString stringWithFormat:@"%d", yourFriendsPassphrase];
 		combinedPasswordString = [NSString stringWithFormat:@"%@%@%d", yourPasswordString, @",", yourFriendsPassphrase];
@@ -197,8 +197,6 @@
 
 
 -(IBAction)didMount:(id)sender {
-    NSString *srcFolder = sourceFolderPath;
-    NSString *destFolder;
     BOOL errOccurred = NO;
     
     [[[NSWorkspace sharedWorkspace] notificationCenter] removeObserver:self];
@@ -218,7 +216,6 @@
             destPath = [tempFolder stringByAppendingPathComponent:file];
             
             if (![fm copyItemAtPath:srcPath toPath:destPath error:&err]) {
-                // FIXME: Display error and clean up
                 [[NSAlert alertWithError:err] runModal];
                 errOccurred = YES;
                 goto Cleanup;
@@ -241,7 +238,7 @@
         }
     }
     if (displayErr) {
-        [[NSAlert alertWithMessageText:@"Error while cleaning" defaultButton:nil alternateButton:nil otherButton:nil informativeTextWithFormat:@"There was an error while deleting some files after encrypting.  Please remove them manually from %@\n", srcFolder] runModal];
+        [[NSAlert alertWithMessageText:@"Error while cleaning" defaultButton:nil alternateButton:nil otherButton:nil informativeTextWithFormat:@"There was an error while deleting some files after encrypting.  Please remove them manually from %@ .\nEncrypted content is at %@", srcFolder, destFolder] runModal];
     }    
 Cleanup:    
 
@@ -251,42 +248,50 @@ Cleanup:
     [fm removeItemAtPath:tempFolder error:nil];
     
     if (errOccurred == NO) {
-    
+        // Now move stuff out of the destFolder onto the parent directory.
+        NSString *file;
+        for (file in [fm contentsOfDirectoryAtPath:destFolder error:nil]) {
+            [fm moveItemAtPath:[destFolder stringByAppendingPathComponent:file] 
+                        toPath:[srcFolder stringByAppendingPathComponent:file] 
+                         error:nil];
+        }
+        [fm removeItemAtPath:destFolder error:nil];
+        
+        destFolder = [srcFolder stringByAppendingPathExtension:@"yc"];        
+        [fm moveItemAtPath:srcFolder toPath:destFolder error:nil];
+            
         /* change folder icon of encrypted folder */
         {
-            NSError *err;
             NSNumber *num = [NSNumber numberWithBool:YES];
             NSDictionary *attribs = [NSDictionary dictionaryWithObjectsAndKeys:num, NSFileExtensionHidden, nil];        
-            [[NSFileManager defaultManager] setAttributes:attribs ofItemAtPath:destFolder error:&err];
-            // NSAlert *alert = [NSAlert alertWithError:err];
-            //  [alert runModal];
+            [[NSFileManager defaultManager] setAttributes:attribs ofItemAtPath:destFolder error:nil];
         }
         
-        [theApp didEncrypt:srcFolder];
+        [theApp didEncrypt:destFolder];
         /* Register password with keyring */
         
         /*** <!-- ENCFS END --> ***/
         /* If sharing is required */
-        if (numberOfUsers == 2) {
-            
-            /***** MAILGUN TASK START ******/
-            
-            NSString *curlEmail = [NSString stringWithFormat:@"to=\"%@\"", yourFriendsEmailString];
-            NSString *curlKey   = [NSString stringWithFormat:@"text=\%@\"", yourFriendsPassphraseString];
-            
-            [libFunctions execCommand:@"/usr/bin/curl" 
-                            arguments:[NSArray arrayWithObjects: 
-                                       @"-s", @"-k", 
-                                       @"--user", @"api:key-67fgovcfrggd6y4l02ucpz-av4b22i26",
-                                       @"https://api.mailgun.net/v2/cloudclear.mailgun.org/messages",
-                                       @"-F", @"from='YouCrypt <postmaster@cloudclear.mailgun.org>'",
-                                       @"-F", curlEmail,
-                                       @"-F", @"subject='Your Temporary Passphrase'",
-                                       @"-F", curlKey,
-                                       nil]
-                                  env:nil];
-            /***** <!-- MAILGUN END --> ******/
-        }
+//        if (numberOfUsers == 2) {
+//            
+//            /***** MAILGUN TASK START ******/
+//            
+//            NSString *curlEmail = [NSString stringWithFormat:@"to=\"%@\"", yourFriendsEmailString];
+//            NSString *curlKey   = [NSString stringWithFormat:@"text=\%@\"", yourFriendsPassphraseString];
+//            
+//            [libFunctions execCommand:@"/usr/bin/curl" 
+//                            arguments:[NSArray arrayWithObjects: 
+//                                       @"-s", @"-k", 
+//                                       @"--user", @"api:key-67fgovcfrggd6y4l02ucpz-av4b22i26",
+//                                       @"https://api.mailgun.net/v2/cloudclear.mailgun.org/messages",
+//                                       @"-F", @"from='YouCrypt <postmaster@cloudclear.mailgun.org>'",
+//                                       @"-F", curlEmail,
+//                                       @"-F", @"subject='Your Temporary Passphrase'",
+//                                       @"-F", curlKey,
+//                                       nil]
+//                                  env:nil];
+//            /***** <!-- MAILGUN END --> ******/
+//        }
     }             
     [yourPassword setStringValue:@""];
     [yourFriendsEmail setStringValue:@""];
