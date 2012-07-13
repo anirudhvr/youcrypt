@@ -103,6 +103,8 @@ static int V5SubVersionDefault = 0;
 //const int V6SubVersion = 20080816; // add salt and iteration count
 const int V6SubVersion = 20100713; // add version field for boost 1.42+
 
+const int YCSubVersion = 0;  // Initial YC XML (just EncFS V6).
+
 struct ConfigInfo
 {
     const char *fileName;
@@ -116,6 +118,8 @@ struct ConfigInfo
     int currentSubVersion;
     int defaultSubVersion;
 } ConfigFileMapping[] = {
+    {".youcryptfs.xml", Config_YC, "YCFS_CONFIG", readV6Config, writeV6Config, 
+     YCSubVersion, YCSubVersion},
     {".encfs6.xml", Config_V6, "ENCFS6_CONFIG", readV6Config, writeV6Config, 
 	V6SubVersion, 0 },
     // backward compatible support for older versions
@@ -1205,7 +1209,7 @@ RootPtr createV6Config( EncFS_Context *ctx,
 
     shared_ptr<EncFSConfig> config( new EncFSConfig );
 
-    config->cfgType = Config_V6;
+    config->cfgType = Config_YC;
     config->cipherIface = cipher->interface();
     config->keySize = keySize;
     config->blockSize = blockSize;
@@ -1330,7 +1334,7 @@ RootPtr createV6Config( EncFS_Context *ctx,
     config->ignoreList.push_back(".ignore_enc");
     
 
-    if(!saveConfig( Config_V6, rootDir, config ))
+    if(!saveConfig( Config_YC, rootDir, config ))
         return rootInfo;
 
     // fill in config struct
