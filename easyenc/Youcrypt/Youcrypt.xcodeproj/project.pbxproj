@@ -41,6 +41,7 @@
 		25E8BC3415AE4F7200A323D8 /* libencfs.la in Resources */ = {isa = PBXBuildFile; fileRef = 25E8BC3115AE4F7200A323D8 /* libencfs.la */; };
 		25E8BC3515AE516300A323D8 /* libencfs.6.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 25E8BC2F15AE4F7200A323D8 /* libencfs.6.dylib */; };
 		25E8BC3615AE516300A323D8 /* libencfs.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 25E8BC3015AE4F7200A323D8 /* libencfs.dylib */; };
+		25E8BC4815AE6D7F00A323D8 /* youcrypt-overlay.icns in Resources */ = {isa = PBXBuildFile; fileRef = 25E8BC4715AE6D7F00A323D8 /* youcrypt-overlay.icns */; };
 		25EE6A5915928D2C008A0DC8 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25EE6A5815928D2C008A0DC8 /* Security.framework */; };
 		25F3D14C15923FE800E3383C /* Decrypt.m in Sources */ = {isa = PBXBuildFile; fileRef = 25F3D14A15923FE800E3383C /* Decrypt.m */; };
 		25F3D14D15923FE800E3383C /* Decrypt.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25F3D14B15923FE800E3383C /* Decrypt.xib */; };
@@ -248,6 +249,7 @@
 		25E8BC2F15AE4F7200A323D8 /* libencfs.6.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libencfs.6.dylib; sourceTree = "<group>"; };
 		25E8BC3015AE4F7200A323D8 /* libencfs.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libencfs.dylib; sourceTree = "<group>"; };
 		25E8BC3115AE4F7200A323D8 /* libencfs.la */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = libencfs.la; sourceTree = "<group>"; };
+		25E8BC4715AE6D7F00A323D8 /* youcrypt-overlay.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = "youcrypt-overlay.icns"; sourceTree = "<group>"; };
 		25EE6A5815928D2C008A0DC8 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		25F3D14915923FE800E3383C /* Decrypt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Decrypt.h; path = sources/Decrypt.h; sourceTree = "<group>"; };
 		25F3D14A15923FE800E3383C /* Decrypt.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Decrypt.m; path = sources/Decrypt.m; sourceTree = "<group>"; };
@@ -685,6 +687,7 @@
 		E6BEB6C915A3A72000878D4B /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				25E8BC4715AE6D7F00A323D8 /* youcrypt-overlay.icns */,
 				E64B307015AEE1A500827591 /* tableview-background.png */,
 				E603DBAF15AEC5C400ABB170 /* box_closed_48x48.png */,
 				E603DBB015AEC5C400ABB170 /* box_open_48x48.png */,
@@ -994,6 +997,7 @@
 				25E8BC2D15AE4F5F00A323D8 /* yc-encfssh in Resources */,
 				25E8BC3415AE4F7200A323D8 /* libencfs.la in Resources */,
 				E67AC5B615AF9448005A7938 /* TourWizard.xib in Resources */,
+				25E8BC4815AE6D7F00A323D8 /* youcrypt-overlay.icns in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

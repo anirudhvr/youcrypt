@@ -190,6 +190,8 @@
         // Error while encrypting.
         // TODO.        
     }
+    
+    // Try to overlay icon !!
     return;
 }
 
