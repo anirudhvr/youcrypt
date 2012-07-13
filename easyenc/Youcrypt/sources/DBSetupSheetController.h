@@ -12,10 +12,10 @@
 @interface DBSetupSheetController : JCSSheetController <NSBrowserDelegate> {
     IBOutlet NSBrowser *_browser;
     FSNode *_rootNode;
-    NSMutableDictionary *selected;
+    NSMutableSet *selected;
 }
 
-@property (nonatomic,strong) NSMutableDictionary *selected;
+@property (nonatomic,strong) NSMutableSet *selected;
 
 -(IBAction)save:(id)sender;
 -(IBAction)cancel:(id)sender;

@@ -565,8 +565,6 @@
 		25F3D154159243E300E3383C /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				254412FE15AFCB910098B8FB /* DBSetupSheetController.h */,
-				254412FF15AFCB910098B8FB /* DBSetupSheetController.m */,
 				256C3571158EA75F00E2BEC4 /* AppDelegate.h */,
 				256C3572158EA75F00E2BEC4 /* AppDelegate.m */,
 				E0BF0EBA159838DD002F9FB9 /* ListDirectoriesWindow.h */,
@@ -599,6 +597,8 @@
 				251C770415ADFFC6001605F5 /* TourController.m */,
 				E66988DA159E63CF002323AD /* PassphraseSheetController.h */,
 				E66988DB159E63CF002323AD /* PassphraseSheetController.m */,
+				254412FE15AFCB910098B8FB /* DBSetupSheetController.h */,
+				254412FF15AFCB910098B8FB /* DBSetupSheetController.m */,
 				25300E8815A385BD009CDA08 /* GmailSheetController.h */,
 				25300E8915A385BE009CDA08 /* GmailSheetController.m */,
 				25300E8D15A3BE73009CDA08 /* FirstRunSheetController.h */,

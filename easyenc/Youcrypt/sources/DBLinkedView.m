@@ -8,7 +8,7 @@
 
 #import "DBLinkedView.h"
 #import "DBSetupSheetController.h"
-
+#import "AppDelegate.h"
 @implementation DBLinkedView
 
 @synthesize dbSetupSheet;
@@ -41,12 +41,13 @@
     [dbSetupSheet beginSheetModalForWindow:self.window completionHandler:^(NSUInteger returnCode) {
         if (returnCode == kSheetReturnedSave) {
             NSLog(@"DB Setup done");
-            [self.window close];
+            [theApp encryptDropboxFolders];
+          //  [self.window close];
         } else if (returnCode == kSheetReturnedCancel) {
             NSLog(@"DB Setup cancelled :( ");
         } else {
             NSLog(@"Unknown return code");
         }
-    }];    
+    }];  
 }
 @end

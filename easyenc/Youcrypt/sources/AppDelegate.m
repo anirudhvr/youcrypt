@@ -45,7 +45,7 @@ CompressingLogFileManager *logFileManager;
 @synthesize tourController;
 @synthesize tourWizard;
 @synthesize fileLogger;
-
+@synthesize dropboxEncryptedFolders;
 
 
 // --------------------------------------------------------------------------------------
@@ -83,6 +83,7 @@ CompressingLogFileManager *logFileManager;
     configDirBeingSynced = NO;
     
     theApp = self;
+    dropboxEncryptedFolders = [[NSMutableSet alloc] init];
     return self;
 }
 
@@ -498,6 +499,32 @@ CompressingLogFileManager *logFileManager;
     [[NSWorkspace sharedWorkspace] openURL: [NSURL URLWithString:@"http://youcrypt.com"]];
 }
 
+- (void) encryptDropboxFolders
+{
+    NSLog(@"In encryptDropboxFolders: %@",dropboxEncryptedFolders);
+    NSArray *folders = [dropboxEncryptedFolders allObjects];
+    if(folders || folders.count) {
+        [self encryptFolders:folders];
+    }
+}
+
+- (void) encryptFolders:(NSArray *)folders
+{
+    NSLog(@"In encrypt folders : %@",folders);
+    if (!encryptController) {
+        encryptController = [[Encrypt alloc] init];
+    } 
+    NSString *pp =[libFunctions getPassphraseFromKeychain:@"Youcrypt"];
+    NSLog(@"Got passphrase : %@",pp);
+    encryptController.passphraseFromKeychain = pp;
+    encryptController.keychainHasPassphrase = YES;
+
+    for (NSString *path in folders) {
+        NSLog(@"Encrypting DB Folder %@",path);
+        encryptController.sourceFolderPath = path;
+        [encryptController encrypt:self];
+    } 
+}
 
 //--------------------------------------------------------------------------------------------------
 // The AppDelegate is also our tableview's data source.  It populates shit using the directories array.
