@@ -44,6 +44,14 @@
 	}    
 }
 
+- (void) setImageViewUnderTable:(NSImageView*)imgView
+{
+    backgroundImageView = imgView;
+    defaultImage = [NSImage imageNamed:@"Grey_Add_Folder.png"];
+    otherImage = [NSImage imageNamed:@"Grey_Open_Folder.png"];
+
+}
+
 - (void)awakeFromNib {
     
     [super awakeFromNib];
@@ -59,6 +67,49 @@
     
     // don't draw a background rect
 }
+
+- (NSDragOperation)draggingEntered:(id < NSDraggingInfo >)sender
+{
+    NSDragOperation ret = [super draggingEntered:sender];
+
+    NSPasteboard *pb = [sender draggingPasteboard];
+    
+    // Check if the pboard contains a URL that's a diretory.
+    if ([[pb types] containsObject:NSURLPboardType]) {
+        NSString *path = [[NSURL URLFromPasteboard:pb] path];
+        NSFileManager *fm = [NSFileManager defaultManager];
+        BOOL isDir;
+        if ([fm fileExistsAtPath:path isDirectory:&isDir] && isDir) {
+         //   NSLog(@"Dragging entered");
+            if (backgroundImageView != nil) {
+                [backgroundImageView setImage:otherImage];
+            }
+
+        }
+    }
+        return ret;
+}
+
+- (void)draggingExited:(id < NSDraggingInfo >)sender
+{
+    [super draggingExited:sender];
+    NSPasteboard *pb = [sender draggingPasteboard];
+    
+    // Check if the pboard contains a URL that's a diretory.
+    if ([[pb types] containsObject:NSURLPboardType]) {
+        NSString *path = [[NSURL URLFromPasteboard:pb] path];
+        NSFileManager *fm = [NSFileManager defaultManager];
+        BOOL isDir;
+        if ([fm fileExistsAtPath:path isDirectory:&isDir] && isDir) {
+            //NSLog(@"Dragging exited");
+            if (backgroundImageView != nil) {
+                [backgroundImageView setImage:defaultImage];
+            }
+            
+        }
+    }
+}
+
 
 
 @end

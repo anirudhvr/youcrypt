@@ -81,6 +81,8 @@
     [table setListDir:self];
     [[self window] makeFirstResponder:table];
     
+    [table setImageViewUnderTable:backgroundImageView];
+    
 }
 
 - (IBAction)doEncrypt:(id)sender {
