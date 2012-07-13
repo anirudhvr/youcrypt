@@ -23,6 +23,8 @@
 @class TourController;
 @class DDFileLogger;
 @class CompressingLogFileManager;
+@class TourWizard;
+
 
 @interface AppDelegate : NSObject <NSTableViewDataSource, NSTableViewDelegate, NSApplicationDelegate> { // changed from NSApplicationDelegate
     
@@ -37,6 +39,7 @@
     Encrypt  *encryptController;
     RestoreController *restoreController;
     TourController *tourController;
+    TourWizard *tourWizard;
         
 
     // Config directory
@@ -111,6 +114,7 @@
 @property (nonatomic, strong) PreferenceController *preferenceController;
 @property (nonatomic, strong) TourController *tourController;
 @property (nonatomic, strong) DDFileLogger *fileLogger;
+@property (nonatomic, strong) TourWizard *tourWizard;
 
 
 @end

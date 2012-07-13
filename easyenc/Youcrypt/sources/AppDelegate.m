@@ -20,6 +20,7 @@
 #import "PeriodicActionTimer.h"
 #import "TourController.h"
 #import "CompressingLogFileManager.h"
+#import "TourWizard.h"
 
 int ddLogLevel = LOG_LEVEL_VERBOSE;
 
@@ -42,7 +43,8 @@ CompressingLogFileManager *logFileManager;
 @synthesize keyDown;
 @synthesize preferenceController;
 @synthesize tourController;
-
+@synthesize tourWizard;
+@synthesize fileLogger;
 
 
 // --------------------------------------------------------------------------------------
@@ -375,11 +377,12 @@ CompressingLogFileManager *logFileManager;
 }
 
 -(void) showTour {
-    if (!tourController) {
-        tourController = [[TourController alloc] init];
+    if (!tourWizard) {
+        tourWizard = [[TourWizard alloc] init];
     }
+    
     DDLogVerbose(@"showing %@", tourController);
-    [tourController showWindow:self];
+    [tourWizard showWindow:self];
 }
 
 -(void)showFirstRun
@@ -543,30 +546,43 @@ CompressingLogFileManager *logFileManager;
 - (NSDragOperation)tableView:(NSTableView *)tableView validateDrop:(id<NSDraggingInfo>)info proposedRow:(NSInteger)row proposedDropOperation:(NSTableViewDropOperation)dropOperation {
     NSPasteboard *pb = [info draggingPasteboard];
     
-    
     // Check if the pboard contains a URL that's a diretory.
     if ([[pb types] containsObject:NSURLPboardType]) {
         NSString *path = [[NSURL URLFromPasteboard:pb] path];
         NSFileManager *fm = [NSFileManager defaultManager];
         BOOL isDir;
         if ([fm fileExistsAtPath:path isDirectory:&isDir] && isDir) {
+            [listDirectories.backgroundImageView setImage:[NSImage imageNamed:@"DropBox.png"]];
             return NSDragOperationCopy;
         }
     }
     return NSDragOperationNone;
 }
+- (void) tableView:(NSTableView *)tableView draggingSession:(NSDraggingSession *)session endedAtPoint:(NSPoint)screenPoint operation:(NSDragOperation)operation
+{
+    [listDirectories.backgroundImageView setImage:[NSImage imageNamed:@"tableview-background.png"]];
+}
+- (void)tableView:(NSTableView *)tableView updateDraggingItemsForDrag:(id < NSDraggingInfo >)draggingInfo
+{
+    NSPoint p = [draggingInfo draggingLocation];
+    NSLog(@"%lf, %lf", p.x, p.y);
+//    [listDirectories.backgroundImageView setImage:[NSImage imageNamed:@"tableview-background.png"]];
+}
 
 - (BOOL)tableView:(NSTableView *)tableView acceptDrop:(id<NSDraggingInfo>)info row:(NSInteger)row dropOperation:(NSTableViewDropOperation)dropOperation {
     
     NSPasteboard *pb = [info draggingPasteboard];
-    
+    [listDirectories.backgroundImageView setImage:[NSImage imageNamed:@"tableview-background.png"]];
+
     // Check if the pboard contains a URL that's a diretory.
     if ([[pb types] containsObject:NSURLPboardType]) {
         NSString *path = [[NSURL URLFromPasteboard:pb] path];
         NSFileManager *fm = [NSFileManager defaultManager];
         
         BOOL isDir;
-        if ([fm fileExistsAtPath:path isDirectory:&isDir] && isDir) {            
+        if ([fm fileExistsAtPath:path isDirectory:&isDir] && isDir) {  
+            
+            
             // If it's a .yc file, we open it, otherwise, we encrypt it
             if ([[path pathExtension] isEqualToString:@"yc"]) {
                 [theApp openEncryptedFolder:path];
@@ -647,7 +663,7 @@ CompressingLogFileManager *logFileManager;
 - (NSString *)tableView:(NSTableView *)aTableView toolTipForTableColumn:(NSTableColumn *)aTableColumn row:(NSInteger)rowIndex
 {   
     NSString *tooltip;
-    NSLog(@"%d", rowIndex);
+    NSLog(@"%lu", rowIndex);
     if (rowIndex >= 0) {
         YoucryptDirectory *dir = [directories objectAtIndex:rowIndex];
         tooltip = [NSString stringWithFormat:@"Source folder: %@\n\n"
@@ -660,9 +676,6 @@ CompressingLogFileManager *logFileManager;
 
     return tooltip;
 }
-
-
-
 
 - (void) removeFSAtRow:(int) row {
     YoucryptDirectory *dir = [directories objectAtIndex:row];
