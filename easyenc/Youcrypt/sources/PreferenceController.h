@@ -102,7 +102,6 @@
 
 // Services tab methods
 - (IBAction)saveServicesPrefs:(id)sender;
--(NSString*) locateDropboxFolder;
 -(NSString*) locateBoxFolder;
 static NSArray *openFiles();
 

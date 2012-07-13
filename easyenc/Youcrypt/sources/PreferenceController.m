@@ -82,7 +82,7 @@
                        YC_BOXLOCATION, YC_ENCRYPTFILENAMES, YC_STARTONBOOT, 
                        YC_USERREALNAME, YC_USEREMAIL, YC_GMAILUSERNAME, YC_BOXSTATUS, nil];
 
-    defaultPreferences = [[NSMutableDictionary alloc] initWithObjects:[NSArray arrayWithObjects:[self locateDropboxFolder], [self locateBoxFolder], [NSNumber numberWithInt:1], [NSNumber numberWithInt:1], @"", @"", @"", @"", nil] forKeys:preferencesKeys];
+    defaultPreferences = [[NSMutableDictionary alloc] initWithObjects:[NSArray arrayWithObjects:[libFunctions locateDropboxFolder], [self locateBoxFolder], [NSNumber numberWithInt:1], [NSNumber numberWithInt:1], @"", @"", @"", @"", nil] forKeys:preferencesKeys];
     
     NSLog(@"%@",defaultPreferences);
     
@@ -275,52 +275,7 @@
 }
 
 
-- (NSString*) locateDropboxFolder
-{
-    NSString *bundlepath =[[NSBundle mainBundle] resourcePath];
-    NSString *dropboxScript = [bundlepath stringByAppendingPathComponent:@"/get_dropbox_folder.sh"]; 
-    //const char *shellFile = NULL;
-   // char out[1000];
-    NSString *dropboxURL = nil;
-      
-    // check if dropbox script exists and fail otherwise
-    if (![[NSFileManager defaultManager] fileExistsAtPath:dropboxScript]) {
-        DDLogVerbose(@"Cannot find dropbox locator script at %@", dropboxScript);
-        return @"";
-    }
-    //shellFile = [dropboxScript cStringUsingEncoding:NSUTF8StringEncoding];  
-    /*
-    int fd;
-    if ((fd = execWithSocket(dropboxScript, nil)) == -1)
-    {
-        DDLogVerbose(@"Could not run dropbox locator script");
-        dropboxURL = [NSString stringWithFormat:@"%@/Dropbox", NSHomeDirectory()];
-    } else {
-        FILE *f = fdopen(fd, "r");
-        fgets(out, 900, f);
-        fclose(f);
-        dropboxURL = [NSString stringWithFormat:@"%s",out];
-        dropboxURL = [dropboxURL stringByReplacingOccurrencesOfString:@"\n" withString:@""];
-        DDLogVerbose(@"Found dropbox location: [%@] ", dropboxURL);
-    }
-     */
-    
-    NSFileHandle *fh = [NSFileHandle alloc];
-    NSTask *dropboxTask = [NSTask alloc];
-    if ([libFunctions execWithSocket:dropboxScript arguments:nil env:nil io:fh proc:dropboxTask]) {
-        [dropboxTask waitUntilExit];
-        NSData *bytes = [fh availableData];
-        dropboxURL = [[NSString alloc] initWithData:bytes encoding:NSUTF8StringEncoding];
 
-        [fh closeFile];
-    } else {
-        DDLogVerbose(@"Could not exec dropbox location finder script");
-    }
-    
-    
-    NSLog(@"Dropbox folder loc: %@",dropboxURL);
-    return dropboxURL;
-}
 
 - (BOOL)windowShouldClose:(id)sender
 {
