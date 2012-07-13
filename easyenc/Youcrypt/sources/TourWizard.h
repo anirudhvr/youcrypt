@@ -16,7 +16,6 @@
 {
     IBOutlet LinkedView *currentView;
     CATransition *transition;
-
 }
 
 @property(nonatomic, strong) LinkedView *currentView;
