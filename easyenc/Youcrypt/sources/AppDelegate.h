@@ -113,10 +113,7 @@
 @property (nonatomic, strong) keyDownView *keyDown;
 @property (nonatomic, strong) PreferenceController *preferenceController;
 @property (nonatomic, strong) TourController *tourController;
-<<<<<<< HEAD
 @property (nonatomic, strong) DDFileLogger *fileLogger;
-=======
->>>>>>> origin/dev
 @property (nonatomic, strong) TourWizard *tourWizard;
 
 
