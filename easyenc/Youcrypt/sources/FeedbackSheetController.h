@@ -12,6 +12,8 @@
 
 @property (nonatomic, weak) IBOutlet NSTextField *message;
 @property (nonatomic, weak) IBOutlet NSButton *anonymize;
+@property (nonatomic, weak) IBOutlet NSButton *logfiles;
+@property (nonatomic, weak) IBOutlet NSTextField *progressMessage;
 
 -(IBAction)send:(id)sender;
 -(IBAction)cancel:(id)sender;

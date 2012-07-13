@@ -300,8 +300,6 @@
 		E64B308D15AEE9C300827591 /* MixpanelAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MixpanelAPI.m; path = Mixpanel_fpotter.github.com/MPLib/MixpanelAPI.m; sourceTree = "<group>"; };
 		E64B308E15AEE9C300827591 /* MixpanelEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MixpanelEvent.h; path = Mixpanel_fpotter.github.com/MPLib/MixpanelEvent.h; sourceTree = "<group>"; };
 		E64B308F15AEE9C300827591 /* MixpanelEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MixpanelEvent.m; path = Mixpanel_fpotter.github.com/MPLib/MixpanelEvent.m; sourceTree = "<group>"; };
-		E64B309915AEEB1D00827591 /* MixpanelAnalytics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MixpanelAnalytics.h; path = sources/MixpanelAnalytics.h; sourceTree = "<group>"; };
-		E64B309A15AEEB1D00827591 /* MixpanelAnalytics.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MixpanelAnalytics.m; path = sources/MixpanelAnalytics.m; sourceTree = "<group>"; };
 		E65C4B5415ABAD9F00AF9D8E /* processing-22x22.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "processing-22x22.png"; sourceTree = "<group>"; };
 		E6649C7915A53CD80096886F /* Encrypt.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Encrypt.m; path = sources/Encrypt.m; sourceTree = "<group>"; };
 		E6649C7B15A53CE40096886F /* Encrypt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Encrypt.h; path = sources/Encrypt.h; sourceTree = "<group>"; };
@@ -566,8 +564,6 @@
 				E6649C9415A70FB00096886F /* VolumePropertiesSheetController.m */,
 				25C3FE4215A7A803006606DF /* FeedbackSheetController.h */,
 				25C3FE4315A7A804006606DF /* FeedbackSheetController.m */,
-				E64B309915AEEB1D00827591 /* MixpanelAnalytics.h */,
-				E64B309A15AEEB1D00827591 /* MixpanelAnalytics.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
