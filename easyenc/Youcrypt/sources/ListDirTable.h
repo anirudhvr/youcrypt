@@ -13,11 +13,16 @@
 
 @interface ListDirTable : AMToolTipTableView {
     ListDirectoriesWindow *listDirObj;
+    NSImageView *backgroundImageView; // The imageview under the table
+    NSImage *defaultImage;
+    NSImage *otherImage;
+
 }
 
 @property (nonatomic, copy) ListDirectoriesWindow *listDirObj;
 
 - (void) keyDown:(NSEvent *)theEvent;
 - (void) setListDir:(ListDirectoriesWindow*)listDirObj;
+- (void) setImageViewUnderTable:(NSImageView*)imgView;
 
 @end

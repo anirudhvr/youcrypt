@@ -553,28 +553,15 @@ CompressingLogFileManager *logFileManager;
         NSFileManager *fm = [NSFileManager defaultManager];
         BOOL isDir;
         if ([fm fileExistsAtPath:path isDirectory:&isDir] && isDir) {
-            [listDirectories.backgroundImageView setImage:[NSImage imageNamed:@"DropBox.png"]];
             return NSDragOperationCopy;
         }
     }
     return NSDragOperationNone;
 }
-- (void) tableView:(NSTableView *)tableView draggingSession:(NSDraggingSession *)session endedAtPoint:(NSPoint)screenPoint operation:(NSDragOperation)operation
-{
-    [listDirectories.backgroundImageView setImage:[NSImage imageNamed:@"tableview-background.png"]];
-}
-- (void)tableView:(NSTableView *)tableView updateDraggingItemsForDrag:(id < NSDraggingInfo >)draggingInfo
-{
-    NSPoint p = [draggingInfo draggingLocation];
-    NSLog(@"%lf, %lf", p.x, p.y);
-//    [listDirectories.backgroundImageView setImage:[NSImage imageNamed:@"tableview-background.png"]];
-}
 
 - (BOOL)tableView:(NSTableView *)tableView acceptDrop:(id<NSDraggingInfo>)info row:(NSInteger)row dropOperation:(NSTableViewDropOperation)dropOperation {
     
     NSPasteboard *pb = [info draggingPasteboard];
-    [listDirectories.backgroundImageView setImage:[NSImage imageNamed:@"tableview-background.png"]];
-
     // Check if the pboard contains a URL that's a diretory.
     if ([[pb types] containsObject:NSURLPboardType]) {
         NSString *path = [[NSURL URLFromPasteboard:pb] path];

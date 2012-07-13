@@ -110,6 +110,8 @@
 		E67AC5B615AF9448005A7938 /* TourWizard.xib in Resources */ = {isa = PBXBuildFile; fileRef = E67AC5B515AF9448005A7938 /* TourWizard.xib */; };
 		E67AC5B915AF989F005A7938 /* TourWizard.m in Sources */ = {isa = PBXBuildFile; fileRef = E67AC5B815AF989E005A7938 /* TourWizard.m */; };
 		E67AC5BA15AF9BE3005A7938 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 253C3D79159BBF4000120B8D /* QuartzCore.framework */; };
+		E67AC5C715AFA7AD005A7938 /* Grey_Add_Folder.png in Resources */ = {isa = PBXBuildFile; fileRef = E67AC5C615AFA7AD005A7938 /* Grey_Add_Folder.png */; };
+		E67AC5C915AFB0C4005A7938 /* Grey_Open_Folder.png in Resources */ = {isa = PBXBuildFile; fileRef = E67AC5C815AFB0C4005A7938 /* Grey_Open_Folder.png */; };
 		E67FF2F215A8D5190033A63A /* PeriodicActionTimer.m in Sources */ = {isa = PBXBuildFile; fileRef = E67FF2F115A8D5190033A63A /* PeriodicActionTimer.m */; };
 		E6BEB6F015A4BB4F00878D4B /* Exit.png in Resources */ = {isa = PBXBuildFile; fileRef = E6BEB6EC15A4BB4F00878D4B /* Exit.png */; };
 		E6BEB6F115A4BB4F00878D4B /* Help.png in Resources */ = {isa = PBXBuildFile; fileRef = E6BEB6ED15A4BB4F00878D4B /* Help.png */; };
@@ -341,6 +343,8 @@
 		E67AC5B515AF9448005A7938 /* TourWizard.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TourWizard.xib; sourceTree = "<group>"; };
 		E67AC5B715AF989E005A7938 /* TourWizard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TourWizard.h; path = sources/TourWizard.h; sourceTree = "<group>"; };
 		E67AC5B815AF989E005A7938 /* TourWizard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TourWizard.m; path = sources/TourWizard.m; sourceTree = "<group>"; };
+		E67AC5C615AFA7AD005A7938 /* Grey_Add_Folder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Grey_Add_Folder.png; sourceTree = "<group>"; };
+		E67AC5C815AFB0C4005A7938 /* Grey_Open_Folder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Grey_Open_Folder.png; sourceTree = "<group>"; };
 		E67FF2F015A8D5180033A63A /* PeriodicActionTimer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PeriodicActionTimer.h; path = sources/PeriodicActionTimer.h; sourceTree = "<group>"; };
 		E67FF2F115A8D5190033A63A /* PeriodicActionTimer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PeriodicActionTimer.m; path = sources/PeriodicActionTimer.m; sourceTree = "<group>"; };
 		E6BEB6EC15A4BB4F00878D4B /* Exit.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Exit.png; sourceTree = "<group>"; };
@@ -718,6 +722,8 @@
 		E6BEB6C915A3A72000878D4B /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				E67AC5C815AFB0C4005A7938 /* Grey_Open_Folder.png */,
+				E67AC5C615AFA7AD005A7938 /* Grey_Add_Folder.png */,
 				25E8BC4715AE6D7F00A323D8 /* youcrypt-overlay.icns */,
 				E64B307015AEE1A500827591 /* tableview-background.png */,
 				E603DBAF15AEC5C400ABB170 /* box_closed_48x48.png */,
@@ -1030,6 +1036,8 @@
 				E67AC5B615AF9448005A7938 /* TourWizard.xib in Resources */,
 				25E8BC4815AE6D7F00A323D8 /* youcrypt-overlay.icns in Resources */,
 				254412E515AFB1E60098B8FB /* DBSetup.xib in Resources */,
+				E67AC5C715AFA7AD005A7938 /* Grey_Add_Folder.png in Resources */,
+				E67AC5C915AFB0C4005A7938 /* Grey_Open_Folder.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
