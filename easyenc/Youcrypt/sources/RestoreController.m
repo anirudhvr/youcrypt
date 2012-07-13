@@ -76,43 +76,38 @@
 -(IBAction)didMount:(id)sender {
         
     NSString *backPath = [path stringByDeletingLastPathComponent];
+    NSError *err;
+    NSFileManager *fm = [NSFileManager defaultManager];
+    [[[NSWorkspace sharedWorkspace] notificationCenter] removeObserver:self];
+    
+    backPath = [backPath stringByAppendingPathComponent: [[NSProcessInfo processInfo] globallyUniqueString]];
+    [libFunctions mkdirRecursive:backPath];
+    
     NSLog(@"Backpath is %@\n", backPath);
     
-    [[[NSWorkspace sharedWorkspace] notificationCenter] removeObserver:self];
-
-    
     // Now to move the contents of tempFolder into backPath
-    // Unfortunately, a direct move won't work since both directories exist and
-    // stupid macOS thinks it is overwriting the mount point we just created
-    NSFileManager *fm = [NSFileManager defaultManager];
-    NSError *err;
+    // Unfortunately, a direct move won't work since blah blah blah
+
     NSArray *files = [fm contentsOfDirectoryAtPath:tempFolder error:&err];
-//    if (err != nil) {        
-//        [[NSAlert alertWithError:err] runModal];
-//        // FIXME
-//    }
-    
-    NSLog(@"files = %@\n", files);    
     for (NSString *file in files) {
         NSError *err;
         if (([file isEqualToString:@".DS_Store"]) || ([file isEqualToString:@".youcryptfs.xml"]))
             continue;
         if (![fm moveItemAtPath:[tempFolder stringByAppendingPathComponent:file] toPath:[backPath stringByAppendingPathComponent:file] error:&err]) {
-            //            [[NSAlert alertWithError:err] runModal];
+            //FIXME:  Restore error handler.
+            [[NSAlert alertWithError:err] runModal];
         }
-        NSLog(@"Moving %@ to %@", 
-              [tempFolder stringByAppendingPathComponent:file],
-              [backPath stringByAppendingPathComponent:file]
-              );
     }    
     
     // Unmount the destination folder containing decrypted files    
-    if ([libFunctions execCommand:@"/sbin/umount" arguments:[NSArray arrayWithObject:tempFolder]
+    if ([libFunctions execCommand:@"/sbin/umount" 
+                        arguments:[NSArray arrayWithObject:tempFolder]
                               env:nil]) {
         NSLog(@"Umount failed.\nAborting\n");
     }
     [fm removeItemAtPath:tempFolder error:nil];
     [fm removeItemAtPath:path error:nil];
+    [fm moveItemAtPath:backPath toPath:[path stringByDeletingPathExtension] error:nil];
     [theApp didRestore:path];
     [self.window close];
 
