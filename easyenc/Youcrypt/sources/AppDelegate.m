@@ -19,7 +19,10 @@
 #import "FeedbackSheetController.h"
 #import "PeriodicActionTimer.h"
 #import "TourController.h"
+<<<<<<< HEAD
 #import "CompressingLogFileManager.h"
+=======
+>>>>>>> origin/dev
 #import "TourWizard.h"
 
 int ddLogLevel = LOG_LEVEL_VERBOSE;
@@ -45,6 +48,8 @@ CompressingLogFileManager *logFileManager;
 @synthesize tourController;
 @synthesize tourWizard;
 @synthesize fileLogger;
+
+>>>>>>> origin/dev
 
 
 // --------------------------------------------------------------------------------------
