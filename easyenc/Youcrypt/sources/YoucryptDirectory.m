@@ -151,7 +151,7 @@ static NSMutableArray *mountedFuseVolumes;
     if ([libFunctions execWithSocket:mountcmd arguments:argsArray env:nil io:fh proc:mountTask]) {
         [mountTask waitUntilExit];
         if (![libFunctions fileHandleIsReadable:fh]) {
-            [mountedFuseVolumes removeAllObjects]; // clear existing array
+            mountedFuseVolumes = tmpMountedFuseVolumes;
             return;
         }
 
