@@ -64,7 +64,6 @@
     [(FSNode *)item setState:[object boolValue]];
 }
 - (void)browser:(NSBrowser *)browser willDisplayCell:(FSBrowserCell *)cell atRow:(NSInteger)row column:(NSInteger)column {
-    NSLog(@"CALLED");
     NSIndexPath *indexPath = [browser indexPathForColumn:column];
     indexPath = [indexPath indexPathByAddingIndex:row];
     FSNode *node = [browser itemAtIndexPath:indexPath];

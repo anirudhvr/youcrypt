@@ -43,7 +43,7 @@
         NSLog(@"Successfully registered passphrase wiht keychain");
     if (error) {
         NSLog(@"Error registering with Keychain");
-        NSLog(@"%@",[error localizedDescription]);
+        NSLog(@"Register Keychain Error: %@",[error localizedDescription]);
         return NO;
     }
     return YES;

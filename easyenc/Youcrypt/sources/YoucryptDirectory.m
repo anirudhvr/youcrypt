@@ -186,7 +186,7 @@ static NSMutableArray *mountedFuseVolumes;
     NSString *mnted;
     NSLog(@"Mounted fuse volumes:\n");
     for (mnted in mountedFuseVolumes) {
-        NSLog(@"%@\n", mnted);
+        NSLog(@"mounted : %@\n", mnted);
     }
 }
 

@@ -33,13 +33,12 @@
     return [_path lastPathComponent];
 }
 - (NSArray *)children {
-    NSLog(@"CHILDREN");
     if (_children == nil) {
         NSMutableArray *newChildren = [NSMutableArray array];
         NSError *myError = nil;
         NSArray *contents = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:_path error:&myError];
         if (contents == nil) {
-            NSLog(@"%@", myError);
+            NSLog(@"FSNode Error: %@", myError);
             return nil;
         }
         NSMutableArray *sorted = [NSMutableArray arrayWithArray:contents];
