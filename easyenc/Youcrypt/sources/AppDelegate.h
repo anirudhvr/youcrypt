@@ -21,6 +21,7 @@
 @class PeriodicActionTimer;
 @class keyDownView;
 @class TourController;
+@class TourWizard;
 
 
 
@@ -37,6 +38,7 @@
     Encrypt  *encryptController;
     RestoreController *restoreController;
     TourController *tourController;
+    TourWizard *tourWizard;
         
 
     // Config directory
@@ -108,6 +110,7 @@
 @property (nonatomic, strong) keyDownView *keyDown;
 @property (nonatomic, strong) PreferenceController *preferenceController;
 @property (nonatomic, strong) TourController *tourController;
+@property (nonatomic, strong) TourWizard *tourWizard;
 
 
 @end

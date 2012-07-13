@@ -100,6 +100,10 @@
 		E66988D5159E62D8002323AD /* ChangePassphrase.xib in Resources */ = {isa = PBXBuildFile; fileRef = E66988D4159E62D8002323AD /* ChangePassphrase.xib */; };
 		E66988D9159E63BE002323AD /* JCSSheetController.m in Sources */ = {isa = PBXBuildFile; fileRef = E66988D8159E63BE002323AD /* JCSSheetController.m */; };
 		E66988DC159E63CF002323AD /* PassphraseSheetController.m in Sources */ = {isa = PBXBuildFile; fileRef = E66988DB159E63CF002323AD /* PassphraseSheetController.m */; };
+		E67AC5B415AF8BA6005A7938 /* LinkedView.m in Sources */ = {isa = PBXBuildFile; fileRef = E67AC5B315AF8BA6005A7938 /* LinkedView.m */; };
+		E67AC5B615AF9448005A7938 /* TourWizard.xib in Resources */ = {isa = PBXBuildFile; fileRef = E67AC5B515AF9448005A7938 /* TourWizard.xib */; };
+		E67AC5B915AF989F005A7938 /* TourWizard.m in Sources */ = {isa = PBXBuildFile; fileRef = E67AC5B815AF989E005A7938 /* TourWizard.m */; };
+		E67AC5BA15AF9BE3005A7938 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 253C3D79159BBF4000120B8D /* QuartzCore.framework */; };
 		E67FF2F215A8D5190033A63A /* PeriodicActionTimer.m in Sources */ = {isa = PBXBuildFile; fileRef = E67FF2F115A8D5190033A63A /* PeriodicActionTimer.m */; };
 		E6BEB6F015A4BB4F00878D4B /* Exit.png in Resources */ = {isa = PBXBuildFile; fileRef = E6BEB6EC15A4BB4F00878D4B /* Exit.png */; };
 		E6BEB6F115A4BB4F00878D4B /* Help.png in Resources */ = {isa = PBXBuildFile; fileRef = E6BEB6ED15A4BB4F00878D4B /* Help.png */; };
@@ -298,8 +302,6 @@
 		E64B308D15AEE9C300827591 /* MixpanelAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MixpanelAPI.m; path = Mixpanel_fpotter.github.com/MPLib/MixpanelAPI.m; sourceTree = "<group>"; };
 		E64B308E15AEE9C300827591 /* MixpanelEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MixpanelEvent.h; path = Mixpanel_fpotter.github.com/MPLib/MixpanelEvent.h; sourceTree = "<group>"; };
 		E64B308F15AEE9C300827591 /* MixpanelEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MixpanelEvent.m; path = Mixpanel_fpotter.github.com/MPLib/MixpanelEvent.m; sourceTree = "<group>"; };
-		E64B309915AEEB1D00827591 /* MixpanelAnalytics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MixpanelAnalytics.h; path = sources/MixpanelAnalytics.h; sourceTree = "<group>"; };
-		E64B309A15AEEB1D00827591 /* MixpanelAnalytics.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MixpanelAnalytics.m; path = sources/MixpanelAnalytics.m; sourceTree = "<group>"; };
 		E65C4B5415ABAD9F00AF9D8E /* processing-22x22.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "processing-22x22.png"; sourceTree = "<group>"; };
 		E6649C7915A53CD80096886F /* Encrypt.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Encrypt.m; path = sources/Encrypt.m; sourceTree = "<group>"; };
 		E6649C7B15A53CE40096886F /* Encrypt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Encrypt.h; path = sources/Encrypt.h; sourceTree = "<group>"; };
@@ -318,6 +320,11 @@
 		E66988D8159E63BE002323AD /* JCSSheetController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCSSheetController.m; sourceTree = "<group>"; };
 		E66988DA159E63CF002323AD /* PassphraseSheetController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PassphraseSheetController.h; path = sources/PassphraseSheetController.h; sourceTree = "<group>"; };
 		E66988DB159E63CF002323AD /* PassphraseSheetController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PassphraseSheetController.m; path = sources/PassphraseSheetController.m; sourceTree = "<group>"; };
+		E67AC5B215AF8BA6005A7938 /* LinkedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LinkedView.h; path = sources/LinkedView.h; sourceTree = "<group>"; };
+		E67AC5B315AF8BA6005A7938 /* LinkedView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LinkedView.m; path = sources/LinkedView.m; sourceTree = "<group>"; };
+		E67AC5B515AF9448005A7938 /* TourWizard.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TourWizard.xib; sourceTree = "<group>"; };
+		E67AC5B715AF989E005A7938 /* TourWizard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TourWizard.h; path = sources/TourWizard.h; sourceTree = "<group>"; };
+		E67AC5B815AF989E005A7938 /* TourWizard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TourWizard.m; path = sources/TourWizard.m; sourceTree = "<group>"; };
 		E67FF2F015A8D5180033A63A /* PeriodicActionTimer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PeriodicActionTimer.h; path = sources/PeriodicActionTimer.h; sourceTree = "<group>"; };
 		E67FF2F115A8D5190033A63A /* PeriodicActionTimer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PeriodicActionTimer.m; path = sources/PeriodicActionTimer.m; sourceTree = "<group>"; };
 		E6BEB6EC15A4BB4F00878D4B /* Exit.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Exit.png; sourceTree = "<group>"; };
@@ -369,6 +376,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E67AC5BA15AF9BE3005A7938 /* QuartzCore.framework in Frameworks */,
 				E6C0468115AE1733004B52E5 /* Sparkle.framework in Frameworks */,
 				25EE6A5915928D2C008A0DC8 /* Security.framework in Frameworks */,
 				256C3560158EA75F00E2BEC4 /* Cocoa.framework in Frameworks */,
@@ -506,6 +514,7 @@
 				25F3D14B15923FE800E3383C /* Decrypt.xib */,
 				E66988D4159E62D8002323AD /* ChangePassphrase.xib */,
 				251C770515ADFFC6001605F5 /* Tour.xib */,
+				E67AC5B515AF9448005A7938 /* TourWizard.xib */,
 			);
 			name = UI;
 			path = sources/UI;
@@ -564,8 +573,10 @@
 				E6649C9415A70FB00096886F /* VolumePropertiesSheetController.m */,
 				25C3FE4215A7A803006606DF /* FeedbackSheetController.h */,
 				25C3FE4315A7A804006606DF /* FeedbackSheetController.m */,
-				E64B309915AEEB1D00827591 /* MixpanelAnalytics.h */,
-				E64B309A15AEEB1D00827591 /* MixpanelAnalytics.m */,
+				E67AC5B215AF8BA6005A7938 /* LinkedView.h */,
+				E67AC5B315AF8BA6005A7938 /* LinkedView.m */,
+				E67AC5B715AF989E005A7938 /* TourWizard.h */,
+				E67AC5B815AF989E005A7938 /* TourWizard.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -982,6 +993,7 @@
 				25E8BC2C15AE4F5F00A323D8 /* yc-encfsctl in Resources */,
 				25E8BC2D15AE4F5F00A323D8 /* yc-encfssh in Resources */,
 				25E8BC3415AE4F7200A323D8 /* libencfs.la in Resources */,
+				E67AC5B615AF9448005A7938 /* TourWizard.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1053,6 +1065,8 @@
 				E64B309315AEE9C300827591 /* NSData+MPBase64.m in Sources */,
 				E64B309415AEE9C300827591 /* MixpanelAPI.m in Sources */,
 				E64B309515AEE9C300827591 /* MixpanelEvent.m in Sources */,
+				E67AC5B415AF8BA6005A7938 /* LinkedView.m in Sources */,
+				E67AC5B915AF989F005A7938 /* TourWizard.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
