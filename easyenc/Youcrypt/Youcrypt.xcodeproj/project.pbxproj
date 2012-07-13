@@ -20,6 +20,11 @@
 		25300E9015A3BE74009CDA08 /* FirstRunSheetController.m in Sources */ = {isa = PBXBuildFile; fileRef = 25300E8E15A3BE73009CDA08 /* FirstRunSheetController.m */; };
 		25300E9115A3BE74009CDA08 /* FirstRun.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25300E8F15A3BE73009CDA08 /* FirstRun.xib */; };
 		253C3D7F159BBF9400120B8D /* BoxFSA.m in Sources */ = {isa = PBXBuildFile; fileRef = 253C3D7E159BBF9400120B8D /* BoxFSA.m */; };
+		254412E515AFB1E60098B8FB /* DBSetup.xib in Resources */ = {isa = PBXBuildFile; fileRef = 254412E415AFB1E60098B8FB /* DBSetup.xib */; };
+		254412F615AFBAD60098B8FB /* FSBrowserCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 254412F315AFBAD60098B8FB /* FSBrowserCell.m */; };
+		254412F715AFBAD60098B8FB /* FSNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 254412F515AFBAD60098B8FB /* FSNode.m */; };
+		254412FD15AFC0BD0098B8FB /* DBLinkedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 254412FC15AFC0BD0098B8FB /* DBLinkedView.m */; };
+		2544130015AFCB910098B8FB /* DBSetupSheetController.m in Sources */ = {isa = PBXBuildFile; fileRef = 254412FF15AFCB910098B8FB /* DBSetupSheetController.m */; };
 		25617DC715ABD54B00EED7F7 /* ListDirTable.m in Sources */ = {isa = PBXBuildFile; fileRef = 25617DC615ABD54B00EED7F7 /* ListDirTable.m */; };
 		256C3560158EA75F00E2BEC4 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 256C355F158EA75F00E2BEC4 /* Cocoa.framework */; };
 		256C356C158EA75F00E2BEC4 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 256C356B158EA75F00E2BEC4 /* main.m */; };
@@ -217,6 +222,15 @@
 		253C3D7B159BBF4A00120B8D /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
 		253C3D7D159BBF9400120B8D /* BoxFSA.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BoxFSA.h; path = sources/BoxFSA.h; sourceTree = "<group>"; };
 		253C3D7E159BBF9400120B8D /* BoxFSA.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BoxFSA.m; path = sources/BoxFSA.m; sourceTree = "<group>"; };
+		254412E415AFB1E60098B8FB /* DBSetup.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DBSetup.xib; sourceTree = "<group>"; };
+		254412F215AFBAD60098B8FB /* FSBrowserCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FSBrowserCell.h; path = FileBrowser/FSBrowserCell.h; sourceTree = "<group>"; };
+		254412F315AFBAD60098B8FB /* FSBrowserCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FSBrowserCell.m; path = FileBrowser/FSBrowserCell.m; sourceTree = "<group>"; };
+		254412F415AFBAD60098B8FB /* FSNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FSNode.h; path = FileBrowser/FSNode.h; sourceTree = "<group>"; };
+		254412F515AFBAD60098B8FB /* FSNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FSNode.m; path = FileBrowser/FSNode.m; sourceTree = "<group>"; };
+		254412FB15AFC0BD0098B8FB /* DBLinkedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DBLinkedView.h; path = sources/DBLinkedView.h; sourceTree = "<group>"; };
+		254412FC15AFC0BD0098B8FB /* DBLinkedView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DBLinkedView.m; path = sources/DBLinkedView.m; sourceTree = "<group>"; };
+		254412FE15AFCB910098B8FB /* DBSetupSheetController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DBSetupSheetController.h; path = sources/DBSetupSheetController.h; sourceTree = "<group>"; };
+		254412FF15AFCB910098B8FB /* DBSetupSheetController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DBSetupSheetController.m; path = sources/DBSetupSheetController.m; sourceTree = "<group>"; };
 		25617DC515ABD54A00EED7F7 /* ListDirTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ListDirTable.h; path = sources/ListDirTable.h; sourceTree = "<group>"; };
 		25617DC615ABD54B00EED7F7 /* ListDirTable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ListDirTable.m; path = sources/ListDirTable.m; sourceTree = "<group>"; };
 		256C355B158EA75F00E2BEC4 /* Youcrypt.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Youcrypt.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -412,6 +426,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		254412EB15AFBA640098B8FB /* FileBrowser */ = {
+			isa = PBXGroup;
+			children = (
+				254412F215AFBAD60098B8FB /* FSBrowserCell.h */,
+				254412F315AFBAD60098B8FB /* FSBrowserCell.m */,
+				254412F415AFBAD60098B8FB /* FSNode.h */,
+				254412F515AFBAD60098B8FB /* FSNode.m */,
+			);
+			name = FileBrowser;
+			sourceTree = "<group>";
+		};
 		256C3550158EA75F00E2BEC4 = {
 			isa = PBXGroup;
 			children = (
@@ -501,6 +526,7 @@
 		25F3D1521592436000E3383C /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				254412E415AFB1E60098B8FB /* DBSetup.xib */,
 				E6C0468A15AE18B4004B52E5 /* FirstRunSheetController.xib */,
 				E6C0468B15AE18B4004B52E5 /* GmailSheetController.xib */,
 				E6C0468C15AE18B4004B52E5 /* MainMenu.xib */,
@@ -535,6 +561,8 @@
 		25F3D154159243E300E3383C /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				254412FE15AFCB910098B8FB /* DBSetupSheetController.h */,
+				254412FF15AFCB910098B8FB /* DBSetupSheetController.m */,
 				256C3571158EA75F00E2BEC4 /* AppDelegate.h */,
 				256C3572158EA75F00E2BEC4 /* AppDelegate.m */,
 				E0BF0EBA159838DD002F9FB9 /* ListDirectoriesWindow.h */,
@@ -577,6 +605,8 @@
 				25C3FE4315A7A804006606DF /* FeedbackSheetController.m */,
 				E67AC5B215AF8BA6005A7938 /* LinkedView.h */,
 				E67AC5B315AF8BA6005A7938 /* LinkedView.m */,
+				254412FB15AFC0BD0098B8FB /* DBLinkedView.h */,
+				254412FC15AFC0BD0098B8FB /* DBLinkedView.m */,
 				E67AC5B715AF989E005A7938 /* TourWizard.h */,
 				E67AC5B815AF989E005A7938 /* TourWizard.m */,
 			);
@@ -674,6 +704,7 @@
 		E6649C0A15A53BFA0096886F /* contrib */ = {
 			isa = PBXGroup;
 			children = (
+				254412EB15AFBA640098B8FB /* FileBrowser */,
 				E64B307615AEE8C400827591 /* Mixpanel_iphonemod_fpotter */,
 				E603DBB315AEC9CC00ABB170 /* AMToolTipTableView */,
 				E6C046D815AE299C004B52E5 /* SSKeychain */,
@@ -998,6 +1029,7 @@
 				25E8BC3415AE4F7200A323D8 /* libencfs.la in Resources */,
 				E67AC5B615AF9448005A7938 /* TourWizard.xib in Resources */,
 				25E8BC4815AE6D7F00A323D8 /* youcrypt-overlay.icns in Resources */,
+				254412E515AFB1E60098B8FB /* DBSetup.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1071,6 +1103,10 @@
 				E64B309515AEE9C300827591 /* MixpanelEvent.m in Sources */,
 				E67AC5B415AF8BA6005A7938 /* LinkedView.m in Sources */,
 				E67AC5B915AF989F005A7938 /* TourWizard.m in Sources */,
+				254412F615AFBAD60098B8FB /* FSBrowserCell.m in Sources */,
+				254412F715AFBAD60098B8FB /* FSNode.m in Sources */,
+				254412FD15AFC0BD0098B8FB /* DBLinkedView.m in Sources */,
+				2544130015AFCB910098B8FB /* DBSetupSheetController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
