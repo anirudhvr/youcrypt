@@ -42,8 +42,8 @@
 
 - (IBAction)decrypt:(id)sender
 {	
-	NSString *srcFolder = sourceFolderPath;
-	NSString *destFolder = destFolderPath;	
+	srcFolder = sourceFolderPath;
+	destFolder = destFolderPath;	
 	NSString *yourPasswordString;
     if (keychainHasPassphrase)
         yourPasswordString = passphraseFromKeychain;
@@ -51,8 +51,8 @@
         yourPasswordString = [yourPassword stringValue];
     
     [libFunctions mkdirRecursive:destFolder]; 
-    
-    NSString *volname = [[srcFolder stringByDeletingLastPathComponent] lastPathComponent];
+    //FIXME
+    NSString *volname = [[srcFolder stringByDeletingPathExtension] lastPathComponent];
     
     NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:@"logo-512x512-alpha.icns", @"volicon", volname, @"volname", nil];
         

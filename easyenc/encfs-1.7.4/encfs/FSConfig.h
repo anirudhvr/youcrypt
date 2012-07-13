@@ -35,7 +35,8 @@ enum ConfigType
     Config_V3,
     Config_V4,
     Config_V5,
-    Config_V6
+    Config_V6,
+    Config_YC
 };
 
 class EncFS_Opts;
