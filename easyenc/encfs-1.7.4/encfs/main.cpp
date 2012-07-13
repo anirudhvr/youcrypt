@@ -557,17 +557,17 @@ int parse_sock_args(int client_socket_fd, char ***pargv)
     FILE *sockfile = fdopen(client_socket_fd, "r");
     char line[1000], **argv;
     int argc;    
-    
+
     fgets(line, 998, sockfile);
     sscanf(line, "%d", &argc);
     (*pargv) = argv = (char **)malloc(sizeof(char *) * argc);
     for (int i=0; i<argc; i++) {
-	int len;
-	fgets(line, 998, sockfile);
-	len = strlen(line);
-	argv[i] = (char *)malloc(sizeof(char)*len);
-	strcpy(argv[i], line);
-	if (line[len-1] == '\n') argv[i][len-1] = 0;
+        int len;
+        fgets(line, 998, sockfile);
+        len = strlen(line);
+        argv[i] = (char *)malloc(sizeof(char)*(len+1));
+        strcpy(argv[i], line);
+        if (line[len-1] == '\n') argv[i][len-1] = 0;
     }
     return argc;
 }
@@ -577,16 +577,19 @@ int main(int argc, char **argv)
 {
   // Rajsekar Manokaran
   // Read the arguments from the socket.
+    char **new_argv = NULL;
     if (argc == 1) {    // Only if there were no args passed to the program.
-	argc = parse_sock_args(0, &argv);
-	{
-	    int i;
-	    printf("argc count: %d\n", argc);
-	    for (i=0; i<argc; i++)
-		printf ("arg[%d]: %s\n", i, argv[i]);
-	    
-	}
+        argc = parse_sock_args(0, &new_argv);
+        {
+            int i;
+            printf("argc count: %d\n", argc);
+            for (i=0; i<argc; i++)
+                printf ("arg[%d]: %s\n", i, new_argv[i]);
+
+        }
+        argv = new_argv;
     }
+
   
     // initialize the logging library
     RLogInit( argc, argv );
@@ -778,6 +781,13 @@ int main(int argc, char **argv)
 
     MemoryPool::destroyAll();
     openssl_shutdown( encfsArgs->isThreaded );
+
+    if (new_argv) {
+        int i;
+        for (i = 0; i < argc; ++i) 
+            if (new_argv[i]) free(new_argv[i]);
+        free(new_argv);
+    }
 
     return returnCode;
 }
