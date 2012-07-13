@@ -71,5 +71,7 @@
 
 + (NSString*) appBundlePath;
 
++ (NSString*) locateDropboxFolder;
+
 
 @end

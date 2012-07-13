@@ -273,6 +273,7 @@
 
 
 
+
 + (BOOL) changeEncFSPasswd:(NSString *)path
                  oldPasswd:(NSString *)oldPasswd
                  newPasswd:(NSString *)newPasswd {
@@ -320,6 +321,35 @@
 + (id) unarchiveDirectoryListFromFile:(NSString*)file
 {
     return [NSKeyedUnarchiver unarchiveObjectWithFile:file];    
+}
+
++ (NSString*) locateDropboxFolder
+{
+    NSString *bundlepath =[[NSBundle mainBundle] resourcePath];
+    NSString *dropboxScript = [bundlepath stringByAppendingPathComponent:@"/get_dropbox_folder.sh"]; 
+    NSString *dropboxURL = nil;
+    
+    // check if dropbox script exists and fail otherwise
+    if (![[NSFileManager defaultManager] fileExistsAtPath:dropboxScript]) {
+        DDLogVerbose(@"Cannot find dropbox locator script at %@", dropboxScript);
+        return @"";
+    }
+   
+    NSFileHandle *fh = [NSFileHandle alloc];
+    NSTask *dropboxTask = [NSTask alloc];
+    if ([self execWithSocket:dropboxScript arguments:nil env:nil io:fh proc:dropboxTask]) {
+        [dropboxTask waitUntilExit];
+        NSData *bytes = [fh availableData];
+        dropboxURL = [[NSString alloc] initWithData:bytes encoding:NSUTF8StringEncoding];
+        
+        [fh closeFile];
+    } else {
+        DDLogVerbose(@"Could not exec dropbox location finder script");
+    }
+    
+    
+    NSLog(@"Dropbox folder loc: %@",dropboxURL);
+    return [dropboxURL stringByReplacingOccurrencesOfString:@"\n" withString:@""];
 }
 
 + (NSString*) appBundlePath 

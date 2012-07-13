@@ -10,6 +10,7 @@
 #import "Contrib/FileBrowser/FSBrowserCell.h"
 #import "Contrib/FileBrowser/FSNode.h"
 #import "AppDelegate.h"
+#import "libFunctions.h"
 
 @interface DBSetupSheetController ()
 
@@ -38,7 +39,8 @@
     NSLog(@"AWAKE BROWSER");
     [_browser setCellClass:[FSBrowserCell class]];
     [_browser setColumnResizingType:NSBrowserUserColumnResizing];
-    _rootNode = [[FSNode alloc] initWithPath:@"/Users/hr/Dropbox" isDirectory:YES];
+    NSString *dbPath = [libFunctions locateDropboxFolder] ;
+    _rootNode = [[FSNode alloc] initWithPath:dbPath isDirectory:YES];
     selected = [[NSMutableSet alloc] init];
 }
 
