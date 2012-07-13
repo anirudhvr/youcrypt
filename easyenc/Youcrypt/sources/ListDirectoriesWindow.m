@@ -190,8 +190,6 @@
             NSLog(@"Icon reset : %d for %@",didSetIcon,[[dir path] stringByDeletingLastPathComponent]);
         }
     }
-    
-
     [table reloadData];
 }
 

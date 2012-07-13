@@ -13,12 +13,13 @@
 {
     IBOutlet LinkedView *previousView;
     IBOutlet LinkedView *nextView;
+    IBOutlet NSTextField *message;
     
     IBOutlet NSButton *nextButton;
     IBOutlet NSButton *previousButton;
 }
 
 @property(nonatomic, strong)LinkedView *previousView, *nextView;
-
+@property(nonatomic, strong) NSTextField *message;
 
 @end

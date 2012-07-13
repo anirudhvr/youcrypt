@@ -84,7 +84,7 @@
 
     defaultPreferences = [[NSMutableDictionary alloc] initWithObjects:[NSArray arrayWithObjects:[libFunctions locateDropboxFolder], [self locateBoxFolder], [NSNumber numberWithInt:1], [NSNumber numberWithInt:1], @"", @"", @"", @"", nil] forKeys:preferencesKeys];
     
-    NSLog(@"%@",defaultPreferences);
+    NSLog(@"defaultPrefs : %@",defaultPreferences);
     
     
     DDLogVerbose(@"Preferences awakeFromNib called");
@@ -94,7 +94,7 @@
     //[preferences addEntriesFromDictionary:defaultPreferences];
 
     
-    NSLog(@"%@",preferences);
+    NSLog(@"prefs : %@",preferences);
 
     //[self updatePreferences:preferences];
     
@@ -109,7 +109,7 @@
     
     [tabView selectTabViewItem:[tabView tabViewItemAtIndex:0]];
     
-    NSLog(@"%@ %@ %@",[self getPreference:YC_USEREMAIL],[self getPreference:YC_USERREALNAME],@"");
+    NSLog(@"email, name : %@ %@ %@",[self getPreference:YC_USEREMAIL],[self getPreference:YC_USERREALNAME],@"");
     NSLog(@"dbloc aw; %@",[self getPreference:YC_DROPBOXLOCATION]);
     
     if([self getPreference:YC_DROPBOXLOCATION] == nil){
@@ -169,7 +169,7 @@
 
 -(IBAction)linkBoxAccount:(id)sender
 {
-    NSLog(@"%@",[self getPreference:YC_BOXSTATUS]);
+    NSLog(@"box status: %@",[self getPreference:YC_BOXSTATUS]);
     if(([self getPreference:YC_BOXSTATUS] == nil) || ([[self getPreference:YC_BOXSTATUS] isEqualToString:@""]) ) {
         [boxClient auth];
         

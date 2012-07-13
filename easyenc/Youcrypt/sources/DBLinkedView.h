@@ -18,7 +18,6 @@
 }
 
 @property (nonatomic, strong) DBSetupSheetController *dbSetupSheet;
-
 -(IBAction)dbFolderCheckToggle:(id)sender;
 -(void)selectDBFoldersToEncrypt;
 

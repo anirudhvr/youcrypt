@@ -13,7 +13,7 @@
 @implementation LinkedView
 
 @synthesize  previousView, nextView;
-
+@synthesize message;
 
 - (id)initWithFrame:(NSRect)frame
 {
@@ -31,6 +31,7 @@
     [self setWantsLayer:YES];
     [previousButton setEnabled:(previousView != nil)];
     [nextButton setEnabled:(nextView != nil)];
+    [message setStringValue:@""];
 }
 
 - (void)drawRect:(NSRect)dirtyRect

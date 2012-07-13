@@ -21,6 +21,7 @@
 #import "TourController.h"
 #import "CompressingLogFileManager.h"
 #import "TourWizard.h"
+#import "DBLinkedView.h"
 
 int ddLogLevel = LOG_LEVEL_VERBOSE;
 
@@ -294,7 +295,6 @@ CompressingLogFileManager *logFileManager;
     NSImage *overlay = [[NSImage alloc] initWithContentsOfFile:[[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"/youcrypt-overlay.icns"]];
     BOOL didSetIcon = [[NSWorkspace sharedWorkspace] setIcon:overlay forFile:path options:0];
     NSLog(@"Icon set : %d for %@",didSetIcon,path);
-    NSLog(@"%d", didSetIcon);
     YoucryptDirectory *dir = [[YoucryptDirectory alloc] init];        
     dir.path = [path stringByAppendingPathComponent:@"encrypted.yc"];
     dir.mountedPath = @"";
@@ -518,12 +518,23 @@ CompressingLogFileManager *logFileManager;
     NSLog(@"Got passphrase : %@",pp);
     encryptController.passphraseFromKeychain = pp;
     encryptController.keychainHasPassphrase = YES;
+    NSString *path;
+    for (int i=0; i<folders.count; i++) {
+        path = [folders objectAtIndex:i];
+        NSLog(@"Folder %d : %@",i+1,path);
+        [tourWizard.currentView.message setStringValue:[NSString stringWithFormat:@"Updating %d%%",((i+1)*100)/folders.count]];
+        encryptController.sourceFolderPath = path;
+        [encryptController encrypt:self];
 
+    }
+    [tourWizard.currentView.message setStringValue:@"Done."];
+    /*
     for (NSString *path in folders) {
         NSLog(@"Encrypting DB Folder %@",path);
         encryptController.sourceFolderPath = path;
         [encryptController encrypt:self];
     } 
+     */
 }
 
 //--------------------------------------------------------------------------------------------------
@@ -686,7 +697,7 @@ CompressingLogFileManager *logFileManager;
 - (NSString *)tableView:(NSTableView *)aTableView toolTipForTableColumn:(NSTableColumn *)aTableColumn row:(NSInteger)rowIndex
 {   
     NSString *tooltip;
-    NSLog(@"%lu", rowIndex);
+    NSLog(@"tooltip row index: %lu", rowIndex);
     if (rowIndex >= 0) {
         YoucryptDirectory *dir = [directories objectAtIndex:rowIndex];
         tooltip = [NSString stringWithFormat:@"Source folder: %@\n\n"

@@ -43,7 +43,7 @@
     NSData *response = [NSURLConnection sendSynchronousRequest: theRequest returningResponse: &resp error: &error];
     NSString *responseString = [[NSString alloc] initWithData:response encoding:NSUTF8StringEncoding]; 
     
-    NSLog(@"%@",responseString);
+    NSLog(@"rest response string:%@",responseString);
     return responseString;
 }
 
