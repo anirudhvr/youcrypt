@@ -19,6 +19,7 @@
 #import "FeedbackSheetController.h"
 #import "PeriodicActionTimer.h"
 #import "TourController.h"
+#import "CompressingLogFileManager.h"
 #import "TourWizard.h"
 
 int ddLogLevel = LOG_LEVEL_VERBOSE;
@@ -27,6 +28,7 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
 /* Global Variables Accessible to everyone */
 /* These variables should be initialized */
 AppDelegate *theApp;
+CompressingLogFileManager *logFileManager;
 
 @implementation AppDelegate
 
@@ -42,6 +44,7 @@ AppDelegate *theApp;
 @synthesize preferenceController;
 @synthesize tourController;
 @synthesize tourWizard;
+@synthesize fileLogger;
 
 
 
@@ -108,15 +111,17 @@ AppDelegate *theApp;
     [NSApp setServicesProvider:youcryptService];
     
     // Logging
-    CompressingLogFileManager *logFileManager = [[CompressingLogFileManager alloc] initWithLogsDirectory:configDir.youCryptLogDir];
+    logFileManager = [[CompressingLogFileManager alloc] initWithLogsDirectory:configDir.youCryptLogDir];
+
     [DDLog addLogger:[DDASLLogger sharedInstance]];
     [DDLog addLogger:[DDTTYLogger sharedInstance]];
     
-    DDFileLogger *fileLogger = [[DDFileLogger alloc] initWithLogFileManager:logFileManager];
+    fileLogger = [[DDFileLogger alloc] initWithLogFileManager:logFileManager];
     fileLogger.rollingFrequency = 60 * 60 * 24; // 24 hour rolling
     fileLogger.logFileManager.maximumNumberOfLogFiles = 7;
     [DDLog addLogger:fileLogger];    
     
+    // Make sure only one instance of Youcrypt runs
     NSArray *apps = [[NSWorkspace sharedWorkspace] runningApplications]; 
     int ycAppCount = 0;
     

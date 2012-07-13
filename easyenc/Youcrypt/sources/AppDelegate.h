@@ -21,8 +21,9 @@
 @class PeriodicActionTimer;
 @class keyDownView;
 @class TourController;
+@class DDFileLogger;
+@class CompressingLogFileManager;
 @class TourWizard;
-
 
 
 @interface AppDelegate : NSObject <NSTableViewDataSource, NSTableViewDelegate, NSApplicationDelegate> { // changed from NSApplicationDelegate
@@ -55,6 +56,8 @@
     // List of directories maintained by us.
     // Objects added should be (YoucryptDirectory *)
     NSMutableArray *directories;
+    
+    DDFileLogger *fileLogger;
 }
 
 
@@ -110,6 +113,7 @@
 @property (nonatomic, strong) keyDownView *keyDown;
 @property (nonatomic, strong) PreferenceController *preferenceController;
 @property (nonatomic, strong) TourController *tourController;
+@property (nonatomic, strong) DDFileLogger *fileLogger;
 @property (nonatomic, strong) TourWizard *tourWizard;
 
 
@@ -117,3 +121,4 @@
 
 extern AppDelegate *theApp;
 extern NSWindow *_window;
+extern CompressingLogFileManager *logFileManager;
