@@ -60,6 +60,8 @@
     
     DDFileLogger *fileLogger;
     NSString *mixpanelUUID;
+    
+    BOOL callFinderScript;
 }
 
 
