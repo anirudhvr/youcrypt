@@ -515,7 +515,7 @@ CompressingLogFileManager *logFileManager;
         encryptController = [[Encrypt alloc] init];
     } 
     NSString *pp =[libFunctions getPassphraseFromKeychain:@"Youcrypt"];
-    NSLog(@"Got passphrase : %@",pp);
+    //NSLog(@"Got passphrase : %@",pp);
     encryptController.passphraseFromKeychain = pp;
     encryptController.keychainHasPassphrase = YES;
     NSString *path;

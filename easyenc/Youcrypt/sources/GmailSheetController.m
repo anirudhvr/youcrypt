@@ -54,7 +54,7 @@
 // Mark: Action methods
 
 - (IBAction)saveClicked:(id)sender {
-        NSLog(@"Registering new passphrase %@ with keychain", [password stringValue]);
+        //NSLog(@"Registering new passphrase %@ with keychain", [password stringValue]);
         [libFunctions registerWithKeychain:[password stringValue]:@"ycgmail"];
         [preferenceController setPreference:YC_GMAILUSERNAME value:[username stringValue]];
         NSLog(@"GMAIL USERNAME: %@ %@",YC_GMAILUSERNAME,[username stringValue]);

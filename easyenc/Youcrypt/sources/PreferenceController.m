@@ -82,7 +82,7 @@
                        YC_BOXLOCATION, YC_ENCRYPTFILENAMES, YC_STARTONBOOT, 
                        YC_USERREALNAME, YC_USEREMAIL, YC_GMAILUSERNAME, YC_BOXSTATUS, nil];
 
-    defaultPreferences = [[NSMutableDictionary alloc] initWithObjects:[NSArray arrayWithObjects:[libFunctions locateDropboxFolder], [self locateBoxFolder], [NSNumber numberWithInt:1], [NSNumber numberWithInt:1], @"", @"", @"", @"", nil] forKeys:preferencesKeys];
+    defaultPreferences = [[NSMutableDictionary alloc] initWithObjects:[NSArray arrayWithObjects:[libFunctions locateDropboxFolder], [self locateBoxFolder], [NSNumber numberWithInt:0], [NSNumber numberWithInt:1], @"", @"", @"", @"", nil] forKeys:preferencesKeys];
     
     NSLog(@"defaultPrefs : %@",defaultPreferences);
     

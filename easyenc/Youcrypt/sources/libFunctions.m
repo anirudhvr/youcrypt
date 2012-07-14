@@ -28,7 +28,7 @@
         NSLog(@"Did not get passphrase");
         return nil;
     } else {
-        NSLog(@"Got passphrase from keychain %@", passphraseFromKeychain);
+        //NSLog(@"Got passphrase from keychain %@", passphraseFromKeychain);
         return passphraseFromKeychain;
     }
 }
@@ -178,8 +178,8 @@
             count++;
         }
         
-        NSString *encfsArgs = [NSString stringWithFormat:@"8\nencfs\n--nu\n%d\n--pw\n%@\n%@--\n%@\n%@\n",
-                               numUsers, pwd, encryptfilenames_s, encFolder, decFolder];
+        NSString *encfsArgs = [NSString stringWithFormat:@"%d\nencfs\n--nu\n%d\n--pw\n%@\n%@--\n%@\n%@\n",
+                               count, numUsers, pwd, encryptfilenames_s, encFolder, decFolder];
         
         [io writeData:[encfsArgs dataUsingEncoding:NSUTF8StringEncoding]];
         [encfsProc waitUntilExit];

@@ -48,7 +48,7 @@
 	<key>NSHumanReadableCopyright</key>
 	<string>Copyright © 2012 Nouvou Inc.. All rights reserved.</string>
 	<key>NSMainNibFile</key>
-	<string>MainMenu</string>
+	<string>ListDirectoriesWindow</string>
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>
 	<key>NSServices</key>

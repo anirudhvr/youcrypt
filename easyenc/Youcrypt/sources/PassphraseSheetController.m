@@ -51,9 +51,9 @@
 
     } else {
         [oldpassphrase setEditable:YES];
-        NSLog(@"Got stored passphrase: %@", storedpassphrase);
+        //NSLog(@"Got stored passphrase: %@", storedpassphrase);
         NSString *oldpp = [oldpassphrase stringValue];
-        NSLog(@"value of oldpassphrase [%@],  storedpassphrase: [%@], isEqual: %d", oldpp, storedpassphrase,[oldpp isEqualToString:storedpassphrase]);
+        //NSLog(@"value of oldpassphrase [%@],  storedpassphrase: [%@], isEqual: %d", oldpp, storedpassphrase,[oldpp isEqualToString:storedpassphrase]);
         if (![oldpp isEqualToString:storedpassphrase]) {
             [message setTextColor:[NSColor redColor]];
             [message setStringValue:@"Old password does not match password stored in keychain"];
@@ -67,7 +67,7 @@
         return;
     } else {
         [message setStringValue:@"Please Wait. It may take a while."];
-        NSLog(@"Registering new passphrase %@ with keychain", [newpassphrase stringValue]);
+        NSLog(@"Registering new passphrase with keychain");
         [libFunctions registerWithKeychain:[newpassphrase stringValue]:@"Youcrypt"];
         int count = arr.count;
         for(int i=0;i<count;i++) {

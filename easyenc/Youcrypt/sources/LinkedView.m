@@ -29,14 +29,29 @@
 - (void) awakeFromNib
 {
     [self setWantsLayer:YES];
+    [self setAutoresizesSubviews:YES];
+    [self setAutoresizingMask:NSViewHeightSizable|NSViewWidthSizable];
     [previousButton setEnabled:(previousView != nil)];
     [nextButton setEnabled:(nextView != nil)];
     [message setStringValue:@""];
+    
 }
 
-- (void)drawRect:(NSRect)dirtyRect
+- (void)drawRect:(NSRect)rect
 {
+    [super drawRect:rect];
     // Drawing code here.
+//    [[NSColor darkGrayColor] set];
+  //  NSRectFill(rect);
+    //[self setAlphaValue:0.1];
+
 }
+
+-(BOOL) isOpaque
+{
+    return NO;
+}
+
+
 
 @end
