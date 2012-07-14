@@ -37,17 +37,19 @@
         [libFunctions mkdirRecursive:youCryptLogDir];
         [libFunctions mkdirRecursive:youCryptVolDir];
         [libFunctions mkdirRecursive:youCryptTmpDir];
+        
+        NSString *uuid = [[NSProcessInfo processInfo] globallyUniqueString];
+        NSError *error;
+        [uuid writeToFile:youcryptUserUUID atomically:YES encoding:NSASCIIStringEncoding error:&error];
+        if(error) {
+            DDLogVerbose(@"Could not create uuid.txt : %@",[error localizedDescription]);
+        }
+        DDLogVerbose(@"Client has been assigned UUID: %@",uuid);
     } else {
         firstRun = NO;
     }
     
-    NSString *uuid = [[NSProcessInfo processInfo] globallyUniqueString];
-    NSError *error;
-    [uuid writeToFile:youcryptUserUUID atomically:YES encoding:NSASCIIStringEncoding error:&error];
-    if(error) {
-        DDLogVerbose(@"Could not create uuid.txt : %@",[error localizedDescription]);
-    }
-    DDLogVerbose(@"Client has been assigned UUID: %@",uuid);
+    
     return self;
 }
 

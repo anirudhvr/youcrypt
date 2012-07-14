@@ -136,7 +136,6 @@
     //-     
     
     // Enumerate DIR contents to get number of objects in dir
-    NSLog(srcFolder);
     NSDirectoryEnumerator *direnum = [[NSFileManager defaultManager] enumeratorAtPath:srcFolder];
 
     int dirCount = 0;
@@ -217,10 +216,7 @@
                      fileSizeS, @"dirSize", 
                      nil]
      ];
-    
-    NSLog(@"dirCount : %@",dirCountS);
-    NSLog(@"fileSize: %@",fileSizeS);
-    
+     
     // Try to overlay icon !!
     return;
 }
