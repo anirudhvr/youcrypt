@@ -89,7 +89,7 @@ MixpanelAPI *mixpanel;
     theApp = self;
     dropboxEncryptedFolders = [[NSMutableSet alloc] init];
     mixpanel = [MixpanelAPI sharedAPIWithToken:MIXPANEL_TOKEN];
-    mixpanelUUID = [NSString stringWithFormat:@"Youcrypt_%@",[[NSProcessInfo processInfo] globallyUniqueString]];
+    mixpanelUUID = [NSString stringWithFormat:@"YC_%@",[[NSProcessInfo processInfo] globallyUniqueString]];
     return self;
 }
 

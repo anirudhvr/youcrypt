@@ -88,11 +88,7 @@
 
 - (IBAction)doOpen:(id)sender {
     
-//    [mixpanel track:@"Youcrypt_test" 
-//         properties:[NSDictionary dictionaryWithObjectsAndKeys:
-//                     @"Open", @"Button",
-//                     nil]];
-//    
+       
     if ([table clickedRow] < [theApp.directories count]) {
         YoucryptDirectory *dir = [theApp.directories objectAtIndex:[table clickedRow]];
         [theApp openEncryptedFolder:[dir path]];
@@ -108,14 +104,6 @@
 }
 
 - (IBAction)doProps:(id)sender {
-    
-    
-//    [mixpanel track:@"Youcrypt_test" 
-//         properties:[NSDictionary dictionaryWithObjectsAndKeys:
-//                     @"Properties", @"Button",
-//                     nil]];
-
-    
     
     if ([table clickedRow] < [theApp.directories count]) {
         YoucryptDirectory *dir = [theApp.directories objectAtIndex:[table clickedRow]];

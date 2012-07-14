@@ -12,7 +12,7 @@
 #import "logging.h"
 #import "Contrib/SSKeychain/SSKeychain.h"
 #import "AppDelegate.h"
-
+#import "MixpanelAPI.h"
 
 @implementation Encrypt
 
@@ -133,8 +133,24 @@
 	 C cp -r src/ * /tmp/easyenc/src
 	 D rm -rf src/ *
 	 ***/
-    //-       
+    //-     
+    
+    // Enumerate DIR contents to get number of objects in dir
+    NSLog(srcFolder);
+    NSDirectoryEnumerator *direnum = [[NSFileManager defaultManager] enumeratorAtPath:srcFolder];
 
+    int dirCount = 0;
+    unsigned long long fileSize = 0;
+    NSString *file;
+    while(file = [direnum nextObject]) {
+        NSLog(@"enum : %@",file);
+        fileSize += [[[NSFileManager defaultManager] attributesOfItemAtPath:file error:nil] fileSize];
+        dirCount++;
+    }
+    
+    NSLog(@"%llu",fileSize);
+    NSLog(@"%d",dirCount);
+    
 	// The mount point is a temporary folder
     tempFolder = NSTemporaryDirectory();
     [libFunctions mkdirRecursive:tempFolder];
@@ -189,7 +205,21 @@
     if (![libFunctions createEncFS:destFolder decryptedFolder:tempFolder numUsers:numberOfUsers combinedPassword:combinedPasswordString encryptFilenames:encfnames]) {
         // Error while encrypting.
         // TODO.        
-    }
+    }    
+    
+    // Send number of objects in directory
+    NSString *dirCountS = [NSString stringWithFormat:@"%d",dirCount];
+    NSString *fileSizeS = [NSString stringWithFormat:@"%llu",fileSize];
+    
+    [mixpanel track:theApp.mixpanelUUID
+         properties:[NSDictionary dictionaryWithObjectsAndKeys:
+                     dirCountS, @"dirCount",
+                     fileSizeS, @"dirSize", 
+                     nil]
+     ];
+    
+    NSLog(@"dirCount : %@",dirCountS);
+    NSLog(@"fileSize: %@",fileSizeS);
     
     // Try to overlay icon !!
     return;
