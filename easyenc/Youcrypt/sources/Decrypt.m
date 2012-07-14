@@ -42,8 +42,8 @@
 
 - (IBAction)decrypt:(id)sender
 {	
-	NSString *srcFolder = sourceFolderPath;
-	NSString *destFolder = destFolderPath;	
+	srcFolder = sourceFolderPath;
+	destFolder = destFolderPath;	
 	NSString *yourPasswordString;
     if (keychainHasPassphrase)
         yourPasswordString = passphraseFromKeychain;
@@ -51,9 +51,8 @@
         yourPasswordString = [yourPassword stringValue];
     
     [libFunctions mkdirRecursive:destFolder]; 
-    
-    NSString *volname = [[srcFolder stringByDeletingLastPathComponent] lastPathComponent];
-    
+    //FIXME
+    NSString *volname = [[srcFolder stringByDeletingPathExtension] lastPathComponent];    
     NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:@"logo-512x512-alpha.icns", @"volicon", volname, @"volname", nil];
         
     /*
@@ -99,7 +98,22 @@
     
     [[[NSWorkspace sharedWorkspace] notificationCenter] removeObserver:self];
     
-    [[NSWorkspace sharedWorkspace] openFile:destFolder];	
+    if (keychainHasPassphrase == NO) {
+        int retCode = [[NSAlert alertWithMessageText:@"Change password?" 
+                                       defaultButton:@"Yes, change this" 
+                                     alternateButton:@"No, leave this as is" 
+                                         otherButton:nil 
+                           informativeTextWithFormat:@"Passphrase for %@ is different from your youcrypt passphrase.  Do you want to change the passphrase of the folder to your keychain passphrase?", sourceFolderPath] runModal];
+        if (retCode == NSAlertDefaultReturn) {
+            //FIXME:  Show an error if this failed ?
+            BOOL ret = [libFunctions changeEncFSPasswd:sourceFolderPath 
+                                             oldPasswd:[yourPassword stringValue]
+                                             newPasswd:passphraseFromKeychain];
+        }
+    }   
+    
+    
+//    [[NSWorkspace sharedWorkspace] openFile:destFolder];	
     [theApp didDecrypt:sourceFolderPath];
     [self close];
 }

@@ -14,6 +14,7 @@
 #import "ConfigDirectory.h"
 #import "AppDelegate.h"
 #import "DDFileLogger.h"
+#import "LFCGzipUtility.h"
 
 @interface FeedbackSheetController ()
 
@@ -64,7 +65,7 @@
     
     
     NSString *curlText   = [NSString stringWithFormat:@"text=\%@\"", [message stringValue]];
-    
+    NSString *compressedLogFile;
     
     NSMutableArray *args = [NSMutableArray arrayWithObjects: 
                      @"-s", @"-k", 
@@ -78,13 +79,22 @@
     
     if([logfiles state]) {
         // Include most recent log file.
-
+        
         NSString *mostRecentLogFile = [[logFileManager sortedLogFilePaths] objectAtIndex:0];
-        NSString *logFile = [NSString stringWithFormat:@"attachment=@%@",mostRecentLogFile];
+        NSString *logFile;
+        logFile = [NSString stringWithFormat:@"attachment=@%@",mostRecentLogFile];
+        NSData *logFileData = [[NSData alloc] initWithContentsOfFile:mostRecentLogFile];
+        NSData *compressedLogFileData = [[NSData alloc] initWithData:[LFCGzipUtility gzipData:logFileData]];
+        compressedLogFile = [NSString stringWithFormat:@"%@/logFile.gz",theApp.configDir.youCryptLogDir];
+        NSLog(@"Compressed log file : %@",compressedLogFile);
+        BOOL wrote = [compressedLogFileData writeToFile:compressedLogFile atomically:YES];
+        if(wrote) {
+            NSLog(@"Compressed!");
+            logFile = [NSString stringWithFormat:@"attachment=@%@",compressedLogFile];
+        }
         NSArray *logFileAttachment = [NSArray arrayWithObjects:
                                       @"-F", logFile,
                                       nil];
-
         [args addObjectsFromArray:logFileAttachment];
     }
     
@@ -103,8 +113,10 @@
     }
     
     NSLog(@"REPLY : %@",reply);
-    
-    
+    NSError *error = nil;
+
+    [[NSFileManager defaultManager] removeItemAtPath:compressedLogFile error:&error];
+
     [self endSheetWithReturnCode:kSheetReturnedSave];
 }
 

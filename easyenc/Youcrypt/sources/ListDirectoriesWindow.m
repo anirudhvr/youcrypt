@@ -13,7 +13,6 @@
 #import "libFunctions.h"
 #import "contrib/Mixpanel_fpotter.github.com/MPLib/MixpanelAPI.h"
 
-#define MIXPANEL_TOKEN @"b01b99df347adcb20353ba2a4cb6faf4" // avr@nouvou.com's token
 
 @implementation ListDirectoriesWindow
 
@@ -31,7 +30,6 @@
     
     volumePropsSheet = [[VolumePropertiesSheetController alloc] init];
     passphraseSheet = [[PassphraseSheetController alloc] init];
-    mixpanel = [MixpanelAPI sharedAPIWithToken:MIXPANEL_TOKEN];
     return self;
     
 }
@@ -90,11 +88,7 @@
 
 - (IBAction)doOpen:(id)sender {
     
-//    [mixpanel track:@"Youcrypt_test" 
-//         properties:[NSDictionary dictionaryWithObjectsAndKeys:
-//                     @"Open", @"Button",
-//                     nil]];
-//    
+       
     if ([table clickedRow] < [theApp.directories count]) {
         YoucryptDirectory *dir = [theApp.directories objectAtIndex:[table clickedRow]];
         [theApp openEncryptedFolder:[dir path]];
@@ -110,14 +104,6 @@
 }
 
 - (IBAction)doProps:(id)sender {
-    
-    
-//    [mixpanel track:@"Youcrypt_test" 
-//         properties:[NSDictionary dictionaryWithObjectsAndKeys:
-//                     @"Properties", @"Button",
-//                     nil]];
-
-    
     
     if ([table clickedRow] < [theApp.directories count]) {
         YoucryptDirectory *dir = [theApp.directories objectAtIndex:[table clickedRow]];
@@ -185,9 +171,9 @@
             else if (retCode == NSAlertAlternateReturn) {
                 [theApp.directories removeObject:dir];
             }
-            NSImage *generic = [[NSWorkspace sharedWorkspace] iconForFileType:NSFileTypeForHFSTypeCode(kGenericFolderIcon)];
-            BOOL didSetIcon = [[NSWorkspace sharedWorkspace] setIcon:generic forFile:[[dir path] stringByDeletingLastPathComponent] options:0];
-            NSLog(@"Icon reset : %d for %@",didSetIcon,[[dir path] stringByDeletingLastPathComponent]);
+//            NSImage *generic = [[NSWorkspace sharedWorkspace] iconForFileType:NSFileTypeForHFSTypeCode(kGenericFolderIcon)];
+//            BOOL didSetIcon = [[NSWorkspace sharedWorkspace] setIcon:generic forFile:[[dir path] stringByDeletingLastPathComponent] options:0];
+//            NSLog(@"Icon reset : %d for %@",didSetIcon,[[dir path] stringByDeletingLastPathComponent]);
         }
     }
     [table reloadData];

@@ -24,7 +24,7 @@
 @class DDFileLogger;
 @class CompressingLogFileManager;
 @class TourWizard;
-
+@class MixpanelAPI;
 
 @interface AppDelegate : NSObject <NSTableViewDataSource, NSTableViewDelegate, NSApplicationDelegate> { // changed from NSApplicationDelegate
     
@@ -59,6 +59,9 @@
     NSMutableSet *dropboxEncryptedFolders;
     
     DDFileLogger *fileLogger;
+    NSString *mixpanelUUID;
+    
+    BOOL callFinderScript;
 }
 
 
@@ -119,10 +122,11 @@
 @property (nonatomic, strong) DDFileLogger *fileLogger;
 @property (nonatomic, strong) NSMutableSet *dropboxEncryptedFolders;
 @property (nonatomic, strong) TourWizard *tourWizard;
-
+@property (nonatomic, strong) NSString *mixpanelUUID;
 
 @end
 
 extern AppDelegate *theApp;
 extern NSWindow *_window;
 extern CompressingLogFileManager *logFileManager;
+extern MixpanelAPI *mixpanel;

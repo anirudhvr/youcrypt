@@ -15,6 +15,8 @@
     NSString *destFolderPath;
     BOOL keychainHasPassphrase;
     NSString *passphraseFromKeychain;
+    
+    NSString *srcFolder, *destFolder;
 }
 
 - (IBAction)decrypt:(id)sender;

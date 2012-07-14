@@ -167,9 +167,15 @@
     NSTask *encfsProc = [NSTask alloc];
     NSFileHandle *io = [NSFileHandle alloc];
     NSString *encfsPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:ENCFS];
+    
+    NSDictionary *newenvsetting = [NSDictionary dictionaryWithObjectsAndKeys:[[NSBundle mainBundle] resourcePath], @"DYLD_LIBRARY_PATH", nil];
+    [encfsProc setEnvironment:newenvsetting];
+    
+    NSDictionary *env = [encfsProc environment];
+    NSLog(@"getenv : %@",env);
+    
     NSLog(@"ENCFSPATH : %@",encfsPath);
-    if ([libFunctions execWithSocket:encfsPath arguments:nil env:nil io:io proc:encfsProc]) {    
-        NSLog(@"SUCCESS");
+    if ([libFunctions execWithSocket:encfsPath arguments:nil env:env io:io proc:encfsProc]) {    
         int count = 8;
         
         NSString *encryptfilenames_s = [[NSString alloc] initWithString:@""];
@@ -181,8 +187,11 @@
         NSString *encfsArgs = [NSString stringWithFormat:@"%d\nencfs\n--nu\n%d\n--pw\n%@\n%@--\n%@\n%@\n",
                                count, numUsers, pwd, encryptfilenames_s, encFolder, decFolder];
         
+        NSLog(@"encfsargs\n%@",encfsArgs);
         [io writeData:[encfsArgs dataUsingEncoding:NSUTF8StringEncoding]];
         [encfsProc waitUntilExit];
+        NSLog(@"SUCCESS");
+
         [io closeFile];
         return YES;
     }
@@ -217,8 +226,16 @@
         }
     }
     [fuseopts addObject:[NSString stringWithString:@"-ofsname=YouCryptFS"]];
-    NSString *encfsPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:ENCFS]; 
-    if ([libFunctions execWithSocket:encfsPath arguments:nil env:nil io:io proc:encfsProc]) { 
+    NSString *encfsPath = [[[NSBundle mainBundle] resourcePath] 
+                           stringByAppendingPathComponent:ENCFS]; 
+    
+    NSDictionary *newenvsetting = [NSDictionary dictionaryWithObjectsAndKeys:[[NSBundle mainBundle] resourcePath], @"DYLD_LIBRARY_PATH", nil];
+    [encfsProc setEnvironment:newenvsetting];
+    
+    NSDictionary *env = [encfsProc environment];
+    NSLog(@"getenv : %@",env);
+    
+    if ([libFunctions execWithSocket:encfsPath arguments:nil env:env io:io proc:encfsProc]) { 
         int count = 6 + [fuseopts count];
         
         NSString *idletime_s = [[NSString alloc] initWithString:@""];

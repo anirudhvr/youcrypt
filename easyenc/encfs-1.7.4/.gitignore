@@ -38,3 +38,4 @@ libtool
 makedist2.sh
 po/POTFILES
 stamp-h1
+po/Makefile.in

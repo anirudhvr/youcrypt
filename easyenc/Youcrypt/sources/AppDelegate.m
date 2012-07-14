@@ -22,7 +22,9 @@
 #import "CompressingLogFileManager.h"
 #import "TourWizard.h"
 #import "DBLinkedView.h"
+#import "MixpanelAPI.h"
 
+#define MIXPANEL_TOKEN @"b01b99df347adcb20353ba2a4cb6faf4" // avr@nouvou.com's token
 int ddLogLevel = LOG_LEVEL_VERBOSE;
 
 
@@ -30,6 +32,7 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
 /* These variables should be initialized */
 AppDelegate *theApp;
 CompressingLogFileManager *logFileManager;
+MixpanelAPI *mixpanel;
 
 @implementation AppDelegate
 
@@ -47,7 +50,7 @@ CompressingLogFileManager *logFileManager;
 @synthesize tourWizard;
 @synthesize fileLogger;
 @synthesize dropboxEncryptedFolders;
-
+@synthesize mixpanelUUID;
 
 // --------------------------------------------------------------------------------------
 // App events
@@ -85,6 +88,9 @@ CompressingLogFileManager *logFileManager;
     
     theApp = self;
     dropboxEncryptedFolders = [[NSMutableSet alloc] init];
+    mixpanel = [MixpanelAPI sharedAPIWithToken:MIXPANEL_TOKEN];
+    mixpanelUUID = [NSString stringWithFormat:@"YC_%@",[[NSProcessInfo processInfo] globallyUniqueString]];
+    
     return self;
 }
 
@@ -149,6 +155,9 @@ CompressingLogFileManager *logFileManager;
     [self someUnMount:nil];
 
     DDLogVerbose(@"App did, in fact, finish launching!!!");
+    NSDictionary *env = [[NSProcessInfo processInfo] environment];
+    NSLog(env);
+
 }
 
 - (void)applicationWillTerminate:(NSNotification *)aNotification {
@@ -197,8 +206,6 @@ CompressingLogFileManager *logFileManager;
 - (BOOL)openEncryptedFolder:(NSString *)path {   
     //--------------------------------------------------------------------------------------------------
     // 1.  Check if path is really a folder
-    // 2.  Check if the last component is encrypted.yc   <---- TODO
-    // 3.  Check if it is already mounted                <---- TODO
     // 4.  o/w, mount and open it.
     // 5.  Make sure we maintain it in our list.
     //--------------------------------------------------------------------------------------------------
@@ -210,7 +217,7 @@ CompressingLogFileManager *logFileManager;
         // 2. Set up decrypt controller with the path and the mount point
         // 3. Open the decrypt window
         
-        NSString *mountPoint = [[path stringByDeletingLastPathComponent] lastPathComponent];
+        NSString *mountPoint = [[path stringByDeletingPathExtension] lastPathComponent];
         NSString *timeStr = [[NSDate date] descriptionWithCalendarFormat:nil timeZone:nil locale:nil];
         timeStr = [timeStr stringByReplacingOccurrencesOfString:@" " withString:@"_"];
         mountPoint = [configDir.youCryptVolDir stringByAppendingPathComponent:
@@ -229,31 +236,68 @@ CompressingLogFileManager *logFileManager;
         }        
         dir = [[YoucryptDirectory alloc] init];
         dir.path = path;
-        dir.alias = [[path stringByDeletingLastPathComponent] lastPathComponent];
+        dir.alias = [[path stringByDeletingPathExtension] lastPathComponent];
 //        dir.status = YoucryptDirectoryStatusUnmounted;
         dir.status = YoucryptDirectoryStatusProcessing;
         dir.mountedPath = mountPoint;
         [directories addObject:dir];                
     FoundOne:      
         [dir checkYoucryptDirectoryStatus:YES]; // Check that it's actually mounted.
+
+        NSString *source = [NSString stringWithFormat:@"tell application \"Finder\"\n"
+                            "set selectedItems to selection\n"
+                            "if ((count of selectedItems) > 0) then\n"
+                            "set selectedItem to ((item 1 of selectedItems) as alias)\n"
+                            "POSIX path of selectedItem\n"
+                            "end if\n"
+                            "end tell\n"];
+        NSAppleScript *update=[[NSAppleScript alloc] initWithSource:source];
+        NSDictionary *err;
+        NSAppleEventDescriptor *ret = [update executeAndReturnError:&err];
+        NSString *finderSelPath = [ret stringValue];
+        NSString *finderPath;
+        
+        source = [NSString stringWithFormat:@"tell application \"Finder\"\n"
+                  "set selectedItems to selection\n"
+                  "POSIX path of (target of Finder window 1 as alias)\n"
+                  "end tell\n"];
+        update = [[NSAppleScript alloc] initWithSource:source];
+        ret = [update executeAndReturnError:&err];
+        finderPath = [ret stringValue];
+        
+        if (((finderPath != nil) && ([finderPath isEqualToString:[[dir.path stringByDeletingLastPathComponent] stringByAppendingFormat:@"/"]]))
+            || ((finderPath != nil) && ([finderSelPath isEqualToString:[dir.path stringByAppendingFormat:@"/"]])))
+            callFinderScript = YES;
+        else {
+            callFinderScript = NO;
+        }
+            
+
         if (dir.status == YoucryptDirectoryStatusMounted) {
-            // Just need to open the folder in this case            
-//            [[NSWorkspace sharedWorkspace] openFile:dir.mountedPath];	
-            NSString *source=[NSString stringWithFormat:@"tell application \"Finder\"\n"
-                              "activate\n"
-                              "set target of Finder window 1 to disk \"%@\"\n"
-                              "set current view of Finder window 1 to icon view\n"
-                              "end tell\n", dir.alias];
-            NSAppleScript *update=[[NSAppleScript alloc] initWithSource:source];
-            NSDictionary *err;
-            [update executeAndReturnError:&err];
+            // Just need to open the folder in this case  
+            if (callFinderScript == NO) {
+                [[NSWorkspace sharedWorkspace] openFile:dir.mountedPath];	
+            }
+            else {
+                
+                NSString *source=[NSString stringWithFormat:@"tell application \"Finder\"\n"
+                                  "activate\n"
+                                  "set target of Finder window 1 to disk \"%@\"\n"
+                                  "set current view of Finder window 1 to icon view\n"
+                                  "end tell\n", dir.alias];
+                NSAppleScript *update=[[NSAppleScript alloc] initWithSource:source];
+                NSDictionary *err;
+                NSAppleEventDescriptor *ret = [update executeAndReturnError:&err];
+                if (err != nil)
+                    [[NSWorkspace sharedWorkspace] openFile:dir.mountedPath];
+            }
         } else {
             dir.status = YoucryptDirectoryStatusProcessing;
             dir.mountedPath = mountPoint;
             
             // Check if the keychain contains a password.
             
-            [self showDecryptWindow:self path:path mountPoint:mountPoint];
+            [self showDecryptWindow:self path:dir.path mountPoint:mountPoint];
         }
         return YES;
     }
@@ -282,6 +326,23 @@ CompressingLogFileManager *logFileManager;
         if ([path isEqualToString:dir.path]) {
             NSLog(@"Setting it to mounted\n");
             dir.status = YoucryptDirectoryStatusMounted;
+            if (callFinderScript == NO) {
+                [[NSWorkspace sharedWorkspace] openFile:dir.mountedPath];	
+            }
+            else {
+                
+                NSString *source=[NSString stringWithFormat:@"tell application \"Finder\"\n"
+                                  "activate\n"
+                                  "set target of Finder window 1 to disk \"%@\"\n"
+                                  "set current view of Finder window 1 to icon view\n"
+                                  "end tell\n", dir.alias];
+                NSAppleScript *update=[[NSAppleScript alloc] initWithSource:source];
+                NSDictionary *err;
+                NSAppleEventDescriptor *ret = [update executeAndReturnError:&err];
+                if (err != nil)
+                    [[NSWorkspace sharedWorkspace] openFile:dir.mountedPath];
+            }
+            
 //            [dir checkYoucryptDirectoryStatus:YES];
         }
     }
@@ -295,10 +356,12 @@ CompressingLogFileManager *logFileManager;
     NSImage *overlay = [[NSImage alloc] initWithContentsOfFile:[[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"/youcrypt-overlay.icns"]];
     BOOL didSetIcon = [[NSWorkspace sharedWorkspace] setIcon:overlay forFile:path options:0];
     NSLog(@"Icon set : %d for %@",didSetIcon,path);
-    YoucryptDirectory *dir = [[YoucryptDirectory alloc] init];        
-    dir.path = [path stringByAppendingPathComponent:@"encrypted.yc"];
+    NSLog(@"%d", didSetIcon);
+    
+    YoucryptDirectory *dir = [[YoucryptDirectory alloc] init];       
+    dir.path = path;
     dir.mountedPath = @"";
-    dir.alias = [path lastPathComponent];
+    dir.alias = [[path stringByDeletingPathExtension] lastPathComponent];
     dir.status = YoucryptDirectoryStatusUnmounted;
     [directories addObject:dir];            
     if (listDirectories != nil) {
@@ -322,7 +385,7 @@ CompressingLogFileManager *logFileManager;
 -(void) cancelRestore:(NSString *)path {
     for (YoucryptDirectory *dir in directories) {
         if ([path isEqualToString:dir.path]) {
-            dir.status = YoucryptDirectoryStatusUnmounted;
+            dir.status = YoucryptDirectoryStatusUnmounted; // Should've been processing
             [dir updateInfo];
             break;
         }
@@ -333,7 +396,7 @@ CompressingLogFileManager *logFileManager;
 -(void) cancelDecrypt:(NSString *)path {
     for (YoucryptDirectory *dir in directories) {
         if ([path isEqualToString:dir.path]) {
-            dir.status = YoucryptDirectoryStatusUnmounted;
+            dir.status = YoucryptDirectoryStatusUnmounted; // Should've been processing
             [dir updateInfo];
             break;
         }
@@ -616,26 +679,27 @@ CompressingLogFileManager *logFileManager;
         BOOL isDir;
         if ([fm fileExistsAtPath:path isDirectory:&isDir] && isDir) {  
             
+            //FIXME:  If it's a .yc file but not in our list file.
             
             // If it's a .yc file, we open it, otherwise, we encrypt it
             if ([[path pathExtension] isEqualToString:@"yc"]) {
                 [theApp openEncryptedFolder:path];
             }
-            else if ([fm fileExistsAtPath:[path stringByAppendingPathComponent:@"encrypted.yc"]
-                              isDirectory:&isDir] && isDir) {
-                NSAlert *alert = [NSAlert alertWithMessageText:@"Decrypt?"
-                                                 defaultButton:@"Decrypt"
-                                               alternateButton:@"Cancel"
-                                                   otherButton:nil
-                                     informativeTextWithFormat:@"This folder already contains encrypted content.  Decrypt and open?"];
-                if ([alert runModal] == NSAlertDefaultReturn) {
-                    [theApp openEncryptedFolder:[path stringByAppendingPathComponent:@"encrypted.yc"]];
-                    return YES;
-                }              
-                else {
-                    return  NO;
-                }
-            }                                           
+//            else if ([fm fileExistsAtPath:[path stringByAppendingPathComponent:@"encrypted.yc"]
+//                              isDirectory:&isDir] && isDir) {
+//                NSAlert *alert = [NSAlert alertWithMessageText:@"Decrypt?"
+//                                                 defaultButton:@"Decrypt"
+//                                               alternateButton:@"Cancel"
+//                                                   otherButton:nil
+//                                     informativeTextWithFormat:@"This folder already contains encrypted content.  Decrypt and open?"];
+//                if ([alert runModal] == NSAlertDefaultReturn) {
+//                    [theApp openEncryptedFolder:[path stringByAppendingPathComponent:@"encrypted.yc"]];
+//                    return YES;
+//                }              
+//                else {
+//                    return  NO;
+//                }
+//            }                                           
             else {
                 [theApp encryptFolder:path];
             }
