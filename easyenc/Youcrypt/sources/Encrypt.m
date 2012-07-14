@@ -329,6 +329,10 @@ Cleanup:
 
 }
 
+-(IBAction)cancel:(id)sender {
+    [self.window close];
+}
+
 
 
 -(void)setPassphraseTextField:(NSString*)string

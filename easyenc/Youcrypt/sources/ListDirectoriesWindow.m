@@ -171,9 +171,9 @@
             else if (retCode == NSAlertAlternateReturn) {
                 [theApp.directories removeObject:dir];
             }
-            NSImage *generic = [[NSWorkspace sharedWorkspace] iconForFileType:NSFileTypeForHFSTypeCode(kGenericFolderIcon)];
-            BOOL didSetIcon = [[NSWorkspace sharedWorkspace] setIcon:generic forFile:[[dir path] stringByDeletingLastPathComponent] options:0];
-            NSLog(@"Icon reset : %d for %@",didSetIcon,[[dir path] stringByDeletingLastPathComponent]);
+//            NSImage *generic = [[NSWorkspace sharedWorkspace] iconForFileType:NSFileTypeForHFSTypeCode(kGenericFolderIcon)];
+//            BOOL didSetIcon = [[NSWorkspace sharedWorkspace] setIcon:generic forFile:[[dir path] stringByDeletingLastPathComponent] options:0];
+//            NSLog(@"Icon reset : %d for %@",didSetIcon,[[dir path] stringByDeletingLastPathComponent]);
         }
     }
     [table reloadData];
