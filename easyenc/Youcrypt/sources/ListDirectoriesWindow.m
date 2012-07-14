@@ -13,7 +13,6 @@
 #import "libFunctions.h"
 #import "contrib/Mixpanel_fpotter.github.com/MPLib/MixpanelAPI.h"
 
-#define MIXPANEL_TOKEN @"b01b99df347adcb20353ba2a4cb6faf4" // avr@nouvou.com's token
 
 @implementation ListDirectoriesWindow
 
@@ -31,7 +30,6 @@
     
     volumePropsSheet = [[VolumePropertiesSheetController alloc] init];
     passphraseSheet = [[PassphraseSheetController alloc] init];
-    mixpanel = [MixpanelAPI sharedAPIWithToken:MIXPANEL_TOKEN];
     return self;
     
 }

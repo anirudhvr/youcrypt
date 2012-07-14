@@ -19,6 +19,7 @@
 @property (nonatomic, strong) NSString *youCryptLockFile;
 @property (nonatomic,strong) NSString *youCryptListFile;
 @property (nonatomic) BOOL firstRun;
+@property (nonatomic, strong) NSString *youcryptUserUUID;
 
 
 /*

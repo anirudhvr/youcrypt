@@ -22,7 +22,9 @@
 #import "CompressingLogFileManager.h"
 #import "TourWizard.h"
 #import "DBLinkedView.h"
+#import "MixpanelAPI.h"
 
+#define MIXPANEL_TOKEN @"b01b99df347adcb20353ba2a4cb6faf4" // avr@nouvou.com's token
 int ddLogLevel = LOG_LEVEL_VERBOSE;
 
 
@@ -30,6 +32,7 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
 /* These variables should be initialized */
 AppDelegate *theApp;
 CompressingLogFileManager *logFileManager;
+MixpanelAPI *mixpanel;
 
 @implementation AppDelegate
 
@@ -47,7 +50,7 @@ CompressingLogFileManager *logFileManager;
 @synthesize tourWizard;
 @synthesize fileLogger;
 @synthesize dropboxEncryptedFolders;
-
+@synthesize mixpanelUUID;
 
 // --------------------------------------------------------------------------------------
 // App events
@@ -85,6 +88,8 @@ CompressingLogFileManager *logFileManager;
     
     theApp = self;
     dropboxEncryptedFolders = [[NSMutableSet alloc] init];
+    mixpanel = [MixpanelAPI sharedAPIWithToken:MIXPANEL_TOKEN];
+    mixpanelUUID = [NSString stringWithFormat:@"Youcrypt_%@",[[NSProcessInfo processInfo] globallyUniqueString]];
     return self;
 }
 
