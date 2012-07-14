@@ -19,6 +19,17 @@
 		25300E8C15A385BE009CDA08 /* Gmail.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25300E8A15A385BE009CDA08 /* Gmail.xib */; };
 		25300E9015A3BE74009CDA08 /* FirstRunSheetController.m in Sources */ = {isa = PBXBuildFile; fileRef = 25300E8E15A3BE73009CDA08 /* FirstRunSheetController.m */; };
 		25300E9115A3BE74009CDA08 /* FirstRun.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25300E8F15A3BE73009CDA08 /* FirstRun.xib */; };
+		2537E31A15B0D63A0034E6E3 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 2537E31415B0D63A0034E6E3 /* .gitignore */; };
+		2537E31B15B0D63A0034E6E3 /* get_dropbox_folder.sh in Resources */ = {isa = PBXBuildFile; fileRef = 2537E31515B0D63A0034E6E3 /* get_dropbox_folder.sh */; };
+		2537E31C15B0D63A0034E6E3 /* simple-mailer.py in Resources */ = {isa = PBXBuildFile; fileRef = 2537E31615B0D63A0034E6E3 /* simple-mailer.py */; };
+		2537E31D15B0D63A0034E6E3 /* yc-encfs in Resources */ = {isa = PBXBuildFile; fileRef = 2537E31715B0D63A0034E6E3 /* yc-encfs */; };
+		2537E31E15B0D63A0034E6E3 /* yc-encfsctl in Resources */ = {isa = PBXBuildFile; fileRef = 2537E31815B0D63A0034E6E3 /* yc-encfsctl */; };
+		2537E31F15B0D63A0034E6E3 /* yc-encfssh in Resources */ = {isa = PBXBuildFile; fileRef = 2537E31915B0D63A0034E6E3 /* yc-encfssh */; };
+		2537E32515B0D6490034E6E3 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 2537E32115B0D6490034E6E3 /* .gitignore */; };
+		2537E32615B0D6490034E6E3 /* libencfs.6.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2537E32215B0D6490034E6E3 /* libencfs.6.dylib */; };
+		2537E32715B0D6490034E6E3 /* libencfs.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2537E32315B0D6490034E6E3 /* libencfs.dylib */; };
+		2537E32815B0D6490034E6E3 /* libencfs.la in Resources */ = {isa = PBXBuildFile; fileRef = 2537E32415B0D6490034E6E3 /* libencfs.la */; };
+		2537E32E15B0E4E80034E6E3 /* LFCGzipUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 2537E32D15B0E4E80034E6E3 /* LFCGzipUtility.m */; };
 		253C3D7F159BBF9400120B8D /* BoxFSA.m in Sources */ = {isa = PBXBuildFile; fileRef = 253C3D7E159BBF9400120B8D /* BoxFSA.m */; };
 		254412E515AFB1E60098B8FB /* DBSetup.xib in Resources */ = {isa = PBXBuildFile; fileRef = 254412E415AFB1E60098B8FB /* DBSetup.xib */; };
 		254412F615AFBAD60098B8FB /* FSBrowserCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 254412F315AFBAD60098B8FB /* FSBrowserCell.m */; };
@@ -38,14 +49,6 @@
 		256C35A9158EAF8700E2BEC4 /* Preferences.xib in Resources */ = {isa = PBXBuildFile; fileRef = 256C35A8158EAF8700E2BEC4 /* Preferences.xib */; };
 		25C3FE4515A7A805006606DF /* FeedbackSheetController.m in Sources */ = {isa = PBXBuildFile; fileRef = 25C3FE4315A7A804006606DF /* FeedbackSheetController.m */; };
 		25C3FE4615A7A805006606DF /* Feedback.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25C3FE4415A7A804006606DF /* Feedback.xib */; };
-		25E8BC2B15AE4F5F00A323D8 /* yc-encfs in Resources */ = {isa = PBXBuildFile; fileRef = 25E8BC2515AE4F5F00A323D8 /* yc-encfs */; };
-		25E8BC2C15AE4F5F00A323D8 /* yc-encfsctl in Resources */ = {isa = PBXBuildFile; fileRef = 25E8BC2615AE4F5F00A323D8 /* yc-encfsctl */; };
-		25E8BC2D15AE4F5F00A323D8 /* yc-encfssh in Resources */ = {isa = PBXBuildFile; fileRef = 25E8BC2715AE4F5F00A323D8 /* yc-encfssh */; };
-		25E8BC3215AE4F7200A323D8 /* libencfs.6.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 25E8BC2F15AE4F7200A323D8 /* libencfs.6.dylib */; };
-		25E8BC3315AE4F7200A323D8 /* libencfs.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 25E8BC3015AE4F7200A323D8 /* libencfs.dylib */; };
-		25E8BC3415AE4F7200A323D8 /* libencfs.la in Resources */ = {isa = PBXBuildFile; fileRef = 25E8BC3115AE4F7200A323D8 /* libencfs.la */; };
-		25E8BC3515AE516300A323D8 /* libencfs.6.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 25E8BC2F15AE4F7200A323D8 /* libencfs.6.dylib */; };
-		25E8BC3615AE516300A323D8 /* libencfs.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 25E8BC3015AE4F7200A323D8 /* libencfs.dylib */; };
 		25E8BC4815AE6D7F00A323D8 /* youcrypt-overlay.icns in Resources */ = {isa = PBXBuildFile; fileRef = 25E8BC4715AE6D7F00A323D8 /* youcrypt-overlay.icns */; };
 		25EE6A5915928D2C008A0DC8 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25EE6A5815928D2C008A0DC8 /* Security.framework */; };
 		25F3D14C15923FE800E3383C /* Decrypt.m in Sources */ = {isa = PBXBuildFile; fileRef = 25F3D14A15923FE800E3383C /* Decrypt.m */; };
@@ -218,6 +221,18 @@
 		25300E8D15A3BE73009CDA08 /* FirstRunSheetController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FirstRunSheetController.h; path = sources/FirstRunSheetController.h; sourceTree = "<group>"; };
 		25300E8E15A3BE73009CDA08 /* FirstRunSheetController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FirstRunSheetController.m; path = sources/FirstRunSheetController.m; sourceTree = "<group>"; };
 		25300E8F15A3BE73009CDA08 /* FirstRun.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FirstRun.xib; sourceTree = "<group>"; };
+		2537E31415B0D63A0034E6E3 /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		2537E31515B0D63A0034E6E3 /* get_dropbox_folder.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = get_dropbox_folder.sh; sourceTree = "<group>"; };
+		2537E31615B0D63A0034E6E3 /* simple-mailer.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; path = "simple-mailer.py"; sourceTree = "<group>"; };
+		2537E31715B0D63A0034E6E3 /* yc-encfs */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = "yc-encfs"; sourceTree = "<group>"; };
+		2537E31815B0D63A0034E6E3 /* yc-encfsctl */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = "yc-encfsctl"; sourceTree = "<group>"; };
+		2537E31915B0D63A0034E6E3 /* yc-encfssh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = "yc-encfssh"; sourceTree = "<group>"; };
+		2537E32115B0D6490034E6E3 /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		2537E32215B0D6490034E6E3 /* libencfs.6.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libencfs.6.dylib; sourceTree = "<group>"; };
+		2537E32315B0D6490034E6E3 /* libencfs.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libencfs.dylib; sourceTree = "<group>"; };
+		2537E32415B0D6490034E6E3 /* libencfs.la */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = libencfs.la; sourceTree = "<group>"; };
+		2537E32C15B0E4E80034E6E3 /* LFCGzipUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LFCGzipUtility.h; path = sources/LFCGzipUtility.h; sourceTree = "<group>"; };
+		2537E32D15B0E4E80034E6E3 /* LFCGzipUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LFCGzipUtility.m; path = sources/LFCGzipUtility.m; sourceTree = "<group>"; };
 		253C3D75159BBF2E00120B8D /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = System/Library/Frameworks/CoreServices.framework; sourceTree = SDKROOT; };
 		253C3D77159BBF3900120B8D /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		253C3D79159BBF4000120B8D /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -401,8 +416,8 @@
 				25EE6A5915928D2C008A0DC8 /* Security.framework in Frameworks */,
 				256C3560158EA75F00E2BEC4 /* Cocoa.framework in Frameworks */,
 				E01A6CD215AE2F95004F442C /* StartOnLogin.framework in Frameworks */,
-				25E8BC3215AE4F7200A323D8 /* libencfs.6.dylib in Frameworks */,
-				25E8BC3315AE4F7200A323D8 /* libencfs.dylib in Frameworks */,
+				2537E32615B0D6490034E6E3 /* libencfs.6.dylib in Frameworks */,
+				2537E32715B0D6490034E6E3 /* libencfs.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -430,6 +445,30 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2537E31315B0D63A0034E6E3 /* bin */ = {
+			isa = PBXGroup;
+			children = (
+				2537E31415B0D63A0034E6E3 /* .gitignore */,
+				2537E31515B0D63A0034E6E3 /* get_dropbox_folder.sh */,
+				2537E31615B0D63A0034E6E3 /* simple-mailer.py */,
+				2537E31715B0D63A0034E6E3 /* yc-encfs */,
+				2537E31815B0D63A0034E6E3 /* yc-encfsctl */,
+				2537E31915B0D63A0034E6E3 /* yc-encfssh */,
+			);
+			path = bin;
+			sourceTree = "<group>";
+		};
+		2537E32015B0D6490034E6E3 /* lib */ = {
+			isa = PBXGroup;
+			children = (
+				2537E32115B0D6490034E6E3 /* .gitignore */,
+				2537E32215B0D6490034E6E3 /* libencfs.6.dylib */,
+				2537E32315B0D6490034E6E3 /* libencfs.dylib */,
+				2537E32415B0D6490034E6E3 /* libencfs.la */,
+			);
+			path = lib;
+			sourceTree = "<group>";
+		};
 		254412EB15AFBA640098B8FB /* FileBrowser */ = {
 			isa = PBXGroup;
 			children = (
@@ -449,6 +488,8 @@
 				E06E2B3F15A7671B00E52B2D /* errors.h */,
 				256C356D158EA75F00E2BEC4 /* Youcrypt-Prefix.pch */,
 				256C356E158EA75F00E2BEC4 /* Credits.rtf */,
+				2537E31315B0D63A0034E6E3 /* bin */,
+				2537E32015B0D6490034E6E3 /* lib */,
 				25F3D154159243E300E3383C /* Classes */,
 				25F3D1521592436000E3383C /* UI */,
 				25F3D1531592437700E3383C /* Plists */,
@@ -565,6 +606,8 @@
 		25F3D154159243E300E3383C /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				2537E32C15B0E4E80034E6E3 /* LFCGzipUtility.h */,
+				2537E32D15B0E4E80034E6E3 /* LFCGzipUtility.m */,
 				256C3571158EA75F00E2BEC4 /* AppDelegate.h */,
 				256C3572158EA75F00E2BEC4 /* AppDelegate.m */,
 				E0BF0EBA159838DD002F9FB9 /* ListDirectoriesWindow.h */,
@@ -962,8 +1005,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				25E8BC3515AE516300A323D8 /* libencfs.6.dylib in Resources */,
-				25E8BC3615AE516300A323D8 /* libencfs.dylib in Resources */,
 				256C3570158EA75F00E2BEC4 /* Credits.rtf in Resources */,
 				256C35A9158EAF8700E2BEC4 /* Preferences.xib in Resources */,
 				25F3D14D15923FE800E3383C /* Decrypt.xib in Resources */,
@@ -1029,15 +1070,19 @@
 				E603DBB115AEC5C400ABB170 /* box_closed_48x48.png in Resources */,
 				E603DBB215AEC5C400ABB170 /* box_open_48x48.png in Resources */,
 				E64B307115AEE1A600827591 /* tableview-background.png in Resources */,
-				25E8BC2B15AE4F5F00A323D8 /* yc-encfs in Resources */,
-				25E8BC2C15AE4F5F00A323D8 /* yc-encfsctl in Resources */,
-				25E8BC2D15AE4F5F00A323D8 /* yc-encfssh in Resources */,
-				25E8BC3415AE4F7200A323D8 /* libencfs.la in Resources */,
 				E67AC5B615AF9448005A7938 /* TourWizard.xib in Resources */,
 				25E8BC4815AE6D7F00A323D8 /* youcrypt-overlay.icns in Resources */,
 				254412E515AFB1E60098B8FB /* DBSetup.xib in Resources */,
 				E67AC5C715AFA7AD005A7938 /* Grey_Add_Folder.png in Resources */,
 				E67AC5C915AFB0C4005A7938 /* Grey_Open_Folder.png in Resources */,
+				2537E31A15B0D63A0034E6E3 /* .gitignore in Resources */,
+				2537E31B15B0D63A0034E6E3 /* get_dropbox_folder.sh in Resources */,
+				2537E31C15B0D63A0034E6E3 /* simple-mailer.py in Resources */,
+				2537E31D15B0D63A0034E6E3 /* yc-encfs in Resources */,
+				2537E31E15B0D63A0034E6E3 /* yc-encfsctl in Resources */,
+				2537E31F15B0D63A0034E6E3 /* yc-encfssh in Resources */,
+				2537E32515B0D6490034E6E3 /* .gitignore in Resources */,
+				2537E32815B0D6490034E6E3 /* libencfs.la in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1115,6 +1160,7 @@
 				254412F715AFBAD60098B8FB /* FSNode.m in Sources */,
 				254412FD15AFC0BD0098B8FB /* DBLinkedView.m in Sources */,
 				2544130015AFCB910098B8FB /* DBSetupSheetController.m in Sources */,
+				2537E32E15B0E4E80034E6E3 /* LFCGzipUtility.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
