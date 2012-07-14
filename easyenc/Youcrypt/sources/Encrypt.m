@@ -137,12 +137,12 @@
     
     // Enumerate DIR contents to get number of objects in dir
     NSDirectoryEnumerator *direnum = [[NSFileManager defaultManager] enumeratorAtPath:srcFolder];
-
+    
     int dirCount = 0;
     unsigned long long fileSize = 0;
     NSString *file;
     while(file = [direnum nextObject]) {
-        NSLog(@"enum : %@",file);
+        NSLog(@"enum : %@ %@",file,[file pathExtension]);
         fileSize += [[[NSFileManager defaultManager] attributesOfItemAtPath:file error:nil] fileSize];
         dirCount++;
     }
@@ -203,17 +203,20 @@
 
     if (![libFunctions createEncFS:destFolder decryptedFolder:tempFolder numUsers:numberOfUsers combinedPassword:combinedPasswordString encryptFilenames:encfnames]) {
         // Error while encrypting.
-        // TODO.        
-    }    
+        // TODO.  
+        NSLog(@"ERROR WHILE ENCRYPTING. createEncfs failed");
+    }  else {
+        NSLog(@"In encrypt: createEncfs succeeded");
+    }
     
     // Send number of objects in directory
     NSString *dirCountS = [NSString stringWithFormat:@"%d",dirCount];
     NSString *fileSizeS = [NSString stringWithFormat:@"%llu",fileSize];
-    
+        
     [mixpanel track:theApp.mixpanelUUID
          properties:[NSDictionary dictionaryWithObjectsAndKeys:
                      dirCountS, @"dirCount",
-                     fileSizeS, @"dirSize", 
+                     fileSizeS, @"dirSize",
                      nil]
      ];
      

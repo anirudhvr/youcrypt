@@ -90,6 +90,7 @@ MixpanelAPI *mixpanel;
     dropboxEncryptedFolders = [[NSMutableSet alloc] init];
     mixpanel = [MixpanelAPI sharedAPIWithToken:MIXPANEL_TOKEN];
     mixpanelUUID = [NSString stringWithFormat:@"YC_%@",[[NSProcessInfo processInfo] globallyUniqueString]];
+    
     return self;
 }
 
@@ -154,6 +155,9 @@ MixpanelAPI *mixpanel;
     [self someUnMount:nil];
 
     DDLogVerbose(@"App did, in fact, finish launching!!!");
+    NSDictionary *env = [[NSProcessInfo processInfo] environment];
+    NSLog(env);
+
 }
 
 - (void)applicationWillTerminate:(NSNotification *)aNotification {

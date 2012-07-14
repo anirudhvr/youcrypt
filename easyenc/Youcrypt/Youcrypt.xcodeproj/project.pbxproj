@@ -19,17 +19,29 @@
 		25300E8C15A385BE009CDA08 /* Gmail.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25300E8A15A385BE009CDA08 /* Gmail.xib */; };
 		25300E9015A3BE74009CDA08 /* FirstRunSheetController.m in Sources */ = {isa = PBXBuildFile; fileRef = 25300E8E15A3BE73009CDA08 /* FirstRunSheetController.m */; };
 		25300E9115A3BE74009CDA08 /* FirstRun.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25300E8F15A3BE73009CDA08 /* FirstRun.xib */; };
-		2537E31A15B0D63A0034E6E3 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 2537E31415B0D63A0034E6E3 /* .gitignore */; };
-		2537E31B15B0D63A0034E6E3 /* get_dropbox_folder.sh in Resources */ = {isa = PBXBuildFile; fileRef = 2537E31515B0D63A0034E6E3 /* get_dropbox_folder.sh */; };
-		2537E31C15B0D63A0034E6E3 /* simple-mailer.py in Resources */ = {isa = PBXBuildFile; fileRef = 2537E31615B0D63A0034E6E3 /* simple-mailer.py */; };
-		2537E31D15B0D63A0034E6E3 /* yc-encfs in Resources */ = {isa = PBXBuildFile; fileRef = 2537E31715B0D63A0034E6E3 /* yc-encfs */; };
-		2537E31E15B0D63A0034E6E3 /* yc-encfsctl in Resources */ = {isa = PBXBuildFile; fileRef = 2537E31815B0D63A0034E6E3 /* yc-encfsctl */; };
-		2537E31F15B0D63A0034E6E3 /* yc-encfssh in Resources */ = {isa = PBXBuildFile; fileRef = 2537E31915B0D63A0034E6E3 /* yc-encfssh */; };
-		2537E32515B0D6490034E6E3 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 2537E32115B0D6490034E6E3 /* .gitignore */; };
-		2537E32615B0D6490034E6E3 /* libencfs.6.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2537E32215B0D6490034E6E3 /* libencfs.6.dylib */; };
-		2537E32715B0D6490034E6E3 /* libencfs.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2537E32315B0D6490034E6E3 /* libencfs.dylib */; };
-		2537E32815B0D6490034E6E3 /* libencfs.la in Resources */ = {isa = PBXBuildFile; fileRef = 2537E32415B0D6490034E6E3 /* libencfs.la */; };
 		2537E32E15B0E4E80034E6E3 /* LFCGzipUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 2537E32D15B0E4E80034E6E3 /* LFCGzipUtility.m */; };
+		2537E33715B1012F0034E6E3 /* libboost_filesystem-mt.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2537E32F15B1012F0034E6E3 /* libboost_filesystem-mt.dylib */; settings = {ATTRIBUTES = (Weak, ); }; };
+		2537E33815B1012F0034E6E3 /* libboost_serialization-mt.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2537E33015B1012F0034E6E3 /* libboost_serialization-mt.dylib */; settings = {ATTRIBUTES = (Weak, ); }; };
+		2537E33915B1012F0034E6E3 /* libboost_system-mt.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2537E33115B1012F0034E6E3 /* libboost_system-mt.dylib */; settings = {ATTRIBUTES = (Weak, ); }; };
+		2537E33F15B101480034E6E3 /* libboost_filesystem-mt.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 2537E32F15B1012F0034E6E3 /* libboost_filesystem-mt.dylib */; };
+		2537E34015B101480034E6E3 /* libboost_serialization-mt.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 2537E33015B1012F0034E6E3 /* libboost_serialization-mt.dylib */; };
+		2537E34115B101480034E6E3 /* libboost_system-mt.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 2537E33115B1012F0034E6E3 /* libboost_system-mt.dylib */; };
+		2537E34C15B125320034E6E3 /* libintl.8.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2537E34915B125320034E6E3 /* libintl.8.dylib */; settings = {ATTRIBUTES = (Weak, ); }; };
+		2537E34D15B125320034E6E3 /* librlog.5.0.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2537E34A15B125320034E6E3 /* librlog.5.0.0.dylib */; settings = {ATTRIBUTES = (Weak, ); }; };
+		2537E34E15B125320034E6E3 /* librlog.5.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2537E34B15B125320034E6E3 /* librlog.5.dylib */; settings = {ATTRIBUTES = (Weak, ); }; };
+		2537E34F15B126520034E6E3 /* libintl.8.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 2537E34915B125320034E6E3 /* libintl.8.dylib */; };
+		2537E35015B126520034E6E3 /* librlog.5.0.0.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 2537E34A15B125320034E6E3 /* librlog.5.0.0.dylib */; };
+		2537E35115B126520034E6E3 /* librlog.5.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 2537E34B15B125320034E6E3 /* librlog.5.dylib */; };
+		2537E35215B126520034E6E3 /* libencfs.6.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 25E8BC2F15AE4F7200A323D8 /* libencfs.6.dylib */; };
+		2537E35315B126520034E6E3 /* libencfs.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 25E8BC3015AE4F7200A323D8 /* libencfs.dylib */; };
+		2537E35415B126520034E6E3 /* libencfs.la in Resources */ = {isa = PBXBuildFile; fileRef = 25E8BC3115AE4F7200A323D8 /* libencfs.la */; };
+		2537E35515B126640034E6E3 /* yc-encfs in Resources */ = {isa = PBXBuildFile; fileRef = 25E8BC2515AE4F5F00A323D8 /* yc-encfs */; };
+		2537E35615B126640034E6E3 /* yc-encfsctl in Resources */ = {isa = PBXBuildFile; fileRef = 25E8BC2615AE4F5F00A323D8 /* yc-encfsctl */; };
+		2537E35715B126640034E6E3 /* yc-encfssh in Resources */ = {isa = PBXBuildFile; fileRef = 25E8BC2715AE4F5F00A323D8 /* yc-encfssh */; };
+		2537E35A15B1271D0034E6E3 /* libintl.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2537E35815B1271D0034E6E3 /* libintl.dylib */; settings = {ATTRIBUTES = (Weak, ); }; };
+		2537E35B15B1271D0034E6E3 /* librlog.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2537E35915B1271D0034E6E3 /* librlog.dylib */; settings = {ATTRIBUTES = (Weak, ); }; };
+		2537E35C15B127300034E6E3 /* libintl.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 2537E35815B1271D0034E6E3 /* libintl.dylib */; };
+		2537E35D15B127300034E6E3 /* librlog.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 2537E35915B1271D0034E6E3 /* librlog.dylib */; };
 		253C3D7F159BBF9400120B8D /* BoxFSA.m in Sources */ = {isa = PBXBuildFile; fileRef = 253C3D7E159BBF9400120B8D /* BoxFSA.m */; };
 		254412E515AFB1E60098B8FB /* DBSetup.xib in Resources */ = {isa = PBXBuildFile; fileRef = 254412E415AFB1E60098B8FB /* DBSetup.xib */; };
 		254412F615AFBAD60098B8FB /* FSBrowserCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 254412F315AFBAD60098B8FB /* FSBrowserCell.m */; };
@@ -221,18 +233,16 @@
 		25300E8D15A3BE73009CDA08 /* FirstRunSheetController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FirstRunSheetController.h; path = sources/FirstRunSheetController.h; sourceTree = "<group>"; };
 		25300E8E15A3BE73009CDA08 /* FirstRunSheetController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FirstRunSheetController.m; path = sources/FirstRunSheetController.m; sourceTree = "<group>"; };
 		25300E8F15A3BE73009CDA08 /* FirstRun.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FirstRun.xib; sourceTree = "<group>"; };
-		2537E31415B0D63A0034E6E3 /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
-		2537E31515B0D63A0034E6E3 /* get_dropbox_folder.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = get_dropbox_folder.sh; sourceTree = "<group>"; };
-		2537E31615B0D63A0034E6E3 /* simple-mailer.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; path = "simple-mailer.py"; sourceTree = "<group>"; };
-		2537E31715B0D63A0034E6E3 /* yc-encfs */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = "yc-encfs"; sourceTree = "<group>"; };
-		2537E31815B0D63A0034E6E3 /* yc-encfsctl */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = "yc-encfsctl"; sourceTree = "<group>"; };
-		2537E31915B0D63A0034E6E3 /* yc-encfssh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = "yc-encfssh"; sourceTree = "<group>"; };
-		2537E32115B0D6490034E6E3 /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
-		2537E32215B0D6490034E6E3 /* libencfs.6.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libencfs.6.dylib; sourceTree = "<group>"; };
-		2537E32315B0D6490034E6E3 /* libencfs.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libencfs.dylib; sourceTree = "<group>"; };
-		2537E32415B0D6490034E6E3 /* libencfs.la */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = libencfs.la; sourceTree = "<group>"; };
 		2537E32C15B0E4E80034E6E3 /* LFCGzipUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LFCGzipUtility.h; path = sources/LFCGzipUtility.h; sourceTree = "<group>"; };
 		2537E32D15B0E4E80034E6E3 /* LFCGzipUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LFCGzipUtility.m; path = sources/LFCGzipUtility.m; sourceTree = "<group>"; };
+		2537E32F15B1012F0034E6E3 /* libboost_filesystem-mt.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = "libboost_filesystem-mt.dylib"; sourceTree = "<group>"; };
+		2537E33015B1012F0034E6E3 /* libboost_serialization-mt.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = "libboost_serialization-mt.dylib"; sourceTree = "<group>"; };
+		2537E33115B1012F0034E6E3 /* libboost_system-mt.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = "libboost_system-mt.dylib"; sourceTree = "<group>"; };
+		2537E34915B125320034E6E3 /* libintl.8.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libintl.8.dylib; sourceTree = "<group>"; };
+		2537E34A15B125320034E6E3 /* librlog.5.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = librlog.5.0.0.dylib; sourceTree = "<group>"; };
+		2537E34B15B125320034E6E3 /* librlog.5.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = librlog.5.dylib; sourceTree = "<group>"; };
+		2537E35815B1271D0034E6E3 /* libintl.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libintl.dylib; sourceTree = "<group>"; };
+		2537E35915B1271D0034E6E3 /* librlog.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = librlog.dylib; sourceTree = "<group>"; };
 		253C3D75159BBF2E00120B8D /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = System/Library/Frameworks/CoreServices.framework; sourceTree = SDKROOT; };
 		253C3D77159BBF3900120B8D /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		253C3D79159BBF4000120B8D /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -416,8 +426,14 @@
 				25EE6A5915928D2C008A0DC8 /* Security.framework in Frameworks */,
 				256C3560158EA75F00E2BEC4 /* Cocoa.framework in Frameworks */,
 				E01A6CD215AE2F95004F442C /* StartOnLogin.framework in Frameworks */,
-				2537E32615B0D6490034E6E3 /* libencfs.6.dylib in Frameworks */,
-				2537E32715B0D6490034E6E3 /* libencfs.dylib in Frameworks */,
+				2537E33715B1012F0034E6E3 /* libboost_filesystem-mt.dylib in Frameworks */,
+				2537E33815B1012F0034E6E3 /* libboost_serialization-mt.dylib in Frameworks */,
+				2537E33915B1012F0034E6E3 /* libboost_system-mt.dylib in Frameworks */,
+				2537E34C15B125320034E6E3 /* libintl.8.dylib in Frameworks */,
+				2537E34D15B125320034E6E3 /* librlog.5.0.0.dylib in Frameworks */,
+				2537E34E15B125320034E6E3 /* librlog.5.dylib in Frameworks */,
+				2537E35A15B1271D0034E6E3 /* libintl.dylib in Frameworks */,
+				2537E35B15B1271D0034E6E3 /* librlog.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -445,30 +461,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		2537E31315B0D63A0034E6E3 /* bin */ = {
-			isa = PBXGroup;
-			children = (
-				2537E31415B0D63A0034E6E3 /* .gitignore */,
-				2537E31515B0D63A0034E6E3 /* get_dropbox_folder.sh */,
-				2537E31615B0D63A0034E6E3 /* simple-mailer.py */,
-				2537E31715B0D63A0034E6E3 /* yc-encfs */,
-				2537E31815B0D63A0034E6E3 /* yc-encfsctl */,
-				2537E31915B0D63A0034E6E3 /* yc-encfssh */,
-			);
-			path = bin;
-			sourceTree = "<group>";
-		};
-		2537E32015B0D6490034E6E3 /* lib */ = {
-			isa = PBXGroup;
-			children = (
-				2537E32115B0D6490034E6E3 /* .gitignore */,
-				2537E32215B0D6490034E6E3 /* libencfs.6.dylib */,
-				2537E32315B0D6490034E6E3 /* libencfs.dylib */,
-				2537E32415B0D6490034E6E3 /* libencfs.la */,
-			);
-			path = lib;
-			sourceTree = "<group>";
-		};
 		254412EB15AFBA640098B8FB /* FileBrowser */ = {
 			isa = PBXGroup;
 			children = (
@@ -488,8 +480,6 @@
 				E06E2B3F15A7671B00E52B2D /* errors.h */,
 				256C356D158EA75F00E2BEC4 /* Youcrypt-Prefix.pch */,
 				256C356E158EA75F00E2BEC4 /* Credits.rtf */,
-				2537E31315B0D63A0034E6E3 /* bin */,
-				2537E32015B0D6490034E6E3 /* lib */,
 				25F3D154159243E300E3383C /* Classes */,
 				25F3D1521592436000E3383C /* UI */,
 				25F3D1531592437700E3383C /* Plists */,
@@ -844,6 +834,14 @@
 		E6C0469E15AE1A58004B52E5 /* lib */ = {
 			isa = PBXGroup;
 			children = (
+				2537E35815B1271D0034E6E3 /* libintl.dylib */,
+				2537E35915B1271D0034E6E3 /* librlog.dylib */,
+				2537E32F15B1012F0034E6E3 /* libboost_filesystem-mt.dylib */,
+				2537E33015B1012F0034E6E3 /* libboost_serialization-mt.dylib */,
+				2537E33115B1012F0034E6E3 /* libboost_system-mt.dylib */,
+				2537E34915B125320034E6E3 /* libintl.8.dylib */,
+				2537E34A15B125320034E6E3 /* librlog.5.0.0.dylib */,
+				2537E34B15B125320034E6E3 /* librlog.5.dylib */,
 				25E8BC2F15AE4F7200A323D8 /* libencfs.6.dylib */,
 				25E8BC3015AE4F7200A323D8 /* libencfs.dylib */,
 				25E8BC3115AE4F7200A323D8 /* libencfs.la */,
@@ -1005,6 +1003,22 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2537E35C15B127300034E6E3 /* libintl.dylib in Resources */,
+				2537E35D15B127300034E6E3 /* librlog.dylib in Resources */,
+				E6C046A015AE1A58004B52E5 /* get_dropbox_folder.sh in Resources */,
+				E6C046A115AE1A58004B52E5 /* simple-mailer.py in Resources */,
+				2537E35515B126640034E6E3 /* yc-encfs in Resources */,
+				2537E35615B126640034E6E3 /* yc-encfsctl in Resources */,
+				2537E35715B126640034E6E3 /* yc-encfssh in Resources */,
+				2537E34F15B126520034E6E3 /* libintl.8.dylib in Resources */,
+				2537E35115B126520034E6E3 /* librlog.5.dylib in Resources */,
+				2537E35215B126520034E6E3 /* libencfs.6.dylib in Resources */,
+				2537E35015B126520034E6E3 /* librlog.5.0.0.dylib in Resources */,
+				2537E35315B126520034E6E3 /* libencfs.dylib in Resources */,
+				2537E35415B126520034E6E3 /* libencfs.la in Resources */,
+				2537E33F15B101480034E6E3 /* libboost_filesystem-mt.dylib in Resources */,
+				2537E34015B101480034E6E3 /* libboost_serialization-mt.dylib in Resources */,
+				2537E34115B101480034E6E3 /* libboost_system-mt.dylib in Resources */,
 				256C3570158EA75F00E2BEC4 /* Credits.rtf in Resources */,
 				256C35A9158EAF8700E2BEC4 /* Preferences.xib in Resources */,
 				25F3D14D15923FE800E3383C /* Decrypt.xib in Resources */,
@@ -1040,8 +1054,6 @@
 				E6C0468E15AE18B4004B52E5 /* GmailSheetController.xib in Resources */,
 				E6C0468F15AE18B4004B52E5 /* MainMenu.xib in Resources */,
 				E6C0469915AE1A35004B52E5 /* dsa_pub.pem in Resources */,
-				E6C046A015AE1A58004B52E5 /* get_dropbox_folder.sh in Resources */,
-				E6C046A115AE1A58004B52E5 /* simple-mailer.py in Resources */,
 				E6C046B215AE1A84004B52E5 /* ActionGear.png in Resources */,
 				E6C046B315AE1A84004B52E5 /* box-logo.png in Resources */,
 				E6C046B415AE1A84004B52E5 /* Cancel.png in Resources */,
@@ -1075,14 +1087,6 @@
 				254412E515AFB1E60098B8FB /* DBSetup.xib in Resources */,
 				E67AC5C715AFA7AD005A7938 /* Grey_Add_Folder.png in Resources */,
 				E67AC5C915AFB0C4005A7938 /* Grey_Open_Folder.png in Resources */,
-				2537E31A15B0D63A0034E6E3 /* .gitignore in Resources */,
-				2537E31B15B0D63A0034E6E3 /* get_dropbox_folder.sh in Resources */,
-				2537E31C15B0D63A0034E6E3 /* simple-mailer.py in Resources */,
-				2537E31D15B0D63A0034E6E3 /* yc-encfs in Resources */,
-				2537E31E15B0D63A0034E6E3 /* yc-encfsctl in Resources */,
-				2537E31F15B0D63A0034E6E3 /* yc-encfssh in Resources */,
-				2537E32515B0D6490034E6E3 /* .gitignore in Resources */,
-				2537E32815B0D6490034E6E3 /* libencfs.la in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
