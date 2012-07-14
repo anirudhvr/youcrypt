@@ -239,17 +239,54 @@ MixpanelAPI *mixpanel;
         [directories addObject:dir];                
     FoundOne:      
         [dir checkYoucryptDirectoryStatus:YES]; // Check that it's actually mounted.
+
+        NSString *source = [NSString stringWithFormat:@"tell application \"Finder\"\n"
+                            "set selectedItems to selection\n"
+                            "if ((count of selectedItems) > 0) then\n"
+                            "set selectedItem to ((item 1 of selectedItems) as alias)\n"
+                            "POSIX path of selectedItem\n"
+                            "end if\n"
+                            "end tell\n"];
+        NSAppleScript *update=[[NSAppleScript alloc] initWithSource:source];
+        NSDictionary *err;
+        NSAppleEventDescriptor *ret = [update executeAndReturnError:&err];
+        NSString *finderSelPath = [ret stringValue];
+        NSString *finderPath;
+        
+        source = [NSString stringWithFormat:@"tell application \"Finder\"\n"
+                  "set selectedItems to selection\n"
+                  "POSIX path of (target of Finder window 1 as alias)\n"
+                  "end tell\n"];
+        update = [[NSAppleScript alloc] initWithSource:source];
+        ret = [update executeAndReturnError:&err];
+        finderPath = [ret stringValue];
+        
+        if (((finderPath != nil) && ([finderPath isEqualToString:[[dir.path stringByDeletingLastPathComponent] stringByAppendingFormat:@"/"]]))
+            || ((finderPath != nil) && ([finderSelPath isEqualToString:[dir.path stringByAppendingFormat:@"/"]])))
+            callFinderScript = YES;
+        else {
+            callFinderScript = NO;
+        }
+            
+
         if (dir.status == YoucryptDirectoryStatusMounted) {
-            // Just need to open the folder in this case            
-//            [[NSWorkspace sharedWorkspace] openFile:dir.mountedPath];	
-            NSString *source=[NSString stringWithFormat:@"tell application \"Finder\"\n"
-                              "activate\n"
-                              "set target of Finder window 1 to disk \"%@\"\n"
-                              "set current view of Finder window 1 to icon view\n"
-                              "end tell\n", dir.alias];
-            NSAppleScript *update=[[NSAppleScript alloc] initWithSource:source];
-            NSDictionary *err;
-            [update executeAndReturnError:&err];
+            // Just need to open the folder in this case  
+            if (callFinderScript == NO) {
+                [[NSWorkspace sharedWorkspace] openFile:dir.mountedPath];	
+            }
+            else {
+                
+                NSString *source=[NSString stringWithFormat:@"tell application \"Finder\"\n"
+                                  "activate\n"
+                                  "set target of Finder window 1 to disk \"%@\"\n"
+                                  "set current view of Finder window 1 to icon view\n"
+                                  "end tell\n", dir.alias];
+                NSAppleScript *update=[[NSAppleScript alloc] initWithSource:source];
+                NSDictionary *err;
+                NSAppleEventDescriptor *ret = [update executeAndReturnError:&err];
+                if (err != nil)
+                    [[NSWorkspace sharedWorkspace] openFile:dir.mountedPath];
+            }
         } else {
             dir.status = YoucryptDirectoryStatusProcessing;
             dir.mountedPath = mountPoint;
@@ -285,6 +322,23 @@ MixpanelAPI *mixpanel;
         if ([path isEqualToString:dir.path]) {
             NSLog(@"Setting it to mounted\n");
             dir.status = YoucryptDirectoryStatusMounted;
+            if (callFinderScript == NO) {
+                [[NSWorkspace sharedWorkspace] openFile:dir.mountedPath];	
+            }
+            else {
+                
+                NSString *source=[NSString stringWithFormat:@"tell application \"Finder\"\n"
+                                  "activate\n"
+                                  "set target of Finder window 1 to disk \"%@\"\n"
+                                  "set current view of Finder window 1 to icon view\n"
+                                  "end tell\n", dir.alias];
+                NSAppleScript *update=[[NSAppleScript alloc] initWithSource:source];
+                NSDictionary *err;
+                NSAppleEventDescriptor *ret = [update executeAndReturnError:&err];
+                if (err != nil)
+                    [[NSWorkspace sharedWorkspace] openFile:dir.mountedPath];
+            }
+            
 //            [dir checkYoucryptDirectoryStatus:YES];
         }
     }

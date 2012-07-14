@@ -113,7 +113,7 @@
     }   
     
     
-    [[NSWorkspace sharedWorkspace] openFile:destFolder];	
+//    [[NSWorkspace sharedWorkspace] openFile:destFolder];	
     [theApp didDecrypt:sourceFolderPath];
     [self close];
 }
