@@ -42,6 +42,8 @@
 		2537E35B15B1271D0034E6E3 /* librlog.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2537E35915B1271D0034E6E3 /* librlog.dylib */; settings = {ATTRIBUTES = (Weak, ); }; };
 		2537E35C15B127300034E6E3 /* libintl.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 2537E35815B1271D0034E6E3 /* libintl.dylib */; };
 		2537E35D15B127300034E6E3 /* librlog.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 2537E35915B1271D0034E6E3 /* librlog.dylib */; };
+		2537E38115B492720034E6E3 /* StartOnLogin.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E635DE8D15AE2BAA00A81117 /* StartOnLogin.framework */; };
+		2537E38815B496400034E6E3 /* StartOnLogin.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = E635DE8D15AE2BAA00A81117 /* StartOnLogin.framework */; };
 		253C3D7F159BBF9400120B8D /* BoxFSA.m in Sources */ = {isa = PBXBuildFile; fileRef = 253C3D7E159BBF9400120B8D /* BoxFSA.m */; };
 		254412E515AFB1E60098B8FB /* DBSetup.xib in Resources */ = {isa = PBXBuildFile; fileRef = 254412E415AFB1E60098B8FB /* DBSetup.xib */; };
 		254412F615AFBAD60098B8FB /* FSBrowserCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 254412F315AFBAD60098B8FB /* FSBrowserCell.m */; };
@@ -69,7 +71,6 @@
 		25F3D15B159244E800E3383C /* Encrypt.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25F3D159159244E800E3383C /* Encrypt.xib */; };
 		E007C09D15A646B500D60802 /* libFunctions.m in Sources */ = {isa = PBXBuildFile; fileRef = 25F3D1501592435600E3383C /* libFunctions.m */; };
 		E007C09F15A646DC00D60802 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25EE6A5815928D2C008A0DC8 /* Security.framework */; };
-		E01A6CD215AE2F95004F442C /* StartOnLogin.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E01A6CD115AE2F95004F442C /* StartOnLogin.framework */; };
 		E01A6CD315AE3D1F004F442C /* SSKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = E6C046DA15AE29AA004B52E5 /* SSKeychain.m */; };
 		E01A6CD415AE3D25004F442C /* CompressingLogFileManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 252C3A971593E84F0044EB3C /* CompressingLogFileManager.m */; };
 		E01A6CD515AE3D33004F442C /* DDASLLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 252C3A571593C6A70044EB3C /* DDASLLogger.m */; };
@@ -194,6 +195,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				2537E38815B496400034E6E3 /* StartOnLogin.framework in CopyFiles */,
 				E6C046DD15AE2B63004B52E5 /* Sparkle.framework in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -298,7 +300,6 @@
 		25F3D1501592435600E3383C /* libFunctions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = libFunctions.m; path = sources/libFunctions.m; sourceTree = "<group>"; };
 		25F3D159159244E800E3383C /* Encrypt.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Encrypt.xib; sourceTree = "<group>"; };
 		25FDA07015A269B1004F2914 /* Automator.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Automator.framework; path = System/Library/Frameworks/Automator.framework; sourceTree = SDKROOT; };
-		E01A6CD115AE2F95004F442C /* StartOnLogin.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StartOnLogin.framework; path = "../../../../../../../Library/Developer/Xcode/DerivedData/Youcrypt-fdubftqonqnypceknpzofarcidfz/Build/Products/Debug/StartOnLogin.framework"; sourceTree = "<group>"; };
 		E01A6CDA15AE57A9004F442C /* libcommonCrypto.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcommonCrypto.dylib; path = usr/lib/system/libcommonCrypto.dylib; sourceTree = SDKROOT; };
 		E054042015AB1CE10011E5CC /* RestoreController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RestoreController.h; path = sources/RestoreController.h; sourceTree = "<group>"; };
 		E054042115AB1CE10011E5CC /* RestoreController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RestoreController.m; path = sources/RestoreController.m; sourceTree = "<group>"; };
@@ -386,7 +387,6 @@
 		E6C0468C15AE18B4004B52E5 /* MainMenu.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainMenu.xib; sourceTree = "<group>"; };
 		E6C0469215AE1972004B52E5 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		E6C0469815AE1A35004B52E5 /* dsa_pub.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = dsa_pub.pem; sourceTree = "<group>"; };
-		E6C0469B15AE1A58004B52E5 /* email.pyc */ = {isa = PBXFileReference; lastKnownFileType = file; path = email.pyc; sourceTree = "<group>"; };
 		E6C0469C15AE1A58004B52E5 /* get_dropbox_folder.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = get_dropbox_folder.sh; sourceTree = "<group>"; };
 		E6C0469D15AE1A58004B52E5 /* simple-mailer.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; path = "simple-mailer.py"; sourceTree = "<group>"; };
 		E6C046A215AE1A83004B52E5 /* ActionGear.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ActionGear.png; sourceTree = "<group>"; };
@@ -421,11 +421,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2537E38115B492720034E6E3 /* StartOnLogin.framework in Frameworks */,
 				E67AC5BA15AF9BE3005A7938 /* QuartzCore.framework in Frameworks */,
 				E6C0468115AE1733004B52E5 /* Sparkle.framework in Frameworks */,
 				25EE6A5915928D2C008A0DC8 /* Security.framework in Frameworks */,
 				256C3560158EA75F00E2BEC4 /* Cocoa.framework in Frameworks */,
-				E01A6CD215AE2F95004F442C /* StartOnLogin.framework in Frameworks */,
 				2537E33715B1012F0034E6E3 /* libboost_filesystem-mt.dylib in Frameworks */,
 				2537E33815B1012F0034E6E3 /* libboost_serialization-mt.dylib in Frameworks */,
 				2537E33915B1012F0034E6E3 /* libboost_system-mt.dylib in Frameworks */,
@@ -508,7 +508,6 @@
 			children = (
 				E01A6CDA15AE57A9004F442C /* libcommonCrypto.dylib */,
 				253C3D7B159BBF4A00120B8D /* libxml2.dylib */,
-				E01A6CD115AE2F95004F442C /* StartOnLogin.framework */,
 				256C3564158EA75F00E2BEC4 /* Foundation.framework */,
 				256C3563158EA75F00E2BEC4 /* CoreData.framework */,
 				256C3562158EA75F00E2BEC4 /* AppKit.framework */,
@@ -819,7 +818,6 @@
 		E6C0469A15AE1A58004B52E5 /* bin */ = {
 			isa = PBXGroup;
 			children = (
-				E6C0469B15AE1A58004B52E5 /* email.pyc */,
 				25E8BC2315AE4F5F00A323D8 /* get_dropbox_folder.sh */,
 				25E8BC2415AE4F5F00A323D8 /* simple-mailer.py */,
 				25E8BC2515AE4F5F00A323D8 /* yc-encfs */,

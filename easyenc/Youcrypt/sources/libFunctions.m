@@ -246,6 +246,8 @@
                 
         NSString *str = [NSString stringWithFormat:@"%d\nencfs\n--pw\n%@\n%@--\n%@\n%@\n%@\n", 
                          count, password, idletime_s, encFolder, decFolder, [fuseopts componentsJoinedByString:@"\n"]];
+        NSLog(@"Decrypt args : %@",str);
+        
         NSData *data = [str dataUsingEncoding:NSUTF8StringEncoding];
                         
         //NSFileHandle *err = [encfsProc standardError];
@@ -272,9 +274,17 @@
     NSFileHandle *io = [NSFileHandle alloc];
     NSString *vol = [NSString stringWithString:(volname == nil ? @"Youcrypt Volume" : volname)];
     NSString *encfsPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:ENCFS]; 
-    if ([libFunctions execWithSocket:encfsPath arguments:nil env:nil io:io proc:encfsProc]) {        
-        [io writeData:[[NSString stringWithFormat:@"8\nencfs\n--pw\n%@\n--\n%@\n%@\n-ofsname=YoucryptFS\n-ovolname=%@\n", 
-                        password, encFolder, decFolder, vol] dataUsingEncoding:NSUTF8StringEncoding]];
+    
+    NSDictionary *newenvsetting = [NSDictionary dictionaryWithObjectsAndKeys:[[NSBundle mainBundle] resourcePath], @"DYLD_LIBRARY_PATH", nil];
+    [encfsProc setEnvironment:newenvsetting];
+    
+    NSDictionary *env = [encfsProc environment];
+    NSLog(@"getenv : %@",env);
+
+    if ([libFunctions execWithSocket:encfsPath arguments:nil env:env io:io proc:encfsProc]) {   
+        NSString *args = [NSString stringWithFormat:@"8\nencfs\n--pw\n%@\n--\n%@\n%@\n-ofsname=YoucryptFS\n-ovolname=%@\n", 
+                          password, encFolder, decFolder, vol];
+        [io writeData:[args dataUsingEncoding:NSUTF8StringEncoding]];
         [encfsProc waitUntilExit];
         [io closeFile];
         if ([encfsProc terminationStatus])
