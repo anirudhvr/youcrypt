@@ -89,7 +89,10 @@ MixpanelAPI *mixpanel;
     theApp = self;
     dropboxEncryptedFolders = [[NSMutableSet alloc] init];
     mixpanel = [MixpanelAPI sharedAPIWithToken:MIXPANEL_TOKEN];
-    mixpanelUUID = [NSString stringWithFormat:@"YC_%@",[[NSProcessInfo processInfo] globallyUniqueString]];
+    NSError *error = nil;
+    mixpanelUUID = [NSString stringWithContentsOfFile:configDir.youcryptUserUUID encoding:NSASCIIStringEncoding error:&error];
+    [mixpanelUUID stringByReplacingOccurrencesOfString:@"\n" withString:@""];
+    NSLog(@"mixpanel uuid : %@",mixpanelUUID);
     
     return self;
 }
@@ -490,6 +493,7 @@ MixpanelAPI *mixpanel;
     DDLogVerbose(@"showing %@", decryptController);
     
     if ((pp != nil) && !([pp isEqualToString:@""])) {
+        NSLog(@"Got pp from keychain successfully");
         decryptController.passphraseFromKeychain = pp;
         decryptController.keychainHasPassphrase = YES;
         [decryptController decrypt:self];
@@ -508,6 +512,7 @@ MixpanelAPI *mixpanel;
     restoreController.path = path;
     NSString *pp =[libFunctions getPassphraseFromKeychain:@"Youcrypt"];
     if (pp != nil && !([pp isEqualToString:@""])) {
+        NSLog(@"Got pp from keychain successfully");
         restoreController.passwd = pp;
         restoreController.keychainHasPassphrase = YES;
         [restoreController restore:self];
