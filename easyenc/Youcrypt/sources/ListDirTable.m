@@ -47,15 +47,25 @@
 - (void) setImageViewUnderTable:(NSImageView*)imgView
 {
     backgroundImageView = imgView;
-    defaultImage = [NSImage imageNamed:@"Grey_Add_Folder.png"];
-    otherImage = [NSImage imageNamed:@"Grey_Open_Folder.png"];
 
+}
+
+- (void) setDefaultImage
+{
+    backgroundImageView = defaultImage;
+}
+
+- (void) setOtherImage
+{
+    backgroundImageView = otherImage;
 }
 
 - (void)awakeFromNib {
     
     [super awakeFromNib];
     [[self enclosingScrollView] setDrawsBackground: NO];
+    defaultImage = [NSImage imageNamed:@"Grey_Add_Folder.png"];
+    otherImage = [NSImage imageNamed:@"Grey_Open_Folder.png"];
 }
 
 - (BOOL)isOpaque {
@@ -88,6 +98,12 @@
         }
     }
         return ret;
+}
+
+- (void)draggingEnded:(id < NSDraggingInfo >)sender
+{
+    [super draggingEnded:sender];
+    [self draggingExited:sender];
 }
 
 - (void)draggingExited:(id < NSDraggingInfo >)sender

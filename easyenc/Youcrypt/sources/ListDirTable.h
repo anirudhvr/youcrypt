@@ -24,5 +24,7 @@
 - (void) keyDown:(NSEvent *)theEvent;
 - (void) setListDir:(ListDirectoriesWindow*)listDirObj;
 - (void) setImageViewUnderTable:(NSImageView*)imgView;
+- (void) setDefaultImage;
+- (void) setOtherImage;
 
 @end

@@ -48,11 +48,28 @@
 	<key>NSHumanReadableCopyright</key>
 	<string>Copyright © 2012 Nouvou Inc.. All rights reserved.</string>
 	<key>NSMainNibFile</key>
-	<string>ListDirectoriesWindow</string>
+	<string>MainMenu</string>
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>
 	<key>NSServices</key>
 	<array>
+		<dict>
+			<key>NSMenuItem</key>
+			<dict>
+				<key>default</key>
+				<string>Decrypt permanently with Youcrypt</string>
+			</dict>
+			<key>NSMessage</key>
+			<string>doDecryptAndRestore</string>
+			<key>NSPortName</key>
+			<string>YoucryptService</string>
+			<key>NSRequiredContext</key>
+			<dict/>
+			<key>NSSendTypes</key>
+			<array>
+				<string>NSURLPboardType</string>
+			</array>
+		</dict>
 		<dict>
 			<key>NSMenuItem</key>
 			<dict>

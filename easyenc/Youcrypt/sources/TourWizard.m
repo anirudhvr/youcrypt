@@ -42,6 +42,8 @@
     
     NSDictionary *ani = [NSDictionary dictionaryWithObject:transition forKey:@"subviews"];
     [contentView setAnimations:ani];
+    
+    currentView.tourWizard = self;
 }
 
 - (void)setCurrentView:(LinkedView*)newView

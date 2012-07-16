@@ -35,7 +35,7 @@
         
 }
 
-@property (atomic, strong) IBOutlet NSTableView *table;
+@property (atomic, strong) IBOutlet ListDirTable *table;
 @property (atomic, strong) IBOutlet NSImageView *backgroundImageView;
 
 @property (nonatomic, strong) PassphraseSheetController *passphraseSheet;

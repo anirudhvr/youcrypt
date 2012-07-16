@@ -51,6 +51,13 @@
     return;
 }
 
+- (void)doDecryptAndRestore:(NSPasteboard *)pboard
+         userData:(NSString *)data
+            error:(NSString **)error
+{
+    NSLog(@"Dodecryptandrestore");
+    return;
+}
 
 
 @end

@@ -9,6 +9,8 @@
 #import <Cocoa/Cocoa.h>
 #import <QuartzCore/CoreAnimation.h>
 
+@class TourWizard;
+
 @interface LinkedView : NSView
 {
     IBOutlet LinkedView *previousView;
@@ -21,5 +23,9 @@
 
 @property(nonatomic, strong)LinkedView *previousView, *nextView;
 @property(nonatomic, strong) NSTextField *message;
+@property(nonatomic, strong) TourWizard *tourWizard;
+
+- (void)goToNextView;
+- (void)goToPrevView;
 
 @end

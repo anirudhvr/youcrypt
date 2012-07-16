@@ -676,8 +676,9 @@ MixpanelAPI *mixpanel;
         NSString *path = [[NSURL URLFromPasteboard:pb] path];
         NSFileManager *fm = [NSFileManager defaultManager];
         
+        [listDirectories.table setDefaultImage];
         BOOL isDir;
-        if ([fm fileExistsAtPath:path isDirectory:&isDir] && isDir) {  
+        if ([fm fileExistsAtPath:path isDirectory:&isDir] && isDir) {
             
             //FIXME:  If it's a .yc file but not in our list file.
             
@@ -685,21 +686,6 @@ MixpanelAPI *mixpanel;
             if ([[path pathExtension] isEqualToString:@"yc"]) {
                 [theApp openEncryptedFolder:path];
             }
-//            else if ([fm fileExistsAtPath:[path stringByAppendingPathComponent:@"encrypted.yc"]
-//                              isDirectory:&isDir] && isDir) {
-//                NSAlert *alert = [NSAlert alertWithMessageText:@"Decrypt?"
-//                                                 defaultButton:@"Decrypt"
-//                                               alternateButton:@"Cancel"
-//                                                   otherButton:nil
-//                                     informativeTextWithFormat:@"This folder already contains encrypted content.  Decrypt and open?"];
-//                if ([alert runModal] == NSAlertDefaultReturn) {
-//                    [theApp openEncryptedFolder:[path stringByAppendingPathComponent:@"encrypted.yc"]];
-//                    return YES;
-//                }              
-//                else {
-//                    return  NO;
-//                }
-//            }                                           
             else {
                 [theApp encryptFolder:path];
             }

@@ -8,12 +8,13 @@
 
 
 #import "LinkedView.h"
-
+#import "TourWizard.h"
 
 @implementation LinkedView
 
 @synthesize  previousView, nextView;
 @synthesize message;
+@synthesize tourWizard;
 
 - (id)initWithFrame:(NSRect)frame
 {
@@ -21,6 +22,8 @@
     if (self) {
         // Initialization code here.
     }
+    
+    tourWizard = nil;
     
     return self;
 }
@@ -34,7 +37,6 @@
     [previousButton setEnabled:(previousView != nil)];
     [nextButton setEnabled:(nextView != nil)];
     [message setStringValue:@""];
-    
 }
 
 - (void)drawRect:(NSRect)rect
@@ -52,6 +54,16 @@
     return NO;
 }
 
+
+- (void)goToNextView
+{
+    [tourWizard nextView:self];
+}
+
+- (void)goToPrevView
+{
+    [tourWizard previousView:self];
+}
 
 
 @end
