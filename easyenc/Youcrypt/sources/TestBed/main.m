@@ -9,7 +9,6 @@
 #import <Foundation/Foundation.h>
 #import "YoucryptDirectory.h"
 #import "libFunctions.h"
-#import "Contrib/Lumberjack/logging.h"
 
 
 int ddLogLevel = LOG_LEVEL_VERBOSE;

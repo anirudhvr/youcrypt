@@ -55,7 +55,6 @@
 
 - (void)sheetWillDisplay {
     [super sheetWillDisplay];
-    NSLog(@"Volume props info sheet will display");
   
     
 }

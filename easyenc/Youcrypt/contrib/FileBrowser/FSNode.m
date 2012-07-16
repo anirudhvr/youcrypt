@@ -38,7 +38,7 @@
         NSError *myError = nil;
         NSArray *contents = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:_path error:&myError];
         if (contents == nil) {
-            NSLog(@"FSNode Error: %@", myError);
+            DDLogError(@"FSNode Error: %@", myError);
             return nil;
         }
         NSMutableArray *sorted = [NSMutableArray arrayWithArray:contents];

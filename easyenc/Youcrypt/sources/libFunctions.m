@@ -9,7 +9,6 @@
 #import "libFunctions.h"
 
 #import "contrib/SSKeychain/SSKeychain.h"
-#import "contrib/Lumberjack/logging.h"
 #import <errno.h>
 #import <CommonCrypto/CommonDigest.h>
 
@@ -25,10 +24,10 @@
     NSString *passphraseFromKeychain = [SSKeychain passwordForService:service account:NSUserName() error:&error];
     
     if (error) {
-        NSLog(@"Did not get passphrase");
+        DDLogInfo(@"libFunctions:getPPFromKeychain: Did not get passphrase");
         return nil;
     } else {
-        NSLog(@"Got passphrase from keychain %@", passphraseFromKeychain);
+        DDLogInfo(@"libFunctions:getPPFromKeychain: Got passphrase from keychain %@", passphraseFromKeychain);
         return passphraseFromKeychain;
     }
 }
@@ -40,10 +39,10 @@
     NSString *yourPasswordString = passphrase;
     NSError *error = nil;
     if([SSKeychain setPassword:yourPasswordString forService:service account:NSUserName() error:&error])
-        NSLog(@"Successfully registered passphrase wiht keychain");
+        DDLogInfo(@"libFunctions:registerWithKeychain: Successfully registered passphrase wiht keychain");
     if (error) {
-        NSLog(@"Error registering with Keychain");
-        NSLog(@"Register Keychain Error: %@",[error localizedDescription]);
+        DDLogInfo(@"libFunctions:registerWithKeychain: Error registering with Keychain");
+        DDLogInfo(@"libFunctions:registerWithKeychain: Register Keychain Error: %@",[error localizedDescription]);
         return NO;
     }
     return YES;
@@ -172,9 +171,9 @@
     [encfsProc setEnvironment:newenvsetting];
     
     NSDictionary *env = [encfsProc environment];
-    NSLog(@"getenv : %@",env);
+    DDLogVerbose(@"createEncfs: getenv : %@",env);
     
-    NSLog(@"ENCFSPATH : %@",encfsPath);
+    DDLogVerbose(@"ENCFSPATH : %@",encfsPath);
     if ([libFunctions execWithSocket:encfsPath arguments:nil env:env io:io proc:encfsProc]) {    
         int count = 8;
         
@@ -187,16 +186,16 @@
         NSString *encfsArgs = [NSString stringWithFormat:@"8\nencfs\n--nu\n%d\n--pw\n%@\n%@--\n%@\n%@\n",
                                numUsers, pwd, encryptfilenames_s, encFolder, decFolder];
         
-        NSLog(@"encfsargs\n%@",encfsArgs);
+        DDLogVerbose(@"encfsargs\n%@",encfsArgs);
         [io writeData:[encfsArgs dataUsingEncoding:NSUTF8StringEncoding]];
         [encfsProc waitUntilExit];
-        NSLog(@"SUCCESS");
+        DDLogVerbose(@"SUCCESS");
 
         [io closeFile];
         return YES;
     }
     else {
-        NSLog(@"FAIL");
+        DDLogVerbose(@"FAIL");
         return NO;
     }
     
@@ -233,7 +232,7 @@
     [encfsProc setEnvironment:newenvsetting];
     
     NSDictionary *env = [encfsProc environment];
-    NSLog(@"getenv : %@",env);
+    DDLogInfo(@"mountEncfs: getenv : %@",env);
     
     if ([libFunctions execWithSocket:encfsPath arguments:nil env:env io:io proc:encfsProc]) { 
         int count = 6 + [fuseopts count];
@@ -246,7 +245,7 @@
                 
         NSString *str = [NSString stringWithFormat:@"%d\nencfs\n--pw\n%@\n%@--\n%@\n%@\n%@\n", 
                          count, password, idletime_s, encFolder, decFolder, [fuseopts componentsJoinedByString:@"\n"]];
-        NSLog(@"Decrypt args : %@",str);
+        DDLogInfo(@"mountEncfs: Decrypt args : %@",str);
         
         NSData *data = [str dataUsingEncoding:NSUTF8StringEncoding];
                         
@@ -279,7 +278,7 @@
     [encfsProc setEnvironment:newenvsetting];
     
     NSDictionary *env = [encfsProc environment];
-    NSLog(@"getenv : %@",env);
+    DDLogInfo(@"mountEncfs: getenv : %@",env);
 
     if ([libFunctions execWithSocket:encfsPath arguments:nil env:env io:io proc:encfsProc]) {   
         NSString *args = [NSString stringWithFormat:@"8\nencfs\n--pw\n%@\n--\n%@\n%@\n-ofsname=YoucryptFS\n-ovolname=%@\n", 
@@ -307,21 +306,21 @@
     NSTask *encfsProc = [NSTask alloc];
     NSFileHandle *io = [NSFileHandle alloc];
     NSString *encfsctlPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:ENCFSCTL]; 
-    NSLog(@"ENCFSCTL Path : %@",encfsctlPath);
+    DDLogInfo(@"changeEncfsPwd: ENCFSCTL Path : %@",encfsctlPath);
     if ([libFunctions execWithSocket:encfsctlPath arguments:[NSArray arrayWithObjects:@"autopasswd", path, nil] env:nil io:io proc:encfsProc]) {
         [io writeData:[[NSString stringWithFormat:@"%@\n%@\n", oldPasswd, newPasswd] dataUsingEncoding:NSUTF8StringEncoding]];
         [encfsProc waitUntilExit];
         if ([encfsProc terminationStatus] == 0) {
-            NSLog(@"ENCFSCTL SUCCEEDED!");
+            DDLogInfo(@"changeEncfsPwd: ENCFSCTL SUCCEEDED!");
             return YES;
         }
         else {
-            NSLog(@"ENCFSCTL FAILED!");
+            DDLogInfo(@"changeEncfsPwd: ENCFSCTL FAILED!");
             return NO;
         }
     }
     else {
-        NSLog(@"ENCFSCTL FAILED 2!");
+        DDLogInfo(@"changeEncfsPwd: ENCFSCTL FAILED 2!");
         return NO;
     }
 }
@@ -375,7 +374,7 @@
     }
     
     
-    NSLog(@"Dropbox folder loc: %@",dropboxURL);
+    DDLogInfo(@"Dropbox folder loc: %@",dropboxURL);
     return [dropboxURL stringByReplacingOccurrencesOfString:@"\n" withString:@""];
 }
 

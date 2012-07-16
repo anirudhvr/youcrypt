@@ -46,7 +46,6 @@
 }
 
 - (void)saveClicked:(id)sender {
-    NSLog(@" username %@",[preferenceController getPreference:YC_USERREALNAME]);
     if([[password stringValue] isEqualToString:@""] || 
        [[password stringValue] isNotEqualTo:[confirmPassword stringValue]]) {
         
@@ -74,7 +73,6 @@
 
 - (void)sheetWillDisplay {
     [super sheetWillDisplay];
-    NSLog(@"First run sheet will display");
     
     
 }

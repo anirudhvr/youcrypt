@@ -10,7 +10,6 @@
 #import "AppDelegate.h"
 #import "ListDirectoriesWindow.h"
 
-
 @implementation ListDirTable
 
 @synthesize listDirObj;
@@ -25,11 +24,9 @@
 {
     [super keyDown:theEvent];			
 
-    NSLog(@"KEY! : %d",theEvent.keyCode);
     switch (theEvent.keyCode) {
         case 125: // down
         case 126: // up
-            NSLog(@"ROW: %ld",[listDirObj.table selectedRow]);
             [listDirObj setStatusToSelectedRow:[listDirObj.table selectedRow]];
             break;
         case 117: // delete

@@ -31,7 +31,7 @@
     keychainHasPassphrase = NO;
 	if (![super initWithWindowNibName:@"Encrypt"]){
          return nil;
-         DDLogVerbose(@"nil");
+         DDLogVerbose(@"ERROR: encryptController is NIL in Encrypt.m");
     }
     return self;
 }
@@ -39,8 +39,6 @@
 -(void)awakeFromNib
 {
     [shareCheckBox setState:0];
-    NSLog(@"Encrypt awake from nib called");
-    
     
 }
 
@@ -142,13 +140,12 @@
     unsigned long long fileSize = 0;
     NSString *file;
     while(file = [direnum nextObject]) {
-        NSLog(@"enum : %@ %@",file,[file pathExtension]);
         fileSize += [[[NSFileManager defaultManager] attributesOfItemAtPath:file error:nil] fileSize];
         dirCount++;
     }
     
-    NSLog(@"%llu",fileSize);
-    NSLog(@"%d",dirCount);
+    DDLogInfo(@"Folder size: %llu",fileSize);
+    DDLogInfo(@"Folder count: %d",dirCount);
     
 	// The mount point is a temporary folder
     tempFolder = NSTemporaryDirectory();
@@ -204,9 +201,9 @@
     if (![libFunctions createEncFS:destFolder decryptedFolder:tempFolder numUsers:numberOfUsers combinedPassword:combinedPasswordString encryptFilenames:encfnames]) {
         // Error while encrypting.
         // TODO.  
-        NSLog(@"ERROR WHILE ENCRYPTING. createEncfs failed");
+        DDLogVerbose(@"ERROR WHILE ENCRYPTING. createEncfs failed");
     }  else {
-        NSLog(@"In encrypt: createEncfs succeeded");
+        DDLogVerbose(@"In encrypt: createEncfs succeeded");
     }
     
     // Send number of objects in directory

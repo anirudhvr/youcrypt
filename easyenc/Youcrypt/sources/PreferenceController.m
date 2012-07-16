@@ -7,7 +7,6 @@
 //
 
 #import "PreferenceController.h"
-#import "Contrib/Lumberjack/logging.h"
 #import "PassphraseSheetController.h"
 #import "GmailSheetController.h"
 #import "FirstRunSheetController.h"
@@ -15,6 +14,7 @@
 #import "libFunctions.h"
 #import "XMLDictionary.h"
 #import "AppDelegate.h"
+
 @implementation PreferenceController
 
 @synthesize boxClient;
@@ -67,7 +67,7 @@
 
 - (void)setPreference:(NSString*)key value:(id)val
 {
-    NSLog(@"setPref %@ %@",key,val);
+//    NSLog(@"setPref %@ %@",key,val);
     [preferences setObject:val forKey:key];
 }
 
@@ -84,17 +84,15 @@
 
     defaultPreferences = [[NSMutableDictionary alloc] initWithObjects:[NSArray arrayWithObjects:[libFunctions locateDropboxFolder], [self locateBoxFolder], [NSNumber numberWithInt:1], [NSNumber numberWithInt:1], @"", @"", @"", @"", nil] forKeys:preferencesKeys];
     
-    NSLog(@"defaultPrefs : %@",defaultPreferences);
+    DDLogVerbose(@"defaultPrefs : %@",defaultPreferences);
     
-    
-    DDLogVerbose(@"Preferences awakeFromNib called");
-  
+      
      // load preferences from NSUserDefaults
     [self readPreferences];
     //[preferences addEntriesFromDictionary:defaultPreferences];
 
     
-    NSLog(@"prefs : %@",preferences);
+    DDLogVerbose(@"prefs : %@",preferences);
 
     //[self updatePreferences:preferences];
     
@@ -102,16 +100,16 @@
     [email setStringValue:[self getPreference:YC_USEREMAIL]];
     [passphrase setStringValue:@"somerandomvalue"];
     [passphrase setEditable:NO];
-    if([self getPreference:YC_USERREALNAME] == nil)
-        NSLog(@"NIL!");
+//    if([self getPreference:YC_USERREALNAME] == nil)
+//        NSLog(@"NIL!");
 
     passphraseSheetController = [[PassphraseSheetController alloc] init];
     
     [tabView selectTabViewItem:[tabView tabViewItemAtIndex:0]];
     
-    NSLog(@"email, name : %@ %@ %@",[self getPreference:YC_USEREMAIL],[self getPreference:YC_USERREALNAME],@"");
-    NSLog(@"dbloc aw; %@",[self getPreference:YC_DROPBOXLOCATION]);
-    
+//    NSLog(@"email, name : %@ %@ %@",[self getPreference:YC_USEREMAIL],[self getPreference:YC_USERREALNAME],@"");
+//    NSLog(@"dbloc aw; %@",[self getPreference:YC_DROPBOXLOCATION]);
+//    
     if([self getPreference:YC_DROPBOXLOCATION] == nil){
         [dropboxLocation setHidden:YES];
     } else {
@@ -124,7 +122,7 @@
         [boxLocation setHidden:YES];
         
     } else {
-        NSLog(@"box loc valid : %@",[self getPreference:YC_BOXLOCATION]);
+        DDLogInfo(@"box loc valid : %@",[self getPreference:YC_BOXLOCATION]);
         [boxLocation setHidden:NO];
         [boxLocation setURL:[NSURL URLWithString:[self getPreference:YC_BOXLOCATION]]];
         [linkBox setTitle:@"Unlink Box Account"];
@@ -134,7 +132,7 @@
         [linkGmail setTitle:@"Set GMail Credentials"];
 
     } else {
-        NSLog(@"gmail username valid : %@",[self getPreference:YC_GMAILUSERNAME]);
+        DDLogInfo(@"gmail username valid : %@",[self getPreference:YC_GMAILUSERNAME]);
         [linkGmail setTitle:@"Change GMail Credentials"];
     }
     
@@ -161,7 +159,7 @@
     NSString *boxXMLPath = [NSString stringWithFormat:@"%@/Library/Application Support/Box Sync/LastLoggedInUserInfo.xml",NSHomeDirectory()];
     NSDictionary *xmlDoc = [NSDictionary dictionaryWithXMLFile:boxXMLPath];
     NSString *boxFolderPath = [[xmlDoc objectForKey:@"Settings"] objectForKey:@"_RootSyncFolderLocation"];
-    NSLog(@"Box folder loc : %@",boxFolderPath);
+    DDLogVerbose(@"Box folder loc : %@",boxFolderPath);
     if (boxFolderPath == nil)
         boxFolderPath = [[NSString alloc] initWithString:@""];
     return boxFolderPath;
@@ -169,7 +167,7 @@
 
 -(IBAction)linkBoxAccount:(id)sender
 {
-    NSLog(@"box status: %@",[self getPreference:YC_BOXSTATUS]);
+    DDLogVerbose(@"box status: %@",[self getPreference:YC_BOXSTATUS]);
     if(([self getPreference:YC_BOXSTATUS] == nil) || ([[self getPreference:YC_BOXSTATUS] isEqualToString:@""]) ) {
         [boxClient auth];
         
@@ -182,7 +180,7 @@
         [alert beginSheetModalForWindow:self.window modalDelegate:self didEndSelector:@selector(boxAuthDone:returnCode:) contextInfo:nil];
     }
     else {
-        NSLog(@"removing boxstatus pref");
+        DDLogVerbose(@"removing boxstatus pref");
         //[self removePreference:YC_BOXSTATUS];
         [self setPreference:YC_BOXSTATUS value:@""];
         [self refreshBoxLinkStatus:NO];
@@ -194,12 +192,12 @@
         gmailSheetController.preferenceController = self;
         [gmailSheetController beginSheetModalForWindow:self.window completionHandler:^(NSUInteger returnCode) {
             if (returnCode == kSheetReturnedSave) {
-                NSLog(@"Gmail password saved");
+                DDLogVerbose(@"linkGmailAccount: Gmail password saved");
                 [self refreshGmailLinkStatus:YES];
             } else if (returnCode == kSheetReturnedCancel) {
-                NSLog(@"Gmail password cancelled");
+                DDLogVerbose(@"linkGmailAccount: Gmail password cancelled");
             } else {
-                NSLog(@"Unknown return code");
+                DDLogVerbose(@"linkGmailAccount: Unknown return code");
             }
         }];
 
@@ -217,9 +215,9 @@
 
 -(void)sendEmail
 {
-    char *shellFile = "/Users/hr/simple-mailer.py --tls hrbaconbits@gmail.com:Nouvou123@smtp.gmail.com:587 hardik988@gmail.com hardik988@gmail.com \"Hello WOrld\"";
-    char *out, *err;
-    int outlen,errlen;
+//    char *shellFile = "/Users/hr/simple-mailer.py --tls hrbaconbits@gmail.com:Nouvou123@smtp.gmail.com:587 hardik988@gmail.com hardik988@gmail.com \"Hello WOrld\"";
+//    char *out, *err;
+//    int outlen,errlen;
 //    run_command(shellFile, &out, &outlen, &err, &errlen);
 //    FIXME
 }
@@ -227,7 +225,7 @@
 -(void)boxAuthDone:(NSAlert *)alert returnCode:(NSInteger)returnCode
 {
     if (returnCode == NSAlertFirstButtonReturn) {
-        NSLog(@"BOX AUTH DONE!");
+        DDLogVerbose(@"BOX AUTH DONE!");
         //[self sendEmail];
         NSString *boxAuthToken = [boxClient userGavePerms];
         if(![boxAuthToken isEqualToString:@""]) {
@@ -239,17 +237,17 @@
 
 -(IBAction)windowDidLoad:(id)sender
 {
-    NSLog(@"Windowdidload called");
+//    NSLog(@"Windowdidload called");
 }
 
 -(IBAction)windowWillLoad:(id)sender
 {
-    NSLog(@"Windowwillload called");
+//    NSLog(@"Windowwillload called");
 }
 
 - (void) readPreferences
 { 
-    NSLog(@"Reading stored preferences");
+//    NSLog(@"Reading stored preferences");
     NSString *prefValue;
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     for (NSString *prefKey in preferencesKeys) {
@@ -270,7 +268,7 @@
 {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults setValuesForKeysWithDictionary:preferences];
-    NSLog(@"SAVING:  %@",preferences);
+//   NSLog(@"SAVING:  %@",preferences);
     [defaults synchronize];
 }
 
@@ -279,7 +277,6 @@
 
 - (BOOL)windowShouldClose:(id)sender
 {
-    DDLogVerbose(@"Window closing");
     
     [self setPreference:YC_USERREALNAME value:[realName stringValue]];
     [self setPreference:YC_USEREMAIL value:[email stringValue]];
@@ -297,15 +294,14 @@
 
 -(IBAction)changePassphrase:(id)sender
 {
-    NSLog(@"ChangePassphrase clicked");
     passphraseSheetController.arr = theApp.directories;
     [passphraseSheetController beginSheetModalForWindow:self.window completionHandler:^(NSUInteger returnCode) {
         if (returnCode == kSheetReturnedSave) {
-            NSLog(@"Passphrase change saved");
+            DDLogVerbose(@"changePassphrase: Passphrase change saved");
         } else if (returnCode == kSheetReturnedCancel) {
-            NSLog(@"Passphrase change cancelled");
+            DDLogVerbose(@"changePassphrase: Passphrase change cancelled");
         } else {
-            NSLog(@"Unknown return code");
+            DDLogVerbose(@"changePassphrase: Unknown return code");
         }
     }];
 }
@@ -317,12 +313,12 @@
 
     [firstRunSheetController beginSheetModalForWindow:self.window completionHandler:^(NSUInteger returnCode) {
         if (returnCode == kSheetReturnedSave) {
-            NSLog(@"First run done");
+            DDLogVerbose(@"showFirstRun: First run done");
             [self.window close];
         } else if (returnCode == kSheetReturnedCancel) {
-            NSLog(@"First Run cancelled :( ");
+            DDLogVerbose(@"showFirstRun: First Run cancelled :( ");
         } else {
-            NSLog(@"Unknown return code");
+            DDLogVerbose(@"showFirstRun: Unknown return code");
         }
     }];
 
@@ -392,10 +388,10 @@ static NSArray *openFiles()
        // [self updatePreferences:dict];
      //   NSLog(@"Stored prefs state: %d", [[self getPreference:YC_STARTONBOOT] intValue]);
         if (onBootState == NSOnState) {
-            NSLog(@"Will start at login");
+            DDLogInfo(@"Will start at login");
             [StartOnLogin setStartAtLogin:[self appURL] enabled:YES];
         } else {
-            NSLog(@"Will not start at login");
+            DDLogInfo(@"Will not start at login");
             [StartOnLogin setStartAtLogin:[self appURL] enabled:NO];
         }
     }
@@ -403,7 +399,7 @@ static NSArray *openFiles()
 
 - (IBAction)idleTimeChanged:(id)sender
 {
-    NSLog(@"idle time changed to %@", [idleTime stringValue]);
+    DDLogInfo(@"idle time changed to %@", [idleTime stringValue]);
     [self setPreference:YC_IDLETIME value:[idleTime stringValue]];
 }
 

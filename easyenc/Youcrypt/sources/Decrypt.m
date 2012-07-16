@@ -8,7 +8,6 @@
 
 #import "Decrypt.h"
 #import "libFunctions.h"
-#import "Contrib/Lumberjack/logging.h"
 #import "AppDelegate.h"
 #import "PreferenceController.h"
 
@@ -30,7 +29,6 @@
 
 -(void)awakeFromNib
 {
-    NSLog(@"Decrypt awake from nib called");    
 }
 
 /**
@@ -76,6 +74,7 @@
         if (keychainHasPassphrase) {
             // The error wasn't the user's fault.
             // His keychain couldn't unlock it.
+            DDLogInfo(@"Decrypt: Could not get pp from keyChain.");
             [self showWindow:nil];
             keychainHasPassphrase = NO;
             return;
@@ -89,12 +88,13 @@
 }
 
 - (IBAction)cancel:(id)sender {
+    DDLogVerbose(@"Cancel decrypt : %@",sourceFolderPath);
     [theApp cancelDecrypt:sourceFolderPath];
     [self close];
 }
 
 - (IBAction)didMount:(id)sender {
-    NSString *destFolder = destFolderPath;	
+//    NSString *destFolder = destFolderPath;	
     
     [[[NSWorkspace sharedWorkspace] notificationCenter] removeObserver:self];
     
@@ -109,6 +109,7 @@
             BOOL ret = [libFunctions changeEncFSPasswd:sourceFolderPath 
                                              oldPasswd:[yourPassword stringValue]
                                              newPasswd:passphraseFromKeychain];
+            DDLogInfo(@"didMount: changeEncfsPwd returned : %d",ret);
         }
     }   
     

@@ -76,6 +76,7 @@
 @property (nonatomic, strong) FirstRunSheetController *firstRunSheetController;
 
 @property (nonatomic, strong) IBOutlet NSButton *changePassphraseButton;
+@property (nonatomic, strong) BoxFSA *boxClient;
 
 // public methods
 - (id)getPreference:(NSString*)key;
@@ -105,7 +106,6 @@
 -(NSString*) locateBoxFolder;
 static NSArray *openFiles();
 
-@property (nonatomic, strong) BoxFSA *boxClient;
 
 - (IBAction)chooseDBLocation:(id)sender;
 

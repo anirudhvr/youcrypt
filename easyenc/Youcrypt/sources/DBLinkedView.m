@@ -41,13 +41,13 @@
 {
     [dbSetupSheet beginSheetModalForWindow:self.window completionHandler:^(NSUInteger returnCode) {
         if (returnCode == kSheetReturnedSave) {
-            NSLog(@"DB Setup done");
+            DDLogVerbose(@"dbSetupSheet: DB Setup done");
             [theApp encryptDropboxFolders];
           //  [self.window close];
         } else if (returnCode == kSheetReturnedCancel) {
-            NSLog(@"DB Setup cancelled :( ");
+            DDLogVerbose(@"dbSetupSheet: DB Setup cancelled :( ");
         } else {
-            NSLog(@"Unknown return code");
+            DDLogVerbose(@"dbSetupSheet: Unknown return code");
         }
     }];  
 }
