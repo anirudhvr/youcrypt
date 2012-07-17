@@ -627,9 +627,6 @@ MixpanelAPI *mixpanel;
 }
 
 - (IBAction)showEncryptWindow:(id)sender path:(NSString *)path {
-    if (configDir.firstRun)
-        return;
-
     if (path == nil) {
         BOOL doReturn = NO;
         // Pick the next object from the queue and encrypt.
@@ -706,7 +703,9 @@ MixpanelAPI *mixpanel;
     DDLogVerbose(@"In encryptDropboxFolders: list of DB Encrypted Folders %@",dropboxEncryptedFolders);
     NSArray *folders = [dropboxEncryptedFolders allObjects];
     if(folders || folders.count) {
-        [self encryptFolders:folders];
+        for (NSString *folder in folders) {
+            [self showEncryptWindow:self  path:folder];
+        }
     }
 }
 
@@ -714,8 +713,9 @@ MixpanelAPI *mixpanel;
 {
     if (configDir.firstRun)
         return;
-      
-    NSLog(@"In encrypt folders : %@",folders);
+    
+    NSLog(@"Queuing dropbox folders: %@",folders);
+    
     if (!encryptController) {
         encryptController = [[Encrypt alloc] init];
     } 
