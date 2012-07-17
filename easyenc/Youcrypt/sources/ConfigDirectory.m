@@ -8,7 +8,6 @@
 
 #import "ConfigDirectory.h"
 #import "libFunctions.h"
-#import "Contrib/Lumberjack/logging.h"
 
 @implementation ConfigDirectory
 

@@ -7,7 +7,6 @@
 //
 
 #import "YoucryptDirectory.h"
-#import "Contrib/Lumberjack/logging.h"
 #import "libFunctions.h"
 #import "PeriodicActionTimer.h"
 
@@ -167,7 +166,6 @@ static NSMutableArray *mountedFuseVolumes;
 
     NSMutableArray *mountLines = [[NSMutableArray alloc] initWithArray:[mountOutput componentsSeparatedByString:@"\n"]];
     
-    //NSLog(@"Got %lu lines from mount", [mountLines count]);
     
     for (NSString *line in mountLines) {
         NSError *error = NULL;
@@ -176,7 +174,6 @@ static NSMutableArray *mountedFuseVolumes;
                                       options:NSRegularExpressionCaseInsensitive
                                       error:&error];
         [regex enumerateMatchesInString:line options:0 range:NSMakeRange(0, [line length]) usingBlock:^(NSTextCheckingResult *match, NSMatchingFlags flags, BOOL *stop){
-           //  NSLog(@"Matched Volume [%@]", [line substringWithRange:[match rangeAtIndex:1]]);
             [tmpMountedFuseVolumes addObject:[line substringWithRange:[match rangeAtIndex:1]]];
         }];
      
@@ -184,9 +181,18 @@ static NSMutableArray *mountedFuseVolumes;
     [mountedFuseVolumes removeAllObjects]; // clear existing array
     mountedFuseVolumes = tmpMountedFuseVolumes;
     NSString *mnted;
-    NSLog(@"Mounted fuse volumes:\n");
+    DDLogInfo(@"Mounted fuse volumes:\n");
     for (mnted in mountedFuseVolumes) {
-        NSLog(@"mounted : %@\n", mnted);
+        DDLogInfo(@"mounted : %@\n", mnted);
+    }
+}
+
++ (BOOL) pathIsMounted:(NSString *)path {
+    [YoucryptDirectory refreshMountedFuseVolumes];    
+    if ([mountedFuseVolumes indexOfObject:path] == NSNotFound)
+        return NO;
+    else {
+        return YES;
     }
 }
 

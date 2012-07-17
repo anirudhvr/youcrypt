@@ -8,7 +8,6 @@
 
 #import "Decrypt.h"
 #import "libFunctions.h"
-#import "Contrib/Lumberjack/logging.h"
 #import "AppDelegate.h"
 #import "PreferenceController.h"
 
@@ -30,7 +29,6 @@
 
 -(void)awakeFromNib
 {
-    NSLog(@"Decrypt awake from nib called");    
 }
 
 /**
@@ -76,12 +74,13 @@
         if (keychainHasPassphrase) {
             // The error wasn't the user's fault.
             // His keychain couldn't unlock it.
+            DDLogInfo(@"Decrypt: Could not get pp from keyChain.");
             [self showWindow:nil];
             keychainHasPassphrase = NO;
             return;
         }
         else {
-            NSAlert *alert = [NSAlert alertWithMessageText:@"Incorrect passphrase" defaultButton:nil alternateButton:nil otherButton:nil informativeTextWithFormat:@"The passphrase does not decrypt %@", [srcFolder stringByDeletingLastPathComponent]];
+            NSAlert *alert = [NSAlert alertWithMessageText:@"Incorrect passphrase" defaultButton:nil alternateButton:nil otherButton:nil informativeTextWithFormat:@"The passphrase does not decrypt %@", [srcFolder stringByDeletingPathExtension]];
             [alert runModal];
             return;
         }
@@ -89,26 +88,35 @@
 }
 
 - (IBAction)cancel:(id)sender {
+    DDLogVerbose(@"Cancel decrypt : %@",sourceFolderPath);
     [theApp cancelDecrypt:sourceFolderPath];
     [self close];
 }
 
 - (IBAction)didMount:(id)sender {
-    NSString *destFolder = destFolderPath;	
+//    NSString *destFolder = destFolderPath;	
     
     [[[NSWorkspace sharedWorkspace] notificationCenter] removeObserver:self];
     
     if (keychainHasPassphrase == NO) {
-        int retCode = [[NSAlert alertWithMessageText:@"Change password?" 
-                                       defaultButton:@"Yes, change this" 
-                                     alternateButton:@"No, leave this as is" 
-                                         otherButton:nil 
-                           informativeTextWithFormat:@"Passphrase for %@ is different from your youcrypt passphrase.  Do you want to change the passphrase of the folder to your keychain passphrase?", sourceFolderPath] runModal];
-        if (retCode == NSAlertDefaultReturn) {
-            //FIXME:  Show an error if this failed ?
-            BOOL ret = [libFunctions changeEncFSPasswd:sourceFolderPath 
-                                             oldPasswd:[yourPassword stringValue]
-                                             newPasswd:passphraseFromKeychain];
+        // Check if there's a different passphrase in the keychain.
+        NSString *keyPP = [libFunctions getPassphraseFromKeychain:@"Youcrypt"];
+        if ((keyPP != nil) && ![keyPP isEqualToString:@""]) {
+            // Seems like a non-empty passphrase...
+            // Suggest that the user change the passphrase of the current folder.        
+        
+            int retCode = [[NSAlert alertWithMessageText:@"Change passphrase?" 
+                                           defaultButton:@"Yes, change this" 
+                                         alternateButton:@"No, leave this as is" 
+                                             otherButton:nil 
+                               informativeTextWithFormat:@"Passphrase for %@ is different from your youcrypt passphrase.  Do you want to change the passphrase of the folder to your keychain passphrase?", sourceFolderPath] runModal];
+            if (retCode == NSAlertDefaultReturn) {
+                //FIXME:  Show an error if this failed ?
+                BOOL ret = [libFunctions changeEncFSPasswd:sourceFolderPath 
+                                                 oldPasswd:[yourPassword stringValue]
+                                                 newPasswd:keyPP];
+                DDLogInfo(@"didMount: changeEncfsPwd returned : %d",ret);
+            }
         }
     }   
     

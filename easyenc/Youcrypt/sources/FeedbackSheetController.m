@@ -86,10 +86,10 @@
         NSData *logFileData = [[NSData alloc] initWithContentsOfFile:mostRecentLogFile];
         NSData *compressedLogFileData = [[NSData alloc] initWithData:[LFCGzipUtility gzipData:logFileData]];
         compressedLogFile = [NSString stringWithFormat:@"%@/logFile.gz",theApp.configDir.youCryptLogDir];
-        NSLog(@"Compressed log file : %@",compressedLogFile);
+        DDLogInfo(@"Compressed log file : %@",compressedLogFile);
         BOOL wrote = [compressedLogFileData writeToFile:compressedLogFile atomically:YES];
         if(wrote) {
-            NSLog(@"Compressed!");
+            DDLogInfo(@"Compressed!");
             logFile = [NSString stringWithFormat:@"attachment=@%@",compressedLogFile];
         }
         NSArray *logFileAttachment = [NSArray arrayWithObjects:
@@ -109,10 +109,9 @@
         
         [fh closeFile];
     } else {
-        NSLog(@"FAILED");
+        DDLogInfo(@"Compression FAILED");
     }
     
-    NSLog(@"REPLY : %@",reply);
     NSError *error = nil;
 
     [[NSFileManager defaultManager] removeItemAtPath:compressedLogFile error:&error];
@@ -122,9 +121,6 @@
 
 - (void)sheetWillDisplay {
     [super sheetWillDisplay];
-    NSLog(@"First run sheet will display");
-    
-    
 }
 
 -(IBAction)cancel:(id)sender

@@ -33,7 +33,6 @@
 }
 
 - (NSUInteger)hitTestForEvent:(NSEvent *)event inRect:(NSRect)cellFrame ofView:(NSView *)controlView {
-    NSLog(@"HIT TEST");
     NSPoint point = [controlView convertPoint:[event locationInWindow] fromView:nil];
     NSRect checkboxRect = NSMakeRect(cellFrame.origin.x, cellFrame.origin.y, CHECKBOX_WIDTH, cellFrame.size.height);
     if (NSMouseInRect(point, checkboxRect, [controlView isFlipped])) {

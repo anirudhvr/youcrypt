@@ -36,7 +36,6 @@
 }
 
 - (void)awakeFromNib {
-    NSLog(@"AWAKE BROWSER");
     [_browser setCellClass:[FSBrowserCell class]];
     [_browser setColumnResizingType:NSBrowserUserColumnResizing];
     NSString *dbPath = [libFunctions locateDropboxFolder] ;
@@ -83,7 +82,6 @@
 
 -(IBAction)save:(id)sender
 {
-    NSLog(@"Selected items:\n%@", selected);
     theApp.dropboxEncryptedFolders = selected;
     [self endSheetWithReturnCode:kSheetReturnedSave];
 }

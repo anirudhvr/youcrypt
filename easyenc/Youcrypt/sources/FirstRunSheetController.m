@@ -46,12 +46,11 @@
 }
 
 - (void)saveClicked:(id)sender {
-    NSLog(@" username %@",[preferenceController getPreference:YC_USERREALNAME]);
     if([[password stringValue] isEqualToString:@""] || 
        [[password stringValue] isNotEqualTo:[confirmPassword stringValue]]) {
         
         [message setTextColor:[NSColor redColor]];
-        [message setStringValue:@"Passwords do not match"];
+        [message setStringValue:@"Passphrases do not match"];
         [confirmPassword setFocusRingType:NSFocusRingTypeExterior];
         [password setFocusRingType:NSFocusRingTypeExterior];
         
@@ -74,7 +73,6 @@
 
 - (void)sheetWillDisplay {
     [super sheetWillDisplay];
-    NSLog(@"First run sheet will display");
     
     
 }

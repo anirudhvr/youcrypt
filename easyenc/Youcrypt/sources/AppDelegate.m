@@ -12,7 +12,6 @@
 #import "Encrypt.h"
 #import "YoucryptService.h"
 #import "libFunctions.h"
-#import "Contrib/Lumberjack/logging.h"
 #import "ConfigDirectory.h"
 #import "ListDirectoriesWindow.h"
 #import "FirstRunSheetController.h"
@@ -23,6 +22,7 @@
 #import "TourWizard.h"
 #import "DBLinkedView.h"
 #import "MixpanelAPI.h"
+#import "AboutController.h"
 
 #define MIXPANEL_TOKEN @"b01b99df347adcb20353ba2a4cb6faf4" // avr@nouvou.com's token
 int ddLogLevel = LOG_LEVEL_VERBOSE;
@@ -51,6 +51,7 @@ MixpanelAPI *mixpanel;
 @synthesize fileLogger;
 @synthesize dropboxEncryptedFolders;
 @synthesize mixpanelUUID;
+@synthesize aboutController;
 
 // --------------------------------------------------------------------------------------
 // App events
@@ -92,18 +93,15 @@ MixpanelAPI *mixpanel;
     NSError *error = nil;
     mixpanelUUID = [NSString stringWithContentsOfFile:configDir.youcryptUserUUID encoding:NSASCIIStringEncoding error:&error];
     [mixpanelUUID stringByReplacingOccurrencesOfString:@"\n" withString:@""];
-    NSLog(@"mixpanel uuid : %@",mixpanelUUID);
+    DDLogVerbose(@"mixpanel uuid : %@",mixpanelUUID);
     
     return self;
 }
 
 - (void) applicationDidResignActive:(NSNotification *)notification
 {
-    NSLog(@"Resigned active");
-
     if (configDirBeingSynced == NO && [timer timerElapsed]) {
         configDirBeingSynced = YES;
-        NSLog(@"Syncing current state to disk");
         // XXX break this off into a new thread?
         /// XX might want to use a dispatch queue here instead
         [libFunctions archiveDirectoryList:directories toFile:configDir.youCryptListFile];
@@ -114,7 +112,7 @@ MixpanelAPI *mixpanel;
 }
 - (void) applicationDidBecomeActive:(NSNotification *)notification
 {
-    NSLog(@"Became active");
+//    NSLog(@"Became active");
 }
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
@@ -136,7 +134,6 @@ MixpanelAPI *mixpanel;
     NSArray *apps = [[NSWorkspace sharedWorkspace] runningApplications]; 
     int ycAppCount = 0;
     
-    NSLog(@"App name is : %@", [[NSProcessInfo processInfo] processName]);
     for(NSRunningApplication *app in apps) {
         if([[app localizedName] isEqualToString:[[NSProcessInfo processInfo] processName]]) {
             ycAppCount++;
@@ -158,7 +155,6 @@ MixpanelAPI *mixpanel;
     [self someUnMount:nil];
 
     DDLogVerbose(@"App did, in fact, finish launching!!!");
-   
 
 }
 
@@ -166,7 +162,7 @@ MixpanelAPI *mixpanel;
     //[NSKeyedArchiver archiveRootObject:directories toFile:configDir.youCryptListFile];
     [libFunctions archiveDirectoryList:directories toFile:configDir.youCryptListFile];
     for (id dir in directories) {
-        NSLog(@"Trying to unmount %@",[dir path]);
+       
         [libFunctions execCommand:@"/sbin/umount" arguments:[NSArray arrayWithObject:[dir mountedPath]]
                               env:nil];
     }
@@ -193,7 +189,7 @@ MixpanelAPI *mixpanel;
     
     if([configDir isFirstRun]) {
         //[self showListDirectories:self];
-        NSLog(@"FIRST RUN ! ");
+        DDLogInfo(@"Initiating First Run! ");
         [self showTour];
     }    
 }
@@ -284,11 +280,11 @@ MixpanelAPI *mixpanel;
                 NSString *source=[NSString stringWithFormat:@"tell application \"Finder\"\n"
                                   "activate\n"
                                   "set target of Finder window 1 to disk \"%@\"\n"
-                                  "set current view of Finder window 1 to icon view\n"
+//                                  "set current view of Finder window 1 to icon view\n"
                                   "end tell\n", dir.alias];
                 NSAppleScript *update=[[NSAppleScript alloc] initWithSource:source];
                 NSDictionary *err;
-                NSAppleEventDescriptor *ret = [update executeAndReturnError:&err];
+                [update executeAndReturnError:&err];
                 if (err != nil)
                     [[NSWorkspace sharedWorkspace] openFile:dir.mountedPath];
             }
@@ -301,6 +297,8 @@ MixpanelAPI *mixpanel;
             [self showDecryptWindow:self path:dir.path mountPoint:mountPoint];
         }
         return YES;
+    } else {
+        [self someUnMount:nil];
     }
     return NO;
     
@@ -322,10 +320,8 @@ MixpanelAPI *mixpanel;
 }
 
 - (void)didDecrypt:(NSString *)path {
-    NSLog(@"did decrypt %@\n", path);
     for (YoucryptDirectory *dir in directories) {
         if ([path isEqualToString:dir.path]) {
-            NSLog(@"Setting it to mounted\n");
             dir.status = YoucryptDirectoryStatusMounted;
             if (callFinderScript == NO) {
                 [[NSWorkspace sharedWorkspace] openFile:dir.mountedPath];	
@@ -339,11 +335,12 @@ MixpanelAPI *mixpanel;
                                   "end tell\n", dir.alias];
                 NSAppleScript *update=[[NSAppleScript alloc] initWithSource:source];
                 NSDictionary *err;
-                NSAppleEventDescriptor *ret = [update executeAndReturnError:&err];
+                [update executeAndReturnError:&err];
                 if (err != nil)
                     [[NSWorkspace sharedWorkspace] openFile:dir.mountedPath];
             }
-            
+            DDLogVerbose(@"didDecrypt folder %@\n", path);
+
 //            [dir checkYoucryptDirectoryStatus:YES];
         }
     }
@@ -356,8 +353,8 @@ MixpanelAPI *mixpanel;
 - (void)didEncrypt:(NSString *)path {
     NSImage *overlay = [[NSImage alloc] initWithContentsOfFile:[[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"/youcrypt-overlay.icns"]];
     BOOL didSetIcon = [[NSWorkspace sharedWorkspace] setIcon:overlay forFile:path options:0];
-    NSLog(@"Icon set : %d for %@",didSetIcon,path);
-    NSLog(@"%d", didSetIcon);
+    if(!didSetIcon)
+        DDLogInfo(@"ERROR: Could not set Icon for %@",path);
     
     YoucryptDirectory *dir = [[YoucryptDirectory alloc] init];       
     dir.path = path;
@@ -366,8 +363,9 @@ MixpanelAPI *mixpanel;
     dir.status = YoucryptDirectoryStatusUnmounted;
     [directories addObject:dir];            
     if (listDirectories != nil) {
-        [listDirectories.table reloadData];
+        [listDirectories.table reloadData];                
     }
+    
 }
 
 - (void)didRestore:(NSString *)path {
@@ -408,9 +406,11 @@ MixpanelAPI *mixpanel;
 
 
 - (IBAction)windowShouldClose:(id)sender {
-    DDLogVerbose(@"Closing..");
+    //DDLogVerbose(@"Closing..");
 }
+
 - (IBAction)terminateApp:(id)sender {
+    DDLogInfo(@"Going to terminate App.");
     [NSApp terminate:nil];
 }
 
@@ -446,8 +446,25 @@ MixpanelAPI *mixpanel;
     if (!preferenceController) {
         preferenceController = [[PreferenceController alloc] init];
     }
-    DDLogVerbose(@"showing %@", preferenceController);
     [preferenceController showWindow:self];
+}
+
+- (void)showFirstRunSheet {
+    // Is preferenceController nil?
+    if (!preferenceController) {
+        preferenceController = [[PreferenceController alloc] init];
+    }
+    [self showFirstRun]; 
+    
+}
+
+- (IBAction)showAboutWindow:(id)sender
+{
+    // Is preferenceController nil?
+    if (!aboutController) {
+        aboutController = [[AboutController alloc] init];
+    }
+    [aboutController.window makeKeyAndOrderFront:nil];
 }
 
 -(void) showTour {
@@ -455,9 +472,28 @@ MixpanelAPI *mixpanel;
         tourWizard = [[TourWizard alloc] init];
     }
     
-    DDLogVerbose(@"showing %@", tourController);
+    DDLogVerbose(@"Now showing tourController: %@", tourController);
     [tourWizard showWindow:self];
 }
+
+//-(void)showFirstRun
+//{    
+//    DDLogInfo(@"About to First Run! !");
+//    if(self.window == nil)
+//        DDLogVerbose(@"ERROR: In First Run, NIL WINDOW ");
+//    [self showListDirectories:self];
+//    [firstRunSheetController beginSheetModalForWindow:theApp.listDirectories.window completionHandler:^(NSUInteger returnCode) {
+//        if (returnCode == kSheetReturnedSave) {
+//            DDLogVerbose(@"FirstRunSheet: Done");
+//            [self.window close];
+//        } else if (returnCode == kSheetReturnedCancel) {
+//            DDLogVerbose(@"FirstRunSheet: cancelled :( ");
+//        } else {
+//            DDLogVerbose(@"FirstRunSheet: Unknown return code");
+//        }
+//    }];    
+//}
+//
 
 - (IBAction)showDecryptWindow:(id)sender path:(NSString *)path mountPoint:(NSString *)mountPath {
     if (configDir.firstRun)
@@ -472,10 +508,10 @@ MixpanelAPI *mixpanel;
     decryptController.destFolderPath = mountPath;
         
     NSString *pp =[libFunctions getPassphraseFromKeychain:@"Youcrypt"];
-    DDLogVerbose(@"showing %@", decryptController);
+    DDLogInfo(@"showing %@", decryptController);
     
     if ((pp != nil) && !([pp isEqualToString:@""])) {
-        NSLog(@"Got pp from keychain successfully");
+        DDLogVerbose(@"In showDecryptWindow: Got pp from keychain successfully");
         decryptController.passphraseFromKeychain = pp;
         decryptController.keychainHasPassphrase = YES;
         [decryptController decrypt:self];
@@ -497,7 +533,7 @@ MixpanelAPI *mixpanel;
     restoreController.path = path;
     NSString *pp =[libFunctions getPassphraseFromKeychain:@"Youcrypt"];
     if (pp != nil && !([pp isEqualToString:@""])) {
-        NSLog(@"Got pp from keychain successfully");
+        DDLogVerbose(@"In showRestoreWindow: Got pp from keychain successfully");
         restoreController.passwd = pp;
         restoreController.keychainHasPassphrase = YES;
         [restoreController restore:self];
@@ -521,15 +557,16 @@ MixpanelAPI *mixpanel;
     NSString *pp =[libFunctions getPassphraseFromKeychain:@"Youcrypt"];
     encryptController.sourceFolderPath = path;
     if (pp != nil && [pp isNotEqualTo:@""]) {
+        DDLogVerbose(@"In showEncryptWindow: Got pp from keychain successfully");
         encryptController.passphraseFromKeychain = pp;
         encryptController.keychainHasPassphrase = YES;
         [encryptController encrypt:self];
     } else { 
+        NSButton *storePasswd = encryptController.checkStorePasswd;
+        [storePasswd setState:NSOnState];
         encryptController.passphraseFromKeychain = nil;
         encryptController.keychainHasPassphrase = NO;
-        DDLogVerbose(@"showing %@", encryptController);
-        [encryptController showWindow:self];
-        
+        [encryptController showWindow:self];        
     }
 }
 
@@ -539,12 +576,12 @@ MixpanelAPI *mixpanel;
     //[[NSWorkspace sharedWorkspace] openURL: [NSURL URLWithString:@"http://youcrypt.com"]];
     [feedbackSheetController beginSheetModalForWindow:theApp.listDirectories.window completionHandler:^(NSUInteger returnCode) {
         if (returnCode == kSheetReturnedSave) {
-            NSLog(@"Feedback run done");
+            DDLogVerbose(@"feedbackSheetController: Feedback run done");
             [self.window close];
         } else if (returnCode == kSheetReturnedCancel) {
-            NSLog(@"Feedback cancelled :( ");
+            DDLogVerbose(@"feedbackSheetController: Feedback cancelled :( ");
         } else {
-            NSLog(@"Unknown return code");
+            DDLogVerbose(@"feedbackSheetController: Unknown return code");
         }
     }];
 
@@ -557,7 +594,7 @@ MixpanelAPI *mixpanel;
 
 - (void) encryptDropboxFolders
 {
-    NSLog(@"In encryptDropboxFolders: %@",dropboxEncryptedFolders);
+    DDLogVerbose(@"In encryptDropboxFolders: list of DB Encrypted Folders %@",dropboxEncryptedFolders);
     NSArray *folders = [dropboxEncryptedFolders allObjects];
     if(folders || folders.count) {
         [self encryptFolders:folders];
@@ -575,13 +612,12 @@ MixpanelAPI *mixpanel;
         encryptController = [[Encrypt alloc] init];
     } 
     NSString *pp =[libFunctions getPassphraseFromKeychain:@"Youcrypt"];
-    //NSLog(@"Got passphrase : %@",pp);
     encryptController.passphraseFromKeychain = pp;
     encryptController.keychainHasPassphrase = YES;
     NSString *path;
     for (int i=0; i<folders.count; i++) {
         path = [folders objectAtIndex:i];
-        NSLog(@"Folder %d : %@",i+1,path);
+        DDLogVerbose(@"encryptFolders: Encrypting Folder %d : %@",i+1,path);
         [tourWizard.currentView.message setStringValue:[NSString stringWithFormat:@"Updating %d%%",((i+1)*100)/folders.count]];
         encryptController.sourceFolderPath = path;
         [encryptController encrypt:self];
@@ -610,7 +646,6 @@ MixpanelAPI *mixpanel;
 
 - (void)keyDown:(NSEvent *)theEvent
 {
-    NSLog(@"KEY: %d",theEvent.keyCode);
 }
 
 
@@ -744,7 +779,6 @@ MixpanelAPI *mixpanel;
 - (NSString *)tableView:(NSTableView *)aTableView toolTipForTableColumn:(NSTableColumn *)aTableColumn row:(NSInteger)rowIndex
 {   
     NSString *tooltip;
-    NSLog(@"tooltip row index: %lu", rowIndex);
     if (rowIndex >= 0) {
         YoucryptDirectory *dir = [directories objectAtIndex:rowIndex];
         tooltip = [NSString stringWithFormat:@"Source folder: %@\n\n"
@@ -786,7 +820,7 @@ MixpanelAPI *mixpanel;
 
 -(id) someUnMount:(id) sender {
     // Someone unmount us a bomb.
-    NSLog(@"Something unmounted\n");
+    DDLogVerbose(@"Something unmounted\n");
     [YoucryptDirectory refreshMountedFuseVolumes];
     YoucryptDirectory *dir;
     for (dir in directories) {

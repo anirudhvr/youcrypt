@@ -38,7 +38,6 @@
 - (void) next:(id)sender
 {
     stage++;
-    NSLog(@"IN NEXT: STAGE : %d",stage);
 
     NSString *picture;
     switch (stage) {

@@ -55,7 +55,7 @@
     
     
     if (![libFunctions mountEncFS:path decryptedFolder:tempFolder password:passwd volumeName:path]) {
-        NSLog(@"Restoring failed at mountEncFs %@: tmpDir = %@\n", path, tempFolder);
+        DDLogError(@"Restoring failed at mountEncFs %@: tmpDir = %@\n", path, tempFolder);
         if (self.keychainHasPassphrase) {
             // The error wasn't the user's fault.
             // His keychain couldn't unlock it.
@@ -83,7 +83,7 @@
     backPath = [backPath stringByAppendingPathComponent: [[NSProcessInfo processInfo] globallyUniqueString]];
     [libFunctions mkdirRecursive:backPath];
     
-    NSLog(@"Backpath is %@\n", backPath);
+    DDLogInfo(@"didMount Backpath is %@\n", backPath);
     
     // Now to move the contents of tempFolder into backPath
     // Unfortunately, a direct move won't work since blah blah blah
@@ -103,7 +103,7 @@
     if ([libFunctions execCommand:@"/sbin/umount" 
                         arguments:[NSArray arrayWithObject:tempFolder]
                               env:nil]) {
-        NSLog(@"Umount failed.\nAborting\n");
+        DDLogError(@"ERROR: Umount failed.\nAborting\n");
     }
     [fm removeItemAtPath:tempFolder error:nil];
     [fm removeItemAtPath:path error:nil];

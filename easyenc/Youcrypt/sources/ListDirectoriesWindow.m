@@ -11,8 +11,7 @@
 #import "ListDirTable.h"
 #import "PassphraseSheetController.h"
 #import "libFunctions.h"
-#import "contrib/Mixpanel_fpotter.github.com/MPLib/MixpanelAPI.h"
-
+#import "Contrib/Mixpanel_fpotter.github.com/MPLib/MixpanelAPI.h"
 
 @implementation ListDirectoriesWindow
 
@@ -51,14 +50,14 @@
 
 - (void) handleDoubleClick:(id)sender
 {
-    if (dirName != nil)
-        NSLog(@"Doubleclicked %@", [dirName stringValue]);
+//    if (dirName != nil)
+//        NSLog(@"Doubleclicked %@", [dirName stringValue]);
     [self doOpen:table];
 }
 
 - (void) keyDownCallback: (int) keyCode
 {
-    NSLog(@"KEYDOWN !!! : %d",keyCode);
+//    NSLog(@"KEYDOWN !!! : %d",keyCode);
 }
 
 - (void)awakeFromNib {
@@ -112,21 +111,21 @@
         volumePropsSheet.stat = [YoucryptDirectory statusToString:dir.status];
         [volumePropsSheet beginSheetModalForWindow:self.window completionHandler:^(NSUInteger returnCode) {
             if (returnCode == 0) {
-                NSLog(@"sheet returned success");
+                DDLogVerbose(@"sheet returned success");
             }
         }];
     }
 }
 
 - (IBAction)selectRow:(id)sender {
-    NSLog(@"Selected row %ld", [sender selectedRow]);
+//    NSLog(@"Selected row %ld", [sender selectedRow]);
     if ([sender clickedRow] < [theApp.directories count]) {
         [self setStatusToSelectedRow:[sender clickedRow]];
     }
 }
 
 - (void)setStatusToSelectedRow:(NSInteger)row {
-    NSLog(@"Selected row %ld", row);
+//    NSLog(@"Selected row %ld", row);
     
     YoucryptDirectory *dir = [theApp.directories objectAtIndex:row];
     [dirName setStringValue:[NSString stringWithFormat:@"   %@: %@", [YoucryptDirectory statusToString:dir.status], dir.path]];
@@ -184,7 +183,7 @@
     NSInteger row = [table selectedRow];
     if (row < [theApp.directories count] && row != -1) {
         NSString *mountedPath = [[theApp.directories objectAtIndex:row] mountedPath];
-        NSLog(@"Trying to unmount %@",mountedPath);
+        DDLogVerbose(@"Trying to unmount %@",mountedPath);
         [libFunctions execCommand:@"/sbin/umount" arguments:[NSArray arrayWithObject:mountedPath] env:nil];
     }
     [table reloadData];
@@ -384,18 +383,18 @@
 
 - (void)showPreferencePanel
 {
-    NSLog(@"Called showPreferences");
+//    NSLog(@"Called showPreferences");
     [theApp showPreferencePanel:theApp];
 }
 
 - (void) exitApp 
 {
-    NSLog(@"Called terminate");
+//    NSLog(@"Called terminate");
     [theApp terminateApp:self];
 }
 - (void) showHelp 
 {
-    NSLog(@"Called showHelp");
+//    NSLog(@"Called showHelp");
     [[NSWorkspace sharedWorkspace] openURL: [NSURL URLWithString:@"http://youcrypt.com"]];
 }
 
@@ -406,11 +405,11 @@
     passphraseSheet.arr = theApp.directories;
     [passphraseSheet beginSheetModalForWindow:theApp.listDirectories.window completionHandler:^(NSUInteger returnCode) {
         if (returnCode == kSheetReturnedSave) {
-            NSLog(@"Change Passphrase done");
+            DDLogVerbose(@"showChangePassphraseSheet: Change Passphrase done");
         } else if (returnCode == kSheetReturnedCancel) {
-            NSLog(@"Change Passphrase cancelled :( ");
+            DDLogVerbose(@"showChangePassphraseSheet: Change Passphrase cancelled :( ");
         } else {
-            NSLog(@"Unknown return code");
+            DDLogVerbose(@"showChangePassphraseSheet: Unknown return code");
         }
     }];
 }

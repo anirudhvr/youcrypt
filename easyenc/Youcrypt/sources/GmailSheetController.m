@@ -46,7 +46,6 @@
 {
     [super windowDidLoad];
     
-    NSLog(@"GMail window loaded");
     // Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
 }
 
@@ -54,10 +53,8 @@
 // Mark: Action methods
 
 - (IBAction)saveClicked:(id)sender {
-        //NSLog(@"Registering new passphrase %@ with keychain", [password stringValue]);
         [libFunctions registerWithKeychain:[password stringValue]:@"ycgmail"];
         [preferenceController setPreference:YC_GMAILUSERNAME value:[username stringValue]];
-        NSLog(@"GMAIL USERNAME: %@ %@",YC_GMAILUSERNAME,[username stringValue]);
         [username setStringValue:@""];
         [password setStringValue:@""];
         [username becomeFirstResponder];
@@ -73,7 +70,6 @@
 
 - (void)sheetWillDisplay {
     [super sheetWillDisplay];
-    NSLog(@"Gmail sheet will display");
 }
 
 
