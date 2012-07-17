@@ -302,7 +302,6 @@ Cleanup:
             [libFunctions registerWithKeychain:[yourPassword stringValue] :@"Youcrypt" ];            
         }
         
-        [theApp didEncrypt:destFolder];
         /* Register password with keyring */
         
         /*** <!-- ENCFS END --> ***/
@@ -331,11 +330,14 @@ Cleanup:
     [yourPassword setStringValue:@""];
     [yourFriendsEmail setStringValue:@""];
     [self.window close];
+    [theApp didEncrypt:destFolder];
+
 
 }
 
 -(IBAction)cancel:(id)sender {
     [self.window close];
+    [theApp cancelEncrypt:destFolder];
 }
 
 

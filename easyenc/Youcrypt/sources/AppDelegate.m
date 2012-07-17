@@ -94,6 +94,10 @@ MixpanelAPI *mixpanel;
     mixpanelUUID = [NSString stringWithContentsOfFile:configDir.youcryptUserUUID encoding:NSASCIIStringEncoding error:&error];
     [mixpanelUUID stringByReplacingOccurrencesOfString:@"\n" withString:@""];
     DDLogVerbose(@"mixpanel uuid : %@",mixpanelUUID);
+
+    encryptQ = [[NSMutableArray alloc] init];
+    decryptQ = [[NSMutableArray alloc] init];
+    restoreQ = [[NSMutableArray alloc] init];
     
     return self;
 }
@@ -190,6 +194,7 @@ MixpanelAPI *mixpanel;
     if([configDir isFirstRun]) {
         //[self showListDirectories:self];
         DDLogInfo(@"Initiating First Run! ");
+
         [self showTour];
     }    
 }
@@ -348,6 +353,10 @@ MixpanelAPI *mixpanel;
     if (listDirectories != nil) {
         [listDirectories.table reloadData];
     }
+    @synchronized(self) {
+    [decryptQ removeLastObject];
+    }
+    [self showDecryptWindow:self path:nil mountPoint:@""];
 }
 
 - (void)didEncrypt:(NSString *)path {
@@ -365,7 +374,15 @@ MixpanelAPI *mixpanel;
     if (listDirectories != nil) {
         [listDirectories.table reloadData];                
     }
+
+    [encryptQ removeLastObject];
+    [self showEncryptWindow:self path:nil];
     
+}
+
+- (void)cancelEncrypt:(NSString *)path {
+    [encryptQ removeLastObject];
+    [self showEncryptWindow:self path:nil];
 }
 
 - (void)didRestore:(NSString *)path {
@@ -379,6 +396,8 @@ MixpanelAPI *mixpanel;
     if (listDirectories != nil) {
         [listDirectories.table reloadData];
     }
+    [restoreQ removeLastObject];
+    [self showRestoreWindow:self path:nil];
 }
 
 -(void) cancelRestore:(NSString *)path {
@@ -390,6 +409,8 @@ MixpanelAPI *mixpanel;
         }
         
     }    
+    [restoreQ removeLastObject];
+    [self showRestoreWindow:self path:nil];
 }
 
 -(void) cancelDecrypt:(NSString *)path {
@@ -401,6 +422,10 @@ MixpanelAPI *mixpanel;
         }
         
     }    
+    @synchronized(self) {
+    [decryptQ removeLastObject];
+    }
+    [self showDecryptWindow:self path:nil mountPoint:@""];
 }
 
 
@@ -476,28 +501,44 @@ MixpanelAPI *mixpanel;
     [tourWizard showWindow:self];
 }
 
-//-(void)showFirstRun
-//{    
-//    DDLogInfo(@"About to First Run! !");
-//    if(self.window == nil)
-//        DDLogVerbose(@"ERROR: In First Run, NIL WINDOW ");
-//    [self showListDirectories:self];
-//    [firstRunSheetController beginSheetModalForWindow:theApp.listDirectories.window completionHandler:^(NSUInteger returnCode) {
-//        if (returnCode == kSheetReturnedSave) {
-//            DDLogVerbose(@"FirstRunSheet: Done");
-//            [self.window close];
-//        } else if (returnCode == kSheetReturnedCancel) {
-//            DDLogVerbose(@"FirstRunSheet: cancelled :( ");
-//        } else {
-//            DDLogVerbose(@"FirstRunSheet: Unknown return code");
-//        }
-//    }];    
-//}
-//
-
 - (IBAction)showDecryptWindow:(id)sender path:(NSString *)path mountPoint:(NSString *)mountPath {
+    
     if (configDir.firstRun)
         return;
+    
+    NSLog (@"DecryptQ: count=%d, path=%@\n", [decryptQ count], path);
+    if (path == nil) {
+        // Pick the next object from the queue and decrypt.        
+        BOOL doReturn;
+        doReturn = NO;
+        @synchronized(self) {
+            if ([decryptQ count] > 0) {
+                NSDictionary *dict = [decryptQ lastObject];
+                path = [dict objectForKey:@"path"];
+                mountPath = [dict objectForKey:@"mountPoint"];
+            }
+            else {
+                // Nothing to service.
+                doReturn = YES;
+            }
+        }
+        if (doReturn)
+            return;
+    } else {
+        NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:
+                              path, @"path", mountPath, @"mountPoint", nil];        
+        BOOL doReturn = NO;
+        @synchronized(self) {
+            [decryptQ addObject:dict];
+            if ([decryptQ count] > 1)
+                doReturn = YES;
+        }
+        if (doReturn)
+            return;
+    }
+    
+    
+
     
     // Is decryptController nil?
     if (!decryptController) {
@@ -523,9 +564,26 @@ MixpanelAPI *mixpanel;
 }
 
 - (IBAction)showRestoreWindow:(id)sender path:(NSString *)path {
+
     if (configDir.firstRun)
         return;
+
     
+    if (path == nil) {
+        // Pick the next object from the queue and restore.        
+        if ([restoreQ count] > 0) {
+            path = [restoreQ lastObject];
+        }
+        else {
+            // Nothing to service.
+            return;
+        }
+    } else {
+        [restoreQ addObject:path];
+        if ([restoreQ count] > 1)
+            return;
+    }
+        
     if (!restoreController) {
         restoreController = [[RestoreController alloc] init];
     }
@@ -544,10 +602,24 @@ MixpanelAPI *mixpanel;
     }
 }
 
-
 - (IBAction)showEncryptWindow:(id)sender path:(NSString *)path {
     if (configDir.firstRun)
         return;
+
+    if (path == nil) {
+        // Pick the next object from the queue and encrypt.        
+        if ([encryptQ count] > 0) {
+            path = [encryptQ lastObject];
+        }
+        else {
+            // Nothing to service.
+            return;
+        }
+    } else {
+        [encryptQ addObject:path];
+        if ([encryptQ count] > 1)
+            return;
+    }
     
     // Is encryptController nil?
     if (!encryptController) {
@@ -605,8 +677,7 @@ MixpanelAPI *mixpanel;
 {
     if (configDir.firstRun)
         return;
-    
-    
+      
     NSLog(@"In encrypt folders : %@",folders);
     if (!encryptController) {
         encryptController = [[Encrypt alloc] init];

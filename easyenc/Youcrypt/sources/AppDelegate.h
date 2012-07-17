@@ -63,6 +63,8 @@
     NSString *mixpanelUUID;
     
     BOOL callFinderScript;
+    
+    NSMutableArray *encryptQ, *decryptQ, *restoreQ;
 }
 
 
@@ -97,7 +99,7 @@
 
 -(void) cancelDecrypt:(NSString *)path;
 -(void) cancelRestore:(NSString *)path;
-
+-(void) cancelEncrypt:(NSString *)path;
 
 
 -(void) removeFSAtRow:(int) row ;

@@ -180,6 +180,7 @@
         
         NSString *encfsArgs = [NSString stringWithFormat:@"%d\nencfs\n--nu\n%d\n--pw\n%@\n%@--\n%@\n%@\n-ofsname=YoucryptFS\n",
                                count, numUsers, pwd, encryptfilenames_s, encFolder, decFolder];
+
         
         DDLogVerbose(@"encfsargs\n%@",encfsArgs);
         [io writeData:[encfsArgs dataUsingEncoding:NSUTF8StringEncoding]];

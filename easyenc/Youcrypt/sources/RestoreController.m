@@ -108,14 +108,14 @@
     [fm removeItemAtPath:tempFolder error:nil];
     [fm removeItemAtPath:path error:nil];
     [fm moveItemAtPath:backPath toPath:[path stringByDeletingPathExtension] error:nil];
-    [theApp didRestore:path];
     [self.window close];
+    [theApp didRestore:path];
 
 }
 
 - (IBAction)cancel:(id)sender {
-    [theApp cancelRestore:path];
     [self.window close];
+    [theApp cancelRestore:path];
 }
 
 

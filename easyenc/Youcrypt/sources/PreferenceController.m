@@ -83,6 +83,7 @@
                        YC_USERREALNAME, YC_USEREMAIL, YC_GMAILUSERNAME, YC_BOXSTATUS, nil];
 
     defaultPreferences = [[NSMutableDictionary alloc] initWithObjects:[NSArray arrayWithObjects:[libFunctions locateDropboxFolder], [self locateBoxFolder], [NSNumber numberWithInt:0], [NSNumber numberWithInt:1], @"", @"", @"", @"", nil] forKeys:preferencesKeys];
+
     
     DDLogVerbose(@"defaultPrefs : %@",defaultPreferences);
     

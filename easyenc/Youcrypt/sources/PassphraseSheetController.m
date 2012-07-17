@@ -63,7 +63,6 @@
         return;
     } else {
         [message setStringValue:@"Please Wait. It may take a while."];
-      NSLog(@"Registering new passphrase with keychain");
         [libFunctions registerWithKeychain:[newpassphrase stringValue]:@"Youcrypt"];
         int count = arr.count;
         for(int i=0;i<count;i++) {
