@@ -22,7 +22,9 @@
 
 - (void) keyDown:(NSEvent *)theEvent;
 {
-    [super keyDown:theEvent];			
+    [super keyDown:theEvent];	
+    
+    NSLog(@"keycode:%lu, modifierflags: %lu", theEvent.keyCode, theEvent.modifierFlags);
 
     switch (theEvent.keyCode) {
         case 125: // down
@@ -36,19 +38,20 @@
             [listDirObj doOpenProxy:[listDirObj.table selectedRow]];
             break;
         case 15: // Test for 'Cmd-Shift-R'
-            if (theEvent.modifierFlags & (NSCommandKeyMask | NSShiftKeyMask)) {
+            if (theEvent.modifierFlags & NSCommandKeyMask) {
                 [listDirObj doOpenProxy:[listDirObj.table selectedRow]];
             }
             break; 
         case 2: // Test for Cmd-shift-D or decryot
-            if (theEvent.modifierFlags & (NSCommandKeyMask | NSShiftKeyMask)) {
+            if (theEvent.modifierFlags & NSCommandKeyMask) {
                 [listDirObj removeFS:listDirObj.window];
             }
             break;
         case 8:  // Test for Cmd-shift-C or close
-            if (theEvent.modifierFlags & (NSCommandKeyMask | NSShiftKeyMask)) {
+            if (theEvent.modifierFlags & NSCommandKeyMask) {
                 [listDirObj close:listDirObj.window];
             }
+            break;
 
         default:
             break;

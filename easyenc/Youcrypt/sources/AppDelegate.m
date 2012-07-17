@@ -232,7 +232,7 @@ MixpanelAPI *mixpanel;
                 if (dir.status == YoucryptDirectoryStatusUnmounted) {
                     dir.status =  YoucryptDirectoryStatusProcessing;
                     dir.mountedPath = mountPoint;
-                }
+                }                
                 goto FoundOne;
             }
         }        
@@ -596,7 +596,7 @@ MixpanelAPI *mixpanel;
         if (doReturn)
             return;        
     } else {
-        BOOL doReturn = YES;
+        BOOL doReturn = NO;
         @synchronized(self) {
             [restoreQ addObject:path];
             if ([restoreQ count] > 1)
@@ -811,28 +811,36 @@ MixpanelAPI *mixpanel;
 - (BOOL)tableView:(NSTableView *)tableView acceptDrop:(id<NSDraggingInfo>)info row:(NSInteger)row dropOperation:(NSTableViewDropOperation)dropOperation {
     
     NSPasteboard *pb = [info draggingPasteboard];
+    
+    BOOL ret = NO;    
+    NSArray *fileURLs = nil;
+    {
+        NSArray *classes = [NSArray arrayWithObject:[NSURL class]];        
+        fileURLs = [pb readObjectsForClasses:classes options:nil];
+    }
+            
+    
     // Check if the pboard contains a URL that's a diretory.
-    if ([[pb types] containsObject:NSURLPboardType]) {
-        NSString *path = [[NSURL URLFromPasteboard:pb] path];
+    if ([[pb types] containsObject:NSURLPboardType]) {        
         NSFileManager *fm = [NSFileManager defaultManager];
-        
-        [listDirectories.table setDefaultImage];
-        BOOL isDir;
-        if ([fm fileExistsAtPath:path isDirectory:&isDir] && isDir) {
-            
-            //FIXME:  If it's a .yc file but not in our list file.
-            
-            // If it's a .yc file, we open it, otherwise, we encrypt it
-            if ([[path pathExtension] isEqualToString:@"yc"]) {
-                [theApp openEncryptedFolder:path];
+       [listDirectories.table setDefaultImage];
+        NSURL *url;
+        for (url in fileURLs) {
+            BOOL isDir;
+            NSString *path = [url path];
+            if ([fm fileExistsAtPath:path isDirectory:&isDir] && isDir) {                  
+                // If it's a .yc file, we open it, otherwise, we encrypt it
+                if ([[path pathExtension] isEqualToString:@"yc"]) {
+                    [theApp openEncryptedFolder:path];
+                }
+                else {
+                    [theApp encryptFolder:path];
+                }
+                ret = YES;
             }
-            else {
-                [theApp encryptFolder:path];
-            }
-            return YES;
         }
     }
-    return NO;
+    return ret;
 }
 
 //--------------------------------------------------------------------------------------------------
