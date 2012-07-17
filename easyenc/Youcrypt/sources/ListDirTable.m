@@ -9,6 +9,9 @@
 #import "ListDirTable.h"
 #import "AppDelegate.h"
 #import "ListDirectoriesWindow.h"
+#import <QuartzCore/QuartzCore.h>
+#import <QuartzCore/CoreAnimation.h>
+
 
 @implementation ListDirTable
 
@@ -37,17 +40,17 @@
         case 36: // enter
             [listDirObj doOpenProxy:[listDirObj.table selectedRow]];
             break;
-        case 15: // Test for 'Cmd-Shift-R'
+        case 15: // Test for 'Cmd-R'
             if (theEvent.modifierFlags & NSCommandKeyMask) {
                 [listDirObj doOpenProxy:[listDirObj.table selectedRow]];
             }
             break; 
-        case 2: // Test for Cmd-shift-D or decryot
+        case 2: // Test for Cmd-D or decryot
             if (theEvent.modifierFlags & NSCommandKeyMask) {
                 [listDirObj removeFS:listDirObj.window];
             }
             break;
-        case 8:  // Test for Cmd-shift-C or close
+        case 8:  // Test for Cmd-C or close
             if (theEvent.modifierFlags & NSCommandKeyMask) {
                 [listDirObj close:listDirObj.window];
             }
@@ -59,21 +62,6 @@
 	}    
 }
 
-- (void) setImageViewUnderTable:(NSImageView*)imgView
-{
-    backgroundImageView = imgView;
-
-}
-
-- (void) setDefaultImage
-{
-    [backgroundImageView setImage:defaultImage];
-}
-
-- (void) setOtherImage
-{
-    [backgroundImageView setImage:otherImage];
-}
 
 - (void)awakeFromNib {
     
@@ -81,12 +69,71 @@
     [[self enclosingScrollView] setDrawsBackground: NO];
     defaultImage = [NSImage imageNamed:@"Grey_Add_Folder.png"];
     otherImage = [NSImage imageNamed:@"Grey_Open_Folder.png"];
+    anim = [CABasicAnimation  animation];
+    [anim setDelegate:listDirObj.backgroundImageView];
+    [listDirObj.backgroundImageView setAnimations:[NSDictionary dictionaryWithObject:anim forKey:@"alphaValue"]];
+    [listDirObj.backgroundImageView.animator setAlphaValue:0.65];
 }
 
-- (BOOL)isOpaque {
+
+- (void)setUpTrackingArea {
+    // find location of image under the table 
+
+    NSRect imgview_bound = [self getBackgroundImageRect];
     
-    return NO;
+    trackingArea = [[NSTrackingArea alloc] initWithRect:imgview_bound
+                                                options: (NSTrackingMouseEnteredAndExited | NSTrackingMouseMoved | NSTrackingActiveInKeyWindow )
+                                                  owner:self userInfo:nil];
+    [self addTrackingArea:trackingArea];
+
 }
+
+- (void)updateTrackingAreas {
+    NSRect imgview_bounds = [self getBackgroundImageRect];
+    [self removeTrackingArea:trackingArea];
+    trackingArea = [[NSTrackingArea alloc] initWithRect:imgview_bounds
+                                                options: (NSTrackingMouseEnteredAndExited | NSTrackingMouseMoved | NSTrackingActiveInKeyWindow)
+                                                  owner:self userInfo:nil];
+    [self addTrackingArea:trackingArea];
+}
+
+
+
+- (void)mouseEntered:(NSEvent*)event
+{
+//    [listDirObj.backgroundImageView.animator alpha
+    [listDirObj.backgroundImageView.animator setAlphaValue:1.0];
+    [[NSCursor pointingHandCursor] set];
+//    [self setToolTip:[NSString stringWithString:@"Open Finder"]];
+
+}
+
+
+- (void)mouseExited:(NSEvent*)event
+{
+    //    [listDirObj.backgroundImageView.animator alpha
+    [listDirObj.backgroundImageView.animator setAlphaValue:0.65];
+    [[NSCursor arrowCursor] set];
+//    [self setToolTip:nil];
+    
+}
+
+
+- (NSRect) getBackgroundImageRect
+{
+    NSRect imgbound = [self convertRectToBacking:[listDirObj.backgroundImageView bounds]];
+    NSRect tblbound = [self bounds];
+
+    // add tracking area for picture under the table
+    NSRect imgview_bound = [listDirObj.backgroundImageView bounds];
+    imgview_bound.origin.x = tblbound.size.width/2 - imgbound.size.width/2;
+    imgview_bound.origin.y = tblbound.size.height - imgbound.size.height;
+
+    if (imgview_bound.origin.x < 191) imgview_bound.origin.x = 191; // XXX FIXME HACK tableview's size isnt correct at the beginning but becomes okay after a resize 
+    
+    return imgview_bound;
+}
+
 
 - (void)drawBackgroundInClipRect:(NSRect)clipRect {
     
@@ -139,6 +186,45 @@
     }
 }
 
+- (void) setImageViewUnderTable:(NSImageView*)imgView
+{
+    backgroundImageView = imgView;
+    
+}
+
+- (void) setDefaultImage
+{
+    [backgroundImageView setImage:defaultImage];
+}
+
+- (void) setOtherImage
+{
+    [backgroundImageView setImage:otherImage];
+}
 
 
+- (BOOL)isOpaque {
+    
+    return NO;
+}
+
+
+- (void)mouseDown:(NSEvent *)theEvent {
+    // determine if I handle theEvent
+    // if not...
+    [super mouseDown:theEvent];
+    
+    NSPoint globalLocation = [ NSEvent mouseLocation ];
+    NSPoint windowLocation = [ self.window convertScreenToBase:globalLocation];
+    NSPoint viewLocation = [listDirObj.backgroundImageView convertPoint:windowLocation fromView: nil ];
+    NSPoint tableviewLocation = [self convertPoint:viewLocation fromView: listDirObj.backgroundImageView ];
+
+    
+    if( NSPointInRect( viewLocation, [listDirObj.backgroundImageView bounds ] ) ) {
+        [[NSWorkspace sharedWorkspace] openFile:NSHomeDirectory()];
+    }
+    
+//    NSLog(@"mousedown: \timgviewloc:(%f,%f)\n\ttableviewloc: (%f, %f)\n\tclickloc(%f,%f)", viewLocation.x, viewLocation.y, 
+//             tableviewLocation.x, tableviewLocation.y, windowLocation.x, windowLocation.y);
+}
 @end

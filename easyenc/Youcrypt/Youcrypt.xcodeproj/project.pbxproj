@@ -239,8 +239,8 @@
 		25300E8D15A3BE73009CDA08 /* FirstRunSheetController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FirstRunSheetController.h; path = sources/FirstRunSheetController.h; sourceTree = "<group>"; };
 		25300E8E15A3BE73009CDA08 /* FirstRunSheetController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FirstRunSheetController.m; path = sources/FirstRunSheetController.m; sourceTree = "<group>"; };
 		25300E8F15A3BE73009CDA08 /* FirstRun.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FirstRun.xib; sourceTree = "<group>"; };
-		2537E32C15B0E4E80034E6E3 /* LFCGzipUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LFCGzipUtility.h; path = sources/LFCGzipUtility.h; sourceTree = "<group>"; };
-		2537E32D15B0E4E80034E6E3 /* LFCGzipUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LFCGzipUtility.m; path = sources/LFCGzipUtility.m; sourceTree = "<group>"; };
+		2537E32C15B0E4E80034E6E3 /* LFCGzipUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LFCGzipUtility.h; path = ../sources/LFCGzipUtility.h; sourceTree = "<group>"; };
+		2537E32D15B0E4E80034E6E3 /* LFCGzipUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LFCGzipUtility.m; path = ../sources/LFCGzipUtility.m; sourceTree = "<group>"; };
 		2537E32F15B1012F0034E6E3 /* libboost_filesystem-mt.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = "libboost_filesystem-mt.dylib"; sourceTree = "<group>"; };
 		2537E33015B1012F0034E6E3 /* libboost_serialization-mt.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = "libboost_serialization-mt.dylib"; sourceTree = "<group>"; };
 		2537E33115B1012F0034E6E3 /* libboost_system-mt.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = "libboost_system-mt.dylib"; sourceTree = "<group>"; };
@@ -609,8 +609,6 @@
 			children = (
 				2537E39B15B4FD260034E6E3 /* AboutController.h */,
 				2537E39C15B4FD260034E6E3 /* AboutController.m */,
-				2537E32C15B0E4E80034E6E3 /* LFCGzipUtility.h */,
-				2537E32D15B0E4E80034E6E3 /* LFCGzipUtility.m */,
 				256C3571158EA75F00E2BEC4 /* AppDelegate.h */,
 				256C3572158EA75F00E2BEC4 /* AppDelegate.m */,
 				E0BF0EBA159838DD002F9FB9 /* ListDirectoriesWindow.h */,
@@ -742,9 +740,19 @@
 			path = NSData_Base64;
 			sourceTree = "<group>";
 		};
+		E64FA4B415B563A200C08D5F /* zlib */ = {
+			isa = PBXGroup;
+			children = (
+				2537E32C15B0E4E80034E6E3 /* LFCGzipUtility.h */,
+				2537E32D15B0E4E80034E6E3 /* LFCGzipUtility.m */,
+			);
+			name = zlib;
+			sourceTree = "<group>";
+		};
 		E6649C0A15A53BFA0096886F /* contrib */ = {
 			isa = PBXGroup;
 			children = (
+				E64FA4B415B563A200C08D5F /* zlib */,
 				254412EB15AFBA640098B8FB /* FileBrowser */,
 				E64B307615AEE8C400827591 /* Mixpanel_iphonemod_fpotter */,
 				E603DBB315AEC9CC00ABB170 /* AMToolTipTableView */,

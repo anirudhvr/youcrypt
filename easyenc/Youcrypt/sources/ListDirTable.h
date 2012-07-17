@@ -8,6 +8,8 @@
 
 #import <Cocoa/Cocoa.h>
 #import "contrib/AMToolTipTableView/AMToolTipTableView.h"
+#import <QuartzCore/QuartzCore.h>
+#import <QuartzCore/CoreAnimation.h>
 
 @class ListDirectoriesWindow;
 
@@ -16,6 +18,8 @@
     NSImageView *backgroundImageView; // The imageview under the table
     NSImage *defaultImage;
     NSImage *otherImage;
+    NSTrackingArea *trackingArea;
+    CAAnimation *anim;
 
 }
 
@@ -26,5 +30,8 @@
 - (void) setImageViewUnderTable:(NSImageView*)imgView;
 - (void) setDefaultImage;
 - (void) setOtherImage;
+- (void)setUpTrackingArea;
+- (NSRect) getBackgroundImageRect;
+
 
 @end

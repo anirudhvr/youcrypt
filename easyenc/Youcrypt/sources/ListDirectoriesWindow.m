@@ -79,6 +79,7 @@
     [[self window] makeFirstResponder:table];
     
     [table setImageViewUnderTable:backgroundImageView];
+    [table setUpTrackingArea];
     
 }
 
@@ -86,13 +87,7 @@
 }
 
 - (IBAction)doOpen:(id)sender {
-    
-       
-    if ([table clickedRow] < [theApp.directories count]) {
-        YoucryptDirectory *dir = [theApp.directories objectAtIndex:[table clickedRow]];
-        [theApp openEncryptedFolder:[dir path]];
-
-    }
+    [self doOpenProxy:[table clickedRow]];
 }
 
 - (void)doOpenProxy:(NSInteger) row {

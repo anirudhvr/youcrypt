@@ -10,6 +10,7 @@
 #import "DBSetupSheetController.h"
 #import "AppDelegate.h"
 #import "ConfigDirectory.h"
+#import "libFunctions.h"
 @implementation DBLinkedView
 
 @synthesize dbSetupSheet;
@@ -43,7 +44,6 @@
     [dbSetupSheet beginSheetModalForWindow:self.window completionHandler:^(NSUInteger returnCode) {
         if (returnCode == kSheetReturnedSave) {
             DDLogVerbose(@"dbSetupSheet: DB Setup done");
-            [theApp encryptDropboxFolders];
           //  [self.window close];
         } else if (returnCode == kSheetReturnedCancel) {
             DDLogVerbose(@"dbSetupSheet: DB Setup cancelled :( ");
@@ -59,13 +59,18 @@
     NSLog(@"push folders here to the queue");
  
     
-    if ([newYCFolderInDropbox state] == NSOnState) {
-        
+    if ([chooseDBFoldersToEncrypt state] == NSOnState) {
+        [theApp encryptDropboxFolders];
     }
     
-    if ([chooseDBFoldersToEncrypt state] == NSOnState) {
-        
+    
+    if ([newYCFolderInDropbox state] == NSOnState) {
+        NSString* newYCfolder = [NSString stringWithFormat:@"%@/YouCrypt", [libFunctions locateDropboxFolder]]; 
+        if ([libFunctions mkdirRecursive:newYCfolder]) {
+            [theApp encryptFolder:newYCfolder]; // XXX awakeFromNib issue
+        }
     }
+  
     
     [theApp.configDir firstRunSuccessful];
     [self.window close];
