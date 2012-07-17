@@ -89,8 +89,8 @@
 
 - (IBAction)cancel:(id)sender {
     DDLogVerbose(@"Cancel decrypt : %@",sourceFolderPath);
-    [theApp cancelDecrypt:sourceFolderPath];
     [self close];
+    [theApp cancelDecrypt:sourceFolderPath];
 }
 
 - (IBAction)didMount:(id)sender {
@@ -122,7 +122,7 @@
     
     
 //    [[NSWorkspace sharedWorkspace] openFile:destFolder];	
-    [theApp didDecrypt:sourceFolderPath];
     [self close];
+    [theApp didDecrypt:sourceFolderPath];
 }
 @end

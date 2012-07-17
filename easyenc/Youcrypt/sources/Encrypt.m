@@ -232,7 +232,6 @@
     
     [[[NSWorkspace sharedWorkspace] notificationCenter] removeObserver:self];
     
-    
     // Now to move the contents of tempFolder into destFolder
     // Unfortunately, a direct move won't work since both directories exist and
     // macOS thinks it is overwriting the mount point we just created
@@ -303,7 +302,6 @@ Cleanup:
             [libFunctions registerWithKeychain:[yourPassword stringValue] :@"Youcrypt" ];            
         }
         
-        [theApp didEncrypt:destFolder];
         /* Register password with keyring */
         
         /*** <!-- ENCFS END --> ***/
@@ -332,11 +330,14 @@ Cleanup:
     [yourPassword setStringValue:@""];
     [yourFriendsEmail setStringValue:@""];
     [self.window close];
+    [theApp didEncrypt:destFolder];
+
 
 }
 
 -(IBAction)cancel:(id)sender {
     [self.window close];
+    [theApp cancelEncrypt:destFolder];
 }
 
 
