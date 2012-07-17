@@ -11,6 +11,7 @@
 
 @implementation TourWizard
 
+@synthesize message;
 @synthesize currentView;
 
 - (id)init
@@ -33,6 +34,10 @@
 - (void)awakeFromNib
 {
     NSView *contentView = [[self window] contentView];
+    
+    [[NSColor grayColor] set]; 
+    [contentView setFrame:NSMakeRect(10, 10, [contentView bounds].size.width - 20, 500)];
+    
     [contentView setWantsLayer:YES];
     [contentView addSubview:[self currentView]];
     
@@ -43,18 +48,24 @@
     NSDictionary *ani = [NSDictionary dictionaryWithObject:transition forKey:@"subviews"];
     [contentView setAnimations:ani];
     
-    currentView.tourWizard = self;
+    if (currentView) {
+        currentView.tourWizard = self;
+        [message setStringValue:[currentView.message stringValue]];
+    }
+    
 }
 
 - (void)setCurrentView:(LinkedView*)newView
 {
     if (!currentView) {
         currentView = newView;
+        [message setStringValue:[currentView.message stringValue]];
         return;
     }
     NSView *contentView = [[self window] contentView];
     [[contentView animator] replaceSubview:currentView with:newView];
     currentView = newView;
+    [message setStringValue:[currentView.message stringValue]];
 }
 
 - (IBAction)nextView:(id)sender;

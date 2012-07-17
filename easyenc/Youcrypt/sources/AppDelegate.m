@@ -158,8 +158,7 @@ MixpanelAPI *mixpanel;
     [self someUnMount:nil];
 
     DDLogVerbose(@"App did, in fact, finish launching!!!");
-    NSDictionary *env = [[NSProcessInfo processInfo] environment];
-    NSLog(env);
+   
 
 }
 
@@ -192,10 +191,9 @@ MixpanelAPI *mixpanel;
     [statusItem setHighlightMode:YES];
     
     
-    if(configDir.firstRun) {
+    if([configDir isFirstRun]) {
         //[self showListDirectories:self];
         NSLog(@"FIRST RUN ! ");
-        //[self showFirstRunSheet];
         [self showTour];
     }    
 }
@@ -422,10 +420,16 @@ MixpanelAPI *mixpanel;
 // Helper functions to show any window; you name it, we've it.
 // --------------------------------------------------------------------------------------
 - (IBAction)showMainApp:(id)sender {
+    if (configDir.firstRun)
+        return;
+        
     [listDirectories.window makeKeyAndOrderFront:self];
 }
 
 - (IBAction)showListDirectories:(id)sender {
+    if (configDir.firstRun)
+        return;
+    
     // Is list directories nil?
     if (!listDirectories) {
         listDirectories = [[ListDirectoriesWindow alloc] init];
@@ -435,21 +439,15 @@ MixpanelAPI *mixpanel;
 }
 
 - (IBAction)showPreferencePanel:(id)sender {
+    if (configDir.firstRun)
+        return;
+    
     // Is preferenceController nil?
     if (!preferenceController) {
         preferenceController = [[PreferenceController alloc] init];
     }
     DDLogVerbose(@"showing %@", preferenceController);
     [preferenceController showWindow:self];
-}
-
-- (void)showFirstRunSheet {
-    // Is preferenceController nil?
-    if (!preferenceController) {
-        preferenceController = [[PreferenceController alloc] init];
-    }
-    [self showFirstRun]; 
-    
 }
 
 -(void) showTour {
@@ -461,26 +459,10 @@ MixpanelAPI *mixpanel;
     [tourWizard showWindow:self];
 }
 
--(void)showFirstRun
-{    
-    NSLog(@"in show first run !");
-    if(self.window == nil)
-        NSLog(@"NIL WINDOW ____________ ");
-    [self showListDirectories:self];
-    [firstRunSheetController beginSheetModalForWindow:theApp.listDirectories.window completionHandler:^(NSUInteger returnCode) {
-        if (returnCode == kSheetReturnedSave) {
-            NSLog(@"First run done");
-            [self.window close];
-        } else if (returnCode == kSheetReturnedCancel) {
-            NSLog(@"First Run cancelled :( ");
-        } else {
-            NSLog(@"Unknown return code");
-        }
-    }];    
-}
-
-
 - (IBAction)showDecryptWindow:(id)sender path:(NSString *)path mountPoint:(NSString *)mountPath {
+    if (configDir.firstRun)
+        return;
+    
     // Is decryptController nil?
     if (!decryptController) {
         decryptController = [[Decrypt alloc] init];
@@ -505,6 +487,9 @@ MixpanelAPI *mixpanel;
 }
 
 - (IBAction)showRestoreWindow:(id)sender path:(NSString *)path {
+    if (configDir.firstRun)
+        return;
+    
     if (!restoreController) {
         restoreController = [[RestoreController alloc] init];
     }
@@ -525,6 +510,9 @@ MixpanelAPI *mixpanel;
 
 
 - (IBAction)showEncryptWindow:(id)sender path:(NSString *)path {
+    if (configDir.firstRun)
+        return;
+    
     // Is encryptController nil?
     if (!encryptController) {
         encryptController = [[Encrypt alloc] init];
@@ -578,6 +566,10 @@ MixpanelAPI *mixpanel;
 
 - (void) encryptFolders:(NSArray *)folders
 {
+    if (configDir.firstRun)
+        return;
+    
+    
     NSLog(@"In encrypt folders : %@",folders);
     if (!encryptController) {
         encryptController = [[Encrypt alloc] init];

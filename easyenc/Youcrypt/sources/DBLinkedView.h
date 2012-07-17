@@ -21,4 +21,8 @@
 -(IBAction)dbFolderCheckToggle:(id)sender;
 -(void)selectDBFoldersToEncrypt;
 
+-(IBAction)letsGo:(id) sender;
+-(IBAction)notNow:(id) sender;
+
+
 @end

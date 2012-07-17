@@ -19,6 +19,7 @@
     
     IBOutlet NSButton *nextButton;
     IBOutlet NSButton *previousButton;
+    
 }
 
 @property(nonatomic, strong)LinkedView *previousView, *nextView;

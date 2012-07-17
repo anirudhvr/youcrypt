@@ -231,7 +231,6 @@
     
     NSDictionary *newenvsetting = [NSDictionary dictionaryWithObjectsAndKeys:[[NSBundle mainBundle] resourcePath], @"DYLD_LIBRARY_PATH", nil];
     [encfsProc setEnvironment:newenvsetting];
-    
     NSDictionary *env = [encfsProc environment];
     NSLog(@"getenv : %@",env);
     
@@ -277,10 +276,8 @@
     
     NSDictionary *newenvsetting = [NSDictionary dictionaryWithObjectsAndKeys:[[NSBundle mainBundle] resourcePath], @"DYLD_LIBRARY_PATH", nil];
     [encfsProc setEnvironment:newenvsetting];
-    
     NSDictionary *env = [encfsProc environment];
-    NSLog(@"getenv : %@",env);
-
+    
     if ([libFunctions execWithSocket:encfsPath arguments:nil env:env io:io proc:encfsProc]) {   
         NSString *args = [NSString stringWithFormat:@"8\nencfs\n--pw\n%@\n--\n%@\n%@\n-ofsname=YoucryptFS\n-ovolname=%@\n", 
                           password, encFolder, decFolder, vol];
@@ -304,11 +301,17 @@
 + (BOOL) changeEncFSPasswd:(NSString *)path
                  oldPasswd:(NSString *)oldPasswd
                  newPasswd:(NSString *)newPasswd {
+   
     NSTask *encfsProc = [NSTask alloc];
     NSFileHandle *io = [NSFileHandle alloc];
     NSString *encfsctlPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:ENCFSCTL]; 
     NSLog(@"ENCFSCTL Path : %@",encfsctlPath);
-    if ([libFunctions execWithSocket:encfsctlPath arguments:[NSArray arrayWithObjects:@"autopasswd", path, nil] env:nil io:io proc:encfsProc]) {
+    
+    NSDictionary *newenvsetting = [NSDictionary dictionaryWithObjectsAndKeys:[[NSBundle mainBundle] resourcePath], @"DYLD_LIBRARY_PATH", nil];
+    [encfsProc setEnvironment:newenvsetting];
+    NSDictionary *env = [encfsProc environment];
+
+    if ([libFunctions execWithSocket:encfsctlPath arguments:[NSArray arrayWithObjects:@"autopasswd", path, nil] env:env io:io proc:encfsProc]) {
         [io writeData:[[NSString stringWithFormat:@"%@\n%@\n", oldPasswd, newPasswd] dataUsingEncoding:NSUTF8StringEncoding]];
         [encfsProc waitUntilExit];
         if ([encfsProc terminationStatus] == 0) {
@@ -376,7 +379,10 @@
     
     
     NSLog(@"Dropbox folder loc: %@",dropboxURL);
-    return [dropboxURL stringByReplacingOccurrencesOfString:@"\n" withString:@""];
+    if (dropboxURL)
+        dropboxURL = [dropboxURL stringByReplacingOccurrencesOfString:@"\n" withString:@""];
+    
+    return dropboxURL;
 }
 
 + (NSString*) appBundlePath 

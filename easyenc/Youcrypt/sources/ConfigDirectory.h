@@ -21,6 +21,9 @@
 @property (nonatomic) BOOL firstRun;
 @property (nonatomic, strong) NSString *youcryptUserUUID;
 
+-(BOOL)isFirstRun;
+-(void)firstRunSuccessful;
+
 
 /*
  - (NSString*) getHomeDir;

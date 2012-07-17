@@ -32,25 +32,38 @@
     youCryptListFile = [homedir stringByAppendingPathComponent:@"/.youcrypt/dirs.plist"];
     youcryptUserUUID = [homedir stringByAppendingPathComponent:@"/.youcrypt/uuid.txt"];
 
-    if (![[NSFileManager defaultManager] fileExistsAtPath:[homedir stringByAppendingPathComponent:@"/.youcrypt"]]) {
+      
+    return self;
+}
+
+-(BOOL)isFirstRun
+{
+    NSString *homedir = NSHomeDirectory();
+    if (![[NSFileManager defaultManager] fileExistsAtPath:youcryptUserUUID]) // this is created last in teh firstrunsuccessful method
         firstRun = YES;
-        [libFunctions mkdirRecursive:youCryptLogDir];
-        [libFunctions mkdirRecursive:youCryptVolDir];
-        [libFunctions mkdirRecursive:youCryptTmpDir];
-        
+    else
+        firstRun = NO;
+    return firstRun;
+}
+
+-(void)firstRunSuccessful
+{    
+    if (![libFunctions mkdirRecursive:youCryptLogDir]) {
+        DDLogVerbose(@"First run: could not create youcrypt logdir");
+    } else if (![libFunctions mkdirRecursive:youCryptVolDir]) {
+        DDLogVerbose(@"First run: could not create Youcrypt vol dir");
+    } else if (![libFunctions mkdirRecursive:youCryptTmpDir]) {
+        DDLogVerbose(@"First run: could not create Youcrypt Tmp dir");
+    } else {    
         NSString *uuid = [[NSProcessInfo processInfo] globallyUniqueString];
         NSError *error;
         [uuid writeToFile:youcryptUserUUID atomically:YES encoding:NSASCIIStringEncoding error:&error];
-        if(error) {
+        if(!error) {
+            firstRun = NO;
+        } else {
             DDLogVerbose(@"Could not create uuid.txt : %@",[error localizedDescription]);
         }
-        DDLogVerbose(@"Client has been assigned UUID: %@",uuid);
-    } else {
-        firstRun = NO;
     }
-    
-    
-    return self;
 }
 
 -(NSString*)getLogDir

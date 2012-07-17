@@ -52,12 +52,12 @@
 
 - (void) setDefaultImage
 {
-    backgroundImageView = defaultImage;
+    [backgroundImageView setImage:defaultImage];
 }
 
 - (void) setOtherImage
 {
-    backgroundImageView = otherImage;
+    [backgroundImageView setImage:otherImage];
 }
 
 - (void)awakeFromNib {
@@ -90,26 +90,24 @@
         NSFileManager *fm = [NSFileManager defaultManager];
         BOOL isDir;
         if ([fm fileExistsAtPath:path isDirectory:&isDir] && isDir) {
-         //   NSLog(@"Dragging entered");
+            //   NSLog(@"Dragging entered");
             if (backgroundImageView != nil) {
                 [backgroundImageView setImage:otherImage];
             }
-
+            
         }
     }
-        return ret;
+    
+    return ret;
 }
 
-- (void)draggingEnded:(id < NSDraggingInfo >)sender
-{
-    [super draggingEnded:sender];
-    [self draggingExited:sender];
-}
 
 - (void)draggingExited:(id < NSDraggingInfo >)sender
 {
     [super draggingExited:sender];
+
     NSPasteboard *pb = [sender draggingPasteboard];
+
     
     // Check if the pboard contains a URL that's a diretory.
     if ([[pb types] containsObject:NSURLPboardType]) {

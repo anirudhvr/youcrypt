@@ -9,6 +9,7 @@
 #import "DBLinkedView.h"
 #import "DBSetupSheetController.h"
 #import "AppDelegate.h"
+#import "ConfigDirectory.h"
 @implementation DBLinkedView
 
 @synthesize dbSetupSheet;
@@ -51,4 +52,30 @@
         }
     }];  
 }
+
+-(IBAction)letsGo:(id)sender
+{
+    // Link this to the queue when it's done
+    NSLog(@"push folders here to the queue");
+ 
+    
+    if ([newYCFolderInDropbox state] == NSOnState) {
+        
+    }
+    
+    if ([chooseDBFoldersToEncrypt state] == NSOnState) {
+        
+    }
+    
+    [theApp.configDir firstRunSuccessful];
+    [self.window close];
+    
+}
+
+-(IBAction)notNow:(id)sender
+{
+    [theApp.configDir firstRunSuccessful];
+    [self.window close];
+}
+
 @end

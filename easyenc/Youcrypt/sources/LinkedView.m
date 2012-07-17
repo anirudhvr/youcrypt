@@ -36,7 +36,7 @@
     [self setAutoresizingMask:NSViewHeightSizable|NSViewWidthSizable];
     [previousButton setEnabled:(previousView != nil)];
     [nextButton setEnabled:(nextView != nil)];
-    [message setStringValue:@""];
+   // [message setStringValue:@""];
 }
 
 - (void)drawRect:(NSRect)rect
@@ -46,7 +46,8 @@
 //    [[NSColor darkGrayColor] set];
   //  NSRectFill(rect);
     //[self setAlphaValue:0.1];
-
+    
+    
 }
 
 -(BOOL) isOpaque

@@ -19,7 +19,8 @@
 }
 
 @property(nonatomic, strong) LinkedView *currentView;
-
+@property(nonatomic, strong) IBOutlet NSTextField *message;
+          
 - (IBAction)nextView:(id)sender;
 - (IBAction)previousView:(id)sender;
 
