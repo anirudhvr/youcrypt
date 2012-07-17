@@ -44,6 +44,8 @@
 		2537E35D15B127300034E6E3 /* librlog.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 2537E35915B1271D0034E6E3 /* librlog.dylib */; };
 		2537E38115B492720034E6E3 /* StartOnLogin.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E635DE8D15AE2BAA00A81117 /* StartOnLogin.framework */; };
 		2537E38815B496400034E6E3 /* StartOnLogin.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = E635DE8D15AE2BAA00A81117 /* StartOnLogin.framework */; };
+		2537E39515B4F1660034E6E3 /* About.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2537E39415B4F1660034E6E3 /* About.xib */; };
+		2537E39D15B4FD260034E6E3 /* AboutController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2537E39C15B4FD260034E6E3 /* AboutController.m */; };
 		253C3D7F159BBF9400120B8D /* BoxFSA.m in Sources */ = {isa = PBXBuildFile; fileRef = 253C3D7E159BBF9400120B8D /* BoxFSA.m */; };
 		254412E515AFB1E60098B8FB /* DBSetup.xib in Resources */ = {isa = PBXBuildFile; fileRef = 254412E415AFB1E60098B8FB /* DBSetup.xib */; };
 		254412F615AFBAD60098B8FB /* FSBrowserCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 254412F315AFBAD60098B8FB /* FSBrowserCell.m */; };
@@ -244,6 +246,9 @@
 		2537E34B15B125320034E6E3 /* librlog.5.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = librlog.5.dylib; sourceTree = "<group>"; };
 		2537E35815B1271D0034E6E3 /* libintl.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libintl.dylib; sourceTree = "<group>"; };
 		2537E35915B1271D0034E6E3 /* librlog.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = librlog.dylib; sourceTree = "<group>"; };
+		2537E39415B4F1660034E6E3 /* About.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = About.xib; sourceTree = "<group>"; };
+		2537E39B15B4FD260034E6E3 /* AboutController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AboutController.h; path = sources/AboutController.h; sourceTree = "<group>"; };
+		2537E39C15B4FD260034E6E3 /* AboutController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AboutController.m; path = sources/AboutController.m; sourceTree = "<group>"; };
 		253C3D75159BBF2E00120B8D /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = System/Library/Frameworks/CoreServices.framework; sourceTree = SDKROOT; };
 		253C3D77159BBF3900120B8D /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		253C3D79159BBF4000120B8D /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -576,6 +581,7 @@
 				E66988D4159E62D8002323AD /* ChangePassphrase.xib */,
 				251C770515ADFFC6001605F5 /* Tour.xib */,
 				E67AC5B515AF9448005A7938 /* TourWizard.xib */,
+				2537E39415B4F1660034E6E3 /* About.xib */,
 			);
 			name = UI;
 			path = sources/UI;
@@ -594,6 +600,8 @@
 		25F3D154159243E300E3383C /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				2537E39B15B4FD260034E6E3 /* AboutController.h */,
+				2537E39C15B4FD260034E6E3 /* AboutController.m */,
 				2537E32C15B0E4E80034E6E3 /* LFCGzipUtility.h */,
 				2537E32D15B0E4E80034E6E3 /* LFCGzipUtility.m */,
 				256C3571158EA75F00E2BEC4 /* AppDelegate.h */,
@@ -1083,6 +1091,7 @@
 				254412E515AFB1E60098B8FB /* DBSetup.xib in Resources */,
 				E67AC5C715AFA7AD005A7938 /* Grey_Add_Folder.png in Resources */,
 				E67AC5C915AFB0C4005A7938 /* Grey_Open_Folder.png in Resources */,
+				2537E39515B4F1660034E6E3 /* About.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1161,6 +1170,7 @@
 				254412FD15AFC0BD0098B8FB /* DBLinkedView.m in Sources */,
 				2544130015AFCB910098B8FB /* DBSetupSheetController.m in Sources */,
 				2537E32E15B0E4E80034E6E3 /* LFCGzipUtility.m in Sources */,
+				2537E39D15B4FD260034E6E3 /* AboutController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
