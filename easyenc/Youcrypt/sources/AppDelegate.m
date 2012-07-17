@@ -22,6 +22,7 @@
 #import "TourWizard.h"
 #import "DBLinkedView.h"
 #import "MixpanelAPI.h"
+#import "AboutController.h"
 
 #define MIXPANEL_TOKEN @"b01b99df347adcb20353ba2a4cb6faf4" // avr@nouvou.com's token
 int ddLogLevel = LOG_LEVEL_VERBOSE;
@@ -50,6 +51,7 @@ MixpanelAPI *mixpanel;
 @synthesize fileLogger;
 @synthesize dropboxEncryptedFolders;
 @synthesize mixpanelUUID;
+@synthesize aboutController;
 
 // --------------------------------------------------------------------------------------
 // App events
@@ -445,6 +447,15 @@ MixpanelAPI *mixpanel;
     }
     [self showFirstRun]; 
     
+}
+
+- (IBAction)showAboutWindow:(id)sender
+{
+    // Is preferenceController nil?
+    if (!aboutController) {
+        aboutController = [[AboutController alloc] init];
+    }
+    [aboutController.window makeKeyAndOrderFront:nil];
 }
 
 -(void) showTour {

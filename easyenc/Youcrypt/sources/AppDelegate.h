@@ -25,6 +25,7 @@
 @class CompressingLogFileManager;
 @class TourWizard;
 @class MixpanelAPI;
+@class AboutController;
 
 @interface AppDelegate : NSObject <NSTableViewDataSource, NSTableViewDelegate, NSApplicationDelegate> { // changed from NSApplicationDelegate
     
@@ -40,7 +41,7 @@
     RestoreController *restoreController;
     TourController *tourController;
     TourWizard *tourWizard;
-        
+    AboutController *aboutController;
 
     // Config directory
     ConfigDirectory *configDir;
@@ -86,6 +87,7 @@
 - (IBAction)showListDirectories:(id)sender;
 - (IBAction)openFeedbackPage:(id)sender;
 - (IBAction)openHelpPage:(id)sender;
+- (IBAction)showAboutWindow:(id)sender;
 
 -(void)encryptFolder:(NSString *)path;
 -(BOOL)openEncryptedFolder:(NSString *)path;
@@ -123,6 +125,7 @@
 @property (nonatomic, strong) NSMutableSet *dropboxEncryptedFolders;
 @property (nonatomic, strong) TourWizard *tourWizard;
 @property (nonatomic, strong) NSString *mixpanelUUID;
+@property (nonatomic, strong) AboutController *aboutController;
 
 @end
 
