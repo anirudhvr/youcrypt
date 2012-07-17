@@ -35,6 +35,21 @@
         case 36: // enter
             [listDirObj doOpenProxy:[listDirObj.table selectedRow]];
             break;
+        case 15: // Test for 'Cmd-Shift-R'
+            if (theEvent.modifierFlags & (NSCommandKeyMask | NSShiftKeyMask)) {
+                [listDirObj doOpenProxy:[listDirObj.table selectedRow]];
+            }
+            break; 
+        case 2: // Test for Cmd-shift-D or decryot
+            if (theEvent.modifierFlags & (NSCommandKeyMask | NSShiftKeyMask)) {
+                [listDirObj removeFS:listDirObj.window];
+            }
+            break;
+        case 8:  // Test for Cmd-shift-C or close
+            if (theEvent.modifierFlags & (NSCommandKeyMask | NSShiftKeyMask)) {
+                [listDirObj close:listDirObj.window];
+            }
+
         default:
             break;
         

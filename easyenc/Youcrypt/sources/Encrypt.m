@@ -229,7 +229,6 @@
 
     if (![fm fileExistsAtPath:[tempFolder stringByAppendingPathComponent:@".youcryptfs.xml"]])
         return;
-    
     [[[NSWorkspace sharedWorkspace] notificationCenter] removeObserver:self];
     
     // Now to move the contents of tempFolder into destFolder

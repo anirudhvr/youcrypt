@@ -65,6 +65,7 @@
     BOOL callFinderScript;
     
     NSMutableArray *encryptQ, *decryptQ, *restoreQ;
+    int enQIndex, deQIndex, reQIndex;
 }
 
 

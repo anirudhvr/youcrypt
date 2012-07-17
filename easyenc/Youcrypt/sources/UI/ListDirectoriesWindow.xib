@@ -98,6 +98,70 @@
 								</object>
 							</object>
 						</object>
+						<object class="NSImageView" id="249124253">
+							<reference key="NSNextResponder" ref="1006"/>
+							<int key="NSvFlags">268</int>
+							<set class="NSMutableSet" key="NSDragTypes">
+								<string>Apple PDF pasteboard type</string>
+								<string>Apple PICT pasteboard type</string>
+								<string>Apple PNG pasteboard type</string>
+								<string>NSFilenamesPboardType</string>
+								<string>NeXT Encapsulated PostScript v1.2 pasteboard type</string>
+								<string>NeXT TIFF v4.0 pasteboard type</string>
+							</set>
+							<string key="NSFrame">{{520, 20}, {38, 25}}</string>
+							<reference key="NSSuperview" ref="1006"/>
+							<reference key="NSWindow"/>
+							<reference key="NSNextKeyView"/>
+							<string key="NSReuseIdentifierKey">_NS:9</string>
+							<bool key="NSEnabled">YES</bool>
+							<object class="NSImageCell" key="NSCell" id="139831049">
+								<int key="NSCellFlags">130560</int>
+								<int key="NSCellFlags2">33554432</int>
+								<object class="NSCustomResource" key="NSContents">
+									<string key="NSClassName">NSImage</string>
+									<string key="NSResourceName">logo-grayscale-alpha</string>
+								</object>
+								<string key="NSCellIdentifier">_NS:9</string>
+								<int key="NSAlign">7</int>
+								<int key="NSScale">1</int>
+								<int key="NSStyle">0</int>
+								<bool key="NSAnimates">NO</bool>
+							</object>
+							<bool key="NSEditable">YES</bool>
+						</object>
+						<object class="NSImageView" id="936961964">
+							<reference key="NSNextResponder" ref="1006"/>
+							<int key="NSvFlags">268</int>
+							<set class="NSMutableSet" key="NSDragTypes">
+								<string>Apple PDF pasteboard type</string>
+								<string>Apple PICT pasteboard type</string>
+								<string>Apple PNG pasteboard type</string>
+								<string>NSFilenamesPboardType</string>
+								<string>NeXT Encapsulated PostScript v1.2 pasteboard type</string>
+								<string>NeXT TIFF v4.0 pasteboard type</string>
+							</set>
+							<string key="NSFrame">{{191, 20}, {197, 182}}</string>
+							<reference key="NSSuperview" ref="1006"/>
+							<reference key="NSWindow"/>
+							<reference key="NSNextKeyView" ref="249124253"/>
+							<string key="NSReuseIdentifierKey">_NS:9</string>
+							<bool key="NSEnabled">YES</bool>
+							<object class="NSImageCell" key="NSCell" id="901492949">
+								<int key="NSCellFlags">130560</int>
+								<int key="NSCellFlags2">33554432</int>
+								<object class="NSCustomResource" key="NSContents">
+									<string key="NSClassName">NSImage</string>
+									<string key="NSResourceName">Grey_Add_Folder</string>
+								</object>
+								<string key="NSCellIdentifier">_NS:9</string>
+								<int key="NSAlign">0</int>
+								<int key="NSScale">3</int>
+								<int key="NSStyle">0</int>
+								<bool key="NSAnimates">YES</bool>
+							</object>
+							<bool key="NSEditable">YES</bool>
+						</object>
 						<object class="NSScrollView" id="854108534">
 							<reference key="NSNextResponder" ref="1006"/>
 							<int key="NSvFlags">268</int>
@@ -236,10 +300,10 @@
 														<string key="NSCellIdentifier">_NS:9</string>
 														<reference key="NSControlView" ref="835527558"/>
 														<int key="NSButtonFlags">-2035138305</int>
-														<int key="NSButtonFlags2">32</int>
+														<int key="NSButtonFlags2">268435488</int>
 														<reference key="NSAlternateImage" ref="874784264"/>
 														<string key="NSAlternateContents"/>
-														<string key="NSKeyEquivalent"/>
+														<string key="NSKeyEquivalent">A</string>
 														<int key="NSPeriodicDelay">400</int>
 														<int key="NSPeriodicInterval">75</int>
 														<object class="NSMenuItem" key="NSMenuItem" id="978439456">
@@ -266,8 +330,9 @@
 																<reference ref="978439456"/>
 																<object class="NSMenuItem" id="370843215">
 																	<reference key="NSMenu" ref="66255003"/>
-																	<string key="NSTitle">Open</string>
-																	<string key="NSKeyEquiv"/>
+																	<string key="NSTitle">Reveal</string>
+																	<string key="NSKeyEquiv">R</string>
+																	<int key="NSKeyEquivModMask">1048576</int>
 																	<int key="NSMnemonicLoc">2147483647</int>
 																	<reference key="NSOnImage" ref="682584002"/>
 																	<reference key="NSMixedImage" ref="457621844"/>
@@ -277,7 +342,8 @@
 																<object class="NSMenuItem" id="251818114">
 																	<reference key="NSMenu" ref="66255003"/>
 																	<string key="NSTitle">Close</string>
-																	<string key="NSKeyEquiv"/>
+																	<string key="NSKeyEquiv">C</string>
+																	<int key="NSKeyEquivModMask">1048576</int>
 																	<int key="NSMnemonicLoc">2147483647</int>
 																	<reference key="NSOnImage" ref="682584002"/>
 																	<reference key="NSMixedImage" ref="457621844"/>
@@ -287,7 +353,8 @@
 																<object class="NSMenuItem" id="1037139021">
 																	<reference key="NSMenu" ref="66255003"/>
 																	<string key="NSTitle">Decrypt</string>
-																	<string key="NSKeyEquiv"/>
+																	<string key="NSKeyEquiv">D</string>
+																	<int key="NSKeyEquivModMask">1048576</int>
 																	<int key="NSMnemonicLoc">2147483647</int>
 																	<reference key="NSOnImage" ref="682584002"/>
 																	<reference key="NSMixedImage" ref="457621844"/>
@@ -309,7 +376,8 @@
 																<object class="NSMenuItem" id="334233204">
 																	<reference key="NSMenu" ref="66255003"/>
 																	<string key="NSTitle">Properties</string>
-																	<string key="NSKeyEquiv"/>
+																	<string key="NSKeyEquiv">P</string>
+																	<int key="NSKeyEquivModMask">1048576</int>
 																	<int key="NSMnemonicLoc">2147483647</int>
 																	<reference key="NSOnImage" ref="682584002"/>
 																	<reference key="NSMixedImage" ref="457621844"/>
@@ -319,6 +387,7 @@
 															</array>
 															<reference key="NSMenuFont" ref="26"/>
 														</object>
+														<int key="NSSelectedIndex">-1</int>
 														<bool key="NSPullDown">YES</bool>
 														<int key="NSPreferredEdge">3</int>
 														<bool key="NSUsesItemFromMenu">YES</bool>
@@ -410,75 +479,13 @@
 							<reference key="NSContentView" ref="170027385"/>
 							<bytes key="NSScrollAmts">QSAAAEEgAABCCAAAQggAAA</bytes>
 						</object>
-						<object class="NSImageView" id="249124253">
-							<reference key="NSNextResponder" ref="1006"/>
-							<int key="NSvFlags">268</int>
-							<set class="NSMutableSet" key="NSDragTypes">
-								<string>Apple PDF pasteboard type</string>
-								<string>Apple PICT pasteboard type</string>
-								<string>Apple PNG pasteboard type</string>
-								<string>NSFilenamesPboardType</string>
-								<string>NeXT Encapsulated PostScript v1.2 pasteboard type</string>
-								<string>NeXT TIFF v4.0 pasteboard type</string>
-							</set>
-							<string key="NSFrame">{{520, 20}, {38, 25}}</string>
-							<reference key="NSSuperview" ref="1006"/>
-							<reference key="NSWindow"/>
-							<string key="NSReuseIdentifierKey">_NS:9</string>
-							<bool key="NSEnabled">YES</bool>
-							<object class="NSImageCell" key="NSCell" id="139831049">
-								<int key="NSCellFlags">130560</int>
-								<int key="NSCellFlags2">33554432</int>
-								<object class="NSCustomResource" key="NSContents">
-									<string key="NSClassName">NSImage</string>
-									<string key="NSResourceName">logo-grayscale-alpha</string>
-								</object>
-								<string key="NSCellIdentifier">_NS:9</string>
-								<int key="NSAlign">7</int>
-								<int key="NSScale">1</int>
-								<int key="NSStyle">0</int>
-								<bool key="NSAnimates">NO</bool>
-							</object>
-							<bool key="NSEditable">YES</bool>
-						</object>
-						<object class="NSImageView" id="936961964">
-							<reference key="NSNextResponder" ref="1006"/>
-							<int key="NSvFlags">268</int>
-							<set class="NSMutableSet" key="NSDragTypes">
-								<string>Apple PDF pasteboard type</string>
-								<string>Apple PICT pasteboard type</string>
-								<string>Apple PNG pasteboard type</string>
-								<string>NSFilenamesPboardType</string>
-								<string>NeXT Encapsulated PostScript v1.2 pasteboard type</string>
-								<string>NeXT TIFF v4.0 pasteboard type</string>
-							</set>
-							<string key="NSFrame">{{191, 20}, {197, 182}}</string>
-							<reference key="NSSuperview" ref="1006"/>
-							<reference key="NSWindow"/>
-							<string key="NSReuseIdentifierKey">_NS:9</string>
-							<bool key="NSEnabled">YES</bool>
-							<object class="NSImageCell" key="NSCell" id="901492949">
-								<int key="NSCellFlags">130560</int>
-								<int key="NSCellFlags2">33554432</int>
-								<object class="NSCustomResource" key="NSContents">
-									<string key="NSClassName">NSImage</string>
-									<string key="NSResourceName">Grey_Add_Folder</string>
-								</object>
-								<string key="NSCellIdentifier">_NS:9</string>
-								<int key="NSAlign">0</int>
-								<int key="NSScale">3</int>
-								<int key="NSStyle">0</int>
-								<bool key="NSAnimates">YES</bool>
-							</object>
-							<bool key="NSEditable">YES</bool>
-						</object>
 					</array>
 					<string key="NSFrameSize">{578, 348}</string>
 					<reference key="NSSuperview"/>
 					<reference key="NSWindow"/>
 					<reference key="NSNextKeyView" ref="741920390"/>
 				</object>
-				<string key="NSScreenRect">{{0, 0}, {1920, 1058}}</string>
+				<string key="NSScreenRect">{{0, 0}, {1440, 878}}</string>
 				<string key="NSMaxSize">{10000000000000, 10000000000000}</string>
 				<bool key="NSWindowIsRestorable">YES</bool>
 			</object>
