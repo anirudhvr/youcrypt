@@ -27,7 +27,7 @@
 {
     [super keyDown:theEvent];	
     
-    NSLog(@"keycode:%lu, modifierflags: %lu", theEvent.keyCode, theEvent.modifierFlags);
+    //NSLog(@"keycode:%lu, modifierflags: %lu", theEvent.keyCode, theEvent.modifierFlags);
 
     switch (theEvent.keyCode) {
         case 125: // down

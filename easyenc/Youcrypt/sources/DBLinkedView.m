@@ -57,21 +57,21 @@
 {
     // Link this to the queue when it's done
     NSLog(@"push folders here to the queue");
- 
+
+    
+    if ([newYCFolderInDropbox state] == NSOnState) {
+        NSString* newYCfolder = [NSString stringWithFormat:@"%@/YouCrypt", [libFunctions locateDropboxFolder]]; 
+        if ([libFunctions mkdirRecursive:newYCfolder]) {
+            [theApp.dropboxEncryptedFolders addObject:newYCfolder];
+        }
+    }
+    
     
     if ([chooseDBFoldersToEncrypt state] == NSOnState) {
         [theApp encryptDropboxFolders];
     }
     
-    
-    if ([newYCFolderInDropbox state] == NSOnState) {
-        NSString* newYCfolder = [NSString stringWithFormat:@"%@/YouCrypt", [libFunctions locateDropboxFolder]]; 
-        if ([libFunctions mkdirRecursive:newYCfolder]) {
-            [theApp encryptFolder:newYCfolder]; // XXX awakeFromNib issue
-        }
-    }
   
-    
     [theApp.configDir firstRunSuccessful];
     [self.window close];
     
