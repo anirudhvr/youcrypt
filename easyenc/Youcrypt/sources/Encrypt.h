@@ -4,6 +4,7 @@
 @interface Encrypt :NSWindowController{
 	IBOutlet NSTextField *yourPassword;
 	IBOutlet NSTextField *yourFriendsEmail;
+    IBOutlet NSButton *checkStorePasswd;
 
     BOOL encryptionInProcess;
     BOOL lastEncryptionStatus;
@@ -32,6 +33,7 @@
 @property (atomic, assign) BOOL encryptionInProcess;
 @property (atomic, assign) BOOL keychainHasPassphrase;
 @property (atomic, strong) NSString *passphraseFromKeychain;
+@property (atomic, strong) IBOutlet NSButton *checkStorePasswd;
 
 -(IBAction)encrypt:(id)sender;
 -(IBAction)shareCheckClicked:(id)sender;

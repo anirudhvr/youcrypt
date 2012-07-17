@@ -163,7 +163,6 @@
 		E6C046BF15AE1A84004B52E5 /* Settings.png in Resources */ = {isa = PBXBuildFile; fileRef = E6C046AF15AE1A84004B52E5 /* Settings.png */; };
 		E6C046C015AE1A84004B52E5 /* Synchronize.png in Resources */ = {isa = PBXBuildFile; fileRef = E6C046B015AE1A84004B52E5 /* Synchronize.png */; };
 		E6C046C115AE1A84004B52E5 /* twitter.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = E6C046B115AE1A84004B52E5 /* twitter.jpeg */; };
-		E6C046C615AE1F24004B52E5 /* Youcrypt.plist in Resources */ = {isa = PBXBuildFile; fileRef = E6C046C515AE1F24004B52E5 /* Youcrypt.plist */; };
 		E6C046D115AE2321004B52E5 /* XMLDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = E6C046CE15AE2321004B52E5 /* XMLDictionary.m */; };
 		E6C046D215AE2321004B52E5 /* XMLReader.m in Sources */ = {isa = PBXBuildFile; fileRef = E6C046D015AE2321004B52E5 /* XMLReader.m */; };
 		E6C046D415AE236A004B52E5 /* YoucryptService.m in Sources */ = {isa = PBXBuildFile; fileRef = E6E2A0B6159266F6003E3F6C /* YoucryptService.m */; };
@@ -1076,7 +1075,6 @@
 				E6C046BF15AE1A84004B52E5 /* Settings.png in Resources */,
 				E6C046C015AE1A84004B52E5 /* Synchronize.png in Resources */,
 				E6C046C115AE1A84004B52E5 /* twitter.jpeg in Resources */,
-				E6C046C615AE1F24004B52E5 /* Youcrypt.plist in Resources */,
 				E603DB9B15AEC19F00ABB170 /* box_closed.png in Resources */,
 				E603DB9C15AEC19F00ABB170 /* box_closed2.png in Resources */,
 				E603DB9D15AEC19F00ABB170 /* box_closed3.png in Resources */,

@@ -187,6 +187,15 @@ static NSMutableArray *mountedFuseVolumes;
     }
 }
 
++ (BOOL) pathIsMounted:(NSString *)path {
+    [YoucryptDirectory refreshMountedFuseVolumes];    
+    if ([mountedFuseVolumes indexOfObject:path] == NSNotFound)
+        return NO;
+    else {
+        return YES;
+    }
+}
+
 + (NSString*) statusToString:(NSUInteger)status
 {
     switch(status) {
