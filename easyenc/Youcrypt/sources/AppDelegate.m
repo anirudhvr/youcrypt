@@ -233,7 +233,7 @@ MixpanelAPI *mixpanel;
                 if (dir.status == YoucryptDirectoryStatusUnmounted) {
                     dir.status =  YoucryptDirectoryStatusProcessing;
                     dir.mountedPath = mountPoint;
-                }
+                }                
                 goto FoundOne;
             }
         }        
@@ -599,7 +599,7 @@ MixpanelAPI *mixpanel;
         if (doReturn)
             return;        
     } else {
-        BOOL doReturn = YES;
+        BOOL doReturn = NO;
         @synchronized(self) {
             [restoreQ addObject:path];
             if ([restoreQ count] > 1)
