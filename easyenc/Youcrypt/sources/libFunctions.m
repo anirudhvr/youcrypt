@@ -27,7 +27,6 @@
         DDLogInfo(@"libFunctions:getPPFromKeychain: Did not get passphrase");
         return nil;
     } else {
-        DDLogInfo(@"libFunctions:getPPFromKeychain: Got passphrase from keychain %@", passphraseFromKeychain);
         return passphraseFromKeychain;
     }
 }
@@ -183,7 +182,7 @@
             count++;
         }
         
-        NSString *encfsArgs = [NSString stringWithFormat:@"8\nencfs\n--nu\n%d\n--pw\n%@\n%@--\n%@\n%@\n",
+        NSString *encfsArgs = [NSString stringWithFormat:@"9\nencfs\n--nu\n%d\n--pw\n%@\n%@--\n%@\n%@\n-ofsname=YoucryptFS\n",
                                numUsers, pwd, encryptfilenames_s, encFolder, decFolder];
         
         DDLogVerbose(@"encfsargs\n%@",encfsArgs);
@@ -224,7 +223,7 @@
             [fuseopts addObject:[NSString stringWithFormat:@"-o%@=%@", key, [fuseOpts objectForKey:key]]];
         }
     }
-    [fuseopts addObject:[NSString stringWithString:@"-ofsname=YouCryptFS"]];
+    [fuseopts addObject:[NSString stringWithString:@"-ofsname=YoucryptFS"]];
     NSString *encfsPath = [[[NSBundle mainBundle] resourcePath] 
                            stringByAppendingPathComponent:ENCFS]; 
     

@@ -280,12 +280,11 @@ MixpanelAPI *mixpanel;
                 NSString *source=[NSString stringWithFormat:@"tell application \"Finder\"\n"
                                   "activate\n"
                                   "set target of Finder window 1 to disk \"%@\"\n"
-                                  "set current view of Finder window 1 to icon view\n"
+//                                  "set current view of Finder window 1 to icon view\n"
                                   "end tell\n", dir.alias];
                 NSAppleScript *update=[[NSAppleScript alloc] initWithSource:source];
                 NSDictionary *err;
-                NSAppleEventDescriptor *ret = [update executeAndReturnError:&err];
-                DDLogInfo(@"AppleScript return : %@",ret);
+                [update executeAndReturnError:&err];
                 if (err != nil)
                     [[NSWorkspace sharedWorkspace] openFile:dir.mountedPath];
             }
@@ -298,6 +297,8 @@ MixpanelAPI *mixpanel;
             [self showDecryptWindow:self path:dir.path mountPoint:mountPoint];
         }
         return YES;
+    } else {
+        [self someUnMount:nil];
     }
     return NO;
     
@@ -334,7 +335,7 @@ MixpanelAPI *mixpanel;
                                   "end tell\n", dir.alias];
                 NSAppleScript *update=[[NSAppleScript alloc] initWithSource:source];
                 NSDictionary *err;
-                NSAppleEventDescriptor *ret = [update executeAndReturnError:&err];
+                [update executeAndReturnError:&err];
                 if (err != nil)
                     [[NSWorkspace sharedWorkspace] openFile:dir.mountedPath];
             }
@@ -362,8 +363,9 @@ MixpanelAPI *mixpanel;
     dir.status = YoucryptDirectoryStatusUnmounted;
     [directories addObject:dir];            
     if (listDirectories != nil) {
-        [listDirectories.table reloadData];
+        [listDirectories.table reloadData];                
     }
+    
 }
 
 - (void)didRestore:(NSString *)path {
@@ -533,10 +535,11 @@ MixpanelAPI *mixpanel;
         encryptController.keychainHasPassphrase = YES;
         [encryptController encrypt:self];
     } else { 
+        NSButton *storePasswd = encryptController.checkStorePasswd;
+        [storePasswd setState:NSOnState];
         encryptController.passphraseFromKeychain = nil;
         encryptController.keychainHasPassphrase = NO;
-        [encryptController showWindow:self];
-        
+        [encryptController showWindow:self];        
     }
 }
 

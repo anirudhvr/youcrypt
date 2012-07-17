@@ -50,7 +50,7 @@
        [[password stringValue] isNotEqualTo:[confirmPassword stringValue]]) {
         
         [message setTextColor:[NSColor redColor]];
-        [message setStringValue:@"Passwords do not match"];
+        [message setStringValue:@"Passphrases do not match"];
         [confirmPassword setFocusRingType:NSFocusRingTypeExterior];
         [password setFocusRingType:NSFocusRingTypeExterior];
         

@@ -10,9 +10,9 @@
 #import "PreferenceController.h"
 #import "libFunctions.h"
 #import "logging.h"
-#import "Contrib/SSKeychain/SSKeychain.h"
 #import "AppDelegate.h"
 #import "MixpanelAPI.h"
+#import "YoucryptDirectory.h"
 
 @implementation Encrypt
 
@@ -22,6 +22,7 @@
 @synthesize lastEncryptionStatus;
 @synthesize encryptionInProcess;
 @synthesize keychainHasPassphrase;
+@synthesize checkStorePasswd;
 //@synthesize yourPassword;
 @synthesize passphraseFromKeychain;
 
@@ -224,6 +225,10 @@
 
 -(IBAction)didMount:(id)sender {
     BOOL errOccurred = NO;
+    NSFileManager *fm = [NSFileManager defaultManager];
+
+    if (![fm fileExistsAtPath:[tempFolder stringByAppendingPathComponent:@".youcryptfs.xml"]])
+        return;
     
     [[[NSWorkspace sharedWorkspace] notificationCenter] removeObserver:self];
     
@@ -231,7 +236,6 @@
     // Now to move the contents of tempFolder into destFolder
     // Unfortunately, a direct move won't work since both directories exist and
     // macOS thinks it is overwriting the mount point we just created
-    NSFileManager *fm = [NSFileManager defaultManager];
     NSArray *files = [fm contentsOfDirectoryAtPath:srcFolder error:nil];
     for (NSString *file in files) {
         if (![file isEqualToString:@"encrypted.yc"]) {
@@ -291,6 +295,12 @@ Cleanup:
             NSNumber *num = [NSNumber numberWithBool:YES];
             NSDictionary *attribs = [NSDictionary dictionaryWithObjectsAndKeys:num, NSFileExtensionHidden, nil];        
             [[NSFileManager defaultManager] setAttributes:attribs ofItemAtPath:destFolder error:nil];
+        }
+        
+        // Check if we should store this passwd.
+        if ((keychainHasPassphrase == NO) &&
+            ([self.checkStorePasswd state] == NSOnState)) {
+            [libFunctions registerWithKeychain:[yourPassword stringValue] :@"Youcrypt" ];            
         }
         
         [theApp didEncrypt:destFolder];

@@ -31,7 +31,7 @@ enum {
 - (BOOL) checkYoucryptDirectoryStatus:(BOOL)forceRefresh;
 + (void) refreshMountedFuseVolumes;
 + (NSString*) statusToString:(NSUInteger)status;
-
++ (BOOL) pathIsMounted:(NSString *)path;
 
 // Add more if needed.
 
