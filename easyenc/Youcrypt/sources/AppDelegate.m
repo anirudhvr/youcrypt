@@ -355,7 +355,7 @@ MixpanelAPI *mixpanel;
         [listDirectories.table reloadData];
     }
     @synchronized(self) {
-    [decryptQ removeLastObject];
+        [decryptQ removeObjectAtIndex:deQIndex];
     }
     [self showDecryptWindow:self path:nil mountPoint:@""];
 }
@@ -375,13 +375,17 @@ MixpanelAPI *mixpanel;
     if (listDirectories != nil) {
         [listDirectories.table reloadData];                
     }
-    [encryptQ removeLastObject];
+    @synchronized(self) {
+        [encryptQ removeObjectAtIndex:enQIndex];
+    }
     [self showEncryptWindow:self path:nil];
     
 }
 
 - (void)cancelEncrypt:(NSString *)path {
-    [encryptQ removeLastObject];
+    @synchronized(self) {
+        [encryptQ removeObjectAtIndex:enQIndex];
+    }
     [self showEncryptWindow:self path:nil];
 }
 
@@ -396,7 +400,9 @@ MixpanelAPI *mixpanel;
     if (listDirectories != nil) {
         [listDirectories.table reloadData];
     }
-    [restoreQ removeLastObject];
+    @synchronized(self) {
+        [restoreQ removeObjectAtIndex:reQIndex];
+    }
     [self showRestoreWindow:self path:nil];
 }
 
@@ -409,7 +415,9 @@ MixpanelAPI *mixpanel;
         }
         
     }    
-    [restoreQ removeLastObject];
+    @synchronized(self) {
+        [restoreQ removeObjectAtIndex:reQIndex];
+    }
     [self showRestoreWindow:self path:nil];
 }
 
@@ -423,7 +431,7 @@ MixpanelAPI *mixpanel;
         
     }    
     @synchronized(self) {
-    [decryptQ removeLastObject];
+        [decryptQ removeObjectAtIndex:deQIndex];
     }
     [self showDecryptWindow:self path:nil mountPoint:@""];
 }
@@ -513,7 +521,6 @@ MixpanelAPI *mixpanel;
 
 - (IBAction)showDecryptWindow:(id)sender path:(NSString *)path mountPoint:(NSString *)mountPath {
     
-    NSLog (@"DecryptQ: count=%d, path=%@\n", [decryptQ count], path);
     if (path == nil) {
         // Pick the next object from the queue and decrypt.        
         BOOL doReturn;
@@ -523,6 +530,7 @@ MixpanelAPI *mixpanel;
                 NSDictionary *dict = [decryptQ lastObject];
                 path = [dict objectForKey:@"path"];
                 mountPath = [dict objectForKey:@"mountPoint"];
+                deQIndex = [decryptQ count] - 1;
             }
             else {
                 // Nothing to service.
@@ -539,6 +547,9 @@ MixpanelAPI *mixpanel;
             [decryptQ addObject:dict];
             if ([decryptQ count] > 1)
                 doReturn = YES;
+            else {
+                deQIndex = 0; // Index of the object being processed.
+            }
         }
         if (doReturn)
             return;
@@ -574,17 +585,29 @@ MixpanelAPI *mixpanel;
 - (IBAction)showRestoreWindow:(id)sender path:(NSString *)path {
     
     if (path == nil) {
+        BOOL doReturn = NO;
         // Pick the next object from the queue and restore.        
-        if ([restoreQ count] > 0) {
-            path = [restoreQ lastObject];
+        @synchronized(self) {
+            if ([restoreQ count] > 0) {
+                path = [restoreQ lastObject];
+                reQIndex = [restoreQ count] - 1;
+            }
+            else {
+                doReturn = YES;
+            }
         }
-        else {
-            // Nothing to service.
-            return;
-        }
+        if (doReturn)
+            return;        
     } else {
-        [restoreQ addObject:path];
-        if ([restoreQ count] > 1)
+        BOOL doReturn = YES;
+        @synchronized(self) {
+            [restoreQ addObject:path];
+            if ([restoreQ count] > 1)
+                doReturn = YES;
+            else
+                reQIndex = 0;
+        }
+        if (doReturn)
             return;
     }
     
@@ -610,17 +633,30 @@ MixpanelAPI *mixpanel;
 - (IBAction)showEncryptWindow:(id)sender path:(NSString *)path {
 
     if (path == nil) {
-        // Pick the next object from the queue and encrypt.        
-        if ([encryptQ count] > 0) {
-            path = [encryptQ lastObject];
+        BOOL doReturn = NO;
+        // Pick the next object from the queue and encrypt.
+        @synchronized(self) {
+            if ([encryptQ count] > 0) {
+                path = [encryptQ lastObject];
+                enQIndex = [encryptQ count] - 1;
+            }
+            else {
+                // Nothing to service.
+                doReturn = YES;
+            }
         }
-        else {
-            // Nothing to service.
+        if (doReturn)
             return;
-        }
     } else {
-        [encryptQ addObject:path];
-        if ([encryptQ count] > 1)
+        BOOL doReturn = NO;
+        @synchronized(self) {
+            [encryptQ addObject:path];
+            if ([encryptQ count] > 1)
+                doReturn = YES;
+            else
+                enQIndex = 0;
+        }
+        if (doReturn)
             return;
     }
     
