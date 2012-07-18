@@ -9,7 +9,6 @@
 #import "DBSetupSheetController.h"
 #import "Contrib/FileBrowser/FSBrowserCell.h"
 #import "Contrib/FileBrowser/FSNode.h"
-#import "AppDelegate.h"
 #import "libFunctions.h"
 
 @interface DBSetupSheetController ()
@@ -25,6 +24,8 @@
     if (!(self = [super initWithWindowNibName:@"DBSetup"])) {
         return nil; // Bail!
     }
+    selected = [[NSMutableSet alloc] init];
+
     return self;
 }
 
@@ -40,7 +41,6 @@
     [_browser setColumnResizingType:NSBrowserUserColumnResizing];
     NSString *dbPath = [libFunctions locateDropboxFolder] ;
     _rootNode = [[FSNode alloc] initWithPath:dbPath isDirectory:YES];
-    selected = [[NSMutableSet alloc] init];
 }
 
 #pragma mark NSBrowserDelegate
@@ -82,7 +82,6 @@
 
 -(IBAction)save:(id)sender
 {
-    theApp.dropboxEncryptedFolders = selected;
     [self endSheetWithReturnCode:kSheetReturnedSave];
 }
 

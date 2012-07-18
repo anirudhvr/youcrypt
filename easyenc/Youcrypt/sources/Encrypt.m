@@ -145,8 +145,7 @@
         dirCount++;
     }
     
-    DDLogInfo(@"Folder size: %llu",fileSize);
-    DDLogInfo(@"Folder count: %d",dirCount);
+    DDLogInfo(@"Encrypting folder of size: %llu, #files: %d",fileSize, dirCount);
     
 	// The mount point is a temporary folder
     tempFolder = NSTemporaryDirectory();
@@ -203,9 +202,7 @@
         // Error while encrypting.
         // TODO.  
         DDLogVerbose(@"ERROR WHILE ENCRYPTING. createEncfs failed");
-    }  else {
-        DDLogVerbose(@"In encrypt: createEncfs succeeded");
-    }
+    }  
     
     // Send number of objects in directory
     NSString *dirCountS = [NSString stringWithFormat:@"%d",dirCount];

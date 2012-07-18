@@ -73,5 +73,8 @@
 
 + (NSString*) locateDropboxFolder;
 
++ (BOOL) validateEmail: (NSString *) candidate;
+
+
 
 @end

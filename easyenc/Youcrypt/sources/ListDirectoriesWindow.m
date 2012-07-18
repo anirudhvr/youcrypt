@@ -159,7 +159,7 @@
             [[NSAlert alertWithMessageText:@"Cannot remove a mounted directory" defaultButton:@"OK" alternateButton:nil  otherButton:nil informativeTextWithFormat:@""] runModal];             
         } else if (dir.status == YoucryptDirectoryStatusUnmounted) {
             int retCode;
-            if((retCode = [[NSAlert alertWithMessageText:@"Decrypt and Restore" defaultButton:@"Yes" alternateButton:@"No, just remove it" otherButton:@"Cancel" informativeTextWithFormat:@"You have chosen to permanently decrypt the encrypted folder at %@.  Restore contents?", [dir.path stringByDeletingLastPathComponent]] runModal]) == NSAlertDefaultReturn) {
+            if((retCode = [[NSAlert alertWithMessageText:@"Decrypt and Restore" defaultButton:@"Yes" alternateButton:@"No, delete the data." otherButton:@"Cancel" informativeTextWithFormat:@"You have chosen to permanently decrypt the encrypted folder at %@.  Restore contents?", [dir.path stringByDeletingLastPathComponent]] runModal]) == NSAlertDefaultReturn) {
                 [theApp removeFSAtRow:row];
             }
             else if (retCode == NSAlertAlternateReturn) {
@@ -390,7 +390,7 @@
 - (void) showHelp 
 {
 //    NSLog(@"Called showHelp");
-    [[NSWorkspace sharedWorkspace] openURL: [NSURL URLWithString:@"http://youcrypt.com"]];
+    [[NSWorkspace sharedWorkspace] openURL: [NSURL URLWithString:@"http://youcrypt.com/help"]];
 }
 
 

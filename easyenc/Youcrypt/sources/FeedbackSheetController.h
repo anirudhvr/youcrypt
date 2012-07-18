@@ -15,6 +15,11 @@
 @property (nonatomic, weak) IBOutlet NSButton *logfiles;
 @property (nonatomic, weak) IBOutlet NSTextField *progressMessage;
 
+@property (nonatomic, weak) IBOutlet NSButton *isBug;
+@property (nonatomic, weak) IBOutlet NSButton *isFeature;
+@property (nonatomic, weak) IBOutlet NSButton *isSuggestion;
+
+
 -(IBAction)send:(id)sender;
 -(IBAction)cancel:(id)sender;
 

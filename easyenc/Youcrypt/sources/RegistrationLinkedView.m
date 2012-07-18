@@ -10,6 +10,7 @@
 #import "libFunctions.h"
 #import "PreferenceController.h"
 #import "AppDelegate.h"
+#import "ConfigDirectory.h"
 
 @implementation RegistrationLinkedView
 
@@ -54,7 +55,11 @@
         [msg setStringValue:@"Passwords do not match"];
         [confirmPassword setFocusRingType:NSFocusRingTypeExterior];
         [password setFocusRingType:NSFocusRingTypeExterior];
-        
+        return;
+    } else if (![libFunctions validateEmail:[email stringValue]]) {
+        [msg setTextColor:[NSColor redColor]];
+        [msg setStringValue:@"Invalid email"];
+        [email setFocusRingType:NSFocusRingTypeExterior];
         return;
     } else {
         //[preferenceController setPreference:[email stringValue] value:YC_USEREMAIL];
@@ -64,6 +69,8 @@
         [[NSUserDefaults standardUserDefaults] synchronize];
         
         [libFunctions registerWithKeychain:[password stringValue]:@"Youcrypt"];
+        [theApp.configDir firstRunSuccessful];
+
     }
     
     [super goToNextView];

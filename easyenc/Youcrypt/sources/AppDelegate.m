@@ -17,7 +17,6 @@
 #import "FirstRunSheetController.h"
 #import "FeedbackSheetController.h"
 #import "PeriodicActionTimer.h"
-#import "TourController.h"
 #import "CompressingLogFileManager.h"
 #import "TourWizard.h"
 #import "DBLinkedView.h"
@@ -46,7 +45,6 @@ MixpanelAPI *mixpanel;
 @synthesize feedbackSheetController;
 @synthesize keyDown;
 @synthesize preferenceController;
-@synthesize tourController;
 @synthesize tourWizard;
 @synthesize fileLogger;
 @synthesize dropboxEncryptedFolders;
@@ -452,14 +450,14 @@ MixpanelAPI *mixpanel;
 // Helper functions to show any window; you name it, we've it.
 // --------------------------------------------------------------------------------------
 - (IBAction)showMainApp:(id)sender {
-    if (configDir.firstRun)
+    if ([configDir isFirstRun])
         return;
         
     [listDirectories.window makeKeyAndOrderFront:self];
 }
 
 - (IBAction)showListDirectories:(id)sender {
-    if (configDir.firstRun)
+    if ([configDir isFirstRun])
         return;
     
     // Is list directories nil?
@@ -471,7 +469,7 @@ MixpanelAPI *mixpanel;
 }
 
 - (IBAction)showPreferencePanel:(id)sender {
-    if (configDir.firstRun)
+    if ([configDir isFirstRun])
         return;
     
     // Is preferenceController nil?
@@ -504,7 +502,6 @@ MixpanelAPI *mixpanel;
         tourWizard = [[TourWizard alloc] init];
     }
     
-    DDLogVerbose(@"Now showing tourController: %@", tourController);
     [tourWizard showWindow:self];
 }
 
@@ -695,50 +692,7 @@ MixpanelAPI *mixpanel;
 
 - (IBAction)openHelpPage:(id)sender
 {
-    [[NSWorkspace sharedWorkspace] openURL: [NSURL URLWithString:@"http://youcrypt.com"]];
-}
-
-- (void) encryptDropboxFolders
-{
-    DDLogVerbose(@"In encryptDropboxFolders: list of DB Encrypted Folders %@",dropboxEncryptedFolders);
-    NSArray *folders = [dropboxEncryptedFolders allObjects];
-    if(folders || folders.count) {
-        for (NSString *folder in folders) {
-            [self showEncryptWindow:self  path:folder];
-        }
-    }
-}
-
-- (void) encryptFolders:(NSArray *)folders
-{
-    if (configDir.firstRun)
-        return;
-    
-    NSLog(@"Queuing dropbox folders: %@",folders);
-    
-    if (!encryptController) {
-        encryptController = [[Encrypt alloc] init];
-    } 
-    NSString *pp =[libFunctions getPassphraseFromKeychain:@"Youcrypt"];
-    encryptController.passphraseFromKeychain = pp;
-    encryptController.keychainHasPassphrase = YES;
-    NSString *path;
-    for (int i=0; i<folders.count; i++) {
-        path = [folders objectAtIndex:i];
-        DDLogVerbose(@"encryptFolders: Encrypting Folder %d : %@",i+1,path);
-        [tourWizard.currentView.message setStringValue:[NSString stringWithFormat:@"Updating %d%%",((i+1)*100)/folders.count]];
-        encryptController.sourceFolderPath = path;
-        [encryptController encrypt:self];
-
-    }
-    [tourWizard.currentView.message setStringValue:@"Done."];
-    /*
-    for (NSString *path in folders) {
-        NSLog(@"Encrypting DB Folder %@",path);
-        encryptController.sourceFolderPath = path;
-        [encryptController encrypt:self];
-    } 
-     */
+    [[NSWorkspace sharedWorkspace] openURL: [NSURL URLWithString:@"http://youcrypt.com/help"]];
 }
 
 //--------------------------------------------------------------------------------------------------
@@ -911,6 +865,17 @@ MixpanelAPI *mixpanel;
 - (void) removeFSAtRow:(int) row {
     YoucryptDirectory *dir = [directories objectAtIndex:row];
     [self showRestoreWindow:self path:dir.path];
+}
+
+- (void) removeFSAtPath:(NSString*) path {
+
+    int i = 0;
+    for (YoucryptDirectory *dir in directories) {
+        if ([dir.path isEqualToString:path]) {
+            [self removeFSAtRow:i];
+        }
+        i++;
+    }
 }
 
 - (id) tableView:(NSTableView*)tableView dataCellForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row

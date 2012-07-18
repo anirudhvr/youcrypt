@@ -14,6 +14,10 @@
 @implementation DBLinkedView
 
 @synthesize dbSetupSheet;
+@synthesize selectedDBFolders;
+@synthesize updateMessage;
+@synthesize hiddenErrormsg;
+@synthesize dbLoc;
 
 
 - (id)initWithFrame:(NSRect)frame
@@ -24,12 +28,28 @@
         dbSetupSheet = [[DBSetupSheetController alloc] init];
     }
     
+    
     return self;
 }
 
 - (void)drawRect:(NSRect)dirtyRect
 {
     // Drawing code here.
+}
+
+-(void) awakeFromNib
+{
+    selectedDBFolders = nil;
+    NSString *str = [libFunctions locateDropboxFolder];
+    if (str == nil) {
+        [chooseDBFoldersToEncrypt setHidden:YES];
+        [newYCFolderInDropbox setHidden:YES];
+        [hiddenErrormsg setHidden:NO];
+    } else {
+        [dbLoc setStringValue:[NSString stringWithFormat:@"Dropbox folder found at '%@'", str]];
+    }
+    
+
 }
 
 - (IBAction)dbFolderCheckToggle:(id)sender
@@ -43,10 +63,9 @@
 {
     [dbSetupSheet beginSheetModalForWindow:self.window completionHandler:^(NSUInteger returnCode) {
         if (returnCode == kSheetReturnedSave) {
-            DDLogVerbose(@"dbSetupSheet: DB Setup done");
-          //  [self.window close];
-        } else if (returnCode == kSheetReturnedCancel) {
-            DDLogVerbose(@"dbSetupSheet: DB Setup cancelled :( ");
+            DDLogVerbose(@"dbSetupSheet: Db setup sheet returned save");
+            selectedDBFolders = dbSetupSheet.selected;
+          // [self.window close];
         } else {
             DDLogVerbose(@"dbSetupSheet: Unknown return code");
         }
@@ -54,32 +73,37 @@
 }
 
 -(IBAction)letsGo:(id)sender
-{
-    // Link this to the queue when it's done
-    NSLog(@"push folders here to the queue");
-
+{    
+    if (selectedDBFolders == nil)
+        selectedDBFolders = [[NSMutableSet alloc] init];
     
     if ([newYCFolderInDropbox state] == NSOnState) {
-        NSString* newYCfolder = [NSString stringWithFormat:@"%@/YouCrypt", [libFunctions locateDropboxFolder]]; 
+        NSString* newYCfolder = [[libFunctions locateDropboxFolder] stringByAppendingPathComponent:@"/YouCrypt"];
         if ([libFunctions mkdirRecursive:newYCfolder]) {
-            [theApp.dropboxEncryptedFolders addObject:newYCfolder];
+            [selectedDBFolders addObject:newYCfolder];
         }
     }
     
-    
-    if ([chooseDBFoldersToEncrypt state] == NSOnState) {
-        [theApp encryptDropboxFolders];
+    NSFileManager *fm = [NSFileManager defaultManager];
+    int i = 1, count = [selectedDBFolders count];
+    BOOL isDir;
+    for (NSString *path in selectedDBFolders) {
+        if ([fm fileExistsAtPath:path isDirectory:&isDir] && isDir) {                  
+            // encrypt it if it'ns not already encrypted
+            if (![[path pathExtension] isEqualToString:@"yc"]) {
+                [theApp encryptFolder:path];
+                [updateMessage setStringValue:[NSString stringWithFormat:@"Encrypting folder %d of %d (%@)",
+                                               i++, count, path]];
+            }
+        }
     }
-    
-  
-    [theApp.configDir firstRunSuccessful];
+
     [self.window close];
     
 }
 
 -(IBAction)notNow:(id)sender
 {
-    [theApp.configDir firstRunSuccessful];
     [self.window close];
 }
 

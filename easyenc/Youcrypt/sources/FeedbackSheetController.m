@@ -26,6 +26,9 @@
 @synthesize anonymize;
 @synthesize logfiles;
 @synthesize progressMessage;
+@synthesize isBug;
+@synthesize isFeature;
+@synthesize isSuggestion;
 
 - (id)init
 {
@@ -51,8 +54,8 @@
 -(IBAction)send:(id)sender
 {
 
-    [progressMessage setStringValue:@"Sending Feedback...."];
     NSString *curlEmail;
+   
     if([anonymize state]) {
         curlEmail = [NSString stringWithFormat:@"from=\"anonymous@youcrypt.com\""];
     }
@@ -60,8 +63,23 @@
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
         NSString *userRealName = [defaults objectForKey:YC_USERREALNAME];
         NSString *userEmail = [defaults objectForKey:YC_USEREMAIL];
+        if (![libFunctions validateEmail:userEmail]) 
+            userEmail = [NSString stringWithString:@"invalid-email@youcrypt.com"];
+        
         curlEmail = [NSString stringWithFormat:@"from=\"%@ <%@>\"",userRealName,userEmail];
     }
+    
+    
+    NSString *subject = [NSString stringWithString:@"subject='"];
+    if ([isBug state])
+        subject = [subject stringByAppendingString:@"[Bug]"];
+    if ([isFeature state])
+        subject = [subject stringByAppendingString:@"[Feature]"];
+    if ([isSuggestion state])
+        subject = [subject stringByAppendingString:@"[Suggestion]"];
+    
+    subject = [subject stringByAppendingString:@"YouCrypt Feedback'"];
+
     
     
     NSString *curlText   = [NSString stringWithFormat:@"text=\%@\"", [message stringValue]];
@@ -73,7 +91,7 @@
                      @"https://api.mailgun.net/v2/cloudclear.mailgun.org/messages",
                      @"-F", curlEmail,
                      @"-F", @"to=\"feedback@youcrypt.com\"",
-                     @"-F", @"subject='Youcrypt Feedback'",
+                     @"-F", subject,
                      @"-F", curlText, 
             nil];
     
@@ -86,10 +104,10 @@
         NSData *logFileData = [[NSData alloc] initWithContentsOfFile:mostRecentLogFile];
         NSData *compressedLogFileData = [[NSData alloc] initWithData:[LFCGzipUtility gzipData:logFileData]];
         compressedLogFile = [NSString stringWithFormat:@"%@/logFile.gz",theApp.configDir.youCryptLogDir];
-        DDLogInfo(@"Compressed log file : %@",compressedLogFile);
+       // DDLogInfo(@"Compressed log file : %@",compressedLogFile);
         BOOL wrote = [compressedLogFileData writeToFile:compressedLogFile atomically:YES];
         if(wrote) {
-            DDLogInfo(@"Compressed!");
+        //    DDLogInfo(@"Compressed!");
             logFile = [NSString stringWithFormat:@"attachment=@%@",compressedLogFile];
         }
         NSArray *logFileAttachment = [NSArray arrayWithObjects:

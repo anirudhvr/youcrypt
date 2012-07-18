@@ -20,7 +20,6 @@
 @class FeedbackSheetController;
 @class PeriodicActionTimer;
 @class keyDownView;
-@class TourController;
 @class DDFileLogger;
 @class CompressingLogFileManager;
 @class TourWizard;
@@ -39,7 +38,6 @@
     Decrypt *decryptController;
     Encrypt  *encryptController;
     RestoreController *restoreController;
-    TourController *tourController;
     TourWizard *tourWizard;
     AboutController *aboutController;
 
@@ -57,7 +55,6 @@
     // List of directories maintained by us.
     // Objects added should be (YoucryptDirectory *)
     NSMutableArray *directories;
-    NSMutableSet *dropboxEncryptedFolders;
     
     DDFileLogger *fileLogger;
     NSString *mixpanelUUID;
@@ -104,13 +101,12 @@
 
 
 -(void) removeFSAtRow:(int) row ;
+- (void) removeFSAtPath:(NSString*) path;
+
 
 
 - (void) showFirstRun;
 - (void) showTour;
-
-- (void) encryptDropboxFolders;
-- (void) encryptFolders: (NSArray*) folders;
 
 // Setters and getters
 @property (readonly) NSMutableArray *directories;
@@ -123,7 +119,6 @@
 @property (nonatomic, strong) FeedbackSheetController *feedbackSheetController;
 @property (nonatomic, strong) keyDownView *keyDown;
 @property (nonatomic, strong) PreferenceController *preferenceController;
-@property (nonatomic, strong) TourController *tourController;
 @property (nonatomic, strong) DDFileLogger *fileLogger;
 @property (nonatomic, strong) NSMutableSet *dropboxEncryptedFolders;
 @property (nonatomic, strong) TourWizard *tourWizard;

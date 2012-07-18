@@ -108,7 +108,7 @@
 	<key>SUCheckForUpdates</key>
 	<string>YES</string>
 	<key>SUFeedURL</key>
-	<string>http://hardikr.com/yc.xml</string>
+	<string>http://youcrypt.com/alpha/yc.xml</string>
 	<key>SUPublicDSAKeyFile</key>
 	<string>dsa_pub.pem</string>
 </dict>

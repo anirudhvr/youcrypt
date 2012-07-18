@@ -102,7 +102,7 @@
 - (void)mouseEntered:(NSEvent*)event
 {
 //    [listDirObj.backgroundImageView.animator alpha
-    [listDirObj.backgroundImageView.animator setAlphaValue:1.0];
+    [listDirObj.backgroundImageView.animator setAlphaValue:1.5];
     [[NSCursor pointingHandCursor] set];
 //    [self setToolTip:[NSString stringWithString:@"Open Finder"]];
 
@@ -221,7 +221,8 @@
 
     
     if( NSPointInRect( viewLocation, [listDirObj.backgroundImageView bounds ] ) ) {
-        [[NSWorkspace sharedWorkspace] openFile:NSHomeDirectory()];
+//        [[NSWorkspace sharedWorkspace] openFile:NSHomeDirectory()];
+        [listDirObj addNew:listDirObj];
     }
     
 //    NSLog(@"mousedown: \timgviewloc:(%f,%f)\n\ttableviewloc: (%f, %f)\n\tclickloc(%f,%f)", viewLocation.x, viewLocation.y, 

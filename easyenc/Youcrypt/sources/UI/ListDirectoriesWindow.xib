@@ -46,7 +46,7 @@
 				<string key="NSClassName">NSApplication</string>
 			</object>
 			<object class="NSWindowTemplate" id="1005">
-				<int key="NSWindowStyleMask">267</int>
+				<int key="NSWindowStyleMask">271</int>
 				<int key="NSWindowBacking">2</int>
 				<string key="NSWindowRect">{{428, 290}, {578, 348}}</string>
 				<int key="NSWTFlags">544735232</int>
@@ -331,7 +331,7 @@
 																<object class="NSMenuItem" id="370843215">
 																	<reference key="NSMenu" ref="66255003"/>
 																	<string key="NSTitle">Reveal</string>
-																	<string key="NSKeyEquiv">r</string>
+																	<string key="NSKeyEquiv">R</string>
 																	<int key="NSKeyEquivModMask">1048576</int>
 																	<int key="NSMnemonicLoc">2147483647</int>
 																	<reference key="NSOnImage" ref="682584002"/>
@@ -484,7 +484,7 @@
 					<reference key="NSWindow"/>
 					<reference key="NSNextKeyView" ref="741920390"/>
 				</object>
-				<string key="NSScreenRect">{{0, 0}, {1440, 878}}</string>
+				<string key="NSScreenRect">{{0, 0}, {1920, 1058}}</string>
 				<string key="NSMinSize">{578, 370}</string>
 				<string key="NSMaxSize">{10000000000000, 10000000000000}</string>
 				<bool key="NSWindowIsRestorable">YES</bool>
@@ -669,7 +669,6 @@
 								<int key="contentType">3</int>
 								<reference key="containingView" ref="1006"/>
 							</object>
-							<reference ref="854108534"/>
 							<object class="IBNSLayoutConstraint" id="249234523">
 								<reference key="firstItem" ref="1006"/>
 								<int key="firstAttribute">4</int>
@@ -782,6 +781,7 @@
 								<int key="contentType">3</int>
 								<reference key="containingView" ref="1006"/>
 							</object>
+							<reference ref="854108534"/>
 							<object class="IBNSLayoutConstraint" id="1060162073">
 								<reference key="firstItem" ref="1006"/>
 								<int key="firstAttribute">4</int>
@@ -1080,11 +1080,6 @@
 						<reference key="parent" ref="1006"/>
 					</object>
 					<object class="IBObjectRecord">
-						<int key="objectID">2398</int>
-						<reference key="object" ref="1060162073"/>
-						<reference key="parent" ref="1006"/>
-					</object>
-					<object class="IBObjectRecord">
 						<int key="objectID">2397</int>
 						<reference key="object" ref="929736671"/>
 						<reference key="parent" ref="1006"/>
@@ -1097,6 +1092,11 @@
 					<object class="IBObjectRecord">
 						<int key="objectID">2395</int>
 						<reference key="object" ref="537993159"/>
+						<reference key="parent" ref="1006"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">2398</int>
+						<reference key="object" ref="1060162073"/>
 						<reference key="parent" ref="1006"/>
 					</object>
 				</array>
@@ -1179,7 +1179,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">2407</int>
+			<int key="maxID">2414</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">

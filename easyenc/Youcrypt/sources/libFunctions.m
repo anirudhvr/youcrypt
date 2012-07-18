@@ -166,9 +166,9 @@
     [encfsProc setEnvironment:newenvsetting];
     
     NSDictionary *env = [encfsProc environment];
-    DDLogVerbose(@"createEncfs: getenv : %@",env);
+    //DDLogVerbose(@"createEncfs: getenv : %@",env);
     
-    DDLogVerbose(@"ENCFSPATH : %@",encfsPath);
+    //DDLogVerbose(@"ENCFSPATH : %@",encfsPath);
     if ([libFunctions execWithSocket:encfsPath arguments:nil env:env io:io proc:encfsProc]) {    
         int count = 9;
         
@@ -182,10 +182,10 @@
                                count, numUsers, pwd, encryptfilenames_s, encFolder, decFolder];
 
         
-        DDLogVerbose(@"encfsargs\n%@",encfsArgs);
+        //DDLogVerbose(@"encfsargs\n%@",encfsArgs);
         [io writeData:[encfsArgs dataUsingEncoding:NSUTF8StringEncoding]];
         [encfsProc waitUntilExit];
-        DDLogVerbose(@"SUCCESS");
+        //DDLogVerbose(@"SUCCESS");
 
         [io closeFile];
         return YES;
@@ -227,7 +227,7 @@
     NSDictionary *newenvsetting = [NSDictionary dictionaryWithObjectsAndKeys:[[NSBundle mainBundle] resourcePath], @"DYLD_LIBRARY_PATH", nil];
     [encfsProc setEnvironment:newenvsetting];
     NSDictionary *env = [encfsProc environment];
-    DDLogInfo(@"mountEncfs: getenv : %@",env);
+    //DDLogInfo(@"mountEncfs: getenv : %@",env);
     
     if ([libFunctions execWithSocket:encfsPath arguments:nil env:env io:io proc:encfsProc]) { 
         int count = 6 + [fuseopts count];
@@ -240,7 +240,7 @@
                 
         NSString *str = [NSString stringWithFormat:@"%d\nencfs\n--pw\n%@\n%@--\n%@\n%@\n%@\n", 
                          count, password, idletime_s, encFolder, decFolder, [fuseopts componentsJoinedByString:@"\n"]];
-        DDLogInfo(@"mountEncfs: Decrypt args : %@",str);
+        //DDLogInfo(@"mountEncfs: Decrypt args : %@",str);
         
         NSData *data = [str dataUsingEncoding:NSUTF8StringEncoding];
                         
@@ -374,7 +374,7 @@
     }
     
     
-    NSLog(@"Dropbox folder loc: %@",dropboxURL);
+//    NSLog(@"Dropbox folder loc: %@",dropboxURL);
     if (dropboxURL)
         dropboxURL = [dropboxURL stringByReplacingOccurrencesOfString:@"\n" withString:@""];
     
@@ -385,6 +385,13 @@
 + (NSString*) appBundlePath 
 {
     return [[NSURL fileURLWithPath:[[NSBundle mainBundle] bundlePath]] path];
+}
+
++ (BOOL) validateEmail: (NSString *) candidate {
+    NSString *emailRegex = @"[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}"; 
+    NSPredicate *emailTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", emailRegex]; 
+    
+    return [emailTest evaluateWithObject:candidate];
 }
 
 

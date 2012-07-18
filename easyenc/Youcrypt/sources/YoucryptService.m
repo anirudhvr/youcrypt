@@ -55,8 +55,18 @@
          userData:(NSString *)data
             error:(NSString **)error
 {
-    NSLog(@"Dodecryptandrestore");
-    return;
+    NSArray *types;    
+    types = [pboard types];
+    
+    if (![types containsObject:NSURLPboardType]) {
+        *error = NSLocalizedString(@"Error: Pasteboard deosn't contain URL", @"Pasteboard didn't give url");
+        return;
+    }
+    
+    NSURL *url = [NSURL URLFromPasteboard:pboard];
+    NSString *path = [url path];
+    
+    [theApp removeFSAtPath:path];
 }
 
 

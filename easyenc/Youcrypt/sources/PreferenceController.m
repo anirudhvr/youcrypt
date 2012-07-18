@@ -85,7 +85,7 @@
     defaultPreferences = [[NSMutableDictionary alloc] initWithObjects:[NSArray arrayWithObjects:[libFunctions locateDropboxFolder], [self locateBoxFolder], [NSNumber numberWithInt:0], [NSNumber numberWithInt:1], @"", @"", @"", @"", nil] forKeys:preferencesKeys];
 
     
-    DDLogVerbose(@"defaultPrefs : %@",defaultPreferences);
+   // DDLogVerbose(@"defaultPrefs : %@",defaultPreferences);
     
       
      // load preferences from NSUserDefaults
@@ -160,7 +160,7 @@
     NSString *boxXMLPath = [NSString stringWithFormat:@"%@/Library/Application Support/Box Sync/LastLoggedInUserInfo.xml",NSHomeDirectory()];
     NSDictionary *xmlDoc = [NSDictionary dictionaryWithXMLFile:boxXMLPath];
     NSString *boxFolderPath = [[xmlDoc objectForKey:@"Settings"] objectForKey:@"_RootSyncFolderLocation"];
-    DDLogVerbose(@"Box folder loc : %@",boxFolderPath);
+    //DDLogVerbose(@"Box folder loc : %@",boxFolderPath);
     if (boxFolderPath == nil)
         boxFolderPath = [[NSString alloc] initWithString:@""];
     return boxFolderPath;
