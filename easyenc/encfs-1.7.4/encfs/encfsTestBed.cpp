@@ -1,6 +1,5 @@
 /*****************************************************************************
  * Author:   Rajsekar Manokaran (for Nouvou/Youcrypt)
- *
  *****************************************************************************
  * Copyright (c) 2012: Rajsekar Manokaran
  *
@@ -188,8 +187,7 @@ void FuseUsage()
 rAssert(out->fuseArgc < MaxFuseArgs); \
 out->fuseArgv[out->fuseArgc++] = ARG
 
-static
-string slashTerminate( const string &src )
+static string slashTerminate( const string &src )
 {
     string result = src;
     if( result[ result.length()-1 ] != '/' )
@@ -214,8 +212,7 @@ static std::vector<std::string> split(const std::string &s, char delim) {
     return split(s, delim, elems);
 }
 
-static 
-bool processArgs(int argc, char *argv[], const shared_ptr<EncFS_Args> &out)
+static bool processArgs(int argc, char *argv[], const shared_ptr<EncFS_Args> &out)
 {
     // set defaults
     out->isDaemon = true;
@@ -494,8 +491,6 @@ bool processArgs(int argc, char *argv[], const shared_ptr<EncFS_Args> &out)
     return true;
 }
 
-
-
 static void * idleMonitor(void *);
 
 void *encfs_init(fuse_conn_info *conn)
@@ -549,7 +544,8 @@ void encfs_destroy( void *_ctx )
     }
 }
 
-void read_fully(int fd, char *ptr, size_t size) {
+void read_fully(int fd, char *ptr, size_t size) 
+{
   size_t rsize;
   while (size) {
     rsize = read(fd, ptr, size);    
