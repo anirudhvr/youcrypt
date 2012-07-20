@@ -25,7 +25,7 @@ endif
 lib_LTLIBRARIES = libencfs.la
 bin_PROGRAMS = encfs encfsctl
 dist_bin_SCRIPTS = encfssh
-noinst_PROGRAMS = test makeKey
+noinst_PROGRAMS = test makeKey encfsTestBed
 
 all-local: encfs-man.html
 
@@ -33,6 +33,7 @@ encfs_LDADD   = libencfs.la $(ALL_LDFLAGS)
 encfsctl_LDADD = libencfs.la $(ALL_LDFLAGS)
 test_LDADD   = libencfs.la $(ALL_LDFLAGS)
 makeKey_LDADD   = libencfs.la $(ALL_LDFLAGS)
+encfsTestBed_LDADD = libencfs.la $(ALL_LDFLAGS)
 
 if BUILD_STATIC
 encfs_LDFLAGS = -all-static
@@ -98,6 +99,10 @@ makeKey_SOURCES = \
 
 encfsctl_SOURCES = \
     encfsctl.cpp
+
+encfsTestBed_SOURCES = \
+    encfsTestBed.cpp \
+    encfs.cpp
 
 noinst_HEADERS = \
     base64.h \
