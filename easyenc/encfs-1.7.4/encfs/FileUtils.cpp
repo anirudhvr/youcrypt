@@ -36,6 +36,7 @@
 #include "StreamNameIO.h"
 #include "BlockNameIO.h"
 #include "NullNameIO.h"
+#include "YCNameIO.h"
 #include "Context.h"
 
 #include <rlog/rlog.h>
@@ -1118,7 +1119,7 @@ RootPtr createV6Config( EncFS_Context *ctx,
 	if (opts->mangleFilename)
 	  nameIOIface = BlockNameIO::CurrentInterface();
 	else
-	  nameIOIface = NullNameIO::CurrentInterface();
+	  nameIOIface = YCNameIO::CurrentInterface();
         blockMACBytes = 8;
         blockMACRandBytes = 0; // using uniqueIV, so this isn't necessary
         uniqueIV = true;
@@ -1140,7 +1141,7 @@ RootPtr createV6Config( EncFS_Context *ctx,
 	if (opts->mangleFilename)
 	  nameIOIface = BlockNameIO::CurrentInterface();
 	else
-	  nameIOIface = NullNameIO::CurrentInterface();
+	  nameIOIface = YCNameIO::CurrentInterface();
 
         if (reverseEncryption)
         {

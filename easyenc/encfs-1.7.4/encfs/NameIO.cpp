@@ -30,6 +30,7 @@
 #include "BlockNameIO.h"
 #include "StreamNameIO.h"
 #include "NullNameIO.h"
+#include "YCNameIO.h"
 
 using namespace std;
 using namespace rel;
@@ -45,6 +46,7 @@ void AddSymbolReferences()
     REF_MODULE(BlockNameIO)
     REF_MODULE(StreamNameIO)
     REF_MODULE(NullNameIO)
+    REF_MODULE(YCNameIO)
 }
 
 

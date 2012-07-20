@@ -126,7 +126,8 @@ am__libencfs_la_SOURCES_DIST = readpassphrase.cpp base64.cpp \
 	CipherFileIO.cpp MACFileIO.cpp NameIO.cpp StreamNameIO.cpp \
 	BlockNameIO.cpp NullNameIO.cpp Interface.cpp MemoryPool.cpp \
 	NullCipher.cpp DirNode.cpp FileNode.cpp FileUtils.cpp \
-	openssl.cpp ../intl/autosprintf.cpp SSL_Cipher.cpp
+	openssl.cpp ../intl/autosprintf.cpp SSL_Cipher.cpp \
+	YCNameIO.cpp
 @BUILD_OPENSSL_TRUE@@BUILD_SSLCIPHER_TRUE@am__objects_1 =  \
 @BUILD_OPENSSL_TRUE@@BUILD_SSLCIPHER_TRUE@	SSL_Cipher.lo
 am__objects_2 = autosprintf.lo $(am__objects_1)
@@ -135,7 +136,8 @@ am_libencfs_la_OBJECTS = readpassphrase.lo base64.lo ConfigReader.lo \
 	RawFileIO.lo BlockFileIO.lo CipherFileIO.lo MACFileIO.lo \
 	NameIO.lo StreamNameIO.lo BlockNameIO.lo NullNameIO.lo \
 	Interface.lo MemoryPool.lo NullCipher.lo DirNode.lo \
-	FileNode.lo FileUtils.lo openssl.lo $(am__objects_2)
+	FileNode.lo FileUtils.lo openssl.lo $(am__objects_2) \
+	YCNameIO.lo
 libencfs_la_OBJECTS = $(am_libencfs_la_OBJECTS)
 libencfs_la_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(AM_CXXFLAGS) \
@@ -409,6 +411,7 @@ libencfs_la_SOURCES = \
     StreamNameIO.cpp \
     BlockNameIO.cpp \
     NullNameIO.cpp \
+    YCNameIO.cpp \
     Interface.cpp \
     MemoryPool.cpp \
     NullCipher.cpp \

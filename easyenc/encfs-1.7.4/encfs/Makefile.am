@@ -84,6 +84,7 @@ libencfs_la_SOURCES = \
     FileNode.cpp \
     FileUtils.cpp \
     openssl.cpp \
+    YCNameIO.cpp \
     ${EXTRASRC}
 
 
@@ -134,7 +135,8 @@ noinst_HEADERS = \
     RawFileIO.h \
     readpassphrase.h \
     SSL_Cipher.h \
-    StreamNameIO.h
+    StreamNameIO.h \
+    YCNameIO.h
 
 man_MANS=encfs.1 encfsctl.1
 EXTRA_DIST = encfs.pod encfsctl.pod encfs.1 encfsctl.1 encfs-man.html
