@@ -35,4 +35,10 @@
     [self.window close];
 }
 
+- (IBAction) showTerms:(id) sender
+{
+    [[NSWorkspace sharedWorkspace] openURL: [NSURL URLWithString:@"http://youcrypt.com/alpha/TOS"]];
+   
+}
+
 @end

@@ -46,6 +46,7 @@
 - (IBAction)selectRow:(id)sender;
 - (IBAction)addNew:(id)sender;
 - (IBAction)close:(id)sender;
+- (IBAction) shareFolder:(id) sender;
 - (IBAction)removeFS:(id)sender;
 - (IBAction)windowWillClose:(NSNotification *)notification;
 

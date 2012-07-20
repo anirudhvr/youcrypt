@@ -12,6 +12,7 @@
 #import "PassphraseSheetController.h"
 #import "libFunctions.h"
 #import "Contrib/Mixpanel_fpotter.github.com/MPLib/MixpanelAPI.h"
+#import "PreferenceController.h"
 
 @implementation ListDirectoriesWindow
 
@@ -184,6 +185,19 @@
     [table reloadData];
 }
 
+- (IBAction) shareFolder:(id) sender {
+    
+    NSInteger row = [table selectedRow];
+
+    if ([[theApp.preferenceController getPreference:YC_ANONYMOUSSTATISTICS] intValue])
+        [mixpanel track:theApp.mixpanelUUID
+             properties:[NSDictionary dictionaryWithObjectsAndKeys:
+                         @"YES", @"shareClicked",
+                         nil]];
+    
+    [[NSAlert alertWithMessageText:@"Sharing is not yet supported but will be in the next version of YouCrypt!" 
+      " Please send feature requests to feedback@youcrypt.com" defaultButton:@"OK" alternateButton:nil  otherButton:nil informativeTextWithFormat:@""] runModal]; 
+}
 
 /***
  ***
@@ -390,7 +404,7 @@
 - (void) showHelp 
 {
 //    NSLog(@"Called showHelp");
-    [[NSWorkspace sharedWorkspace] openURL: [NSURL URLWithString:@"http://youcrypt.com/help"]];
+    [[NSWorkspace sharedWorkspace] openURL: [NSURL URLWithString:@"http://youcrypt.com/alpha/help/"]];
 }
 
 

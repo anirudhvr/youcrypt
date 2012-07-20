@@ -208,12 +208,12 @@
     NSString *dirCountS = [NSString stringWithFormat:@"%d",dirCount];
     NSString *fileSizeS = [NSString stringWithFormat:@"%llu",fileSize];
         
-    [mixpanel track:theApp.mixpanelUUID
-         properties:[NSDictionary dictionaryWithObjectsAndKeys:
-                     dirCountS, @"dirCount",
-                     fileSizeS, @"dirSize",
-                     nil]
-     ];
+    if ([[theApp.preferenceController getPreference:YC_ANONYMOUSSTATISTICS] intValue])
+        [mixpanel track:theApp.mixpanelUUID
+             properties:[NSDictionary dictionaryWithObjectsAndKeys:
+                         dirCountS, @"dirCount",
+                         fileSizeS, @"dirSize",
+                         nil]];
      
     // Try to overlay icon !!
     return;

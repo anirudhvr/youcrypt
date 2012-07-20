@@ -13,4 +13,7 @@
     IBOutlet NSTextField *version;
 }
 
+- (IBAction) showTerms:(id) sender;
+
+
 @end

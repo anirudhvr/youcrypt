@@ -113,6 +113,7 @@
 							<string key="NSFrame">{{520, 20}, {38, 25}}</string>
 							<reference key="NSSuperview" ref="1006"/>
 							<reference key="NSWindow"/>
+							<reference key="NSNextKeyView"/>
 							<string key="NSReuseIdentifierKey">_NS:9</string>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSImageCell" key="NSCell" id="139831049">
@@ -384,9 +385,21 @@
 																	<string key="NSAction">_popUpItemAction:</string>
 																	<reference key="NSTarget" ref="578343073"/>
 																</object>
+																<object class="NSMenuItem" id="327416603">
+																	<reference key="NSMenu" ref="66255003"/>
+																	<string key="NSTitle">Share</string>
+																	<string key="NSKeyEquiv">s</string>
+																	<int key="NSKeyEquivModMask">1048576</int>
+																	<int key="NSMnemonicLoc">2147483647</int>
+																	<reference key="NSOnImage" ref="682584002"/>
+																	<reference key="NSMixedImage" ref="457621844"/>
+																	<string key="NSAction">_popUpItemAction:</string>
+																	<reference key="NSTarget" ref="578343073"/>
+																</object>
 															</array>
 															<reference key="NSMenuFont" ref="26"/>
 														</object>
+														<int key="NSSelectedIndex">-1</int>
 														<bool key="NSPullDown">YES</bool>
 														<int key="NSPreferredEdge">3</int>
 														<bool key="NSUsesItemFromMenu">YES</bool>
@@ -570,6 +583,14 @@
 						<reference key="destination" ref="936961964"/>
 					</object>
 					<int key="connectionID">1542</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">shareFolder:</string>
+						<reference key="source" ref="1001"/>
+						<reference key="destination" ref="327416603"/>
+					</object>
+					<int key="connectionID">2416</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
@@ -781,7 +802,6 @@
 								<int key="contentType">3</int>
 								<reference key="containingView" ref="1006"/>
 							</object>
-							<reference ref="854108534"/>
 							<object class="IBNSLayoutConstraint" id="1060162073">
 								<reference key="firstItem" ref="1006"/>
 								<int key="firstAttribute">4</int>
@@ -798,6 +818,7 @@
 								<int key="contentType">3</int>
 								<reference key="containingView" ref="1006"/>
 							</object>
+							<reference ref="854108534"/>
 						</array>
 						<reference key="parent" ref="1005"/>
 					</object>
@@ -891,6 +912,7 @@
 							<reference ref="978439456"/>
 							<reference ref="649986875"/>
 							<reference ref="251818114"/>
+							<reference ref="327416603"/>
 						</array>
 						<reference key="parent" ref="578343073"/>
 					</object>
@@ -1099,6 +1121,11 @@
 						<reference key="object" ref="1060162073"/>
 						<reference key="parent" ref="1006"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">2415</int>
+						<reference key="object" ref="327416603"/>
+						<reference key="parent" ref="66255003"/>
+					</object>
 				</array>
 			</object>
 			<dictionary class="NSMutableDictionary" key="flattenedProperties">
@@ -1157,6 +1184,7 @@
 				<string key="2396.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="2397.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="2398.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="2415.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="NO" key="393.IBNSViewMetadataTranslatesAutoresizingMaskIntoConstraints"/>
 				<string key="393.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="394.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -1179,7 +1207,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">2414</int>
+			<int key="maxID">2416</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -1211,6 +1239,7 @@
 						<string key="removeFS:">id</string>
 						<string key="resizeWindow:">id</string>
 						<string key="selectRow:">id</string>
+						<string key="shareFolder:">id</string>
 						<string key="windowWillClose:">NSNotification</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="actionInfosByName">
@@ -1244,6 +1273,10 @@
 						</object>
 						<object class="IBActionInfo" key="selectRow:">
 							<string key="name">selectRow:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="shareFolder:">
+							<string key="name">shareFolder:</string>
 							<string key="candidateClassName">id</string>
 						</object>
 						<object class="IBActionInfo" key="windowWillClose:">

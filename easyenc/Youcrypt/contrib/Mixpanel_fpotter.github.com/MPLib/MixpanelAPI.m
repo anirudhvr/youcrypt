@@ -58,6 +58,7 @@
 @synthesize uploadInterval;
 @synthesize flushOnBackground;
 @synthesize testMode;
+@synthesize dontLog;
 static MixpanelAPI *sharedInstance = nil; 
 
 NSString* calculateHMAC_SHA1(NSString *str, NSString *key) {
@@ -283,7 +284,8 @@ NSString* calculateHMAC_SHA1(NSString *str, NSString *key) {
 
 - (void)track:(NSString*) event
 {
-	[self track:event properties:nil];
+    if (!dontLog)
+        [self track:event properties:nil];
 }
 
 - (void)track:(NSString*) event properties:(NSDictionary*) properties

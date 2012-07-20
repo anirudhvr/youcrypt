@@ -26,7 +26,7 @@
 #define YC_ENCRYPTFILENAMES @"yc.encryptfilenames"
 #define YC_STARTONBOOT      @"yc.startonboot"
 #define YC_BOXSTATUS        @"yc.boxstatus"
-
+#define YC_ANONYMOUSSTATISTICS @"yc.anonymousstatistics"
 #define YC_IDLETIME         @"yc.idletime"
 
 @interface PreferenceController : NSWindowController <NSAlertDelegate> {
@@ -42,7 +42,9 @@
     // General preferences
     IBOutlet NSButton *startOnBoot;
     IBOutlet NSButton *enableFilenameEncryption;
+    IBOutlet NSButton *allowAnonymousUsageStatistics;
     IBOutlet NSTextField *idleTime;
+    
     // Libarray to start on login
     StartOnLogin *startOnLogin;
     
@@ -87,11 +89,11 @@
  *  Private methods
  */
 // utility methods
-- (void)updatePreferences:(NSDictionary*)prefs;
 
 // General tab methods
 - (IBAction)filenameEncryptionChecked:(id)sender;
 - (IBAction)startOnBootChecked:(id)sender;
+- (IBAction)allowAnonymousUsageStatisticsChecked:(id)sender;
 - (IBAction)idleTimeChanged:(id)sender;
 
 - (void) savePreferences;

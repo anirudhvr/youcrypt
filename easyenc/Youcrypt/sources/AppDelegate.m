@@ -97,6 +97,13 @@ MixpanelAPI *mixpanel;
     decryptQ = [[NSMutableArray alloc] init];
     restoreQ = [[NSMutableArray alloc] init];
     
+    // XXX FIXME Change for Release
+#ifdef DEBUG
+    mixpanel.dontLog = YES;
+#elif RELEASE
+    mixpanel.dontLog = NO;
+#endif
+    
     return self;
 }
 
@@ -692,7 +699,7 @@ MixpanelAPI *mixpanel;
 
 - (IBAction)openHelpPage:(id)sender
 {
-    [[NSWorkspace sharedWorkspace] openURL: [NSURL URLWithString:@"http://youcrypt.com/help"]];
+    [[NSWorkspace sharedWorkspace] openURL: [NSURL URLWithString:@"http://youcrypt.com/alpha/help"]];
 }
 
 //--------------------------------------------------------------------------------------------------

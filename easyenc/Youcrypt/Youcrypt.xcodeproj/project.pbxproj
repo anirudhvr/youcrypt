@@ -601,8 +601,6 @@
 		25F3D154159243E300E3383C /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				2537E39B15B4FD260034E6E3 /* AboutController.h */,
-				2537E39C15B4FD260034E6E3 /* AboutController.m */,
 				256C3571158EA75F00E2BEC4 /* AppDelegate.h */,
 				256C3572158EA75F00E2BEC4 /* AppDelegate.m */,
 				E0BF0EBA159838DD002F9FB9 /* ListDirectoriesWindow.h */,
@@ -641,6 +639,8 @@
 				E6649C9415A70FB00096886F /* VolumePropertiesSheetController.m */,
 				25C3FE4215A7A803006606DF /* FeedbackSheetController.h */,
 				25C3FE4315A7A804006606DF /* FeedbackSheetController.m */,
+				2537E39B15B4FD260034E6E3 /* AboutController.h */,
+				2537E39C15B4FD260034E6E3 /* AboutController.m */,
 				E68F196A15B4A979008A90FC /* Firstrun_Tour */,
 			);
 			name = Classes;
@@ -1321,6 +1321,7 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "sources/Youcrypt-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS_NOT_USED_IN_PRECOMPS = "";
 				HEADER_SEARCH_PATHS = "\"$(SRCROOT)\"";
 				"HEADER_SEARCH_PATHS[arch=*]" = "\"$(SRCROOT)\"";
 				INFOPLIST_FILE = sources/Youcrypt.plist;
@@ -1348,6 +1349,8 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "sources/Youcrypt-Prefix.pch";
+				"GCC_PREPROCESSOR_DEFINITIONS[sdk=macosx10.7][arch=x86_64]" = "RELEASE=1";
+				GCC_PREPROCESSOR_DEFINITIONS_NOT_USED_IN_PRECOMPS = "";
 				HEADER_SEARCH_PATHS = "\"$(SRCROOT)\"";
 				INFOPLIST_FILE = sources/Youcrypt.plist;
 				LD_RUNPATH_SEARCH_PATHS = /Library/Frameworks;

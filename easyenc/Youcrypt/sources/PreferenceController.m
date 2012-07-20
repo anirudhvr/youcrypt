@@ -39,27 +39,6 @@
     return self;
 }
 
-- (void)updatePreferences:(NSDictionary*)prefs
-{
-    for (NSString *key in prefs) {
-        if ([key isEqualToString:YC_STARTONBOOT]) {
-            [startOnBoot setState:[[prefs objectForKey:YC_STARTONBOOT] intValue]];
-        } else if ([key isEqualToString:YC_ENCRYPTFILENAMES]) {
-            [enableFilenameEncryption setState:[[prefs objectForKey:YC_ENCRYPTFILENAMES] intValue]];
-        } else if ([key isEqualToString:YC_DROPBOXLOCATION]) {
-            [dropboxLocation setStringValue:[prefs objectForKey:YC_DROPBOXLOCATION]];
-        } else if ([key isEqualToString:YC_BOXLOCATION]) {
-            [boxLocation setStringValue:[prefs objectForKey:YC_BOXLOCATION]];
-        } else if ([key isEqualToString:YC_USERREALNAME]) {
-            [realName setStringValue:[prefs objectForKey:YC_USERREALNAME]];
-        } else if ([key isEqualToString:YC_USEREMAIL]) {
-            [email setStringValue:[prefs objectForKey:YC_USEREMAIL]];
-        } else {
-            //DDLogError(@"key %@ not a valid preference", key);
-        }
-    }   
-}
-
 - (id)getPreference:(NSString*)key
 {
     return [preferences objectForKey:key];
@@ -76,31 +55,88 @@
     [preferences removeObjectForKey:key];
 }
 
+- (void) readPreferences
+{ 
+    //    NSLog(@"Reading stored preferences");
+    NSString *prefValue;
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    for (NSString *prefKey in preferencesKeys) {
+        prefValue = [defaults stringForKey:prefKey];
+        
+        if(prefValue == nil){
+            [preferences setValue:[defaultPreferences objectForKey:prefKey] forKey:prefKey];
+            DDLogVerbose(@"WARNING: Setting %@ %@ was Nil in Defaults",prefKey,[defaultPreferences objectForKey:prefKey]);
+            
+        }
+        else{
+            [preferences setValue:prefValue forKey:prefKey];
+        }
+    }
+}
+
+- (void) savePreferences
+{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setValuesForKeysWithDictionary:preferences];
+    //   NSLog(@"SAVING:  %@",preferences);
+    [defaults synchronize];
+}
+
+
 - (void)awakeFromNib
 {	
-    preferencesKeys = [NSArray arrayWithObjects:YC_DROPBOXLOCATION, 
-                       YC_BOXLOCATION, YC_ENCRYPTFILENAMES, YC_STARTONBOOT, 
-                       YC_USERREALNAME, YC_USEREMAIL, YC_GMAILUSERNAME, YC_BOXSTATUS, nil];
-
-    defaultPreferences = [[NSMutableDictionary alloc] initWithObjects:[NSArray arrayWithObjects:[libFunctions locateDropboxFolder], [self locateBoxFolder], [NSNumber numberWithInt:0], [NSNumber numberWithInt:1], @"", @"", @"", @"", nil] forKeys:preferencesKeys];
-
     
-   // DDLogVerbose(@"defaultPrefs : %@",defaultPreferences);
+    /**
+     * Set up default prefs
+     */
+    preferencesKeys = [NSArray arrayWithObjects:
+                       YC_DROPBOXLOCATION, 
+                       YC_BOXLOCATION, 
+                       YC_ENCRYPTFILENAMES, 
+                       YC_STARTONBOOT,  
+                       YC_ANONYMOUSSTATISTICS, 
+                       YC_IDLETIME, 
+                       YC_USERREALNAME, 
+                       YC_USEREMAIL, 
+                       YC_GMAILUSERNAME, 
+                       YC_BOXSTATUS, 
+                       nil];
     
-      
-     // load preferences from NSUserDefaults
-    [self readPreferences];
-    //[preferences addEntriesFromDictionary:defaultPreferences];
+    defaultPreferences = [[NSMutableDictionary alloc] initWithObjects:[NSArray arrayWithObjects:
+                                                                       [libFunctions locateDropboxFolder], 
+                                                                       [self locateBoxFolder], 
+                                                                       [NSNumber numberWithInt:0], 
+                                                                       [NSNumber numberWithInt:1], 
+                                                                       [NSNumber numberWithInt:1], 
+                                                                       [[NSString alloc] initWithString:@""],
+                                                                       @"", 
+                                                                       @"", 
+                                                                       @"", 
+                                                                       @"", 
+                                                                       nil] 
+                                                              forKeys:preferencesKeys];
 
-    
+    /**
+     *  Load stored prefs from NSUserDefaults
+     */
+    [self readPreferences];   
     DDLogVerbose(@"prefs : %@",preferences);
 
-    //[self updatePreferences:preferences];
+    /**
+     * Set UI values to match prefs read from NSUserDEfaults
+     */
+    [startOnBoot setState:[[self getPreference:YC_STARTONBOOT] intValue]];
+    [enableFilenameEncryption setState:[[self getPreference:YC_ENCRYPTFILENAMES] intValue]];
+    [allowAnonymousUsageStatistics setState:[[self getPreference:YC_ANONYMOUSSTATISTICS] intValue]];
+    [idleTime setStringValue:[self getPreference:YC_IDLETIME]];
+    
     
     [realName setStringValue:[self getPreference:YC_USERREALNAME]];
     [email setStringValue:[self getPreference:YC_USEREMAIL]];
     [passphrase setStringValue:@"somerandomvalue"];
     [passphrase setEditable:NO];
+    
+    
 //    if([self getPreference:YC_USERREALNAME] == nil)
 //        NSLog(@"NIL!");
 
@@ -246,34 +282,6 @@
 //    NSLog(@"Windowwillload called");
 }
 
-- (void) readPreferences
-{ 
-//    NSLog(@"Reading stored preferences");
-    NSString *prefValue;
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    for (NSString *prefKey in preferencesKeys) {
-        prefValue = [defaults stringForKey:prefKey];
-
-        if(prefValue == nil){
-            [preferences setValue:[defaultPreferences objectForKey:prefKey] forKey:prefKey];
-            DDLogVerbose(@"WARNING: Setting %@ %@ was Nil in Defaults",prefKey,[defaultPreferences objectForKey:prefKey]);
-
-        }
-        else{
-            [preferences setValue:prefValue forKey:prefKey];
-        }
-    }
-}
-
-- (void) savePreferences
-{
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults setValuesForKeysWithDictionary:preferences];
-//   NSLog(@"SAVING:  %@",preferences);
-    [defaults synchronize];
-}
-
-
 
 
 - (BOOL)windowShouldClose:(id)sender
@@ -373,7 +381,6 @@ static NSArray *openFiles()
     if (encState != [[preferences objectForKey:YC_ENCRYPTFILENAMES] intValue]) {
         // NSDictionary* dict = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:encState], YC_ENCRYPTFILENAMES, nil];
         DDLogVerbose(@"updating encstate to %d", encState);
-        //[self updatePreferences:dict];
         [self setPreference:YC_ENCRYPTFILENAMES value:[NSNumber numberWithInt:encState]];
     }
 }
@@ -386,7 +393,6 @@ static NSArray *openFiles()
        // NSDictionary* dict = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:onBootState], YC_STARTONBOOT, nil];
         [self setPreference:YC_STARTONBOOT value:[NSNumber numberWithInt:onBootState]];
      //   DDLogVerbose(@"Setting onboot state to %d", onBootState);
-       // [self updatePreferences:dict];
      //   NSLog(@"Stored prefs state: %d", [[self getPreference:YC_STARTONBOOT] intValue]);
         if (onBootState == NSOnState) {
             DDLogInfo(@"Will start at login");
@@ -395,6 +401,16 @@ static NSArray *openFiles()
             DDLogInfo(@"Will not start at login");
             [StartOnLogin setStartAtLogin:[self appURL] enabled:NO];
         }
+    }
+}
+
+- (IBAction)allowAnonymousUsageStatisticsChecked:(id)sender
+{
+
+    int state = [allowAnonymousUsageStatistics state];
+    if (state != [[self getPreference:YC_ANONYMOUSSTATISTICS] intValue]) {
+        DDLogInfo(@"old anonym feedback checkbox state: %d, new: %d", state, [[self getPreference:YC_ANONYMOUSSTATISTICS] intValue]);
+        [self setPreference:YC_ANONYMOUSSTATISTICS value:[NSNumber numberWithInt:state]];
     }
 }
 
