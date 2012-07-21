@@ -126,8 +126,8 @@ am__libencfs_la_SOURCES_DIST = readpassphrase.cpp base64.cpp \
 	CipherFileIO.cpp MACFileIO.cpp NameIO.cpp StreamNameIO.cpp \
 	BlockNameIO.cpp NullNameIO.cpp Interface.cpp MemoryPool.cpp \
 	NullCipher.cpp DirNode.cpp FileNode.cpp FileUtils.cpp \
-	openssl.cpp ../intl/autosprintf.cpp SSL_Cipher.cpp \
-	YCNameIO.cpp
+	openssl.cpp YCNameIO.cpp Credentials.cpp YoucryptFolder.cpp \
+	../intl/autosprintf.cpp SSL_Cipher.cpp
 @BUILD_OPENSSL_TRUE@@BUILD_SSLCIPHER_TRUE@am__objects_1 =  \
 @BUILD_OPENSSL_TRUE@@BUILD_SSLCIPHER_TRUE@	SSL_Cipher.lo
 am__objects_2 = autosprintf.lo $(am__objects_1)
@@ -136,8 +136,8 @@ am_libencfs_la_OBJECTS = readpassphrase.lo base64.lo ConfigReader.lo \
 	RawFileIO.lo BlockFileIO.lo CipherFileIO.lo MACFileIO.lo \
 	NameIO.lo StreamNameIO.lo BlockNameIO.lo NullNameIO.lo \
 	Interface.lo MemoryPool.lo NullCipher.lo DirNode.lo \
-	FileNode.lo FileUtils.lo openssl.lo $(am__objects_2) \
-	YCNameIO.lo
+	FileNode.lo FileUtils.lo openssl.lo YCNameIO.lo Credentials.lo \
+	YoucryptFolder.lo $(am__objects_2)
 libencfs_la_OBJECTS = $(am_libencfs_la_OBJECTS)
 libencfs_la_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(AM_CXXFLAGS) \
@@ -411,7 +411,6 @@ libencfs_la_SOURCES = \
     StreamNameIO.cpp \
     BlockNameIO.cpp \
     NullNameIO.cpp \
-    YCNameIO.cpp \
     Interface.cpp \
     MemoryPool.cpp \
     NullCipher.cpp \
@@ -419,6 +418,9 @@ libencfs_la_SOURCES = \
     FileNode.cpp \
     FileUtils.cpp \
     openssl.cpp \
+    YCNameIO.cpp \
+    Credentials.cpp \
+    YoucryptFolder.cpp \
     ${EXTRASRC}
 
 encfs_SOURCES = \
@@ -468,7 +470,8 @@ noinst_HEADERS = \
     RawFileIO.h \
     readpassphrase.h \
     SSL_Cipher.h \
-    StreamNameIO.h
+    StreamNameIO.h \
+    YCNameIO.h
 
 man_MANS = encfs.1 encfsctl.1
 EXTRA_DIST = encfs.pod encfsctl.pod encfs.1 encfsctl.1 encfs-man.html
@@ -665,6 +668,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ConfigReader.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ConfigVar.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/Context.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/Credentials.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/DirNode.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/FileIO.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/FileNode.Plo@am__quote@
@@ -678,6 +682,8 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/RawFileIO.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/SSL_Cipher.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/StreamNameIO.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/YCNameIO.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/YoucryptFolder.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/autosprintf.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/base64.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/encfs.Po@am__quote@

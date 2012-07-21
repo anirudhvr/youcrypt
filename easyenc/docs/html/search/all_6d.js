@@ -35,7 +35,7 @@ var searchData=
   ['monitorthread',['monitorThread',['../class_enc_f_s___context.html#a95543b7ea639ed3055e1852c21ead5fb',1,'EncFS_Context']]],
   ['mounted',['mounted',['../classyoucrypt_1_1_youcrypt_folder.html#a41250e1cd6bf235fde94e5b41d1ae07badf5848245f20d227459dedecc8c8843c',1,'youcrypt::YoucryptFolder']]],
   ['mountondemand',['mountOnDemand',['../struct_enc_f_s___opts.html#a5aad9455725d9ce57241900afd327f03',1,'EncFS_Opts']]],
-  ['mountpoint',['mountPoint',['../struct_enc_f_s___args.html#a9863ae04a8fe3801951fb83c2a5c2d6b',1,'EncFS_Args']]],
+  ['mountpoint',['mountPoint',['../struct_enc_f_s___args.html#a9863ae04a8fe3801951fb83c2a5c2d6b',1,'EncFS_Args::mountPoint()'],['../classyoucrypt_1_1_youcrypt_folder.html#a319599374892a525922d3cde65c0756a',1,'youcrypt::YoucryptFolder::mountPoint()']]],
   ['mutex',['mutex',['../class_dir_node.html#a19261f1cc876481b2d3166de27ef34b2',1,'DirNode::mutex()'],['../class_file_node.html#aaa5e2e0c77bb9af3cddde721ff9d14f6',1,'FileNode::mutex()'],['../class_s_s_l_key.html#abc7101a5e1c63b1c4cc81091a5675ceb',1,'SSLKey::mutex()']]],
   ['mutex_2eh',['Mutex.h',['../_mutex_8h.html',1,'']]]
 ];

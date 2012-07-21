@@ -85,6 +85,8 @@ libencfs_la_SOURCES = \
     FileUtils.cpp \
     openssl.cpp \
     YCNameIO.cpp \
+    Credentials.cpp \
+    YoucryptFolder.cpp \
     ${EXTRASRC}
 
 

@@ -7,13 +7,14 @@
 #ifndef _Youcrypt_Credentials_incl_
 #define _Youcrypt_Credentials_incl_
 
+#include <string>
 using std::string;
 
 namespace youcrypt {
 
     class Credentials {
     public:
-        string decryptVolumeKey(string) = 0;
+        virtual string decryptVolumeKey(string) = 0;
     };
 
 }
