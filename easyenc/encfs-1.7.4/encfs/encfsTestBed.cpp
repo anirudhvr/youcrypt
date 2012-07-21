@@ -668,10 +668,10 @@ int main(int argc, char **argv)
 
     RLogInit (argc, argv);
     scoped_ptr<StdioNode> slog (new StdioNode (STDERR_FILENO) );
-//    slog->subscribeTo (GetGlobalChannel ("error") );
-//    slog->subscribeTo (GetGlobalChannel ("warning") );
-//    slog->subscribeTo (GetGlobalChannel ("info") );
-//    slog->subscribeTo (GetGlobalChannel ("debug") );
+    slog->subscribeTo (GetGlobalChannel ("error") );
+    slog->subscribeTo (GetGlobalChannel ("warning") );
+    slog->subscribeTo (GetGlobalChannel ("info") );
+    slog->subscribeTo (GetGlobalChannel ("debug") );
 
     openssl_init( encfsArgs->isThreaded );
 
