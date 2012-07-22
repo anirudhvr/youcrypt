@@ -21,7 +21,6 @@ namespace youcrypt {
     public:
 
         //! Create a new object representing encrypted content at path.
-        //! Loads a config / creates a new config at path.
         YoucryptFolder(const path&);
 
         //! Create a new config. at path and loads it up.
@@ -30,17 +29,16 @@ namespace youcrypt {
         //! Load config at path.
         bool loadConfigAtPath(const path&);
         
-
-        //! Import content at the path specified into the folder
-        //! (<blah> goes to /<blah> in the folder).
+        //! Import content at the path specified into the folder.
         bool importContent(const path&);
 
-        //! Import content at the path specified into the folder at
-        //! the path specified.
+        //! Import content at the path specified into the folder.
         bool importContent(const path&, const path&);
 
         //! Same as import, except not!
         bool exportContent(const path&, const path&);
+
+        //! Helper opts initialization function.
     public:
         enum Status {
             //! Status is not known (not parseable, not readable, etc.)
@@ -48,6 +46,8 @@ namespace youcrypt {
             //! Directory exists but is not a Youcrypt folder. (no
             //! config files, etc.)
             uninitialized,
+            //! Directory contains a (partially) corrupt config.
+            config_error,
             //! Directory is a proper Youcrypt folder.
             initialized,
             //! Directory is being processed.  (files are being added
@@ -65,6 +65,9 @@ namespace youcrypt {
 
         path mountPoint;
         Status status;
+
+        //! FIXME:  Not yet implemented.  Need to do this.
+        bool idleTracking;        
     };
 
 }

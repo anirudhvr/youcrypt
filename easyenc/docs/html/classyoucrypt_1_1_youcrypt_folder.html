@@ -121,12 +121,15 @@ Public Types</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a8561f3c3413ebd6e0139b6b2997fede6"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classyoucrypt_1_1_youcrypt_folder.html#a8561f3c3413ebd6e0139b6b2997fede6">YoucryptFolder</a> (const path &amp;)</td></tr>
+<tr class="memdesc:a8561f3c3413ebd6e0139b6b2997fede6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a new object representing encrypted content at path.  <a href="#a8561f3c3413ebd6e0139b6b2997fede6"></a><br/></td></tr>
 <tr class="memitem:abfe3b4cae468df40240811829d1f674e"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classyoucrypt_1_1_youcrypt_folder.html#abfe3b4cae468df40240811829d1f674e">createAtPath</a> (const path &amp;)</td></tr>
 <tr class="memdesc:abfe3b4cae468df40240811829d1f674e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a new config. at path and loads it up.  <a href="#abfe3b4cae468df40240811829d1f674e"></a><br/></td></tr>
 <tr class="memitem:a9d638ebc93bedbc32117561882e9db21"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classyoucrypt_1_1_youcrypt_folder.html#a9d638ebc93bedbc32117561882e9db21">loadConfigAtPath</a> (const path &amp;)</td></tr>
 <tr class="memdesc:a9d638ebc93bedbc32117561882e9db21"><td class="mdescLeft">&#160;</td><td class="mdescRight">Load config at path.  <a href="#a9d638ebc93bedbc32117561882e9db21"></a><br/></td></tr>
 <tr class="memitem:a6cc19684bc9c06648c2039aa3870d9d6"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classyoucrypt_1_1_youcrypt_folder.html#a6cc19684bc9c06648c2039aa3870d9d6">importContent</a> (const path &amp;)</td></tr>
+<tr class="memdesc:a6cc19684bc9c06648c2039aa3870d9d6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Import content at the path specified into the folder.  <a href="#a6cc19684bc9c06648c2039aa3870d9d6"></a><br/></td></tr>
 <tr class="memitem:a4afa6fb7cd5708e914d4421235cf55ae"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classyoucrypt_1_1_youcrypt_folder.html#a4afa6fb7cd5708e914d4421235cf55ae">importContent</a> (const path &amp;, const path &amp;)</td></tr>
+<tr class="memdesc:a4afa6fb7cd5708e914d4421235cf55ae"><td class="mdescLeft">&#160;</td><td class="mdescRight">Import content at the path specified into the folder.  <a href="#a4afa6fb7cd5708e914d4421235cf55ae"></a><br/></td></tr>
 <tr class="memitem:ad39a5858bbab5eff4f70f0a7007afc80"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classyoucrypt_1_1_youcrypt_folder.html#ad39a5858bbab5eff4f70f0a7007afc80">exportContent</a> (const path &amp;, const path &amp;)</td></tr>
 <tr class="memdesc:ad39a5858bbab5eff4f70f0a7007afc80"><td class="mdescLeft">&#160;</td><td class="mdescRight">Same as import, except not!  <a href="#ad39a5858bbab5eff4f70f0a7007afc80"></a><br/></td></tr>
 </table><table class="memberdecls">
@@ -185,7 +188,8 @@ Private Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Create a new object representing encrypted content at path. Loads a config / creates a new config at path.</p>
+
+<p>Create a new object representing encrypted content at path. </p>
 <p>Implementation: Try to loadConfig and createAtPath otherwise. </p>
 
 <p>References <a class="el" href="classyoucrypt_1_1_youcrypt_folder.html#abfe3b4cae468df40240811829d1f674e">createAtPath()</a>, and <a class="el" href="classyoucrypt_1_1_youcrypt_folder.html#a9d638ebc93bedbc32117561882e9db21">loadConfigAtPath()</a>.</p>
@@ -257,7 +261,9 @@ Private Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Import content at the path specified into the folder (&lt;blah&gt; goes to /&lt;blah&gt; in the folder). </p>
+
+<p>Import content at the path specified into the folder. </p>
+<p>(&lt;blah&gt; goes to /&lt;blah&gt; in the folder). </p>
 
 </div>
 </div>
@@ -284,7 +290,9 @@ Private Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Import content at the path specified into the folder at the path specified. </p>
+
+<p>Import content at the path specified into the folder. </p>
+<p>Import path into relative path specified by the second argument. </p>
 
 </div>
 </div>
@@ -449,7 +457,7 @@ Private Attributes</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Jul 21 2012 22:10:35 for Youcrypt/EncFS by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Jul 21 2012 22:29:10 for Youcrypt/EncFS by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.1.1
 </small></address>

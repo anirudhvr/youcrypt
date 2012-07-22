@@ -655,7 +655,6 @@ int encryptFolder( EncFS_Context * ctx,
 
 int main(int argc, char **argv)
 {
-
     shared_ptr<EncFS_Args> encfsArgs( new EncFS_Args );
     for(int i=0; i<MaxFuseArgs; ++i)
 	encfsArgs->fuseArgv[i] = NULL; // libfuse expects null args..

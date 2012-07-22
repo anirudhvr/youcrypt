@@ -31,7 +31,6 @@ using youcrypt::YoucryptFolder;
 using rel::Interface;
 
 
-
 // Helper functions
 Cipher::CipherAlgorithm findCipherAlgorithm(const char *name, int keySize );
 
@@ -45,17 +44,27 @@ YoucryptFolder::YoucryptFolder(const path &_rootPath) {
 
 /*! Implementation: must be very simialr to createV6Config (except for
  *  Youcrypt specific customizations).
+ *  Details of Youcrypt modification (from encfs/initFS()):
+ *
+ *  * reverseEncryption is not used.
+ *  * creds is passed the cipher to obtain a userKey which then interacts
+ *     with the cipher to obtain the volumeKey(s) and are verified with the
+ *     hash.
+ *  * forceDecode is always set.
  */
 bool YoucryptFolder::loadConfigAtPath(const path &_rootPath) {
-    boost::shared_ptr<EncFSConfig> config(new EncFSConfig);
+ 
     status = YoucryptFolder::status_unknown;
 
-
+   boost::shared_ptr<EncFSConfig> config(new EncFSConfig);
     if(readConfig( _rootPath.string(), config ) == Config_None)
         return false;
 
     // The path already has a configuration.  and is loaded at
     // config.
+
+    // At this point, the status can at worst be config_error.
+    status = YoucryptFolder::config_error;
 
     // Removed Option:  reverseEncryption
 
@@ -63,45 +72,32 @@ bool YoucryptFolder::loadConfigAtPath(const path &_rootPath) {
     cipher = config->getCipher();
     if(!cipher)
     {
-        rError(_("Unable to find cipher %s, version %i:%i:%i"),
-               config->cipherIface.name().c_str(),
-               config->cipherIface.current(),
-               config->cipherIface.revision(),
-               config->cipherIface.age());
-        // xgroup(diag)
-        cout << _("The requested cipher interface is not available\n");
         return false;
     }
 
     // get user key
-    CipherKey userKey;        
+
 
     // FIXME: Major fix me here.
+    // userKey = credentials->getUserKey();
     userKey = config->createUserKeyFromPassphrase("asdf");
     if(!userKey) 
         return false;
 
     for (int i=0; ((i<config->easyencNumUsers) && (!volumeKey)); ++i ) {
-        volumeKey = cipher->readKey(config->getKeyData(), userKey, false);
+        volumeKey = cipher->readKey(&(config->easyencKeys[i].front()), userKey, 
+                                    false);
     }
 
     // If !volumeKey, no volumeKey matched passphrase.
     if(!volumeKey)
         return false;
-
     userKey.reset();
+
     shared_ptr<NameIO> nameCoder = NameIO::New( config->nameIface, 
                                                 cipher, volumeKey );
     if(!nameCoder)
     {
-        rError(_("Unable to find nameio interface %s, version %i:%i:%i"),
-               config->nameIface.name().c_str(),
-               config->nameIface.current(),
-               config->nameIface.revision(),
-               config->nameIface.age());
-        // xgroup(diag)
-        cout << _("The requested filename coding interface is "
-                  "not available\n");
         return false;
     }
 
@@ -117,7 +113,7 @@ bool YoucryptFolder::loadConfigAtPath(const path &_rootPath) {
     fsConfig->config = config;
 
     // Removed Option: forceDecode
-    fsConfig->forceDecode = false;
+    fsConfig->forceDecode = true;
     fsConfig->reverseEncryption = false;
     fsConfig->opts.reset(); // This is never used (grep
     // checked). Set to null.
@@ -139,7 +135,7 @@ bool YoucryptFolder::createAtPath(const path& _rootPath) {
 
     // FIXME: This needs to happen.
     bool enableIdleTracking = false;
-    bool forceDecode = false;
+    bool forceDecode = true;
     bool reverseEncryption = false;
 
     RootPtr rootInfo;
@@ -310,15 +306,13 @@ bool YoucryptFolder::createAtPath(const path& _rootPath) {
     return true;
 }
 
-/*! Import content at the path specified into the folder (<blah> goes
- *  to /<blah> in the folder).
+/*! (<blah> goes to /<blah> in the folder).
  */
 bool YoucryptFolder::importContent(const path&) {
     return true;
 }
 
-/*! Import content at the path specified into the folder at the path
- *  specified.
+/*! Import path into relative path specified by the second argument.
  */
 bool YoucryptFolder::importContent(const path&, const path&) {
     return true;

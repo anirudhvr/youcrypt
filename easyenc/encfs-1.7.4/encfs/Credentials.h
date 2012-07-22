@@ -14,7 +14,7 @@ namespace youcrypt {
 
     class Credentials {
     public:
-        virtual string decryptVolumeKey(string) = 0;
+        virtual string getUserKey();
     };
 
     
