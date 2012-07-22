@@ -101,7 +101,7 @@ Collaboration diagram for youcrypt::YoucryptFolder:</div>
 <div class="dyncontent">
 <div class="center"><img src="classyoucrypt_1_1_youcrypt_folder__coll__graph.png" border="0" usemap="#youcrypt_1_1_youcrypt_folder_coll__map" alt="Collaboration graph"/></div>
 <map name="youcrypt_1_1_youcrypt_folder_coll__map" id="youcrypt_1_1_youcrypt_folder_coll__map">
-<area shape="rect" id="node4" title="STL class." alt="" coords="96,99,171,125"/><area shape="rect" id="node6" title="STL class." alt="" coords="74,6,192,47"/></map>
+<area shape="rect" id="node4" href="class_enc_f_s___context.html" title="EncFS_Context" alt="" coords="1054,127,1165,153"/><area shape="rect" id="node10" title="STL class." alt="" coords="547,68,621,95"/><area shape="rect" id="node12" title="STL class." alt="" coords="273,61,391,102"/><area shape="rect" id="node16" href="struct_enc_f_s___context_1_1_placeholder.html" title="EncFS_Context::Placeholder" alt="" coords="241,137,423,164"/></map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 
 <p><a href="classyoucrypt_1_1_youcrypt_folder-members.html">List of all members.</a></p>
@@ -120,20 +120,24 @@ Public Types</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:ace741948e47b87d3f35c877fcc0d518d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classyoucrypt_1_1_youcrypt_folder.html#ace741948e47b87d3f35c877fcc0d518d">YoucryptFolder</a> (const path &amp;, <a class="el" href="classyoucrypt_1_1_credentials.html">Credentials</a> *)</td></tr>
-<tr class="memdesc:ace741948e47b87d3f35c877fcc0d518d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a new object representing encrypted content at path; use <a class="el" href="classyoucrypt_1_1_credentials.html">Credentials</a> to decrypt volume key.  <a href="#ace741948e47b87d3f35c877fcc0d518d"></a><br/></td></tr>
-<tr class="memitem:a1fa0d0c7504422ba19cbce5f1068eada"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classyoucrypt_1_1_youcrypt_folder.html#a1fa0d0c7504422ba19cbce5f1068eada">importContent</a> (const path &amp;)</td></tr>
-<tr class="memdesc:a1fa0d0c7504422ba19cbce5f1068eada"><td class="mdescLeft">&#160;</td><td class="mdescRight">Import content at the path specified into the folder (&lt;blah&gt; goes to /&lt;blah&gt; in the folder).  <a href="#a1fa0d0c7504422ba19cbce5f1068eada"></a><br/></td></tr>
-<tr class="memitem:a76260299c7c0af307d9f16addcc87fc3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classyoucrypt_1_1_youcrypt_folder.html#a76260299c7c0af307d9f16addcc87fc3">importContent</a> (const path &amp;, const Path &amp;)</td></tr>
-<tr class="memdesc:a76260299c7c0af307d9f16addcc87fc3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Import content at the path specified into the folder at the path specified.  <a href="#a76260299c7c0af307d9f16addcc87fc3"></a><br/></td></tr>
-<tr class="memitem:a89a8cd4491d91062c7f5bdc9dfe5aefa"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classyoucrypt_1_1_youcrypt_folder.html#a89a8cd4491d91062c7f5bdc9dfe5aefa">exportContent</a> (const path &amp;, const path &amp;)</td></tr>
-<tr class="memdesc:a89a8cd4491d91062c7f5bdc9dfe5aefa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Same as import, except not!  <a href="#a89a8cd4491d91062c7f5bdc9dfe5aefa"></a><br/></td></tr>
+<tr class="memitem:a8561f3c3413ebd6e0139b6b2997fede6"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classyoucrypt_1_1_youcrypt_folder.html#a8561f3c3413ebd6e0139b6b2997fede6">YoucryptFolder</a> (const path &amp;)</td></tr>
+<tr class="memitem:abfe3b4cae468df40240811829d1f674e"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classyoucrypt_1_1_youcrypt_folder.html#abfe3b4cae468df40240811829d1f674e">createAtPath</a> (const path &amp;)</td></tr>
+<tr class="memdesc:abfe3b4cae468df40240811829d1f674e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a new config. at path and loads it up.  <a href="#abfe3b4cae468df40240811829d1f674e"></a><br/></td></tr>
+<tr class="memitem:a9d638ebc93bedbc32117561882e9db21"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classyoucrypt_1_1_youcrypt_folder.html#a9d638ebc93bedbc32117561882e9db21">loadConfigAtPath</a> (const path &amp;)</td></tr>
+<tr class="memdesc:a9d638ebc93bedbc32117561882e9db21"><td class="mdescLeft">&#160;</td><td class="mdescRight">Load config at path.  <a href="#a9d638ebc93bedbc32117561882e9db21"></a><br/></td></tr>
+<tr class="memitem:a6cc19684bc9c06648c2039aa3870d9d6"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classyoucrypt_1_1_youcrypt_folder.html#a6cc19684bc9c06648c2039aa3870d9d6">importContent</a> (const path &amp;)</td></tr>
+<tr class="memitem:a4afa6fb7cd5708e914d4421235cf55ae"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classyoucrypt_1_1_youcrypt_folder.html#a4afa6fb7cd5708e914d4421235cf55ae">importContent</a> (const path &amp;, const path &amp;)</td></tr>
+<tr class="memitem:ad39a5858bbab5eff4f70f0a7007afc80"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classyoucrypt_1_1_youcrypt_folder.html#ad39a5858bbab5eff4f70f0a7007afc80">exportContent</a> (const path &amp;, const path &amp;)</td></tr>
+<tr class="memdesc:ad39a5858bbab5eff4f70f0a7007afc80"><td class="mdescLeft">&#160;</td><td class="mdescRight">Same as import, except not!  <a href="#ad39a5858bbab5eff4f70f0a7007afc80"></a><br/></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2><a name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
-<tr class="memitem:ae744f2054a50ea3180c6ecacb7953394"><td class="memItemLeft" align="right" valign="top">path&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classyoucrypt_1_1_youcrypt_folder.html#ae744f2054a50ea3180c6ecacb7953394">rootPath</a></td></tr>
+<tr class="memitem:afea3646bd7dedcf02df578ae93a09847"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_enc_f_s___context.html">EncFS_Context</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classyoucrypt_1_1_youcrypt_folder.html#afea3646bd7dedcf02df578ae93a09847">ctx</a></td></tr>
+<tr class="memitem:a8ce01a9a37e31fae8db32b1692d466d5"><td class="memItemLeft" align="right" valign="top">boost::shared_ptr&lt; <a class="el" href="class_cipher.html">Cipher</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classyoucrypt_1_1_youcrypt_folder.html#a8ce01a9a37e31fae8db32b1692d466d5">cipher</a></td></tr>
+<tr class="memitem:aff9623e1bac1a4c0f2f081f349b66625"><td class="memItemLeft" align="right" valign="top"><a class="el" href="_cipher_key_8h.html#a3dfceedc1be103f5268ff5974416ff99">CipherKey</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classyoucrypt_1_1_youcrypt_folder.html#aff9623e1bac1a4c0f2f081f349b66625">volumeKey</a></td></tr>
+<tr class="memitem:acbed4b16d8083216a51fa6e22bbbcdf7"><td class="memItemLeft" align="right" valign="top">boost::shared_ptr&lt; <a class="el" href="class_dir_node.html">DirNode</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classyoucrypt_1_1_youcrypt_folder.html#acbed4b16d8083216a51fa6e22bbbcdf7">rootNode</a></td></tr>
 <tr class="memitem:a319599374892a525922d3cde65c0756a"><td class="memItemLeft" align="right" valign="top">path&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classyoucrypt_1_1_youcrypt_folder.html#a319599374892a525922d3cde65c0756a">mountPoint</a></td></tr>
-<tr class="memitem:a8ff6304743e6d89157d0e66d9e54c922"><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classyoucrypt_1_1_youcrypt_folder.html#a8ff6304743e6d89157d0e66d9e54c922">decryptedVolumeKey</a></td></tr>
+<tr class="memitem:af68c87e08833b8d7cc85c60aca3a511e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classyoucrypt_1_1_youcrypt_folder.html#a41250e1cd6bf235fde94e5b41d1ae07b">Status</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classyoucrypt_1_1_youcrypt_folder.html#af68c87e08833b8d7cc85c60aca3a511e">status</a></td></tr>
 </table>
 <hr/><h2>Member Enumeration Documentation</h2>
 <a class="anchor" id="a41250e1cd6bf235fde94e5b41d1ae07b"></a>
@@ -168,42 +172,56 @@ Private Attributes</h2></td></tr>
 </div>
 </div>
 <hr/><h2>Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" id="ace741948e47b87d3f35c877fcc0d518d"></a>
+<a class="anchor" id="a8561f3c3413ebd6e0139b6b2997fede6"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">youcrypt::YoucryptFolder::YoucryptFolder </td>
+          <td class="memname">YoucryptFolder::YoucryptFolder </td>
           <td>(</td>
           <td class="paramtype">const path &amp;&#160;</td>
-          <td class="paramname"><em>_rootPath</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
+          <td class="paramname"><em>_rootPath</em></td><td>)</td>
           <td></td>
-          <td class="paramtype"><a class="el" href="classyoucrypt_1_1_credentials.html">Credentials</a> *&#160;</td>
-          <td class="paramname"><em>authCred</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Create a new object representing encrypted content at path. Loads a config / creates a new config at path.</p>
+<p>Implementation: Try to loadConfig and createAtPath otherwise. </p>
 
-<p>Create a new object representing encrypted content at path; use <a class="el" href="classyoucrypt_1_1_credentials.html">Credentials</a> to decrypt volume key. </p>
-<p>Some more documentation. </p>
+<p>References <a class="el" href="classyoucrypt_1_1_youcrypt_folder.html#abfe3b4cae468df40240811829d1f674e">createAtPath()</a>, and <a class="el" href="classyoucrypt_1_1_youcrypt_folder.html#a9d638ebc93bedbc32117561882e9db21">loadConfigAtPath()</a>.</p>
 
 </div>
 </div>
 <hr/><h2>Member Function Documentation</h2>
-<a class="anchor" id="a89a8cd4491d91062c7f5bdc9dfe5aefa"></a>
+<a class="anchor" id="abfe3b4cae468df40240811829d1f674e"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void youcrypt::YoucryptFolder::exportContent </td>
+          <td class="memname">bool YoucryptFolder::createAtPath </td>
+          <td>(</td>
+          <td class="paramtype">const path &amp;&#160;</td>
+          <td class="paramname"><em>_rootPath</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Create a new config. at path and loads it up. </p>
+<p>Implementation: must be very similar to CreateV6Config (except for Youcrypt specific customizations). </p>
+
+<p>References <a class="el" href="i18n_8h.html#aa60c7b54824e4ecb6a6401ff9f4a5fa3">_</a>, <a class="el" href="classyoucrypt_1_1_youcrypt_folder.html#a8ce01a9a37e31fae8db32b1692d466d5">cipher</a>, <a class="el" href="_f_s_config_8h.html#ac254e872972d56fde0b2d9b767e157a9af5d16cffca1c4c0b885e5ae5bc81b9e7">Config_YC</a>, <a class="el" href="classyoucrypt_1_1_youcrypt_folder.html#afea3646bd7dedcf02df578ae93a09847">ctx</a>, <a class="el" href="class_y_c_name_i_o.html#a4b754da68b827614a8f80d31d47c83d4">YCNameIO::CurrentInterface()</a>, <a class="el" href="class_block_name_i_o.html#ae87ef387e9f445249bf9976e868322e7">BlockNameIO::CurrentInterface()</a>, <a class="el" href="_file_utils_8cpp.html#a5054c05bbdd1fa08baa2e068e86877d7">findCipherAlgorithm()</a>, <a class="el" href="struct_cipher_1_1_cipher_algorithm.html#accfa9d1eab33fa4c72b024432a34b992">Cipher::CipherAlgorithm::name</a>, <a class="el" href="class_name_i_o.html#ac2d959c62ad958aacbcf6601972ef53f">NameIO::New()</a>, <a class="el" href="class_cipher.html#a5ce4fbe613809b2e550be0158b212829">Cipher::New()</a>, <a class="el" href="classyoucrypt_1_1_youcrypt_folder.html#acbed4b16d8083216a51fa6e22bbbcdf7">rootNode</a>, <a class="el" href="_file_utils_8cpp.html#a0f5932e7a917a4a073a1076845c64698">saveConfig()</a>, <a class="el" href="classyoucrypt_1_1_youcrypt_folder.html#af68c87e08833b8d7cc85c60aca3a511e">status</a>, <a class="el" href="classyoucrypt_1_1_youcrypt_folder.html#a41250e1cd6bf235fde94e5b41d1ae07ba3ab3002b37c0482cbfe894512963d450">status_unknown</a>, and <a class="el" href="classyoucrypt_1_1_youcrypt_folder.html#aff9623e1bac1a4c0f2f081f349b66625">volumeKey</a>.</p>
+
+<p>Referenced by <a class="el" href="classyoucrypt_1_1_youcrypt_folder.html#a8561f3c3413ebd6e0139b6b2997fede6">YoucryptFolder()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ad39a5858bbab5eff4f70f0a7007afc80"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool YoucryptFolder::exportContent </td>
           <td>(</td>
           <td class="paramtype">const path &amp;&#160;</td>
           <td class="paramname">, </td>
@@ -226,12 +244,12 @@ Private Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a1fa0d0c7504422ba19cbce5f1068eada"></a>
+<a class="anchor" id="a6cc19684bc9c06648c2039aa3870d9d6"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void youcrypt::YoucryptFolder::importContent </td>
+          <td class="memname">bool YoucryptFolder::importContent </td>
           <td>(</td>
           <td class="paramtype">const path &amp;&#160;</td>
           <td class="paramname"></td><td>)</td>
@@ -239,17 +257,16 @@ Private Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
 <p>Import content at the path specified into the folder (&lt;blah&gt; goes to /&lt;blah&gt; in the folder). </p>
 
 </div>
 </div>
-<a class="anchor" id="a76260299c7c0af307d9f16addcc87fc3"></a>
+<a class="anchor" id="a4afa6fb7cd5708e914d4421235cf55ae"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void youcrypt::YoucryptFolder::importContent </td>
+          <td class="memname">bool YoucryptFolder::importContent </td>
           <td>(</td>
           <td class="paramtype">const path &amp;&#160;</td>
           <td class="paramname">, </td>
@@ -257,7 +274,7 @@ Private Attributes</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const Path &amp;&#160;</td>
+          <td class="paramtype">const path &amp;&#160;</td>
           <td class="paramname">&#160;</td>
         </tr>
         <tr>
@@ -267,13 +284,35 @@ Private Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
 <p>Import content at the path specified into the folder at the path specified. </p>
 
 </div>
 </div>
+<a class="anchor" id="a9d638ebc93bedbc32117561882e9db21"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool YoucryptFolder::loadConfigAtPath </td>
+          <td>(</td>
+          <td class="paramtype">const path &amp;&#160;</td>
+          <td class="paramname"><em>_rootPath</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Load config at path. </p>
+<p>Implementation: must be very simialr to createV6Config (except for Youcrypt specific customizations). </p>
+
+<p>References <a class="el" href="i18n_8h.html#aa60c7b54824e4ecb6a6401ff9f4a5fa3">_</a>, <a class="el" href="classyoucrypt_1_1_youcrypt_folder.html#a8ce01a9a37e31fae8db32b1692d466d5">cipher</a>, <a class="el" href="_f_s_config_8h.html#ac254e872972d56fde0b2d9b767e157a9a3022bacc2b5ec0c860d9c78a46d2af8a">Config_None</a>, <a class="el" href="classyoucrypt_1_1_youcrypt_folder.html#afea3646bd7dedcf02df578ae93a09847">ctx</a>, <a class="el" href="classyoucrypt_1_1_youcrypt_folder.html#a41250e1cd6bf235fde94e5b41d1ae07badf575f1527c5aa7f53d98d5d8efd02e2">initialized</a>, <a class="el" href="class_name_i_o.html#ac2d959c62ad958aacbcf6601972ef53f">NameIO::New()</a>, <a class="el" href="_file_utils_8cpp.html#ae3a3730cb9ce4984766bea478d288e8d">readConfig()</a>, <a class="el" href="classyoucrypt_1_1_youcrypt_folder.html#acbed4b16d8083216a51fa6e22bbbcdf7">rootNode</a>, <a class="el" href="classyoucrypt_1_1_youcrypt_folder.html#af68c87e08833b8d7cc85c60aca3a511e">status</a>, <a class="el" href="classyoucrypt_1_1_youcrypt_folder.html#a41250e1cd6bf235fde94e5b41d1ae07ba3ab3002b37c0482cbfe894512963d450">status_unknown</a>, and <a class="el" href="classyoucrypt_1_1_youcrypt_folder.html#aff9623e1bac1a4c0f2f081f349b66625">volumeKey</a>.</p>
+
+<p>Referenced by <a class="el" href="classyoucrypt_1_1_youcrypt_folder.html#a8561f3c3413ebd6e0139b6b2997fede6">YoucryptFolder()</a>.</p>
+
+</div>
+</div>
 <hr/><h2>Member Data Documentation</h2>
-<a class="anchor" id="a8ff6304743e6d89157d0e66d9e54c922"></a>
+<a class="anchor" id="a8ce01a9a37e31fae8db32b1692d466d5"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -281,7 +320,7 @@ Private Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">string youcrypt::YoucryptFolder::decryptedVolumeKey</td>
+          <td class="memname">boost::shared_ptr&lt;<a class="el" href="class_cipher.html">Cipher</a>&gt; youcrypt::YoucryptFolder::cipher</td>
         </tr>
       </table>
   </td>
@@ -290,6 +329,30 @@ Private Attributes</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Referenced by <a class="el" href="classyoucrypt_1_1_youcrypt_folder.html#abfe3b4cae468df40240811829d1f674e">createAtPath()</a>, and <a class="el" href="classyoucrypt_1_1_youcrypt_folder.html#a9d638ebc93bedbc32117561882e9db21">loadConfigAtPath()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="afea3646bd7dedcf02df578ae93a09847"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_enc_f_s___context.html">EncFS_Context</a> youcrypt::YoucryptFolder::ctx</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Referenced by <a class="el" href="classyoucrypt_1_1_youcrypt_folder.html#abfe3b4cae468df40240811829d1f674e">createAtPath()</a>, and <a class="el" href="classyoucrypt_1_1_youcrypt_folder.html#a9d638ebc93bedbc32117561882e9db21">loadConfigAtPath()</a>.</p>
 
 </div>
 </div>
@@ -313,7 +376,7 @@ Private Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ae744f2054a50ea3180c6ecacb7953394"></a>
+<a class="anchor" id="acbed4b16d8083216a51fa6e22bbbcdf7"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -321,7 +384,7 @@ Private Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">path youcrypt::YoucryptFolder::rootPath</td>
+          <td class="memname">boost::shared_ptr&lt;<a class="el" href="class_dir_node.html">DirNode</a>&gt; youcrypt::YoucryptFolder::rootNode</td>
         </tr>
       </table>
   </td>
@@ -331,16 +394,62 @@ Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Referenced by <a class="el" href="classyoucrypt_1_1_youcrypt_folder.html#abfe3b4cae468df40240811829d1f674e">createAtPath()</a>, and <a class="el" href="classyoucrypt_1_1_youcrypt_folder.html#a9d638ebc93bedbc32117561882e9db21">loadConfigAtPath()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="af68c87e08833b8d7cc85c60aca3a511e"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classyoucrypt_1_1_youcrypt_folder.html#a41250e1cd6bf235fde94e5b41d1ae07b">Status</a> youcrypt::YoucryptFolder::status</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Referenced by <a class="el" href="classyoucrypt_1_1_youcrypt_folder.html#abfe3b4cae468df40240811829d1f674e">createAtPath()</a>, and <a class="el" href="classyoucrypt_1_1_youcrypt_folder.html#a9d638ebc93bedbc32117561882e9db21">loadConfigAtPath()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="aff9623e1bac1a4c0f2f081f349b66625"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="_cipher_key_8h.html#a3dfceedc1be103f5268ff5974416ff99">CipherKey</a> youcrypt::YoucryptFolder::volumeKey</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Referenced by <a class="el" href="classyoucrypt_1_1_youcrypt_folder.html#abfe3b4cae468df40240811829d1f674e">createAtPath()</a>, and <a class="el" href="classyoucrypt_1_1_youcrypt_folder.html#a9d638ebc93bedbc32117561882e9db21">loadConfigAtPath()</a>.</p>
+
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
 <li><a class="el" href="_youcrypt_folder_8h_source.html">YoucryptFolder.h</a></li>
-<li><a class="el" href="_youcrypt_8cpp.html">Youcrypt.cpp</a></li>
+<li><a class="el" href="_youcrypt_folder_8cpp.html">YoucryptFolder.cpp</a></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Jul 20 2012 18:40:03 for Youcrypt/EncFS by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Jul 21 2012 22:10:35 for Youcrypt/EncFS by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.1.1
 </small></address>

@@ -30,6 +30,7 @@ var searchData=
   ['context',['context',['../encfs_8cpp.html#ad0c2d26802163be4fba6111e478d0bb3',1,'encfs.cpp']]],
   ['copycontents',['copyContents',['../encfsctl_8cpp.html#a93a91077361898dc856545874f385d29',1,'encfsctl.cpp']]],
   ['copylink',['copyLink',['../encfsctl_8cpp.html#a6b56fc6c9d1d731ffb9d8b57d7597f74',1,'encfsctl.cpp']]],
+  ['createatpath',['createAtPath',['../classyoucrypt_1_1_youcrypt_folder.html#abfe3b4cae468df40240811829d1f674e',1,'youcrypt::YoucryptFolder']]],
   ['createuserkeyfrompassphrase',['createUserKeyFromPassphrase',['../struct_enc_f_s_config.html#aeede6124650b359a7e21a5346cf086ae',1,'EncFSConfig']]],
   ['createv6config',['createV6Config',['../_file_utils_8cpp.html#a8759b71b37ed9bccc8fd79da004300d3',1,'createV6Config(EncFS_Context *ctx, const shared_ptr&lt; EncFS_Opts &gt; &amp;opts):&#160;FileUtils.cpp'],['../_file_utils_8h.html#a27ddd6cd93f281d5bda063f850ea5c7d',1,'createV6Config(EncFS_Context *ctx, const boost::shared_ptr&lt; EncFS_Opts &gt; &amp;opts):&#160;FileUtils.h']]],
   ['current',['current',['../classrel_1_1_interface.html#a3876694d8851e6762552021809f810d7',1,'rel::Interface::current() const '],['../classrel_1_1_interface.html#ace3eaed69c28ffe4a0a2c7f80b3d6490',1,'rel::Interface::current()']]],

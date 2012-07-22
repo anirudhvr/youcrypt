@@ -39,5 +39,5 @@ var searchData=
   ['encryptfolder',['encryptFolder',['../encfs_test_bed_8cpp.html#a2a66301fb2ce457add84215fea94eb5c',1,'encfsTestBed.cpp']]],
   ['endswith',['endsWith',['../encfsctl_8cpp.html#af1d87808bca3cecd1d91b363b5cb59c7',1,'encfsctl.cpp']]],
   ['erasenode',['eraseNode',['../class_enc_f_s___context.html#a5ab7aa8498e8c7e83863e6155a573275',1,'EncFS_Context::eraseNode(const char *path, void *placeholder)'],['../class_enc_f_s___context.html#a5ab7aa8498e8c7e83863e6155a573275',1,'EncFS_Context::eraseNode(const char *path, void *placeholder)']]],
-  ['exportcontent',['exportContent',['../classyoucrypt_1_1_youcrypt_folder.html#a89a8cd4491d91062c7f5bdc9dfe5aefa',1,'youcrypt::YoucryptFolder']]]
+  ['exportcontent',['exportContent',['../classyoucrypt_1_1_youcrypt_folder.html#ad39a5858bbab5eff4f70f0a7007afc80',1,'youcrypt::YoucryptFolder']]]
 ];

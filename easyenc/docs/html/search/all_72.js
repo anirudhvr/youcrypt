@@ -44,7 +44,7 @@ var searchData=
   ['rootcipherdir',['rootCipherDir',['../class_enc_f_s___context.html#aa62bcc9956e2f601d854600a1aa14612',1,'EncFS_Context']]],
   ['rootdir',['rootDir',['../class_dir_node.html#a933c4da5596711020ad4a86ee808235d',1,'DirNode::rootDir()'],['../struct_enc_f_s___opts.html#ac52fae9dc94810e69f5f8b67308a2894',1,'EncFS_Opts::rootDir()']]],
   ['rootdirectory',['rootDirectory',['../class_dir_node.html#aa6cd33041270c71ef698b3d8f82a9ae8',1,'DirNode']]],
-  ['rootpath',['rootPath',['../classyoucrypt_1_1_youcrypt_folder.html#ae744f2054a50ea3180c6ecacb7953394',1,'youcrypt::YoucryptFolder']]],
+  ['rootnode',['rootNode',['../classyoucrypt_1_1_youcrypt_folder.html#acbed4b16d8083216a51fa6e22bbbcdf7',1,'youcrypt::YoucryptFolder']]],
   ['rootptr',['RootPtr',['../_file_utils_8h.html#abe6745e1f05fda514a8129dae833fbc4',1,'FileUtils.h']]],
   ['roundupdivide',['roundUpDivide',['../_m_a_c_file_i_o_8cpp.html#a6035cadf0a40606714032ab609f2426e',1,'MACFileIO.cpp']]],
   ['rpp_5fecho_5foff',['RPP_ECHO_OFF',['../readpassphrase_8h.html#a672109f5219281f9f3420614f1a42446',1,'readpassphrase.h']]],

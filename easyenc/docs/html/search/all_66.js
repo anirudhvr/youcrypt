@@ -14,7 +14,7 @@ var searchData=
   ['filesize',['fileSize',['../class_raw_file_i_o.html#a07dc4d98fa02d3ff6be01493fc758cc9',1,'RawFileIO']]],
   ['fileutils_2ecpp',['FileUtils.cpp',['../_file_utils_8cpp.html',1,'']]],
   ['fileutils_2eh',['FileUtils.h',['../_file_utils_8h.html',1,'']]],
-  ['findcipheralgorithm',['findCipherAlgorithm',['../_file_utils_8cpp.html#a2039eb5adcc2900772c687f6a7e8e5ae',1,'FileUtils.cpp']]],
+  ['findcipheralgorithm',['findCipherAlgorithm',['../_file_utils_8cpp.html#a5054c05bbdd1fa08baa2e068e86877d7',1,'findCipherAlgorithm(const char *name, int keySize):&#160;FileUtils.cpp'],['../_youcrypt_folder_8cpp.html#a5054c05bbdd1fa08baa2e068e86877d7',1,'findCipherAlgorithm(const char *name, int keySize):&#160;FileUtils.cpp']]],
   ['findorcreate',['findOrCreate',['../class_dir_node.html#a71094c9115294187db297a51c12edce1',1,'DirNode']]],
   ['flipbytes',['flipBytes',['../_s_s_l___cipher_8cpp.html#af34b8d5e24e462f8b48d28014f9d5a08',1,'SSL_Cipher.cpp']]],
   ['forcedecode',['forceDecode',['../struct_enc_f_s___opts.html#a856029438f7bbe0c828298fce67d4f21',1,'EncFS_Opts::forceDecode()'],['../struct_f_s_config.html#a0c79a1d6a6510ece504ce014bcea55ad',1,'FSConfig::forceDecode()']]],

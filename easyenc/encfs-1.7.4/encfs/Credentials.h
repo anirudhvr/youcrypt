@@ -17,6 +17,8 @@ namespace youcrypt {
         virtual string decryptVolumeKey(string) = 0;
     };
 
+    
+
 }
 
 #endif

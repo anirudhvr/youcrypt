@@ -38,7 +38,7 @@ var searchData=
   ['ssl_5fcipher_2ecpp',['SSL_Cipher.cpp',['../_s_s_l___cipher_8cpp.html',1,'']]],
   ['ssl_5fcipher_2eh',['SSL_Cipher.h',['../_s_s_l___cipher_8h.html',1,'']]],
   ['sslkey',['SSLKey',['../class_s_s_l_key.html',1,'SSLKey'],['../class_s_s_l_key.html#ad8bd3451042668c67fc19c00f93b396e',1,'SSLKey::SSLKey()']]],
-  ['status',['Status',['../classyoucrypt_1_1_youcrypt_folder.html#a41250e1cd6bf235fde94e5b41d1ae07b',1,'youcrypt::YoucryptFolder']]],
+  ['status',['Status',['../classyoucrypt_1_1_youcrypt_folder.html#a41250e1cd6bf235fde94e5b41d1ae07b',1,'youcrypt::YoucryptFolder::Status()'],['../classyoucrypt_1_1_youcrypt_folder.html#af68c87e08833b8d7cc85c60aca3a511e',1,'youcrypt::YoucryptFolder::status()']]],
   ['status_5funknown',['status_unknown',['../classyoucrypt_1_1_youcrypt_folder.html#a41250e1cd6bf235fde94e5b41d1ae07ba3ab3002b37c0482cbfe894512963d450',1,'youcrypt::YoucryptFolder']]],
   ['stream_5fdec',['stream_dec',['../class_s_s_l_key.html#a3cf0d512d0d7a0994006880045514693',1,'SSLKey']]],
   ['stream_5fenc',['stream_enc',['../class_s_s_l_key.html#ab4ce79812603a6fca466ed1c23b1ef13',1,'SSLKey']]],

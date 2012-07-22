@@ -1,3 +1,9 @@
 <map id="G" name="G">
-<area shape="rect" id="node3" href="$_credentials_8h.html" title="Credentials.h" alt="" coords="15,80,109,107"/>
+<area shape="rect" id="node3" href="$_credentials_8h.html" title="Credentials.h" alt="" coords="5,155,99,181"/>
+<area shape="rect" id="node7" href="$_file_utils_8h.html" title="FileUtils.h" alt="" coords="271,80,344,107"/>
+<area shape="rect" id="node34" href="$_context_8h.html" title="Context.h" alt="" coords="466,155,541,181"/>
+<area shape="rect" id="node9" href="$encfs_8h.html" title="encfs.h" alt="" coords="473,229,535,256"/>
+<area shape="rect" id="node19" href="$_interface_8h.html" title="Interface.h" alt="" coords="71,229,149,256"/>
+<area shape="rect" id="node22" href="$_cipher_key_8h.html" title="CipherKey.h" alt="" coords="305,229,396,256"/>
+<area shape="rect" id="node26" href="$_f_s_config_8h.html" title="FSConfig.h" alt="" coords="226,155,309,181"/>
 </map>

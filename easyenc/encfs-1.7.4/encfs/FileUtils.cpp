@@ -667,7 +667,6 @@ bool writeV4Config( const char *configFile,
     return cfg.save( configFile );
 }
 
-static
 Cipher::CipherAlgorithm findCipherAlgorithm(const char *name,
 	int keySize )
 {

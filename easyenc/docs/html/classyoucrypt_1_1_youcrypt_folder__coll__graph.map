@@ -1,4 +1,6 @@
 <map id="G" name="G">
-<area shape="rect" id="node4" title="STL class." alt="" coords="96,99,171,125"/>
-<area shape="rect" id="node6" title="STL class." alt="" coords="74,6,192,47"/>
+<area shape="rect" id="node4" href="$class_enc_f_s___context.html" title="EncFS_Context" alt="" coords="1054,127,1165,153"/>
+<area shape="rect" id="node10" title="STL class." alt="" coords="547,68,621,95"/>
+<area shape="rect" id="node12" title="STL class." alt="" coords="273,61,391,102"/>
+<area shape="rect" id="node16" href="$struct_enc_f_s___context_1_1_placeholder.html" title="EncFS_Context::Placeholder" alt="" coords="241,137,423,164"/>
 </map>

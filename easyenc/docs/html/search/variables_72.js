@@ -8,6 +8,6 @@ var searchData=
   ['root',['root',['../class_enc_f_s___context.html#a5164dbf2fb91de7a7f8166a7cc8ca20c',1,'EncFS_Context::root()'],['../struct_enc_f_s___root.html#a607916084a9c0d31edd3a440f99e92b3',1,'EncFS_Root::root()']]],
   ['rootcipherdir',['rootCipherDir',['../class_enc_f_s___context.html#aa62bcc9956e2f601d854600a1aa14612',1,'EncFS_Context']]],
   ['rootdir',['rootDir',['../class_dir_node.html#a933c4da5596711020ad4a86ee808235d',1,'DirNode::rootDir()'],['../struct_enc_f_s___opts.html#ac52fae9dc94810e69f5f8b67308a2894',1,'EncFS_Opts::rootDir()']]],
-  ['rootpath',['rootPath',['../classyoucrypt_1_1_youcrypt_folder.html#ae744f2054a50ea3180c6ecacb7953394',1,'youcrypt::YoucryptFolder']]],
+  ['rootnode',['rootNode',['../classyoucrypt_1_1_youcrypt_folder.html#acbed4b16d8083216a51fa6e22bbbcdf7',1,'youcrypt::YoucryptFolder']]],
   ['running',['running',['../class_enc_f_s___context.html#a2d91bdd606db3ee6e91602714892501a',1,'EncFS_Context']]]
 ];
