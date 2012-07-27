@@ -124,9 +124,17 @@ MixpanelAPI *mixpanel;
 //    NSLog(@"Became active");
 }
 
+- (BOOL)applicationShouldHandleReopen:(NSApplication *)theApplication hasVisibleWindows:(BOOL)flag
+{
+    [self showListDirectories:self];
+    return YES;
+}
+
+
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
     // Insert code here to initialize your application
     [NSApp setServicesProvider:youcryptService];
+    
     
     // Logging
     logFileManager = [[CompressingLogFileManager alloc] initWithLogsDirectory:configDir.youCryptLogDir];
@@ -181,6 +189,7 @@ MixpanelAPI *mixpanel;
 - (BOOL)application:(NSApplication *)theApplication openFile:(NSString *)filename {    
     return [self openEncryptedFolder:filename];
 }
+
 - (void)awakeFromNib{
     
     //--------------------------------------------------------------------------------------------------
@@ -201,7 +210,15 @@ MixpanelAPI *mixpanel;
         DDLogInfo(@"Initiating First Run! ");
 
         [self showTour];
-    }    
+        
+//        NSString *error;
+//        if (![self updatePBS:&error]) {
+//            DDLogVerbose(@"Update PBS failed: %@", error);
+//        }
+    }
+    
+    NSUpdateDynamicServices(); // Equivalent to calling /System/Library/CoreServices/pbs 
+
 }
 // --------------------------------------------------------------------------------------
 
@@ -471,8 +488,10 @@ MixpanelAPI *mixpanel;
     if (!listDirectories) {
         listDirectories = [[ListDirectoriesWindow alloc] init];
     }
-    [listDirectories.window makeKeyAndOrderFront:self];
+    //[listDirectories.window makeKeyAndOrderFront:self];
     [listDirectories showWindow:self];
+    [NSApp activateIgnoringOtherApps:YES];
+    
 }
 
 - (IBAction)showPreferencePanel:(id)sender {
@@ -495,8 +514,8 @@ MixpanelAPI *mixpanel;
     
 }
 
-- (IBAction)showAboutWindow:(id)sender
-{
+- (IBAction)showAboutWindow:(id)sender {
+
     // Is preferenceController nil?
     if (!aboutController) {
         aboutController = [[AboutController alloc] init];
@@ -917,6 +936,12 @@ MixpanelAPI *mixpanel;
     if (listDirectories != nil)
         [listDirectories.table reloadData];
     return nil;
+}
+
+-(BOOL) updatePBS:(NSString **)error
+{
+
+    return YES;
 }
 
 

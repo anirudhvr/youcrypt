@@ -21,7 +21,7 @@ function fatal {
   then
     local SCRIPTNAME=$( basename $0 )
   fi
-  echo "$SCRIPTNAME: $1" >&2
+  echo "$SCRIPTNAME: $1"
   exit 1
 }
 

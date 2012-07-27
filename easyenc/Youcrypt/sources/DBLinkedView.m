@@ -78,9 +78,12 @@
         selectedDBFolders = [[NSMutableSet alloc] init];
     
     if ([newYCFolderInDropbox state] == NSOnState) {
-        NSString* newYCfolder = [[libFunctions locateDropboxFolder] stringByAppendingPathComponent:@"/YouCrypt"];
-        if ([libFunctions mkdirRecursive:newYCfolder]) {
-            [selectedDBFolders addObject:newYCfolder];
+        NSString *dbLoc = [libFunctions locateDropboxFolder];
+        if (dbLoc != nil) {
+            NSString* newYCfolder = [dbLoc stringByAppendingPathComponent:@"/YouCrypt"];
+            if ([libFunctions mkdirRecursive:newYCfolder]) {
+                [selectedDBFolders addObject:newYCfolder];
+            }
         }
     }
     

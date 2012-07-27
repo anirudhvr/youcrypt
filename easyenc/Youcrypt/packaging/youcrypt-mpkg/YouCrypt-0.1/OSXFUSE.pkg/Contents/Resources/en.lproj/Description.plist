@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IFPkgDescriptionDescription</key>
+	<string>Installs OSXFUSE 2.4.2 including Core, Preference Pane and MacFUSE Compatibility Layer. BoxCryptor requires OSXFUSE to be installed. For more information see http://osxfuse.github.com</string>
+	<key>IFPkgDescriptionTitle</key>
+	<string>OSXFuse</string>
+</dict>
+</plist>
