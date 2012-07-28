@@ -1,0 +1,19 @@
+To package Youcrypt
+
+1. Install iceberg http://s.sudre.free.fr/Software/Iceberg.html
+2. Open youcrypt-app/youcrypt-app/youcrypt-app.packproj
+    * Go to Files on the left tab
+    * Delete the existing Youcrypt.app
+    * Drag-drop newly built Youcrypt.app (no symlink) under Applications->Utilities
+    * Build
+3. Open youcrypt-mpkg/Youcrypt-0.1/Youcrypt-0.1.packproj
+    * Go to Components, delete components and set correct path for
+      OSXFuse and the youcrypt-app.pkg that was built in Step 2
+    * Build
+
+********
+* TODO *
+********
+
+Write a script to modify paths in .packproj files specific to each
+machine and run 'freeze' (braindead commandline companion to iceberg) 

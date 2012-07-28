@@ -75,7 +75,7 @@
 
 -(IBAction)didMount:(id)sender {
         
-    NSString *backPath = [path stringByDeletingLastPathComponent];
+    NSString *backPath = [[path stringByDeletingLastPathComponent] stringByAppendingString:@"."];
     NSError *err;
     NSFileManager *fm = [NSFileManager defaultManager];
     [[[NSWorkspace sharedWorkspace] notificationCenter] removeObserver:self];

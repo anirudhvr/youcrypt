@@ -681,7 +681,7 @@ MixpanelAPI *mixpanel;
     // Is encryptController nil?
     if (!encryptController) {
         encryptController = [[Encrypt alloc] init];
-    } 
+    }
     
     NSString *pp =[libFunctions getPassphraseFromKeychain:@"Youcrypt"];
     encryptController.sourceFolderPath = path;
