@@ -75,12 +75,13 @@
 
 -(IBAction)didMount:(id)sender {
         
-    NSString *backPath = [[path stringByDeletingLastPathComponent] stringByAppendingString:@"."];
+    NSString *backPath = [path stringByDeletingLastPathComponent];
     NSError *err;
     NSFileManager *fm = [NSFileManager defaultManager];
     [[[NSWorkspace sharedWorkspace] notificationCenter] removeObserver:self];
     
-    backPath = [backPath stringByAppendingPathComponent: [[NSProcessInfo processInfo] globallyUniqueString]];
+    backPath = [backPath stringByAppendingPathComponent: [NSString stringWithFormat:@".%@",[[NSProcessInfo processInfo] globallyUniqueString]]];
+    
     [libFunctions mkdirRecursive:backPath];
     
     DDLogInfo(@"didMount Backpath is %@\n", backPath);
@@ -91,7 +92,7 @@
     NSArray *files = [fm contentsOfDirectoryAtPath:tempFolder error:&err];
     for (NSString *file in files) {
         NSError *err;
-        if (([file isEqualToString:@".DS_Store"]) || ([file isEqualToString:@".youcryptfs.xml"]))
+        if (([file isEqualToString:@".DS_Store"]) || ([file isEqualToString:YOUCRYPT_XMLCONFIG_FILENAME]))
             continue;
         if (![fm moveItemAtPath:[tempFolder stringByAppendingPathComponent:file] toPath:[backPath stringByAppendingPathComponent:file] error:&err]) {
             //FIXME:  Restore error handler.

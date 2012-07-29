@@ -48,7 +48,7 @@ int
 main(int argc, char *argv[]) {
 
     
-    const char *url = "http://www.boost.org/index.html";
+    const char *url = "https://www.boost.org/index.html";
     
     try {
         http::client client;

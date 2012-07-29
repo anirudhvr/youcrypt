@@ -303,7 +303,7 @@
 		E054042015AB1CE10011E5CC /* RestoreController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RestoreController.h; path = sources/RestoreController.h; sourceTree = "<group>"; };
 		E054042115AB1CE10011E5CC /* RestoreController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RestoreController.m; path = sources/RestoreController.m; sourceTree = "<group>"; };
 		E054042215AB1CE10011E5CC /* Restore.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Restore.xib; sourceTree = "<group>"; };
-		E06E2B3F15A7671B00E52B2D /* errors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = errors.h; path = sources/errors.h; sourceTree = "<group>"; };
+		E06E2B3F15A7671B00E52B2D /* constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = constants.h; path = sources/constants.h; sourceTree = "<group>"; };
 		E06E2B4015A76ABE00E52B2D /* ListRightClick.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ListRightClick.xib; sourceTree = "<group>"; };
 		E0A2849715A61A26008A949A /* logo-512x512-alpha.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = "logo-512x512-alpha.icns"; sourceTree = "<group>"; };
 		E0BF0E931596B9C8002F9FB9 /* YoucryptDirectory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = YoucryptDirectory.h; path = sources/YoucryptDirectory.h; sourceTree = "<group>"; };
@@ -479,7 +479,7 @@
 			children = (
 				E66988C3159D403B002323AD /* StartOnLogin.xcodeproj */,
 				256C356B158EA75F00E2BEC4 /* main.m */,
-				E06E2B3F15A7671B00E52B2D /* errors.h */,
+				E06E2B3F15A7671B00E52B2D /* constants.h */,
 				256C356D158EA75F00E2BEC4 /* Youcrypt-Prefix.pch */,
 				256C356E158EA75F00E2BEC4 /* Credits.rtf */,
 				25F3D154159243E300E3383C /* Classes */,

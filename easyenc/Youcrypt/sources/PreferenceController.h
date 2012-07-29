@@ -15,20 +15,6 @@
 @class GmailSheetController;
 @class FirstRunSheetController;
 
-// string prefrence keys
-#define YC_DROPBOXLOCATION  @"yc.dropboxfolderlocation"
-#define YC_BOXLOCATION      @"yc.boxfolderlocation"
-#define YC_USERREALNAME     @"yc.userrealname"
-#define YC_USEREMAIL        @"yc.email"
-#define YC_GMAILUSERNAME    @"yc.gmailusername"
-
-// bool preference keys
-#define YC_ENCRYPTFILENAMES @"yc.encryptfilenames"
-#define YC_STARTONBOOT      @"yc.startonboot"
-#define YC_BOXSTATUS        @"yc.boxstatus"
-#define YC_ANONYMOUSSTATISTICS @"yc.anonymousstatistics"
-#define YC_IDLETIME         @"yc.idletime"
-
 @interface PreferenceController : NSWindowController <NSAlertDelegate> {
     
     // the tabview

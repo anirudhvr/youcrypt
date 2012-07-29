@@ -235,7 +235,7 @@ MixpanelAPI *mixpanel;
     //--------------------------------------------------------------------------------------------------
     NSFileManager *fm = [NSFileManager defaultManager];
     BOOL isDir;
-    if ([fm fileExistsAtPath:path isDirectory:&isDir] && isDir && ([[path pathExtension] isEqualToString:@"yc"])) {
+    if ([fm fileExistsAtPath:path isDirectory:&isDir] && isDir && ([[path pathExtension] isEqualToString:ENCRYPTED_DIRECTORY_EXTENSION])) {
         
         // 1. Set up a new mount point
         // 2. Set up decrypt controller with the path and the mount point
@@ -342,6 +342,12 @@ MixpanelAPI *mixpanel;
     NSFileManager *fm = [NSFileManager defaultManager];
     BOOL isDir;
     if ([fm fileExistsAtPath:path isDirectory:&isDir] && isDir) {
+        // Ok, this is a directory, but is it an already encrypted directory?
+        if ([[path pathExtension] isEqualToString:ENCRYPTED_DIRECTORY_EXTENSION] &&
+            [fm fileExistsAtPath:[path stringByAppendingPathComponent:YOUCRYPT_XMLCONFIG_FILENAME]]) {
+            [[NSAlert alertWithMessageText:@"Directory already encrypted" defaultButton:nil alternateButton:nil otherButton:nil informativeTextWithFormat:@"The directory %@ appears to already be encrypted using Youcrypt. Did you mean to decrypt it instead?", [path stringByDeletingLastPathComponent]] runModal];
+        }
+                    
         [self showEncryptWindow:self path:path];
     }
 }
@@ -690,7 +696,7 @@ MixpanelAPI *mixpanel;
         encryptController.passphraseFromKeychain = pp;
         encryptController.keychainHasPassphrase = YES;
         [encryptController encrypt:self];
-    } else { 
+    } else {
         NSButton *storePasswd = encryptController.checkStorePasswd;
         [storePasswd setState:NSOnState];
         encryptController.passphraseFromKeychain = nil;
@@ -809,8 +815,10 @@ MixpanelAPI *mixpanel;
             BOOL isDir;
             NSString *path = [url path];
             if ([fm fileExistsAtPath:path isDirectory:&isDir] && isDir) {                  
-                // If it's a .yc file, we open it, otherwise, we encrypt it
-                if ([[path pathExtension] isEqualToString:@"yc"]) {
+                // If it's a .yc folder and if it contains YOUCRYPT_XMLCONFIG_FILENAME ,
+                //  we open it, otherwise, we encrypt it
+                if ([[path pathExtension] isEqualToString:ENCRYPTED_DIRECTORY_EXTENSION] &&
+                    [fm fileExistsAtPath:[path stringByAppendingPathComponent:YOUCRYPT_XMLCONFIG_FILENAME]]) {
                     [theApp openEncryptedFolder:path];
                 }
                 else {
@@ -882,7 +890,7 @@ MixpanelAPI *mixpanel;
                              "%@", dir.path, [YoucryptDirectory statusToString:dir.status],
                              (dir.status == YoucryptDirectoryStatusMounted ? [NSString stringWithFormat:@"\n\nMounted at %@", dir.mountedPath] : @"")];
     } else {
-        tooltip = [NSString stringWithString:@"Drag folders here to encrypt them with YouCrypt"];
+        tooltip = @"Drag folders here to encrypt them with YouCrypt";
     }
 
     return tooltip;
@@ -937,12 +945,5 @@ MixpanelAPI *mixpanel;
         [listDirectories.table reloadData];
     return nil;
 }
-
--(BOOL) updatePBS:(NSString **)error
-{
-
-    return YES;
-}
-
 
 @end

@@ -7,7 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		2584A6CB15C371A2003EBB0B /* teststd.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2584A6CA15C371A2003EBB0B /* teststd.1 */; };
+		E63D307A15C5ECDF00877018 /* UserAccount.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E63D307815C5ECDF00877018 /* UserAccount.cpp */; };
+		E63D307E15C5ED7D00877018 /* KeyManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E63D307C15C5ED7D00877018 /* KeyManager.cpp */; };
+		E63D308115C5ED9A00877018 /* HttpLib.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E63D307F15C5ED9A00877018 /* HttpLib.cpp */; };
+		E63D308415C5EE4500877018 /* PasswordManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E63D308215C5EE4500877018 /* PasswordManager.cpp */; };
 		E6938FD815C38EB600A73C80 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E6938FD715C38EB600A73C80 /* main.cpp */; };
 /* End PBXBuildFile section */
 
@@ -18,7 +21,6 @@
 			dstPath = /usr/share/man/man1/;
 			dstSubfolderSpec = 0;
 			files = (
-				2584A6CB15C371A2003EBB0B /* teststd.1 in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 1;
 		};
@@ -26,7 +28,14 @@
 
 /* Begin PBXFileReference section */
 		2584A6C515C371A2003EBB0B /* teststd */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = teststd; sourceTree = BUILT_PRODUCTS_DIR; };
-		2584A6CA15C371A2003EBB0B /* teststd.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = teststd.1; sourceTree = "<group>"; };
+		E63D307815C5ECDF00877018 /* UserAccount.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = UserAccount.cpp; path = sources/UserAccount.cpp; sourceTree = "<group>"; };
+		E63D307915C5ECDF00877018 /* UserAccount.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserAccount.h; path = sources/UserAccount.h; sourceTree = "<group>"; };
+		E63D307C15C5ED7D00877018 /* KeyManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = KeyManager.cpp; path = sources/KeyManager.cpp; sourceTree = "<group>"; };
+		E63D307D15C5ED7D00877018 /* KeyManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KeyManager.h; path = sources/KeyManager.h; sourceTree = "<group>"; };
+		E63D307F15C5ED9A00877018 /* HttpLib.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = HttpLib.cpp; path = sources/HttpLib.cpp; sourceTree = "<group>"; };
+		E63D308015C5ED9A00877018 /* HttpLib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HttpLib.h; path = sources/HttpLib.h; sourceTree = "<group>"; };
+		E63D308215C5EE4500877018 /* PasswordManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = PasswordManager.cpp; path = sources/PasswordManager.cpp; sourceTree = "<group>"; };
+		E63D308315C5EE4500877018 /* PasswordManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PasswordManager.h; path = sources/PasswordManager.h; sourceTree = "<group>"; };
 		E6938EEB15C38E6E00A73C80 /* mime.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = mime.hpp; path = boost/mime.hpp; sourceTree = "<group>"; };
 		E6938EED15C38E6E00A73C80 /* constants.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = constants.hpp; sourceTree = "<group>"; };
 		E6938EEF15C38E6E00A73C80 /* debug.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = debug.hpp; sourceTree = "<group>"; };
@@ -226,7 +235,7 @@
 		E6938FD415C38E6E00A73C80 /* thread_pool.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = thread_pool.hpp; sourceTree = "<group>"; };
 		E6938FD515C38E6E00A73C80 /* version.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = version.hpp; sourceTree = "<group>"; };
 		E6938FD615C38E6E00A73C80 /* network.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = network.hpp; path = boost/network.hpp; sourceTree = "<group>"; };
-		E6938FD715C38EB600A73C80 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = SOURCE_ROOT; };
+		E6938FD715C38EB600A73C80 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = main.cpp; path = sources/main.cpp; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -243,7 +252,8 @@
 		2584A6AD15C36FA5003EBB0B = {
 			isa = PBXGroup;
 			children = (
-				E6938DFD15C38C8400A73C80 /* cppnetlib-0.9.2 */,
+				E63D307715C5ECA300877018 /* sources */,
+				E63D307B15C5ED5D00877018 /* contrib */,
 				2584A6C715C371A2003EBB0B /* main */,
 				2584A6B915C36FA6003EBB0B /* Products */,
 			);
@@ -261,10 +271,32 @@
 			isa = PBXGroup;
 			children = (
 				E6938FD715C38EB600A73C80 /* main.cpp */,
-				2584A6CA15C371A2003EBB0B /* teststd.1 */,
 			);
 			name = main;
 			path = teststd;
+			sourceTree = "<group>";
+		};
+		E63D307715C5ECA300877018 /* sources */ = {
+			isa = PBXGroup;
+			children = (
+				E63D307815C5ECDF00877018 /* UserAccount.cpp */,
+				E63D307915C5ECDF00877018 /* UserAccount.h */,
+				E63D307C15C5ED7D00877018 /* KeyManager.cpp */,
+				E63D307D15C5ED7D00877018 /* KeyManager.h */,
+				E63D307F15C5ED9A00877018 /* HttpLib.cpp */,
+				E63D308015C5ED9A00877018 /* HttpLib.h */,
+				E63D308215C5EE4500877018 /* PasswordManager.cpp */,
+				E63D308315C5EE4500877018 /* PasswordManager.h */,
+			);
+			name = sources;
+			sourceTree = "<group>";
+		};
+		E63D307B15C5ED5D00877018 /* contrib */ = {
+			isa = PBXGroup;
+			children = (
+				E6938DFD15C38C8400A73C80 /* cppnetlib-0.9.2 */,
+			);
+			name = contrib;
 			sourceTree = "<group>";
 		};
 		E6938DFD15C38C8400A73C80 /* cppnetlib-0.9.2 */ = {
@@ -283,6 +315,7 @@
 				E6938FD615C38E6E00A73C80 /* network.hpp */,
 			);
 			name = boost;
+			path = contrib;
 			sourceTree = "<group>";
 		};
 		E6938EEC15C38E6E00A73C80 /* network */ = {
@@ -829,6 +862,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				E6938FD815C38EB600A73C80 /* main.cpp in Sources */,
+				E63D307A15C5ECDF00877018 /* UserAccount.cpp in Sources */,
+				E63D307E15C5ED7D00877018 /* KeyManager.cpp in Sources */,
+				E63D308115C5ED9A00877018 /* HttpLib.cpp in Sources */,
+				E63D308415C5EE4500877018 /* PasswordManager.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -886,6 +923,7 @@
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				HEADER_SEARCH_PATHS = (
 					/usr/include/boost_1_50,
+					contrib,
 					.,
 				);
 				LIBRARY_SEARCH_PATHS = /opt/local/lib;
@@ -903,6 +941,7 @@
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				HEADER_SEARCH_PATHS = (
 					/usr/include/boost_1_50,
+					contrib,
 					.,
 				);
 				LIBRARY_SEARCH_PATHS = /opt/local/lib;

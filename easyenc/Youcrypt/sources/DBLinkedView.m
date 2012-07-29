@@ -93,7 +93,7 @@
     for (NSString *path in selectedDBFolders) {
         if ([fm fileExistsAtPath:path isDirectory:&isDir] && isDir) {                  
             // encrypt it if it'ns not already encrypted
-            if (![[path pathExtension] isEqualToString:@"yc"]) {
+            if (![[path pathExtension] isEqualToString:ENCRYPTED_DIRECTORY_EXTENSION]) {
                 [theApp encryptFolder:path];
                 [updateMessage setStringValue:[NSString stringWithFormat:@"Encrypting folder %d of %d (%@)",
                                                i++, count, path]];

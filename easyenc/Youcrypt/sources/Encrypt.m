@@ -105,7 +105,7 @@
 //    NSString *iconPath = [bundlepath stringByAppendingPathComponent:@"/lockedfolder2.icns"]; 
 //    NSImage* iconImage = [[NSImage alloc] initWithContentsOfFile:iconPath];
 //    BOOL didSetIcon = NO;
-//    //[[NSWorkspace sharedWorkspace] setIcon:iconImage forFile:[sourceFolderPath stringByAppendingPathComponent:@"/encrypted.yc"] options:0];
+//    //[[NSWorkspace sharedWorkspace] setIcon:iconImage forFile:[sourceFolderPath stringByAppendingPathComponent:ENCRYPTION_TEMPORARY_FOLDER] options:0];
 //
 //    if(didSetIcon)
 //        DDLogVerbose(@"Set Folder icon");
@@ -156,7 +156,7 @@
     [libFunctions mkdirRecursive:testFolder];
 
     // The destination of the encrypted files is just <sourcefolder>/encrypted.yc
-    destFolder = [srcFolder stringByAppendingPathComponent:@"/encrypted.yc"];
+    destFolder = [srcFolder stringByAppendingPathComponent:ENCRYPTION_TEMPORARY_FOLDER];
     [libFunctions mkdirRecursive:destFolder];
     
     //FIXME:  Multiple folders
@@ -224,7 +224,7 @@
     BOOL errOccurred = NO;
     NSFileManager *fm = [NSFileManager defaultManager];
 
-    if (![fm fileExistsAtPath:[tempFolder stringByAppendingPathComponent:@".youcryptfs.xml"]])
+    if (![fm fileExistsAtPath:[tempFolder stringByAppendingPathComponent:YOUCRYPT_XMLCONFIG_FILENAME]])
         return;
     [[[NSWorkspace sharedWorkspace] notificationCenter] removeObserver:self];
     
@@ -233,7 +233,7 @@
     // macOS thinks it is overwriting the mount point we just created
     NSArray *files = [fm contentsOfDirectoryAtPath:srcFolder error:nil];
     for (NSString *file in files) {
-        if (![file isEqualToString:@"encrypted.yc"]) {
+        if (![file isEqualToString:ENCRYPTION_TEMPORARY_FOLDER]) {
             NSError *err;
             NSString *srcPath, *destPath;
             
@@ -256,7 +256,7 @@
     // Can safely delete the files.
     BOOL displayErr = NO;
     for (NSString *file in files) {
-        if (![file isEqualToString:@"encrypted.yc"]) {
+        if (![file isEqualToString:ENCRYPTION_TEMPORARY_FOLDER]) {
             if (![fm removeItemAtPath:[srcFolder stringByAppendingPathComponent:file] error:nil]) {
                 displayErr = YES;
             }
@@ -282,7 +282,7 @@ Cleanup:
         }
         [fm removeItemAtPath:destFolder error:nil];
         
-        destFolder = [srcFolder stringByAppendingPathExtension:@"yc"];        
+        destFolder = [srcFolder stringByAppendingPathExtension:ENCRYPTED_DIRECTORY_EXTENSION];
         [fm moveItemAtPath:srcFolder toPath:destFolder error:nil];
             
         /* change folder icon of encrypted folder */
