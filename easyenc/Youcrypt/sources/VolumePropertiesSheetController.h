@@ -21,6 +21,7 @@
 @property (nonatomic, weak) IBOutlet NSTextField *status;
 @property (nonatomic, weak) IBOutlet NSTextField *mountedDate;
 @property (nonatomic, weak) IBOutlet NSTextField *openedByUser;
+@property (nonatomic, weak) IBOutlet NSButton *openMountedPath;
 
 @property (nonatomic, copy) NSString *sp;
 @property (nonatomic, copy) NSString *mp;
@@ -30,4 +31,5 @@
 
 
 -(IBAction)okClicked:(id)sender;
+-(IBAction)openMountedPath:(id)sender;
 @end

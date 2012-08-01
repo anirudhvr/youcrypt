@@ -100,14 +100,14 @@
 
 - (IBAction)doProps:(id)sender {
     
-    if ([table clickedRow] < [theApp.directories count]) {
-        YoucryptDirectory *dir = [theApp.directories objectAtIndex:[table clickedRow]];
+    if ([table selectedRow] < [theApp.directories count]) {
+        YoucryptDirectory *dir = [theApp.directories objectAtIndex:[table selectedRow]];
         volumePropsSheet.sp = dir.path;
         volumePropsSheet.mp = dir.mountedPath;
         volumePropsSheet.stat = [YoucryptDirectory statusToString:dir.status];
         if (dir.status == YoucryptDirectoryStatusMounted) {
-            volumePropsSheet.openedby = dir.mountedDateAsString;
-            volumePropsSheet.mntdate = NSFullUserName();
+            volumePropsSheet.mntdate = dir.mountedDateAsString;
+            volumePropsSheet.openedby = NSFullUserName();
         }
         [volumePropsSheet beginSheetModalForWindow:self.window completionHandler:^(NSUInteger returnCode) {
             if (returnCode == 0) {
@@ -177,6 +177,11 @@
     }
     [dirName setStringValue:@""];
     [table reloadData];
+}
+
+- (BOOL)closeMountedFolder:(YoucryptDirectory*)dir
+{
+    
 }
 
 
@@ -354,7 +359,7 @@
                                                                               @"Remove" /* palletelabel */,
                                                                               @"Permanently decrypt an encrypted folder" /* Tooltip */,
                                                                               self           /* target */,
-                                                                              @"Remove.png" /* image file */,
+                                                                              @"decrypt.png" /* image file */,
                                                                               NSStringFromSelector(@selector(removeFS:)) /* selector */, nil]
                                                                      forKeys:toolbarItemKeys] 
                                   forKey:[allowedToolbarItemKeys objectAtIndex:1]];

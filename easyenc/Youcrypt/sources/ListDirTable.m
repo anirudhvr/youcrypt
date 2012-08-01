@@ -228,4 +228,17 @@
 //    NSLog(@"mousedown: \timgviewloc:(%f,%f)\n\ttableviewloc: (%f, %f)\n\tclickloc(%f,%f)", viewLocation.x, viewLocation.y, 
 //             tableviewLocation.x, tableviewLocation.y, windowLocation.x, windowLocation.y);
 }
+
+
+
+- (NSMenu *)menuForEvent:(NSEvent *)theEvent;
+{
+    // what row are we at?
+    long row = [self rowAtPoint: [self convertPoint: [theEvent locationInWindow] fromView: nil]];
+    if (row != -1) {
+        [self selectRowIndexes:[NSIndexSet indexSetWithIndex:row] byExtendingSelection: NO];
+    }
+    return [super menu]; // use what we've got
+}
+
 @end

@@ -363,6 +363,7 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
     for (YoucryptDirectory *dir in directories) {
         if ([path isEqualToString:dir.path]) {
             dir.status = YoucryptDirectoryStatusMounted;
+            dir.mountedDateAsString = [[NSDate date] descriptionWithCalendarFormat:@"%H:%M %m-%d-%Y" timeZone:nil locale:nil];
             if (callFinderScript == NO) {
                 [[NSWorkspace sharedWorkspace] openFile:dir.mountedPath];	
             }
@@ -858,8 +859,8 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
     
     if (dirAtRow.status == YoucryptDirectoryStatusMounted) { // mounted => unlocked
         if ([cell isKindOfClass:[NSTextFieldCell class]]) {
-            [cell setTextColor:[NSColor redColor]];
-            [cell setBackgroundColor:[NSColor grayColor]];
+//            [cell setTextColor:[NSColor redColor]];
+//            [cell setBackgroundColor:[NSColor grayColor]];
         } else if ([cell isKindOfClass:[NSButtonCell class]] && [colId isEqualToString:@"status"]) {
             [cell setImage:[NSImage imageNamed:@"box_open_48x48.png"]];
         } else if ([cell isKindOfClass:[NSPopUpButtonCell class]] && [colId isEqualToString:@"props"]) {
@@ -869,8 +870,8 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
         }
     } else  { // unmounted => locked
         if ([cell isKindOfClass:[NSTextFieldCell class]]) {
-            [cell setTextColor:[NSColor blackColor]];
-            [cell setBackgroundColor:[NSColor darkGrayColor]];
+//            [cell setTextColor:[NSColor blackColor]];
+//            [cell setBackgroundColor:[NSColor darkGrayColor]];
             
         } else if ([cell isKindOfClass:[NSButtonCell class]] && [colId isEqualToString:@"status"]) {
             if (dirAtRow.status == YoucryptDirectoryStatusUnmounted) 

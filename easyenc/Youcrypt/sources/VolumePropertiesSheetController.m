@@ -17,17 +17,23 @@
 @synthesize status;
 @synthesize mountedDate;
 @synthesize openedByUser;
+@synthesize openMountedPath;
+
 @synthesize sp;
 @synthesize mp;
 @synthesize stat;
 @synthesize openedby;
 @synthesize mntdate;
 
+
+
 - (id)init {
     if (!(self = [super initWithWindowNibName:@"VolumePropertiesSheetController"])) {
         return nil; // Bail!
     }
     sp = mp = stat = openedby = mntdate = @"";
+    [openMountedPath setHidden:YES];
+    [mountPath setHidden:YES];
     return self;
 }
 
@@ -45,6 +51,13 @@
     [openedByUser setStringValue:openedby];
     [mountedDate setStringValue:mntdate];
     
+    if ([mp isEqualToString:@""]) {
+        [mountPath setHidden:YES];
+        [openMountedPath setHidden:YES];
+    } else {
+        [mountPath setHidden:NO];
+        [openMountedPath setHidden:NO];
+    }
    
 }
 // Mark: -
@@ -62,6 +75,13 @@
     [super sheetWillDisplay];
   
     
+}
+
+
+-(IBAction)openMountedPath:(id)sender
+{
+    if ([mp isNotEqualTo:@""])
+        [[NSWorkspace sharedWorkspace] openFile:mp];
 }
 
 @end
