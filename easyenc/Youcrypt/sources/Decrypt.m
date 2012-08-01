@@ -105,7 +105,7 @@
             // Seems like a non-empty passphrase...
             // Suggest that the user change the passphrase of the current folder.        
         
-            int retCode = [[NSAlert alertWithMessageText:@"Change passphrase?" 
+            long retCode = [[NSAlert alertWithMessageText:@"Change passphrase?"
                                            defaultButton:@"Yes, change this" 
                                          alternateButton:@"No, leave this as is" 
                                              otherButton:nil 

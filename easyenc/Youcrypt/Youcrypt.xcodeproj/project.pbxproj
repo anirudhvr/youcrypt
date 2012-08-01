@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		2516C38F15ACCAA10075984B /* Key.png in Resources */ = {isa = PBXBuildFile; fileRef = 2516C38E15ACCAA10075984B /* Key.png */; };
-		251C770615ADFFC6001605F5 /* TourController.m in Sources */ = {isa = PBXBuildFile; fileRef = 251C770415ADFFC6001605F5 /* TourController.m */; };
 		252C3A681593CAA10044EB3C /* Lumberjack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 252C3A671593CAA10044EB3C /* Lumberjack.framework */; };
 		252C3A691593CB780044EB3C /* DDLog.m in Sources */ = {isa = PBXBuildFile; fileRef = 252C3A5B1593C6A70044EB3C /* DDLog.m */; };
 		252C3A6A1593CB9B0044EB3C /* DDASLLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 252C3A571593C6A70044EB3C /* DDASLLogger.m */; };
@@ -212,8 +211,6 @@
 
 /* Begin PBXFileReference section */
 		2516C38E15ACCAA10075984B /* Key.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Key.png; sourceTree = "<group>"; };
-		251C770315ADFFC6001605F5 /* TourController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TourController.h; path = sources/TourController.h; sourceTree = "<group>"; };
-		251C770415ADFFC6001605F5 /* TourController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TourController.m; path = sources/TourController.m; sourceTree = "<group>"; };
 		252C3A561593C6A70044EB3C /* DDASLLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDASLLogger.h; sourceTree = "<group>"; };
 		252C3A571593C6A70044EB3C /* DDASLLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDASLLogger.m; sourceTree = "<group>"; };
 		252C3A581593C6A70044EB3C /* DDFileLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDFileLogger.h; sourceTree = "<group>"; };
@@ -624,8 +621,6 @@
 				E6E2A0B6159266F6003E3F6C /* YoucryptService.m */,
 				E67FF2F015A8D5180033A63A /* PeriodicActionTimer.h */,
 				E67FF2F115A8D5190033A63A /* PeriodicActionTimer.m */,
-				251C770315ADFFC6001605F5 /* TourController.h */,
-				251C770415ADFFC6001605F5 /* TourController.m */,
 				E66988DA159E63CF002323AD /* PassphraseSheetController.h */,
 				E66988DB159E63CF002323AD /* PassphraseSheetController.m */,
 				25300E8815A385BD009CDA08 /* GmailSheetController.h */,
@@ -988,7 +983,7 @@
 			isa = PBXProject;
 			attributes = {
 				CLASSPREFIX = com.youcrypt;
-				LastUpgradeCheck = 0430;
+				LastUpgradeCheck = 0440;
 				ORGANIZATIONNAME = "Nouvou Inc.";
 			};
 			buildConfigurationList = 256C3555158EA75F00E2BEC4 /* Build configuration list for PBXProject "Youcrypt" */;
@@ -1179,7 +1174,6 @@
 				E054042315AB1CE10011E5CC /* RestoreController.m in Sources */,
 				E67FF2F215A8D5190033A63A /* PeriodicActionTimer.m in Sources */,
 				25617DC715ABD54B00EED7F7 /* ListDirTable.m in Sources */,
-				251C770615ADFFC6001605F5 /* TourController.m in Sources */,
 				E6C046D115AE2321004B52E5 /* XMLDictionary.m in Sources */,
 				E6C046D215AE2321004B52E5 /* XMLReader.m in Sources */,
 				E6C046DB15AE29AA004B52E5 /* SSKeychain.m in Sources */,
@@ -1320,6 +1314,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
@@ -1348,6 +1343,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",

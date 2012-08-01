@@ -48,7 +48,6 @@
 - (IBAction)close:(id)sender;
 - (IBAction) shareFolder:(id) sender;
 - (IBAction)removeFS:(id)sender;
-- (IBAction)windowWillClose:(NSNotification *)notification;
 
 - (void)setStatusToSelectedRow:(NSInteger)row;
 - (void)doOpenProxy:(NSInteger)row ;

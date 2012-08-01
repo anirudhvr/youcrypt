@@ -86,11 +86,8 @@
 
 // Account tab methods
 - (IBAction)changePassphrase:(id)sender;
-- (IBAction)saveAccountPrefs:(id)sender;
-
 
 // Services tab methods
-- (IBAction)saveServicesPrefs:(id)sender;
 -(NSString*) locateBoxFolder;
 static NSArray *openFiles();
 

@@ -37,7 +37,6 @@
 
 -(BOOL)isFirstRun
 {
-    NSString *homedir = NSHomeDirectory();
     if (![[NSFileManager defaultManager] fileExistsAtPath:youcryptUserUUID]) // this is created last in teh firstrunsuccessful method
         firstRun = YES;
     else

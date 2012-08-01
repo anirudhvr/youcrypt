@@ -141,13 +141,12 @@ static NSMutableArray *mountedFuseVolumes;
 {
     NSFileHandle *fh = [NSFileHandle alloc];
     NSTask *mountTask = [NSTask alloc];
-    NSString *mountcmd = [[NSString alloc] initWithString:@"/sbin/mount"];
     NSArray *argsArray = [NSArray arrayWithObjects:@"-t", @"osxfusefs", nil];
     NSString *mountOutput;
     NSMutableArray *tmpMountedFuseVolumes = [[NSMutableArray alloc] init];
     
     
-    if ([libFunctions execWithSocket:mountcmd arguments:argsArray env:nil io:fh proc:mountTask]) {
+    if ([libFunctions execWithSocket:MOUNT_CMD arguments:argsArray env:nil io:fh proc:mountTask]) {
         [mountTask waitUntilExit];
         if (![libFunctions fileHandleIsReadable:fh]) {
             mountedFuseVolumes = tmpMountedFuseVolumes;
@@ -200,19 +199,19 @@ static NSMutableArray *mountedFuseVolumes;
 {
     switch(status) {
         case YoucryptDirectoryStatusNotFound:
-            return [NSString stringWithString:@"Directory not found"];
+            return @"Directory not found";
             break;
         case YoucryptDirectoryStatusMounted:
-            return [NSString stringWithString:@"Open"];
+            return @"Open";
             break;
         case YoucryptDirectoryStatusUnmounted:
-            return [NSString stringWithString:@"Closed"];
+            return @"Closed";
             break;
         case YoucryptDirectoryStatusProcessing:
-            return [NSString stringWithString:@"Processing"];
+            return @"Processing";
             break;
         case YoucryptDirectoryStatusSourceNotFound:
-            return [NSString stringWithString:@"Source directory not found"];
+            return @"Source directory not found";
             break;
         default:
             return nil;

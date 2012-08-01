@@ -19,10 +19,14 @@
 @property (nonatomic, weak) IBOutlet NSTextField *sourcePath;
 @property (nonatomic, weak) IBOutlet NSTextField *mountPath;
 @property (nonatomic, weak) IBOutlet NSTextField *status;
+@property (nonatomic, weak) IBOutlet NSTextField *mountedDate;
+@property (nonatomic, weak) IBOutlet NSTextField *openedByUser;
 
 @property (nonatomic, copy) NSString *sp;
 @property (nonatomic, copy) NSString *mp;
 @property (nonatomic, copy) NSString *stat;
+@property (nonatomic, copy) NSString *openedby;
+@property (nonatomic, copy) NSString *mntdate;
 
 
 -(IBAction)okClicked:(id)sender;

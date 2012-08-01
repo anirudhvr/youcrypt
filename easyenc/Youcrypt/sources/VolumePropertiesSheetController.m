@@ -15,17 +15,19 @@
 @synthesize sourcePath;
 @synthesize mountPath;
 @synthesize status;
+@synthesize mountedDate;
+@synthesize openedByUser;
 @synthesize sp;
 @synthesize mp;
 @synthesize stat;
+@synthesize openedby;
+@synthesize mntdate;
 
 - (id)init {
     if (!(self = [super initWithWindowNibName:@"VolumePropertiesSheetController"])) {
         return nil; // Bail!
     }
-    sp = [[NSString alloc] initWithString:@""];
-    mp = [[NSString alloc] initWithString:@""];
-    stat = [[NSString alloc] initWithString:@""];
+    sp = mp = stat = openedby = mntdate = @"";
     return self;
 }
 
@@ -39,7 +41,10 @@
 {
     [sourcePath setStringValue:sp];
     [mountPath setStringValue:mp];
-    [status setStringValue:stat];   
+    [status setStringValue:stat];
+    [openedByUser setStringValue:openedby];
+    [mountedDate setStringValue:mntdate];
+    
    
 }
 // Mark: -

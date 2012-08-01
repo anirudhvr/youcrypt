@@ -78,9 +78,9 @@
         selectedDBFolders = [[NSMutableSet alloc] init];
     
     if ([newYCFolderInDropbox state] == NSOnState) {
-        NSString *dbLoc = [libFunctions locateDropboxFolder];
-        if (dbLoc != nil) {
-            NSString* newYCfolder = [dbLoc stringByAppendingPathComponent:@"/YouCrypt"];
+        NSString *dbloc = [libFunctions locateDropboxFolder];
+        if (dbloc != nil) {
+            NSString* newYCfolder = [dbloc stringByAppendingPathComponent:@"/YouCrypt"];
             if ([libFunctions mkdirRecursive:newYCfolder]) {
                 [selectedDBFolders addObject:newYCfolder];
             }
@@ -88,14 +88,14 @@
     }
     
     NSFileManager *fm = [NSFileManager defaultManager];
-    int i = 1, count = [selectedDBFolders count];
+    long i = 1, count = [selectedDBFolders count];
     BOOL isDir;
     for (NSString *path in selectedDBFolders) {
         if ([fm fileExistsAtPath:path isDirectory:&isDir] && isDir) {                  
             // encrypt it if it'ns not already encrypted
             if (![[path pathExtension] isEqualToString:ENCRYPTED_DIRECTORY_EXTENSION]) {
                 [theApp encryptFolder:path];
-                [updateMessage setStringValue:[NSString stringWithFormat:@"Encrypting folder %d of %d (%@)",
+                [updateMessage setStringValue:[NSString stringWithFormat:@"Encrypting folder %ld of %ld (%@)",
                                                i++, count, path]];
             }
         }

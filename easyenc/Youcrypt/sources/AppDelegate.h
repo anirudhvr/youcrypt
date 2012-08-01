@@ -62,7 +62,7 @@
     BOOL callFinderScript;
     
     NSMutableArray *encryptQ, *decryptQ, *restoreQ;
-    int enQIndex, deQIndex, reQIndex;
+    long enQIndex, deQIndex, reQIndex;
 }
 
 
@@ -79,7 +79,8 @@
 
 - (IBAction)openFeedbackPage:(id)sender;
 
-- (void)showFirstRunSheet;
+//- (void)showFirstRunSheet;
+//- (void)showFirstRun;
 
 // Enc and Dec
 - (IBAction)showEncryptWindow:(id)sender path:(NSString *)path;
@@ -100,12 +101,11 @@
 -(void) cancelEncrypt:(NSString *)path;
 
 
--(void) removeFSAtRow:(int) row ;
+-(void) removeFSAtRow:(long) row ;
 - (void) removeFSAtPath:(NSString*) path;
 
 
 
-- (void) showFirstRun;
 - (void) showTour;
 
 // Setters and getters

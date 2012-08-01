@@ -89,8 +89,7 @@
  **/
 
 +(BOOL) mvRecursive:(NSString *)srcPath toPath:(NSString *)dstPath {
-    [[NSFileManager defaultManager] moveItemAtPath:srcPath toPath:dstPath error:nil];
-    
+    return [[NSFileManager defaultManager] moveItemAtPath:srcPath toPath:dstPath error:nil];
 }
 
 
@@ -172,7 +171,7 @@
     if ([libFunctions execWithSocket:encfsPath arguments:nil env:env io:io proc:encfsProc]) {    
         int count = 9;
         
-        NSString *encryptfilenames_s = [[NSString alloc] initWithString:@""];
+        NSString *encryptfilenames_s = @"";
         if (encryptfilenames) {
             encryptfilenames_s = [encryptfilenames_s stringByAppendingString:@"--enable-filename-encryption\n"];
             count++;
@@ -220,7 +219,7 @@
             [fuseopts addObject:[NSString stringWithFormat:@"-o%@=%@", key, [fuseOpts objectForKey:key]]];
         }
     }
-    [fuseopts addObject:[NSString stringWithString:@"-ofsname=YoucryptFS"]];
+    [fuseopts addObject:@"-ofsname=YoucryptFS"];
     NSString *encfsPath = [[[NSBundle mainBundle] resourcePath] 
                            stringByAppendingPathComponent:ENCFS]; 
     
@@ -230,15 +229,15 @@
     //DDLogInfo(@"mountEncfs: getenv : %@",env);
     
     if ([libFunctions execWithSocket:encfsPath arguments:nil env:env io:io proc:encfsProc]) { 
-        int count = 6 + [fuseopts count];
+        long count = 6 + [fuseopts count];
         
-        NSString *idletime_s = [[NSString alloc] initWithString:@""];
+        NSString *idletime_s = @"";
         if (idletime > 0) {
             idletime_s = [idletime_s stringByAppendingFormat:@"--idle=%d\n", idletime];
             count++;
         }
                 
-        NSString *str = [NSString stringWithFormat:@"%d\nencfs\n--pw\n%@\n%@--\n%@\n%@\n%@\n", 
+        NSString *str = [NSString stringWithFormat:@"%ld\nencfs\n--pw\n%@\n%@--\n%@\n%@\n%@\n", 
                          count, password, idletime_s, encFolder, decFolder, [fuseopts componentsJoinedByString:@"\n"]];
         //DDLogInfo(@"mountEncfs: Decrypt args : %@",str);
         

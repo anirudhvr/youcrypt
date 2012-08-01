@@ -64,11 +64,13 @@
     } else {
         [message setStringValue:@"Please Wait. It may take a while."];
         [libFunctions registerWithKeychain:[newpassphrase stringValue]:@"Youcrypt"];
-        int count = arr.count;
+        long count = arr.count;
         for(int i=0;i<count;i++) {
             NSString *path = [[arr objectAtIndex:i] path];
-            [message setStringValue:[NSString stringWithFormat:@"Updating %d%%",((i+1)*100)/count]];
+            [message setStringValue:[NSString stringWithFormat:@"Updating %ld%%",((i+1)*100)/count]];
             BOOL ret = [libFunctions changeEncFSPasswd:path oldPasswd:[oldpassphrase stringValue] newPasswd:[newpassphrase stringValue]];
+            if (!ret)
+                DDLogVerbose(@"Changing encfs password seems to have failed");
         }
         [self endSheetWithReturnCode:kSheetReturnedSave];
     }

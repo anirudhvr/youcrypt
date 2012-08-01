@@ -72,7 +72,7 @@
 
 - (NSString *)_amKeyForColumn:(NSInteger)columnIndex row:(NSInteger)rowIndex
 {
-	return [NSString stringWithFormat:@"%d,%d", rowIndex, columnIndex];
+	return [NSString stringWithFormat:@"%ld,%ld", rowIndex, columnIndex];
 }
 
 - (NSString *)view:(NSView *)view stringForToolTip:(NSToolTipTag)tag point:(NSPoint)point userData:(void *)data

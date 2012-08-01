@@ -64,13 +64,13 @@
         NSString *userRealName = [defaults objectForKey:YC_USERREALNAME];
         NSString *userEmail = [defaults objectForKey:YC_USEREMAIL];
         if (![libFunctions validateEmail:userEmail]) 
-            userEmail = [NSString stringWithString:@"invalid-email@youcrypt.com"];
+            userEmail = @"invalid-email@youcrypt.com";
         
         curlEmail = [NSString stringWithFormat:@"from=\"%@ <%@>\"",userRealName,userEmail];
     }
     
     
-    NSString *subject = [NSString stringWithString:@"subject='"];
+    NSString *subject = @"subject='";
     if ([isBug state])
         subject = [subject stringByAppendingString:@"[Bug]"];
     if ([isFeature state])

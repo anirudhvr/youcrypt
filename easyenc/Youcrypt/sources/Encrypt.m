@@ -268,7 +268,7 @@
 Cleanup:    
 
     // Unmount the destination folder containing decrypted files
-    [libFunctions execCommand:@"/sbin/umount" arguments:[NSArray arrayWithObject:tempFolder]
+    [libFunctions execCommand:UMOUNT_CMD arguments:[NSArray arrayWithObject:tempFolder]
                           env:nil];
     [fm removeItemAtPath:tempFolder error:nil];
     

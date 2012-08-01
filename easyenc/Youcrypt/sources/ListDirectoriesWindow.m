@@ -105,6 +105,10 @@
         volumePropsSheet.sp = dir.path;
         volumePropsSheet.mp = dir.mountedPath;
         volumePropsSheet.stat = [YoucryptDirectory statusToString:dir.status];
+        if (dir.status == YoucryptDirectoryStatusMounted) {
+            volumePropsSheet.openedby = dir.mountedDateAsString;
+            volumePropsSheet.mntdate = NSFullUserName();
+        }
         [volumePropsSheet beginSheetModalForWindow:self.window completionHandler:^(NSUInteger returnCode) {
             if (returnCode == 0) {
                 DDLogVerbose(@"sheet returned success");
@@ -159,7 +163,7 @@
         } else if (dir.status == YoucryptDirectoryStatusMounted) {
             [[NSAlert alertWithMessageText:@"Cannot remove a mounted directory" defaultButton:@"OK" alternateButton:nil  otherButton:nil informativeTextWithFormat:@""] runModal];             
         } else if (dir.status == YoucryptDirectoryStatusUnmounted) {
-            int retCode;
+            long retCode;
             if((retCode = [[NSAlert alertWithMessageText:@"Decrypt and Restore" defaultButton:@"Yes" alternateButton:@"No, delete the data." otherButton:@"Cancel" informativeTextWithFormat:@"You have chosen to permanently decrypt the encrypted folder at %@.  Restore contents?", [dir.path stringByDeletingLastPathComponent]] runModal]) == NSAlertDefaultReturn) {
                 [theApp removeFSAtRow:row];
             }
@@ -175,19 +179,26 @@
     [table reloadData];
 }
 
+
 - (IBAction)close:(id)sender {
     NSInteger row = [table selectedRow];
     if (row < [theApp.directories count] && row != -1) {
         NSString *mountedPath = [[theApp.directories objectAtIndex:row] mountedPath];
         DDLogVerbose(@"Trying to unmount %@",mountedPath);
-        [libFunctions execCommand:@"/sbin/umount" arguments:[NSArray arrayWithObject:mountedPath] env:nil];
+        int ret = [libFunctions execCommand:UMOUNT_CMD arguments:[NSArray arrayWithObject:mountedPath] env:nil];
+        if (ret > 0) {
+            NSString *errString = [NSString stringWithFormat:@"%s", strerror(ret)];
+            [[NSAlert alertWithMessageText:errString defaultButton:@"OK" alternateButton:nil  otherButton:nil informativeTextWithFormat:@""] runModal];
+        } else if (ret == -1) {
+            [[NSAlert alertWithMessageText:@"Closing directory failed: unknown error" defaultButton:@"OK" alternateButton:nil  otherButton:nil informativeTextWithFormat:@""] runModal];
+        }
     }
     [table reloadData];
 }
 
 - (IBAction) shareFolder:(id) sender {
     
-    NSInteger row = [table selectedRow];
+//    NSInteger row = [table selectedRow];
 
     if ([[theApp.preferenceController getPreference:YC_ANONYMOUSSTATISTICS] intValue])
         [mixpanel track:theApp.mixpanelUUID
@@ -331,7 +342,7 @@
     [allowedToolbarItemDetails setObject:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:
                                                                               @"Encrypt" /* label */, 
                                                                               @"Create" /* palletelabel */,
-                                                                              @"Create an encrypted folder, or encrypt the contents of an existing folder" /* Tooltip */,
+                                                                              @"Encrypt a folder" /* Tooltip */,
                                                                               self           /* target */,
                                                                               @"encrypt.png" /* image file */,
                                                                               NSStringFromSelector(@selector(addNew:)) /* selector */, nil]
@@ -341,9 +352,9 @@
     [allowedToolbarItemDetails setObject:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:
                                                                               @"Decrypt" /* label */, 
                                                                               @"Remove" /* palletelabel */,
-                                                                              @"Permanently decrypt the contents of an encrypted folder" /* Tooltip */,
+                                                                              @"Permanently decrypt an encrypted folder" /* Tooltip */,
                                                                               self           /* target */,
-                                                                              @"decrypt.png" /* image file */,
+                                                                              @"Remove.png" /* image file */,
                                                                               NSStringFromSelector(@selector(removeFS:)) /* selector */, nil]
                                                                      forKeys:toolbarItemKeys] 
                                   forKey:[allowedToolbarItemKeys objectAtIndex:1]];
@@ -351,7 +362,7 @@
     [allowedToolbarItemDetails setObject:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:
                                                                               @"Settings" /* label */, 
                                                                               @"Settings" /* palletelabel */,
-                                                                              @"Change YouCrypt settings" /* Tooltip */,
+                                                                              @"Configure YouCrypt" /* Tooltip */,
                                                                               self           /* target */,
                                                                               @"Preferences.png" /* image file */,
                                                                               NSStringFromSelector(@selector(showPreferencePanel)) /* selector */, nil]

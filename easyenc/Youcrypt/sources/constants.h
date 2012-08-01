@@ -30,3 +30,16 @@
 #define YC_ANONYMOUSSTATISTICS @"yc.anonymousstatistics"
 #define YC_IDLETIME         @"yc.idletime"
 
+
+///////////////////////////////////////
+//          COMMANDS
+///////////////////////////////////////
+#define UMOUNT_CMD              @"/sbin/umount"
+#define MOUNT_CMD               @"/sbin/mount"
+
+
+///////////////////////////////////////
+//          SECRETS
+///////////////////////////////////////
+#define MIXPANEL_TOKEN @"b01b99df347adcb20353ba2a4cb6faf4" // avr@nouvou.com's token
+

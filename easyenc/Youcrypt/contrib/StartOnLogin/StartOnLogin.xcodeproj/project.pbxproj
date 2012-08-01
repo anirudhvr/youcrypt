@@ -132,7 +132,7 @@
 		E6695607159D1B7B002323AD /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0430;
+				LastUpgradeCheck = 0440;
 				ORGANIZATIONNAME = "Nouvou Inc";
 			};
 			buildConfigurationList = E669560A159D1B7B002323AD /* Build configuration list for PBXProject "StartOnLogin" */;
@@ -238,6 +238,7 @@
 		E6695627159D1B7B002323AD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				FRAMEWORK_VERSION = A;
@@ -253,6 +254,7 @@
 		E6695628159D1B7B002323AD /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				FRAMEWORK_VERSION = A;

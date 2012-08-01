@@ -23,15 +23,14 @@
 #import "MixpanelAPI.h"
 #import "AboutController.h"
 
-#define MIXPANEL_TOKEN @"b01b99df347adcb20353ba2a4cb6faf4" // avr@nouvou.com's token
-int ddLogLevel = LOG_LEVEL_VERBOSE;
-
 
 /* Global Variables Accessible to everyone */
 /* These variables should be initialized */
 AppDelegate *theApp;
 CompressingLogFileManager *logFileManager;
 MixpanelAPI *mixpanel;
+
+int ddLogLevel = LOG_LEVEL_VERBOSE;
 
 @implementation AppDelegate
 
@@ -50,6 +49,8 @@ MixpanelAPI *mixpanel;
 @synthesize dropboxEncryptedFolders;
 @synthesize mixpanelUUID;
 @synthesize aboutController;
+
+
 
 // --------------------------------------------------------------------------------------
 // App events
@@ -178,9 +179,11 @@ MixpanelAPI *mixpanel;
 - (void)applicationWillTerminate:(NSNotification *)aNotification {
     //[NSKeyedArchiver archiveRootObject:directories toFile:configDir.youCryptListFile];
     [libFunctions archiveDirectoryList:directories toFile:configDir.youCryptListFile];
+    
+    // Unmount all mounted directories
+    // XXX check unmount status!
     for (id dir in directories) {
-       
-        [libFunctions execCommand:@"/sbin/umount" arguments:[NSArray arrayWithObject:[dir mountedPath]]
+        [libFunctions execCommand:UMOUNT_CMD arguments:[NSArray arrayWithObject:[dir mountedPath]]
                               env:nil];
     }
     [[[NSWorkspace sharedWorkspace] notificationCenter] removeObserver:self];
@@ -264,7 +267,8 @@ MixpanelAPI *mixpanel;
 //        dir.status = YoucryptDirectoryStatusUnmounted;
         dir.status = YoucryptDirectoryStatusProcessing;
         dir.mountedPath = mountPoint;
-        [directories addObject:dir];                
+        dir.mountedDateAsString = [[NSDate date] descriptionWithCalendarFormat:@"%H:%M %m-%d-%Y" timeZone:nil locale:nil];
+        [directories addObject:dir];
     FoundOne:      
         [dir checkYoucryptDirectoryStatus:YES]; // Check that it's actually mounted.
 
@@ -345,10 +349,13 @@ MixpanelAPI *mixpanel;
         // Ok, this is a directory, but is it an already encrypted directory?
         if ([[path pathExtension] isEqualToString:ENCRYPTED_DIRECTORY_EXTENSION] &&
             [fm fileExistsAtPath:[path stringByAppendingPathComponent:YOUCRYPT_XMLCONFIG_FILENAME]]) {
-            [[NSAlert alertWithMessageText:@"Directory already encrypted" defaultButton:nil alternateButton:nil otherButton:nil informativeTextWithFormat:@"The directory %@ appears to already be encrypted using Youcrypt. Did you mean to decrypt it instead?", [path stringByDeletingLastPathComponent]] runModal];
+            long ret = [[NSAlert alertWithMessageText:@"Directory already encrypted" defaultButton:@"Yes" alternateButton:@"Cancel" otherButton:nil informativeTextWithFormat:@"The directory %@ appears to already be encrypted using Youcrypt. Did you mean to decrypt it permanently instead?", [path stringByDeletingLastPathComponent]] runModal];
+            if (ret == NSAlertDefaultReturn) {
+                [self removeFSAtPath:path];
+            }
+        } else {
+            [self showEncryptWindow:self path:path];
         }
-                    
-        [self showEncryptWindow:self path:path];
     }
 }
 
@@ -398,7 +405,8 @@ MixpanelAPI *mixpanel;
     dir.mountedPath = @"";
     dir.alias = [[path stringByDeletingPathExtension] lastPathComponent];
     dir.status = YoucryptDirectoryStatusUnmounted;
-    [directories addObject:dir];            
+    dir.mountedDateAsString = [[NSDate date] descriptionWithCalendarFormat:@"%H:%M %m-%d-%Y" timeZone:nil locale:nil];
+    [directories addObject:dir];
     if (listDirectories != nil) {
         [listDirectories.table reloadData];                
     }
@@ -511,14 +519,14 @@ MixpanelAPI *mixpanel;
     [preferenceController showWindow:self];
 }
 
-- (void)showFirstRunSheet {
-    // Is preferenceController nil?
-    if (!preferenceController) {
-        preferenceController = [[PreferenceController alloc] init];
-    }
-    [self showFirstRun]; 
-    
-}
+//- (void)showFirstRunSheet {
+//    // Is preferenceController nil?
+//    if (!preferenceController) {
+//        preferenceController = [[PreferenceController alloc] init];
+//    }
+//    [self showFirstRun]; 
+//    
+//}
 
 - (IBAction)showAboutWindow:(id)sender {
 
@@ -542,7 +550,7 @@ MixpanelAPI *mixpanel;
     if (configDir.firstRun)
         return;
     
-    NSLog (@"DecryptQ: count=%d, path=%@\n", [decryptQ count], path);
+    NSLog (@"DecryptQ: count=%ld, path=%@\n", [decryptQ count], path);
 
     if (path == nil) {
         // Pick the next object from the queue and decrypt.        
@@ -896,19 +904,37 @@ MixpanelAPI *mixpanel;
     return tooltip;
 }
 
-- (void) removeFSAtRow:(int) row {
+- (void) removeFSAtRow:(long) row {
     YoucryptDirectory *dir = [directories objectAtIndex:row];
     [self showRestoreWindow:self path:dir.path];
 }
 
 - (void) removeFSAtPath:(NSString*) path {
 
-    int i = 0;
+    int i = 0, found = 0;
     for (YoucryptDirectory *dir in directories) {
         if ([dir.path isEqualToString:path]) {
             [self removeFSAtRow:i];
+            found = 1;
+            break;
         }
         i++;
+    }
+    
+    if (!found) {
+        NSFileManager *fm = [NSFileManager defaultManager];
+        if ([[path pathExtension] isEqualToString:ENCRYPTED_DIRECTORY_EXTENSION] &&
+            [fm fileExistsAtPath:[path stringByAppendingPathComponent:YOUCRYPT_XMLCONFIG_FILENAME]]) {
+            long ret = [[NSAlert alertWithMessageText:@"Unknown encrypted directory" defaultButton:@"Yes" alternateButton:@"No, decrypt permanently" otherButton:nil informativeTextWithFormat:@"The encrypted directory %@ is not known to Youcrypt (e.g., perhaps it has been moved or copied). Do you wish to register this encrypted directory with Youcrypt?", [path stringByDeletingLastPathComponent]] runModal];
+            if (ret == NSAlertDefaultReturn) {
+                [self openEncryptedFolder:path];
+            } else if (ret == NSAlertAlternateReturn) {
+                [self showRestoreWindow:self path:path];
+            } else {
+                return;
+            }
+        }
+            
     }
 }
 

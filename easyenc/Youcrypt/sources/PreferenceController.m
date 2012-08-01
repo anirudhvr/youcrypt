@@ -108,7 +108,7 @@
                                                                        [NSNumber numberWithInt:0], 
                                                                        [NSNumber numberWithInt:1], 
                                                                        [NSNumber numberWithInt:1], 
-                                                                       [[NSString alloc] initWithString:@""],
+                                                                       @"",
                                                                        @"", 
                                                                        @"", 
                                                                        @"", 
@@ -198,7 +198,7 @@
     NSString *boxFolderPath = [[xmlDoc objectForKey:@"Settings"] objectForKey:@"_RootSyncFolderLocation"];
     //DDLogVerbose(@"Box folder loc : %@",boxFolderPath);
     if (boxFolderPath == nil)
-        boxFolderPath = [[NSString alloc] initWithString:@""];
+        boxFolderPath = @"";
     return boxFolderPath;
 }
 
@@ -342,7 +342,7 @@ static NSArray *openFiles()
     [panel setFloatingPanel:YES];
     [panel setCanChooseDirectories:YES];
     [panel setCanChooseFiles:NO];
-	int i = [panel runModal];
+	long i = [panel runModal];
 	if(i == NSOKButton){
 		return [panel URLs];
     }
@@ -377,21 +377,21 @@ static NSArray *openFiles()
 }
 - (IBAction)filenameEncryptionChecked:(id)sender
 {
-    int encState = [enableFilenameEncryption state];
+    long encState = [enableFilenameEncryption state];
     if (encState != [[preferences objectForKey:YC_ENCRYPTFILENAMES] intValue]) {
         // NSDictionary* dict = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:encState], YC_ENCRYPTFILENAMES, nil];
-        DDLogVerbose(@"updating encstate to %d", encState);
-        [self setPreference:YC_ENCRYPTFILENAMES value:[NSNumber numberWithInt:encState]];
+        DDLogVerbose(@"updating encstate to %ld", encState);
+        [self setPreference:YC_ENCRYPTFILENAMES value:[NSNumber numberWithLong:encState]];
     }
 }
 
 - (IBAction)startOnBootChecked:(id)sender
 {
-    int onBootState = [startOnBoot state];
+    long onBootState = [startOnBoot state];
   //  NSLog(@"checkbox state: %d, stored state: %d", onBootState, [[preferences objectForKey:YC_STARTONBOOT] intValue]);
     if (onBootState != [[preferences objectForKey:YC_STARTONBOOT] intValue]) {
        // NSDictionary* dict = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:onBootState], YC_STARTONBOOT, nil];
-        [self setPreference:YC_STARTONBOOT value:[NSNumber numberWithInt:onBootState]];
+        [self setPreference:YC_STARTONBOOT value:[NSNumber numberWithLong:onBootState]];
      //   DDLogVerbose(@"Setting onboot state to %d", onBootState);
      //   NSLog(@"Stored prefs state: %d", [[self getPreference:YC_STARTONBOOT] intValue]);
         if (onBootState == NSOnState) {
@@ -407,10 +407,10 @@ static NSArray *openFiles()
 - (IBAction)allowAnonymousUsageStatisticsChecked:(id)sender
 {
 
-    int state = [allowAnonymousUsageStatistics state];
+    long state = [allowAnonymousUsageStatistics state];
     if (state != [[self getPreference:YC_ANONYMOUSSTATISTICS] intValue]) {
-        DDLogInfo(@"old anonym feedback checkbox state: %d, new: %d", state, [[self getPreference:YC_ANONYMOUSSTATISTICS] intValue]);
-        [self setPreference:YC_ANONYMOUSSTATISTICS value:[NSNumber numberWithInt:state]];
+        DDLogInfo(@"old anonym feedback checkbox state: %ld, new: %d", state, [[self getPreference:YC_ANONYMOUSSTATISTICS] intValue]);
+        [self setPreference:YC_ANONYMOUSSTATISTICS value:[NSNumber numberWithLong:state]];
     }
 }
 

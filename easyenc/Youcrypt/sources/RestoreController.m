@@ -101,7 +101,7 @@
     }    
     
     // Unmount the destination folder containing decrypted files    
-    if ([libFunctions execCommand:@"/sbin/umount" 
+    if ([libFunctions execCommand:UMOUNT_CMD
                         arguments:[NSArray arrayWithObject:tempFolder]
                               env:nil]) {
         DDLogError(@"ERROR: Umount failed.\nAborting\n");

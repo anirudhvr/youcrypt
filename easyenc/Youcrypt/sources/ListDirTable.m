@@ -217,7 +217,7 @@
     NSPoint globalLocation = [ NSEvent mouseLocation ];
     NSPoint windowLocation = [ self.window convertScreenToBase:globalLocation];
     NSPoint viewLocation = [listDirObj.backgroundImageView convertPoint:windowLocation fromView: nil ];
-    NSPoint tableviewLocation = [self convertPoint:viewLocation fromView: listDirObj.backgroundImageView ];
+//    NSPoint tableviewLocation = [self convertPoint:viewLocation fromView: listDirObj.backgroundImageView ];
 
     
     if( NSPointInRect( viewLocation, [listDirObj.backgroundImageView bounds ] ) ) {
