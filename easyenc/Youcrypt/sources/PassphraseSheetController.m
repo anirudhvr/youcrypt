@@ -8,6 +8,7 @@
 
 #import "PassphraseSheetController.h"
 #import "libFunctions.h"
+#import "PassphraseManager.h"
 
 
 @implementation PassphraseSheetController
@@ -18,10 +19,11 @@
 @synthesize message;
 @synthesize arr;
 
-- (id)init {
+- (id)initWithPassphraseManager:(PassphraseManager*)ppm {
     if (!(self = [super initWithWindowNibName:@"ChangePassphrase"])) {
         return nil; // Bail!
     }
+    ppman = ppm;
     return self;
 }
 
@@ -44,9 +46,9 @@
 
 - (void)saveClicked:(id)sender {
     
-    storedpassphrase = [libFunctions getPassphraseFromKeychain:@"Youcrypt"];
+    storedpassphrase = [ppman getPassphrase];
     if (storedpassphrase == nil) {
-
+        
     } else {
         [oldpassphrase setEditable:YES];
         NSString *oldpp = [oldpassphrase stringValue];
@@ -63,7 +65,7 @@
         return;
     } else {
         [message setStringValue:@"Please Wait. It may take a while."];
-        [libFunctions registerWithKeychain:[newpassphrase stringValue]:@"Youcrypt"];
+        [ppman setPassPhrase:[newpassphrase stringValue]];
         long count = arr.count;
         for(int i=0;i<count;i++) {
             NSString *path = [[arr objectAtIndex:i] path];

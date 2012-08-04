@@ -37,7 +37,7 @@
 {
     if(!(([preferenceController getPreference:YC_GMAILUSERNAME] == nil) || ([preferenceController getPreference:YC_GMAILUSERNAME] == @""))) {
         [username setStringValue:[preferenceController getPreference:YC_GMAILUSERNAME]];
-        [password setStringValue:[libFunctions getPassphraseFromKeychain:@"ycgmail"]];
+        //[password setStringValue:[libFunctions getPassphraseFromKeychain:@"ycgmail"]];
     }
 }
 
@@ -53,7 +53,7 @@
 // Mark: Action methods
 
 - (IBAction)saveClicked:(id)sender {
-        [libFunctions registerWithKeychain:[password stringValue]:@"ycgmail"];
+   //     [libFunctions registerWithKeychain:[password stringValue]:@"ycgmail"];
         [preferenceController setPreference:YC_GMAILUSERNAME value:[username stringValue]];
         [username setStringValue:@""];
         [password setStringValue:@""];

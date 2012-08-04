@@ -11,6 +11,7 @@
 #import "PreferenceController.h"
 #import "AppDelegate.h"
 #import "ConfigDirectory.h"
+#import "PassphraseManager.h"
 
 @implementation RegistrationLinkedView
 
@@ -68,7 +69,8 @@
         [[NSUserDefaults standardUserDefaults] setValue:[email stringValue] forKey:YC_USEREMAIL];
         [[NSUserDefaults standardUserDefaults] synchronize];
         
-        [libFunctions registerWithKeychain:[password stringValue]:@"Youcrypt"];
+        [theApp.passphraseManager setPassphrase:[password stringValue]];
+        // [libFunctions registerWithKeychain:[password stringValue]:@"Youcrypt"];
         [theApp.configDir firstRunSuccessful];
 
     }

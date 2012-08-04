@@ -10,10 +10,12 @@
 
 #import <Cocoa/Cocoa.h>
 #import "Contrib/JCSSheet/JCSSheetController.h"
+@class PassphraseManager;
 
 
 @interface PassphraseSheetController : JCSSheetController {
     NSString *storedpassphrase;
+    PassphraseManager *ppman;
 }
 
 @property (nonatomic, weak) IBOutlet NSSecureTextField *oldpassphrase;

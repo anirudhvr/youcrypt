@@ -25,6 +25,7 @@
 @class TourWizard;
 @class MixpanelAPI;
 @class AboutController;
+@class PassphraseManager;
 
 @interface AppDelegate : NSObject <NSTableViewDataSource, NSTableViewDelegate, NSApplicationDelegate> { // changed from NSApplicationDelegate
     
@@ -47,6 +48,7 @@
     PeriodicActionTimer *timer;
     
     YoucryptService *youcryptService;
+    PassphraseManager *passphraseManager;
     
     FirstRunSheetController *firstRunSheetController;
     FeedbackSheetController *feedbackSheetController;
@@ -124,6 +126,7 @@
 @property (nonatomic, strong) TourWizard *tourWizard;
 @property (nonatomic, strong) NSString *mixpanelUUID;
 @property (nonatomic, strong) AboutController *aboutController;
+@property (nonatomic, strong) PassphraseManager *passphraseManager;
 
 @end
 

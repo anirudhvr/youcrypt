@@ -22,6 +22,7 @@
 #import "DBLinkedView.h"
 #import "MixpanelAPI.h"
 #import "AboutController.h"
+#import "PassphraseManager.h"
 
 
 /* Global Variables Accessible to everyone */
@@ -49,7 +50,7 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
 @synthesize dropboxEncryptedFolders;
 @synthesize mixpanelUUID;
 @synthesize aboutController;
-
+@synthesize passphraseManager;
 
 
 // --------------------------------------------------------------------------------------
@@ -60,6 +61,11 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
     
     configDir = [[ConfigDirectory alloc] init];
     youcryptService = [[YoucryptService alloc] init];
+    
+    preferenceController = [[PreferenceController alloc] init];
+    listDirectories = [[ListDirectoriesWindow alloc] init];
+    
+    
     firstRunSheetController = [[FirstRunSheetController alloc] init];
     feedbackSheetController = [[FeedbackSheetController alloc] init];
     
@@ -98,6 +104,10 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
     decryptQ = [[NSMutableArray alloc] init];
     restoreQ = [[NSMutableArray alloc] init];
     
+    
+    
+    
+    
     // XXX FIXME Change for Release
 #ifdef DEBUG
     mixpanel.dontLog = YES;
@@ -108,34 +118,10 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
     return self;
 }
 
-- (void) applicationDidResignActive:(NSNotification *)notification
-{
-    if (configDirBeingSynced == NO && [timer timerElapsed]) {
-        configDirBeingSynced = YES;
-        // XXX break this off into a new thread?
-        /// XX might want to use a dispatch queue here instead
-        [libFunctions archiveDirectoryList:directories toFile:configDir.youCryptListFile];
-//        [NSKeyedArchiver archiveRootObject:directories toFile:configDir.youCryptListFile];
-        
-        configDirBeingSynced = NO;
-    }
-}
-- (void) applicationDidBecomeActive:(NSNotification *)notification
-{
-//    NSLog(@"Became active");
-}
-
-- (BOOL)applicationShouldHandleReopen:(NSApplication *)theApplication hasVisibleWindows:(BOOL)flag
-{
-    [self showListDirectories:self];
-    return YES;
-}
-
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
     // Insert code here to initialize your application
     [NSApp setServicesProvider:youcryptService];
-    
     
     // Logging
     logFileManager = [[CompressingLogFileManager alloc] initWithLogsDirectory:configDir.youCryptLogDir];
@@ -162,6 +148,10 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
         }
     }
     
+    passphraseManager = [[PassphraseManager alloc] initWithPrefController:preferenceController saveInKeychain:NO];
+    if (![configDir isFirstRun])
+        [passphraseManager showWindow:self]; // get passphrase
+         
     YoucryptDirectory *dir;
     for (dir in directories) {
         if (dir.status == YoucryptDirectoryStatusProcessing)
@@ -188,6 +178,31 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
     }
     [[[NSWorkspace sharedWorkspace] notificationCenter] removeObserver:self];
 }
+
+- (void) applicationDidResignActive:(NSNotification *)notification
+{
+    if (configDirBeingSynced == NO && [timer timerElapsed]) {
+        configDirBeingSynced = YES;
+        // XXX break this off into a new thread?
+        /// XX might want to use a dispatch queue here instead
+        [libFunctions archiveDirectoryList:directories toFile:configDir.youCryptListFile];
+//        [NSKeyedArchiver archiveRootObject:directories toFile:configDir.youCryptListFile];
+        
+        configDirBeingSynced = NO;
+    }
+}
+- (void) applicationDidBecomeActive:(NSNotification *)notification
+{
+//    NSLog(@"Became active");
+}
+
+- (BOOL)applicationShouldHandleReopen:(NSApplication *)theApplication hasVisibleWindows:(BOOL)flag
+{
+    [self showListDirectories:self];
+    return YES;
+}
+
+
 
 - (BOOL)application:(NSApplication *)theApplication openFile:(NSString *)filename {    
     return [self openEncryptedFolder:filename];
@@ -500,9 +515,9 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
         return;
     
     // Is list directories nil?
-    if (!listDirectories) {
-        listDirectories = [[ListDirectoriesWindow alloc] init];
-    }
+//    if (!listDirectories) {
+//        listDirectories = [[ListDirectoriesWindow alloc] init];
+//    }
     //[listDirectories.window makeKeyAndOrderFront:self];
     [listDirectories showWindow:self];
     [NSApp activateIgnoringOtherApps:YES];
@@ -514,9 +529,9 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
         return;
     
     // Is preferenceController nil?
-    if (!preferenceController) {
-        preferenceController = [[PreferenceController alloc] init];
-    }
+//    if (!preferenceController) {
+//        preferenceController = [[PreferenceController alloc] init];
+//    }
     [preferenceController showWindow:self];
 }
 
@@ -598,7 +613,11 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
     decryptController.sourceFolderPath = path;
     decryptController.destFolderPath = mountPath;
         
-    NSString *pp =[libFunctions getPassphraseFromKeychain:@"Youcrypt"];
+    NSString *pp = nil;
+    if ([passphraseManager getPassphrase])
+        pp = passphraseManager.passPhrase;
+    
+    // NSString *pp =[libFunctions getPassphraseFromKeychain:@"Youcrypt"];
     DDLogInfo(@"showing %@", decryptController);
     
     if ((pp != nil) && !([pp isEqualToString:@""])) {
@@ -651,7 +670,7 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
     }
 
     restoreController.path = path;
-    NSString *pp =[libFunctions getPassphraseFromKeychain:@"Youcrypt"];
+    NSString *pp = [passphraseManager getPassphrase];
     if (pp != nil && !([pp isEqualToString:@""])) {
         DDLogVerbose(@"In showRestoreWindow: Got pp from keychain successfully");
         restoreController.passwd = pp;
@@ -698,7 +717,7 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
         encryptController = [[Encrypt alloc] init];
     }
     
-    NSString *pp =[libFunctions getPassphraseFromKeychain:@"Youcrypt"];
+    NSString *pp =[passphraseManager getPassphrase];
     encryptController.sourceFolderPath = path;
     if (pp != nil && [pp isNotEqualTo:@""]) {
         DDLogVerbose(@"In showEncryptWindow: Got pp from keychain successfully");

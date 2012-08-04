@@ -11,6 +11,7 @@
 #import "libFunctions.h"
 #import "logging.h"
 #import "AppDelegate.h"
+#import "PassphraseManager.h"
 #import "MixpanelAPI.h"
 #import "YoucryptDirectory.h"
 
@@ -295,7 +296,8 @@ Cleanup:
         // Check if we should store this passwd.
         if ((keychainHasPassphrase == NO) &&
             ([self.checkStorePasswd state] == NSOnState)) {
-            [libFunctions registerWithKeychain:[yourPassword stringValue] :@"Youcrypt" ];            
+            [theApp.passphraseManager setPassphrase:[yourPassword stringValue]];
+            // [libFunctions registerWithKeychain:[yourPassword stringValue] :@"Youcrypt" ];
         }
         
         /* Register password with keyring */

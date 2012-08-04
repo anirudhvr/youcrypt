@@ -18,33 +18,6 @@
 @implementation libFunctions
 
 
-+ (NSString*)getPassphraseFromKeychain:(NSString*)service;
-{
-    NSError *error = nil;
-    NSString *passphraseFromKeychain = [SSKeychain passwordForService:service account:NSUserName() error:&error];
-    
-    if (error) {
-        DDLogInfo(@"libFunctions:getPPFromKeychain: Did not get passphrase");
-        return nil;
-    } else {
-        return passphraseFromKeychain;
-    }
-}
-
-
-/* Register password with Mac keychain */
-+ (BOOL)registerWithKeychain:(NSString*)passphrase:(NSString*)service;
-{
-    NSString *yourPasswordString = passphrase;
-    NSError *error = nil;
-    if([SSKeychain setPassword:yourPasswordString forService:service account:NSUserName() error:&error])
-        DDLogInfo(@"libFunctions:registerWithKeychain: Successfully registered passphrase wiht keychain");
-    if (error) {
-        DDLogInfo(@"libFunctions:registerWithKeychain: Register Keychain Error: %@",[error localizedDescription]);
-        return NO;
-    }
-    return YES;
-}
 
 //NSString* systemCall(NSString *binary, NSArray *arguments) {
 //    NSTask *task;   

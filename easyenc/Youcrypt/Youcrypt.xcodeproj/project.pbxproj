@@ -127,6 +127,8 @@
 		E68F196915B4A96D008A90FC /* RegistrationLinkedView.m in Sources */ = {isa = PBXBuildFile; fileRef = E68F196815B4A96D008A90FC /* RegistrationLinkedView.m */; };
 		E68F199415B4E265008A90FC /* screenshot-open.png in Resources */ = {isa = PBXBuildFile; fileRef = E68F199315B4E265008A90FC /* screenshot-open.png */; };
 		E68F199615B4EE67008A90FC /* screenshot-rightclick.png in Resources */ = {isa = PBXBuildFile; fileRef = E68F199515B4EE67008A90FC /* screenshot-rightclick.png */; };
+		E6A3907D15CA0C73007388BE /* PassphraseManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E6A3907C15CA0C73007388BE /* PassphraseManager.m */; };
+		E6A3907F15CB3104007388BE /* AskPassphrase.xib in Resources */ = {isa = PBXBuildFile; fileRef = E6A3907E15CB3104007388BE /* AskPassphrase.xib */; };
 		E6BEB6F015A4BB4F00878D4B /* Exit.png in Resources */ = {isa = PBXBuildFile; fileRef = E6BEB6EC15A4BB4F00878D4B /* Exit.png */; };
 		E6BEB6F115A4BB4F00878D4B /* Help.png in Resources */ = {isa = PBXBuildFile; fileRef = E6BEB6ED15A4BB4F00878D4B /* Help.png */; };
 		E6BEB6F215A4BB4F00878D4B /* Preferences.png in Resources */ = {isa = PBXBuildFile; fileRef = E6BEB6EE15A4BB4F00878D4B /* Preferences.png */; };
@@ -380,6 +382,9 @@
 		E68F196815B4A96D008A90FC /* RegistrationLinkedView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RegistrationLinkedView.m; path = sources/RegistrationLinkedView.m; sourceTree = "<group>"; };
 		E68F199315B4E265008A90FC /* screenshot-open.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "screenshot-open.png"; sourceTree = "<group>"; };
 		E68F199515B4EE67008A90FC /* screenshot-rightclick.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "screenshot-rightclick.png"; sourceTree = "<group>"; };
+		E6A3907B15CA0C73007388BE /* PassphraseManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PassphraseManager.h; path = sources/PassphraseManager.h; sourceTree = "<group>"; };
+		E6A3907C15CA0C73007388BE /* PassphraseManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PassphraseManager.m; path = sources/PassphraseManager.m; sourceTree = "<group>"; };
+		E6A3907E15CB3104007388BE /* AskPassphrase.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AskPassphrase.xib; sourceTree = "<group>"; };
 		E6BEB6EC15A4BB4F00878D4B /* Exit.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Exit.png; sourceTree = "<group>"; };
 		E6BEB6ED15A4BB4F00878D4B /* Help.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Help.png; sourceTree = "<group>"; };
 		E6BEB6EE15A4BB4F00878D4B /* Preferences.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Preferences.png; sourceTree = "<group>"; };
@@ -575,6 +580,7 @@
 				E66988D4159E62D8002323AD /* ChangePassphrase.xib */,
 				E67AC5B515AF9448005A7938 /* TourWizard.xib */,
 				2537E39415B4F1660034E6E3 /* About.xib */,
+				E6A3907E15CB3104007388BE /* AskPassphrase.xib */,
 			);
 			name = UI;
 			path = sources/UI;
@@ -631,6 +637,8 @@
 				25C3FE4315A7A804006606DF /* FeedbackSheetController.m */,
 				2537E39B15B4FD260034E6E3 /* AboutController.h */,
 				2537E39C15B4FD260034E6E3 /* AboutController.m */,
+				E6A3907B15CA0C73007388BE /* PassphraseManager.h */,
+				E6A3907C15CA0C73007388BE /* PassphraseManager.m */,
 				E68F196A15B4A979008A90FC /* Firstrun_Tour */,
 			);
 			name = Classes;
@@ -1114,6 +1122,7 @@
 				E68F199415B4E265008A90FC /* screenshot-open.png in Resources */,
 				E68F199615B4EE67008A90FC /* screenshot-rightclick.png in Resources */,
 				2537E39515B4F1660034E6E3 /* About.xib in Resources */,
+				E6A3907F15CB3104007388BE /* AskPassphrase.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1193,6 +1202,7 @@
 				2537E32E15B0E4E80034E6E3 /* LFCGzipUtility.m in Sources */,
 				E68F196915B4A96D008A90FC /* RegistrationLinkedView.m in Sources */,
 				2537E39D15B4FD260034E6E3 /* AboutController.m in Sources */,
+				E6A3907D15CA0C73007388BE /* PassphraseManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

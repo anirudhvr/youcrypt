@@ -62,7 +62,6 @@
         [[NSUserDefaults standardUserDefaults] setValue:[email stringValue] forKey:YC_USEREMAIL];
         [[NSUserDefaults standardUserDefaults] synchronize];
 
-        [libFunctions registerWithKeychain:[password stringValue]:@"Youcrypt"];
         [self endSheetWithReturnCode:kSheetReturnedSave];
     }
 }

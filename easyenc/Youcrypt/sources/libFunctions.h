@@ -36,8 +36,6 @@
                 env:(NSDictionary *)env;
 
 
-+ (NSString*)getPassphraseFromKeychain:(NSString*)service;
-+ (BOOL)registerWithKeychain:(NSString*)passphrase:(NSString*)service;
 
 + (BOOL) createEncFS:(NSString *)encFolder
      decryptedFolder:(NSString *)decFolder

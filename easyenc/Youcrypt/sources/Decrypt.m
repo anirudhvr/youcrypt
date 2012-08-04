@@ -10,6 +10,7 @@
 #import "libFunctions.h"
 #import "AppDelegate.h"
 #import "PreferenceController.h"
+#import "PassphraseManager.h"
 
 @implementation Decrypt
 
@@ -100,7 +101,7 @@
     
     if (keychainHasPassphrase == NO) {
         // Check if there's a different passphrase in the keychain.
-        NSString *keyPP = [libFunctions getPassphraseFromKeychain:@"Youcrypt"];
+        NSString *keyPP = [theApp.passphraseManager getPassphrase];
         if ((keyPP != nil) && ![keyPP isEqualToString:@""]) {
             // Seems like a non-empty passphrase...
             // Suggest that the user change the passphrase of the current folder.        
