@@ -54,6 +54,10 @@
 
 #include "openssl.h"
 
+#include "YoucryptFolder.h"
+#include "Credentials.h"
+#include "PassphraseCredentials.h"
+
 // Fuse version >= 26 requires another argument to fuse_unmount, which we
 // don't have.  So use the backward compatible call instead..
 extern "C" void fuse_unmount_compat22(const char *mountpoint);
@@ -76,7 +80,8 @@ using namespace rel;
 using namespace gnu;
 using boost::shared_ptr;
 using boost::scoped_ptr;
-namespace fs = boost::filesystem;
+
+using namespace youcrypt;
 
 
 // Maximum number of arguments that we're going to pass on to fuse.  Doesn't
@@ -122,8 +127,6 @@ struct EncFS_Args
     {
     }
 };
-
-static int oldStderr = STDERR_FILENO;
 
 static
 void usage(const char *name)
@@ -491,167 +494,6 @@ static bool processArgs(int argc, char *argv[], const shared_ptr<EncFS_Args> &ou
     return true;
 }
 
-static void * idleMonitor(void *);
-
-void *encfs_init(fuse_conn_info *conn)
-{
-    EncFS_Context *ctx = (EncFS_Context*)fuse_get_context()->private_data;
-
-    // set fuse connection options
-    conn->async_read = true;
-
-    // if an idle timeout is specified, then setup a thread to monitor the
-    // filesystem.
-    if(ctx->args->idleTimeout > 0)
-    {
-	rDebug("starting idle monitoring thread");
-	ctx->running = true;
-
-	int res = pthread_create( &ctx->monitorThread, 0, idleMonitor, 
-		(void*)ctx );
-	if(res != 0)
-	{
-	    rError("error starting idle monitor thread, "
-		    "res = %i, errno = %i", res, errno);
-	}
-    }
-
-    if(ctx->args->isDaemon && oldStderr >= 0)
-    {
-	rInfo("Closing stderr");
-	close(oldStderr);
-	oldStderr = -1;
-    }
-
-    return (void*)ctx;
-}
- 
-void encfs_destroy( void *_ctx )
-{
-    EncFS_Context *ctx = (EncFS_Context*)_ctx;
-    if(ctx->args->idleTimeout > 0)
-    {
-	ctx->running = false;
-
-	// wake up the thread if it is waiting..
-	rDebug("waking up monitoring thread");
-	pthread_mutex_lock( &ctx->wakeupMutex );
-	pthread_cond_signal( &ctx->wakeupCond );
-	pthread_mutex_unlock( &ctx->wakeupMutex );
-	rDebug("joining with idle monitoring thread");
-	pthread_join( ctx->monitorThread , 0 );
-	rDebug("join done");
-    }
-}
-
-void read_fully(int fd, char *ptr, size_t size) 
-{
-  size_t rsize;
-  while (size) {
-    rsize = read(fd, ptr, size);    
-    size -= rsize;
-  }
-}
-
-
-int parse_sock_args(int client_socket_fd, char ***pargv)
-{
-    FILE *sockfile = fdopen(client_socket_fd, "r");
-    char line[1000], **argv;
-    int argc;    
-
-    fgets(line, 998, sockfile);
-    sscanf(line, "%d", &argc);
-    (*pargv) = argv = (char **)malloc(sizeof(char *) * argc);
-    for (int i=0; i<argc; i++) {
-        int len;
-        fgets(line, 998, sockfile);
-        len = strlen(line);
-	if (line[len-1] == '\n') {
-	    line[--len] = 0;
-	}
-        argv[i] = (char *)malloc(sizeof(char)*(len+1));
-        strcpy(argv[i], line);
-    }
-    return argc;
-}
-
-
-int encryptFolder( EncFS_Context * ctx,
-                   const string &destSuffix,
-                    const string &sourcePath) {
-    int res;
-    fs::path p(sourcePath);   
-    shared_ptr<DirNode> root = ctx->getRoot(&res);
-
-    try {
-        if (exists(p))    // does p actually exist?
-        {
-            if (is_regular_file(p)) 
-            {
-                //  p is a regular file?                 
-                // cout << "touch " << p.filename() << '\n';
-                // cout << "openNode: " << (destSuffix + p.filename().string()) << '\n';
-                shared_ptr<FileNode> fnode = root->lookupNode (
-                    (destSuffix + p.filename().string()).c_str(),
-                    "create");
-
-                // FIXME:  take care of permissions.                
-                fnode->mknod (S_IFREG | S_IRUSR | S_IWUSR | S_IWOTH | S_IROTH, 0, 0, 0);
-                fnode->open (O_WRONLY );
-
-                // FIXME:  do file IO to copy file contents.
-                fs::ifstream file(p);
-                char buffer[1024];
-                off_t offset = 0;
-                while (!file.eof()) {
-                    file.read (buffer, 1024);
-                    fnode->write(offset, (unsigned char *)buffer, file.gcount());
-                    offset += file.gcount();
-                }                                
-                fnode.reset();
-            }
-            else if (is_directory(p))      // is p a directory?
-            {
-                // FIXME:  take care of permissions.
-                root->mkdir( 
-                    (destSuffix + p.filename().string()).c_str(),
-                    0777, 0, 0);
-                
-                // cout << "mkdir " << p.filename() << '\n';
-                // cout << "cd " << p.filename() << '\n';
-                
-                for (fs::directory_iterator curr = fs::directory_iterator(p); 
-                     curr != fs::directory_iterator(); ++curr) {
-                    encryptFolder (ctx, 
-                                   destSuffix + p.filename().string() + string("/"),
-                                   curr->path().string());
-                }
-
-                cout << "cd ..\n";
-            }
-            else if (is_symlink(p)) {
-                ;
-                // FIXME:  take care of symlinks that point within the tree being copied.
-                // FIXME:  create a symlink.
-            }
-            else {   
-                ;
-                // cout << p << " exists, but is neither a regular file nor a directory\n";
-            }
-        }
-        else {
-        }
-            // cout << p << " does not exist\n";
-    }
-    catch (const fs::filesystem_error& ex)
-    {
-        cout << ex.what() << '\n';
-    }
-
-    return 0;
-}
-
 
 int main(int argc, char **argv)
 {
@@ -666,6 +508,7 @@ int main(int argc, char **argv)
     }
 
     RLogInit (argc, argv);
+    // Subscribe to every channel.
     scoped_ptr<StdioNode> slog (new StdioNode (STDERR_FILENO) );
     slog->subscribeTo (GetGlobalChannel ("error") );
     slog->subscribeTo (GetGlobalChannel ("warning") );
@@ -674,131 +517,25 @@ int main(int argc, char **argv)
 
     openssl_init( encfsArgs->isThreaded );
 
-    // context is not a smart pointer because it will live for the life of
-    // the filesystem.
-    EncFS_Context *ctx = new EncFS_Context;
-    ctx->publicFilesystem = encfsArgs->opts->ownerCreate;
-    RootPtr rootInfo = initFS( ctx, encfsArgs->opts );
-    
-    int returnCode = EXIT_FAILURE;
-
-    if( rootInfo )
-    {
-	// set the globally visible root directory node
-	ctx->setRoot( rootInfo->root );
-	ctx->args = encfsArgs;
-	ctx->opts = encfsArgs->opts;
-	    
-	if(encfsArgs->isThreaded == false && encfsArgs->idleTimeout > 0)
-	{
-	    // xgroup(usage)
-	    cerr << _("Note: requested single-threaded mode, but an idle\n"
-		    "timeout was specified.  The filesystem will operate\n"
-		    "single-threaded, but threads will still be used to\n"
-		    "implement idle checking.") << endl;
-	}
-
-	// reset umask now, since we don't want it to interfere with the
-	// pass-thru calls..
-	umask( 0 );
-    }
-
-
     // Write encrypt folder code here.
+    string encRoot = encfsArgs->opts->rootDir; 
     string srcFolder = encfsArgs->mountPoint;
-    string encRoot = encfsArgs->opts->rootDir;
-    cout << "Encrypting contents of " << srcFolder << " into " << encRoot << endl;
-    returnCode = encryptFolder( ctx,  "/", srcFolder);
+    
+    YoucryptFolderOpts opts;
+    Credentials creds(new PassphraseCredentials("asdf"));
+    cout << "Source Folder is " << encRoot << endl;
+    YoucryptFolder folder(path(encRoot),
+                          opts,
+                          creds);
 
-    // cleanup so that we can check for leaked resources..
-    rootInfo.reset();
-    ctx->setRoot( shared_ptr<DirNode>() );
+    string destSuffix = (path() / path(srcFolder).filename()).string();
+    destSuffix.append (1, '/');
+    cout << "Encrypting contents of " << srcFolder << " into " << encRoot << endl
+         << "at " << "/" << destSuffix << endl;    
+    folder.importContent (path(srcFolder), destSuffix);
 
     MemoryPool::destroyAll();
     openssl_shutdown( encfsArgs->isThreaded );
-
-    return returnCode;
-}
-
-/*
-    Idle monitoring thread.  This is only used when idle monitoring is enabled.
-    It will cause the filesystem to be automatically unmounted (causing us to
-    commit suicide) if the filesystem stays idle too long.  Idle time is only
-    checked if there are no open files, as I don't want to risk problems by
-    having the filesystem unmounted from underneath open files!
-*/
-const int ActivityCheckInterval = 10;
-static bool unmountFS(EncFS_Context *ctx);
-
-static void * idleMonitor(void *_arg)
-{
-    EncFS_Context *ctx = (EncFS_Context*)_arg;
-    shared_ptr<EncFS_Args> arg = ctx->args;
-
-    const int timeoutCycles = 60 * arg->idleTimeout / ActivityCheckInterval;
-    int idleCycles = 0;
-
-    pthread_mutex_lock( &ctx->wakeupMutex );
-    
-    while(ctx->running)
-    {
-	int usage = ctx->getAndResetUsageCounter();
-
-	if(usage == 0 && ctx->isMounted())
-	    ++idleCycles;
-	else
-	    idleCycles = 0;
-	
-	if(idleCycles >= timeoutCycles)
-	{
-	    int openCount = ctx->openFileCount();
-	    if( openCount == 0 && unmountFS( ctx ) )
-	    {
-		// wait for main thread to wake us up
-		pthread_cond_wait( &ctx->wakeupCond, &ctx->wakeupMutex );
-		break;
-	    }
-		
-	    rDebug("num open files: %i", openCount );
-	}
-	    
-	rDebug("idle cycle count: %i, timeout after %i", idleCycles,
-		timeoutCycles);
-
-	struct timeval currentTime;
-	gettimeofday( &currentTime, 0 );
-	struct timespec wakeupTime;
-	wakeupTime.tv_sec = currentTime.tv_sec + ActivityCheckInterval;
-	wakeupTime.tv_nsec = currentTime.tv_usec * 1000;
-	pthread_cond_timedwait( &ctx->wakeupCond, 
-		&ctx->wakeupMutex, &wakeupTime );
-    }
-    
-    pthread_mutex_unlock( &ctx->wakeupMutex );
-
-    rDebug("Idle monitoring thread exiting");
-
     return 0;
-}
-
-static bool unmountFS(EncFS_Context *ctx)
-{
-    shared_ptr<EncFS_Args> arg = ctx->args;
-    if( arg->opts->mountOnDemand )
-    {
-	rDebug("Detaching filesystem %s due to inactivity",
-		arg->mountPoint.c_str());
-
-	ctx->setRoot( shared_ptr<DirNode>() );
-	return false;
-    } else
-    {
-	// Time to unmount!
-	// xgroup(diag)
-	rWarning(_("Unmounting filesystem %s due to inactivity"),
-		arg->mountPoint.c_str());
-	fuse_unmount( arg->mountPoint.c_str() );
-	return true;
-    }
 }
 

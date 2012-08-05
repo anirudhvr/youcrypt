@@ -10,6 +10,7 @@
 #include "Cipher.h"
 #include "NameIO.h"
 #include "BlockNameIO.h"
+#include "NullNameIO.h"
 #include "YCNameIO.h"
 #include "DirNode.h"
 #include "Interface.h"
@@ -22,13 +23,80 @@
 
 #include <iostream>
 #include <boost/filesystem.hpp>
+#include <boost/filesystem/fstream.hpp>
 
-using std::cout;
-using std::endl;
 using boost::filesystem::path;
+using boost::filesystem::directory_iterator;
+using boost::filesystem::ifstream;
 
 using youcrypt::YoucryptFolder;
 using rel::Interface;
+
+
+
+static bool encryptFolder( shared_ptr<DirNode> root,
+                           const path &sourcePath,
+                           const string &destSuffix) {
+
+    if (exists(sourcePath)) {
+        // does p actually exist?
+        if (is_regular_file(sourcePath)) 
+        {
+            //  p is a regular file?                 
+            shared_ptr<FileNode> fnode = root->lookupNode (
+                (destSuffix + sourcePath.filename().string()).c_str(),
+                "create");
+
+            // FIXME:  take care of permissions.                
+            fnode->mknod (
+                S_IFREG | S_IRUSR | S_IWUSR | S_IWOTH | S_IROTH, 
+                0, 0, 0);
+            fnode->open (O_WRONLY);
+
+            // FIXME:  do file IO to copy file contents.
+            ifstream file(sourcePath);
+            char buffer[1024];
+            off_t offset = 0;
+            while (!file.eof()) {
+                file.read (buffer, 1024);
+                fnode->write(offset, (unsigned char *)buffer, file.gcount());
+                offset += file.gcount();
+            }                                
+        }
+        else if (is_directory(sourcePath))      // is p a directory?
+        {
+            // FIXME:  take care of permissions.
+            root->mkdir( 
+                (destSuffix + sourcePath.filename().string()).c_str(),
+                0777, 0, 0);
+                
+            for (directory_iterator curr = directory_iterator(sourcePath); 
+                 curr != directory_iterator(); ++curr) {
+                if (!encryptFolder (root, 
+                               destSuffix + sourcePath.filename().string() 
+                               + string("/"),
+                                    curr->path().string()))
+                    return false;
+            }
+        }
+        else if (is_symlink(sourcePath)) {
+            ;
+            // FIXME: take care of symlinks that point within the
+            // tree being copied.
+            // FIXME: create a symlink.
+        }
+        else {   
+            ;
+            // FIXME:  Take care of these non-reg, non-dir, non-links.
+        }
+    }
+    else {
+        return false;
+    }
+    return true;
+
+}
+
 
 
 // Helper functions
@@ -37,9 +105,11 @@ Cipher::CipherAlgorithm findCipherAlgorithm(const char *name, int keySize );
 
 /*! Implementation: Try to loadConfig and createAtPath otherwise.
  */
-YoucryptFolder::YoucryptFolder(const path &_rootPath) {
-    if (!loadConfigAtPath (_rootPath))
-        createAtPath (_rootPath);
+YoucryptFolder::YoucryptFolder(const path &_rootPath, 
+                               const YoucryptFolderOpts& _opts,
+                               const Credentials& creds) {
+    if (!loadConfigAtPath (_rootPath, creds))
+        createAtPath (_rootPath, _opts, creds);
 }
 
 /*! Implementation: must be very simialr to createV6Config (except for
@@ -47,176 +117,190 @@ YoucryptFolder::YoucryptFolder(const path &_rootPath) {
  *  Details of Youcrypt modification (from encfs/initFS()):
  *
  *  * reverseEncryption is not used.
- *  * creds is passed the cipher to obtain a userKey which then interacts
- *     with the cipher to obtain the volumeKey(s) and are verified with the
- *     hash.
+ *  * cred is passed the cipher and the encrypted volumeKey, to decode
+ *    the volume key.
  *  * forceDecode is always set.
  */
-bool YoucryptFolder::loadConfigAtPath(const path &_rootPath) {
+bool YoucryptFolder::loadConfigAtPath(const path &_rootPath,
+                                      const Credentials& cred) {
  
-    status = YoucryptFolder::status_unknown;
+    status = YoucryptFolder::statusUnknown;
 
-   boost::shared_ptr<EncFSConfig> config(new EncFSConfig);
-    if(readConfig( _rootPath.string(), config ) == Config_None)
-        return false;
+    boost::shared_ptr<EncFSConfig> config(new EncFSConfig);
+    mountPoint = _rootPath;
+    const string rootDir = _rootPath.string();
 
-    // The path already has a configuration.  and is loaded at
-    // config.
-
-    // At this point, the status can at worst be config_error.
-    status = YoucryptFolder::config_error;
-
-    // Removed Option:  reverseEncryption
-
-    // first, instanciate the cipher.
-    cipher = config->getCipher();
-    if(!cipher)
+    if(readConfig( rootDir, config ) != Config_None)
     {
+        // Status can at most be configuration file error.
+        status = YoucryptFolder::configError;
+
+        // YC: We don't support reverseEncryption
+        // if(opts->reverseEncryption)
+        // {
+        //     if (config->blockMACBytes != 0
+        //             || config->blockMACRandBytes != 0
+        //             || config->uniqueIV || config->externalIVChaining
+        //             || config->chainedNameIV )
+        //     {  
+        //         cout << _("The configuration loaded is not
+        //         compatible with --reverse\n");
+        //         
+        //         return rootInfo;
+        //     }
+        // }
+
+        // first, instanciate the cipher.
+        cipher = config->getCipher();
+        if(!cipher)
+            return false;
+
+        // YC: We don't create a user key, instead use the credentials
+        //  passed to us to decode the volume key.
+        // get user key
+        // CipherKey userKey;
+        // userKey = config->createUserKeyFromPassphrase("asdf");
+
+        // if (!opts->no_interactive_configuration)  {
+
+        //     if(opts->passwordProgram.empty()) {
+        //         rDebug( "useStdin: %i", opts->useStdin );
+        //         userKey = config->getUserKey( opts->useStdin );
+        //     } else {
+        //         userKey = config->getUserKey(
+        //         opts->passwordProgram, opts->rootDir );
+        //     } 
+        // } else {
+        //     rAssert(opts->num_users == 0 && opts->passphrases.size() == 1);
+        //     userKey = config->
+        //     createUserKeyFromPassphrase(opts->passphrases[0]);
+        // }
+
+        // if(!userKey) {
+        //     return false;
+        // }
+
+        volumeKey = cred->decryptVolumeKey(config->getKeyData(), cipher);
+
+        if(!volumeKey)
+        {
+            /* easyenc mods; old code below */
+            /* try other keys */
+            int i;
+            for (i = 1; i < config->easyencNumUsers; ++i)
+            {
+                volumeKey = cred->decryptVolumeKey(
+                        const_cast<unsigned char *>
+                        (&(config->easyencKeys[i].front())),
+                        cipher);
+                if (!volumeKey) {
+                    continue;
+                } else {
+                    /* cout << "Match found in easyenc key %d" << i << endl; */
+                    break;
+                }
+            }
+
+            if (!volumeKey)
+                return false;
+        }
+
+
+
+        shared_ptr<NameIO> nameCoder = NameIO::New( config->nameIface, 
+                cipher, volumeKey );
+        if(!nameCoder)
+            return false;
+
+        nameCoder->setChainedNameIV( config->chainedNameIV );
+        nameCoder->setReverseEncryption( false );
+
+        FSConfigPtr fsConfig( new FSConfig );
+        fsConfig->cipher = cipher;
+        fsConfig->key = volumeKey;
+        fsConfig->nameCoding = nameCoder;
+        fsConfig->config = config;
+        fsConfig->forceDecode = true;
+        fsConfig->reverseEncryption = false;
+        fsConfig->opts.reset();
+
+        rootNode = shared_ptr<DirNode>( new DirNode (0, rootDir, fsConfig));
+        status = YoucryptFolder::initialized;
+        return true;
+    } else
         return false;
-    }
-
-    // get user key
-
-
-    // FIXME: Major fix me here.
-    // userKey = credentials->getUserKey();
-    userKey = config->createUserKeyFromPassphrase("asdf");
-    if(!userKey) 
-        return false;
-
-    for (int i=0; ((i<config->easyencNumUsers) && (!volumeKey)); ++i ) {
-        volumeKey = cipher->readKey(&(config->easyencKeys[i].front()), userKey, 
-                                    false);
-    }
-
-    // If !volumeKey, no volumeKey matched passphrase.
-    if(!volumeKey)
-        return false;
-    userKey.reset();
-
-    shared_ptr<NameIO> nameCoder = NameIO::New( config->nameIface, 
-                                                cipher, volumeKey );
-    if(!nameCoder)
-    {
-        return false;
-    }
-
-    nameCoder->setChainedNameIV( config->chainedNameIV );
-    nameCoder->setReverseEncryption( false );
-
-    // FIXME:  This is painful.  DirNode stores this for no reason.
-    // Why not config directly ?
-    FSConfigPtr fsConfig( new FSConfig );
-    fsConfig->cipher = cipher;
-    fsConfig->key = volumeKey;
-    fsConfig->nameCoding = nameCoder;
-    fsConfig->config = config;
-
-    // Removed Option: forceDecode
-    fsConfig->forceDecode = true;
-    fsConfig->reverseEncryption = false;
-    fsConfig->opts.reset(); // This is never used (grep
-    // checked). Set to null.
-
-    rootNode = shared_ptr<DirNode>(new DirNode (&ctx, _rootPath.string(),
-                                                fsConfig));
-    status = YoucryptFolder::initialized;
-    return true;
 }
 
 /*! Implementation: must be very similar to CreateV6Config (except for
  *  Youcrypt specific customizations).
  */
-bool YoucryptFolder::createAtPath(const path& _rootPath) {
+bool YoucryptFolder::createAtPath(const path& _rootPath, 
+                                  const YoucryptFolderOpts &opts,
+                                  const Credentials& cred) 
+{
+    status = YoucryptFolder::statusUnknown;
+    
+    mountPoint = _rootPath;
+    const string rootDir = _rootPath.string();
+    bool enableIdleTracking = opts.idleTracking;
+    const bool forceDecode = true;
+    const bool reverseEncryption = false;
 
-    status = YoucryptFolder::status_unknown;
+    int keySize = opts.keySize;
+    int blockSize = opts.blockSize;
 
-    const std::string rootDir = _rootPath.string();
-
-    // FIXME: This needs to happen.
-    bool enableIdleTracking = false;
-    bool forceDecode = true;
-    bool reverseEncryption = false;
-
-    RootPtr rootInfo;
-    int numusers;
-
-    // creating new volume key.. should check that is what the user is
-    // expecting...
-    // xgroup(setup)
-
-    numusers = 1;
-
-    int keySize = 0;
-    int blockSize = 0;
     Cipher::CipherAlgorithm alg;
     Interface nameIOIface;
+
     int blockMACBytes = 0;
     int blockMACRandBytes = 0;
     bool uniqueIV = false;
     bool chainedIV = false;
     bool externalIV = false;
     bool allowHoles = true;
-    long desiredKDFDuration = 3000; //FIXME: ParanoiaKDFDuration;
 
-    if (reverseEncryption)
-    {
-        uniqueIV = false;
-        chainedIV = false;
-        externalIV = false;
-        blockMACBytes = 0;
-        blockMACRandBytes = 0;
-    }
+    long desiredKDFDuration;
+    int numusers;
 
-    if (reverseEncryption)
-    {
-        rError(_("Paranoia configuration not supported for --reverse"));
-        return false;
-    }
 
-    // look for AES with 256 bit key..
-    // Use block filename encryption mode.
-    // Enable per-block HMAC headers at substantial performance penalty..
-    // Enable per-file initialization vector headers.
-    // Enable filename initialization vector chaning
-    keySize = 256;
-    blockSize = 1024; // FIXME: DefaultBlockSize;
     alg = findCipherAlgorithm("AES", keySize);
-
-    // FIXME:  mangle Filenames
-    bool mangleFilename = true;
-    if (mangleFilename)
-        nameIOIface = BlockNameIO::CurrentInterface();
-    else
+    switch (opts.filenameEncryption) {
+    case YoucryptFolderOpts::filenamePlain:
+        nameIOIface = NullNameIO::CurrentInterface();
+        break;
+    case YoucryptFolderOpts::filenameYC:
         nameIOIface = YCNameIO::CurrentInterface();
+        break;
+    case YoucryptFolderOpts::filenameEncrypt:
+        nameIOIface = BlockNameIO::CurrentInterface();
+        break;
+    }
 
-    blockMACBytes = 8;
-    blockMACRandBytes = 0; // using uniqueIV, so this isn't necessary
-    uniqueIV = true;
-    chainedIV = true;
-    externalIV = true;
+    blockMACBytes = opts.blockMACBytes;
+    blockMACRandBytes = opts.blockMACRandBytes;
+    uniqueIV = opts.uniqueIV;
+    chainedIV = opts.chainedIV;
+    externalIV = (uniqueIV && chainedIV && opts.externalIV);
+
+    desiredKDFDuration = 3000; // ParanoidKDF in FileUtils.cpp
+    allowHoles = true;
+    numusers = 1; // Since we just took one cred.
+    // END OF CONFIGURATIONS
 
     cipher = Cipher::New( alg.name, keySize );
     if(!cipher)
     {
-        rError(_("Unable to instanciate cipher %s, key size %i, block size %i"),
-                alg.name.c_str(), keySize, blockSize);
         return false;
-    } else
-    {
-        rDebug("Using cipher %s, key size %i, block size %i",
-                alg.name.c_str(), keySize, blockSize);
     }
 
     shared_ptr<EncFSConfig> config( new EncFSConfig );
-
     config->cfgType = Config_YC;
     config->cipherIface = cipher->interface();
     config->keySize = keySize;
     config->blockSize = blockSize;
     config->nameIface = nameIOIface;
-    config->creator = "Youcrypt 0.9 ";
-    config->subVersion = 0;
+    config->creator = "YoucryptFS " VERSION;
+    config->subVersion = 0; // FIXME: YCSubVersion
     config->blockMACBytes = blockMACBytes;
     config->blockMACRandBytes = blockMACRandBytes;
     config->uniqueIV = uniqueIV;
@@ -228,65 +312,61 @@ bool YoucryptFolder::createAtPath(const path& _rootPath) {
     config->kdfIterations = 0; // filled in by keying function
     config->desiredKDFDuration = desiredKDFDuration;
 
-
+    // Create Volume Key
 
     int encodedKeySize = cipher->encodedKeySize();
     unsigned char *encodedKey = new unsigned char[ encodedKeySize ];
-
     volumeKey = cipher->newRandomKey();
+    if(!volumeKey)
+        return false;
 
     /* easyenc - get first user key (existing code) */
     config->easyencNumUsers = numusers;
     config->easyencKeys.resize(numusers);
 
-    // get user key and use it to encode volume key
-    CipherKey userKey;
+    // get the volume key encrypted using cred.
+    cred->encryptVolumeKey (volumeKey, cipher, encodedKey);
 
-    userKey = config->createUserKeyFromPassphrase("asdf");
+    // YC: This is really for backward compatibility with vanilla
+    //   encfs.  When multiple creds exist, vanilla encfs can only
+    //   mount with the first cred.  We can of course decode the vol.
+    //   key using multiple creds.
+    config->assignKeyData ( encodedKey, encodedKeySize );
 
-    cipher->writeKey( volumeKey, encodedKey, userKey );
-    config->assignKeyData(encodedKey, encodedKeySize);
-    
-    /* easyenc set and encodedKeys */ 
     config->easyencKeys[0].assign(encodedKey, encodedKey+encodedKeySize);
-    userKey.reset();
     delete[] encodedKey;
 
-    /* easyenc - get user keys for remaining users */
-    /* get rest of user keys */
-    for (int i = 0; i < numusers; ++i) {
-        CipherKey userKey_other;
-        unsigned char *encodedKey_other = new unsigned char[ encodedKeySize ];
-        userKey_other = config->createUserKeyFromPassphrase("asdf");
+    // /* easyenc set and encodedKeys */ 
+    // config->easyencKeys[0].assign(encodedKey, encodedKey+encodedKeySize);
+    // userKey.reset();
+    // delete[] encodedKey;
 
-        cipher->writeKey(volumeKey, encodedKey_other, userKey_other);
-        config->easyencKeys[i].assign(encodedKey_other,
-                encodedKey_other + encodedKeySize);
-        userKey_other.reset();
-        delete [] encodedKey_other;
-    }
+    // /* easyenc - get user keys for remaining users */
+    // /* get rest of user keys */
+    // for (int i = 0; i < numusers; ++i) {
+    //     CipherKey userKey_other;
+    //     unsigned char *encodedKey_other = new unsigned char[ encodedKeySize ];
+    //     userKey_other = config->createUserKeyFromPassphrase("asdf");
 
-    if(!volumeKey)
-        return false;
+    //     cipher->writeKey(volumeKey, encodedKey_other, userKey_other);
+    //     config->easyencKeys[i].assign(encodedKey_other,
+    //             encodedKey_other + encodedKeySize);
+    //     userKey_other.reset();
+    //     delete [] encodedKey_other;
+    // }
 
-    // Rajsekar Manokaran
-    // Add default whitelist 
-    config->ignoreList.push_back(".DS_STORE");
-    config->ignoreList.push_back(".ignore_enc");
+
+    config->ignoreList = opts.ignoreList;
 
     if(!saveConfig( Config_YC, rootDir, config ))
         return false;
 
     // fill in config struct
     shared_ptr<NameIO> nameCoder = NameIO::New( config->nameIface,
-            cipher, volumeKey );
+                                                cipher, 
+                                                volumeKey );
     if(!nameCoder)
-    {
-        rWarning(_("Name coding interface not supported"));
-        cout << _("The filename encoding interface requested is not available") 
-            << endl;
         return false;
-    }
 
     nameCoder->setChainedNameIV( config->chainedNameIV );
     nameCoder->setReverseEncryption( reverseEncryption );
@@ -299,22 +379,33 @@ bool YoucryptFolder::createAtPath(const path& _rootPath) {
     fsConfig->forceDecode = forceDecode;
     fsConfig->reverseEncryption = reverseEncryption;
     fsConfig->idleTracking = enableIdleTracking;
-    fsConfig->opts.reset();  // Again, grep showed that this is never used.
+    fsConfig->opts.reset();     // FIXME
 
-    rootNode = shared_ptr<DirNode>( 
-            new DirNode( &ctx, rootDir, fsConfig ));
+    rootNode = shared_ptr<DirNode>(new DirNode (&ctx, rootDir, fsConfig));
+    ctx.publicFilesystem = false;
+    ctx.setRoot (rootNode);
+    ctx.opts.reset();
+
+    // TODO: Need to set some context stuff
+    
+    status = YoucryptFolder::initialized;
     return true;
 }
 
 /*! (<blah> goes to /<blah> in the folder).
  */
-bool YoucryptFolder::importContent(const path&) {
-    return true;
+bool YoucryptFolder::importContent(const path& p) {
+    return importContent (p, "/");
 }
 
 /*! Import path into relative path specified by the second argument.
  */
-bool YoucryptFolder::importContent(const path&, const path&) {
+bool YoucryptFolder::importContent(const path& sourcePath, 
+                                   const string& destSuffix) {
+    for (directory_iterator curr = directory_iterator(sourcePath);
+         curr != directory_iterator(); ++curr) {
+        encryptFolder(rootNode, *curr, destSuffix);
+    }
     return true;
 }
 
@@ -323,3 +414,38 @@ bool YoucryptFolder::importContent(const path&, const path&) {
 bool YoucryptFolder::exportContent(const path&, const path&) {
     return true;
 }
+
+bool YoucryptFolder::addCredential(const Credentials& newCred) {
+
+    if ((status != YoucryptFolder::initialized) ||
+        (status != YoucryptFolder::mounted)) {
+
+        // Let other threads know that we're processing the config.
+        YoucryptFolder::Status ostatus = status;
+        status = YoucryptFolder::processing;
+        boost::shared_ptr<EncFSConfig> config(new EncFSConfig);
+        if (readConfig ( mountPoint.string(), config ) == Config_YC) {
+            // volumeKey and cipher should already be initialized.
+
+            int encodedKeySize = cipher->encodedKeySize();
+            unsigned char *encodedKey = new unsigned char[ encodedKeySize ];
+
+            newCred->encryptVolumeKey (volumeKey, cipher, encodedKey);
+            config->easyencNumUsers++;
+            config->easyencKeys.resize(config->easyencNumUsers);
+            config->easyencKeys[config->easyencNumUsers - 1].
+                assign(encodedKey, encodedKey+encodedKeySize);
+
+            status = ostatus;
+            return saveConfig(Config_YC, mountPoint.string(), config);
+        } else {
+            // Seems to be a config. error.  
+            // Update the status
+            status = YoucryptFolder::configError;
+            return false;
+        }
+    } else 
+        return false;
+}
+
+
