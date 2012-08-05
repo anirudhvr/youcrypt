@@ -30,9 +30,15 @@ namespace youcrypt {
         //! List of filepatterns to not encrypt.
         vector<string> ignoreList;
 
+        //! Volume Key size
         int keySize;
+
+        //! Block size if block encryption is intended.
         int blockSize;
+
+        //! Algoname: aes, blowfish
         string algoName;
+        
         int blockMACBytes;
         int blockMACRandBytes;
         bool uniqueIV;

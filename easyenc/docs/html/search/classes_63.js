@@ -8,6 +8,5 @@ var searchData=
   ['configinfo',['ConfigInfo',['../struct_config_info.html',1,'']]],
   ['configreader',['ConfigReader',['../class_config_reader.html',1,'']]],
   ['configvar',['ConfigVar',['../class_config_var.html',1,'']]],
-  ['configvardata',['ConfigVarData',['../struct_config_var_1_1_config_var_data.html',1,'ConfigVar']]],
-  ['credentials',['Credentials',['../classyoucrypt_1_1_credentials.html',1,'youcrypt']]]
+  ['configvardata',['ConfigVarData',['../struct_config_var_1_1_config_var_data.html',1,'ConfigVar']]]
 ];

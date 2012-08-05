@@ -3,6 +3,7 @@ var searchData=
   ['fd',['fd',['../class_raw_file_i_o.html#a2e84856c9d873bead9e184f86bfcfec2',1,'RawFileIO']]],
   ['fileiv',['fileIV',['../class_cipher_file_i_o.html#a51b443019621c5d61fce57a53b016906',1,'CipherFileIO']]],
   ['filename',['fileName',['../struct_config_info.html#a54aa5bfd0b43ebb0f14c20c3ca3d380d',1,'ConfigInfo']]],
+  ['filenameencryption',['filenameEncryption',['../structyoucrypt_1_1_youcrypt_folder_opts.html#ac17f859ebae73d0d4cfdfe0061bc1ee5',1,'youcrypt::YoucryptFolderOpts']]],
   ['filesize',['fileSize',['../class_raw_file_i_o.html#a07dc4d98fa02d3ff6be01493fc758cc9',1,'RawFileIO']]],
   ['forcedecode',['forceDecode',['../struct_enc_f_s___opts.html#a856029438f7bbe0c828298fce67d4f21',1,'EncFS_Opts::forceDecode()'],['../struct_f_s_config.html#a0c79a1d6a6510ece504ce014bcea55ad',1,'FSConfig::forceDecode()']]],
   ['fsblocksize',['FSBlockSize',['../test_8cpp.html#a7e06481349d6ac9ee838ae9c47cc1dcd',1,'test.cpp']]],

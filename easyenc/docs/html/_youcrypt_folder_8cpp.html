@@ -92,6 +92,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <code>#include &quot;<a class="el" href="_cipher_8h_source.html">Cipher.h</a>&quot;</code><br/>
 <code>#include &quot;<a class="el" href="_name_i_o_8h_source.html">NameIO.h</a>&quot;</code><br/>
 <code>#include &quot;<a class="el" href="_block_name_i_o_8h_source.html">BlockNameIO.h</a>&quot;</code><br/>
+<code>#include &quot;<a class="el" href="_null_name_i_o_8h_source.html">NullNameIO.h</a>&quot;</code><br/>
 <code>#include &quot;<a class="el" href="_y_c_name_i_o_8h_source.html">YCNameIO.h</a>&quot;</code><br/>
 <code>#include &quot;<a class="el" href="_dir_node_8h_source.html">DirNode.h</a>&quot;</code><br/>
 <code>#include &quot;<a class="el" href="_interface_8h_source.html">Interface.h</a>&quot;</code><br/>
@@ -101,19 +102,63 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <code>#include &lt;rlog/Error.h&gt;</code><br/>
 <code>#include &lt;iostream&gt;</code><br/>
 <code>#include &lt;boost/filesystem.hpp&gt;</code><br/>
+<code>#include &lt;boost/filesystem/fstream.hpp&gt;</code><br/>
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for YoucryptFolder.cpp:</div>
 <div class="dyncontent">
 <div class="center"><img src="_youcrypt_folder_8cpp__incl.png" border="0" usemap="#_youcrypt_folder_8cpp" alt=""/></div>
 <map name="_youcrypt_folder_8cpp" id="_youcrypt_folder_8cpp">
-<area shape="rect" id="node3" href="_youcrypt_folder_8h.html" title="YoucryptFolder.h" alt="" coords="656,155,771,181"/><area shape="rect" id="node21" href="_interface_8h.html" title="Interface.h" alt="" coords="1006,379,1084,405"/><area shape="rect" id="node28" href="_f_s_config_8h.html" title="FSConfig.h" alt="" coords="534,304,617,331"/><area shape="rect" id="node48" href="_cipher_8h.html" title="Cipher.h" alt="" coords="864,304,933,331"/><area shape="rect" id="node60" href="_name_i_o_8h.html" title="NameIO.h" alt="" coords="1285,304,1365,331"/><area shape="rect" id="node67" href="_block_name_i_o_8h.html" title="BlockNameIO.h" alt="" coords="43,229,153,256"/><area shape="rect" id="node72" href="_y_c_name_i_o_8h.html" title="YCNameIO.h" alt="" coords="1541,155,1640,181"/><area shape="rect" id="node75" href="_dir_node_8h.html" title="DirNode.h" alt="" coords="1049,80,1127,107"/><area shape="rect" id="node100" href="i18n_8h.html" title="i18n.h" alt="" coords="1367,80,1421,107"/><area shape="rect" id="node5" href="_credentials_8h.html" title="Credentials.h" alt="" coords="745,304,839,331"/><area shape="rect" id="node9" href="_file_utils_8h.html" title="FileUtils.h" alt="" coords="697,229,769,256"/><area shape="rect" id="node36" href="_context_8h.html" title="Context.h" alt="" coords="393,229,468,256"/><area shape="rect" id="node11" href="encfs_8h.html" title="encfs.h" alt="" coords="609,379,671,405"/><area shape="rect" id="node24" href="_cipher_key_8h.html" title="CipherKey.h" alt="" coords="411,379,503,405"/><area shape="rect" id="node51" href="_range_8h.html" title="Range.h" alt="" coords="781,379,851,405"/><area shape="rect" id="node86" href="_file_node_8h.html" title="FileNode.h" alt="" coords="1048,155,1128,181"/></map>
+<area shape="rect" id="node3" href="_youcrypt_folder_8h.html" title="YoucryptFolder.h" alt="" coords="445,155,560,181"/><area shape="rect" id="node13" href="_cipher_8h.html" title="Cipher.h" alt="" coords="937,304,1007,331"/><area shape="rect" id="node27" href="_interface_8h.html" title="Interface.h" alt="" coords="1029,379,1107,405"/><area shape="rect" id="node42" href="_f_s_config_8h.html" title="FSConfig.h" alt="" coords="778,304,861,331"/><area shape="rect" id="node63" href="_name_i_o_8h.html" title="NameIO.h" alt="" coords="1393,304,1473,331"/><area shape="rect" id="node70" href="_block_name_i_o_8h.html" title="BlockNameIO.h" alt="" coords="5,229,115,256"/><area shape="rect" id="node75" href="_null_name_i_o_8h.html" title="NullNameIO.h" alt="" coords="1447,155,1547,181"/><area shape="rect" id="node78" href="_y_c_name_i_o_8h.html" title="YCNameIO.h" alt="" coords="1572,155,1671,181"/><area shape="rect" id="node81" href="_dir_node_8h.html" title="DirNode.h" alt="" coords="1117,80,1195,107"/><area shape="rect" id="node106" href="i18n_8h.html" title="i18n.h" alt="" coords="1962,80,2016,107"/><area shape="rect" id="node5" href="_credentials_8h.html" title="Credentials.h" alt="" coords="455,229,549,256"/><area shape="rect" id="node37" href="_file_utils_8h.html" title="FileUtils.h" alt="" coords="677,229,749,256"/><area shape="rect" id="node50" href="_context_8h.html" title="Context.h" alt="" coords="303,229,379,256"/><area shape="rect" id="node9" href="_cipher_key_8h.html" title="CipherKey.h" alt="" coords="549,379,640,405"/><area shape="rect" id="node15" href="encfs_8h.html" title="encfs.h" alt="" coords="717,379,779,405"/><area shape="rect" id="node25" href="_range_8h.html" title="Range.h" alt="" coords="803,379,873,405"/><area shape="rect" id="node92" href="_file_node_8h.html" title="FileNode.h" alt="" coords="952,155,1032,181"/></map>
 </div>
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2><a name="func-members"></a>
 Functions</h2></td></tr>
+<tr class="memitem:aece33b5d2dd151bfa04698d77c21065c"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_youcrypt_folder_8cpp.html#aece33b5d2dd151bfa04698d77c21065c">encryptFolder</a> (shared_ptr&lt; <a class="el" href="class_dir_node.html">DirNode</a> &gt; root, const path &amp;sourcePath, const string &amp;destSuffix)</td></tr>
 <tr class="memitem:a5054c05bbdd1fa08baa2e068e86877d7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_cipher_1_1_cipher_algorithm.html">Cipher::CipherAlgorithm</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_youcrypt_folder_8cpp.html#a5054c05bbdd1fa08baa2e068e86877d7">findCipherAlgorithm</a> (const char *name, int keySize)</td></tr>
 </table>
 <hr/><h2>Function Documentation</h2>
+<a class="anchor" id="aece33b5d2dd151bfa04698d77c21065c"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static bool encryptFolder </td>
+          <td>(</td>
+          <td class="paramtype">shared_ptr&lt; <a class="el" href="class_dir_node.html">DirNode</a> &gt;&#160;</td>
+          <td class="paramname"><em>root</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const path &amp;&#160;</td>
+          <td class="paramname"><em>sourcePath</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const string &amp;&#160;</td>
+          <td class="paramname"><em>destSuffix</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Referenced by <a class="el" href="classyoucrypt_1_1_youcrypt_folder.html#a2e8bc009b91afc452b41782213269093">youcrypt::YoucryptFolder::importContent()</a>.</p>
+
+</div>
+</div>
 <a class="anchor" id="a5054c05bbdd1fa08baa2e068e86877d7"></a>
 <div class="memitem">
 <div class="memproto">
@@ -140,14 +185,14 @@ Functions</h2></td></tr>
 
 <p>References <a class="el" href="class_cipher.html#a429d4bb5432266a0b44992749151d911">Cipher::GetAlgorithmList()</a>.</p>
 
-<p>Referenced by <a class="el" href="classyoucrypt_1_1_youcrypt_folder.html#abfe3b4cae468df40240811829d1f674e">youcrypt::YoucryptFolder::createAtPath()</a>, and <a class="el" href="_file_utils_8cpp.html#a8759b71b37ed9bccc8fd79da004300d3">createV6Config()</a>.</p>
+<p>Referenced by <a class="el" href="classyoucrypt_1_1_youcrypt_folder.html#a582b399d97ccb6bda379b8c2447d48ab">youcrypt::YoucryptFolder::createAtPath()</a>, and <a class="el" href="_file_utils_8cpp.html#a8759b71b37ed9bccc8fd79da004300d3">createV6Config()</a>.</p>
 
 </div>
 </div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Jul 21 2012 22:29:10 for Youcrypt/EncFS by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Aug 4 2012 23:49:22 for Youcrypt/EncFS by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.1.1
 </small></address>

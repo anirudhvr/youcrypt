@@ -1,6 +1,7 @@
 var searchData=
 [
   ['abstractcipherkey',['AbstractCipherKey',['../class_abstract_cipher_key.html#a1652abc6b3a70466aff12bed59e5b668',1,'AbstractCipherKey']]],
+  ['addcredential',['addCredential',['../classyoucrypt_1_1_youcrypt_folder.html#a68ef744f7930b6dd57a89247e837eea3',1,'youcrypt::YoucryptFolder']]],
   ['addsymbolreferences',['AddSymbolReferences',['../_cipher_8cpp.html#a51713040ef51814e61940e8a8b661a3d',1,'AddSymbolReferences():&#160;Cipher.cpp'],['../_name_i_o_8cpp.html#a51713040ef51814e61940e8a8b661a3d',1,'AddSymbolReferences():&#160;NameIO.cpp']]],
   ['age',['age',['../classrel_1_1_interface.html#a85c01b295b7a918d968a4135809c5e99',1,'rel::Interface::age() const '],['../classrel_1_1_interface.html#ace0df0b3d49847f08f6f26ee6c7bc136',1,'rel::Interface::age()']]],
   ['allocate',['allocate',['../namespace_memory_pool.html#a3be80901e03c58843e32d510143bb03c',1,'MemoryPool']]],

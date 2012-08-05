@@ -36,6 +36,7 @@ var searchData=
   ['_5fmutex',['_mutex',['../classrel_1_1_lock.html#a21c55ba6a052cc8a90f3aa2e5e34f962',1,'rel::Lock']]],
   ['_5fname',['_name',['../classrel_1_1_interface.html#a1d2503c2a7867dc9a1a9b224c36fce0f',1,'rel::Interface']]],
   ['_5fnextname',['_nextName',['../_dir_node_8cpp.html#a8dca7b19229c91f43b2ef61ac7cc5572',1,'DirNode.cpp']]],
+  ['_5fpassphrase',['_passphrase',['../classyoucrypt_1_1_passphrase_credentials.html#a9c31e272ed259f6e1a44bdbde6a3b661',1,'youcrypt::PassphraseCredentials']]],
   ['_5fpname',['_pname',['../class_file_node.html#a56d22cd852e712c82c3bbe641e8214a4',1,'FileNode']]],
   ['_5frevision',['_revision',['../classrel_1_1_interface.html#a5ddf0d6946f3d32aa1172e499257987a',1,'rel::Interface']]],
   ['_5fshould_5fignore',['_should_ignore',['../_file_node_8cpp.html#aed0ca84e0a75fb88828fc9c0bdda255b',1,'FileNode.cpp']]],

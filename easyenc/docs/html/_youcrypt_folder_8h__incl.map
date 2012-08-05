@@ -1,9 +1,11 @@
 <map id="G" name="G">
-<area shape="rect" id="node3" href="$_credentials_8h.html" title="Credentials.h" alt="" coords="5,155,99,181"/>
-<area shape="rect" id="node7" href="$_file_utils_8h.html" title="FileUtils.h" alt="" coords="271,80,344,107"/>
-<area shape="rect" id="node34" href="$_context_8h.html" title="Context.h" alt="" coords="466,155,541,181"/>
-<area shape="rect" id="node9" href="$encfs_8h.html" title="encfs.h" alt="" coords="473,229,535,256"/>
-<area shape="rect" id="node19" href="$_interface_8h.html" title="Interface.h" alt="" coords="71,229,149,256"/>
-<area shape="rect" id="node22" href="$_cipher_key_8h.html" title="CipherKey.h" alt="" coords="305,229,396,256"/>
-<area shape="rect" id="node26" href="$_f_s_config_8h.html" title="FSConfig.h" alt="" coords="226,155,309,181"/>
+<area shape="rect" id="node3" href="$_credentials_8h.html" title="Credentials.h" alt="" coords="298,80,392,107"/>
+<area shape="rect" id="node35" href="$_file_utils_8h.html" title="FileUtils.h" alt="" coords="537,80,609,107"/>
+<area shape="rect" id="node48" href="$_context_8h.html" title="Context.h" alt="" coords="778,155,853,181"/>
+<area shape="rect" id="node7" href="$_cipher_key_8h.html" title="CipherKey.h" alt="" coords="486,229,577,256"/>
+<area shape="rect" id="node11" href="$_cipher_8h.html" title="Cipher.h" alt="" coords="239,155,308,181"/>
+<area shape="rect" id="node13" href="$encfs_8h.html" title="encfs.h" alt="" coords="785,229,847,256"/>
+<area shape="rect" id="node23" href="$_range_8h.html" title="Range.h" alt="" coords="123,229,193,256"/>
+<area shape="rect" id="node25" href="$_interface_8h.html" title="Interface.h" alt="" coords="383,229,461,256"/>
+<area shape="rect" id="node40" href="$_f_s_config_8h.html" title="FSConfig.h" alt="" coords="573,155,656,181"/>
 </map>

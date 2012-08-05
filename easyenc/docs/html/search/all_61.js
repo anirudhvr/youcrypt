@@ -1,10 +1,13 @@
 var searchData=
 [
   ['abstractcipherkey',['AbstractCipherKey',['../class_abstract_cipher_key.html',1,'AbstractCipherKey'],['../class_abstract_cipher_key.html#a1652abc6b3a70466aff12bed59e5b668',1,'AbstractCipherKey::AbstractCipherKey()']]],
-  ['activitycheckinterval',['ActivityCheckInterval',['../encfs_test_bed_8cpp.html#aa2cdf4ef86c1b86d390c98b6986dc90f',1,'ActivityCheckInterval():&#160;encfsTestBed.cpp'],['../main_8cpp.html#aa2cdf4ef86c1b86d390c98b6986dc90f',1,'ActivityCheckInterval():&#160;main.cpp']]],
+  ['abstractcredentials',['AbstractCredentials',['../classyoucrypt_1_1_abstract_credentials.html',1,'youcrypt']]],
+  ['activitycheckinterval',['ActivityCheckInterval',['../main_8cpp.html#aa2cdf4ef86c1b86d390c98b6986dc90f',1,'main.cpp']]],
+  ['addcredential',['addCredential',['../classyoucrypt_1_1_youcrypt_folder.html#a68ef744f7930b6dd57a89247e837eea3',1,'youcrypt::YoucryptFolder']]],
   ['addsymbolreferences',['AddSymbolReferences',['../_cipher_8cpp.html#a51713040ef51814e61940e8a8b661a3d',1,'AddSymbolReferences():&#160;Cipher.cpp'],['../_name_i_o_8cpp.html#a51713040ef51814e61940e8a8b661a3d',1,'AddSymbolReferences():&#160;NameIO.cpp']]],
   ['aesinterface',['AESInterface',['../_s_s_l___cipher_8cpp.html#a0d6e941010a2bc00464be4817ef976a0',1,'SSL_Cipher.cpp']]],
   ['age',['age',['../classrel_1_1_interface.html#a85c01b295b7a918d968a4135809c5e99',1,'rel::Interface::age() const '],['../classrel_1_1_interface.html#ace0df0b3d49847f08f6f26ee6c7bc136',1,'rel::Interface::age()']]],
+  ['algoname',['algoName',['../structyoucrypt_1_1_youcrypt_folder_opts.html#ac86c04d2d06d417b673a637e6a562e6c',1,'youcrypt::YoucryptFolderOpts']]],
   ['algorithm',['Algorithm',['../struct_name_i_o_1_1_algorithm.html',1,'NameIO']]],
   ['algorithmlist',['AlgorithmList',['../class_cipher.html#a1f24ef3a6049dc95ed8f6d1f16c4b894',1,'Cipher::AlgorithmList()'],['../class_name_i_o.html#a6e8d5690d6331e58369ab469fe34adf0',1,'NameIO::AlgorithmList()']]],
   ['allocate',['allocate',['../namespace_memory_pool.html#a3be80901e03c58843e32d510143bb03c',1,'MemoryPool']]],

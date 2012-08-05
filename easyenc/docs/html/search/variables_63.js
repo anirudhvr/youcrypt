@@ -2,6 +2,7 @@ var searchData=
 [
   ['canwrite',['canWrite',['../class_raw_file_i_o.html#a89663f3f5df292abb99167cf9b44b9f1',1,'RawFileIO']]],
   ['cfgtype',['cfgType',['../struct_enc_f_s_config.html#a3bc6e1c1af768050470989d90a668104',1,'EncFSConfig']]],
+  ['chainediv',['chainedIV',['../structyoucrypt_1_1_youcrypt_folder_opts.html#a5cb6ef71c0f14dc8238943cf4338afd9',1,'youcrypt::YoucryptFolderOpts']]],
   ['chainednameiv',['chainedNameIV',['../struct_enc_f_s_config.html#a2736950b607ed921281a52a1bb478451',1,'EncFSConfig::chainedNameIV()'],['../class_name_i_o.html#a1552456fa05b652149cbf5a43e15a7a1',1,'NameIO::chainedNameIV()']]],
   ['checkkey',['checkKey',['../struct_enc_f_s___opts.html#ae1b20ff37130739b77d022a23761c7fd',1,'EncFS_Opts']]],
   ['cipher',['cipher',['../class_cipher_file_i_o.html#aaf2fcf68608eefb6ede0958e58f0c814',1,'CipherFileIO::cipher()'],['../struct_enc_f_s___root.html#a26997a5869c47f6d18cd203d2541e5de',1,'EncFS_Root::cipher()'],['../struct_f_s_config.html#a79e6b5ce4cbfbf486d8203300d832547',1,'FSConfig::cipher()'],['../class_m_a_c_file_i_o.html#ac6bc8d088efbd42e32d2c35aa735406d',1,'MACFileIO::cipher()'],['../classyoucrypt_1_1_youcrypt_folder.html#a8ce01a9a37e31fae8db32b1692d466d5',1,'youcrypt::YoucryptFolder::cipher()']]],

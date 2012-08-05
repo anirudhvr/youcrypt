@@ -9,5 +9,6 @@ var searchData=
   ['config_5fv4',['Config_V4',['../_f_s_config_8h.html#ac254e872972d56fde0b2d9b767e157a9a6d198f469900984083465b75b183c5df',1,'FSConfig.h']]],
   ['config_5fv5',['Config_V5',['../_f_s_config_8h.html#ac254e872972d56fde0b2d9b767e157a9a8f9e692dd6eafb3244c4991ab694150d',1,'FSConfig.h']]],
   ['config_5fv6',['Config_V6',['../_f_s_config_8h.html#ac254e872972d56fde0b2d9b767e157a9a2ae913bc5e333bc43ec341f957a78f6f',1,'FSConfig.h']]],
-  ['config_5fyc',['Config_YC',['../_f_s_config_8h.html#ac254e872972d56fde0b2d9b767e157a9af5d16cffca1c4c0b885e5ae5bc81b9e7',1,'FSConfig.h']]]
+  ['config_5fyc',['Config_YC',['../_f_s_config_8h.html#ac254e872972d56fde0b2d9b767e157a9af5d16cffca1c4c0b885e5ae5bc81b9e7',1,'FSConfig.h']]],
+  ['configerror',['configError',['../classyoucrypt_1_1_youcrypt_folder.html#a41250e1cd6bf235fde94e5b41d1ae07ba1d5a35ce45c3c1ec9307b2d00655091b',1,'youcrypt::YoucryptFolder']]]
 ];

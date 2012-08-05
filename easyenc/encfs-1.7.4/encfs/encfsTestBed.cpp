@@ -517,22 +517,25 @@ int main(int argc, char **argv)
 
     openssl_init( encfsArgs->isThreaded );
 
-    // Write encrypt folder code here.
+    // Write test program below
+
     string encRoot = encfsArgs->opts->rootDir; 
     string srcFolder = encfsArgs->mountPoint;
     
     YoucryptFolderOpts opts;
-    Credentials creds(new PassphraseCredentials("asdf"));
-    cout << "Source Folder is " << encRoot << endl;
+    Credentials creds(new PassphraseCredentials("another"));
+    cout << "Encrypted Folder is " << encRoot << endl;
     YoucryptFolder folder(path(encRoot),
                           opts,
                           creds);
 
-    string destSuffix = (path() / path(srcFolder).filename()).string();
-    destSuffix.append (1, '/');
-    cout << "Encrypting contents of " << srcFolder << " into " << encRoot << endl
-         << "at " << "/" << destSuffix << endl;    
-    folder.importContent (path(srcFolder), destSuffix);
+    folder.addCredential(Credentials(new PassphraseCredentials("yet_another")));
+
+    // string destSuffix = (path() / path(srcFolder).filename()).string();
+    // destSuffix.append (1, '/');
+    // cout << "Encrypting contents of " << srcFolder << " into " << encRoot << endl
+    //      << "at " << "/" << destSuffix << endl;    
+    // folder.importContent (path(srcFolder), destSuffix);
 
     MemoryPool::destroyAll();
     openssl_shutdown( encfsArgs->isThreaded );

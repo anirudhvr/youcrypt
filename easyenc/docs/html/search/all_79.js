@@ -8,7 +8,9 @@ var searchData=
   ['ycsubversion',['YCSubVersion',['../_file_utils_8cpp.html#ac42f72e26a2d7bb4a2545e909493aa7b',1,'FileUtils.cpp']]],
   ['youcrypt',['youcrypt',['../namespaceyoucrypt.html',1,'']]],
   ['youcryptfolder',['YoucryptFolder',['../classyoucrypt_1_1_youcrypt_folder.html',1,'youcrypt']]],
-  ['youcryptfolder',['YoucryptFolder',['../classyoucrypt_1_1_youcrypt_folder.html#a8561f3c3413ebd6e0139b6b2997fede6',1,'youcrypt::YoucryptFolder']]],
+  ['youcryptfolder',['YoucryptFolder',['../classyoucrypt_1_1_youcrypt_folder.html#ab4f8ca368a32b89f40edb93586cfbf29',1,'youcrypt::YoucryptFolder']]],
   ['youcryptfolder_2ecpp',['YoucryptFolder.cpp',['../_youcrypt_folder_8cpp.html',1,'']]],
-  ['youcryptfolder_2eh',['YoucryptFolder.h',['../_youcrypt_folder_8h.html',1,'']]]
+  ['youcryptfolder_2eh',['YoucryptFolder.h',['../_youcrypt_folder_8h.html',1,'']]],
+  ['youcryptfolderopts',['YoucryptFolderOpts',['../structyoucrypt_1_1_youcrypt_folder_opts.html#ad7dac8d9f9faf1f9bf73d1afd77831bc',1,'youcrypt::YoucryptFolderOpts']]],
+  ['youcryptfolderopts',['YoucryptFolderOpts',['../structyoucrypt_1_1_youcrypt_folder_opts.html',1,'youcrypt']]]
 ];
