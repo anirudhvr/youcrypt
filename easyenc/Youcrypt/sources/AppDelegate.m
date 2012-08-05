@@ -126,7 +126,6 @@ MixpanelAPI *mixpanel;
 
     [DDLog addLogger:[DDASLLogger sharedInstance]];
     [DDLog addLogger:[DDTTYLogger sharedInstance]];
-    
     fileLogger = [[DDFileLogger alloc] initWithLogFileManager:logFileManager];
     fileLogger.rollingFrequency = 60 * 60 * 24; // 24 hour rolling
     fileLogger.logFileManager.maximumNumberOfLogFiles = 7;
