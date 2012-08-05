@@ -24,7 +24,7 @@ namespace youcrypt {
         //! idle timeout (in seconds)
         unsigned int idleTrackingTimeOut;
 
-        //! Encrypt filenames
+        //! Encrypt filenames: values from the anon. enum. below
         int filenameEncryption;
 
         //! List of filepatterns to not encrypt.
