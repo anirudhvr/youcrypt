@@ -1,8 +1,0 @@
-<map id="G" name="G">
-<area shape="rect" id="node3" href="$base64_8cpp.html" title="base64.cpp" alt="" coords="5,80,96,107"/>
-<area shape="rect" id="node5" href="$_block_name_i_o_8cpp.html" title="BlockNameIO.cpp" alt="" coords="120,80,245,107"/>
-<area shape="rect" id="node7" href="$_cipher_8cpp.html" title="Cipher.cpp" alt="" coords="270,80,353,107"/>
-<area shape="rect" id="node9" href="$_null_name_i_o_8cpp.html" title="NullNameIO.cpp" alt="" coords="379,80,493,107"/>
-<area shape="rect" id="node11" href="$_stream_name_i_o_8cpp.html" title="StreamNameIO.cpp" alt="" coords="518,80,652,107"/>
-<area shape="rect" id="node13" href="$_y_c_name_i_o_8cpp.html" title="YCNameIO.cpp" alt="" coords="677,80,792,107"/>
-</map>

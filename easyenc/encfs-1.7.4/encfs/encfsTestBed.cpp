@@ -494,6 +494,26 @@ static bool processArgs(int argc, char *argv[], const shared_ptr<EncFS_Args> &ou
     return true;
 }
 
+int testImportExport (shared_ptr<EncFS_Args> encfsArgs) 
+{
+    // Write test program below
+    string encRoot = encfsArgs->opts->rootDir; 
+    string srcFolder = encfsArgs->mountPoint;
+    
+    YoucryptFolderOpts opts;
+    Credentials creds(new PassphraseCredentials("yet_another"));
+    cout << "Encrypted Folder is " << encRoot << endl;
+    opts.filenameEncryption = YoucryptFolderOpts::filenameEncrypt;
+    YoucryptFolder folder(path(encRoot), opts, creds);
+    
+    string destSuffix = path(srcFolder).filename().string();
+    cout << "Encrypting contents of " << srcFolder << " into " << encRoot << endl
+          << "at " << "/" << destSuffix << endl;    
+    folder.importContent(path(srcFolder), "try");
+    folder.exportContent(path("/tmp/gen"), "/");
+    return 0;
+}
+
 
 int main(int argc, char **argv)
 {
@@ -508,37 +528,16 @@ int main(int argc, char **argv)
     }
 
     RLogInit (argc, argv);
-    // Subscribe to every channel.
+    // Subscribe to every single channel.
     scoped_ptr<StdioNode> slog (new StdioNode (STDERR_FILENO) );
-    slog->subscribeTo (GetGlobalChannel ("error") );
-    slog->subscribeTo (GetGlobalChannel ("warning") );
-    slog->subscribeTo (GetGlobalChannel ("info") );
-    slog->subscribeTo (GetGlobalChannel ("debug") );
-
+    slog->subscribeTo (GetGlobalChannel ("info/youcrypt") );
+    slog->subscribeTo (GetGlobalChannel ("debug/youcrypt") );
     openssl_init( encfsArgs->isThreaded );
-
-    // Write test program below
-
-    string encRoot = encfsArgs->opts->rootDir; 
-    string srcFolder = encfsArgs->mountPoint;
     
-    YoucryptFolderOpts opts;
-    Credentials creds(new PassphraseCredentials("another"));
-    cout << "Encrypted Folder is " << encRoot << endl;
-    YoucryptFolder folder(path(encRoot),
-                          opts,
-                          creds);
-
-    folder.addCredential(Credentials(new PassphraseCredentials("yet_another")));
-
-    // string destSuffix = (path() / path(srcFolder).filename()).string();
-    // destSuffix.append (1, '/');
-    // cout << "Encrypting contents of " << srcFolder << " into " << encRoot << endl
-    //      << "at " << "/" << destSuffix << endl;    
-    // folder.importContent (path(srcFolder), destSuffix);
+    int res = testImportExport(encfsArgs);
 
     MemoryPool::destroyAll();
     openssl_shutdown( encfsArgs->isThreaded );
-    return 0;
+    return res;
 }
 

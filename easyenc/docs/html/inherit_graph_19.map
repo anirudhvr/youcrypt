@@ -1,7 +1,0 @@
-<map id="G" name="G">
-<area shape="rect" id="node1" href="$class_file_i_o.html" title="FileIO" alt="" coords="6,56,61,83"/>
-<area shape="rect" id="node3" href="$class_block_file_i_o.html" title="BlockFileIO" alt="" coords="110,31,194,57"/>
-<area shape="rect" id="node9" href="$class_raw_file_i_o.html" title="RawFileIO" alt="" coords="111,81,193,108"/>
-<area shape="rect" id="node5" href="$class_cipher_file_i_o.html" title="CipherFileIO" alt="" coords="243,5,333,32"/>
-<area shape="rect" id="node7" href="$class_m_a_c_file_i_o.html" title="MACFileIO" alt="" coords="246,56,330,83"/>
-</map>

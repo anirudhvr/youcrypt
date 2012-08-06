@@ -1,4 +1,3 @@
-gitignore
 config.h*
 config.status
 encfs.spec

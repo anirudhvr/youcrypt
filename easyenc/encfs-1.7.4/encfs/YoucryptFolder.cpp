@@ -24,82 +24,156 @@
 #include <iostream>
 #include <boost/filesystem.hpp>
 #include <boost/filesystem/fstream.hpp>
+#include <boost/algorithm/string.hpp>
 
 using boost::filesystem::path;
 using boost::filesystem::directory_iterator;
 using boost::filesystem::ifstream;
+using boost::filesystem::ofstream;
+
+using boost::split;
+using boost::is_any_of;
 
 using youcrypt::YoucryptFolder;
 using rel::Interface;
 
+using rlog::RLogChannel;
+using rlog::Log_Info;
+
+static RLogChannel * Info = DEF_CHANNEL( "info/youcrypt", Log_Info );
 
 
-static bool encryptFolder( shared_ptr<DirNode> root,
-                           const path &sourcePath,
-                           const string &destSuffix) {
+static bool encryptData(shared_ptr<FileNode> file,
+                        ifstream &input) {
+    unsigned char buf[1024];
+    off_t offset = 0;
+    while (!input.eof()) {
+        input.read((char *)buf, sizeof(buf));
+        file->write(offset, (unsigned char *)buf, input.gcount());
+        offset += input.gcount();
+    }
+    return true;
+}
 
-    if (exists(sourcePath)) {
-        // does p actually exist?
-        if (is_regular_file(sourcePath)) 
-        {
-            //  p is a regular file?                 
-            shared_ptr<FileNode> fnode = root->lookupNode (
-                (destSuffix + sourcePath.filename().string()).c_str(),
-                "create");
+static bool decryptData(shared_ptr<FileNode> node,
+                        ofstream &output) {
+    off_t offset = 0;
+    unsigned char buf[1024];
+    int blocks = (node->getSize() + sizeof(buf)-1) / sizeof(buf);
 
-            // FIXME:  take care of permissions.                
-            fnode->mknod (
-                S_IFREG | S_IRUSR | S_IWUSR | S_IWOTH | S_IROTH, 
-                0, 0, 0);
-            fnode->open (O_WRONLY);
+    for(int i=0; i<blocks; ++i) {
+        int bytes = node->read(offset, buf, sizeof(buf));
+        output.write((char *)buf, bytes);
+        offset += bytes;
+    }    
+    output.close();
+    return true;
+}
 
-            // FIXME:  do file IO to copy file contents.
-            ifstream file(sourcePath);
-            char buffer[1024];
-            off_t offset = 0;
-            while (!file.eof()) {
-                file.read (buffer, 1024);
-                fnode->write(offset, (unsigned char *)buffer, file.gcount());
-                offset += file.gcount();
-            }                                
+static void slashTerminate(string &str) 
+{
+    if (str[str.length() - 1] != '/')
+        str.append(1, '/');
+}
+
+
+//! Helper function to import content in from a directory.
+//! root is the root (DirNode) pointer of the volume.
+//! sourcePath is where to import from
+//! destSuffix is the suffix to the volume to import at.
+//!    eg.  /blah == ENCFSROOT/blah
+//! The function recurses if sourcePath is a directory.
+//! FIXME:  Handle symlinks and non-regular files (sock, pipe, etc)
+static bool encryptFolder(shared_ptr<DirNode> root,
+                              const path &sourcePath,
+                              string destSuffix) {
+    rLog(Info, "importing content %s -> %s", 
+         sourcePath.string().c_str(),
+         destSuffix.c_str());
+    struct stat st;
+    if (stat (sourcePath.string().c_str(), &st))
+        return false;
+    if ((st.st_mode & S_IFREG) == S_IFREG) {
+        shared_ptr<FileNode> fnode = root->lookupNode (
+            destSuffix.c_str(),
+            "yc-import");
+        fnode->mknod(st.st_mode | S_IWUSR, 0, 0, 0);
+        fnode->open(O_WRONLY);
+        ifstream file(sourcePath);
+        if (!encryptData(fnode, file))
+            return false;
+    } else if ((st.st_mode & S_IFDIR)) {
+        root->mkdir(destSuffix.c_str(), st.st_mode, 0, 0);
+        slashTerminate(destSuffix);
+        for (directory_iterator curr = directory_iterator(sourcePath); 
+             curr != directory_iterator(); ++curr) {
+            if (!encryptFolder(root,
+                               curr->path(),
+                               destSuffix + curr->path().filename().string()))
+                return false;
         }
-        else if (is_directory(sourcePath))      // is p a directory?
+    } // Handle symlinks here.
+    return true;
+}
+
+
+//! Similar to above; except for exporting content.  Copies
+//! <volSuffix>/ to <destPath>.  volSuffix should be a relative path in
+//! the encrypted folder.  (eg. /blah is ENCFSROOT/blah)
+//! FIXME: Symlinks are ignored.
+static bool decryptFolder( shared_ptr<DirNode> root,
+                           const path &destPath,
+                           string volSuffix) {
+
+    // Lookup directory node so we can create a destination directory
+    // with the same permissions
+    rLog(Info, "exporting content: %s -> %s", volSuffix.c_str(), 
+          destPath.string().c_str());
+    struct stat st;
+    shared_ptr<FileNode> node = 
+        root->lookupNode( volSuffix.c_str(), "yc-export" );
+    if(node->getAttr(&st))
+        return false;
+    if ((st.st_mode & S_IFREG) == S_IFREG) {
+        // Node's a regular file.
+        // Just copy the content.
+        int fd;
+        if ((fd = open(destPath.c_str(),
+                 O_CREAT | O_TRUNC | O_WRONLY,
+                       st.st_mode | S_IWUSR)) < 0)
+            return false;
+        close(fd);
+        node->open(O_RDONLY);
+
+        ofstream dest(destPath);
+        if (!decryptData(node, dest))
+            return false;
+    } else if ((st.st_mode & S_IFDIR)) {
+        // Node's a directory.
+        // Read and recurse
+        slashTerminate(volSuffix);
+        mkdir(destPath.string().c_str(), st.st_mode);
+        DirTraverse dt = root->openDir(volSuffix.c_str());
+        if(dt.valid())
         {
-            // FIXME:  take care of permissions.
-            root->mkdir( 
-                (destSuffix + sourcePath.filename().string()).c_str(),
-                0777, 0, 0);
-                
-            for (directory_iterator curr = directory_iterator(sourcePath); 
-                 curr != directory_iterator(); ++curr) {
-                if (!encryptFolder (root, 
-                               destSuffix + sourcePath.filename().string() 
-                               + string("/"),
-                                    curr->path().string()))
+            for(string name = dt.nextPlaintextName(); !name.empty(); 
+                name = dt.nextPlaintextName())
+            {
+                // Recurse to subdirectories
+                if(name == "." || name == "..")
+                    continue;
+                if (!decryptFolder(
+                        root, destPath / path(name), volSuffix + name))
                     return false;
             }
         }
-        else if (is_symlink(sourcePath)) {
-            ;
-            // FIXME: take care of symlinks that point within the
-            // tree being copied.
-            // FIXME: create a symlink.
-        }
-        else {   
-            ;
-            // FIXME:  Take care of these non-reg, non-dir, non-links.
-        }
-    }
-    else {
-        return false;
     }
     return true;
-
 }
 
 
 
-// Helper functions
+// Function declared in FileUtils to find ciphers.
 Cipher::CipherAlgorithm findCipherAlgorithm(const char *name, int keySize );
 
 
@@ -392,28 +466,36 @@ bool YoucryptFolder::createAtPath(const path& _rootPath,
     return true;
 }
 
-/*! (<blah> goes to /<blah> in the folder).
+/*! (/full/path/to/<blah> goes to /<blah> in the folder).
  */
 bool YoucryptFolder::importContent(const path& p) {
-    return importContent (p, "/");
+    return importContent (p, "/" + p.filename().string());
 }
 
 /*! Import path into relative path specified by the second argument.
  */
 bool YoucryptFolder::importContent(const path& sourcePath, 
-                                   const string& destSuffix) {
-    for (directory_iterator curr = directory_iterator(sourcePath);
-         curr != directory_iterator(); ++curr) {
-        encryptFolder(rootNode, *curr, destSuffix);
-    }
-    return true;
+                                   string destSuffix) {
+
+    if (destSuffix[0] != '/')
+        destSuffix.insert(0, 1, '/');
+    return encryptFolder(rootNode, sourcePath, destSuffix);
 }
 
 /*! Same as import, except not!
  */
-bool YoucryptFolder::exportContent(const path&, const path&) {
-    return true;
+bool YoucryptFolder::exportContent(const path& toPath, string volPath) {
+    if (volPath[0] != '/')
+        volPath.insert(0, 1, '/');
+    return decryptFolder(rootNode, toPath, volPath);
 }
+
+// /*! Import to the root of the volume
+//  */
+// bool YoucryptFolder::exportContent(const path& toPath) {
+//     return exportContent(toPath, "/" + toPath.filename().string());
+// }
+
 
 bool YoucryptFolder::addCredential(const Credentials& newCred) {
 

@@ -93,10 +93,10 @@ namespace youcrypt {
         bool importContent(const path&);
 
         //! Import content at the path specified into the dest (suffix).
-        bool importContent(const path&, const string&);
+        bool importContent(const path&, string);
 
         //! Same as import, except not!
-        bool exportContent(const path&, const path&);
+        bool exportContent(const path&, string);
 
         //! Add another cred. to an initialized folder
         bool addCredential(const Credentials&);
