@@ -503,13 +503,13 @@ int testImportExport (shared_ptr<EncFS_Args> encfsArgs)
     YoucryptFolderOpts opts;
     Credentials creds(new PassphraseCredentials("yet_another"));
     cout << "Encrypted Folder is " << encRoot << endl;
-    opts.filenameEncryption = YoucryptFolderOpts::filenameEncrypt;
+    //opts.filenameEncryption = YoucryptFolderOpts::filenameEncrypt;
     YoucryptFolder folder(path(encRoot), opts, creds);
     
     string destSuffix = path(srcFolder).filename().string();
     cout << "Encrypting contents of " << srcFolder << " into " << encRoot << endl
           << "at " << "/" << destSuffix << endl;    
-    folder.importContent(path(srcFolder), "try");
+    folder.importContent(path(srcFolder), "/try");
     folder.exportContent(path("/tmp/gen"), "/");
     return 0;
 }

@@ -383,7 +383,7 @@ bool YoucryptFolder::createAtPath(const path& _rootPath,
     config->allowHoles = allowHoles;
 
     config->salt.clear();
-    config->kdfIterations = 0; // filled in by keying function
+    config->kdfIterations = 16; // filled in by keying function
     config->desiredKDFDuration = desiredKDFDuration;
 
     // Create Volume Key
