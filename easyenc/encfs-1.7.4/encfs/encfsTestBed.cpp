@@ -531,6 +531,12 @@ int testMount(shared_ptr<EncFS_Args> encfsArgs)
     return 0;
 }
 
+int unitTestExportImport(shared_ptr<EncFS_Args> encfsArgs) 
+{
+    cout << "Unit test: YoucryptFolder create/import/export" << endl;
+    
+}
+
 
 int main(int argc, char **argv)
 {

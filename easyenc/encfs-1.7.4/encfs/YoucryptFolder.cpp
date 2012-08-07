@@ -61,9 +61,9 @@ static RLogChannel * Info = DEF_CHANNEL( "info/youcrypt", Log_Info );
 Cipher::CipherAlgorithm findCipherAlgorithm(const char *name, int keySize );
 
 
-
 static bool encryptData(shared_ptr<FileNode> file,
-                        ifstream &input) {
+                        ifstream &input) 
+{
     unsigned char buf[1024];
     off_t offset = 0;
     while (!input.eof()) {
@@ -75,7 +75,8 @@ static bool encryptData(shared_ptr<FileNode> file,
 }
 
 static bool decryptData(shared_ptr<FileNode> node,
-                        ofstream &output) {
+                        ofstream &output) 
+{
     off_t offset = 0;
     unsigned char buf[1024];
     int blocks = (node->getSize() + sizeof(buf)-1) / sizeof(buf);
@@ -142,7 +143,8 @@ static bool encryptFolder(shared_ptr<DirNode> root,
 //! FIXME: Symlinks are ignored.
 static bool decryptFolder( shared_ptr<DirNode> root,
                            const path &destPath,
-                           string volSuffix) {
+                           string volSuffix) 
+{
 
     // Lookup directory node so we can create a destination directory
     // with the same permissions
@@ -195,7 +197,8 @@ static bool decryptFolder( shared_ptr<DirNode> root,
  */
 YoucryptFolder::YoucryptFolder(const path &_rootPath, 
                                const YoucryptFolderOpts& _opts,
-                               const Credentials& creds) {
+                               const Credentials& creds) 
+{
     if (!loadConfigAtPath (_rootPath, creds))
         createAtPath (_rootPath, _opts, creds);
 }
@@ -210,7 +213,8 @@ YoucryptFolder::YoucryptFolder(const path &_rootPath,
  *  * forceDecode is always set.
  */
 bool YoucryptFolder::loadConfigAtPath(const path &_rootPath,
-                                      const Credentials& cred) {
+                                      const Credentials& cred) 
+{
  
     status = YoucryptFolder::statusUnknown;
 
@@ -496,7 +500,8 @@ bool YoucryptFolder::importContent(const path& p)
 /*! Import path into relative path specified by the second argument.
  */
 bool YoucryptFolder::importContent(const path& sourcePath, 
-                                   string destSuffix) {
+                                   string destSuffix) 
+{
     if ((status != YoucryptFolder::initialized) ||
         (status != YoucryptFolder::mounted)) 
         return false;
@@ -514,7 +519,8 @@ bool YoucryptFolder::importContent(const path& sourcePath,
 
 /*! Same as import, except not!
  */
-bool YoucryptFolder::exportContent(const path& toPath, string volPath) {
+bool YoucryptFolder::exportContent(const path& toPath, string volPath)
+{
 
     if ((status != YoucryptFolder::initialized) ||
         (status != YoucryptFolder::mounted)) 
@@ -531,11 +537,13 @@ bool YoucryptFolder::exportContent(const path& toPath, string volPath) {
     return ret;
 }
 
-bool YoucryptFolder::exportContent(const path& toPath) {
+bool YoucryptFolder::exportContent(const path& toPath)
+{
     return exportContent(toPath, "/");
 }
 
-bool YoucryptFolder::addCredential(const Credentials& newCred) {
+bool YoucryptFolder::addCredential(const Credentials& newCred) 
+{
 
     if ((status != YoucryptFolder::initialized) ||
         (status != YoucryptFolder::mounted))
