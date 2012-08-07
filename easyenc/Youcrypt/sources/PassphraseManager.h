@@ -31,6 +31,7 @@
 - (BOOL)setPassphrase:(NSString*) passphrase;
 - (BOOL)savePassphraseToKeychain;
 - (BOOL)deletePassphraseFromKeychain;
+- (void)getPassphraseFromUser;
 
 -(IBAction)goClicked:(id) sender;
 -(IBAction)closeButtonClicked:(id) sender;

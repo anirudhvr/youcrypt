@@ -156,7 +156,6 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
             dir.status = YoucryptDirectoryStatusSourceNotFound;
     }
     
-    
     [[[NSWorkspace sharedWorkspace] notificationCenter] addObserver:self selector:@selector(someUnMount:) name:NSWorkspaceDidUnmountNotification object:nil];
     [self someUnMount:nil];
 
@@ -202,7 +201,8 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
 
 
 
-- (BOOL)application:(NSApplication *)theApplication openFile:(NSString *)filename {    
+- (BOOL)application:(NSApplication *)theApplication openFile:(NSString *)filename {
+    NSLog(@"openFile");
     return [self openEncryptedFolder:filename];
 }
 
@@ -221,6 +221,8 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
     [statusItem setHighlightMode:YES];
     
     
+    NSLog(@"Awakefromnib");
+    
     if([configDir isFirstRun]) {
         //[self showListDirectories:self];
         DDLogInfo(@"Initiating First Run! ");
@@ -232,10 +234,16 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
 //            DDLogVerbose(@"Update PBS failed: %@", error);
 //        }
     } else {
-        [passphraseManager getPassphrase]; // get passphrase
+        [passphraseManager getPassphraseFromUser]; // get passphrase
     }
     
-    NSUpdateDynamicServices(); // Equivalent to calling /System/Library/CoreServices/pbs 
+    NSUpdateDynamicServices(); // Equivalent to calling /System/Library/CoreServices/pbs
+    
+    NSArray *args = [[NSProcessInfo processInfo] arguments];
+    if ([args count] > 1) {
+        NSLog(@"args:%@ ", args);
+        [self openEncryptedFolder:[args objectAtIndex:1]];
+    }
 
 }
 // --------------------------------------------------------------------------------------
@@ -251,6 +259,7 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
     // 4.  o/w, mount and open it.
     // 5.  Make sure we maintain it in our list.
     //--------------------------------------------------------------------------------------------------
+    NSLog(@"openEncryptedFolder");
     NSFileManager *fm = [NSFileManager defaultManager];
     BOOL isDir;
     if ([fm fileExistsAtPath:path isDirectory:&isDir] && isDir && ([[path pathExtension] isEqualToString:ENCRYPTED_DIRECTORY_EXTENSION])) {
@@ -569,7 +578,7 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
 
 - (IBAction)showDecryptWindow:(id)sender path:(NSString *)path mountPoint:(NSString *)mountPath {
     
-    if (configDir.firstRun)
+    if ([configDir isFirstRun])
         return;
     
     NSLog (@"DecryptQ: count=%ld, path=%@\n", [decryptQ count], path);
@@ -608,9 +617,6 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
             return;
     }
     
-    
-
-    
     // Is decryptController nil?
     if (!decryptController) {
         decryptController = [[Decrypt alloc] init];
@@ -619,9 +625,7 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
     decryptController.sourceFolderPath = path;
     decryptController.destFolderPath = mountPath;
         
-    NSString *pp = nil;
-    if ([passphraseManager getPassphrase])
-        pp = passphraseManager.passPhrase;
+    NSString *pp = [passphraseManager getPassphrase];
     
     // NSString *pp =[libFunctions getPassphraseFromKeychain:@"Youcrypt"];
     DDLogInfo(@"showing %@", decryptController);
@@ -640,7 +644,7 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
 
 - (IBAction)showRestoreWindow:(id)sender path:(NSString *)path {
 
-    if (configDir.firstRun)
+    if ([configDir isFirstRun])
         return;
 
     

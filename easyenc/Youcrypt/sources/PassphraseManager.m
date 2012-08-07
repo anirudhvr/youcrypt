@@ -25,16 +25,6 @@
 @synthesize pass;
 @synthesize closeButton;
 
-- (id)init
-{
-    self = [super init];
-    if (!self)
-        return nil;
-    passPhrase  = @"";
-    saveInKeychain = NO;
-    
-    return self;
-}
 
 - (id)initWithPrefController:(PreferenceController*)pref
               saveInKeychain:(BOOL)save {
@@ -44,10 +34,7 @@
     
     saveInKeychain = save;
     prefC = pref;
-    
-    closeButton = [self.window standardWindowButton:NSWindowCloseButton];
-    
-    [self.window orderOut:self];
+    passPhrase = @"";
     
     return self;
 }
@@ -61,10 +48,10 @@
     else
         [email setStringValue:@""];
     
-    [pass setStringValue:@"" ];
+    //[pass setStringValue:@"" ];
     
-    [closeButton setTarget:self];
-    [closeButton setAction:@selector(closeButtonClicked:)];
+    //[closeButton setTarget:self];
+    //[closeButton setAction:@selector(closeButtonClicked:)];
 }
 
 -(IBAction)closeButtonClicked:(id) sender
@@ -84,6 +71,7 @@
         [self savePassphraseToKeychain];
     
     [NSApp endSheet:self.window];
+    [self.window setIsVisible:NO];
     [self.window close];
 }
 
@@ -97,30 +85,29 @@
     return ret;
 }
 
+- (void)getPassphraseFromUser
+{
+    [NSApp runModalForWindow:[self window]];
+}
+
 - (NSString*)getPassphrase
 {
-    if ([passPhrase isNotEqualTo:@""]) {
-        return passPhrase;
-    } else {
-        [NSApp runModalForWindow:[self window]];
-        // [self showWindow:self];
-    }
-        
-    
-    if (saveInKeychain) {
-        NSError *error = nil;
-        NSString *passphraseFromKeychain = [SSKeychain passwordForService:YC_KEYCHAIN_SERVICENAME account:NSUserName() error:&error];
-        
-        if (error) {
-            DDLogInfo(@"PassphraseManager:getPassphrase: Did not get passphrase from Keychain");
-            return nil;
-        } else {
-            passPhrase = passphraseFromKeychain;
-            return passPhrase;
+    if (passPhrase == nil || [passPhrase isEqualToString:@""]) {
+        DDLogVerbose(@"Passphrase nil, checking Keychain");
+        if (saveInKeychain) {
+            NSError *error = nil;
+            NSString *passphraseFromKeychain = [SSKeychain passwordForService:YC_KEYCHAIN_SERVICENAME account:NSUserName() error:&error];
+            
+            if (error) {
+                DDLogInfo(@"PassphraseManager:getPassphrase: Did not get passphrase from Keychain");
+                return nil;
+            } else {
+                passPhrase = passphraseFromKeychain;
+            }
         }
-    } else {
-        return nil;
     }
+    
+    return passPhrase;
 }
 
 - (BOOL)savePassphraseToKeychain {

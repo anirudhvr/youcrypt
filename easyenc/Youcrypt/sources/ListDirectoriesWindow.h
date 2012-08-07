@@ -56,6 +56,7 @@
 - (void)setStatusToSelectedRow:(NSInteger)row;
 - (void)doOpenProxy:(NSInteger)row ;
 - (int)closeMountedFolder:(YoucryptDirectory*) dir;
+- (void)getPassphraseFromUser:(id) sender;
 
 // Toolbar / UI stuff
 - (IBAction)resizeWindow:(id)sender;
