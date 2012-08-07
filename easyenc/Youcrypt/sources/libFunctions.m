@@ -346,7 +346,7 @@
         DDLogVerbose(@"Could not exec dropbox location finder script");
     }
     
-   dropboxURL = @"get_dropbox_folder.sh: Dropbox database not found, is dropbox installed?\n";
+   // dropboxURL = @"get_dropbox_folder.sh: Dropbox database not found, is dropbox installed?\n";
     
     NSLog(@"Dropbox folder loc: %@",dropboxURL);
     if (dropboxURL) {
