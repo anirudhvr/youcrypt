@@ -163,7 +163,7 @@ static int withFileNode( const char *opName,
     return res;
 }
 
-int _do_getattr(FileNode *fnode, struct stat *stbuf)
+static int _do_getattr(FileNode *fnode, struct stat *stbuf)
 {
     int res = fnode->getAttr(stbuf);
     if(res == ESUCCESS && S_ISLNK(stbuf->st_mode))
@@ -358,7 +358,7 @@ int youcrypt_mount_unlink(const char *path)
 }
 
 
-int _do_rmdir(EncFS_Context *, const string &cipherPath, int )
+static int _do_rmdir(EncFS_Context *, const string &cipherPath, int )
 {
     return rmdir( cipherPath.c_str() );
 }
@@ -368,7 +368,7 @@ int youcrypt_mount_rmdir(const char *path)
     return withCipherPath( "rmdir", path, _do_rmdir, 0 );
 }
 
-int _do_readlink(EncFS_Context *ctx, const string &cyName,
+static int _do_readlink(EncFS_Context *ctx, const string &cyName,
                  tuple<char *, size_t> data )
 {
     char *buf = data.get<0>();
@@ -495,7 +495,7 @@ int youcrypt_mount_rename(const char *from, const char *to)
     return res;
 }
 
-int _do_chmod(EncFS_Context *, const string &cipherPath, mode_t mode)
+static int _do_chmod(EncFS_Context *, const string &cipherPath, mode_t mode)
 {
     return chmod( cipherPath.c_str(), mode );
 }
@@ -505,7 +505,7 @@ int youcrypt_mount_chmod(const char *path, mode_t mode)
     return withCipherPath( "chmod", path, _do_chmod, mode );
 }
 
-int _do_chown(EncFS_Context *, const string &cyName, 
+static int _do_chown(EncFS_Context *, const string &cyName, 
 	tuple<uid_t, gid_t> data)
 {
     int res = lchown( cyName.c_str(), data.get<0>(), data.get<1>() );
@@ -517,7 +517,7 @@ int youcrypt_mount_chown(const char *path, uid_t uid, gid_t gid)
     return withCipherPath( "chown", path, _do_chown, make_tuple(uid, gid));
 }
 
-int _do_truncate( FileNode *fnode, off_t size )
+static int _do_truncate( FileNode *fnode, off_t size )
 {
     return fnode->truncate( size );
 }
@@ -533,7 +533,7 @@ int youcrypt_mount_ftruncate(const char *path,
     return withFileNode( "ftruncate", path, fi, _do_truncate, size );
 }
 
-int _do_utime(EncFS_Context *, const string &cyName, struct utimbuf *buf)
+static int _do_utime(EncFS_Context *, const string &cyName, struct utimbuf *buf)
 {
     int res = utime( cyName.c_str(), buf);
     return (res == -1) ? -errno : ESUCCESS;
@@ -544,7 +544,7 @@ int youcrypt_mount_utime(const char *path, struct utimbuf *buf)
     return withCipherPath( "utime", path, _do_utime, buf );
 }
 
-int _do_utimens(EncFS_Context *, const string &cyName, 
+static int _do_utimens(EncFS_Context *, const string &cyName, 
 	const struct timespec ts[2])
 {
     struct timeval tv[2];
@@ -597,7 +597,7 @@ int youcrypt_mount_open(const char *path, struct fuse_file_info *file)
     return res;
 }
 
-int _do_flush(FileNode *fnode, int )
+static int _do_flush(FileNode *fnode, int )
 {
     /* Flush can be called multiple times for an open file, so it doesn't
        close the file.  However it is important to call close() for some
@@ -641,7 +641,7 @@ int youcrypt_mount_release(const char *path, struct fuse_file_info *finfo)
     }
 }
 
-int _do_read(FileNode *fnode, tuple<unsigned char *, size_t, off_t> data)
+static int _do_read(FileNode *fnode, tuple<unsigned char *, size_t, off_t> data)
 {
     return fnode->read( data.get<2>(), data.get<0>(), data.get<1>());
 }
@@ -653,7 +653,7 @@ int youcrypt_mount_read(const char *path, char *buf, size_t size, off_t offset,
             make_tuple((unsigned char *)buf, size, offset));
 }
 
-int _do_fsync(FileNode *fnode, int dataSync)
+static int _do_fsync(FileNode *fnode, int dataSync)
 {
     return fnode->sync( dataSync != 0 );
 }
@@ -664,7 +664,7 @@ int youcrypt_mount_fsync(const char *path, int dataSync,
     return withFileNode( "fsync", path, file, _do_fsync, dataSync );
 }
 
-int _do_write(FileNode *fnode, tuple<const char *, size_t, off_t> data)
+static int _do_write(FileNode *fnode, tuple<const char *, size_t, off_t> data)
 {
     size_t size = data.get<1>();
     if(fnode->write( data.get<2>(), (unsigned char *)data.get<0>(), size ))
@@ -713,7 +713,7 @@ int youcrypt_mount_statfs(const char *path, struct statvfs *st)
 
 
 #ifdef XATTR_ADD_OPT
-int _do_setxattr(EncFS_Context *, const string &cyName, 
+static int _do_setxattr(EncFS_Context *, const string &cyName, 
 	tuple<const char *, const char *, size_t, uint32_t> data)
 {
     int options = 0;
@@ -728,7 +728,7 @@ int youcrypt_mount_setxattr( const char *path, const char *name,
                            make_tuple(name, value, size, position) );
 }
 #else
-int _do_setxattr(EncFS_Context *, const string &cyName, 
+static int _do_setxattr(EncFS_Context *, const string &cyName, 
 	tuple<const char *, const char *, size_t, int> data)
 {
     return ::setxattr( cyName.c_str(), data.get<0>(), data.get<1>(), 
@@ -745,7 +745,7 @@ int youcrypt_mount_setxattr( const char *path, const char *name,
 
 
 #ifdef XATTR_ADD_OPT
-int _do_getxattr(EncFS_Context *, const string &cyName,
+static int _do_getxattr(EncFS_Context *, const string &cyName,
 	tuple<const char *, void *, size_t, uint32_t> data)
 {
     int options = 0;
@@ -761,7 +761,7 @@ int youcrypt_mount_getxattr( const char *path, const char *name,
                                       size, position), true );
 }
 #else
-int _do_getxattr(EncFS_Context *, const string &cyName,
+static int _do_getxattr(EncFS_Context *, const string &cyName,
 	tuple<const char *, void *, size_t> data)
 {
     return ::getxattr( cyName.c_str(), data.get<0>(), 
@@ -776,7 +776,7 @@ int youcrypt_mount_getxattr( const char *path, const char *name,
 #endif
 
 
-int _do_listxattr(EncFS_Context *, const string &cyName,
+static int _do_listxattr(EncFS_Context *, const string &cyName,
 	tuple<char *, size_t> data)
 {
 #ifdef XATTR_ADD_OPT
@@ -795,7 +795,7 @@ int youcrypt_mount_listxattr( const char *path, char *list, size_t size )
             make_tuple(list, size), true );
 }
 
-int _do_removexattr(EncFS_Context *, const string &cyName, const char *name)
+static int _do_removexattr(EncFS_Context *, const string &cyName, const char *name)
 {
 #ifdef XATTR_ADD_OPT
     int options = 0;
