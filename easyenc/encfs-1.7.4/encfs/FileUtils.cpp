@@ -36,6 +36,7 @@
 #include "StreamNameIO.h"
 #include "BlockNameIO.h"
 #include "NullNameIO.h"
+#include "YCNameIO.h"
 #include "Context.h"
 
 #include <rlog/rlog.h>
@@ -666,7 +667,6 @@ bool writeV4Config( const char *configFile,
     return cfg.save( configFile );
 }
 
-static
 Cipher::CipherAlgorithm findCipherAlgorithm(const char *name,
 	int keySize )
 {
@@ -1118,7 +1118,7 @@ RootPtr createV6Config( EncFS_Context *ctx,
 	if (opts->mangleFilename)
 	  nameIOIface = BlockNameIO::CurrentInterface();
 	else
-	  nameIOIface = NullNameIO::CurrentInterface();
+	  nameIOIface = YCNameIO::CurrentInterface();
         blockMACBytes = 8;
         blockMACRandBytes = 0; // using uniqueIV, so this isn't necessary
         uniqueIV = true;
@@ -1140,7 +1140,7 @@ RootPtr createV6Config( EncFS_Context *ctx,
 	if (opts->mangleFilename)
 	  nameIOIface = BlockNameIO::CurrentInterface();
 	else
-	  nameIOIface = NullNameIO::CurrentInterface();
+	  nameIOIface = YCNameIO::CurrentInterface();
 
         if (reverseEncryption)
         {
@@ -1799,7 +1799,7 @@ RootPtr initFS( EncFS_Context *ctx, const shared_ptr<EncFS_Opts> &opts )
                     break;
                 }
             }
-
+            ;
             /* old code below */
             if (i == config->easyencNumUsers)  {
                 // xgroup(diag)
@@ -1809,12 +1809,6 @@ RootPtr initFS( EncFS_Context *ctx, const shared_ptr<EncFS_Opts> &opts )
             }
         }
 
-	// If we're here, some passwd worked.
-	if (opts->talkbackMode) {
-	    cout << autosprintf("Passwd OK\n");
-	    close(0);
-	    close(1);
-	}
         userKey.reset();
 
 
