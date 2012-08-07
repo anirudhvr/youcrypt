@@ -14,33 +14,52 @@
 #include "YCNameIO.h"
 #include "DirNode.h"
 #include "Interface.h"
+#include "youcryptMountHelpers.h"
 
 #include "autosprintf.h"
 #include "i18n.h"
+#include "openssl.h"
 
 #include <rlog/rlog.h>
 #include <rlog/Error.h>
+#include <rlog/SyslogNode.h>
+#include <rlog/RLogChannel.h>
+
 
 #include <iostream>
 #include <boost/filesystem.hpp>
 #include <boost/filesystem/fstream.hpp>
 #include <boost/algorithm/string.hpp>
+#include <boost/tuple/tuple.hpp>
+#include <boost/scoped_ptr.hpp>
+#include <boost/shared_ptr.hpp>
+
+static FILE * consfd;
 
 using boost::filesystem::path;
 using boost::filesystem::directory_iterator;
 using boost::filesystem::ifstream;
 using boost::filesystem::ofstream;
 
+using boost::tuple;
 using boost::split;
 using boost::is_any_of;
+using boost::scoped_ptr;
+using boost::shared_ptr;
 
 using youcrypt::YoucryptFolder;
+
 using rel::Interface;
 
 using rlog::RLogChannel;
 using rlog::Log_Info;
+using rlog::SyslogNode;
 
 static RLogChannel * Info = DEF_CHANNEL( "info/youcrypt", Log_Info );
+
+// Function declared in FileUtils to find ciphers.
+Cipher::CipherAlgorithm findCipherAlgorithm(const char *name, int keySize );
+
 
 
 static bool encryptData(shared_ptr<FileNode> file,
@@ -172,11 +191,6 @@ static bool decryptFolder( shared_ptr<DirNode> root,
 }
 
 
-
-// Function declared in FileUtils to find ciphers.
-Cipher::CipherAlgorithm findCipherAlgorithm(const char *name, int keySize );
-
-
 /*! Implementation: Try to loadConfig and createAtPath otherwise.
  */
 YoucryptFolder::YoucryptFolder(const path &_rootPath, 
@@ -201,7 +215,7 @@ bool YoucryptFolder::loadConfigAtPath(const path &_rootPath,
     status = YoucryptFolder::statusUnknown;
 
     boost::shared_ptr<EncFSConfig> config(new EncFSConfig);
-    mountPoint = _rootPath;
+    rootPath = _rootPath;
     const string rootDir = _rootPath.string();
 
     if(readConfig( rootDir, config ) != Config_None)
@@ -299,6 +313,11 @@ bool YoucryptFolder::loadConfigAtPath(const path &_rootPath,
         fsConfig->opts.reset();
 
         rootNode = shared_ptr<DirNode>( new DirNode (0, rootDir, fsConfig));
+        ctx.publicFilesystem = false;
+        ctx.setRoot (rootNode);
+        ctx.opts.reset();
+        ctx.args.reset();
+
         status = YoucryptFolder::initialized;
         return true;
     } else
@@ -314,7 +333,7 @@ bool YoucryptFolder::createAtPath(const path& _rootPath,
 {
     status = YoucryptFolder::statusUnknown;
     
-    mountPoint = _rootPath;
+    rootPath = _rootPath;
     const string rootDir = _rootPath.string();
     bool enableIdleTracking = opts.idleTracking;
     const bool forceDecode = true;
@@ -459,6 +478,7 @@ bool YoucryptFolder::createAtPath(const path& _rootPath,
     ctx.publicFilesystem = false;
     ctx.setRoot (rootNode);
     ctx.opts.reset();
+    ctx.args.reset();
 
     // TODO: Need to set some context stuff
     
@@ -468,7 +488,8 @@ bool YoucryptFolder::createAtPath(const path& _rootPath,
 
 /*! (/full/path/to/<blah> goes to /<blah> in the folder).
  */
-bool YoucryptFolder::importContent(const path& p) {
+bool YoucryptFolder::importContent(const path& p) 
+{
     return importContent (p, "/" + p.filename().string());
 }
 
@@ -476,58 +497,227 @@ bool YoucryptFolder::importContent(const path& p) {
  */
 bool YoucryptFolder::importContent(const path& sourcePath, 
                                    string destSuffix) {
+    if ((status != YoucryptFolder::initialized) ||
+        (status != YoucryptFolder::mounted)) 
+        return false;
+    
+    YoucryptFolder::Status ostatus = status;
+    status = YoucryptFolder::processing;
 
     if (destSuffix[0] != '/')
         destSuffix.insert(0, 1, '/');
-    return encryptFolder(rootNode, sourcePath, destSuffix);
+
+    bool ret = encryptFolder(rootNode, sourcePath, destSuffix);
+    status = ostatus;
+    return ret;
 }
 
 /*! Same as import, except not!
  */
 bool YoucryptFolder::exportContent(const path& toPath, string volPath) {
+
+    if ((status != YoucryptFolder::initialized) ||
+        (status != YoucryptFolder::mounted)) 
+        return false;
+    
+    YoucryptFolder::Status ostatus = status;
+    status = YoucryptFolder::processing;
+
     if (volPath[0] != '/')
         volPath.insert(0, 1, '/');
-    return decryptFolder(rootNode, toPath, volPath);
+
+    bool ret = decryptFolder(rootNode, toPath, volPath);
+    status = ostatus;
+    return ret;
 }
 
-// /*! Import to the root of the volume
-//  */
-// bool YoucryptFolder::exportContent(const path& toPath) {
-//     return exportContent(toPath, "/" + toPath.filename().string());
-// }
-
+bool YoucryptFolder::exportContent(const path& toPath) {
+    return exportContent(toPath, "/");
+}
 
 bool YoucryptFolder::addCredential(const Credentials& newCred) {
 
     if ((status != YoucryptFolder::initialized) ||
-        (status != YoucryptFolder::mounted)) {
-
-        // Let other threads know that we're processing the config.
-        YoucryptFolder::Status ostatus = status;
-        status = YoucryptFolder::processing;
-        boost::shared_ptr<EncFSConfig> config(new EncFSConfig);
-        if (readConfig ( mountPoint.string(), config ) == Config_YC) {
-            // volumeKey and cipher should already be initialized.
-
-            int encodedKeySize = cipher->encodedKeySize();
-            unsigned char *encodedKey = new unsigned char[ encodedKeySize ];
-
-            newCred->encryptVolumeKey (volumeKey, cipher, encodedKey);
-            config->easyencNumUsers++;
-            config->easyencKeys.resize(config->easyencNumUsers);
-            config->easyencKeys[config->easyencNumUsers - 1].
-                assign(encodedKey, encodedKey+encodedKeySize);
-
-            status = ostatus;
-            return saveConfig(Config_YC, mountPoint.string(), config);
-        } else {
-            // Seems to be a config. error.  
-            // Update the status
-            status = YoucryptFolder::configError;
-            return false;
-        }
-    } else 
+        (status != YoucryptFolder::mounted))
         return false;
+
+    // Let other threads know that we're processing the config.
+    YoucryptFolder::Status ostatus = status;
+    status = YoucryptFolder::processing;
+
+    boost::shared_ptr<EncFSConfig> config(new EncFSConfig);
+    if (readConfig ( mountPoint.string(), config ) == Config_YC) {
+        // volumeKey and cipher should already be initialized.
+
+        int encodedKeySize = cipher->encodedKeySize();
+        unsigned char *encodedKey = new unsigned char[ encodedKeySize ];
+
+        newCred->encryptVolumeKey (volumeKey, cipher, encodedKey);
+        config->easyencNumUsers++;
+        config->easyencKeys.resize(config->easyencNumUsers);
+        config->easyencKeys[config->easyencNumUsers - 1].
+            assign(encodedKey, encodedKey+encodedKeySize);
+
+        status = ostatus;
+        return saveConfig(Config_YC, mountPoint.string(), config);
+    } else {
+        // Seems to be a config. error.  
+        // Update the status
+        status = YoucryptFolder::configError;
+        return false;
+    }
 }
 
+/*! Mount the decrypted folder at mountPoint.
+ *  Implementation currently uses osx fuse.
+ */
+bool YoucryptFolder::mount(const path &_mountPoint) 
+{
+    if (status != YoucryptFolder::initialized)
+        return false;
 
+    consfd = fdopen(dup(1), "a");
+    
+
+    mountPoint = _mountPoint;
+    pid_t newPid = fork();    
+    if (newPid < 0)
+        return false; // Error on fork.
+
+    else if (newPid == 0) {
+        // Child process
+
+        // Code copied from main.cpp(encfs)
+
+        // Set up the callbacks from fuse.
+        fuse_operations mount_oper;
+        memset(&mount_oper, 0, sizeof(fuse_operations));
+        mount_oper.getattr = youcrypt_mount_getattr;
+        mount_oper.readlink = youcrypt_mount_readlink;
+        mount_oper.getdir = youcrypt_mount_getdir; // deprecated for readdir
+        mount_oper.mknod = youcrypt_mount_mknod;
+        mount_oper.mkdir = youcrypt_mount_mkdir;
+        mount_oper.unlink = youcrypt_mount_unlink;
+        mount_oper.rmdir = youcrypt_mount_rmdir;
+        mount_oper.symlink = youcrypt_mount_symlink;
+        mount_oper.rename = youcrypt_mount_rename;
+        mount_oper.link = youcrypt_mount_link;
+        mount_oper.chmod = youcrypt_mount_chmod;
+        mount_oper.chown = youcrypt_mount_chown;
+        mount_oper.truncate = youcrypt_mount_truncate;
+        mount_oper.utime = youcrypt_mount_utime; // deprecated for utimens
+        mount_oper.open = youcrypt_mount_open;
+        mount_oper.read = youcrypt_mount_read;
+        mount_oper.write = youcrypt_mount_write;
+        mount_oper.statfs = youcrypt_mount_statfs;
+        mount_oper.flush = youcrypt_mount_flush;
+        mount_oper.release = youcrypt_mount_release;
+        mount_oper.fsync = youcrypt_mount_fsync;
+#ifdef HAVE_XATTR
+        mount_oper.setxattr = youcrypt_mount_setxattr;
+        mount_oper.getxattr = youcrypt_mount_getxattr;
+        mount_oper.listxattr = youcrypt_mount_listxattr;
+        mount_oper.removexattr = youcrypt_mount_removexattr;
+#endif // HAVE_XATTR
+        //mount_oper.opendir = youcrypt_mount_opendir;
+        //mount_oper.readdir = youcrypt_mount_readdir;
+        //mount_oper.releasedir = youcrypt_mount_releasedir;
+        //mount_oper.fsyncdir = youcrypt_mount_fsyncdir;
+        mount_oper.init = youcrypt_mount_init;
+        mount_oper.destroy = youcrypt_mount_destroy;
+        //mount_oper.access = youcrypt_mount_access;
+        //mount_oper.create = youcrypt_mount_create;
+        mount_oper.ftruncate = youcrypt_mount_ftruncate;
+        mount_oper.fgetattr = youcrypt_mount_fgetattr;
+        //mount_oper.lock = youcrypt_mount_lock;
+        mount_oper.utimens = youcrypt_mount_utimens;
+        //mount_oper.bmap = youcrypt_mount_bmap;
+        
+#if (__FreeBSD__ >= 10)
+        // mount_oper.setvolname
+        // mount_oper.exchange
+        // mount_oper.getxtimes
+        // mount_oper.setbkuptime
+        // mount_oper.setchgtime
+        // mount_oper.setcrtime
+        // mount_oper.chflags
+        // mount_oper.setattr_x
+        // mount_oper.fsetattr_x
+#endif
+
+        // Settings used in code below.
+        bool isThreaded = true;
+        bool ownerCreate = false;
+        bool isDaemon = true;
+
+        openssl_init( isThreaded );
+        ctx.publicFilesystem = ownerCreate;
+
+        int returnCode = EXIT_FAILURE;
+        ctx.setRoot(rootNode);
+        ctx.args.reset();
+        ctx.opts.reset();
+
+        // Create fuse args
+        char **fuseArgv = new char *[32];
+        int fuseArgc;
+        fuseArgv[0] = new char[strlen("youcryptFS") + 2];
+        strcpy(fuseArgv[0], "youcryptFS");
+        fuseArgv[1] = new char[mountPoint.string().length() + 2];
+        strcpy(fuseArgv[1], mountPoint.string().c_str());
+        fuseArgc = 2;
+
+        umask(0);            
+        if(isDaemon)
+        {
+            using namespace rlog;
+            // switch to logging just warning and error messages via syslog
+            scoped_ptr<SyslogNode> logNode(new SyslogNode("youcrypt"));
+            logNode->subscribeTo( GetGlobalChannel("warning") );
+            logNode->subscribeTo( GetGlobalChannel("error") );
+        }
+            
+        try
+        {
+            time_t startTime, endTime;
+            // FIXME: workaround for fuse_main returning an error on normal
+            // exit.  Only print information if fuse_main returned
+            // immediately..
+            time( &startTime );
+            
+                // fuse_main returns an error code in newer versions of fuse..
+            int res = fuse_main( fuseArgc,
+                                 const_cast<char**>(fuseArgv),
+                                 &mount_oper, (void*)&ctx);
+            time( &endTime );
+
+            if(res == 0)
+                returnCode = 0;
+
+            if(res != 0 && isDaemon && (endTime - startTime <= 1) )
+                returnCode = -1;
+
+        } catch(std::exception &ex)
+        {
+            rError(_("Internal error: Caught exception from main loop: %s"), 
+                   ex.what());
+            returnCode = -1;
+        } catch(...)
+        {
+            rError(_("Internal error: Caught unexpected exception"));
+            returnCode = -1;
+        }
+        openssl_shutdown( isThreaded );
+        exit(returnCode);
+    }
+
+    else if (newPid > 0) {
+        // Parent process.
+        int status;
+        waitpid(newPid, &status, 0);
+        if (WIFEXITED(status) && !(WEXITSTATUS(status)))
+            return true;
+        else
+            return false;
+    }
+}

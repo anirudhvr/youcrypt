@@ -97,11 +97,14 @@ namespace youcrypt {
 
         //! Same as import, except not!
         bool exportContent(const path&, string);
+        bool exportContent(const path&);
+
+        bool mount(const path&);
 
         //! Add another cred. to an initialized folder
         bool addCredential(const Credentials&);
 
-        //! Helper opts initialization function.
+        int currStatus() { return status; }
     public:
         enum Status {
             //! Status is not known (not parseable, not readable, etc.)
@@ -127,12 +130,12 @@ namespace youcrypt {
         boost::shared_ptr<DirNode> rootNode;
 
         path mountPoint;
+        path rootPath;
         Status status;
 
         //! FIXME:  Not yet implemented.  Need to do this.
         bool idleTracking;        
     };
-
 }
 
 #endif

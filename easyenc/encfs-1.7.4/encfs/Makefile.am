@@ -88,6 +88,7 @@ libencfs_la_SOURCES = \
     Credentials.cpp \
     YoucryptFolder.cpp \
     PassphraseCredentials.cpp \
+    youcryptMountHelpers.cpp \
     ${EXTRASRC}
 
 

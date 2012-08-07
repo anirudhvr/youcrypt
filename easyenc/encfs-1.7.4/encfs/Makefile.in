@@ -115,8 +115,8 @@ am__libencfs_la_SOURCES_DIST = readpassphrase.cpp base64.cpp \
 	BlockNameIO.cpp NullNameIO.cpp Interface.cpp MemoryPool.cpp \
 	NullCipher.cpp DirNode.cpp FileNode.cpp FileUtils.cpp \
 	openssl.cpp YCNameIO.cpp Credentials.cpp YoucryptFolder.cpp \
-	PassphraseCredentials.cpp ../intl/autosprintf.cpp \
-	SSL_Cipher.cpp
+	PassphraseCredentials.cpp youcryptMountHelpers.cpp \
+	../intl/autosprintf.cpp SSL_Cipher.cpp
 @BUILD_OPENSSL_TRUE@@BUILD_SSLCIPHER_TRUE@am__objects_1 =  \
 @BUILD_OPENSSL_TRUE@@BUILD_SSLCIPHER_TRUE@	SSL_Cipher.lo
 am__objects_2 = autosprintf.lo $(am__objects_1)
@@ -126,7 +126,8 @@ am_libencfs_la_OBJECTS = readpassphrase.lo base64.lo ConfigReader.lo \
 	NameIO.lo StreamNameIO.lo BlockNameIO.lo NullNameIO.lo \
 	Interface.lo MemoryPool.lo NullCipher.lo DirNode.lo \
 	FileNode.lo FileUtils.lo openssl.lo YCNameIO.lo Credentials.lo \
-	YoucryptFolder.lo PassphraseCredentials.lo $(am__objects_2)
+	YoucryptFolder.lo PassphraseCredentials.lo \
+	youcryptMountHelpers.lo $(am__objects_2)
 libencfs_la_OBJECTS = $(am_libencfs_la_OBJECTS)
 libencfs_la_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(AM_CXXFLAGS) \
@@ -402,6 +403,7 @@ libencfs_la_SOURCES = \
     Credentials.cpp \
     YoucryptFolder.cpp \
     PassphraseCredentials.cpp \
+    youcryptMountHelpers.cpp \
     ${EXTRASRC}
 
 encfs_SOURCES = \
@@ -676,6 +678,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/openssl.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/readpassphrase.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/test.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/youcryptMountHelpers.Plo@am__quote@
 
 .cpp.o:
 @am__fastdepCXX_TRUE@	$(CXXCOMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<

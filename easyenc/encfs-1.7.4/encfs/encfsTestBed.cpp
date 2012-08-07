@@ -514,6 +514,23 @@ int testImportExport (shared_ptr<EncFS_Args> encfsArgs)
     return 0;
 }
 
+int testMount(shared_ptr<EncFS_Args> encfsArgs) 
+{
+    // Write test program below
+    string encRoot = encfsArgs->opts->rootDir; 
+    string mountPoint = encfsArgs->mountPoint;
+    
+    YoucryptFolderOpts opts;
+    Credentials creds(new PassphraseCredentials("yet_another"));
+    cout << "Encrypted Folder is " << encRoot << endl;
+    YoucryptFolder folder(path(encRoot), opts, creds);
+
+    cout << "Mount point is " << mountPoint << endl;
+    if (!folder.mount(path(mountPoint))) 
+        cout << "Mount failed :-(" << endl;
+    return 0;
+}
+
 
 int main(int argc, char **argv)
 {
@@ -534,7 +551,7 @@ int main(int argc, char **argv)
     slog->subscribeTo (GetGlobalChannel ("debug/youcrypt") );
     openssl_init( encfsArgs->isThreaded );
     
-    int res = testImportExport(encfsArgs);
+    int res = testMount(encfsArgs);
 
     MemoryPool::destroyAll();
     openssl_shutdown( encfsArgs->isThreaded );
