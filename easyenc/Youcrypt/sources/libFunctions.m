@@ -347,7 +347,6 @@
     }
     
    // dropboxURL = @"get_dropbox_folder.sh: Dropbox database not found, is dropbox installed?\n";
-    
     NSLog(@"Dropbox folder loc: %@",dropboxURL);
     if (dropboxURL) {
         dropboxURL = [dropboxURL stringByReplacingOccurrencesOfString:@"\n" withString:@""];
