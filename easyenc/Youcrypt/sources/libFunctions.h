@@ -73,6 +73,7 @@
 
 + (BOOL) validateEmail: (NSString *) candidate;
 
++ (NSString*) getRealPathByResolvingSymlinks:(NSString*) path;
 
 
 @end

@@ -105,6 +105,8 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
     restoreQ = [[NSMutableArray alloc] init];
     
     
+    passphraseManager = [[PassphraseManager alloc] initWithPrefController:preferenceController saveInKeychain:NO];
+         
     
     
     
@@ -148,10 +150,6 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
         }
     }
     
-    passphraseManager = [[PassphraseManager alloc] initWithPrefController:preferenceController saveInKeychain:NO];
-    if (![configDir isFirstRun])
-        [passphraseManager showWindow:self]; // get passphrase
-         
     YoucryptDirectory *dir;
     for (dir in directories) {
         if (dir.status == YoucryptDirectoryStatusProcessing)
@@ -233,6 +231,8 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
 //        if (![self updatePBS:&error]) {
 //            DDLogVerbose(@"Update PBS failed: %@", error);
 //        }
+    } else {
+        [passphraseManager getPassphrase]; // get passphrase
     }
     
     NSUpdateDynamicServices(); // Equivalent to calling /System/Library/CoreServices/pbs 
@@ -424,7 +424,10 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
     dir.mountedDateAsString = [[NSDate date] descriptionWithCalendarFormat:@"%H:%M %m-%d-%Y" timeZone:nil locale:nil];
     [directories addObject:dir];
     if (listDirectories != nil) {
-        [listDirectories.table reloadData];                
+        [listDirectories.statusLabel setStringValue:@""];
+        [listDirectories.progressIndicator stopAnimation:listDirectories.window];
+        [listDirectories.progressIndicator setHidden:YES];
+        [listDirectories.table reloadData];
     }
     @synchronized(self) {
         [encryptQ removeObjectAtIndex:enQIndex];
@@ -449,6 +452,9 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
         
     }
     if (listDirectories != nil) {
+        [listDirectories.statusLabel setStringValue:@""];
+        [listDirectories.progressIndicator stopAnimation:listDirectories.window];
+        [listDirectories.progressIndicator setHidden:YES];
         [listDirectories.table reloadData];
     }
     @synchronized(self) {
@@ -668,7 +674,11 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
     if (!restoreController) {
         restoreController = [[RestoreController alloc] init];
     }
-
+    
+    [listDirectories.statusLabel setStringValue:@"Restoring"];
+    [listDirectories.progressIndicator setHidden:NO];
+    [listDirectories.progressIndicator startAnimation:listDirectories.window];
+    
     restoreController.path = path;
     NSString *pp = [passphraseManager getPassphrase];
     if (pp != nil && !([pp isEqualToString:@""])) {
@@ -716,6 +726,11 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
     if (!encryptController) {
         encryptController = [[Encrypt alloc] init];
     }
+    
+    [listDirectories.statusLabel setStringValue:@"Encrypting"];
+    [listDirectories.progressIndicator setHidden:NO];
+    [listDirectories.progressIndicator startAnimation:listDirectories.window];
+    
     
     NSString *pp =[passphraseManager getPassphrase];
     encryptController.sourceFolderPath = path;

@@ -34,6 +34,7 @@
 
 -(IBAction)goClicked:(id) sender;
 -(IBAction)closeButtonClicked:(id) sender;
+- (IBAction)IdRatherQuitThanEnterAPassword:(id)sender;
 
 @property (nonatomic, strong) NSString *passPhrase;
 @property (nonatomic, strong) NSString *serviceName;

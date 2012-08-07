@@ -23,7 +23,9 @@
 @interface ListDirectoriesWindow : NSWindowController <NSWindowDelegate, NSDraggingDestination, NSToolbarDelegate> {
     IBOutlet ListDirTable *table;
     IBOutlet NSTextField *dirName;          // The text field at the bottom.
+    IBOutlet NSTextField *statusLabel;
     IBOutlet NSImageView *backgroundImageView;
+    IBOutlet NSProgressIndicator *progressIndicator; 
 
     // Toolbar
     IBOutlet NSToolbar *toolbar;
@@ -37,6 +39,8 @@
 
 @property (atomic, strong) IBOutlet ListDirTable *table;
 @property (atomic, strong) IBOutlet NSImageView *backgroundImageView;
+@property (atomic, strong) IBOutlet NSTextField *statusLabel;
+@property (atomic, strong) IBOutlet NSProgressIndicator *progressIndicator;
 
 @property (nonatomic, strong) PassphraseSheetController *passphraseSheet;
 
@@ -51,6 +55,7 @@
 
 - (void)setStatusToSelectedRow:(NSInteger)row;
 - (void)doOpenProxy:(NSInteger)row ;
+- (int)closeMountedFolder:(YoucryptDirectory*) dir;
 
 // Toolbar / UI stuff
 - (IBAction)resizeWindow:(id)sender;

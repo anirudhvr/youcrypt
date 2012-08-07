@@ -10,6 +10,7 @@
 #import "libFunctions.h"
 #import "contrib/SSKeychain/SSKeychain.h"
 #import "PreferenceController.h"
+#import "AppDelegate.h"
 
 #define YC_KEYCHAIN_SERVICENAME @"com.Youcrypt"
 
@@ -46,6 +47,8 @@
     
     closeButton = [self.window standardWindowButton:NSWindowCloseButton];
     
+    [self.window orderOut:self];
+    
     return self;
 }
 
@@ -80,6 +83,7 @@
     if (saveInKeychain)
         [self savePassphraseToKeychain];
     
+    [NSApp endSheet:self.window];
     [self.window close];
 }
 
@@ -98,7 +102,8 @@
     if ([passPhrase isNotEqualTo:@""]) {
         return passPhrase;
     } else {
-        return nil;
+        [NSApp runModalForWindow:[self window]];
+        // [self showWindow:self];
     }
         
     
@@ -146,7 +151,6 @@
 
 - (BOOL)changePassphrase:(NSString*)newPassphrase
                  oldPass:(NSString*)oldPassphrase {
-    NSError *err;
     if ([passPhrase isEqualTo:@""]) {
         DDLogInfo(@"PassPhrase is empty; set with setPassPhrase");
         return NO;
@@ -162,6 +166,11 @@
         DDLogInfo(@"Stored passPhrase does not match provided passphrase");
         return NO;
     }
+}
+
+- (IBAction)IdRatherQuitThanEnterAPassword:(id)sender
+{
+    [theApp terminateApp:self];
 }
 
 @end

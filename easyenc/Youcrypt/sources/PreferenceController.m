@@ -36,6 +36,7 @@
     passphraseSheetController = [[PassphraseSheetController alloc] init];
     gmailSheetController = [[GmailSheetController alloc] init];
     firstRunSheetController = [[FirstRunSheetController alloc] init];
+    [self readPreferences];
     return self;
 }
 
@@ -56,36 +57,7 @@
 }
 
 - (void) readPreferences
-{ 
-    //    NSLog(@"Reading stored preferences");
-    NSString *prefValue;
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    for (NSString *prefKey in preferencesKeys) {
-        prefValue = [defaults stringForKey:prefKey];
-        
-        if(prefValue == nil){
-            [preferences setValue:[defaultPreferences objectForKey:prefKey] forKey:prefKey];
-            DDLogVerbose(@"WARNING: Setting %@ %@ was Nil in Defaults",prefKey,[defaultPreferences objectForKey:prefKey]);
-            
-        }
-        else{
-            [preferences setValue:prefValue forKey:prefKey];
-        }
-    }
-}
-
-- (void) savePreferences
 {
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults setValuesForKeysWithDictionary:preferences];
-    //   NSLog(@"SAVING:  %@",preferences);
-    [defaults synchronize];
-}
-
-
-- (void)awakeFromNib
-{	
-    
     /**
      * Set up default prefs
      */
@@ -116,11 +88,35 @@
                                                                        nil] 
                                                               forKeys:preferencesKeys];
 
-    /**
-     *  Load stored prefs from NSUserDefaults
-     */
-    [self readPreferences];   
-    DDLogVerbose(@"prefs : %@",preferences);
+    //    NSLog(@"Reading stored preferences");
+    NSString *prefValue;
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    for (NSString *prefKey in preferencesKeys) {
+        prefValue = [defaults stringForKey:prefKey];
+        
+        if(prefValue == nil){
+            [preferences setValue:[defaultPreferences objectForKey:prefKey] forKey:prefKey];
+            DDLogVerbose(@"WARNING: Setting %@ %@ was Nil in Defaults",prefKey,[defaultPreferences objectForKey:prefKey]);
+            
+        }
+        else{
+            [preferences setValue:prefValue forKey:prefKey];
+        }
+    }
+}
+
+- (void) savePreferences
+{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setValuesForKeysWithDictionary:preferences];
+    //   NSLog(@"SAVING:  %@",preferences);
+    [defaults synchronize];
+}
+
+
+- (void)awakeFromNib
+{	
+    
 
     /**
      * Set UI values to match prefs read from NSUserDEfaults

@@ -225,8 +225,17 @@
     BOOL errOccurred = NO;
     NSFileManager *fm = [NSFileManager defaultManager];
 
-    if (![fm fileExistsAtPath:[tempFolder stringByAppendingPathComponent:YOUCRYPT_XMLCONFIG_FILENAME]])
+    /* 
+     * First check if tempFolder was mounted
+     */
+    
+    NSString *resolvedPath = [libFunctions getRealPathByResolvingSymlinks:tempFolder];
+    if (resolvedPath == nil)
+        resolvedPath = tempFolder;
+    
+    if (![YoucryptDirectory pathIsMounted:resolvedPath])
         return;
+    
     [[[NSWorkspace sharedWorkspace] notificationCenter] removeObserver:self];
     
     // Now to move the contents of tempFolder into destFolder

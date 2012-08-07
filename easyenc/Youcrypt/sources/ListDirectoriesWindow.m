@@ -19,6 +19,8 @@
 @synthesize table;
 @synthesize passphraseSheet;
 @synthesize backgroundImageView;
+@synthesize progressIndicator;
+@synthesize statusLabel;
 
 - (id)init
 {
@@ -82,6 +84,8 @@
     [table setImageViewUnderTable:backgroundImageView];
     [table setUpTrackingArea];
     
+    [progressIndicator setHidden:YES];
+    
 }
 
 - (IBAction)doEncrypt:(id)sender {
@@ -128,7 +132,7 @@
 //    NSLog(@"Selected row %ld", row);
     
     YoucryptDirectory *dir = [theApp.directories objectAtIndex:row];
-    [dirName setStringValue:[NSString stringWithFormat:@"   %@: %@", [YoucryptDirectory statusToString:dir.status], dir.path]];
+    [dirName setStringValue:[NSString stringWithFormat:@"   %@",[dir.path stringByDeletingPathExtension]]];
 }
 
 - (IBAction)addNew:(id)sender {
@@ -154,14 +158,21 @@
     NSInteger row = [table selectedRow];
     if (row < [theApp.directories count] && row != -1) {
         YoucryptDirectory *dir = [theApp.directories objectAtIndex:row];
+        
+        if (dir.status == YoucryptDirectoryStatusMounted) {
+            int ret = [self closeMountedFolder:dir];
+            if (ret) {
+                printCloseError(ret);
+                return;
+            }
+        }
+        
         if (dir.status == YoucryptDirectoryStatusSourceNotFound || 
             dir.status == YoucryptDirectoryStatusNotFound) {
             [table beginUpdates];
             [table removeRowsAtIndexes:[[NSIndexSet alloc] initWithIndex:row] withAnimation:NSTableViewAnimationSlideUp];
             [table endUpdates];
             [theApp.directories removeObjectAtIndex:row];
-        } else if (dir.status == YoucryptDirectoryStatusMounted) {
-            [[NSAlert alertWithMessageText:@"Cannot remove a mounted directory" defaultButton:@"OK" alternateButton:nil  otherButton:nil informativeTextWithFormat:@""] runModal];             
         } else if (dir.status == YoucryptDirectoryStatusUnmounted) {
             long retCode;
             if((retCode = [[NSAlert alertWithMessageText:@"Decrypt and Restore" defaultButton:@"Yes" alternateButton:@"No, delete the data." otherButton:@"Cancel" informativeTextWithFormat:@"You have chosen to permanently decrypt the encrypted folder at %@.  Restore contents?", [dir.path stringByDeletingLastPathComponent]] runModal]) == NSAlertDefaultReturn) {
@@ -173,14 +184,30 @@
 //            NSImage *generic = [[NSWorkspace sharedWorkspace] iconForFileType:NSFileTypeForHFSTypeCode(kGenericFolderIcon)];
 //            BOOL didSetIcon = [[NSWorkspace sharedWorkspace] setIcon:generic forFile:[[dir path] stringByDeletingLastPathComponent] options:0];
 //            NSLog(@"Icon reset : %d for %@",didSetIcon,[[dir path] stringByDeletingLastPathComponent]);
+            
         }
+        
     }
     [dirName setStringValue:@""];
     [table reloadData];
 }
 
-- (BOOL)closeMountedFolder:(YoucryptDirectory*)dir
+- (int)closeMountedFolder:(YoucryptDirectory*)dir
 {
+    NSString *mountedPath = [dir mountedPath];
+    DDLogVerbose(@"Trying to unmount %@",mountedPath);
+    int ret = [libFunctions execCommand:UMOUNT_CMD arguments:[NSArray arrayWithObject:mountedPath] env:nil];
+    return ret;
+}
+
+void printCloseError(int ret)
+{
+    if (ret != 0) {
+        NSString *errString = [NSString stringWithFormat:@"%s", strerror(ret)];
+        [[NSAlert alertWithMessageText:errString defaultButton:@"OK" alternateButton:nil  otherButton:nil informativeTextWithFormat:@""] runModal];
+    } else if (ret == -1) {
+        [[NSAlert alertWithMessageText:@"Closing directory failed: unknown error" defaultButton:@"OK" alternateButton:nil  otherButton:nil informativeTextWithFormat:@""] runModal];
+    }
     
 }
 
@@ -188,15 +215,11 @@
 - (IBAction)close:(id)sender {
     NSInteger row = [table selectedRow];
     if (row < [theApp.directories count] && row != -1) {
-        NSString *mountedPath = [[theApp.directories objectAtIndex:row] mountedPath];
-        DDLogVerbose(@"Trying to unmount %@",mountedPath);
-        int ret = [libFunctions execCommand:UMOUNT_CMD arguments:[NSArray arrayWithObject:mountedPath] env:nil];
-        if (ret > 0) {
-            NSString *errString = [NSString stringWithFormat:@"%s", strerror(ret)];
-            [[NSAlert alertWithMessageText:errString defaultButton:@"OK" alternateButton:nil  otherButton:nil informativeTextWithFormat:@""] runModal];
-        } else if (ret == -1) {
-            [[NSAlert alertWithMessageText:@"Closing directory failed: unknown error" defaultButton:@"OK" alternateButton:nil  otherButton:nil informativeTextWithFormat:@""] runModal];
-        }
+        YoucryptDirectory *dir = [theApp.directories objectAtIndex:row];
+        
+        int ret = [self closeMountedFolder:dir];
+        printCloseError(ret);
+        
     }
     [table reloadData];
 }

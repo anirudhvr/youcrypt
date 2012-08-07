@@ -168,6 +168,7 @@
 		E6C046D715AE2846004B52E5 /* CompressingLogFileManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 252C3A971593E84F0044EB3C /* CompressingLogFileManager.m */; };
 		E6C046DB15AE29AA004B52E5 /* SSKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = E6C046DA15AE29AA004B52E5 /* SSKeychain.m */; };
 		E6C046DD15AE2B63004B52E5 /* Sparkle.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = E6C0468015AE1733004B52E5 /* Sparkle.framework */; };
+		E6D72B8615D0936900C2A13F /* rightclickoptions.png in Resources */ = {isa = PBXBuildFile; fileRef = E6D72B8515D0936900C2A13F /* rightclickoptions.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -424,6 +425,7 @@
 		E6C046D015AE2321004B52E5 /* XMLReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = XMLReader.m; path = contrib/XMLReader/XMLReader.m; sourceTree = SOURCE_ROOT; };
 		E6C046D915AE29AA004B52E5 /* SSKeychain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSKeychain.h; sourceTree = "<group>"; };
 		E6C046DA15AE29AA004B52E5 /* SSKeychain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSKeychain.m; sourceTree = "<group>"; };
+		E6D72B8515D0936900C2A13F /* rightclickoptions.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = rightclickoptions.png; sourceTree = "<group>"; };
 		E6E2A0B6159266F6003E3F6C /* YoucryptService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = YoucryptService.m; path = sources/YoucryptService.m; sourceTree = "<group>"; };
 		E6E2A0B7159266F6003E3F6C /* YoucryptService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = YoucryptService.h; path = sources/YoucryptService.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -778,6 +780,7 @@
 		E6BEB6C915A3A72000878D4B /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				E6D72B8515D0936900C2A13F /* rightclickoptions.png */,
 				E68F199515B4EE67008A90FC /* screenshot-rightclick.png */,
 				E68F199315B4E265008A90FC /* screenshot-open.png */,
 				E67AC5C815AFB0C4005A7938 /* Grey_Open_Folder.png */,
@@ -1123,6 +1126,7 @@
 				E68F199615B4EE67008A90FC /* screenshot-rightclick.png in Resources */,
 				2537E39515B4F1660034E6E3 /* About.xib in Resources */,
 				E6A3907F15CB3104007388BE /* AskPassphrase.xib in Resources */,
+				E6D72B8615D0936900C2A13F /* rightclickoptions.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

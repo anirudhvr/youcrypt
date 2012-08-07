@@ -378,6 +378,19 @@
     return [emailTest evaluateWithObject:candidate];
 }
 
+#include <stdlib.h>
++ (NSString*) getRealPathByResolvingSymlinks:(NSString*) path
+{
+    const char *inPath = [path cStringUsingEncoding:NSASCIIStringEncoding];
+    char *output = NULL;
+    
+    if ((output = realpath(inPath, NULL))) {
+        return [NSString stringWithCString:output encoding:NSASCIIStringEncoding];
+    } else {
+        return nil;
+    }
+}
+
 
 
 @end

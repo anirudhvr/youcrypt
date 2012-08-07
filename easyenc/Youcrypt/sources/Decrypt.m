@@ -110,7 +110,7 @@
                                            defaultButton:@"Yes, change this" 
                                          alternateButton:@"No, leave this as is" 
                                              otherButton:nil 
-                               informativeTextWithFormat:@"Passphrase for %@ is different from your youcrypt passphrase.  Do you want to change the passphrase of the folder to your keychain passphrase?", sourceFolderPath] runModal];
+                               informativeTextWithFormat:@"Passphrase for %@ is different from your stored YouCrypt passphrase.  Do you want to change the passphrase for the folder to your YouCrypt passphrase?", sourceFolderPath] runModal];
             if (retCode == NSAlertDefaultReturn) {
                 //FIXME:  Show an error if this failed ?
                 BOOL ret = [libFunctions changeEncFSPasswd:sourceFolderPath 
