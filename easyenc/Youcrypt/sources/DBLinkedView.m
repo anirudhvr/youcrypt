@@ -41,7 +41,7 @@
 {
     selectedDBFolders = nil;
     NSString *str = [libFunctions locateDropboxFolder];
-    if (str == nil) {
+    if ([str isEqualToString:@""]) {
         [chooseDBFoldersToEncrypt setHidden:YES];
         [newYCFolderInDropbox setHidden:YES];
         [hiddenErrormsg setHidden:NO];
@@ -79,7 +79,7 @@
     
     if ([newYCFolderInDropbox state] == NSOnState) {
         NSString *dbloc = [libFunctions locateDropboxFolder];
-        if (dbloc != nil) {
+        if ([dbloc isNotEqualTo:@""]) {
             NSString* newYCfolder = [dbloc stringByAppendingPathComponent:@"/YouCrypt"];
             if ([libFunctions mkdirRecursive:newYCfolder]) {
                 [selectedDBFolders addObject:newYCfolder];
