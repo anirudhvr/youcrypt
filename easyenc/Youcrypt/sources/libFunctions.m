@@ -340,15 +340,13 @@
     if ([self execWithSocket:dropboxScript arguments:nil env:nil io:fh proc:dropboxTask]) {
         [dropboxTask waitUntilExit];
         NSData *bytes = [fh availableData];
-        fprintf(stdout, "data read success\n"); fflush(stdout);
         dropboxURL = [[NSString alloc] initWithData:bytes encoding:NSUTF8StringEncoding];
-        fprintf(stdout, "Got Dropbox url \n"); fflush(stdout);
         [fh closeFile];
     } else {
         DDLogVerbose(@"Could not exec dropbox location finder script");
     }
     
-  //  dropboxURL = [NSString stringWithString:@"get_dropbox_folder.sh: Dropbox database not found, is dropbox installed?\n"];
+   dropboxURL = @"get_dropbox_folder.sh: Dropbox database not found, is dropbox installed?\n";
     
     NSLog(@"Dropbox folder loc: %@",dropboxURL);
     if (dropboxURL) {
@@ -359,7 +357,7 @@
         
         if ([dbLocTest evaluateWithObject:dropboxURL]) {
             DDLogVerbose(@"Dropbox not installed - location not found");
-            dropboxURL = nil;
+            dropboxURL = @"";
         }
     }
    
