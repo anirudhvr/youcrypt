@@ -75,5 +75,7 @@
 
 + (NSString*) getRealPathByResolvingSymlinks:(NSString*) path;
 
++ (int) testImportExport;
+
 
 @end

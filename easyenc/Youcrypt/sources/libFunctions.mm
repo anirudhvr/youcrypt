@@ -363,7 +363,7 @@
     return dropboxURL;
 }
 
-+ (NSString*) appBundlePath 
++ (NSString*) appBundlePath
 {
     return [[NSURL fileURLWithPath:[[NSBundle mainBundle] bundlePath]] path];
 }
@@ -388,6 +388,37 @@
     }
 }
 
+
+#include <string>
+#include <iostream>
+#include "encfs-core/YoucryptFolder.h"
+#include "encfs-core/Credentials.h"
+#include "encfs-core/PassphraseCredentials.h"
+
+using std::cout;
+using std::string;
+using std::endl;
+using namespace youcrypt;
+
++ (int) testImportExport
+{
+    // Write test program below
+    std::string encRoot = "/tmp/d";
+    string srcFolder = "/tmp/s";
+    
+    YoucryptFolderOpts opts;
+    Credentials creds(new PassphraseCredentials("yet_another"));
+    cout << "Encrypted Folder is " << encRoot << endl;
+    //opts.filenameEncryption = YoucryptFolderOpts::filenameEncrypt;
+    YoucryptFolder folder(path(encRoot), opts, creds);
+    
+    string destSuffix = path(srcFolder).filename().string();
+    cout << "Encrypting contents of " << srcFolder << " into " << encRoot << endl
+          << "at " << "/" << destSuffix << endl;    
+    folder.importContent(path(srcFolder), "/try");
+    folder.exportContent(path("/tmp/gen"), "/");
+    return 0;
+}
 
 
 @end

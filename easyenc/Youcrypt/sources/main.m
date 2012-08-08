@@ -7,10 +7,11 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "libFunctions.h"
 
-@class FileSystemsController;
 
 int main(int argc, char *argv[])
 {
+    [libFunctions testImportExport];
     return NSApplicationMain(argc, (const char **)argv);
 }

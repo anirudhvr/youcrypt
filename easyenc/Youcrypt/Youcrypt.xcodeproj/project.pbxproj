@@ -57,9 +57,9 @@
 		25EE6A5915928D2C008A0DC8 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25EE6A5815928D2C008A0DC8 /* Security.framework */; };
 		25F3D14C15923FE800E3383C /* Decrypt.m in Sources */ = {isa = PBXBuildFile; fileRef = 25F3D14A15923FE800E3383C /* Decrypt.m */; };
 		25F3D14D15923FE800E3383C /* Decrypt.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25F3D14B15923FE800E3383C /* Decrypt.xib */; };
-		25F3D1511592435600E3383C /* libFunctions.m in Sources */ = {isa = PBXBuildFile; fileRef = 25F3D1501592435600E3383C /* libFunctions.m */; };
+		25F3D1511592435600E3383C /* libFunctions.mm in Sources */ = {isa = PBXBuildFile; fileRef = 25F3D1501592435600E3383C /* libFunctions.mm */; };
 		25F3D15B159244E800E3383C /* Encrypt.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25F3D159159244E800E3383C /* Encrypt.xib */; };
-		E007C09D15A646B500D60802 /* libFunctions.m in Sources */ = {isa = PBXBuildFile; fileRef = 25F3D1501592435600E3383C /* libFunctions.m */; };
+		E007C09D15A646B500D60802 /* libFunctions.mm in Sources */ = {isa = PBXBuildFile; fileRef = 25F3D1501592435600E3383C /* libFunctions.mm */; };
 		E007C09F15A646DC00D60802 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25EE6A5815928D2C008A0DC8 /* Security.framework */; };
 		E01A6CD315AE3D1F004F442C /* SSKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = E6C046DA15AE29AA004B52E5 /* SSKeychain.m */; };
 		E01A6CD415AE3D25004F442C /* CompressingLogFileManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 252C3A971593E84F0044EB3C /* CompressingLogFileManager.m */; };
@@ -169,6 +169,10 @@
 		E6C046DB15AE29AA004B52E5 /* SSKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = E6C046DA15AE29AA004B52E5 /* SSKeychain.m */; };
 		E6C046DD15AE2B63004B52E5 /* Sparkle.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = E6C0468015AE1733004B52E5 /* Sparkle.framework */; };
 		E6D72B8615D0936900C2A13F /* rightclickoptions.png in Resources */ = {isa = PBXBuildFile; fileRef = E6D72B8515D0936900C2A13F /* rightclickoptions.png */; };
+		E6D7D2AE15D273F400780915 /* libyc-encfs-static.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E6D7D2AC15D26AD100780915 /* libyc-encfs-static.a */; };
+		E6D7D2B215D27D6700780915 /* libosxfuse_i64.2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E6D7D2B115D27D6700780915 /* libosxfuse_i64.2.dylib */; };
+		E6D7D2B315D27E2400780915 /* libosxfuse_i64.2.dylib in Resources */ = {isa = PBXBuildFile; fileRef = E6D7D2B115D27D6700780915 /* libosxfuse_i64.2.dylib */; };
+		E6D7D2B515D27E9E00780915 /* librlog.5.0.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2537E34A15B125320034E6E3 /* librlog.5.0.0.dylib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -185,6 +189,13 @@
 			proxyType = 2;
 			remoteGlobalIDString = E6695611159D1B7B002323AD;
 			remoteInfo = StartOnLogin;
+		};
+		E6D7D2AB15D26AD100780915 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E6D7D2A015D26AD100780915 /* yc-encfs.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = E6B544D715D2633F0045E3B3;
+			remoteInfo = "yc-encfs-static";
 		};
 /* End PBXContainerItemProxy section */
 
@@ -296,7 +307,7 @@
 		25F3D14915923FE800E3383C /* Decrypt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Decrypt.h; path = sources/Decrypt.h; sourceTree = "<group>"; };
 		25F3D14A15923FE800E3383C /* Decrypt.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Decrypt.m; path = sources/Decrypt.m; sourceTree = "<group>"; };
 		25F3D14B15923FE800E3383C /* Decrypt.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Decrypt.xib; sourceTree = "<group>"; };
-		25F3D1501592435600E3383C /* libFunctions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = libFunctions.m; path = sources/libFunctions.m; sourceTree = "<group>"; };
+		25F3D1501592435600E3383C /* libFunctions.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = libFunctions.mm; path = sources/libFunctions.mm; sourceTree = "<group>"; };
 		25F3D159159244E800E3383C /* Encrypt.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Encrypt.xib; sourceTree = "<group>"; };
 		25FDA07015A269B1004F2914 /* Automator.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Automator.framework; path = System/Library/Frameworks/Automator.framework; sourceTree = SDKROOT; };
 		E01A6CDA15AE57A9004F442C /* libcommonCrypto.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcommonCrypto.dylib; path = usr/lib/system/libcommonCrypto.dylib; sourceTree = SDKROOT; };
@@ -426,6 +437,9 @@
 		E6C046D915AE29AA004B52E5 /* SSKeychain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSKeychain.h; sourceTree = "<group>"; };
 		E6C046DA15AE29AA004B52E5 /* SSKeychain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSKeychain.m; sourceTree = "<group>"; };
 		E6D72B8515D0936900C2A13F /* rightclickoptions.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = rightclickoptions.png; sourceTree = "<group>"; };
+		E6D7D2A015D26AD100780915 /* yc-encfs.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "yc-encfs.xcodeproj"; path = "yc-encfs/yc-encfs.xcodeproj"; sourceTree = "<group>"; };
+		E6D7D2AF15D27CD100780915 /* librlog.5.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = librlog.5.0.0.dylib; path = lib/librlog.5.0.0.dylib; sourceTree = "<group>"; };
+		E6D7D2B115D27D6700780915 /* libosxfuse_i64.2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libosxfuse_i64.2.dylib; path = lib/libosxfuse_i64.2.dylib; sourceTree = "<group>"; };
 		E6E2A0B6159266F6003E3F6C /* YoucryptService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = YoucryptService.m; path = sources/YoucryptService.m; sourceTree = "<group>"; };
 		E6E2A0B7159266F6003E3F6C /* YoucryptService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = YoucryptService.h; path = sources/YoucryptService.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -435,6 +449,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E6D7D2B515D27E9E00780915 /* librlog.5.0.0.dylib in Frameworks */,
+				E6D7D2B215D27D6700780915 /* libosxfuse_i64.2.dylib in Frameworks */,
+				E6D7D2AE15D273F400780915 /* libyc-encfs-static.a in Frameworks */,
 				2537E38115B492720034E6E3 /* StartOnLogin.framework in Frameworks */,
 				E67AC5BA15AF9BE3005A7938 /* QuartzCore.framework in Frameworks */,
 				E6C0468115AE1733004B52E5 /* Sparkle.framework in Frameworks */,
@@ -481,6 +498,9 @@
 		256C3550158EA75F00E2BEC4 = {
 			isa = PBXGroup;
 			children = (
+				E6D7D2B115D27D6700780915 /* libosxfuse_i64.2.dylib */,
+				E6D7D2AF15D27CD100780915 /* librlog.5.0.0.dylib */,
+				E6D7D2A015D26AD100780915 /* yc-encfs.xcodeproj */,
 				E66988C3159D403B002323AD /* StartOnLogin.xcodeproj */,
 				256C356B158EA75F00E2BEC4 /* main.m */,
 				E06E2B3F15A7671B00E52B2D /* constants.h */,
@@ -616,7 +636,7 @@
 				E0C5AC9F15A50B5B000FC253 /* ConfigDirectory.h */,
 				E0C5ACA215A50BC1000FC253 /* ConfigDirectory.m */,
 				E6649C7C15A53CFC0096886F /* libFunctions.h */,
-				25F3D1501592435600E3383C /* libFunctions.m */,
+				25F3D1501592435600E3383C /* libFunctions.mm */,
 				E6E2A0B7159266F6003E3F6C /* YoucryptService.h */,
 				E6E2A0B6159266F6003E3F6C /* YoucryptService.m */,
 				253C3D7D159BBF9400120B8D /* BoxFSA.h */,
@@ -930,6 +950,14 @@
 			path = SSKeychain;
 			sourceTree = "<group>";
 		};
+		E6D7D2A115D26AD100780915 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E6D7D2AC15D26AD100780915 /* libyc-encfs-static.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1012,6 +1040,10 @@
 					ProductGroup = E635DE8915AE2BAA00A81117 /* Products */;
 					ProjectRef = E66988C3159D403B002323AD /* StartOnLogin.xcodeproj */;
 				},
+				{
+					ProductGroup = E6D7D2A115D26AD100780915 /* Products */;
+					ProjectRef = E6D7D2A015D26AD100780915 /* yc-encfs.xcodeproj */;
+				},
 			);
 			projectRoot = "";
 			targets = (
@@ -1030,6 +1062,13 @@
 			remoteRef = E635DE8C15AE2BAA00A81117 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		E6D7D2AC15D26AD100780915 /* libyc-encfs-static.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libyc-encfs-static.a";
+			remoteRef = E6D7D2AB15D26AD100780915 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 /* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
@@ -1037,6 +1076,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E6D7D2B315D27E2400780915 /* libosxfuse_i64.2.dylib in Resources */,
 				E61DF50615BB49190011A05D /* libboost_filesystem.dylib in Resources */,
 				E61DF50715BB49190011A05D /* libboost_serialization.dylib in Resources */,
 				E61DF50815BB49190011A05D /* libboost_system.dylib in Resources */,
@@ -1167,7 +1207,7 @@
 				256C3573158EA75F00E2BEC4 /* AppDelegate.m in Sources */,
 				256C359E158EA88700E2BEC4 /* PreferenceController.m in Sources */,
 				25F3D14C15923FE800E3383C /* Decrypt.m in Sources */,
-				25F3D1511592435600E3383C /* libFunctions.m in Sources */,
+				25F3D1511592435600E3383C /* libFunctions.mm in Sources */,
 				E6C046D715AE2846004B52E5 /* CompressingLogFileManager.m in Sources */,
 				252C3A691593CB780044EB3C /* DDLog.m in Sources */,
 				252C3A6A1593CB9B0044EB3C /* DDASLLogger.m in Sources */,
@@ -1224,7 +1264,7 @@
 			files = (
 				E0BF0EA01596D01F002F9FB9 /* main.m in Sources */,
 				E0BF0EB415980A72002F9FB9 /* YoucryptDirectory.m in Sources */,
-				E007C09D15A646B500D60802 /* libFunctions.m in Sources */,
+				E007C09D15A646B500D60802 /* libFunctions.mm in Sources */,
 				E01A6CD315AE3D1F004F442C /* SSKeychain.m in Sources */,
 				E01A6CD415AE3D25004F442C /* CompressingLogFileManager.m in Sources */,
 				E01A6CD515AE3D33004F442C /* DDASLLogger.m in Sources */,
@@ -1337,13 +1377,36 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "sources/Youcrypt-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS_NOT_USED_IN_PRECOMPS = "";
-				HEADER_SEARCH_PATHS = "\"$(SRCROOT)\"";
-				"HEADER_SEARCH_PATHS[arch=*]" = "\"$(SRCROOT)\"";
+				HEADER_SEARCH_PATHS = (
+					"\"$(SRCROOT)\"",
+					"\"$(SRCROOT)/yc-encfs/yc-encfs\"",
+					/opt/local/include,
+					/usr/local/include/osxfuse,
+				);
 				INFOPLIST_FILE = sources/Youcrypt.plist;
 				LD_RUNPATH_SEARCH_PATHS = /Library/Frameworks;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/lib\"",
+					/opt/local/lib,
+					/usr/local/lib,
+				);
+				OTHER_CPLUSPLUSFLAGS = (
+					"$(OTHER_CFLAGS)$(OTHER_CFLAGS)",
+					"-D_FILE_OFFSET_BITS=64",
+					"-DFUSE_USE_VERSION=26",
+					"-D__STDC_FORMAT_MACROS",
+					"-DRLOG_COMPONENT=\"encfs\"",
+					"-W",
+					"-Wall",
+					"-Wpointer-arith",
+					"-Wwrite-strings",
+					"-D__FreeBSD__=10",
+				);
+				OTHER_LDFLAGS = (
+					"-lz",
+					"-lrlog",
+					"-lfuse_ino64",
 				);
 				"OTHER_LDFLAGS[arch=*]" = "-lz";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1367,12 +1430,36 @@
 				GCC_PREFIX_HEADER = "sources/Youcrypt-Prefix.pch";
 				"GCC_PREPROCESSOR_DEFINITIONS[sdk=macosx10.7][arch=x86_64]" = "RELEASE=1";
 				GCC_PREPROCESSOR_DEFINITIONS_NOT_USED_IN_PRECOMPS = "";
-				HEADER_SEARCH_PATHS = "\"$(SRCROOT)\"";
+				HEADER_SEARCH_PATHS = (
+					"\"$(SRCROOT)\"",
+					"\"$(SRCROOT)/yc-encfs/yc-encfs\"",
+					/opt/local/include,
+					/usr/local/include/osxfuse,
+				);
 				INFOPLIST_FILE = sources/Youcrypt.plist;
 				LD_RUNPATH_SEARCH_PATHS = /Library/Frameworks;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/lib\"",
+					/opt/local/lib,
+					/usr/local/lib,
+				);
+				OTHER_CPLUSPLUSFLAGS = (
+					"$(OTHER_CFLAGS)$(OTHER_CFLAGS)",
+					"-D_FILE_OFFSET_BITS=64",
+					"-DFUSE_USE_VERSION=26",
+					"-D__STDC_FORMAT_MACROS",
+					"-DRLOG_COMPONENT=\"encfs\"",
+					"-W",
+					"-Wall",
+					"-Wpointer-arith",
+					"-Wwrite-strings",
+					"-D__FreeBSD__=10",
+				);
+				OTHER_LDFLAGS = (
+					"-lz",
+					"-lrlog",
+					"-lfuse_ino64",
 				);
 				"OTHER_LDFLAGS[arch=*]" = "-lz";
 				PRODUCT_NAME = "$(TARGET_NAME)";

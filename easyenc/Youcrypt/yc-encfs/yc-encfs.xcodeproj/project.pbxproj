@@ -1,0 +1,514 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		E6B544DC15D2636C0045E3B3 /* base64.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E6B5443E15D1ECD30045E3B3 /* base64.cpp */; };
+		E6B544DE15D2636C0045E3B3 /* BlockFileIO.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E6B5444015D1ECD30045E3B3 /* BlockFileIO.cpp */; };
+		E6B544E015D2636C0045E3B3 /* BlockNameIO.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E6B5444215D1ECD30045E3B3 /* BlockNameIO.cpp */; };
+		E6B544E315D2636C0045E3B3 /* Cipher.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E6B5444515D1ECD30045E3B3 /* Cipher.cpp */; };
+		E6B544E515D2636C0045E3B3 /* CipherFileIO.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E6B5444715D1ECD30045E3B3 /* CipherFileIO.cpp */; };
+		E6B544E715D2636C0045E3B3 /* CipherKey.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E6B5444915D1ECD30045E3B3 /* CipherKey.cpp */; };
+		E6B544E915D2636C0045E3B3 /* ConfigReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E6B5444B15D1ECD30045E3B3 /* ConfigReader.cpp */; };
+		E6B544EB15D2636C0045E3B3 /* ConfigVar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E6B5444D15D1ECD30045E3B3 /* ConfigVar.cpp */; };
+		E6B544ED15D2636C0045E3B3 /* Context.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E6B5444F15D1ECD30045E3B3 /* Context.cpp */; };
+		E6B544EF15D2636C0045E3B3 /* Credentials.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E6B5445115D1ECD30045E3B3 /* Credentials.cpp */; };
+		E6B544F115D2636C0045E3B3 /* DirNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E6B5445315D1ECD30045E3B3 /* DirNode.cpp */; };
+		E6B544F315D2636C0045E3B3 /* encfs.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E6B5445515D1ECD30045E3B3 /* encfs.cpp */; };
+		E6B544F515D2636C0045E3B3 /* FileIO.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E6B5445915D1ECD30045E3B3 /* FileIO.cpp */; };
+		E6B544F715D2636C0045E3B3 /* FileNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E6B5445B15D1ECD30045E3B3 /* FileNode.cpp */; };
+		E6B544F915D2636C0045E3B3 /* FileUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E6B5445D15D1ECD30045E3B3 /* FileUtils.cpp */; };
+		E6B544FD15D2636C0045E3B3 /* Interface.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E6B5446115D1ECD30045E3B3 /* Interface.cpp */; };
+		E6B544FF15D2636C0045E3B3 /* MACFileIO.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E6B5446315D1ECD30045E3B3 /* MACFileIO.cpp */; };
+		E6B5450115D2636C0045E3B3 /* MemoryPool.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E6B5446715D1ECD30045E3B3 /* MemoryPool.cpp */; };
+		E6B5450415D2636C0045E3B3 /* NameIO.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E6B5446A15D1ECD30045E3B3 /* NameIO.cpp */; };
+		E6B5450615D2636C0045E3B3 /* NullCipher.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E6B5446C15D1ECD30045E3B3 /* NullCipher.cpp */; };
+		E6B5450815D2636C0045E3B3 /* NullNameIO.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E6B5446E15D1ECD30045E3B3 /* NullNameIO.cpp */; };
+		E6B5450A15D2636C0045E3B3 /* openssl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E6B5447015D1ECD30045E3B3 /* openssl.cpp */; };
+		E6B5450C15D2636C0045E3B3 /* PassphraseCredentials.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E6B5447215D1ECD30045E3B3 /* PassphraseCredentials.cpp */; };
+		E6B5450F15D2636C0045E3B3 /* RawFileIO.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E6B5447515D1ECD30045E3B3 /* RawFileIO.cpp */; };
+		E6B5451115D2636C0045E3B3 /* readpassphrase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E6B5447715D1ECD30045E3B3 /* readpassphrase.cpp */; };
+		E6B5451315D2636C0045E3B3 /* SSL_Cipher.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E6B5447915D1ECD30045E3B3 /* SSL_Cipher.cpp */; };
+		E6B5451515D2636C0045E3B3 /* StreamNameIO.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E6B5447B15D1ECD30045E3B3 /* StreamNameIO.cpp */; };
+		E6B5451715D2636C0045E3B3 /* YCNameIO.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E6B5448015D1ECD30045E3B3 /* YCNameIO.cpp */; };
+		E6B5451915D2636C0045E3B3 /* YoucryptFolder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E6B5448215D1ECD30045E3B3 /* YoucryptFolder.cpp */; };
+		E6B5451B15D2636C0045E3B3 /* youcryptMountHelpers.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E6B5448415D1ECD30045E3B3 /* youcryptMountHelpers.cpp */; };
+		E6B5451D15D263830045E3B3 /* autosprintf.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E6B544AF15D1F5BE0045E3B3 /* autosprintf.cpp */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		E63D208F15D1D42500B57720 /* yc_encfs.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = yc_encfs.1; sourceTree = "<group>"; };
+		E6B5443E15D1ECD30045E3B3 /* base64.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = base64.cpp; sourceTree = "<group>"; };
+		E6B5443F15D1ECD30045E3B3 /* base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = base64.h; sourceTree = "<group>"; };
+		E6B5444015D1ECD30045E3B3 /* BlockFileIO.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BlockFileIO.cpp; sourceTree = "<group>"; };
+		E6B5444115D1ECD30045E3B3 /* BlockFileIO.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BlockFileIO.h; sourceTree = "<group>"; };
+		E6B5444215D1ECD30045E3B3 /* BlockNameIO.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BlockNameIO.cpp; sourceTree = "<group>"; };
+		E6B5444315D1ECD30045E3B3 /* BlockNameIO.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BlockNameIO.h; sourceTree = "<group>"; };
+		E6B5444415D1ECD30045E3B3 /* boost-versioning.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "boost-versioning.h"; sourceTree = "<group>"; };
+		E6B5444515D1ECD30045E3B3 /* Cipher.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Cipher.cpp; sourceTree = "<group>"; };
+		E6B5444615D1ECD30045E3B3 /* Cipher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Cipher.h; sourceTree = "<group>"; };
+		E6B5444715D1ECD30045E3B3 /* CipherFileIO.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CipherFileIO.cpp; sourceTree = "<group>"; };
+		E6B5444815D1ECD30045E3B3 /* CipherFileIO.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CipherFileIO.h; sourceTree = "<group>"; };
+		E6B5444915D1ECD30045E3B3 /* CipherKey.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CipherKey.cpp; sourceTree = "<group>"; };
+		E6B5444A15D1ECD30045E3B3 /* CipherKey.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CipherKey.h; sourceTree = "<group>"; };
+		E6B5444B15D1ECD30045E3B3 /* ConfigReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ConfigReader.cpp; sourceTree = "<group>"; };
+		E6B5444C15D1ECD30045E3B3 /* ConfigReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConfigReader.h; sourceTree = "<group>"; };
+		E6B5444D15D1ECD30045E3B3 /* ConfigVar.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ConfigVar.cpp; sourceTree = "<group>"; };
+		E6B5444E15D1ECD30045E3B3 /* ConfigVar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConfigVar.h; sourceTree = "<group>"; };
+		E6B5444F15D1ECD30045E3B3 /* Context.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Context.cpp; sourceTree = "<group>"; };
+		E6B5445015D1ECD30045E3B3 /* Context.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Context.h; sourceTree = "<group>"; };
+		E6B5445115D1ECD30045E3B3 /* Credentials.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Credentials.cpp; sourceTree = "<group>"; };
+		E6B5445215D1ECD30045E3B3 /* Credentials.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Credentials.h; sourceTree = "<group>"; };
+		E6B5445315D1ECD30045E3B3 /* DirNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DirNode.cpp; sourceTree = "<group>"; };
+		E6B5445415D1ECD30045E3B3 /* DirNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DirNode.h; sourceTree = "<group>"; };
+		E6B5445515D1ECD30045E3B3 /* encfs.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = encfs.cpp; sourceTree = "<group>"; };
+		E6B5445615D1ECD30045E3B3 /* encfs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = encfs.h; sourceTree = "<group>"; };
+		E6B5445715D1ECD30045E3B3 /* encfsctl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = encfsctl.cpp; path = "encfs-core/encfsctl.cpp"; sourceTree = "<group>"; };
+		E6B5445815D1ECD30045E3B3 /* encfsTestBed.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = encfsTestBed.cpp; path = "encfs-core/encfsTestBed.cpp"; sourceTree = "<group>"; };
+		E6B5445915D1ECD30045E3B3 /* FileIO.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FileIO.cpp; sourceTree = "<group>"; };
+		E6B5445A15D1ECD30045E3B3 /* FileIO.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileIO.h; sourceTree = "<group>"; };
+		E6B5445B15D1ECD30045E3B3 /* FileNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FileNode.cpp; sourceTree = "<group>"; };
+		E6B5445C15D1ECD30045E3B3 /* FileNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileNode.h; sourceTree = "<group>"; };
+		E6B5445D15D1ECD30045E3B3 /* FileUtils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FileUtils.cpp; sourceTree = "<group>"; };
+		E6B5445E15D1ECD30045E3B3 /* FileUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileUtils.h; sourceTree = "<group>"; };
+		E6B5445F15D1ECD30045E3B3 /* FSConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSConfig.h; sourceTree = "<group>"; };
+		E6B5446015D1ECD30045E3B3 /* i18n.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = i18n.h; sourceTree = "<group>"; };
+		E6B5446115D1ECD30045E3B3 /* Interface.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Interface.cpp; sourceTree = "<group>"; };
+		E6B5446215D1ECD30045E3B3 /* Interface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Interface.h; sourceTree = "<group>"; };
+		E6B5446315D1ECD30045E3B3 /* MACFileIO.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MACFileIO.cpp; sourceTree = "<group>"; };
+		E6B5446415D1ECD30045E3B3 /* MACFileIO.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MACFileIO.h; sourceTree = "<group>"; };
+		E6B5446515D1ECD30045E3B3 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = main.cpp; path = "encfs-core/main.cpp"; sourceTree = "<group>"; };
+		E6B5446615D1ECD30045E3B3 /* makeKey.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = makeKey.cpp; path = "encfs-core/makeKey.cpp"; sourceTree = "<group>"; };
+		E6B5446715D1ECD30045E3B3 /* MemoryPool.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MemoryPool.cpp; sourceTree = "<group>"; };
+		E6B5446815D1ECD30045E3B3 /* MemoryPool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MemoryPool.h; sourceTree = "<group>"; };
+		E6B5446915D1ECD30045E3B3 /* Mutex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Mutex.h; sourceTree = "<group>"; };
+		E6B5446A15D1ECD30045E3B3 /* NameIO.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NameIO.cpp; sourceTree = "<group>"; };
+		E6B5446B15D1ECD30045E3B3 /* NameIO.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NameIO.h; sourceTree = "<group>"; };
+		E6B5446C15D1ECD30045E3B3 /* NullCipher.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NullCipher.cpp; sourceTree = "<group>"; };
+		E6B5446D15D1ECD30045E3B3 /* NullCipher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NullCipher.h; sourceTree = "<group>"; };
+		E6B5446E15D1ECD30045E3B3 /* NullNameIO.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NullNameIO.cpp; sourceTree = "<group>"; };
+		E6B5446F15D1ECD30045E3B3 /* NullNameIO.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NullNameIO.h; sourceTree = "<group>"; };
+		E6B5447015D1ECD30045E3B3 /* openssl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = openssl.cpp; sourceTree = "<group>"; };
+		E6B5447115D1ECD30045E3B3 /* openssl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = openssl.h; sourceTree = "<group>"; };
+		E6B5447215D1ECD30045E3B3 /* PassphraseCredentials.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PassphraseCredentials.cpp; sourceTree = "<group>"; };
+		E6B5447315D1ECD30045E3B3 /* PassphraseCredentials.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PassphraseCredentials.h; sourceTree = "<group>"; };
+		E6B5447415D1ECD30045E3B3 /* Range.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Range.h; sourceTree = "<group>"; };
+		E6B5447515D1ECD30045E3B3 /* RawFileIO.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RawFileIO.cpp; sourceTree = "<group>"; };
+		E6B5447615D1ECD30045E3B3 /* RawFileIO.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RawFileIO.h; sourceTree = "<group>"; };
+		E6B5447715D1ECD30045E3B3 /* readpassphrase.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = readpassphrase.cpp; sourceTree = "<group>"; };
+		E6B5447815D1ECD30045E3B3 /* readpassphrase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = readpassphrase.h; sourceTree = "<group>"; };
+		E6B5447915D1ECD30045E3B3 /* SSL_Cipher.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SSL_Cipher.cpp; sourceTree = "<group>"; };
+		E6B5447A15D1ECD30045E3B3 /* SSL_Cipher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSL_Cipher.h; sourceTree = "<group>"; };
+		E6B5447B15D1ECD30045E3B3 /* StreamNameIO.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = StreamNameIO.cpp; sourceTree = "<group>"; };
+		E6B5447C15D1ECD30045E3B3 /* StreamNameIO.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StreamNameIO.h; sourceTree = "<group>"; };
+		E6B5447D15D1ECD30045E3B3 /* test.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = test.cpp; path = "encfs-core/test.cpp"; sourceTree = "<group>"; };
+		E6B5448015D1ECD30045E3B3 /* YCNameIO.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = YCNameIO.cpp; sourceTree = "<group>"; };
+		E6B5448115D1ECD30045E3B3 /* YCNameIO.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YCNameIO.h; sourceTree = "<group>"; };
+		E6B5448215D1ECD30045E3B3 /* YoucryptFolder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = YoucryptFolder.cpp; sourceTree = "<group>"; };
+		E6B5448315D1ECD30045E3B3 /* YoucryptFolder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YoucryptFolder.h; sourceTree = "<group>"; };
+		E6B5448415D1ECD30045E3B3 /* youcryptMountHelpers.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = youcryptMountHelpers.cpp; sourceTree = "<group>"; };
+		E6B5448515D1ECD30045E3B3 /* youcryptMountHelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = youcryptMountHelpers.h; sourceTree = "<group>"; };
+		E6B544AA15D1F3B80045E3B3 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
+		E6B544AD15D1F41F0045E3B3 /* config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = config.h; path = "yc-encfs/config.h"; sourceTree = "<group>"; };
+		E6B544AF15D1F5BE0045E3B3 /* autosprintf.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = autosprintf.cpp; sourceTree = "<group>"; };
+		E6B544B015D1F5BE0045E3B3 /* autosprintf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = autosprintf.h; sourceTree = "<group>"; };
+		E6B544B115D1F5BE0045E3B3 /* gettext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = gettext.h; sourceTree = "<group>"; };
+		E6B544D715D2633F0045E3B3 /* libyc-encfs-static.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libyc-encfs-static.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		E6B544D415D2633F0045E3B3 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		E63D207E15D1D42500B57720 = {
+			isa = PBXGroup;
+			children = (
+				E6B544AE15D1F57F0045E3B3 /* intl */,
+				E6B544AC15D1F40A0045E3B3 /* common */,
+				E6B544AA15D1F3B80045E3B3 /* CoreFoundation.framework */,
+				E6B5443D15D1EBCD0045E3B3 /* encfs-core */,
+				E63D209615D1E47700B57720 /* libs */,
+				E63D208C15D1D42500B57720 /* main */,
+				E63D208A15D1D42500B57720 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		E63D208A15D1D42500B57720 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E6B544D715D2633F0045E3B3 /* libyc-encfs-static.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		E63D208C15D1D42500B57720 /* main */ = {
+			isa = PBXGroup;
+			children = (
+				E6B5446515D1ECD30045E3B3 /* main.cpp */,
+				E6B5445715D1ECD30045E3B3 /* encfsctl.cpp */,
+				E6B5445815D1ECD30045E3B3 /* encfsTestBed.cpp */,
+				E6B5446615D1ECD30045E3B3 /* makeKey.cpp */,
+				E6B5447D15D1ECD30045E3B3 /* test.cpp */,
+				E63D208F15D1D42500B57720 /* yc_encfs.1 */,
+			);
+			name = main;
+			path = "yc-encfs";
+			sourceTree = "<group>";
+		};
+		E63D209615D1E47700B57720 /* libs */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = libs;
+			sourceTree = "<group>";
+		};
+		E6B5443D15D1EBCD0045E3B3 /* encfs-core */ = {
+			isa = PBXGroup;
+			children = (
+				E6B5443E15D1ECD30045E3B3 /* base64.cpp */,
+				E6B5443F15D1ECD30045E3B3 /* base64.h */,
+				E6B5444015D1ECD30045E3B3 /* BlockFileIO.cpp */,
+				E6B5444115D1ECD30045E3B3 /* BlockFileIO.h */,
+				E6B5444215D1ECD30045E3B3 /* BlockNameIO.cpp */,
+				E6B5444315D1ECD30045E3B3 /* BlockNameIO.h */,
+				E6B5444415D1ECD30045E3B3 /* boost-versioning.h */,
+				E6B5444515D1ECD30045E3B3 /* Cipher.cpp */,
+				E6B5444615D1ECD30045E3B3 /* Cipher.h */,
+				E6B5444715D1ECD30045E3B3 /* CipherFileIO.cpp */,
+				E6B5444815D1ECD30045E3B3 /* CipherFileIO.h */,
+				E6B5444915D1ECD30045E3B3 /* CipherKey.cpp */,
+				E6B5444A15D1ECD30045E3B3 /* CipherKey.h */,
+				E6B5444B15D1ECD30045E3B3 /* ConfigReader.cpp */,
+				E6B5444C15D1ECD30045E3B3 /* ConfigReader.h */,
+				E6B5444D15D1ECD30045E3B3 /* ConfigVar.cpp */,
+				E6B5444E15D1ECD30045E3B3 /* ConfigVar.h */,
+				E6B5444F15D1ECD30045E3B3 /* Context.cpp */,
+				E6B5445015D1ECD30045E3B3 /* Context.h */,
+				E6B5445115D1ECD30045E3B3 /* Credentials.cpp */,
+				E6B5445215D1ECD30045E3B3 /* Credentials.h */,
+				E6B5445315D1ECD30045E3B3 /* DirNode.cpp */,
+				E6B5445415D1ECD30045E3B3 /* DirNode.h */,
+				E6B5445515D1ECD30045E3B3 /* encfs.cpp */,
+				E6B5445615D1ECD30045E3B3 /* encfs.h */,
+				E6B5445915D1ECD30045E3B3 /* FileIO.cpp */,
+				E6B5445A15D1ECD30045E3B3 /* FileIO.h */,
+				E6B5445B15D1ECD30045E3B3 /* FileNode.cpp */,
+				E6B5445C15D1ECD30045E3B3 /* FileNode.h */,
+				E6B5445D15D1ECD30045E3B3 /* FileUtils.cpp */,
+				E6B5445E15D1ECD30045E3B3 /* FileUtils.h */,
+				E6B5445F15D1ECD30045E3B3 /* FSConfig.h */,
+				E6B5446015D1ECD30045E3B3 /* i18n.h */,
+				E6B5446115D1ECD30045E3B3 /* Interface.cpp */,
+				E6B5446215D1ECD30045E3B3 /* Interface.h */,
+				E6B5446315D1ECD30045E3B3 /* MACFileIO.cpp */,
+				E6B5446415D1ECD30045E3B3 /* MACFileIO.h */,
+				E6B5446715D1ECD30045E3B3 /* MemoryPool.cpp */,
+				E6B5446815D1ECD30045E3B3 /* MemoryPool.h */,
+				E6B5446915D1ECD30045E3B3 /* Mutex.h */,
+				E6B5446A15D1ECD30045E3B3 /* NameIO.cpp */,
+				E6B5446B15D1ECD30045E3B3 /* NameIO.h */,
+				E6B5446C15D1ECD30045E3B3 /* NullCipher.cpp */,
+				E6B5446D15D1ECD30045E3B3 /* NullCipher.h */,
+				E6B5446E15D1ECD30045E3B3 /* NullNameIO.cpp */,
+				E6B5446F15D1ECD30045E3B3 /* NullNameIO.h */,
+				E6B5447015D1ECD30045E3B3 /* openssl.cpp */,
+				E6B5447115D1ECD30045E3B3 /* openssl.h */,
+				E6B5447215D1ECD30045E3B3 /* PassphraseCredentials.cpp */,
+				E6B5447315D1ECD30045E3B3 /* PassphraseCredentials.h */,
+				E6B5447415D1ECD30045E3B3 /* Range.h */,
+				E6B5447515D1ECD30045E3B3 /* RawFileIO.cpp */,
+				E6B5447615D1ECD30045E3B3 /* RawFileIO.h */,
+				E6B5447715D1ECD30045E3B3 /* readpassphrase.cpp */,
+				E6B5447815D1ECD30045E3B3 /* readpassphrase.h */,
+				E6B5447915D1ECD30045E3B3 /* SSL_Cipher.cpp */,
+				E6B5447A15D1ECD30045E3B3 /* SSL_Cipher.h */,
+				E6B5447B15D1ECD30045E3B3 /* StreamNameIO.cpp */,
+				E6B5447C15D1ECD30045E3B3 /* StreamNameIO.h */,
+				E6B5448015D1ECD30045E3B3 /* YCNameIO.cpp */,
+				E6B5448115D1ECD30045E3B3 /* YCNameIO.h */,
+				E6B5448215D1ECD30045E3B3 /* YoucryptFolder.cpp */,
+				E6B5448315D1ECD30045E3B3 /* YoucryptFolder.h */,
+				E6B5448415D1ECD30045E3B3 /* youcryptMountHelpers.cpp */,
+				E6B5448515D1ECD30045E3B3 /* youcryptMountHelpers.h */,
+			);
+			name = "encfs-core";
+			path = "yc-encfs/encfs-core";
+			sourceTree = "<group>";
+		};
+		E6B544AC15D1F40A0045E3B3 /* common */ = {
+			isa = PBXGroup;
+			children = (
+				E6B544AD15D1F41F0045E3B3 /* config.h */,
+			);
+			name = common;
+			sourceTree = "<group>";
+		};
+		E6B544AE15D1F57F0045E3B3 /* intl */ = {
+			isa = PBXGroup;
+			children = (
+				E6B544AF15D1F5BE0045E3B3 /* autosprintf.cpp */,
+				E6B544B015D1F5BE0045E3B3 /* autosprintf.h */,
+				E6B544B115D1F5BE0045E3B3 /* gettext.h */,
+			);
+			name = intl;
+			path = "yc-encfs/intl";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		E6B544D515D2633F0045E3B3 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		E6B544D615D2633F0045E3B3 /* yc-encfs-static */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E6B544DA15D2633F0045E3B3 /* Build configuration list for PBXNativeTarget "yc-encfs-static" */;
+			buildPhases = (
+				E6B544D315D2633F0045E3B3 /* Sources */,
+				E6B544D415D2633F0045E3B3 /* Frameworks */,
+				E6B544D515D2633F0045E3B3 /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "yc-encfs-static";
+			productName = "yc-encfs-static";
+			productReference = E6B544D715D2633F0045E3B3 /* libyc-encfs-static.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		E63D208015D1D42500B57720 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0440;
+				ORGANIZATIONNAME = avr;
+			};
+			buildConfigurationList = E63D208315D1D42500B57720 /* Build configuration list for PBXProject "yc-encfs" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = E63D207E15D1D42500B57720;
+			productRefGroup = E63D208A15D1D42500B57720 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				E6B544D615D2633F0045E3B3 /* yc-encfs-static */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		E6B544D315D2633F0045E3B3 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E6B544DC15D2636C0045E3B3 /* base64.cpp in Sources */,
+				E6B544DE15D2636C0045E3B3 /* BlockFileIO.cpp in Sources */,
+				E6B544E015D2636C0045E3B3 /* BlockNameIO.cpp in Sources */,
+				E6B544E315D2636C0045E3B3 /* Cipher.cpp in Sources */,
+				E6B544E515D2636C0045E3B3 /* CipherFileIO.cpp in Sources */,
+				E6B544E715D2636C0045E3B3 /* CipherKey.cpp in Sources */,
+				E6B544E915D2636C0045E3B3 /* ConfigReader.cpp in Sources */,
+				E6B544EB15D2636C0045E3B3 /* ConfigVar.cpp in Sources */,
+				E6B544ED15D2636C0045E3B3 /* Context.cpp in Sources */,
+				E6B544EF15D2636C0045E3B3 /* Credentials.cpp in Sources */,
+				E6B544F115D2636C0045E3B3 /* DirNode.cpp in Sources */,
+				E6B544F315D2636C0045E3B3 /* encfs.cpp in Sources */,
+				E6B544F515D2636C0045E3B3 /* FileIO.cpp in Sources */,
+				E6B544F715D2636C0045E3B3 /* FileNode.cpp in Sources */,
+				E6B544F915D2636C0045E3B3 /* FileUtils.cpp in Sources */,
+				E6B544FD15D2636C0045E3B3 /* Interface.cpp in Sources */,
+				E6B544FF15D2636C0045E3B3 /* MACFileIO.cpp in Sources */,
+				E6B5450115D2636C0045E3B3 /* MemoryPool.cpp in Sources */,
+				E6B5450415D2636C0045E3B3 /* NameIO.cpp in Sources */,
+				E6B5450615D2636C0045E3B3 /* NullCipher.cpp in Sources */,
+				E6B5450815D2636C0045E3B3 /* NullNameIO.cpp in Sources */,
+				E6B5450A15D2636C0045E3B3 /* openssl.cpp in Sources */,
+				E6B5450C15D2636C0045E3B3 /* PassphraseCredentials.cpp in Sources */,
+				E6B5450F15D2636C0045E3B3 /* RawFileIO.cpp in Sources */,
+				E6B5451115D2636C0045E3B3 /* readpassphrase.cpp in Sources */,
+				E6B5451315D2636C0045E3B3 /* SSL_Cipher.cpp in Sources */,
+				E6B5451515D2636C0045E3B3 /* StreamNameIO.cpp in Sources */,
+				E6B5451715D2636C0045E3B3 /* YCNameIO.cpp in Sources */,
+				E6B5451915D2636C0045E3B3 /* YoucryptFolder.cpp in Sources */,
+				E6B5451B15D2636C0045E3B3 /* youcryptMountHelpers.cpp in Sources */,
+				E6B5451D15D263830045E3B3 /* autosprintf.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		E63D209115D1D42500B57720 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		E63D209215D1D42500B57720 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		E6B544D815D2633F0045E3B3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				EXECUTABLE_PREFIX = lib;
+				HEADER_SEARCH_PATHS = (
+					/opt/local/include,
+					/usr/local/include/osxfuse,
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)\"",
+					/usr/local/lib,
+					/opt/local/lib,
+				);
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_CPLUSPLUSFLAGS = (
+					"$(OTHER_CFLAGS)",
+					"-D_FILE_OFFSET_BITS=64",
+					"-DFUSE_USE_VERSION=26",
+					"-D__STDC_FORMAT_MACROS",
+					"-DRLOG_COMPONENT=\"encfs\"",
+					"-W",
+					"-Wall",
+					"-Wpointer-arith",
+					"-Wwrite-strings",
+					"-D__FreeBSD__=10",
+				);
+				OTHER_LDFLAGS = (
+					"-lboost_system-mt",
+					"-lboost_filesystem-mt",
+					"-lboost_serialization-mt",
+					"-lssl",
+					"-lcrypto",
+					"-lintl",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		E6B544D915D2633F0045E3B3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				EXECUTABLE_PREFIX = lib;
+				HEADER_SEARCH_PATHS = (
+					/opt/local/include,
+					/usr/local/include/osxfuse,
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)\"",
+					/usr/local/lib,
+					/opt/local/lib,
+				);
+				OTHER_CPLUSPLUSFLAGS = (
+					"$(OTHER_CFLAGS)",
+					"-D_FILE_OFFSET_BITS=64",
+					"-DFUSE_USE_VERSION=26",
+					"-D__STDC_FORMAT_MACROS",
+					"-DRLOG_COMPONENT=\"encfs\"",
+					"-W",
+					"-Wall",
+					"-Wpointer-arith",
+					"-Wwrite-strings",
+					"-D__FreeBSD__=10",
+				);
+				OTHER_LDFLAGS = (
+					"-lboost_system-mt",
+					"-lboost_filesystem-mt",
+					"-lboost_serialization-mt",
+					"-lssl",
+					"-lcrypto",
+					"-lintl",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		E63D208315D1D42500B57720 /* Build configuration list for PBXProject "yc-encfs" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E63D209115D1D42500B57720 /* Debug */,
+				E63D209215D1D42500B57720 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E6B544DA15D2633F0045E3B3 /* Build configuration list for PBXNativeTarget "yc-encfs-static" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E6B544D815D2633F0045E3B3 /* Debug */,
+				E6B544D915D2633F0045E3B3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = E63D208015D1D42500B57720 /* Project object */;
+}
