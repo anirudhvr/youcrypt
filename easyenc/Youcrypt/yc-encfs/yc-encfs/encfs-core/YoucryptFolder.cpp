@@ -68,7 +68,8 @@ static bool encryptData(shared_ptr<FileNode> file,
     off_t offset = 0;
     while (!input.eof()) {
         input.read((char *)buf, sizeof(buf));
-        file->write(offset, (unsigned char *)buf, input.gcount());
+        if (input.gcount() > 0)
+            file->write(offset, (unsigned char *)buf, input.gcount());
         offset += input.gcount();
     }
     return true;
@@ -83,7 +84,8 @@ static bool decryptData(shared_ptr<FileNode> node,
 
     for(int i=0; i<blocks; ++i) {
         int bytes = node->read(offset, buf, sizeof(buf));
-        output.write((char *)buf, bytes);
+        if (bytes > 0)
+            output.write((char *)buf, bytes);
         offset += bytes;
     }    
     output.close();
@@ -502,7 +504,7 @@ bool YoucryptFolder::importContent(const path& p)
 bool YoucryptFolder::importContent(const path& sourcePath, 
                                    string destSuffix) 
 {
-    if ((status != YoucryptFolder::initialized) ||
+    if ((status != YoucryptFolder::initialized) &&
         (status != YoucryptFolder::mounted)) 
         return false;
     
@@ -522,7 +524,7 @@ bool YoucryptFolder::importContent(const path& sourcePath,
 bool YoucryptFolder::exportContent(const path& toPath, string volPath)
 {
 
-    if ((status != YoucryptFolder::initialized) ||
+    if ((status != YoucryptFolder::initialized) &&
         (status != YoucryptFolder::mounted)) 
         return false;
     
@@ -729,3 +731,26 @@ bool YoucryptFolder::mount(const path &_mountPoint)
             return false;
     }
 }
+
+
+// Fuse version >= 26 requires another argument to fuse_unmount, which we
+// don't have.  So use the backward compatible call instead..
+extern "C" void fuse_unmount_compat22(const char *mountpoint);
+#    define fuse_unmount fuse_unmount_compat22
+
+bool YoucryptFolder::unmount(void)
+{
+    if (status == YoucryptFolder::mounted) {
+	rWarning(_("Unmounting filesystem %s due to inactivity"),
+             mountPoint.c_str());
+        fuse_unmount( mountPoint.c_str() );
+        return true;
+    } else {
+        rWarning(_("Not umounnting since folder not mounted"),
+                 mountPoint.c_str());
+        fuse_unmount( mountPoint.c_str() );
+        return false;
+    }
+}
+
+
