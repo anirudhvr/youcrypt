@@ -340,6 +340,10 @@ bool YoucryptFolder::createAtPath(const path& _rootPath,
     
     rootPath = _rootPath;
     string rootDir = _rootPath.string();
+    
+    if (!exists(_rootPath))
+        mkdir(rootDir.c_str(), 0755);
+    
     slashTerminate(rootDir);
     bool enableIdleTracking = opts.idleTracking;
     const bool forceDecode = true;

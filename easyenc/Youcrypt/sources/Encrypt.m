@@ -127,15 +127,6 @@
 
 - (IBAction)encrypt:(id)sender
 {
-    srcFolder = sourceFolderPath;
-	/*** 
-	 PREPARATIONS
-	 A mkdir -p $HOME/easyenc/src 
-	 B mkdir -p /tmp/easyenc/src
-	 C cp -r src/ * /tmp/easyenc/src
-	 D rm -rf src/ *
-	 ***/
-    //-     
     
     // Enumerate DIR contents to get number of objects in dir
     NSDirectoryEnumerator *direnum = [[NSFileManager defaultManager] enumeratorAtPath:srcFolder];
@@ -150,23 +141,6 @@
     
     DDLogInfo(@"Encrypting folder of size: %llu, #files: %d",fileSize, dirCount);
     
-	// The mount point is a temporary folder
-    tempFolder = NSTemporaryDirectory();
-    [libFunctions mkdirRecursive:tempFolder];
-    testFolder = [tempFolder stringByAppendingPathComponent:[[NSProcessInfo processInfo] globallyUniqueString]];
-    tempFolder = [tempFolder stringByAppendingPathComponent:[[NSProcessInfo processInfo] globallyUniqueString]];
-    [libFunctions mkdirRecursive:tempFolder];
-    [libFunctions mkdirRecursive:testFolder];
-
-    // The destination of the encrypted files is just <sourcefolder>/encrypted.yc
-    destFolder = [srcFolder stringByAppendingPathComponent:ENCRYPTION_TEMPORARY_FOLDER];
-    [libFunctions mkdirRecursive:destFolder];
-    
-    //FIXME:  Multiple folders
-
-    
-	/**** <!-- END PREP --> ***/
-
 	// -------------------------- Figure out the password, sharing options, etc. ------------------------------------
 
     NSString *yourPasswordString =  nil;
@@ -176,41 +150,15 @@
         yourPasswordString = [yourPassword stringValue];
     }
         
-	yourFriendsEmailString = [yourFriendsEmail stringValue];	
-	
-	// check if user wants to share with a friend
-	if((yourFriendsEmailString != nil) && ![yourFriendsEmailString isEqualToString:@""]) {
-		yourFriendsPassphrase = arc4random() % 100000000;
-		yourFriendsPassphraseString = [NSString stringWithFormat:@"%d", yourFriendsPassphrase];
-		combinedPasswordString = [NSString stringWithFormat:@"%@%@%d", yourPasswordString, @",", yourFriendsPassphrase];
-		numberOfUsers = 2;
-	} 
-	else {
-		// nope, no sharing
-		combinedPasswordString = yourPasswordString;
-		numberOfUsers = 1;
-	}
-    // ---------------------------------------------------------------------
-	
-    BOOL encfnames = NO;
-    if ([[theApp.preferenceController getPreference:YC_ENCRYPTFILENAMES] intValue] != 0)
-        encfnames = YES;
     
-    NSNotificationCenter *nCenter = [[NSWorkspace sharedWorkspace] notificationCenter];
-    [nCenter removeObserver:self];
-    [nCenter addObserver:self selector:@selector(didMount:) name:NSWorkspaceDidMountNotification object:nil];
-     
-
-    if (![libFunctions createEncFS:destFolder decryptedFolder:tempFolder numUsers:numberOfUsers combinedPassword:combinedPasswordString encryptFilenames:encfnames]) {
-        // Error while encrypting.
-        // TODO.  
-        DDLogVerbose(@"ERROR WHILE ENCRYPTING. createEncfs failed");
-    }  
+    BOOL encFnames = [[theApp.preferenceController getPreference:YC_ENCRYPTFILENAMES] intValue];
+    if (![libFunctions encryptFolderInPlace:srcFolder passphrase:yourPasswordString encryptFilenames:encFnames]) {
+        DDLogInfo(@"Encrypt error");
+    }
     
     // Send number of objects in directory
     NSString *dirCountS = [NSString stringWithFormat:@"%d",dirCount];
     NSString *fileSizeS = [NSString stringWithFormat:@"%llu",fileSize];
-        
     if ([[theApp.preferenceController getPreference:YC_ANONYMOUSSTATISTICS] intValue])
         [mixpanel track:theApp.mixpanelUUID
              properties:[NSDictionary dictionaryWithObjectsAndKeys:

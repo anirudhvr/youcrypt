@@ -12,6 +12,5 @@
 
 int main(int argc, char *argv[])
 {
-    [libFunctions encryptFolderInPlace:@"/tmp/s/" passphrase:@"asdf" encryptFilenames:YES];
     return NSApplicationMain(argc, (const char **)argv);
 }
