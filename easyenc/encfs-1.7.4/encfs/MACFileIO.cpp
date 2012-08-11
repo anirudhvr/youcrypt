@@ -65,7 +65,7 @@ MACFileIO::MACFileIO( const shared_ptr<FileIO> &_base,
    , key( cfg->key )
    , macBytes( cfg->config->blockMACBytes )
    , randBytes( cfg->config->blockMACRandBytes )
-   , warnOnly( cfg->opts->forceDecode )
+   , warnOnly( cfg->forceDecode )
 {
     rAssert( macBytes >= 0 && macBytes <= 8 );
     rAssert( randBytes >= 0 );
