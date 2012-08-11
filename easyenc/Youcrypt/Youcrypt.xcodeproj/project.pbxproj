@@ -44,7 +44,7 @@
 		256C3560158EA75F00E2BEC4 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 256C355F158EA75F00E2BEC4 /* Cocoa.framework */; };
 		256C356C158EA75F00E2BEC4 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 256C356B158EA75F00E2BEC4 /* main.m */; };
 		256C3570158EA75F00E2BEC4 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 256C356E158EA75F00E2BEC4 /* Credits.rtf */; };
-		256C3573158EA75F00E2BEC4 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 256C3572158EA75F00E2BEC4 /* AppDelegate.m */; };
+		256C3573158EA75F00E2BEC4 /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 256C3572158EA75F00E2BEC4 /* AppDelegate.mm */; };
 		256C357E158EA75F00E2BEC4 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 256C357D158EA75F00E2BEC4 /* SenTestingKit.framework */; };
 		256C357F158EA75F00E2BEC4 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 256C355F158EA75F00E2BEC4 /* Cocoa.framework */; };
 		256C3587158EA75F00E2BEC4 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 256C3585158EA75F00E2BEC4 /* InfoPlist.strings */; };
@@ -281,7 +281,7 @@
 		256C356D158EA75F00E2BEC4 /* Youcrypt-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "Youcrypt-Prefix.pch"; path = "sources/Youcrypt-Prefix.pch"; sourceTree = "<group>"; };
 		256C356F158EA75F00E2BEC4 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
 		256C3571158EA75F00E2BEC4 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = sources/AppDelegate.h; sourceTree = "<group>"; };
-		256C3572158EA75F00E2BEC4 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = sources/AppDelegate.m; sourceTree = "<group>"; };
+		256C3572158EA75F00E2BEC4 /* AppDelegate.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = AppDelegate.mm; path = sources/AppDelegate.mm; sourceTree = "<group>"; };
 		256C357C158EA75F00E2BEC4 /* Youcrypt Mac alphaTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = "Youcrypt Mac alphaTests.octest"; path = YoucryptTest.octest; sourceTree = BUILT_PRODUCTS_DIR; };
 		256C357D158EA75F00E2BEC4 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
 		256C3584158EA75F00E2BEC4 /* Tests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Tests-Info.plist"; sourceTree = "<group>"; };
@@ -622,7 +622,7 @@
 			isa = PBXGroup;
 			children = (
 				256C3571158EA75F00E2BEC4 /* AppDelegate.h */,
-				256C3572158EA75F00E2BEC4 /* AppDelegate.m */,
+				256C3572158EA75F00E2BEC4 /* AppDelegate.mm */,
 				E0BF0EBA159838DD002F9FB9 /* ListDirectoriesWindow.h */,
 				E0BF0EBB159838DD002F9FB9 /* ListDirectoriesWindow.m */,
 				25617DC515ABD54A00EED7F7 /* ListDirTable.h */,
@@ -1204,7 +1204,7 @@
 				E6C046D615AE2817004B52E5 /* CompressingLogFileManager.h in Sources */,
 				E6C046D415AE236A004B52E5 /* YoucryptService.m in Sources */,
 				256C356C158EA75F00E2BEC4 /* main.m in Sources */,
-				256C3573158EA75F00E2BEC4 /* AppDelegate.m in Sources */,
+				256C3573158EA75F00E2BEC4 /* AppDelegate.mm in Sources */,
 				256C359E158EA88700E2BEC4 /* PreferenceController.m in Sources */,
 				25F3D14C15923FE800E3383C /* Decrypt.m in Sources */,
 				25F3D1511592435600E3383C /* libFunctions.mm in Sources */,

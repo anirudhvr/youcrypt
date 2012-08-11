@@ -372,6 +372,54 @@ using std::string;
 using std::endl;
 using namespace youcrypt;
 
++ (BOOL) openEncryptedFolder:(NSString*)srcFolder
+                  mountPoint:(NSString*)destFolder
+                  passphrase:(NSString*)pp
+                    idleTime:(int)idletime
+                    fuseOpts:(NSDictionary*)fuseOpts
+{
+    BOOL ret = YES;
+    const char *srcfolder = [[srcFolder stringByAppendingString:@"/"] cStringUsingEncoding:NSASCIIStringEncoding];
+    const char *destfolder = [destFolder cStringUsingEncoding:NSASCIIStringEncoding];
+    const char *pass = [pp cStringUsingEncoding:NSASCIIStringEncoding];
+    
+    std::vector<std::string> fuse_opts;
+    
+    path ph([srcFolder cStringUsingEncoding:NSASCIIStringEncoding]);
+    YoucryptFolderOpts opts;
+    Credentials creds(new PassphraseCredentials(pass));
+    
+    if (idletime > 0) {
+        opts.idleTracking = true;
+        opts.idleTrackingTimeOut = idletime;
+    }
+    
+    for (NSString *key in [fuseOpts allKeys]) {
+        NSString *opt;
+        if ([key isEqualToString:@"volicon"]) {
+            opt = [NSString stringWithFormat:@"-ovolicon=%@/Contents/Resources/%@", [libFunctions appBundlePath], [fuseOpts objectForKey:key]];
+            fuse_opts.push_back(std::string([opt cStringUsingEncoding:NSASCIIStringEncoding]));
+        } else {
+            opt = [NSString stringWithFormat:@"-o%@=%@", key, [fuseOpts objectForKey:key]];
+        }
+        fuse_opts.push_back(std::string([opt cStringUsingEncoding:NSASCIIStringEncoding]));
+    }
+    fuse_opts.push_back(std::string("-ofsname=YoucryptFS"));
+         
+    YoucryptFolder folder(ph, opts, creds);
+    
+    if (folder.currStatus() == YoucryptFolder::initialized) {
+        // import worked  -- this is a Youcrypt folder
+        folder.mount(path(destfolder), fuse_opts);
+        if (folder.currStatus() != YoucryptFolder::mounted) {
+            DDLogInfo(@"Mounting %@ at %@ failed!", srcFolder, destFolder);
+            ret = NO;
+        }
+    }
+    
+    return ret;
+}
+
 
 + (BOOL)encryptFolderInPlace:(NSString*) srcFolder
                   passphrase:(NSString*)pp

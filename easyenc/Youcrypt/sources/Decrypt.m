@@ -49,24 +49,11 @@
     else
         yourPasswordString = [yourPassword stringValue];
     
-    [libFunctions mkdirRecursive:destFolder]; 
-    //FIXME
-    NSString *volname = [[srcFolder stringByDeletingPathExtension] lastPathComponent];    
+    NSString *volname = [[srcFolder stringByDeletingPathExtension] lastPathComponent];
     NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:@"logo-512x512-alpha.icns", @"volicon", volname, @"volname", nil];
         
-    /*
-     Dead Store:
-    BOOL encfnames = NO;
-    if ([[theApp.preferenceController getPreference:YC_ENCRYPTFILENAMES] intValue] != 0)
-        encfnames = YES;
-    */
     int idletime = [[theApp.preferenceController getPreference:YC_IDLETIME] intValue];
      
-    
-    NSNotificationCenter *nCenter = [[NSWorkspace sharedWorkspace] notificationCenter];
-    [nCenter removeObserver:self];
-    [nCenter addObserver:self selector:@selector(didMount:) name:NSWorkspaceDidMountNotification object:nil];
-    
     BOOL res = [libFunctions mountEncFS:srcFolder decryptedFolder:destFolder password:yourPasswordString fuseOptions:dict idleTime:idletime ];
 
     if (res == YES) {
