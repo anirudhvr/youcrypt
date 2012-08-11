@@ -81,4 +81,9 @@
                   passphrase:(NSString*)pp
             encryptFilenames:(BOOL)encfnames;
 
++ (BOOL) openEncryptedFolder:(NSString*)srcFolder
+                  mountPoint:(NSString*)destFolder
+                  passphrase:(NSString*)pp
+                    idleTime:(int)idletime
+                    fuseOpts:(NSDictionary*)fuseOpts;
 @end

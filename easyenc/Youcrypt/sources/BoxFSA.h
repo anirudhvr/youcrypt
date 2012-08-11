@@ -29,7 +29,7 @@
 -(void) auth;
 -(void) getAuthToken;
 -(NSString*) userGavePerms;
--(NSString*)makeRestCall:(NSString*)reqURL:(BOOL)mutable;
+//-(NSString*)makeRestCall:(NSString*)reqURL:(BOOL)mutable;
 
 @end
 

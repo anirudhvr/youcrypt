@@ -385,7 +385,10 @@ using namespace youcrypt;
     
     std::vector<std::string> fuse_opts;
     
-    path ph([srcFolder cStringUsingEncoding:NSASCIIStringEncoding]);
+    path src(srcfolder);
+    path dst(destfolder);
+    create_directories(dst);
+    
     YoucryptFolderOpts opts;
     Credentials creds(new PassphraseCredentials(pass));
     
@@ -398,7 +401,6 @@ using namespace youcrypt;
         NSString *opt;
         if ([key isEqualToString:@"volicon"]) {
             opt = [NSString stringWithFormat:@"-ovolicon=%@/Contents/Resources/%@", [libFunctions appBundlePath], [fuseOpts objectForKey:key]];
-            fuse_opts.push_back(std::string([opt cStringUsingEncoding:NSASCIIStringEncoding]));
         } else {
             opt = [NSString stringWithFormat:@"-o%@=%@", key, [fuseOpts objectForKey:key]];
         }
@@ -406,11 +408,11 @@ using namespace youcrypt;
     }
     fuse_opts.push_back(std::string("-ofsname=YoucryptFS"));
          
-    YoucryptFolder folder(ph, opts, creds);
+    YoucryptFolder folder(src, opts, creds);
     
     if (folder.currStatus() == YoucryptFolder::initialized) {
         // import worked  -- this is a Youcrypt folder
-        folder.mount(path(destfolder), fuse_opts);
+        folder.mount(dst, fuse_opts);
         if (folder.currStatus() != YoucryptFolder::mounted) {
             DDLogInfo(@"Mounting %@ at %@ failed!", srcFolder, destFolder);
             ret = NO;

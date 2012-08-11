@@ -53,10 +53,14 @@
     NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:@"logo-512x512-alpha.icns", @"volicon", volname, @"volname", nil];
         
     int idletime = [[theApp.preferenceController getPreference:YC_IDLETIME] intValue];
+    
+    BOOL res = [libFunctions openEncryptedFolder:srcFolder mountPoint:destFolder passphrase:yourPasswordString idleTime:idletime fuseOpts:dict];
      
-    BOOL res = [libFunctions mountEncFS:srcFolder decryptedFolder:destFolder password:yourPasswordString fuseOptions:dict idleTime:idletime ];
+//    BOOL res = [libFunctions mountEncFS:srcFolder decryptedFolder:destFolder password:yourPasswordString fuseOptions:dict idleTime:idletime ];
 
     if (res == YES) {
+        [self close];
+        [theApp didDecrypt:sourceFolderPath];
         return;
     } else {
         if (keychainHasPassphrase) {
@@ -81,36 +85,36 @@
     [theApp cancelDecrypt:sourceFolderPath];
 }
 
-- (IBAction)didMount:(id)sender {
-//    NSString *destFolder = destFolderPath;	
-    
-    [[[NSWorkspace sharedWorkspace] notificationCenter] removeObserver:self];
-    
-    if (keychainHasPassphrase == NO) {
-        // Check if there's a different passphrase in the keychain.
-        NSString *keyPP = [theApp.passphraseManager getPassphrase];
-        if ((keyPP != nil) && ![keyPP isEqualToString:@""]) {
-            // Seems like a non-empty passphrase...
-            // Suggest that the user change the passphrase of the current folder.        
-        
-            long retCode = [[NSAlert alertWithMessageText:@"Change passphrase?"
-                                           defaultButton:@"Yes, change this" 
-                                         alternateButton:@"No, leave this as is" 
-                                             otherButton:nil 
-                               informativeTextWithFormat:@"Passphrase for %@ is different from your stored YouCrypt passphrase.  Do you want to change the passphrase for the folder to your YouCrypt passphrase?", sourceFolderPath] runModal];
-            if (retCode == NSAlertDefaultReturn) {
-                //FIXME:  Show an error if this failed ?
-                BOOL ret = [libFunctions changeEncFSPasswd:sourceFolderPath 
-                                                 oldPasswd:[yourPassword stringValue]
-                                                 newPasswd:keyPP];
-                DDLogInfo(@"didMount: changeEncfsPwd returned : %d",ret);
-            }
-        }
-    }   
-    
-    
-//    [[NSWorkspace sharedWorkspace] openFile:destFolder];	
-    [self close];
-    [theApp didDecrypt:sourceFolderPath];
-}
+//- (IBAction)didMount:(id)sender {
+////    NSString *destFolder = destFolderPath;	
+//    
+//    [[[NSWorkspace sharedWorkspace] notificationCenter] removeObserver:self];
+//    
+//    if (keychainHasPassphrase == NO) {
+//        // Check if there's a different passphrase in the keychain.
+//        NSString *keyPP = [theApp.passphraseManager getPassphrase];
+//        if ((keyPP != nil) && ![keyPP isEqualToString:@""]) {
+//            // Seems like a non-empty passphrase...
+//            // Suggest that the user change the passphrase of the current folder.        
+//        
+//            long retCode = [[NSAlert alertWithMessageText:@"Change passphrase?"
+//                                           defaultButton:@"Yes, change this" 
+//                                         alternateButton:@"No, leave this as is" 
+//                                             otherButton:nil 
+//                               informativeTextWithFormat:@"Passphrase for %@ is different from your stored YouCrypt passphrase.  Do you want to change the passphrase for the folder to your YouCrypt passphrase?", sourceFolderPath] runModal];
+//            if (retCode == NSAlertDefaultReturn) {
+//                //FIXME:  Show an error if this failed ?
+//                BOOL ret = [libFunctions changeEncFSPasswd:sourceFolderPath 
+//                                                 oldPasswd:[yourPassword stringValue]
+//                                                 newPasswd:keyPP];
+//                DDLogInfo(@"didMount: changeEncfsPwd returned : %d",ret);
+//            }
+//        }
+//    }   
+//    
+//    
+////    [[NSWorkspace sharedWorkspace] openFile:destFolder];	
+//    [self close];
+//    [theApp didDecrypt:sourceFolderPath];
+//}
 @end
