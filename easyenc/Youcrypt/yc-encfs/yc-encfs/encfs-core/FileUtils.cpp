@@ -106,19 +106,7 @@ const int V6SubVersion = 20100713; // add version field for boost 1.42+
 
 const int YCSubVersion = 0;  // Initial YC XML (just EncFS V6).
 
-struct ConfigInfo
-{
-    const char *fileName;
-    ConfigType type;
-    const char *environmentOverride;
-    bool (*loadFunc)(const char *fileName, 
-            const boost::shared_ptr<EncFSConfig> &config,
-	    ConfigInfo *cfg);
-    bool (*saveFunc)(const char *fileName, 
-            const boost::shared_ptr<EncFSConfig> &config);
-    int currentSubVersion;
-    int defaultSubVersion;
-} ConfigFileMapping[] = {
+struct ConfigInfo ConfigFileMapping[] = {
     {".youcryptfs.xml", Config_YC, "YCFS_CONFIG", readV6Config, writeV6Config, 
      YCSubVersion, YCSubVersion},
     {".encfs6.xml", Config_V6, "ENCFS6_CONFIG", readV6Config, writeV6Config, 

@@ -40,36 +40,53 @@
         passwd = [passwordField stringValue];
     
     
-    tempFolder = NSTemporaryDirectory();
-    [libFunctions mkdirRecursive:tempFolder];
-    tempFolder = [tempFolder stringByAppendingPathComponent:[[NSProcessInfo processInfo] globallyUniqueString]];
-    [libFunctions mkdirRecursive:tempFolder];
+//    tempFolder = NSTemporaryDirectory();
+//    [libFunctions mkdirRecursive:tempFolder];
+//    tempFolder = [tempFolder stringByAppendingPathComponent:[[NSProcessInfo processInfo] globallyUniqueString]];
+//    [libFunctions mkdirRecursive:tempFolder];
         
 //    NSLog(@"Restoring %@: tmpDir = %@\n", path, tempFolder);
         
 //    [libFunctions createEncFS:destFolder decryptedFolder:tempFolder numUsers:numberOfUsers combinedPassword:combinedPasswordString];
     
-    NSNotificationCenter *nCenter = [[NSWorkspace sharedWorkspace] notificationCenter];
-    [nCenter removeObserver:self];
-    [nCenter addObserver:self selector:@selector(didMount:) name:NSWorkspaceDidMountNotification object:nil];
+//    NSNotificationCenter *nCenter = [[NSWorkspace sharedWorkspace] notificationCenter];
+//    [nCenter removeObserver:self];
+//    [nCenter addObserver:self selector:@selector(didMount:) name:NSWorkspaceDidMountNotification object:nil];
+//
     
-    
-    if (![libFunctions mountEncFS:path decryptedFolder:tempFolder password:passwd volumeName:path]) {
-        DDLogError(@"Restoring failed at mountEncFs %@: tmpDir = %@\n", path, tempFolder);
-        if (self.keychainHasPassphrase) {
-            // The error wasn't the user's fault.
-            // His keychain couldn't unlock it.
-            [self showWindow:nil];
-            self.keychainHasPassphrase = NO;
-            return;
-        }
-        else {
-            NSAlert *alert = [NSAlert alertWithMessageText:@"Incorrect passphrase" defaultButton:nil alternateButton:nil otherButton:nil informativeTextWithFormat:@"The passphrase does not decrypt %@", [path stringByDeletingLastPathComponent]];
+    if (![libFunctions decryptFolderInPlace:path
+                                  passphrase:passwd]) {
+        DDLogError(@"Restoring of %@ failed \n", path);
+        NSAlert *alert = [NSAlert alertWithMessageText:@"Incorrect passphrase" defaultButton:nil alternateButton:nil otherButton:nil informativeTextWithFormat:@"The passphrase does not decrypt %@", [path stringByDeletingLastPathComponent]];
             [alert runModal];
-            return;
-        }
-
+    } else { // success
+        NSFileManager *fm = [NSFileManager defaultManager];
+        NSError *err;
+        NSString *finalFolder = [path stringByDeletingPathExtension];
+        if (![fm moveItemAtPath:path toPath:finalFolder error:&err])
+            DDLogError(@"Restore: cannot move items at %@ to %@", path, finalFolder);
+        [self.window close];
+        [theApp didRestore:path];
     }
+    
+    
+//    if (![libFunctions mountEncFS:path decryptedFolder:tempFolder password:passwd volumeName:path]) {
+//        DDLogError(@"Restoring failed at mountEncFs %@: tmpDir = %@\n", path, tempFolder);
+//        if (self.keychainHasPassphrase) {
+//            // The error wasn't the user's fault.
+//            // His keychain couldn't unlock it.
+//            [self showWindow:nil];
+//            self.keychainHasPassphrase = NO;
+//            return;
+//        }
+//        else {
+//            NSAlert *alert = [NSAlert alertWithMessageText:@"Incorrect passphrase" defaultButton:nil alternateButton:nil otherButton:nil informativeTextWithFormat:@"The passphrase does not decrypt %@", [path stringByDeletingLastPathComponent]];
+//            [alert runModal];
+//            return;
+//        }
+//
+//    }
+    
     return;
 }
 

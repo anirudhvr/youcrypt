@@ -107,6 +107,22 @@ struct EncFS_Opts
     }
 };
 
+struct ConfigInfo
+{
+    const char *fileName;
+    ConfigType type;
+    const char *environmentOverride;
+    bool (*loadFunc)(const char *fileName, 
+            const boost::shared_ptr<EncFSConfig> &config,
+	    ConfigInfo *cfg);
+    bool (*saveFunc)(const char *fileName, 
+            const boost::shared_ptr<EncFSConfig> &config);
+    int currentSubVersion;
+    int defaultSubVersion;
+};
+extern ConfigInfo ConfigFileMapping[];
+
+
 /*
     Read existing config file.  Looks for any supported configuration version.
 */

@@ -159,6 +159,7 @@
     srcFolder = sourceFolderPath;
     if (![libFunctions encryptFolderInPlace:srcFolder passphrase:yourPasswordString encryptFilenames:encfnames]) {
         DDLogInfo(@"Encrypt error");
+        return;
     }
     
     NSFileManager *fm = [NSFileManager defaultManager];
@@ -166,6 +167,7 @@
     destFolder = [srcFolder stringByAppendingPathExtension:ENCRYPTED_DIRECTORY_EXTENSION];
     if (![fm moveItemAtPath:srcFolder toPath:destFolder error:&err]) {
         DDLogError(@"Encrypt: cannot move items at %@ to %@", srcFolder, destFolder);
+        return;
     }
     
     /* change folder icon of encrypted folder */
