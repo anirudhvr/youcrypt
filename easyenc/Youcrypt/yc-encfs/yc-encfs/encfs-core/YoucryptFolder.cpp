@@ -663,7 +663,8 @@ bool YoucryptFolder::mount(const path &_mountPoint,
         
     mountPoint = _mountPoint;
     mountOptions = _mountOptions;
-    ctx.idleTimeout = idleTimeout;
+    ctx.mountPoint = mountPoint.string();
+    ctx.idleTimeout = idleTimeout;    
     if (idleTimeout > 0)
         ctx.idleTracking = true;
     if (!(exists(mountPoint) && is_directory(mountPoint)))
@@ -834,7 +835,7 @@ bool YoucryptFolder::unmount(void)
     } else {
         rWarning(_("Not umounnting since folder not mounted"),
                  mountPoint.c_str());
-        fuse_unmount( mountPoint.c_str() );
+        // fuse_unmount( mountPoint.c_str() );
         return false;
     }
 }

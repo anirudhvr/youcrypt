@@ -21,6 +21,7 @@
 #include "encfs.h"
 #include <boost/shared_ptr.hpp>
 #include <set>
+#include <string>
 
 #ifdef USE_HASHMAP
 #include <ext/hash_map>
@@ -29,6 +30,7 @@
 #endif
 
 using boost::shared_ptr;
+using std::string;
 struct EncFS_Args;
 struct EncFS_Opts;
 class FileNode;
@@ -71,6 +73,7 @@ public:
 
     int idleTimeout;
     bool idleTracking;
+    string mountPoint;
 private:
     /* This placeholder is what is referenced in FUSE context (passed to
      * callbacks).

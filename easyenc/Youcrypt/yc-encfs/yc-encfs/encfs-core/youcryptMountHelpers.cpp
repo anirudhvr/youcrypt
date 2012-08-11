@@ -822,7 +822,7 @@ extern "C" void fuse_unmount_compat22(const char *mountpoint);
 
 static bool _unmountFS(EncFS_Context *ctx)
 {
-    fuse_unmount( ctx->rootCipherDir.c_str() );
+    fuse_unmount( ctx->mountPoint.c_str() );
     return true;
 }
 
