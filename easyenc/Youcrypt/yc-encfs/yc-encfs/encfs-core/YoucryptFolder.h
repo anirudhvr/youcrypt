@@ -100,7 +100,8 @@ namespace youcrypt {
         bool exportContent(const path&);
 
         bool mount(const path&);
-
+        bool unmount(void);
+        
         //! Add another cred. to an initialized folder
         bool addCredential(const Credentials&);
 

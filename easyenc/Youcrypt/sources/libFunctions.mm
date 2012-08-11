@@ -18,37 +18,9 @@
 @implementation libFunctions
 
 
-
-//NSString* systemCall(NSString *binary, NSArray *arguments) {
-//    NSTask *task;   
-//    task = [[NSTask alloc] init];
-//    [task setLaunchPath: binary];
-//    
-//    [task setArguments: arguments];
-//    
-//    NSPipe *pipe;
-//    pipe = [NSPipe pipe];
-//    [task setStandardOutput: pipe];
-//    
-//    [task launch];
-//    
-//    NSData *data = [[pipe fileHandleForReading] readDataToEndOfFile];
-//    
-//    [task waitUntilExit]; 
-//    //[task release];
-//    
-//    NSString *string = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]; 
-//    
-//    //DDLogVerbose (@"got\n%@", string); 
-//    
-//    return string;
-//}
-
 + (BOOL) mkdirRecursive:(NSString *)path {
     return [[NSFileManager defaultManager] createDirectoryAtPath:path withIntermediateDirectories:YES attributes:nil error:nil];
 }
-
-
 
 /**
  
@@ -403,13 +375,13 @@ using namespace youcrypt;
 + (int) testImportExport
 {
     // Write test program below
-    std::string encRoot = "/tmp/d";
+    std::string encRoot = "/tmp/d/";
     string srcFolder = "/tmp/s";
     
     YoucryptFolderOpts opts;
     Credentials creds(new PassphraseCredentials("yet_another"));
     cout << "Encrypted Folder is " << encRoot << endl;
-    //opts.filenameEncryption = YoucryptFolderOpts::filenameEncrypt;
+    opts.filenameEncryption = YoucryptFolderOpts::filenameEncrypt;
     YoucryptFolder folder(path(encRoot), opts, creds);
     
     string destSuffix = path(srcFolder).filename().string();
@@ -417,6 +389,10 @@ using namespace youcrypt;
           << "at " << "/" << destSuffix << endl;    
     folder.importContent(path(srcFolder), "/try");
     folder.exportContent(path("/tmp/gen"), "/");
+    folder.mount(path("/tmp/mounted"));
+    sleep(10);
+    folder.unmount();
+    
     return 0;
 }
 

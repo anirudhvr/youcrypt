@@ -730,3 +730,26 @@ bool YoucryptFolder::mount(const path &_mountPoint)
             return false;
     }
 }
+
+
+// Fuse version >= 26 requires another argument to fuse_unmount, which we
+// don't have.  So use the backward compatible call instead..
+extern "C" void fuse_unmount_compat22(const char *mountpoint);
+#    define fuse_unmount fuse_unmount_compat22
+
+bool YoucryptFolder::unmount(void)
+{
+    if (status == YoucryptFolder::mounted) {
+	rWarning(_("Unmounting filesystem %s due to inactivity"),
+             mountPoint.c_str());
+        fuse_unmount( mountPoint.c_str() );
+        return true;
+    } else {
+        rWarning(_("Not umounnting since folder not mounted"),
+                 mountPoint.c_str());
+        fuse_unmount( mountPoint.c_str() );
+        return false;
+    }
+}
+
+
