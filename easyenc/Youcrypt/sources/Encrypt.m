@@ -123,6 +123,8 @@
  sender: window who sent the action
  
  **/
+
+
 - (IBAction)encrypt:(id)sender
 {
     srcFolder = sourceFolderPath;

@@ -372,6 +372,56 @@ using std::string;
 using std::endl;
 using namespace youcrypt;
 
+
++ (BOOL)encryptFolderInPlace:(NSString*) srcFolder
+                  passphrase:(NSString*)pp
+            encryptFilenames:(BOOL)encfnames
+{
+    const char *srcfolder = [[srcFolder stringByAppendingString:@"/"] cStringUsingEncoding:NSASCIIStringEncoding];
+    const char *pass = [pp cStringUsingEncoding:NSASCIIStringEncoding];
+    BOOL ret = YES;
+    
+    YoucryptFolderOpts opts;
+    Credentials creds(new PassphraseCredentials(pass));
+    
+    if (encfnames)
+        opts.filenameEncryption = YoucryptFolderOpts::filenameEncrypt;
+    
+    YoucryptFolder folder(path(srcfolder), opts, creds);
+    
+    if (folder.importContent(path(srcfolder), [ENCRYPTION_TEMPORARY_FOLDER cStringUsingEncoding:NSASCIIStringEncoding])) {
+        // succeeded
+        NSFileManager *fm = [NSFileManager defaultManager];
+        NSArray *files = [fm contentsOfDirectoryAtPath:srcFolder error:nil];
+        NSError *err;
+        // Remove everything in the source folder except for the encrypted folder
+        for (NSString *file in files) {
+            if (!([file isEqualToString:ENCRYPTION_TEMPORARY_FOLDER] ||
+                  [file isEqualToString:@"."] || [file isEqualToString:@".."])) {
+                if (![fm removeItemAtPath:[srcFolder stringByAppendingPathComponent:file] error:&err]) {
+                    DDLogInfo(@"Error removing dir: %@", [err localizedDescription]);
+                    ret = NO;
+                }
+            }
+        }
+        
+        NSString *encryptedFolder = [srcFolder stringByAppendingPathComponent:ENCRYPTION_TEMPORARY_FOLDER];
+        files = [fm contentsOfDirectoryAtPath:encryptedFolder error:nil];
+        for (NSString *file in files) {
+            if (![fm moveItemAtPath:[encryptedFolder stringByAppendingPathComponent:file]
+                             toPath:[srcFolder stringByAppendingPathComponent:file] error:&err]) {
+                DDLogInfo(@"Error moving contents: %@", [err localizedDescription]);
+                ret = NO;
+            }
+        }
+    } else {
+        DDLogInfo(@"Encrypt: could not import content of %@ to temp folder /%@", srcFolder, ENCRYPTION_TEMPORARY_FOLDER);
+        ret = NO;
+    }
+    
+    return ret;
+}
+
 + (int) testImportExport
 {
     // Write test program below

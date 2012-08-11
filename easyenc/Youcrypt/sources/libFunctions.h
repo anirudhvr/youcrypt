@@ -77,5 +77,8 @@
 
 + (int) testImportExport;
 
++ (BOOL)encryptFolderInPlace:(NSString*) srcFolder
+                  passphrase:(NSString*)pp
+            encryptFilenames:(BOOL)encfnames;
 
 @end
