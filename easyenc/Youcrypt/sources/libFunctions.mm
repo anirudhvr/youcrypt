@@ -392,11 +392,8 @@ using namespace youcrypt;
     YoucryptFolderOpts opts;
     Credentials creds(new PassphraseCredentials(pass));
     
-    if (idletime > 0) {
-        opts.idleTracking = true;
-        opts.idleTrackingTimeOut = idletime;
-    }
-    
+    if (idletime < 0)
+        idletime = 0;
     for (NSString *key in [fuseOpts allKeys]) {
         NSString *opt;
         if ([key isEqualToString:@"volicon"]) {
@@ -412,7 +409,7 @@ using namespace youcrypt;
     
     if (folder.currStatus() == YoucryptFolder::initialized) {
         // import worked  -- this is a Youcrypt folder
-        bool m = folder.mount(dst, fuse_opts);
+        bool m = folder.mount(dst, fuse_opts, idletime);
         if (folder.currStatus() != YoucryptFolder::mounted) {
             DDLogInfo(@"Mounting %@ at %@ failed!", srcFolder, destFolder);
             ret = NO;
