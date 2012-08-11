@@ -34,8 +34,6 @@
 #include <boost/scoped_ptr.hpp>
 #include <boost/shared_ptr.hpp>
 
-static FILE * consfd;
-
 using boost::filesystem::path;
 using boost::filesystem::directory_iterator;
 using boost::filesystem::ifstream;
@@ -68,7 +66,8 @@ static bool encryptData(shared_ptr<FileNode> file,
     off_t offset = 0;
     while (!input.eof()) {
         input.read((char *)buf, sizeof(buf));
-        file->write(offset, (unsigned char *)buf, input.gcount());
+        if (input.gcount() > 0)
+            file->write(offset, (unsigned char *)buf, input.gcount());
         offset += input.gcount();
     }
     return true;
@@ -83,7 +82,8 @@ static bool decryptData(shared_ptr<FileNode> node,
 
     for(int i=0; i<blocks; ++i) {
         int bytes = node->read(offset, buf, sizeof(buf));
-        output.write((char *)buf, bytes);
+        if (bytes > 0)
+            output.write((char *)buf, bytes);
         offset += bytes;
     }    
     output.close();
@@ -220,7 +220,8 @@ bool YoucryptFolder::loadConfigAtPath(const path &_rootPath,
 
     boost::shared_ptr<EncFSConfig> config(new EncFSConfig);
     rootPath = _rootPath;
-    const string rootDir = _rootPath.string();
+    string rootDir = _rootPath.string();
+    slashTerminate(rootDir);
 
     if(readConfig( rootDir, config ) != Config_None)
     {
@@ -338,7 +339,8 @@ bool YoucryptFolder::createAtPath(const path& _rootPath,
     status = YoucryptFolder::statusUnknown;
     
     rootPath = _rootPath;
-    const string rootDir = _rootPath.string();
+    string rootDir = _rootPath.string();
+    slashTerminate(rootDir);
     bool enableIdleTracking = opts.idleTracking;
     const bool forceDecode = true;
     const bool reverseEncryption = false;
@@ -502,7 +504,7 @@ bool YoucryptFolder::importContent(const path& p)
 bool YoucryptFolder::importContent(const path& sourcePath, 
                                    string destSuffix) 
 {
-    if ((status != YoucryptFolder::initialized) ||
+    if ((status != YoucryptFolder::initialized) &&
         (status != YoucryptFolder::mounted)) 
         return false;
     
@@ -522,7 +524,7 @@ bool YoucryptFolder::importContent(const path& sourcePath,
 bool YoucryptFolder::exportContent(const path& toPath, string volPath)
 {
 
-    if ((status != YoucryptFolder::initialized) ||
+    if ((status != YoucryptFolder::initialized) &&
         (status != YoucryptFolder::mounted)) 
         return false;
     
@@ -583,11 +585,10 @@ bool YoucryptFolder::mount(const path &_mountPoint)
 {
     if (status != YoucryptFolder::initialized)
         return false;
-
-    consfd = fdopen(dup(1), "a");
-    
-
+        
     mountPoint = _mountPoint;
+    if (!(exists(mountPoint) && is_directory(mountPoint)))
+        return false;
     pid_t newPid = fork();    
     if (newPid < 0)
         return false; // Error on fork.
