@@ -33,6 +33,7 @@
 #include <boost/tuple/tuple.hpp>
 #include <boost/scoped_ptr.hpp>
 #include <boost/shared_ptr.hpp>
+#include <boost/foreach.hpp>
 
 using boost::filesystem::path;
 using boost::filesystem::directory_iterator;
@@ -585,12 +586,14 @@ bool YoucryptFolder::addCredential(const Credentials& newCred)
 /*! Mount the decrypted folder at mountPoint.
  *  Implementation currently uses osx fuse.
  */
-bool YoucryptFolder::mount(const path &_mountPoint) 
+bool YoucryptFolder::mount(const path &_mountPoint, 
+                           const vector<string> &_mountOptions) 
 {
     if (status != YoucryptFolder::initialized)
         return false;
         
     mountPoint = _mountPoint;
+    mountOptions = _mountOptions;
     if (!(exists(mountPoint) && is_directory(mountPoint)))
         return false;
     pid_t newPid = fork();    
@@ -672,14 +675,18 @@ bool YoucryptFolder::mount(const path &_mountPoint)
         ctx.opts.reset();
 
         // Create fuse args
-        char **fuseArgv = new char *[32];
-        int fuseArgc;
-        fuseArgv[0] = new char[strlen("youcryptFS") + 2];
-        strcpy(fuseArgv[0], "youcryptFS");
-        fuseArgv[1] = new char[mountPoint.string().length() + 2];
-        strcpy(fuseArgv[1], mountPoint.string().c_str());
-        fuseArgc = 2;
+        rAssert(mountOptions.size() <= 30);
+        
+        const char **fuseArgv = new char const *[32];
+        int fuseArgc = 0;
 
+        fuseArgv[fuseArgc++] = "youcryptFS";
+        fuseArgv[fuseArgc++] = mountPoint.string().c_str();
+
+        BOOST_FOREACH( string arg, mountOptions ) {
+            fuseArgv[fuseArgc++] = arg.c_str();
+        }
+                
         umask(0);            
         if(isDaemon)
         {
