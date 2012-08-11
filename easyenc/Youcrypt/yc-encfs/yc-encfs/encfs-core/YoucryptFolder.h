@@ -19,11 +19,6 @@ using std::vector;
 namespace youcrypt {
 
     struct YoucryptFolderOpts {
-        //! Monitor filesystem idle time
-        bool idleTracking;
-        //! idle timeout (in seconds)
-        unsigned int idleTrackingTimeOut;
-
         //! Encrypt filenames: values from the anon. enum. below
         int filenameEncryption;
 
@@ -54,9 +49,6 @@ namespace youcrypt {
 
         //! Constructing providing sane defaults.
         YoucryptFolderOpts() {
-
-            idleTracking = false;
-            idleTrackingTimeOut = 0;
 
             filenameEncryption = filenamePlain;
             ignoreList.push_back(".DS_STORE");
@@ -99,11 +91,17 @@ namespace youcrypt {
         bool exportContent(const path&, string);
         bool exportContent(const path&);
 
-        bool mount(const path&, const vector<string> & = vector<string>());
+        bool mount(const path&, const vector<string> & = vector<string>(),
+                   int=0);
         bool unmount(void);
         
         //! Add another cred. to an initialized folder
         bool addCredential(const Credentials&);
+        /*! Delete the key correspondign to cred.  If multiple keys
+         *  match delete teh first matching key.  Refuses to delete if
+         *  the key is currently in use or if is the sole key.
+         */
+        bool deleteCredential(const Credentials&);
 
         int currStatus() { return status; }
     public:
@@ -129,6 +127,7 @@ namespace youcrypt {
         boost::shared_ptr<Cipher> cipher;
         CipherKey volumeKey;
         boost::shared_ptr<DirNode> rootNode;
+        shared_ptr<EncFSConfig> config;
 
         path mountPoint;
         path rootPath;

@@ -219,7 +219,7 @@ bool YoucryptFolder::loadConfigAtPath(const path &_rootPath,
  
     status = YoucryptFolder::statusUnknown;
 
-    boost::shared_ptr<EncFSConfig> config(new EncFSConfig);
+    config.reset(new EncFSConfig);
     rootPath = _rootPath;
     string rootDir = _rootPath.string();
     slashTerminate(rootDir);
@@ -324,6 +324,7 @@ bool YoucryptFolder::loadConfigAtPath(const path &_rootPath,
         ctx.opts.reset();
         ctx.args.reset();
 
+
         status = YoucryptFolder::initialized;
         return true;
     } else
@@ -346,7 +347,7 @@ bool YoucryptFolder::createAtPath(const path& _rootPath,
         mkdir(rootDir.c_str(), 0755);
     
     slashTerminate(rootDir);
-    bool enableIdleTracking = opts.idleTracking;
+    bool enableIdleTracking = true;
     const bool forceDecode = true;
     const bool reverseEncryption = false;
 
@@ -397,7 +398,7 @@ bool YoucryptFolder::createAtPath(const path& _rootPath,
         return false;
     }
 
-    shared_ptr<EncFSConfig> config( new EncFSConfig );
+    config.reset( new EncFSConfig );
     config->cfgType = Config_YC;
     config->cipherIface = cipher->interface();
     config->keySize = keySize;
@@ -490,7 +491,6 @@ bool YoucryptFolder::createAtPath(const path& _rootPath,
     ctx.setRoot (rootNode);
     ctx.opts.reset();
     ctx.args.reset();
-
     // TODO: Need to set some context stuff
     
     status = YoucryptFolder::initialized;
@@ -552,7 +552,7 @@ bool YoucryptFolder::exportContent(const path& toPath)
 bool YoucryptFolder::addCredential(const Credentials& newCred) 
 {
 
-    if ((status != YoucryptFolder::initialized) ||
+    if ((status != YoucryptFolder::initialized) &&
         (status != YoucryptFolder::mounted))
         return false;
 
@@ -560,7 +560,7 @@ bool YoucryptFolder::addCredential(const Credentials& newCred)
     YoucryptFolder::Status ostatus = status;
     status = YoucryptFolder::processing;
 
-    boost::shared_ptr<EncFSConfig> config(new EncFSConfig);
+    config.reset( new EncFSConfig );
     if (readConfig ( mountPoint.string(), config ) == Config_YC) {
         // volumeKey and cipher should already be initialized.
 
@@ -583,17 +583,77 @@ bool YoucryptFolder::addCredential(const Credentials& newCred)
     }
 }
 
+bool YoucryptFolder::deleteCredential(const Credentials& cred) 
+{
+    if ((status != YoucryptFolder::initialized) &&
+        (status != YoucryptFolder::mounted))
+        return false;
+
+    // Let other threads know that we're processing the config.
+    YoucryptFolder::Status ostatus = status;
+    status = YoucryptFolder::processing;
+
+    config.reset( new EncFSConfig );
+    if (readConfig ( mountPoint.string(), config ) == Config_YC) {
+        // volumeKey and cipher should already be initialized.
+
+        int numUsers = config->easyencNumUsers;
+        CipherKey decodedKey;
+        if (numUsers = 1)
+            return false;
+        for (int i=0; i<numUsers; i++) {
+            decodedKey = cred->decryptVolumeKey
+                (const_cast<unsigned char *>(&(config->easyencKeys[i].front())),
+                 cipher);
+            if (decodedKey) {                
+                if (!cipher->compareKey(decodedKey, volumeKey)) {
+                    // The cred. decoded the key, and it's not the one in use.
+
+                    config->easyencKeys.erase(config->easyencKeys.begin() + 5);
+                    config->easyencNumUsers--;
+
+                    // For backward compatibility, we also check if
+                    // the "main" key got deleted.
+                    if (cred->decryptVolumeKey(config->getKeyData(), 
+                                               cipher)) {
+                        config->assignKeyData(const_cast<unsigned char *>
+                                              (&(config->easyencKeys[i].front())),
+                                              cipher->encodedKeySize());
+                    }
+
+                    status = ostatus;
+                    return saveConfig(Config_YC, rootPath.string(), config);
+                }
+                else {
+                    status = ostatus;
+                    return false;
+                }
+            }
+        }
+        // Nothing decoded.
+        return false;
+    }
+    // readConfig failed!  Update status?
+    // We could also ignore this.
+    status = ostatus;
+}
+
+
 /*! Mount the decrypted folder at mountPoint.
  *  Implementation currently uses osx fuse.
  */
 bool YoucryptFolder::mount(const path &_mountPoint, 
-                           const vector<string> &_mountOptions) 
+                           const vector<string> &_mountOptions,
+                           int idleTimeout ) 
 {
     if (status != YoucryptFolder::initialized)
         return false;
         
     mountPoint = _mountPoint;
     mountOptions = _mountOptions;
+    ctx.idleTimeout = idleTimeout;
+    if (idleTimeout > 0)
+        ctx.idleTracking = true;
     if (!(exists(mountPoint) && is_directory(mountPoint)))
         return false;
     pid_t newPid = fork();    
