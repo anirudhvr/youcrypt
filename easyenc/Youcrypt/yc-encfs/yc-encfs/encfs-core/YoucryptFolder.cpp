@@ -34,8 +34,6 @@
 #include <boost/scoped_ptr.hpp>
 #include <boost/shared_ptr.hpp>
 
-static FILE * consfd;
-
 using boost::filesystem::path;
 using boost::filesystem::directory_iterator;
 using boost::filesystem::ifstream;
@@ -222,7 +220,8 @@ bool YoucryptFolder::loadConfigAtPath(const path &_rootPath,
 
     boost::shared_ptr<EncFSConfig> config(new EncFSConfig);
     rootPath = _rootPath;
-    const string rootDir = _rootPath.string();
+    string rootDir = _rootPath.string();
+    slashTerminate(rootDir);
 
     if(readConfig( rootDir, config ) != Config_None)
     {
@@ -340,7 +339,8 @@ bool YoucryptFolder::createAtPath(const path& _rootPath,
     status = YoucryptFolder::statusUnknown;
     
     rootPath = _rootPath;
-    const string rootDir = _rootPath.string();
+    string rootDir = _rootPath.string();
+    slashTerminate(rootDir);
     bool enableIdleTracking = opts.idleTracking;
     const bool forceDecode = true;
     const bool reverseEncryption = false;
@@ -585,11 +585,10 @@ bool YoucryptFolder::mount(const path &_mountPoint)
 {
     if (status != YoucryptFolder::initialized)
         return false;
-
-    consfd = fdopen(dup(1), "a");
-    
-
+        
     mountPoint = _mountPoint;
+    if (!(exists(mountPoint) && is_directory(mountPoint)))
+        return false;
     pid_t newPid = fork();    
     if (newPid < 0)
         return false; // Error on fork.
