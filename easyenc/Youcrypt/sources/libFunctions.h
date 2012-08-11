@@ -80,6 +80,8 @@
 + (BOOL)encryptFolderInPlace:(NSString*) srcFolder
                   passphrase:(NSString*)pp
             encryptFilenames:(BOOL)encfnames;
++ (BOOL)decryptFolderInPlace:(NSString*) srcFolder
+                  passphrase:(NSString*)pp;
 
 + (BOOL) openEncryptedFolder:(NSString*)srcFolder
                   mountPoint:(NSString*)destFolder

@@ -422,6 +422,53 @@ using namespace youcrypt;
     return ret;
 }
 
++ (BOOL)decryptFolderInPlace:(NSString*) srcFolder
+                  passphrase:(NSString*)pp
+{
+    const char *srcfolder = [[srcFolder stringByAppendingString:@"/"] cStringUsingEncoding:NSASCIIStringEncoding];
+    const char *pass = [pp cStringUsingEncoding:NSASCIIStringEncoding];
+    BOOL ret = YES;
+    
+    path ph = boost::filesystem::temp_directory_path() / boost::filesystem::unique_path();
+    create_directories(ph);
+    NSString *tempFolder = [NSString stringWithCString:ph.string().c_str()];
+    
+    YoucryptFolderOpts opts;
+    Credentials creds(new PassphraseCredentials(pass));
+    YoucryptFolder folder(path(srcfolder), opts, creds);
+    
+    if (folder.exportContent(ph)) {
+        // success
+        NSFileManager *fm = [NSFileManager defaultManager];
+        NSArray *files = [fm contentsOfDirectoryAtPath:srcFolder error:nil];
+        NSError *err;
+        // Remove everything in the source folder
+        for (NSString *file in files) {
+            if (!([file isEqualToString:@"."] || [file isEqualToString:@".."])) {
+                if (![fm removeItemAtPath:[srcFolder stringByAppendingPathComponent:file] error:&err]) {
+                    DDLogInfo(@"Error removing dir: %@", [err localizedDescription]);
+                    ret = NO;
+                }
+            }
+        }
+        
+        // Move everything from the decrypted folder back to the source folder
+        files = [fm contentsOfDirectoryAtPath:tempFolder error:nil];
+        for (NSString *file in files) {
+            if (![fm moveItemAtPath:[tempFolder stringByAppendingPathComponent:file]
+                             toPath:[srcFolder stringByAppendingPathComponent:file] error:&err]) {
+                DDLogInfo(@"Error moving contents: %@", [err localizedDescription]);
+                ret = NO;
+            }
+        }
+    } else {
+        DDLogInfo(@"decrypt: could not export content of %@ to temp folder /%@", srcFolder, ENCRYPTION_TEMPORARY_FOLDER);
+        ret = NO;
+    }
+    
+    return ret;
+}
+
 
 + (BOOL)encryptFolderInPlace:(NSString*) srcFolder
                   passphrase:(NSString*)pp
@@ -448,7 +495,7 @@ using namespace youcrypt;
         NSFileManager *fm = [NSFileManager defaultManager];
         NSArray *files = [fm contentsOfDirectoryAtPath:srcFolder error:nil];
         NSError *err;
-        // Remove everything in the source folder except for the encrypted folder
+        // Remove everything in the source folder
         for (NSString *file in files) {
             if (!([file isEqualToString:@"."] || [file isEqualToString:@".."])) {
                 if (![fm removeItemAtPath:[srcFolder stringByAppendingPathComponent:file] error:&err]) {

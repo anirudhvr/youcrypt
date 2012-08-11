@@ -59,6 +59,16 @@ static RLogChannel * Info = DEF_CHANNEL( "info/youcrypt", Log_Info );
 // Function declared in FileUtils to find ciphers.
 Cipher::CipherAlgorithm findCipherAlgorithm(const char *name, int keySize );
 
+static
+const char *
+getConfigFileName(void)
+{
+    ConfigInfo *nm = ConfigFileMapping;
+    while(!nm->fileName) {
+        nm++;
+    }
+    return nm->fileName;
+}
 
 static bool encryptData(shared_ptr<FileNode> file,
                         ifstream &input) 
@@ -182,7 +192,7 @@ static bool decryptFolder( shared_ptr<DirNode> root,
                 name = dt.nextPlaintextName())
             {
                 // Recurse to subdirectories
-                if(name == "." || name == "..")
+                if(name == "." || name == ".." || name == getConfigFileName())
                     continue;
                 if (!decryptFolder(
                         root, destPath / path(name), volSuffix + name))
@@ -192,6 +202,8 @@ static bool decryptFolder( shared_ptr<DirNode> root,
     }
     return true;
 }
+
+
 
 
 /*! Implementation: Try to loadConfig and createAtPath otherwise.
