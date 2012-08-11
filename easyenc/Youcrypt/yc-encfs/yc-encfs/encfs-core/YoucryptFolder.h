@@ -99,7 +99,7 @@ namespace youcrypt {
         bool exportContent(const path&, string);
         bool exportContent(const path&);
 
-        bool mount(const path&);
+        bool mount(const path&, const vector<string> & = vector<string>());
         bool unmount(void);
         
         //! Add another cred. to an initialized folder
@@ -132,6 +132,7 @@ namespace youcrypt {
 
         path mountPoint;
         path rootPath;
+        vector<string> mountOptions;
         Status status;
 
         //! FIXME:  Not yet implemented.  Need to do this.
