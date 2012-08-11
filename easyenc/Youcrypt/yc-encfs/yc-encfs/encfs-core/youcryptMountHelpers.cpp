@@ -20,6 +20,7 @@
 #include "i18n.h"
 #include "openssl.h"
 
+#include <pthread.h>
 #include <rlog/rlog.h>
 #include <rlog/Error.h>
 #include <rlog/SyslogNode.h>
@@ -813,11 +814,84 @@ int youcrypt_mount_removexattr( const char *path, const char *name )
 
 #endif // HAVE_XATTR
 
+// Fuse version >= 26 requires another argument to fuse_unmount, which we
+// don't have.  So use the backward compatible call instead..
+extern "C" void fuse_unmount_compat22(const char *mountpoint);
+#    define fuse_unmount fuse_unmount_compat22
+
+
+static bool _unmountFS(EncFS_Context *ctx)
+{
+    fuse_unmount( ctx->rootCipherDir.c_str() );
+    return true;
+}
+
+static const int ActivityCheckInterval = 10;
+static
+void *_idleMonitor(void *_arg)
+{
+    EncFS_Context *ctx = (EncFS_Context*)_arg;
+
+    const int timeoutCycles = 60 * ctx->idleTimeout / ActivityCheckInterval;
+    int idleCycles = 0;
+
+    pthread_mutex_lock( &ctx->wakeupMutex );
+    
+    while(ctx->running)
+    {
+	int usage = ctx->getAndResetUsageCounter();
+
+	if(usage == 0 && ctx->isMounted())
+	    ++idleCycles;
+	else
+	    idleCycles = 0;
+	
+	if(idleCycles >= timeoutCycles)
+	{
+	    int openCount = ctx->openFileCount();
+	    if( openCount == 0 && _unmountFS( ctx ) )
+	    {
+		// wait for main thread to wake us up
+		pthread_cond_wait( &ctx->wakeupCond, &ctx->wakeupMutex );
+		break;
+	    }
+		
+	    rDebug("num open files: %i", openCount );
+	}
+	    
+	rDebug("idle cycle count: %i, timeout after %i", idleCycles,
+		timeoutCycles);
+
+	struct timeval currentTime;
+	gettimeofday( &currentTime, 0 );
+	struct timespec wakeupTime;
+	wakeupTime.tv_sec = currentTime.tv_sec + ActivityCheckInterval;
+	wakeupTime.tv_nsec = currentTime.tv_usec * 1000;
+	pthread_cond_timedwait( &ctx->wakeupCond, 
+		&ctx->wakeupMutex, &wakeupTime );
+    }
+    
+    pthread_mutex_unlock( &ctx->wakeupMutex );
+
+    rDebug("Idle monitoring thread exiting");
+
+    return 0;
+}
+
+
 
 void *youcrypt_mount_init(fuse_conn_info *conn) {
     conn->async_read = true;
     EncFS_Context *ctx = (EncFS_Context *)fuse_get_context()->private_data;
-    return (void *)ctx;
+    
+    conn->async_read = true;
+
+    if (ctx->idleTimeout > 0) {
+        ctx->running = true;
+        int res = pthread_create (&ctx->monitorThread, 0, _idleMonitor,
+                                  ((void *)ctx));
+    }
+    return ((void *)ctx);
 }
 
 void youcrypt_mount_destroy(void *_ctx) {

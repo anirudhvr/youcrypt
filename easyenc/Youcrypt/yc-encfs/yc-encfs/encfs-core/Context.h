@@ -69,6 +69,8 @@ public:
     pthread_cond_t wakeupCond;
     pthread_mutex_t wakeupMutex;
 
+    int idleTimeout;
+    bool idleTracking;
 private:
     /* This placeholder is what is referenced in FUSE context (passed to
      * callbacks).
@@ -100,6 +102,7 @@ private:
 
     int usageCount;
     shared_ptr<DirNode> root;
+
 };
 
 int remountFS( EncFS_Context *ctx );
