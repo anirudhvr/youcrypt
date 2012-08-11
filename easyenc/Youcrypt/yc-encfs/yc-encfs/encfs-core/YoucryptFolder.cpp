@@ -680,7 +680,7 @@ bool YoucryptFolder::mount(const path &_mountPoint,
         const char **fuseArgv = new char const *[32];
         int fuseArgc = 0;
 
-        fuseArgv[fuseArgc++] = "youcryptFS";
+        fuseArgv[fuseArgc++] = "YouCryptFS";
         fuseArgv[fuseArgc++] = mountPoint.string().c_str();
 
         BOOST_FOREACH( string arg, mountOptions ) {
@@ -733,10 +733,10 @@ bool YoucryptFolder::mount(const path &_mountPoint,
 
     else if (newPid > 0) {
         // Parent process.
-        int status;
-        waitpid(newPid, &status, 0);
-        if (WIFEXITED(status) && !(WEXITSTATUS(status))) {
-            status = YoucryptFolder::mounted;
+        int stat;
+        waitpid(newPid, &stat, 0);
+        if (WIFEXITED(stat) && !(WEXITSTATUS(stat))) {
+            this->status = YoucryptFolder::mounted;
             return true;
         }
         else

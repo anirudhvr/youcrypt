@@ -412,7 +412,7 @@ using namespace youcrypt;
     
     if (folder.currStatus() == YoucryptFolder::initialized) {
         // import worked  -- this is a Youcrypt folder
-        folder.mount(dst, fuse_opts);
+        bool m = folder.mount(dst, fuse_opts);
         if (folder.currStatus() != YoucryptFolder::mounted) {
             DDLogInfo(@"Mounting %@ at %@ failed!", srcFolder, destFolder);
             ret = NO;
