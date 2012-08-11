@@ -734,7 +734,9 @@ bool YoucryptFolder::mount(const path &_mountPoint,
     else if (newPid > 0) {
         // Parent process.
         int stat;
-        waitpid(newPid, &stat, 0);
+        do {
+            waitpid(newPid, &stat, 0);
+        } while (!(WIFEXITED(stat)));
         if (WIFEXITED(stat) && !(WEXITSTATUS(stat))) {
             this->status = YoucryptFolder::mounted;
             return true;
