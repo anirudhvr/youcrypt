@@ -56,8 +56,6 @@
     
     BOOL res = [libFunctions openEncryptedFolder:srcFolder mountPoint:destFolder passphrase:yourPasswordString idleTime:idletime fuseOpts:dict];
      
-//    BOOL res = [libFunctions mountEncFS:srcFolder decryptedFolder:destFolder password:yourPasswordString fuseOptions:dict idleTime:idletime ];
-
     if (res == YES) {
         [self close];
         [theApp didDecrypt:sourceFolderPath];
