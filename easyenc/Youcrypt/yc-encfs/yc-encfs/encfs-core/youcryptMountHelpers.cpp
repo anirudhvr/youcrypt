@@ -895,7 +895,8 @@ void *youcrypt_mount_init(fuse_conn_info *conn) {
 }
 
 void youcrypt_mount_destroy(void *_ctx) {
-    
+    EncFS_Context *ectx = (EncFS_Context *)_ctx;
+    ectx->folder->status = youcrypt::YoucryptFolder::initialized;
 }
 
 

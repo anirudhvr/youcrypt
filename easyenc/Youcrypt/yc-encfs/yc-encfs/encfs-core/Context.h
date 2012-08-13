@@ -33,6 +33,11 @@ using boost::shared_ptr;
 using std::string;
 struct EncFS_Args;
 struct EncFS_Opts;
+
+namespace youcrypt {
+    class YoucryptFolder;
+}
+
 class FileNode;
 class DirNode;
 
@@ -74,6 +79,7 @@ public:
     int idleTimeout;
     bool idleTracking;
     string mountPoint;
+    shared_ptr<youcrypt::YoucryptFolder> folder;
 private:
     /* This placeholder is what is referenced in FUSE context (passed to
      * callbacks).

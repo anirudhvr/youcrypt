@@ -46,13 +46,12 @@ using boost::is_any_of;
 using boost::scoped_ptr;
 using boost::shared_ptr;
 
-using youcrypt::YoucryptFolder;
-
 using rel::Interface;
-
 using rlog::RLogChannel;
 using rlog::Log_Info;
 using rlog::SyslogNode;
+
+using namespace youcrypt;
 
 static RLogChannel * Info = DEF_CHANNEL( "info/youcrypt", Log_Info );
 
@@ -431,6 +430,7 @@ bool YoucryptFolder::createAtPath(const path& _rootPath,
 
     // Create Volume Key
 
+    // This should really come from the cred. object.
     int encodedKeySize = cipher->encodedKeySize();
     unsigned char *encodedKey = new unsigned char[ encodedKeySize ];
     volumeKey = cipher->newRandomKey();
@@ -840,4 +840,9 @@ bool YoucryptFolder::unmount(void)
     }
 }
 
+
+YoucryptFolder::~YoucryptFolder() {
+    if (status == YoucryptFolder::mounted)
+        unmount();
+}
 
