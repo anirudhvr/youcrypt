@@ -204,8 +204,26 @@ static bool decryptFolder( shared_ptr<DirNode> root,
 }
 
 
+const char *YoucryptFolder::statusString[] = {
+            "Status Unknown",
+            "Folder uninitialized",
+            "Error reading config",
+            "Folder initialized",
+            "Folder processing",
+            "Folder mounted",
+            "Folder unmounted"
+};
 
-
+/*! Implementation: Create a YoucryptFolder object
+ */
+YoucryptFolder::YoucryptFolder(const path &_rootPath)
+{
+    status = YoucryptFolder::statusUnknown;
+    rootPath = _rootPath;
+    string rootDir = _rootPath.string();
+    slashTerminate(rootDir);
+}
+                               
 /*! Implementation: Try to loadConfig and createAtPath otherwise.
  */
 YoucryptFolder::YoucryptFolder(const path &_rootPath, 

@@ -7,6 +7,13 @@
 //
 
 #import <Foundation/Foundation.h>
+
+// C++ headers
+#include <boost/shared_ptr.hpp>
+#include "encfs-core/YoucryptFolder.h"
+#include "encfs-core/Credentials.h"
+#include "encfs-core/PassphraseCredentials.h"
+
 @class PeriodicActionTimer;
 enum {
     YoucryptDirectoryStatusNotFound = 0,
@@ -17,7 +24,7 @@ enum {
 } YoucryptDirectoryStatus;
 
 @interface YoucryptDirectory : NSObject <NSCoding> {
-//    PeriodicActionTimer *timer;
+    boost::shared_ptr<youcrypt::YoucryptFolder> folder;
 }
 
 @property (nonatomic, strong) NSString *path;          // Path of the youcrypt directory.
@@ -27,13 +34,26 @@ enum {
 @property (nonatomic, assign) NSUInteger status; // status description
 
 
+/* C++ wrappers */
+- (BOOL) encryptFolderInPlaceWithPassphrase:(NSString*)pp
+                           encryptFilenames:(BOOL)encfnames;
+
+- (BOOL) decryptFolderInPlaceWithPassphrase:(NSString*)pp;
+
+- (BOOL) openEncryptedFolderAtMountPoint:(NSString*)destFolder
+                              withPassphrase:(NSString*)pp
+                                idleTime:(int)idletime
+                                fuseOpts:(NSDictionary*)fuseOpts;
+- (BOOL) closeEncryptedFolder;
+
+
+/* Old methods */
 - (void) updateInfo;
 - (BOOL) checkYoucryptDirectoryStatus:(BOOL)forceRefresh;
 + (void) refreshMountedFuseVolumes;
 + (NSString*) statusToString:(NSUInteger)status;
 + (BOOL) pathIsMounted:(NSString *)path;
 
-// Add more if needed.
 
 @end
 

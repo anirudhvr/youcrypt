@@ -66,12 +66,15 @@ namespace youcrypt {
 
     class YoucryptFolder {
     public:
-
         //! Create a new object representing encrypted content at path.
         YoucryptFolder(const path&, 
                        const YoucryptFolderOpts &, 
                        const Credentials&);
-
+        
+        //! Simple constructor; does not read config.
+        YoucryptFolder(const path&);
+        
+        
         //! Create a new config. at path and loads it up.
         bool createAtPath(const path&, 
                           const YoucryptFolderOpts &, 
@@ -104,6 +107,7 @@ namespace youcrypt {
         bool deleteCredential(const Credentials&);
 
         int currStatus() { return status; }
+        const char *statusAsString()  { return statusString[status]; }
     public:
         enum Status {
             //! Status is not known (not parseable, not readable, etc.)
@@ -121,6 +125,10 @@ namespace youcrypt {
             //! Directory is initialized at mounted.
             mounted
         };
+        
+        //! The status, except in words
+        // Defined in YoucryptFolder.cpp
+        static const char *statusString[];
 
     private:
         EncFS_Context ctx;

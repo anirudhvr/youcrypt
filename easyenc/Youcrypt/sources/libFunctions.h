@@ -20,8 +20,6 @@
 #import <sys/un.h>
 #import <string.h>
 
-
-
 @interface libFunctions : NSObject {
     
 }
@@ -36,31 +34,13 @@
                 env:(NSDictionary *)env;
 
 
-
-+ (BOOL) createEncFS:(NSString *)encFolder
-     decryptedFolder:(NSString *)decFolder
-            numUsers:(int)numUsers
-    combinedPassword:(NSString *)pwd
-    encryptFilenames:(BOOL)encryptfilenames;
-
-+ (BOOL) mountEncFS:(NSString *)encFolder 
-    decryptedFolder:(NSString *)decFolder 
-           password:(NSString*)password 
-        fuseOptions:(NSDictionary*)fuseOpts
-           idleTime:(int)idletime;
-
-+ (BOOL) mountEncFS:(NSString *)encFolder
-    decryptedFolder:(NSString *)decFolder
-           password:(NSString *)password
-         volumeName:(NSString*) volname;
-
 + (BOOL) changeEncFSPasswd:(NSString *)path
                  oldPasswd:(NSString *)oldPasswd
                  newPasswd:(NSString *)newPasswd;
 
 
 
-+ (void) archiveDirectoryList:(id)directories 
++ (void) archiveDirectoryList:(id)directories
                        toFile:(NSString*)file;
 + (id) unarchiveDirectoryListFromFile:(NSString*)file;
 
@@ -75,17 +55,4 @@
 
 + (NSString*) getRealPathByResolvingSymlinks:(NSString*) path;
 
-+ (int) testImportExport;
-
-+ (BOOL)encryptFolderInPlace:(NSString*) srcFolder
-                  passphrase:(NSString*)pp
-            encryptFilenames:(BOOL)encfnames;
-+ (BOOL)decryptFolderInPlace:(NSString*) srcFolder
-                  passphrase:(NSString*)pp;
-
-+ (BOOL) openEncryptedFolder:(NSString*)srcFolder
-                  mountPoint:(NSString*)destFolder
-                  passphrase:(NSString*)pp
-                    idleTime:(int)idletime
-                    fuseOpts:(NSDictionary*)fuseOpts;
 @end
