@@ -7,6 +7,7 @@
 //
 
 #import <Cocoa/Cocoa.h>
+@class YoucryptDirectory;
 
 @interface RestoreController : NSWindowController {
     IBOutlet NSSecureTextField *passwordField;
@@ -14,6 +15,7 @@
 }
 
 @property (readwrite,copy) IBOutlet NSString *path;
+@property (readwrite,copy) YoucryptDirectory *dir;
 @property (readwrite,copy) NSString *passwd;
 @property (readwrite,assign) BOOL keychainHasPassphrase;
 

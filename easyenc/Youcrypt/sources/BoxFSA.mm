@@ -26,10 +26,10 @@
     return self;
 }
 
--(NSString*)makeRestCall:(NSString*)reqURL:(BOOL)mutable
+-(NSString*)makeRestCall:(NSString*)reqURL:(BOOL)isMutable
 {
     NSURLRequest *theRequest;
-    if(mutable){
+    if(isMutable){
         NSMutableURLRequest *mutableRequest = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:reqURL]];
         NSString *authHeader = [NSString stringWithFormat:@"BoxAuth api_key=%@&auth_token=%@",apiKey,authToken];
         [mutableRequest addValue:authHeader forHTTPHeaderField:@"Authorization"];

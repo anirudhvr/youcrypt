@@ -108,7 +108,7 @@
         YoucryptDirectory *dir = [theApp.directories objectAtIndex:[table selectedRow]];
         volumePropsSheet.sp = dir.path;
         volumePropsSheet.mp = dir.mountedPath;
-        volumePropsSheet.stat = [YoucryptDirectory statusToString:dir.status];
+        volumePropsSheet.stat = [dir getStatus];
         if (dir.status == YoucryptDirectoryStatusMounted) {
             volumePropsSheet.mntdate = dir.mountedDateAsString;
             volumePropsSheet.openedby = NSFullUserName();
@@ -167,13 +167,15 @@
             }
         }
         
-        if (dir.status == YoucryptDirectoryStatusSourceNotFound || 
-            dir.status == YoucryptDirectoryStatusNotFound) {
+        int dirstatus = [dir status];
+        if (dirstatus == YoucryptDirectoryStatusConfigError ||
+            dirstatus == YoucryptDirectoryStatusUnknown ||
+            dirstatus == YoucryptDirectoryStatusUninitialized) {
             [table beginUpdates];
             [table removeRowsAtIndexes:[[NSIndexSet alloc] initWithIndex:row] withAnimation:NSTableViewAnimationSlideUp];
             [table endUpdates];
             [theApp.directories removeObjectAtIndex:row];
-        } else if (dir.status == YoucryptDirectoryStatusUnmounted) {
+        } else if (dirstatus == YoucryptDirectoryStatusInitialized) {
             long retCode;
             if((retCode = [[NSAlert alertWithMessageText:@"Decrypt and Restore" defaultButton:@"Yes" alternateButton:@"No, delete the data." otherButton:@"Cancel" informativeTextWithFormat:@"You have chosen to permanently decrypt the encrypted folder at %@.  Restore contents?", [dir.path stringByDeletingLastPathComponent]] runModal]) == NSAlertDefaultReturn) {
                 [theApp removeFSAtRow:row];

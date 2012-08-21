@@ -111,7 +111,7 @@ namespace youcrypt {
     public:
         enum Status {
             //! Status is not known (not parseable, not readable, etc.)
-            statusUnknown, 
+            statusUnknown = 0,
             //! Directory exists but is not a Youcrypt folder. (no
             //! config files, etc.)
             uninitialized,

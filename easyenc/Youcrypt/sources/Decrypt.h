@@ -7,12 +7,12 @@
 //
 
 #import <Cocoa/Cocoa.h>
+@class YoucryptDirectory;
 
 @interface Decrypt : NSWindowController {
 	IBOutlet NSTextField *yourPassword;
 	IBOutlet NSTextField *errorMessage;
-    NSString *sourceFolderPath;
-    NSString *destFolderPath;
+    YoucryptDirectory *dir;
     BOOL keychainHasPassphrase;
     NSString *passphraseFromKeychain;
     
@@ -21,8 +21,7 @@
 
 - (IBAction)decrypt:(id)sender;
 
-@property (atomic, strong) NSString *sourceFolderPath;
-@property (atomic, strong) NSString *destFolderPath;
+@property (atomic, strong) YoucryptDirectory *dir;
 @property (atomic, copy) NSString *passphraseFromKeychain;
 @property (atomic, assign) BOOL keychainHasPassphrase;
 

@@ -55,4 +55,11 @@
 
 + (NSString*) getRealPathByResolvingSymlinks:(NSString*) path;
 
+
++ (NSString*) findCurrentlySelectedDirInFinder;
++ (NSString*) findCurrentlyOpenDirInFinder;
++ (BOOL) openMountedPathInTopFinderWindow:(NSString*)diskName;
++ (BOOL) openMountedPathInFinderSomehow:(NSString*)sourcepath
+                            mountedPath:(NSString*)mountedpath;
+
 @end

@@ -6,6 +6,8 @@
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
+#import <Foundation/Foundation.h>
+
 #import "AppDelegate.h"
 #import "PreferenceController.h"
 #import "Decrypt.h"
@@ -23,7 +25,6 @@
 #import "MixpanelAPI.h"
 #import "AboutController.h"
 #import "PassphraseManager.h"
-
 
 /* Global Variables Accessible to everyone */
 /* These variables should be initialized */
@@ -72,11 +73,12 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
     //[youcryptService setApp:self];
     
     // TODO:  Load up directories array from the list file.
+    
     directories = [libFunctions unarchiveDirectoryListFromFile:configDir.youCryptListFile];
     if (directories == nil) {
         directories = [[NSMutableArray alloc] init];
     } else {
-        // Do stuff here to check if dirs are all 
+        // Do stuff here to check if dirs are all fine?
     }
     
     // Notifiers to indicate when app gains and loses focus
@@ -150,10 +152,6 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
     }
     
     YoucryptDirectory *dir;
-    for (dir in directories) {
-        if (dir.status == YoucryptDirectoryStatusProcessing)
-            dir.status = YoucryptDirectoryStatusSourceNotFound;
-    }
     
     [[[NSWorkspace sharedWorkspace] notificationCenter] addObserver:self selector:@selector(someUnMount:) name:NSWorkspaceDidUnmountNotification object:nil];
     [self someUnMount:nil];
@@ -246,189 +244,244 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
 
 }
 // --------------------------------------------------------------------------------------
-
-
-
 // --------------------------------------------------------------------------------------
-// Core Encrypt / Decrypt methods
+// Decryption methods
 // --------------------------------------------------------------------------------------
-- (BOOL)openEncryptedFolder:(NSString *)path {   
+// --------------------------------------------------------------------------------------
+- (BOOL)openEncryptedFolder:(NSString *)path {
     //--------------------------------------------------------------------------------------------------
     // 1.  Check if path is really a folder
-    // 4.  o/w, mount and open it.
-    // 5.  Make sure we maintain it in our list.
+    // 2.  Check if we know bout it in our list of folders. If not, create and add it to list
+    // 3.  Open it using Applescript or openFile
     //--------------------------------------------------------------------------------------------------
-    NSLog(@"openEncryptedFolder");
     NSFileManager *fm = [NSFileManager defaultManager];
     BOOL isDir;
-    if ([fm fileExistsAtPath:path isDirectory:&isDir] && isDir && ([[path pathExtension] isEqualToString:ENCRYPTED_DIRECTORY_EXTENSION])) {
-        
-        // 1. Set up a new mount point
-        // 2. Set up decrypt controller with the path and the mount point
-        // 3. Open the decrypt window
-        
-        NSString *mountPoint = [[path stringByDeletingPathExtension] lastPathComponent];
-        NSString *timeStr = [[NSDate date] descriptionWithCalendarFormat:nil timeZone:nil locale:nil];
-        timeStr = [timeStr stringByReplacingOccurrencesOfString:@" " withString:@"_"];
-        mountPoint = [configDir.youCryptVolDir stringByAppendingPathComponent:
-                      [timeStr stringByAppendingPathComponent:mountPoint]];
-        
-        
-        YoucryptDirectory *dir;
-        for (dir in directories) {
-            if ([path isEqualToString:dir.path]) {
-                if (dir.status == YoucryptDirectoryStatusUnmounted) {
-                    dir.status =  YoucryptDirectoryStatusProcessing;
-                    dir.mountedPath = mountPoint;
-                }                
-                goto FoundOne;
-            }
-        }        
-        dir = [[YoucryptDirectory alloc] init];
-        dir.path = path;
-        dir.alias = [[path stringByDeletingPathExtension] lastPathComponent];
-//        dir.status = YoucryptDirectoryStatusUnmounted;
-        dir.status = YoucryptDirectoryStatusProcessing;
-        dir.mountedPath = mountPoint;
-        dir.mountedDateAsString = [[NSDate date] descriptionWithCalendarFormat:@"%H:%M %m-%d-%Y" timeZone:nil locale:nil];
-        [directories addObject:dir];
-    FoundOne:      
-        [dir checkYoucryptDirectoryStatus:YES]; // Check that it's actually mounted.
-
-        NSString *source = [NSString stringWithFormat:@"tell application \"Finder\"\n"
-                            "set selectedItems to selection\n"
-                            "if ((count of selectedItems) > 0) then\n"
-                            "set selectedItem to ((item 1 of selectedItems) as alias)\n"
-                            "POSIX path of selectedItem\n"
-                            "end if\n"
-                            "end tell\n"];
-        NSAppleScript *update=[[NSAppleScript alloc] initWithSource:source];
-        NSDictionary *err;
-        NSAppleEventDescriptor *ret = [update executeAndReturnError:&err];
-        NSString *finderSelPath = [ret stringValue];
-        NSString *finderPath;
-        
-        source = [NSString stringWithFormat:@"tell application \"Finder\"\n"
-                  "set selectedItems to selection\n"
-                  "POSIX path of (target of Finder window 1 as alias)\n"
-                  "end tell\n"];
-        update = [[NSAppleScript alloc] initWithSource:source];
-        ret = [update executeAndReturnError:&err];
-        finderPath = [ret stringValue];
-        
-        if (((finderPath != nil) && ([finderPath isEqualToString:[[dir.path stringByDeletingLastPathComponent] stringByAppendingFormat:@"/"]]))
-            || ((finderPath != nil) && ([finderSelPath isEqualToString:[dir.path stringByAppendingFormat:@"/"]])))
-            callFinderScript = YES;
-        else {
-            callFinderScript = NO;
-        }
-            
-
-        if (dir.status == YoucryptDirectoryStatusMounted) {
-            // Just need to open the folder in this case  
-            if (callFinderScript == NO) {
-                [[NSWorkspace sharedWorkspace] openFile:dir.mountedPath];	
-            }
-            else {
-                
-                NSString *source=[NSString stringWithFormat:@"tell application \"Finder\"\n"
-                                  "activate\n"
-                                  "set target of Finder window 1 to disk \"%@\"\n"
-//                                  "set current view of Finder window 1 to icon view\n"
-                                  "end tell\n", dir.alias];
-                NSAppleScript *update=[[NSAppleScript alloc] initWithSource:source];
-                NSDictionary *err;
-                [update executeAndReturnError:&err];
-                if (err != nil)
-                    [[NSWorkspace sharedWorkspace] openFile:dir.mountedPath];
-            }
-        } else {
-            dir.status = YoucryptDirectoryStatusProcessing;
-            dir.mountedPath = mountPoint;
-            
-            // Check if the keychain contains a password.
-            
-            [self showDecryptWindow:self path:dir.path mountPoint:mountPoint];
-        }
-        return YES;
-    } else {
-        [self someUnMount:nil];
-    }
-    return NO;
+    BOOL ret = YES;
+    if (!([fm fileExistsAtPath:path isDirectory:&isDir] && isDir && ([[path pathExtension] isEqualToString:ENCRYPTED_DIRECTORY_EXTENSION])))
+        return NO;
     
-    //    decryptController.sourceFolderPath = file;
-    //    NSString *dest = [[configDir.youCryptVolDir stringByAppendingPathComponent:file] stringByDeletingPathExtension];
-    //    decryptController.destFolderPath = dest;
-    //    
-    //    DDLogVerbose(@"The following file has been dropped or selected: %@",file);
-    //   
-    //    return  YES; // Return YES when file processed succesfull, else return NO.
-}
-- (void)encryptFolder:(NSString *)path {
+    // Construct the new mount point dir name
+    NSString *timeStr = [[[NSDate date] descriptionWithCalendarFormat:nil timeZone:nil locale:nil] stringByReplacingOccurrencesOfString:@" " withString:@"_"];
+    NSString *mountPoint = [configDir.youCryptVolDir stringByAppendingPathComponent:
+                            [timeStr stringByAppendingPathComponent:[[path stringByDeletingPathExtension] lastPathComponent]]];
     
-    NSFileManager *fm = [NSFileManager defaultManager];
-    BOOL isDir;
-    if ([fm fileExistsAtPath:path isDirectory:&isDir] && isDir) {
-        // Ok, this is a directory, but is it an already encrypted directory?
-        if ([[path pathExtension] isEqualToString:ENCRYPTED_DIRECTORY_EXTENSION] &&
-            [fm fileExistsAtPath:[path stringByAppendingPathComponent:YOUCRYPT_XMLCONFIG_FILENAME]]) {
-            long ret = [[NSAlert alertWithMessageText:@"Directory already encrypted" defaultButton:@"Yes" alternateButton:@"Cancel" otherButton:nil informativeTextWithFormat:@"The directory %@ appears to already be encrypted using Youcrypt. Did you mean to decrypt it permanently instead?", [path stringByDeletingLastPathComponent]] runModal];
-            if (ret == NSAlertDefaultReturn) {
-                [self removeFSAtPath:path];
-            }
-        } else {
-            [self showEncryptWindow:self path:path];
-        }
+    // Check if a YoucryptDirectory already exists for this folder
+    YoucryptDirectory *dir;
+    for (dir in directories) {
+        if ([path isEqualToString:dir.path])
+            goto FoundOne;
     }
+    
+    // No directory exists; so create a new one
+    dir = [[YoucryptDirectory alloc] initWithPath:path];
+    dir.alias = [[path stringByDeletingPathExtension] lastPathComponent];
+    [directories addObject:dir]; // FIXME do this later
+    
+FoundOne:      
+    dir.mountedPath = mountPoint;
+    
+    switch([dir status]) {
+        case YoucryptDirectoryStatusUnknown:
+        case YoucryptDirectoryStatusConfigError:
+            DDLogError(@"Error opening supposedly Youcrypted dir: %@", [dir getStatus]);
+            ret = NO;
+            break;
+            
+        case YoucryptDirectoryStatusInitialized:
+            [self doDecrypt:dir];
+            break;
+            
+        case YoucryptDirectoryStatusMounted:
+            [libFunctions openMountedPathInFinderSomehow:dir.path mountedPath:dir.mountedPath];
+            break;
+    }
+    
+    return ret;
 }
 
-- (void)didDecrypt:(NSString *)path {
-    for (YoucryptDirectory *dir in directories) {
-        if ([path isEqualToString:dir.path]) {
-            dir.status = YoucryptDirectoryStatusMounted;
-            dir.mountedDateAsString = [[NSDate date] descriptionWithCalendarFormat:@"%H:%M %m-%d-%Y" timeZone:nil locale:nil];
-            if (callFinderScript == NO) {
-                [[NSWorkspace sharedWorkspace] openFile:dir.mountedPath];	
-            }
-            else {
-                
-                NSString *source=[NSString stringWithFormat:@"tell application \"Finder\"\n"
-                                  "activate\n"
-                                  "set target of Finder window 1 to disk \"%@\"\n"
-                                  "set current view of Finder window 1 to icon view\n"
-                                  "end tell\n", dir.alias];
-                NSAppleScript *update=[[NSAppleScript alloc] initWithSource:source];
-                NSDictionary *err;
-                [update executeAndReturnError:&err];
-                if (err != nil)
-                    [[NSWorkspace sharedWorkspace] openFile:dir.mountedPath];
-            }
-            DDLogVerbose(@"didDecrypt folder %@\n", path);
-
-//            [dir checkYoucryptDirectoryStatus:YES];
-        }
-    }
-
+- (void)didDecrypt:(YoucryptDirectory *)dir {
+    
+    if (dir == nil) return;
+    
+    
+    dir.mountedDateAsString = [[NSDate date] descriptionWithCalendarFormat:@"%H:%M %m-%d-%Y" timeZone:nil locale:nil];
+    [libFunctions openMountedPathInFinderSomehow:dir.path mountedPath:dir.mountedPath];
+    
+    DDLogVerbose(@"didDecrypt folder %@\n", dir.path);
+    
     if (listDirectories != nil) {
         [listDirectories.table reloadData];
     }
     @synchronized(self) {
         [decryptQ removeObjectAtIndex:deQIndex];
     }
-    [self showDecryptWindow:self path:nil mountPoint:@""];
+    [self doDecrypt:nil];
 }
 
-- (void)didEncrypt:(NSString *)path {
-    NSImage *overlay = [[NSImage alloc] initWithContentsOfFile:[[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"/youcrypt-overlay.icns"]];
-    BOOL didSetIcon = [[NSWorkspace sharedWorkspace] setIcon:overlay forFile:path options:0];
-    if(!didSetIcon)
-        DDLogInfo(@"ERROR: Could not set Icon for %@",path);
+- (BOOL)doDecrypt:(YoucryptDirectory *)dir  {
     
-    YoucryptDirectory *dir = [[YoucryptDirectory alloc] init];       
-    dir.path = path;
-    dir.mountedPath = @"";
-    dir.alias = [[path stringByDeletingPathExtension] lastPathComponent];
-    dir.status = YoucryptDirectoryStatusUnmounted;
+    if ([configDir isFirstRun])
+        return NO;
+    NSString *path, *mountPath;
+    
+    if (dir == nil) {
+        // Pick the next object from the queue and decrypt.        
+        BOOL doReturn;
+        doReturn = NO;
+        @synchronized(self) {
+            if ([decryptQ count] > 0) {
+                NSDictionary *dict = [decryptQ lastObject];
+                path = [dict objectForKey:@"path"];
+                mountPath = [dict objectForKey:@"mountPoint"];
+                deQIndex = [decryptQ count] - 1;
+            }
+            else {
+                // Nothing to service.
+                doReturn = YES;
+            }
+        }
+        if (doReturn)
+            return NO;
+    } else {
+        NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:
+                              dir.path, @"path", dir.mountedPath, @"mountPoint", nil];
+        BOOL doReturn = NO;
+        @synchronized(self) {
+            [decryptQ addObject:dict];
+            if ([decryptQ count] > 1)
+                doReturn = YES;
+            else {
+                deQIndex = 0; // Index of the object being processed.
+            }
+        }
+        if (doReturn)
+            return NO;
+    }
+    
+    // Is decryptController nil?
+    if (!decryptController) {
+        decryptController = [[Decrypt alloc] init];
+    }
+    
+    decryptController.dir = dir;
+    
+    NSString *pp = [passphraseManager getPassphrase];
+    
+    // NSString *pp =[libFunctions getPassphraseFromKeychain:@"Youcrypt"];
+    DDLogInfo(@"showing %@", decryptController);
+    
+    if ((pp != nil) && !([pp isEqualToString:@""])) {
+        DDLogVerbose(@"In doDecrypt: Got pp from keychain successfully");
+        decryptController.passphraseFromKeychain = pp;
+        decryptController.keychainHasPassphrase = YES;
+        [decryptController decrypt:self];
+    }
+    else {
+        decryptController.keychainHasPassphrase = NO;
+        [decryptController showWindow:self];
+    }
+    return YES;
+}
+
+-(void) cancelDecrypt:(YoucryptDirectory *)dir {
+    @synchronized(self) {
+        [decryptQ removeObjectAtIndex:deQIndex];
+    }
+    dir = nil;
+    [self doDecrypt:nil];
+}
+
+
+// --------------------------------------------------------------------------------------
+// --------------------------------------------------------------------------------------
+// Encryption methods
+// --------------------------------------------------------------------------------------
+// --------------------------------------------------------------------------------------
+
+- (BOOL)encryptFolder:(NSString *)path {
+    
+    NSFileManager *fm = [NSFileManager defaultManager];
+    BOOL isDir;
+    if (!([fm fileExistsAtPath:path isDirectory:&isDir] && isDir))
+        return NO;
+    
+    // Ok, this is a directory, but is it an already encrypted directory?
+    if ([[path pathExtension] isEqualToString:ENCRYPTED_DIRECTORY_EXTENSION] &&
+        [fm fileExistsAtPath:[path stringByAppendingPathComponent:YOUCRYPT_XMLCONFIG_FILENAME]]) {
+        long ret = [[NSAlert alertWithMessageText:@"Directory already encrypted" defaultButton:@"Yes" alternateButton:@"Cancel" otherButton:nil informativeTextWithFormat:@"The directory %@ appears to already be encrypted using Youcrypt. Did you mean to decrypt it permanently instead?", [path stringByDeletingLastPathComponent]] runModal];
+        if (ret == NSAlertDefaultReturn) {
+            [self removeFSAtPath:path];
+        }
+    } else {
+        [self doEncrypt:path];
+    }
+}
+
+- (BOOL)doEncrypt:(NSString *)path {
+    if (path == nil) {
+        BOOL doReturn = NO;
+        // Pick the next object from the queue and encrypt.
+        @synchronized(self) {
+            if ([encryptQ count] > 0) {
+                path = [encryptQ lastObject];
+                enQIndex = [encryptQ count] - 1;
+            }
+            else {
+                // Nothing to service.
+                doReturn = YES;
+            }
+        }
+        if (doReturn)
+            return NO;
+    } else {
+        BOOL doReturn = NO;
+        @synchronized(self) {
+            [encryptQ addObject:path];
+            if ([encryptQ count] > 1)
+                doReturn = YES;
+            else
+                enQIndex = 0;
+        }
+        if (doReturn)
+            return NO;
+    }
+    
+    // Is encryptController nil?
+    if (!encryptController) {
+        encryptController = [[Encrypt alloc] init];
+    }
+    
+    [listDirectories.statusLabel setStringValue:@"Encrypting"];
+    [listDirectories.progressIndicator setHidden:NO];
+    [listDirectories.progressIndicator startAnimation:listDirectories.window];
+    
+    
+    NSString *pp =[passphraseManager getPassphrase];
+    encryptController.sourceFolderPath = path;
+    
+    if (pp != nil && [pp isNotEqualTo:@""]) {
+        DDLogVerbose(@"In doEncrypt: Got pp from keychain successfully");
+        encryptController.passphraseFromKeychain = pp;
+        encryptController.keychainHasPassphrase = YES;
+        [encryptController encrypt:self];
+    } else {
+        NSButton *storePasswd = encryptController.checkStorePasswd;
+        [storePasswd setState:NSOnState];
+        encryptController.passphraseFromKeychain = nil;
+        encryptController.keychainHasPassphrase = NO;
+        [encryptController showWindow:self];        
+    }
+    return YES;
+}
+
+
+- (void)didEncrypt:(YoucryptDirectory *)dir {
+    NSImage *overlay = [[NSImage alloc] initWithContentsOfFile:[[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"/youcrypt-overlay.icns"]];
+    BOOL didSetIcon = [[NSWorkspace sharedWorkspace] setIcon:overlay forFile:dir.path options:0];
+    if(!didSetIcon)
+        DDLogInfo(@"ERROR: Could not set Icon for %@", dir.path);
+    
+    dir.alias = [[dir.path stringByDeletingPathExtension] lastPathComponent];
     dir.mountedDateAsString = [[NSDate date] descriptionWithCalendarFormat:@"%H:%M %m-%d-%Y" timeZone:nil locale:nil];
     [directories addObject:dir];
     if (listDirectories != nil) {
@@ -440,7 +493,7 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
     @synchronized(self) {
         [encryptQ removeObjectAtIndex:enQIndex];
     }
-    [self showEncryptWindow:self path:nil];
+    [self doEncrypt:nil]; // To process other items in encryptQ
     
 }
 
@@ -448,7 +501,121 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
     @synchronized(self) {
         [encryptQ removeObjectAtIndex:enQIndex];
     }
-    [self showEncryptWindow:self path:nil];
+    DDLogInfo(@"Canceling encryption for %@", path);
+    [self doEncrypt:nil]; // To process other items in encryptQ
+}
+
+// --------------------------------------------------------------------------------------
+// --------------------------------------------------------------------------------------
+// Restore methods
+// --------------------------------------------------------------------------------------
+// --------------------------------------------------------------------------------------
+
+- (void) removeFSAtRow:(long) row {
+    YoucryptDirectory *dir = [directories objectAtIndex:row];
+    [self doRestore:dir.path];
+}
+
+- (void) removeFSAtPath:(NSString*) path {
+
+    int i = 0, found = 0;
+    for (YoucryptDirectory *dir in directories) {
+        if ([dir.path isEqualToString:path]) {
+            [self doRestore:path];
+            found = 1;
+            break;
+        }
+        i++;
+    }
+    
+    if (!found) {
+        NSFileManager *fm = [NSFileManager defaultManager];
+        if ([[path pathExtension] isEqualToString:ENCRYPTED_DIRECTORY_EXTENSION] &&
+            [fm fileExistsAtPath:[path stringByAppendingPathComponent:YOUCRYPT_XMLCONFIG_FILENAME]]) {
+            long ret = [[NSAlert alertWithMessageText:@"Unknown encrypted directory" defaultButton:@"Yes" alternateButton:@"No, decrypt permanently" otherButton:nil informativeTextWithFormat:@"The encrypted directory %@ is not known to Youcrypt (e.g., perhaps it has been moved or copied). Do you wish to register this encrypted directory with Youcrypt?", [path stringByDeletingLastPathComponent]] runModal];
+            if (ret == NSAlertDefaultReturn) {
+                [self openEncryptedFolder:path];
+            } else if (ret == NSAlertAlternateReturn) {
+                [self doRestore:path];
+            } else {
+                return;
+            }
+        }
+            
+    }
+}
+
+- (BOOL)doRestore:(NSString *)path {
+
+    if ([configDir isFirstRun])
+        return NO;
+
+    if (path == nil) {
+        BOOL doReturn = NO;
+        // Pick the next object from the queue and restore.        
+        @synchronized(self) {
+            if ([restoreQ count] > 0) {
+                path = [restoreQ lastObject];
+                reQIndex = [restoreQ count] - 1;
+            }
+            else {
+                doReturn = YES;
+            }
+        }
+        if (doReturn)
+            return NO;
+    } else {
+        BOOL doReturn = NO;
+        @synchronized(self) {
+            [restoreQ addObject:path];
+            if ([restoreQ count] > 1)
+                doReturn = YES;
+            else
+                reQIndex = 0;
+        }
+        if (doReturn)
+            return NO;
+    }
+    
+    YoucryptDirectory *d = nil;
+    for (YoucryptDirectory *dir in directories) {
+        if ([dir.path isEqualToString:path]) {
+            d = dir;
+            break;
+        }
+    }
+    if (d == nil) {
+        d = [[YoucryptDirectory alloc] initWithPath:path];
+        
+        if ([d status] != YoucryptDirectoryStatusInitialized) {
+            DDLogError(@"Directory to be restored looks like something something else; status %@", [d getStatus]);
+            return NO;
+        }
+    }
+        
+    if (!restoreController) {
+        restoreController = [[RestoreController alloc] init];
+    }
+    
+    [listDirectories.statusLabel setStringValue:@"Restoring"];
+    [listDirectories.progressIndicator setHidden:NO];
+    [listDirectories.progressIndicator startAnimation:listDirectories.window];
+    
+    
+    restoreController.path = path;
+    restoreController.dir = d;
+    NSString *pp = [passphraseManager getPassphrase];
+    if (pp != nil && !([pp isEqualToString:@""])) {
+        DDLogVerbose(@"In doRestore: Got pp from keychain successfully");
+        restoreController.passwd = pp;
+        restoreController.keychainHasPassphrase = YES;
+        [restoreController restore:self];
+    }
+    else {
+        restoreController.keychainHasPassphrase = NO;
+        [restoreController showWindow:self];
+    }
+    return YES;
 }
 
 - (void)didRestore:(NSString *)path {
@@ -459,6 +626,7 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
         }
         
     }
+    
     if (listDirectories != nil) {
         [listDirectories.statusLabel setStringValue:@""];
         [listDirectories.progressIndicator stopAnimation:listDirectories.window];
@@ -468,39 +636,23 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
     @synchronized(self) {
         [restoreQ removeObjectAtIndex:reQIndex];
     }
-    [self showRestoreWindow:self path:nil];
+    [self doRestore:nil];
 }
 
 -(void) cancelRestore:(NSString *)path {
-    for (YoucryptDirectory *dir in directories) {
-        if ([path isEqualToString:dir.path]) {
-            dir.status = YoucryptDirectoryStatusUnmounted; // Should've been processing
-            [dir updateInfo];
-            break;
-        }
-        
-    }    
+//    for (YoucryptDirectory *dir in directories) {
+//        if ([path isEqualToString:dir.path]) {
+//            dir.status = YoucryptDirectoryStatusUnmounted; // Should've been processing
+//            [dir updateInfo];
+//            break;
+//        }
+//        
+//    }    
     @synchronized(self) {
         [restoreQ removeObjectAtIndex:reQIndex];
     }
-    [self showRestoreWindow:self path:nil];
+    [self doRestore:nil];
 }
-
--(void) cancelDecrypt:(NSString *)path {
-    for (YoucryptDirectory *dir in directories) {
-        if ([path isEqualToString:dir.path]) {
-            dir.status = YoucryptDirectoryStatusUnmounted; // Should've been processing
-            [dir updateInfo];
-            break;
-        }
-        
-    }    
-    @synchronized(self) {
-        [decryptQ removeObjectAtIndex:deQIndex];
-    }
-    [self showDecryptWindow:self path:nil mountPoint:@""];
-}
-
 
 
 - (IBAction)windowShouldClose:(id)sender {
@@ -575,181 +727,6 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
     [tourWizard showWindow:self];
 }
 
-- (IBAction)showDecryptWindow:(id)sender path:(NSString *)path mountPoint:(NSString *)mountPath {
-    
-    if ([configDir isFirstRun])
-        return;
-    
-    NSLog (@"DecryptQ: count=%ld, path=%@\n", [decryptQ count], path);
-
-    if (path == nil) {
-        // Pick the next object from the queue and decrypt.        
-        BOOL doReturn;
-        doReturn = NO;
-        @synchronized(self) {
-            if ([decryptQ count] > 0) {
-                NSDictionary *dict = [decryptQ lastObject];
-                path = [dict objectForKey:@"path"];
-                mountPath = [dict objectForKey:@"mountPoint"];
-                deQIndex = [decryptQ count] - 1;
-            }
-            else {
-                // Nothing to service.
-                doReturn = YES;
-            }
-        }
-        if (doReturn)
-            return;
-    } else {
-        NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:
-                              path, @"path", mountPath, @"mountPoint", nil];        
-        BOOL doReturn = NO;
-        @synchronized(self) {
-            [decryptQ addObject:dict];
-            if ([decryptQ count] > 1)
-                doReturn = YES;
-            else {
-                deQIndex = 0; // Index of the object being processed.
-            }
-        }
-        if (doReturn)
-            return;
-    }
-    
-    // Is decryptController nil?
-    if (!decryptController) {
-        decryptController = [[Decrypt alloc] init];
-    }
-    
-    decryptController.sourceFolderPath = path;
-    decryptController.destFolderPath = mountPath;
-        
-    NSString *pp = [passphraseManager getPassphrase];
-    
-    // NSString *pp =[libFunctions getPassphraseFromKeychain:@"Youcrypt"];
-    DDLogInfo(@"showing %@", decryptController);
-    
-    if ((pp != nil) && !([pp isEqualToString:@""])) {
-        DDLogVerbose(@"In showDecryptWindow: Got pp from keychain successfully");
-        decryptController.passphraseFromKeychain = pp;
-        decryptController.keychainHasPassphrase = YES;
-        [decryptController decrypt:self];
-    }
-    else {
-        decryptController.keychainHasPassphrase = NO;
-        [decryptController showWindow:self];
-    }
-}
-
-- (IBAction)showRestoreWindow:(id)sender path:(NSString *)path {
-
-    if ([configDir isFirstRun])
-        return;
-
-    
-    if (path == nil) {
-        BOOL doReturn = NO;
-        // Pick the next object from the queue and restore.        
-        @synchronized(self) {
-            if ([restoreQ count] > 0) {
-                path = [restoreQ lastObject];
-                reQIndex = [restoreQ count] - 1;
-            }
-            else {
-                doReturn = YES;
-            }
-        }
-        if (doReturn)
-            return;        
-    } else {
-        BOOL doReturn = NO;
-        @synchronized(self) {
-            [restoreQ addObject:path];
-            if ([restoreQ count] > 1)
-                doReturn = YES;
-            else
-                reQIndex = 0;
-        }
-        if (doReturn)
-            return;
-    }
-        
-    if (!restoreController) {
-        restoreController = [[RestoreController alloc] init];
-    }
-    
-    [listDirectories.statusLabel setStringValue:@"Restoring"];
-    [listDirectories.progressIndicator setHidden:NO];
-    [listDirectories.progressIndicator startAnimation:listDirectories.window];
-    
-    restoreController.path = path;
-    NSString *pp = [passphraseManager getPassphrase];
-    if (pp != nil && !([pp isEqualToString:@""])) {
-        DDLogVerbose(@"In showRestoreWindow: Got pp from keychain successfully");
-        restoreController.passwd = pp;
-        restoreController.keychainHasPassphrase = YES;
-        [restoreController restore:self];
-    }
-    else {
-        restoreController.keychainHasPassphrase = NO;
-        [restoreController showWindow:self];
-    }
-}
-
-- (IBAction)showEncryptWindow:(id)sender path:(NSString *)path {
-    if (path == nil) {
-        BOOL doReturn = NO;
-        // Pick the next object from the queue and encrypt.
-        @synchronized(self) {
-            if ([encryptQ count] > 0) {
-                path = [encryptQ lastObject];
-                enQIndex = [encryptQ count] - 1;
-            }
-            else {
-                // Nothing to service.
-                doReturn = YES;
-            }
-        }
-        if (doReturn)
-            return;
-    } else {
-        BOOL doReturn = NO;
-        @synchronized(self) {
-            [encryptQ addObject:path];
-            if ([encryptQ count] > 1)
-                doReturn = YES;
-            else
-                enQIndex = 0;
-        }
-        if (doReturn)
-            return;
-    }
-    
-    // Is encryptController nil?
-    if (!encryptController) {
-        encryptController = [[Encrypt alloc] init];
-    }
-    
-    [listDirectories.statusLabel setStringValue:@"Encrypting"];
-    [listDirectories.progressIndicator setHidden:NO];
-    [listDirectories.progressIndicator startAnimation:listDirectories.window];
-    
-    
-    NSString *pp =[passphraseManager getPassphrase];
-    encryptController.sourceFolderPath = path;
-    if (pp != nil && [pp isNotEqualTo:@""]) {
-        DDLogVerbose(@"In showEncryptWindow: Got pp from keychain successfully");
-        encryptController.passphraseFromKeychain = pp;
-        encryptController.keychainHasPassphrase = YES;
-        [encryptController encrypt:self];
-    } else {
-        NSButton *storePasswd = encryptController.checkStorePasswd;
-        [storePasswd setState:NSOnState];
-        encryptController.passphraseFromKeychain = nil;
-        encryptController.keychainHasPassphrase = NO;
-        [encryptController showWindow:self];        
-    }
-}
 
 
 - (IBAction)openFeedbackPage:(id)sender
@@ -894,7 +871,7 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
         
 //    [dirAtRow updateInfo];
     
-    if (dirAtRow.status == YoucryptDirectoryStatusMounted) { // mounted => unlocked
+    if ([dirAtRow status] == YoucryptDirectoryStatusMounted) { // mounted => unlocked
         if ([cell isKindOfClass:[NSTextFieldCell class]]) {
 //            [cell setTextColor:[NSColor redColor]];
 //            [cell setBackgroundColor:[NSColor grayColor]];
@@ -911,11 +888,11 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
 //            [cell setBackgroundColor:[NSColor darkGrayColor]];
             
         } else if ([cell isKindOfClass:[NSButtonCell class]] && [colId isEqualToString:@"status"]) {
-            if (dirAtRow.status == YoucryptDirectoryStatusUnmounted) 
+            if ([dirAtRow status] == YoucryptDirectoryStatusInitialized)
                 [cell setImage:[NSImage imageNamed:@"box_closed_48x48.png"]];
-            else if (dirAtRow.status == YoucryptDirectoryStatusSourceNotFound) 
+            else if ([dirAtRow status] == YoucryptDirectoryStatusConfigError || [dirAtRow status] == YoucryptDirectoryStatusUnknown)
                 [cell setImage:[NSImage imageNamed:@"error-22x22.png"]];
-            if (dirAtRow.status == YoucryptDirectoryStatusProcessing)
+            if ([dirAtRow status] == YoucryptDirectoryStatusProcessing)
                 [cell setImage:[NSImage imageNamed:@"processing-22x22.gif"]];
         } else if ([cell isKindOfClass:[NSPopUpButtonCell class]] && [colId isEqualToString:@"props"]) {
             //NSPopUpButtonCell *dataTypeDropDownCell = [tableColumn dataCell];
@@ -933,47 +910,13 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
         YoucryptDirectory *dir = [directories objectAtIndex:rowIndex];
         tooltip = [NSString stringWithFormat:@"Source folder: %@\n\n"
                              "Status: %@"
-                             "%@", dir.path, [YoucryptDirectory statusToString:dir.status],
-                             (dir.status == YoucryptDirectoryStatusMounted ? [NSString stringWithFormat:@"\n\nMounted at %@", dir.mountedPath] : @"")];
+                             "%@", dir.path, [dir getStatus],
+                             ([dir status] == YoucryptDirectoryStatusMounted ? [NSString stringWithFormat:@"\n\nMounted at %@", dir.mountedPath] : @"")];
     } else {
         tooltip = @"Drag folders here to encrypt them with YouCrypt";
     }
 
     return tooltip;
-}
-
-- (void) removeFSAtRow:(long) row {
-    YoucryptDirectory *dir = [directories objectAtIndex:row];
-    [self showRestoreWindow:self path:dir.path];
-}
-
-- (void) removeFSAtPath:(NSString*) path {
-
-    int i = 0, found = 0;
-    for (YoucryptDirectory *dir in directories) {
-        if ([dir.path isEqualToString:path]) {
-            [self removeFSAtRow:i];
-            found = 1;
-            break;
-        }
-        i++;
-    }
-    
-    if (!found) {
-        NSFileManager *fm = [NSFileManager defaultManager];
-        if ([[path pathExtension] isEqualToString:ENCRYPTED_DIRECTORY_EXTENSION] &&
-            [fm fileExistsAtPath:[path stringByAppendingPathComponent:YOUCRYPT_XMLCONFIG_FILENAME]]) {
-            long ret = [[NSAlert alertWithMessageText:@"Unknown encrypted directory" defaultButton:@"Yes" alternateButton:@"No, decrypt permanently" otherButton:nil informativeTextWithFormat:@"The encrypted directory %@ is not known to Youcrypt (e.g., perhaps it has been moved or copied). Do you wish to register this encrypted directory with Youcrypt?", [path stringByDeletingLastPathComponent]] runModal];
-            if (ret == NSAlertDefaultReturn) {
-                [self openEncryptedFolder:path];
-            } else if (ret == NSAlertAlternateReturn) {
-                [self showRestoreWindow:self path:path];
-            } else {
-                return;
-            }
-        }
-            
-    }
 }
 
 - (id) tableView:(NSTableView*)tableView dataCellForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row
@@ -1000,11 +943,11 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
 -(id) someUnMount:(id) sender {
     // Someone unmount us a bomb.
     DDLogVerbose(@"Something unmounted\n");
-    [YoucryptDirectory refreshMountedFuseVolumes];
-    YoucryptDirectory *dir;
-    for (dir in directories) {
-        [dir updateInfo];
-    }
+//    [YoucryptDirectory refreshMountedFuseVolumes];
+//    YoucryptDirectory *dir;
+//    for (dir in directories) {
+//        [dir updateInfo];
+//    }
     if (listDirectories != nil)
         [listDirectories.table reloadData];
     return nil;

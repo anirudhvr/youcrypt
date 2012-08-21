@@ -9,11 +9,13 @@
 #import "RestoreController.h"
 #import "libFunctions.h"
 #import "AppDelegate.h"
+#import "YoucryptDirectory.h"
 
 
 @implementation RestoreController
 
 @synthesize path;
+@synthesize dir;
 @synthesize passwd;
 @synthesize keychainHasPassphrase;
 
@@ -34,13 +36,17 @@
 }
 
 
-- (IBAction) restore:(id)sender
+- (IBAction) restore:(NSString *)path
 {
     if (!self.keychainHasPassphrase)
         passwd = [passwordField stringValue];
     
-    if (![libFunctions decryptFolderInPlace:path
-                                  passphrase:passwd]) {
+    if (dir == nil) {
+        DDLogError(@"Restoring of %@ failed; need non-nil dir\n", path);
+        return;
+    }
+    
+    if (![dir decryptFolderInPlaceWithPassphrase:passwd]) {
         DDLogError(@"Restoring of %@ failed \n", path);
         NSAlert *alert = [NSAlert alertWithMessageText:@"Incorrect passphrase" defaultButton:nil alternateButton:nil otherButton:nil informativeTextWithFormat:@"The passphrase does not decrypt %@", [path stringByDeletingLastPathComponent]];
             [alert runModal];

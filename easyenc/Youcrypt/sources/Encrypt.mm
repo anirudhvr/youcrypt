@@ -24,7 +24,7 @@
 @synthesize encryptionInProcess;
 @synthesize keychainHasPassphrase;
 @synthesize checkStorePasswd;
-//@synthesize yourPassword;
+@synthesize dir;
 @synthesize passphraseFromKeychain;
 
 
@@ -43,6 +43,81 @@
     [shareCheckBox setState:0];
     
 }
+
+- (IBAction)encrypt:(id)sender
+{
+    srcFolder = sourceFolderPath;
+    
+    // Enumerate DIR contents to get number of objects in dir
+    NSDirectoryEnumerator *direnum = [[NSFileManager defaultManager] enumeratorAtPath:srcFolder];
+    
+    int dirCount = 0;
+    unsigned long long fileSize = 0;
+    NSString *file;
+    while(file = [direnum nextObject]) {
+        fileSize += [[[NSFileManager defaultManager] attributesOfItemAtPath:file error:nil] fileSize];
+        dirCount++;
+    }
+    DDLogInfo(@"Encrypting folder of size: %llu, #files: %d",fileSize, dirCount);
+    
+	// -------------------------- Figure out the password, sharing options, etc. ------------------------------------
+
+    NSString *yourPasswordString =  nil;
+    if (keychainHasPassphrase) {
+        yourPasswordString = passphraseFromKeychain;
+    } else {
+        yourPasswordString = [yourPassword stringValue];
+    }
+        
+    
+    BOOL encfnames = NO;
+    if ([[theApp.preferenceController getPreference:YC_ENCRYPTFILENAMES] intValue] != 0)
+        encfnames = YES;
+    
+    dir = [[YoucryptDirectory alloc] initWithPath:srcFolder];
+    if ([dir status] != YoucryptDirectoryStatusUnknown) {
+        DDLogError(@"Directory to be encrypted looks like something else; status %@", [dir getStatus]);
+        return ;
+    }
+    
+    if (![dir encryptFolderInPlaceWithPassphrase:yourPasswordString encryptFilenames:encfnames]) {
+        DDLogInfo(@"Encrypt error");
+        return ;
+    }
+    
+    NSFileManager *fm = [NSFileManager defaultManager];
+    NSError *err;
+    destFolder = [srcFolder stringByAppendingPathExtension:ENCRYPTED_DIRECTORY_EXTENSION];
+    if (![fm moveItemAtPath:srcFolder toPath:destFolder error:&err]) {
+        DDLogError(@"Encrypt: cannot move items at %@ to %@", srcFolder, destFolder);
+        return;
+    }
+    
+    /* change folder icon of encrypted folder */
+    {
+        NSNumber *num = [NSNumber numberWithBool:YES];
+        NSDictionary *attribs = [NSDictionary dictionaryWithObjectsAndKeys:num, NSFileExtensionHidden, nil];        
+        [[NSFileManager defaultManager] setAttributes:attribs ofItemAtPath:destFolder error:nil];
+    }
+    
+    // Send number of objects in directory
+    NSString *dirCountS = [NSString stringWithFormat:@"%d",dirCount];
+    NSString *fileSizeS = [NSString stringWithFormat:@"%llu",fileSize];
+    if ([[theApp.preferenceController getPreference:YC_ANONYMOUSSTATISTICS] intValue])
+        [mixpanel track:theApp.mixpanelUUID
+             properties:[NSDictionary dictionaryWithObjectsAndKeys:
+                         dirCountS, @"dirCount",
+                         fileSizeS, @"dirSize",
+                         nil]];
+    
+    [self.window close];
+    dir.path = destFolder;
+    [theApp didEncrypt:dir];
+    
+    return;
+}
+
+
 
 - (IBAction)startIt:(id)sender {
     [encryptProgress setHidden:NO];
@@ -125,80 +200,10 @@
  **/
 
 
-- (IBAction)encrypt:(id)sender
-{
-    
-    // Enumerate DIR contents to get number of objects in dir
-    NSDirectoryEnumerator *direnum = [[NSFileManager defaultManager] enumeratorAtPath:srcFolder];
-    
-    int dirCount = 0;
-    unsigned long long fileSize = 0;
-    NSString *file;
-    while(file = [direnum nextObject]) {
-        fileSize += [[[NSFileManager defaultManager] attributesOfItemAtPath:file error:nil] fileSize];
-        dirCount++;
-    }
-    
-    DDLogInfo(@"Encrypting folder of size: %llu, #files: %d",fileSize, dirCount);
-    
-	// -------------------------- Figure out the password, sharing options, etc. ------------------------------------
-
-    NSString *yourPasswordString =  nil;
-    if (keychainHasPassphrase) {
-        yourPasswordString = passphraseFromKeychain;
-    } else {
-        yourPasswordString = [yourPassword stringValue];
-    }
-        
-    
-    BOOL encfnames = NO;
-    if ([[theApp.preferenceController getPreference:YC_ENCRYPTFILENAMES] intValue] != 0)
-        encfnames = YES;
-    
-    
-    srcFolder = sourceFolderPath;
-    if (![libFunctions encryptFolderInPlace:srcFolder passphrase:yourPasswordString encryptFilenames:encfnames]) {
-        DDLogInfo(@"Encrypt error");
-        return;
-    }
-    
-    NSFileManager *fm = [NSFileManager defaultManager];
-    NSError *err;
-    destFolder = [srcFolder stringByAppendingPathExtension:ENCRYPTED_DIRECTORY_EXTENSION];
-    if (![fm moveItemAtPath:srcFolder toPath:destFolder error:&err]) {
-        DDLogError(@"Encrypt: cannot move items at %@ to %@", srcFolder, destFolder);
-        return;
-    }
-    
-    /* change folder icon of encrypted folder */
-    {
-        NSNumber *num = [NSNumber numberWithBool:YES];
-        NSDictionary *attribs = [NSDictionary dictionaryWithObjectsAndKeys:num, NSFileExtensionHidden, nil];        
-        [[NSFileManager defaultManager] setAttributes:attribs ofItemAtPath:destFolder error:nil];
-    }
-    
-    
-    
-    // Send number of objects in directory
-    NSString *dirCountS = [NSString stringWithFormat:@"%d",dirCount];
-    NSString *fileSizeS = [NSString stringWithFormat:@"%llu",fileSize];
-    if ([[theApp.preferenceController getPreference:YC_ANONYMOUSSTATISTICS] intValue])
-        [mixpanel track:theApp.mixpanelUUID
-             properties:[NSDictionary dictionaryWithObjectsAndKeys:
-                         dirCountS, @"dirCount",
-                         fileSizeS, @"dirSize",
-                         nil]];
-    
-    [self.window close];
-    [theApp didEncrypt:destFolder];
-    
-    // Try to overlay icon !!
-    return;
-}
-
 
 -(IBAction)cancel:(id)sender {
     [self.window close];
+    dir = nil;
     [theApp cancelEncrypt:destFolder];
 }
 

@@ -234,5 +234,58 @@ using namespace youcrypt;
 }
 
 
++ (NSString*) findCurrentlySelectedDirInFinder
+{
+    NSString *source = [NSString stringWithFormat:@"tell application \"Finder\"\n"
+                        "set selectedItems to selection\n"
+                        "if ((count of selectedItems) > 0) then\n"
+                        "set selectedItem to ((item 1 of selectedItems) as alias)\n"
+                        "POSIX path of selectedItem\n"
+                        "end if\n"
+                        "end tell\n"];
+    NSAppleScript *update=[[NSAppleScript alloc] initWithSource:source];
+    NSDictionary *err;
+    NSAppleEventDescriptor *ret = [update executeAndReturnError:&err];
+    return [ret stringValue];
+}
+
++ (NSString*) findCurrentlyOpenDirInFinder
+{
+    NSString *source = [NSString stringWithFormat:@"tell application \"Finder\"\n"
+              "set selectedItems to selection\n"
+              "POSIX path of (target of Finder window 1 as alias)\n"
+              "end tell\n"];
+    NSAppleScript *update = [[NSAppleScript alloc] initWithSource:source];
+    NSDictionary *err;
+    NSAppleEventDescriptor *ret = [update executeAndReturnError:&err];
+    return  [ret stringValue];
+}
+
++ (BOOL) openMountedPathInTopFinderWindow:(NSString*)diskName
+{
+    NSString *source=[NSString stringWithFormat:@"tell application \"Finder\"\n"
+                      "activate\n"
+                      "set target of Finder window 1 to disk \"%@\"\n"
+                      "end tell\n", diskName];
+    NSAppleScript *update=[[NSAppleScript alloc] initWithSource:source];
+    NSDictionary *err;
+    [update executeAndReturnError:&err];
+    return (err == nil) ? YES : NO;
+}
+
++ (BOOL) openMountedPathInFinderSomehow:(NSString*)sourcepath
+                            mountedPath:(NSString*)mountedpath
+{
+    NSString *finderSelPath = [libFunctions findCurrentlySelectedDirInFinder];
+    NSString *finderPath = [libFunctions findCurrentlyOpenDirInFinder];
+    if (((finderPath != nil) && ([finderPath isEqualToString:[[sourcepath stringByDeletingLastPathComponent] stringByAppendingFormat:@"/"]]))
+        || ((finderPath != nil) && ([finderSelPath isEqualToString:[sourcepath stringByAppendingFormat:@"/"]]))) {
+        if (![libFunctions openMountedPathInTopFinderWindow:mountedpath])
+            [[NSWorkspace sharedWorkspace] openFile:mountedpath];
+        
+    } else {
+        [[NSWorkspace sharedWorkspace] openFile:mountedpath];
+    }
+}
 
 @end

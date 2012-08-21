@@ -14,6 +14,7 @@
 @class Decrypt;
 @class Encrypt;
 @class ConfigDirectory;
+@class YoucryptDirectory;
 @class YoucryptService;
 @class ListDirectoriesWindow;
 @class FirstRunSheetController;
@@ -85,26 +86,26 @@
 //- (void)showFirstRun;
 
 // Enc and Dec
-- (IBAction)showEncryptWindow:(id)sender path:(NSString *)path;
-- (IBAction)showDecryptWindow:(id)sender path:(NSString *)path mountPoint:(NSString *)mountPath;
 - (IBAction)showListDirectories:(id)sender;
 - (IBAction)openFeedbackPage:(id)sender;
 - (IBAction)openHelpPage:(id)sender;
 - (IBAction)showAboutWindow:(id)sender;
 
--(void)encryptFolder:(NSString *)path;
 -(BOOL)openEncryptedFolder:(NSString *)path;
--(void)didDecrypt:(NSString *)path;
--(void)didEncrypt:(NSString *)path;
+-(BOOL)doDecrypt:(YoucryptDirectory*)dir;
+-(void)didDecrypt:(YoucryptDirectory *)dir;
+-(void)cancelDecrypt:(YoucryptDirectory *)dir;
+
+-(BOOL)encryptFolder:(NSString *)path;
+-(BOOL)doEncrypt:(NSString *)path;
+-(void)didEncrypt:(YoucryptDirectory *)dir;
+-(void)cancelEncrypt:(NSString *)path;
+
+-(void)removeFSAtRow:(long) row ;
+-(void)removeFSAtPath:(NSString*) path;
 -(void)didRestore:(NSString *)path;
-
--(void) cancelDecrypt:(NSString *)path;
--(void) cancelRestore:(NSString *)path;
--(void) cancelEncrypt:(NSString *)path;
-
-
--(void) removeFSAtRow:(long) row ;
-- (void) removeFSAtPath:(NSString*) path;
+-(void)cancelRestore:(NSString *)path;
+-(BOOL)doRestore:(NSString *)path;
 
 
 

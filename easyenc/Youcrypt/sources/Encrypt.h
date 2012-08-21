@@ -1,5 +1,6 @@
 
 #import <Cocoa/Cocoa.h>
+@class YoucryptDirectory;
 
 @interface Encrypt :NSWindowController{
 	IBOutlet NSTextField *yourPassword;
@@ -10,6 +11,8 @@
     BOOL lastEncryptionStatus;
 	NSString *sourceFolderPath;
     NSString *destFolderPath;
+    
+    YoucryptDirectory *dir;
 
     IBOutlet NSButton *shareCheckBox;
 	NSString *filePath;
@@ -29,6 +32,7 @@
 //@property (atomic, strong) IBOutlet NSTextField *yourPassword;
 @property (atomic, strong) NSString *sourceFolderPath;
 @property (atomic, strong) NSString *destFolderPath;
+@property (atomic, strong) YoucryptDirectory *dir;
 @property (atomic, assign) BOOL lastEncryptionStatus;
 @property (atomic, assign) BOOL encryptionInProcess;
 @property (atomic, assign) BOOL keychainHasPassphrase;
