@@ -9,6 +9,8 @@
 #import "YoucryptDirectory.h"
 #import "libFunctions.h"
 #import "PeriodicActionTimer.h"
+#import "AppDelegate.h"
+#import "PassphraseManager.h"
 
 #include <boost/filesystem/path.hpp>
 #include <boost/filesystem/operations.hpp>
@@ -44,6 +46,9 @@ static NSMutableArray *mountedFuseVolumes;
     
 - (id)initWithCoder:(NSCoder *)decoder {
     self = [super init];
+    
+    NSString *pp = [theApp.passphraseManager getPassphrase];
+    
     if (self != nil) {
         path = [decoder decodeObjectForKey:@"path"];
         mountedPath = [decoder decodeObjectForKey:@"mountedPath"];
@@ -52,7 +57,13 @@ static NSMutableArray *mountedFuseVolumes;
 //        status = [decoder decodeIntegerForKey:@"status"];
         
         boost::filesystem::path ph([path cStringUsingEncoding:NSASCIIStringEncoding]);
-        folder.reset(new YoucryptFolder(ph));
+        if (pp != nil) {
+            YoucryptFolderOpts opts;
+            Credentials creds(new PassphraseCredentials([pp cStringUsingEncoding:NSASCIIStringEncoding]));
+            folder.reset(new YoucryptFolder(ph, opts, creds));
+        } else {
+            folder.reset(new YoucryptFolder(ph));
+        }
         
         if (!alias)
             alias = [[NSString alloc] init];

@@ -15,6 +15,8 @@
 #include "encfs-core/PassphraseCredentials.h"
 
 @class PeriodicActionTimer;
+@class PassphraseManager;
+
 using namespace youcrypt;
 enum {
     YoucryptDirectoryStatusUnknown = YoucryptFolder::statusUnknown,

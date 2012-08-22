@@ -74,13 +74,6 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
     
     // TODO:  Load up directories array from the list file.
     
-    directories = [libFunctions unarchiveDirectoryListFromFile:configDir.youCryptListFile];
-    if (directories == nil) {
-        directories = [[NSMutableArray alloc] init];
-    } else {
-        // Do stuff here to check if dirs are all fine?
-    }
-    
     // Notifiers to indicate when app gains and loses focus
     // This is to do background stuffl ike syncing the config directory to disk
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -108,9 +101,13 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
     
     
     passphraseManager = [[PassphraseManager alloc] initWithPrefController:preferenceController saveInKeychain:NO];
-         
     
-    
+    directories = [libFunctions unarchiveDirectoryListFromFile:configDir.youCryptListFile];
+    if (directories == nil) {
+        directories = [[NSMutableArray alloc] init];
+    } else {
+        // Do stuff here to check if dirs are all fine?
+    }
     
     // XXX FIXME Change for Release
 #ifdef DEBUG
