@@ -16,6 +16,8 @@ using boost::filesystem::path;
 using std::string;
 using std::vector;
 
+extern "C" void youcrypt_mount_destroy(void *);
+
 namespace youcrypt {
 
     struct YoucryptFolderOpts {
@@ -70,11 +72,11 @@ namespace youcrypt {
         YoucryptFolder(const path&, 
                        const YoucryptFolderOpts &, 
                        const Credentials&);
-        
         //! Simple constructor; does not read config.
         YoucryptFolder(const path&);
         
-        
+        virtual ~YoucryptFolder();
+
         //! Create a new config. at path and loads it up.
         bool createAtPath(const path&, 
                           const YoucryptFolderOpts &, 
@@ -143,7 +145,9 @@ namespace youcrypt {
         Status status;
 
         //! FIXME:  Not yet implemented.  Need to do this.
-        bool idleTracking;        
+        bool idleTracking;     
+
+        friend void ::youcrypt_mount_destroy(void *);
     };
 }
 

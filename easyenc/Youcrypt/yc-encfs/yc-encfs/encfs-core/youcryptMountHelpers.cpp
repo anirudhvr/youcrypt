@@ -822,7 +822,7 @@ extern "C" void fuse_unmount_compat22(const char *mountpoint);
 
 static bool _unmountFS(EncFS_Context *ctx)
 {
-    fuse_unmount( ctx->rootCipherDir.c_str() );
+    fuse_unmount( ctx->mountPoint.c_str() );
     return true;
 }
 
@@ -895,7 +895,8 @@ void *youcrypt_mount_init(fuse_conn_info *conn) {
 }
 
 void youcrypt_mount_destroy(void *_ctx) {
-    
+    EncFS_Context *ectx = (EncFS_Context *)_ctx;
+    ectx->folder->status = youcrypt::YoucryptFolder::initialized;
 }
 
 

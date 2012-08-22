@@ -46,13 +46,12 @@ using boost::is_any_of;
 using boost::scoped_ptr;
 using boost::shared_ptr;
 
-using youcrypt::YoucryptFolder;
-
 using rel::Interface;
-
 using rlog::RLogChannel;
 using rlog::Log_Info;
 using rlog::SyslogNode;
+
+using namespace youcrypt;
 
 static RLogChannel * Info = DEF_CHANNEL( "info/youcrypt", Log_Info );
 
@@ -449,6 +448,7 @@ bool YoucryptFolder::createAtPath(const path& _rootPath,
 
     // Create Volume Key
 
+    // This should really come from the cred. object.
     int encodedKeySize = cipher->encodedKeySize();
     unsigned char *encodedKey = new unsigned char[ encodedKeySize ];
     volumeKey = cipher->newRandomKey();
@@ -681,7 +681,8 @@ bool YoucryptFolder::mount(const path &_mountPoint,
         
     mountPoint = _mountPoint;
     mountOptions = _mountOptions;
-    ctx.idleTimeout = idleTimeout;
+    ctx.mountPoint = mountPoint.string();
+    ctx.idleTimeout = idleTimeout;    
     if (idleTimeout > 0)
         ctx.idleTracking = true;
     if (!(exists(mountPoint) && is_directory(mountPoint)))
@@ -852,9 +853,14 @@ bool YoucryptFolder::unmount(void)
     } else {
         rWarning(_("Not umounnting since folder not mounted"),
                  mountPoint.c_str());
-        fuse_unmount( mountPoint.c_str() );
+        // fuse_unmount( mountPoint.c_str() );
         return false;
     }
 }
 
+
+YoucryptFolder::~YoucryptFolder() {
+    if (status == YoucryptFolder::mounted)
+        unmount();
+}
 

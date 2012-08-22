@@ -21,6 +21,7 @@
 #include "encfs.h"
 #include <boost/shared_ptr.hpp>
 #include <set>
+#include <string>
 
 #ifdef USE_HASHMAP
 #include <ext/hash_map>
@@ -29,8 +30,14 @@
 #endif
 
 using boost::shared_ptr;
+using std::string;
 struct EncFS_Args;
 struct EncFS_Opts;
+
+namespace youcrypt {
+    class YoucryptFolder;
+}
+
 class FileNode;
 class DirNode;
 
@@ -71,6 +78,8 @@ public:
 
     int idleTimeout;
     bool idleTracking;
+    string mountPoint;
+    shared_ptr<youcrypt::YoucryptFolder> folder;
 private:
     /* This placeholder is what is referenced in FUSE context (passed to
      * callbacks).
