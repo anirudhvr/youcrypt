@@ -363,6 +363,75 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
+		E004CC2415E79286008924A3 /* NoWarn */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
+				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = NO;
+				GCC_WARN_UNUSED_VALUE = NO;
+				GCC_WARN_UNUSED_VARIABLE = NO;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = NoWarn;
+		};
+		E004CC2515E79286008924A3 /* NoWarn */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				EXECUTABLE_PREFIX = lib;
+				HEADER_SEARCH_PATHS = (
+					/opt/local/include,
+					/usr/local/include/osxfuse,
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)\"",
+					/usr/local/lib,
+					/opt/local/lib,
+				);
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_CPLUSPLUSFLAGS = (
+					"$(OTHER_CFLAGS)",
+					"-D_FILE_OFFSET_BITS=64",
+					"-DFUSE_USE_VERSION=26",
+					"-D__STDC_FORMAT_MACROS",
+					"-DRLOG_COMPONENT=\"encfs\"",
+					"-W",
+					"-Wall",
+					"-Wpointer-arith",
+					"-Wwrite-strings",
+					"-D__FreeBSD__=10",
+					"-Wno-unused-parameter",
+				);
+				OTHER_LDFLAGS = (
+					"-lboost_system-mt",
+					"-lboost_filesystem-mt",
+					"-lboost_serialization-mt",
+					"-lssl",
+					"-lcrypto",
+					"-lintl",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = NoWarn;
+		};
 		E63D209115D1D42500B57720 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -494,6 +563,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				E63D209115D1D42500B57720 /* Debug */,
+				E004CC2415E79286008924A3 /* NoWarn */,
 				E63D209215D1D42500B57720 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -503,6 +573,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				E6B544D815D2633F0045E3B3 /* Debug */,
+				E004CC2515E79286008924A3 /* NoWarn */,
 				E6B544D915D2633F0045E3B3 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;

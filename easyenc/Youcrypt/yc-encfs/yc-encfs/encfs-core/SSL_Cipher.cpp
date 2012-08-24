@@ -266,6 +266,8 @@ public:
     HMAC_CTX mac_ctx;
 
     SSLKey(int keySize, int ivLength);
+    virtual int keyDataSize();
+    virtual void copyKeyData(char *);
     ~SSLKey();
 };
 
@@ -302,6 +304,19 @@ SSLKey::~SSLKey()
 
     pthread_mutex_destroy( &mutex );
 }
+
+int keyDataSize() {
+    return keySize + ivLength;
+}
+
+void copyKeyData(char *out) {
+    if (keySize + ivLength > 0)
+        memcpy(out, buffer, keySize+ivLength);
+}
+
+void setKeyData(const char *in) {
+}
+
 
 
 inline unsigned char* KeyData( const shared_ptr<SSLKey> &key )
