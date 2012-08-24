@@ -9,7 +9,7 @@
 #ifndef __Youcrypt__testhttpclient__
 #define __Youcrypt__testhttpclient__
 
-#include <iostream>
 int test(void);
-    
+
+int testServer(void);
 #endif /* defined(__Youcrypt__testhttpclient__) */

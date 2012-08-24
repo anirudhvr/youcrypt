@@ -102,6 +102,13 @@
 		E64AC0F715E7582500D2E046 /* libboost_program_options-mt.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E64AC0F315E7582500D2E046 /* libboost_program_options-mt.dylib */; };
 		E64AC0F815E7582500D2E046 /* libboost_regex-mt.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E64AC0F415E7582500D2E046 /* libboost_regex-mt.dylib */; };
 		E64AC0F915E7582500D2E046 /* libboost_thread-mt.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E64AC0F515E7582500D2E046 /* libboost_thread-mt.dylib */; };
+		E64AC1AD15E7699500D2E046 /* bcrypt_wrapper.c in Sources */ = {isa = PBXBuildFile; fileRef = E64AC1A815E7699500D2E046 /* bcrypt_wrapper.c */; };
+		E64AC1AE15E7699500D2E046 /* bcrypt.c in Sources */ = {isa = PBXBuildFile; fileRef = E64AC1AA15E7699500D2E046 /* bcrypt.c */; };
+		E64AC1AF15E7699500D2E046 /* blowfish.c in Sources */ = {isa = PBXBuildFile; fileRef = E64AC1AB15E7699500D2E046 /* blowfish.c */; };
+		E64AC1BA15E769D500D2E046 /* HttpLib.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E64AC1B015E769D500D2E046 /* HttpLib.cpp */; };
+		E64AC1BB15E769D500D2E046 /* KeyManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E64AC1B315E769D500D2E046 /* KeyManager.cpp */; };
+		E64AC1BD15E769D500D2E046 /* PasswordManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E64AC1B615E769D500D2E046 /* PasswordManager.cpp */; };
+		E64AC1BE15E769D500D2E046 /* UserAccount.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E64AC1B815E769D500D2E046 /* UserAccount.cpp */; };
 		E64B307115AEE1A600827591 /* tableview-background.png in Resources */ = {isa = PBXBuildFile; fileRef = E64B307015AEE1A500827591 /* tableview-background.png */; };
 		E64B309015AEE9C300827591 /* MPCJSONDataSerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = E64B308415AEE9C300827591 /* MPCJSONDataSerializer.m */; };
 		E64B309115AEE9C300827591 /* MPCJSONSerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = E64B308615AEE9C300827591 /* MPCJSONSerializer.m */; };
@@ -543,12 +550,36 @@
 		E61DF50115BB49080011A05D /* libboost_serialization.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libboost_serialization.dylib; sourceTree = "<group>"; };
 		E61DF50215BB49080011A05D /* libboost_system.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libboost_system.dylib; sourceTree = "<group>"; };
 		E64ABFCA15E724A600D2E046 /* CPP-NETLIB.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "CPP-NETLIB.xcodeproj"; path = "cpp-netlib-0.9.4/CPP-NETLIB.xcodeproj"; sourceTree = "<group>"; };
-		E64AC0EF15E7575700D2E046 /* testhttpclient.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = testhttpclient.cpp; path = "yc-networking/testhttpclient.cpp"; sourceTree = "<group>"; };
-		E64AC0F015E7575700D2E046 /* testhttpclient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = testhttpclient.h; path = "yc-networking/testhttpclient.h"; sourceTree = "<group>"; };
+		E64AC0EF15E7575700D2E046 /* testhttpclient.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = testhttpclient.cpp; sourceTree = "<group>"; };
+		E64AC0F015E7575700D2E046 /* testhttpclient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = testhttpclient.h; sourceTree = "<group>"; };
 		E64AC0F215E7582500D2E046 /* libboost_date_time-mt.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libboost_date_time-mt.dylib"; path = "/opt/local/lib/libboost_date_time-mt.dylib"; sourceTree = "<absolute>"; };
 		E64AC0F315E7582500D2E046 /* libboost_program_options-mt.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libboost_program_options-mt.dylib"; path = "/opt/local/lib/libboost_program_options-mt.dylib"; sourceTree = "<absolute>"; };
 		E64AC0F415E7582500D2E046 /* libboost_regex-mt.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libboost_regex-mt.dylib"; path = "/opt/local/lib/libboost_regex-mt.dylib"; sourceTree = "<absolute>"; };
 		E64AC0F515E7582500D2E046 /* libboost_thread-mt.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libboost_thread-mt.dylib"; path = "/opt/local/lib/libboost_thread-mt.dylib"; sourceTree = "<absolute>"; };
+		E64AC19C15E7698200D2E046 /* document.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = document.h; sourceTree = "<group>"; };
+		E64AC19D15E7698200D2E046 /* filestream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = filestream.h; sourceTree = "<group>"; };
+		E64AC19F15E7698200D2E046 /* pow10.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pow10.h; sourceTree = "<group>"; };
+		E64AC1A015E7698300D2E046 /* stack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stack.h; sourceTree = "<group>"; };
+		E64AC1A115E7698300D2E046 /* strfunc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = strfunc.h; sourceTree = "<group>"; };
+		E64AC1A215E7698300D2E046 /* prettywriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = prettywriter.h; sourceTree = "<group>"; };
+		E64AC1A315E7698300D2E046 /* rapidjson.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = rapidjson.h; sourceTree = "<group>"; };
+		E64AC1A415E7698300D2E046 /* reader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = reader.h; sourceTree = "<group>"; };
+		E64AC1A515E7698300D2E046 /* stringbuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stringbuffer.h; sourceTree = "<group>"; };
+		E64AC1A615E7698300D2E046 /* writer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = writer.h; sourceTree = "<group>"; };
+		E64AC1A815E7699500D2E046 /* bcrypt_wrapper.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = bcrypt_wrapper.c; sourceTree = "<group>"; };
+		E64AC1A915E7699500D2E046 /* bcrypt_wrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = bcrypt_wrapper.h; sourceTree = "<group>"; };
+		E64AC1AA15E7699500D2E046 /* bcrypt.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = bcrypt.c; sourceTree = "<group>"; };
+		E64AC1AB15E7699500D2E046 /* blowfish.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = blowfish.c; sourceTree = "<group>"; };
+		E64AC1AC15E7699500D2E046 /* pybc_blf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pybc_blf.h; sourceTree = "<group>"; };
+		E64AC1B015E769D500D2E046 /* HttpLib.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HttpLib.cpp; sourceTree = "<group>"; };
+		E64AC1B115E769D500D2E046 /* HttpLib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HttpLib.h; sourceTree = "<group>"; };
+		E64AC1B215E769D500D2E046 /* Key.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Key.h; sourceTree = "<group>"; };
+		E64AC1B315E769D500D2E046 /* KeyManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = KeyManager.cpp; sourceTree = "<group>"; };
+		E64AC1B415E769D500D2E046 /* KeyManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeyManager.h; sourceTree = "<group>"; };
+		E64AC1B615E769D500D2E046 /* PasswordManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PasswordManager.cpp; sourceTree = "<group>"; };
+		E64AC1B715E769D500D2E046 /* PasswordManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PasswordManager.h; sourceTree = "<group>"; };
+		E64AC1B815E769D500D2E046 /* UserAccount.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UserAccount.cpp; sourceTree = "<group>"; };
+		E64AC1B915E769D500D2E046 /* UserAccount.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserAccount.h; sourceTree = "<group>"; };
 		E64B307015AEE1A500827591 /* tableview-background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tableview-background.png"; sourceTree = "<group>"; };
 		E64B308315AEE9C300827591 /* MPCJSONDataSerializer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPCJSONDataSerializer.h; sourceTree = "<group>"; };
 		E64B308415AEE9C300827591 /* MPCJSONDataSerializer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPCJSONDataSerializer.m; sourceTree = "<group>"; };
@@ -951,10 +982,56 @@
 		E64AC0FA15E7597E00D2E046 /* yc-networking */ = {
 			isa = PBXGroup;
 			children = (
+				E64AC1B015E769D500D2E046 /* HttpLib.cpp */,
+				E64AC1B115E769D500D2E046 /* HttpLib.h */,
+				E64AC1B215E769D500D2E046 /* Key.h */,
+				E64AC1B315E769D500D2E046 /* KeyManager.cpp */,
+				E64AC1B415E769D500D2E046 /* KeyManager.h */,
+				E64AC1B615E769D500D2E046 /* PasswordManager.cpp */,
+				E64AC1B715E769D500D2E046 /* PasswordManager.h */,
+				E64AC1B815E769D500D2E046 /* UserAccount.cpp */,
+				E64AC1B915E769D500D2E046 /* UserAccount.h */,
 				E64AC0EF15E7575700D2E046 /* testhttpclient.cpp */,
 				E64AC0F015E7575700D2E046 /* testhttpclient.h */,
 			);
-			name = "yc-networking";
+			path = "yc-networking";
+			sourceTree = "<group>";
+		};
+		E64AC19B15E7695900D2E046 /* rapidjson */ = {
+			isa = PBXGroup;
+			children = (
+				E64AC19C15E7698200D2E046 /* document.h */,
+				E64AC19D15E7698200D2E046 /* filestream.h */,
+				E64AC19E15E7698200D2E046 /* internal */,
+				E64AC1A215E7698300D2E046 /* prettywriter.h */,
+				E64AC1A315E7698300D2E046 /* rapidjson.h */,
+				E64AC1A415E7698300D2E046 /* reader.h */,
+				E64AC1A515E7698300D2E046 /* stringbuffer.h */,
+				E64AC1A615E7698300D2E046 /* writer.h */,
+			);
+			path = rapidjson;
+			sourceTree = "<group>";
+		};
+		E64AC19E15E7698200D2E046 /* internal */ = {
+			isa = PBXGroup;
+			children = (
+				E64AC19F15E7698200D2E046 /* pow10.h */,
+				E64AC1A015E7698300D2E046 /* stack.h */,
+				E64AC1A115E7698300D2E046 /* strfunc.h */,
+			);
+			path = internal;
+			sourceTree = "<group>";
+		};
+		E64AC1A715E7698900D2E046 /* bcrypt */ = {
+			isa = PBXGroup;
+			children = (
+				E64AC1A815E7699500D2E046 /* bcrypt_wrapper.c */,
+				E64AC1A915E7699500D2E046 /* bcrypt_wrapper.h */,
+				E64AC1AA15E7699500D2E046 /* bcrypt.c */,
+				E64AC1AB15E7699500D2E046 /* blowfish.c */,
+				E64AC1AC15E7699500D2E046 /* pybc_blf.h */,
+			);
+			path = bcrypt;
 			sourceTree = "<group>";
 		};
 		E64B307615AEE8C400827591 /* Mixpanel_iphonemod_fpotter */ = {
@@ -1021,6 +1098,8 @@
 		E6649C0A15A53BFA0096886F /* contrib */ = {
 			isa = PBXGroup;
 			children = (
+				E64AC1A715E7698900D2E046 /* bcrypt */,
+				E64AC19B15E7695900D2E046 /* rapidjson */,
 				E64FA4B415B563A200C08D5F /* zlib */,
 				254412EB15AFBA640098B8FB /* FileBrowser */,
 				E64B307615AEE8C400827591 /* Mixpanel_iphonemod_fpotter */,
@@ -1691,6 +1770,13 @@
 				2537E39D15B4FD260034E6E3 /* AboutController.mm in Sources */,
 				E6A3907D15CA0C73007388BE /* PassphraseManager.mm in Sources */,
 				E64AC0F115E7575700D2E046 /* testhttpclient.cpp in Sources */,
+				E64AC1AD15E7699500D2E046 /* bcrypt_wrapper.c in Sources */,
+				E64AC1AE15E7699500D2E046 /* bcrypt.c in Sources */,
+				E64AC1AF15E7699500D2E046 /* blowfish.c in Sources */,
+				E64AC1BA15E769D500D2E046 /* HttpLib.cpp in Sources */,
+				E64AC1BB15E769D500D2E046 /* KeyManager.cpp in Sources */,
+				E64AC1BD15E769D500D2E046 /* PasswordManager.cpp in Sources */,
+				E64AC1BE15E769D500D2E046 /* UserAccount.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
