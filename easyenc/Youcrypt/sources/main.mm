@@ -1,3 +1,4 @@
+//]
 //
 //  main.m
 //  Youcrypt Mac alpha
@@ -8,9 +9,11 @@
 
 #import <Cocoa/Cocoa.h>
 #import "libFunctions.h"
+#include "testhttpclient.h"
 
 
 int main(int argc, char *argv[])
 {
     return NSApplicationMain(argc, (const char **)argv);
 }
+

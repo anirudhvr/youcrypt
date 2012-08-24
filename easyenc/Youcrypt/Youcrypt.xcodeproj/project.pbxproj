@@ -23,11 +23,6 @@
 		2537E34F15B126520034E6E3 /* libintl.8.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 2537E34915B125320034E6E3 /* libintl.8.dylib */; };
 		2537E35015B126520034E6E3 /* librlog.5.0.0.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 2537E34A15B125320034E6E3 /* librlog.5.0.0.dylib */; };
 		2537E35115B126520034E6E3 /* librlog.5.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 2537E34B15B125320034E6E3 /* librlog.5.dylib */; };
-		2537E35215B126520034E6E3 /* libencfs.6.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 25E8BC2F15AE4F7200A323D8 /* libencfs.6.dylib */; };
-		2537E35315B126520034E6E3 /* libencfs.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 25E8BC3015AE4F7200A323D8 /* libencfs.dylib */; };
-		2537E35515B126640034E6E3 /* yc-encfs in Resources */ = {isa = PBXBuildFile; fileRef = 25E8BC2515AE4F5F00A323D8 /* yc-encfs */; };
-		2537E35615B126640034E6E3 /* yc-encfsctl in Resources */ = {isa = PBXBuildFile; fileRef = 25E8BC2615AE4F5F00A323D8 /* yc-encfsctl */; };
-		2537E35715B126640034E6E3 /* yc-encfssh in Resources */ = {isa = PBXBuildFile; fileRef = 25E8BC2715AE4F5F00A323D8 /* yc-encfssh */; };
 		2537E35C15B127300034E6E3 /* libintl.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 2537E35815B1271D0034E6E3 /* libintl.dylib */; };
 		2537E35D15B127300034E6E3 /* librlog.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 2537E35915B1271D0034E6E3 /* librlog.dylib */; };
 		2537E38115B492720034E6E3 /* StartOnLogin.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E635DE8D15AE2BAA00A81117 /* StartOnLogin.framework */; };
@@ -42,7 +37,7 @@
 		2544130015AFCB910098B8FB /* DBSetupSheetController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 254412FF15AFCB910098B8FB /* DBSetupSheetController.mm */; };
 		25617DC715ABD54B00EED7F7 /* ListDirTable.mm in Sources */ = {isa = PBXBuildFile; fileRef = 25617DC615ABD54B00EED7F7 /* ListDirTable.mm */; };
 		256C3560158EA75F00E2BEC4 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 256C355F158EA75F00E2BEC4 /* Cocoa.framework */; };
-		256C356C158EA75F00E2BEC4 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 256C356B158EA75F00E2BEC4 /* main.m */; };
+		256C356C158EA75F00E2BEC4 /* main.mm in Sources */ = {isa = PBXBuildFile; fileRef = 256C356B158EA75F00E2BEC4 /* main.mm */; };
 		256C3570158EA75F00E2BEC4 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 256C356E158EA75F00E2BEC4 /* Credits.rtf */; };
 		256C3573158EA75F00E2BEC4 /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 256C3572158EA75F00E2BEC4 /* AppDelegate.mm */; };
 		256C357E158EA75F00E2BEC4 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 256C357D158EA75F00E2BEC4 /* SenTestingKit.framework */; };
@@ -99,6 +94,14 @@
 		E61DF50615BB49190011A05D /* libboost_filesystem.dylib in Resources */ = {isa = PBXBuildFile; fileRef = E61DF50015BB49080011A05D /* libboost_filesystem.dylib */; };
 		E61DF50715BB49190011A05D /* libboost_serialization.dylib in Resources */ = {isa = PBXBuildFile; fileRef = E61DF50115BB49080011A05D /* libboost_serialization.dylib */; };
 		E61DF50815BB49190011A05D /* libboost_system.dylib in Resources */ = {isa = PBXBuildFile; fileRef = E61DF50215BB49080011A05D /* libboost_system.dylib */; };
+		E64AC03D15E72B3F00D2E046 /* libcppnetlib-client-connections.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E64AC00715E724A700D2E046 /* libcppnetlib-client-connections.a */; };
+		E64AC03E15E72B3F00D2E046 /* libcppnetlib-server-parsers.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E64AC00915E724A700D2E046 /* libcppnetlib-server-parsers.a */; };
+		E64AC03F15E72B3F00D2E046 /* libcppnetlib-uri.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E64AC00B15E724A700D2E046 /* libcppnetlib-uri.a */; };
+		E64AC0F115E7575700D2E046 /* testhttpclient.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E64AC0EF15E7575700D2E046 /* testhttpclient.cpp */; };
+		E64AC0F615E7582500D2E046 /* libboost_date_time-mt.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E64AC0F215E7582500D2E046 /* libboost_date_time-mt.dylib */; };
+		E64AC0F715E7582500D2E046 /* libboost_program_options-mt.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E64AC0F315E7582500D2E046 /* libboost_program_options-mt.dylib */; };
+		E64AC0F815E7582500D2E046 /* libboost_regex-mt.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E64AC0F415E7582500D2E046 /* libboost_regex-mt.dylib */; };
+		E64AC0F915E7582500D2E046 /* libboost_thread-mt.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E64AC0F515E7582500D2E046 /* libboost_thread-mt.dylib */; };
 		E64B307115AEE1A600827591 /* tableview-background.png in Resources */ = {isa = PBXBuildFile; fileRef = E64B307015AEE1A500827591 /* tableview-background.png */; };
 		E64B309015AEE9C300827591 /* MPCJSONDataSerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = E64B308415AEE9C300827591 /* MPCJSONDataSerializer.m */; };
 		E64B309115AEE9C300827591 /* MPCJSONSerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = E64B308615AEE9C300827591 /* MPCJSONSerializer.m */; };
@@ -190,6 +193,195 @@
 			remoteGlobalIDString = E6695611159D1B7B002323AD;
 			remoteInfo = StartOnLogin;
 		};
+		E64AC00615E724A700D2E046 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E64ABFCA15E724A600D2E046 /* CPP-NETLIB.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = A711E7B698D24074BE336296;
+			remoteInfo = "cppnetlib-client-connections";
+		};
+		E64AC00815E724A700D2E046 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E64ABFCA15E724A600D2E046 /* CPP-NETLIB.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 484D2801C7EA43E3ADF98B28;
+			remoteInfo = "cppnetlib-server-parsers";
+		};
+		E64AC00A15E724A700D2E046 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E64ABFCA15E724A600D2E046 /* CPP-NETLIB.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 0BEC54F603C047DFA5931B94;
+			remoteInfo = "cppnetlib-uri";
+		};
+		E64AC00C15E724A700D2E046 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E64ABFCA15E724A600D2E046 /* CPP-NETLIB.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = C418A90FB49C4648B2C191A1;
+			remoteInfo = "cpp-netlib-message_test";
+		};
+		E64AC00E15E724A700D2E046 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E64ABFCA15E724A600D2E046 /* CPP-NETLIB.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = EE27E32217534835AA6C1295;
+			remoteInfo = "cpp-netlib-message_transform_test";
+		};
+		E64AC01015E724A700D2E046 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E64ABFCA15E724A600D2E046 /* CPP-NETLIB.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = DA475C8374604798863A6CD9;
+			remoteInfo = "cpp-netlib-utils_thread_pool";
+		};
+		E64AC01215E724A700D2E046 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E64ABFCA15E724A600D2E046 /* CPP-NETLIB.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = FD53C8A70FA847FF944D51F3;
+			remoteInfo = "cpp-netlib-relative_uri_test";
+		};
+		E64AC01415E724A700D2E046 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E64ABFCA15E724A600D2E046 /* CPP-NETLIB.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = EBA60DD88C474FA68DF97734;
+			remoteInfo = "cpp-netlib-uri_builder_stream_test";
+		};
+		E64AC01615E724A700D2E046 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E64ABFCA15E724A600D2E046 /* CPP-NETLIB.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = E87866410B0749ABA6F8250A;
+			remoteInfo = "cpp-netlib-uri_builder_test";
+		};
+		E64AC01815E724A700D2E046 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E64ABFCA15E724A600D2E046 /* CPP-NETLIB.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 867582A65F64449C82FDEBB0;
+			remoteInfo = "cpp-netlib-uri_encoding_test";
+		};
+		E64AC01A15E724A700D2E046 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E64ABFCA15E724A600D2E046 /* CPP-NETLIB.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 8EBC92B2EB794FA0A67048CF;
+			remoteInfo = "cpp-netlib-uri_test";
+		};
+		E64AC01C15E724A700D2E046 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E64ABFCA15E724A600D2E046 /* CPP-NETLIB.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 58FE4829C4134E628F89AD28;
+			remoteInfo = "cpp-netlib-http-client_constructor_test";
+		};
+		E64AC01E15E724A700D2E046 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E64ABFCA15E724A600D2E046 /* CPP-NETLIB.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = A787F47201584254AA8406DB;
+			remoteInfo = "cpp-netlib-http-client_get_different_port_test";
+		};
+		E64AC02015E724A700D2E046 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E64ABFCA15E724A600D2E046 /* CPP-NETLIB.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = E638FD2171134AEEB74C0E35;
+			remoteInfo = "cpp-netlib-http-client_get_streaming_test";
+		};
+		E64AC02215E724A700D2E046 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E64ABFCA15E724A600D2E046 /* CPP-NETLIB.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 879E9AD062E04AEEB291AD43;
+			remoteInfo = "cpp-netlib-http-client_get_test";
+		};
+		E64AC02415E724A700D2E046 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E64ABFCA15E724A600D2E046 /* CPP-NETLIB.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 9ACB681DAF2749A1AC84332E;
+			remoteInfo = "cpp-netlib-http-client_get_timeout_test";
+		};
+		E64AC02615E724A700D2E046 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E64ABFCA15E724A600D2E046 /* CPP-NETLIB.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = DB8298E5DE3542FE93AAD764;
+			remoteInfo = "cpp-netlib-http-server_async_run_stop_concurrency";
+		};
+		E64AC02815E724A700D2E046 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E64ABFCA15E724A600D2E046 /* CPP-NETLIB.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 880B45A78ECC4C81A36D74D2;
+			remoteInfo = "cpp-netlib-http-server_constructor_test";
+		};
+		E64AC02A15E724A700D2E046 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E64ABFCA15E724A600D2E046 /* CPP-NETLIB.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 90A8D66CC0CD4A4093BB9347;
+			remoteInfo = "mime-roundtrip";
+		};
+		E64AC02C15E724A700D2E046 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E64ABFCA15E724A600D2E046 /* CPP-NETLIB.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 7DCC1ED82F7A424791D93B7F;
+			remoteInfo = atom_reader;
+		};
+		E64AC02E15E724A700D2E046 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E64ABFCA15E724A600D2E046 /* CPP-NETLIB.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 59C313C4666A488C98BC85BD;
+			remoteInfo = fileserver;
+		};
+		E64AC03015E724A700D2E046 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E64ABFCA15E724A600D2E046 /* CPP-NETLIB.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 6D7E48F013C5490B8FA4B33C;
+			remoteInfo = hello_world_client;
+		};
+		E64AC03215E724A700D2E046 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E64ABFCA15E724A600D2E046 /* CPP-NETLIB.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 36BB4CA8B25A4DC0AD313E77;
+			remoteInfo = hello_world_server;
+		};
+		E64AC03415E724A700D2E046 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E64ABFCA15E724A600D2E046 /* CPP-NETLIB.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = ABE32A55A547423C813B0692;
+			remoteInfo = http_client;
+		};
+		E64AC03615E724A700D2E046 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E64ABFCA15E724A600D2E046 /* CPP-NETLIB.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = F47E676359F44085B13760F0;
+			remoteInfo = rss_reader;
+		};
+		E64AC03815E724A700D2E046 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E64ABFCA15E724A600D2E046 /* CPP-NETLIB.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 80BD80A2DFE44E69A458B8F5;
+			remoteInfo = simple_wget;
+		};
+		E64AC03A15E724A700D2E046 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E64ABFCA15E724A600D2E046 /* CPP-NETLIB.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = E68C01B8310D4D1795A42470;
+			remoteInfo = twitter_search;
+		};
 		E6D7D2AB15D26AD100780915 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = E6D7D2A015D26AD100780915 /* yc-encfs.xcodeproj */;
@@ -277,7 +469,7 @@
 		256C3562158EA75F00E2BEC4 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
 		256C3563158EA75F00E2BEC4 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		256C3564158EA75F00E2BEC4 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		256C356B158EA75F00E2BEC4 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = main.m; path = sources/main.m; sourceTree = "<group>"; };
+		256C356B158EA75F00E2BEC4 /* main.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = main.mm; path = sources/main.mm; sourceTree = "<group>"; };
 		256C356D158EA75F00E2BEC4 /* Youcrypt-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "Youcrypt-Prefix.pch"; path = "sources/Youcrypt-Prefix.pch"; sourceTree = "<group>"; };
 		256C356F158EA75F00E2BEC4 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
 		256C3571158EA75F00E2BEC4 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = sources/AppDelegate.h; sourceTree = "<group>"; };
@@ -350,6 +542,13 @@
 		E61DF50015BB49080011A05D /* libboost_filesystem.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libboost_filesystem.dylib; sourceTree = "<group>"; };
 		E61DF50115BB49080011A05D /* libboost_serialization.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libboost_serialization.dylib; sourceTree = "<group>"; };
 		E61DF50215BB49080011A05D /* libboost_system.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libboost_system.dylib; sourceTree = "<group>"; };
+		E64ABFCA15E724A600D2E046 /* CPP-NETLIB.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "CPP-NETLIB.xcodeproj"; path = "cpp-netlib-0.9.4/CPP-NETLIB.xcodeproj"; sourceTree = "<group>"; };
+		E64AC0EF15E7575700D2E046 /* testhttpclient.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = testhttpclient.cpp; path = "yc-networking/testhttpclient.cpp"; sourceTree = "<group>"; };
+		E64AC0F015E7575700D2E046 /* testhttpclient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = testhttpclient.h; path = "yc-networking/testhttpclient.h"; sourceTree = "<group>"; };
+		E64AC0F215E7582500D2E046 /* libboost_date_time-mt.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libboost_date_time-mt.dylib"; path = "../../../../../../opt/local/lib/libboost_date_time-mt.dylib"; sourceTree = "<group>"; };
+		E64AC0F315E7582500D2E046 /* libboost_program_options-mt.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libboost_program_options-mt.dylib"; path = "../../../../../../opt/local/lib/libboost_program_options-mt.dylib"; sourceTree = "<group>"; };
+		E64AC0F415E7582500D2E046 /* libboost_regex-mt.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libboost_regex-mt.dylib"; path = "../../../../../../opt/local/lib/libboost_regex-mt.dylib"; sourceTree = "<group>"; };
+		E64AC0F515E7582500D2E046 /* libboost_thread-mt.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libboost_thread-mt.dylib"; path = "../../../../../../opt/local/lib/libboost_thread-mt.dylib"; sourceTree = "<group>"; };
 		E64B307015AEE1A500827591 /* tableview-background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tableview-background.png"; sourceTree = "<group>"; };
 		E64B308315AEE9C300827591 /* MPCJSONDataSerializer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPCJSONDataSerializer.h; sourceTree = "<group>"; };
 		E64B308415AEE9C300827591 /* MPCJSONDataSerializer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPCJSONDataSerializer.m; sourceTree = "<group>"; };
@@ -449,6 +648,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E64AC0F615E7582500D2E046 /* libboost_date_time-mt.dylib in Frameworks */,
+				E64AC0F715E7582500D2E046 /* libboost_program_options-mt.dylib in Frameworks */,
+				E64AC0F815E7582500D2E046 /* libboost_regex-mt.dylib in Frameworks */,
+				E64AC0F915E7582500D2E046 /* libboost_thread-mt.dylib in Frameworks */,
+				E64AC03D15E72B3F00D2E046 /* libcppnetlib-client-connections.a in Frameworks */,
+				E64AC03E15E72B3F00D2E046 /* libcppnetlib-server-parsers.a in Frameworks */,
+				E64AC03F15E72B3F00D2E046 /* libcppnetlib-uri.a in Frameworks */,
 				E6D7D2B515D27E9E00780915 /* librlog.5.0.0.dylib in Frameworks */,
 				E6D7D2B215D27D6700780915 /* libosxfuse_i64.2.dylib in Frameworks */,
 				E6D7D2AE15D273F400780915 /* libyc-encfs-static.a in Frameworks */,
@@ -498,14 +704,20 @@
 		256C3550158EA75F00E2BEC4 = {
 			isa = PBXGroup;
 			children = (
+				E64AC0F215E7582500D2E046 /* libboost_date_time-mt.dylib */,
+				E64AC0F315E7582500D2E046 /* libboost_program_options-mt.dylib */,
+				E64AC0F415E7582500D2E046 /* libboost_regex-mt.dylib */,
+				E64AC0F515E7582500D2E046 /* libboost_thread-mt.dylib */,
+				E64ABFCA15E724A600D2E046 /* CPP-NETLIB.xcodeproj */,
 				E6D7D2B115D27D6700780915 /* libosxfuse_i64.2.dylib */,
 				E6D7D2AF15D27CD100780915 /* librlog.5.0.0.dylib */,
 				E6D7D2A015D26AD100780915 /* yc-encfs.xcodeproj */,
 				E66988C3159D403B002323AD /* StartOnLogin.xcodeproj */,
-				256C356B158EA75F00E2BEC4 /* main.m */,
+				256C356B158EA75F00E2BEC4 /* main.mm */,
 				E06E2B3F15A7671B00E52B2D /* constants.h */,
 				256C356D158EA75F00E2BEC4 /* Youcrypt-Prefix.pch */,
 				256C356E158EA75F00E2BEC4 /* Credits.rtf */,
+				E64AC0FA15E7597E00D2E046 /* yc-networking */,
 				25F3D154159243E300E3383C /* Classes */,
 				25F3D1521592436000E3383C /* UI */,
 				25F3D1531592437700E3383C /* Plists */,
@@ -700,6 +912,49 @@
 				E635DE8D15AE2BAA00A81117 /* StartOnLogin.framework */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		E64ABFCB15E724A600D2E046 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E64AC00715E724A700D2E046 /* libcppnetlib-client-connections.a */,
+				E64AC00915E724A700D2E046 /* libcppnetlib-server-parsers.a */,
+				E64AC00B15E724A700D2E046 /* libcppnetlib-uri.a */,
+				E64AC00D15E724A700D2E046 /* cpp-netlib-message_test */,
+				E64AC00F15E724A700D2E046 /* cpp-netlib-message_transform_test */,
+				E64AC01115E724A700D2E046 /* cpp-netlib-utils_thread_pool */,
+				E64AC01315E724A700D2E046 /* cpp-netlib-relative_uri_test */,
+				E64AC01515E724A700D2E046 /* cpp-netlib-uri_builder_stream_test */,
+				E64AC01715E724A700D2E046 /* cpp-netlib-uri_builder_test */,
+				E64AC01915E724A700D2E046 /* cpp-netlib-uri_encoding_test */,
+				E64AC01B15E724A700D2E046 /* cpp-netlib-uri_test */,
+				E64AC01D15E724A700D2E046 /* cpp-netlib-http-client_constructor_test */,
+				E64AC01F15E724A700D2E046 /* cpp-netlib-http-client_get_different_port_test */,
+				E64AC02115E724A700D2E046 /* cpp-netlib-http-client_get_streaming_test */,
+				E64AC02315E724A700D2E046 /* cpp-netlib-http-client_get_test */,
+				E64AC02515E724A700D2E046 /* cpp-netlib-http-client_get_timeout_test */,
+				E64AC02715E724A700D2E046 /* cpp-netlib-http-server_async_run_stop_concurrency */,
+				E64AC02915E724A700D2E046 /* cpp-netlib-http-server_constructor_test */,
+				E64AC02B15E724A700D2E046 /* mime-roundtrip */,
+				E64AC02D15E724A700D2E046 /* atom_reader */,
+				E64AC02F15E724A700D2E046 /* fileserver */,
+				E64AC03115E724A700D2E046 /* hello_world_client */,
+				E64AC03315E724A700D2E046 /* hello_world_server */,
+				E64AC03515E724A700D2E046 /* http_client */,
+				E64AC03715E724A700D2E046 /* rss_reader */,
+				E64AC03915E724A700D2E046 /* simple_wget */,
+				E64AC03B15E724A700D2E046 /* twitter_search */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		E64AC0FA15E7597E00D2E046 /* yc-networking */ = {
+			isa = PBXGroup;
+			children = (
+				E64AC0EF15E7575700D2E046 /* testhttpclient.cpp */,
+				E64AC0F015E7575700D2E046 /* testhttpclient.h */,
+			);
+			name = "yc-networking";
 			sourceTree = "<group>";
 		};
 		E64B307615AEE8C400827591 /* Mixpanel_iphonemod_fpotter */ = {
@@ -1037,6 +1292,10 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
+					ProductGroup = E64ABFCB15E724A600D2E046 /* Products */;
+					ProjectRef = E64ABFCA15E724A600D2E046 /* CPP-NETLIB.xcodeproj */;
+				},
+				{
 					ProductGroup = E635DE8915AE2BAA00A81117 /* Products */;
 					ProjectRef = E66988C3159D403B002323AD /* StartOnLogin.xcodeproj */;
 				},
@@ -1060,6 +1319,195 @@
 			fileType = wrapper.framework;
 			path = StartOnLogin.framework;
 			remoteRef = E635DE8C15AE2BAA00A81117 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E64AC00715E724A700D2E046 /* libcppnetlib-client-connections.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libcppnetlib-client-connections.a";
+			remoteRef = E64AC00615E724A700D2E046 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E64AC00915E724A700D2E046 /* libcppnetlib-server-parsers.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libcppnetlib-server-parsers.a";
+			remoteRef = E64AC00815E724A700D2E046 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E64AC00B15E724A700D2E046 /* libcppnetlib-uri.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libcppnetlib-uri.a";
+			remoteRef = E64AC00A15E724A700D2E046 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E64AC00D15E724A700D2E046 /* cpp-netlib-message_test */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = "cpp-netlib-message_test";
+			remoteRef = E64AC00C15E724A700D2E046 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E64AC00F15E724A700D2E046 /* cpp-netlib-message_transform_test */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = "cpp-netlib-message_transform_test";
+			remoteRef = E64AC00E15E724A700D2E046 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E64AC01115E724A700D2E046 /* cpp-netlib-utils_thread_pool */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = "cpp-netlib-utils_thread_pool";
+			remoteRef = E64AC01015E724A700D2E046 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E64AC01315E724A700D2E046 /* cpp-netlib-relative_uri_test */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = "cpp-netlib-relative_uri_test";
+			remoteRef = E64AC01215E724A700D2E046 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E64AC01515E724A700D2E046 /* cpp-netlib-uri_builder_stream_test */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = "cpp-netlib-uri_builder_stream_test";
+			remoteRef = E64AC01415E724A700D2E046 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E64AC01715E724A700D2E046 /* cpp-netlib-uri_builder_test */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = "cpp-netlib-uri_builder_test";
+			remoteRef = E64AC01615E724A700D2E046 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E64AC01915E724A700D2E046 /* cpp-netlib-uri_encoding_test */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = "cpp-netlib-uri_encoding_test";
+			remoteRef = E64AC01815E724A700D2E046 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E64AC01B15E724A700D2E046 /* cpp-netlib-uri_test */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = "cpp-netlib-uri_test";
+			remoteRef = E64AC01A15E724A700D2E046 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E64AC01D15E724A700D2E046 /* cpp-netlib-http-client_constructor_test */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = "cpp-netlib-http-client_constructor_test";
+			remoteRef = E64AC01C15E724A700D2E046 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E64AC01F15E724A700D2E046 /* cpp-netlib-http-client_get_different_port_test */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = "cpp-netlib-http-client_get_different_port_test";
+			remoteRef = E64AC01E15E724A700D2E046 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E64AC02115E724A700D2E046 /* cpp-netlib-http-client_get_streaming_test */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = "cpp-netlib-http-client_get_streaming_test";
+			remoteRef = E64AC02015E724A700D2E046 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E64AC02315E724A700D2E046 /* cpp-netlib-http-client_get_test */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = "cpp-netlib-http-client_get_test";
+			remoteRef = E64AC02215E724A700D2E046 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E64AC02515E724A700D2E046 /* cpp-netlib-http-client_get_timeout_test */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = "cpp-netlib-http-client_get_timeout_test";
+			remoteRef = E64AC02415E724A700D2E046 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E64AC02715E724A700D2E046 /* cpp-netlib-http-server_async_run_stop_concurrency */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = "cpp-netlib-http-server_async_run_stop_concurrency";
+			remoteRef = E64AC02615E724A700D2E046 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E64AC02915E724A700D2E046 /* cpp-netlib-http-server_constructor_test */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = "cpp-netlib-http-server_constructor_test";
+			remoteRef = E64AC02815E724A700D2E046 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E64AC02B15E724A700D2E046 /* mime-roundtrip */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = "mime-roundtrip";
+			remoteRef = E64AC02A15E724A700D2E046 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E64AC02D15E724A700D2E046 /* atom_reader */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = atom_reader;
+			remoteRef = E64AC02C15E724A700D2E046 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E64AC02F15E724A700D2E046 /* fileserver */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = fileserver;
+			remoteRef = E64AC02E15E724A700D2E046 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E64AC03115E724A700D2E046 /* hello_world_client */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = hello_world_client;
+			remoteRef = E64AC03015E724A700D2E046 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E64AC03315E724A700D2E046 /* hello_world_server */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = hello_world_server;
+			remoteRef = E64AC03215E724A700D2E046 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E64AC03515E724A700D2E046 /* http_client */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = http_client;
+			remoteRef = E64AC03415E724A700D2E046 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E64AC03715E724A700D2E046 /* rss_reader */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = rss_reader;
+			remoteRef = E64AC03615E724A700D2E046 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E64AC03915E724A700D2E046 /* simple_wget */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = simple_wget;
+			remoteRef = E64AC03815E724A700D2E046 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E64AC03B15E724A700D2E046 /* twitter_search */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = twitter_search;
+			remoteRef = E64AC03A15E724A700D2E046 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		E6D7D2AC15D26AD100780915 /* libyc-encfs-static.a */ = {
@@ -1086,14 +1534,9 @@
 				2537E35D15B127300034E6E3 /* librlog.dylib in Resources */,
 				E6C046A015AE1A58004B52E5 /* get_dropbox_folder.sh in Resources */,
 				E6C046A115AE1A58004B52E5 /* simple-mailer.py in Resources */,
-				2537E35515B126640034E6E3 /* yc-encfs in Resources */,
-				2537E35615B126640034E6E3 /* yc-encfsctl in Resources */,
-				2537E35715B126640034E6E3 /* yc-encfssh in Resources */,
 				2537E34F15B126520034E6E3 /* libintl.8.dylib in Resources */,
 				2537E35115B126520034E6E3 /* librlog.5.dylib in Resources */,
-				2537E35215B126520034E6E3 /* libencfs.6.dylib in Resources */,
 				2537E35015B126520034E6E3 /* librlog.5.0.0.dylib in Resources */,
-				2537E35315B126520034E6E3 /* libencfs.dylib in Resources */,
 				2537E33F15B101480034E6E3 /* libboost_filesystem-mt.dylib in Resources */,
 				2537E34015B101480034E6E3 /* libboost_serialization-mt.dylib in Resources */,
 				2537E34115B101480034E6E3 /* libboost_system-mt.dylib in Resources */,
@@ -1203,7 +1646,7 @@
 			files = (
 				E6C046D615AE2817004B52E5 /* CompressingLogFileManager.h in Sources */,
 				E6C046D415AE236A004B52E5 /* YoucryptService.mm in Sources */,
-				256C356C158EA75F00E2BEC4 /* main.m in Sources */,
+				256C356C158EA75F00E2BEC4 /* main.mm in Sources */,
 				256C3573158EA75F00E2BEC4 /* AppDelegate.mm in Sources */,
 				256C359E158EA88700E2BEC4 /* PreferenceController.mm in Sources */,
 				25F3D14C15923FE800E3383C /* Decrypt.mm in Sources */,
@@ -1247,6 +1690,7 @@
 				E68F196915B4A96D008A90FC /* RegistrationLinkedView.mm in Sources */,
 				2537E39D15B4FD260034E6E3 /* AboutController.mm in Sources */,
 				E6A3907D15CA0C73007388BE /* PassphraseManager.mm in Sources */,
+				E64AC0F115E7575700D2E046 /* testhttpclient.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1382,6 +1826,7 @@
 					"\"$(SRCROOT)/yc-encfs/yc-encfs\"",
 					/opt/local/include,
 					/usr/local/include/osxfuse,
+					"\"$(SRCROOT)/cpp-netlib-0.9.4/\"",
 				);
 				INFOPLIST_FILE = sources/Youcrypt.plist;
 				LD_RUNPATH_SEARCH_PATHS = /Library/Frameworks;
@@ -1402,11 +1847,14 @@
 					"-Wpointer-arith",
 					"-Wwrite-strings",
 					"-D__FreeBSD__=10",
+					"-DBOOST_NETWORK_ENABLE_HTTPS",
 				);
 				OTHER_LDFLAGS = (
 					"-lz",
 					"-lrlog",
 					"-lfuse_ino64",
+					"-Wl,-search_paths_first",
+					"-Wl,-headerpad_max_install_names",
 				);
 				"OTHER_LDFLAGS[arch=*]" = "-lz";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1435,6 +1883,7 @@
 					"\"$(SRCROOT)/yc-encfs/yc-encfs\"",
 					/opt/local/include,
 					/usr/local/include/osxfuse,
+					"\"$(SRCROOT)/cpp-netlib-0.9.4/\"",
 				);
 				INFOPLIST_FILE = sources/Youcrypt.plist;
 				LD_RUNPATH_SEARCH_PATHS = /Library/Frameworks;
@@ -1455,6 +1904,7 @@
 					"-Wpointer-arith",
 					"-Wwrite-strings",
 					"-D__FreeBSD__=10",
+					"-DBOOST_NETWORK_ENABLE_HTTPS",
 				);
 				OTHER_LDFLAGS = (
 					"-lz",
