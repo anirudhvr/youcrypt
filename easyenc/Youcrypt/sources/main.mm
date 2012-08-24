@@ -14,7 +14,6 @@
 
 int main(int argc, char *argv[])
 {
-    test();
     return NSApplicationMain(argc, (const char **)argv);
 }
 
