@@ -103,6 +103,7 @@ public:
     virtual void writeKey(const CipherKey &key, unsigned char *data, 
 	                  const CipherKey &encodingKey) =0; 
 
+
     virtual std::string encodeAsString(const CipherKey &key,
                                   const CipherKey &encodingKey );
 

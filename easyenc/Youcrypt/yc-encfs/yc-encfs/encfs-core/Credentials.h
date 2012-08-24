@@ -18,11 +18,10 @@ namespace youcrypt {
 
     class AbstractCredentials {
     public:
-        virtual CipherKey decryptVolumeKey(const unsigned char *, 
-                                           const boost::shared_ptr<Cipher> &) = 0;
-        virtual void encryptVolumeKey(const CipherKey&, 
-                                      const boost::shared_ptr<Cipher> &,
+        virtual CipherKey decryptVolumeKey(const unsigned char *) = 0;
+        virtual void encryptVolumeKey(const CipherKey &,
                                       unsigned char *) = 0;
+        virtual int  encodedKeySize(const CipherKey&) = 0;
     };
 
     typedef boost::shared_ptr<AbstractCredentials> Credentials;

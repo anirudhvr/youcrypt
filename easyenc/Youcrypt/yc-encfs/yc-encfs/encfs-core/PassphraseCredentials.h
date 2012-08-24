@@ -19,14 +19,14 @@ namespace youcrypt {
     public:
         PassphraseCredentials(string passphrase);
 
-        virtual CipherKey decryptVolumeKey(const unsigned char *, 
-                                           const boost::shared_ptr<Cipher> &);
-        virtual void encryptVolumeKey(const CipherKey&, 
-                                      const boost::shared_ptr<Cipher> &,
+        virtual CipherKey decryptVolumeKey(const unsigned char *);
+        virtual void encryptVolumeKey(const CipherKey &,
                                       unsigned char *);
+        virtual int  encodedKeySize(const CipherKey&);
 
     private:
         string _passphrase;    
+        shared_ptr<Cipher> cipher;
     };
     
 }

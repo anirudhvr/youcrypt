@@ -15,15 +15,28 @@ using youcrypt::PassphraseCredentials;
 
 PassphraseCredentials::PassphraseCredentials(string passphrase) {
     _passphrase = passphrase;
+    int keySize = 256;
+    Cipher::CipherAlgorithm alg = findCipherAlgorithm("AES", keySize);    
+    cipher = Cipher::New(alg.name, keySize);
+}
+
+//! return encoded key size
+int PassphraseCredentials::encodedKeySize(const CipherKey &key) {
+    
 }
 
 //! decrypt a volume key (data) of type (cipher)
-CipherKey PassphraseCredentials::decryptVolumeKey(const unsigned char *data, 
-                           const boost::shared_ptr<Cipher> &cipher) {
+CipherKey PassphraseCredentials::decryptVolumeKey(const unsigned char *data)
+{
     // Cipher tell us what type of cipher is used in
     // encrypting/decrypting the data.
-    CipherKey key = cipher->newKey(_passphrase.c_str(), _passphrase.length());
-    return cipher->readKey(data, key, true);
+    if (cipher)
+        return cipher->readKey(data, 
+                               cipher->newKey(_passphrase.c_str(),
+                                              _passphrase.length()),
+                               true);
+    else
+        return CipherKey();
 }
 
 
