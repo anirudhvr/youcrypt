@@ -1,9 +1,0 @@
-#!/bin/sh
-BOOST_CPPFLAGS="-I/opt/local/include"               \
-LDFLAGS="-L/usr/local/lib -L$PWD/../Youcrypt/lib -lintl"                       \
-CFLAGS="-I/usr/local/include/ -I/opt/local/include"                      \
-CPPFLAGS="-I/usr/local/include/ -I/opt/local/include                     \
--I/usr/local/include/osxfuse" ./configure --disable-nls                  \
---with-boost-system=boost_system                                         \
---with-boost-filesystem=boost_filesystem                                 \
---with-boost-serialization=boost_serialization --prefix="$PWD/../Youcrypt" --program-prefix=yc-
