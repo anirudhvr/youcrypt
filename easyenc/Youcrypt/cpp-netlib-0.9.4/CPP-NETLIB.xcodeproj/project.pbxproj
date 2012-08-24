@@ -50,7 +50,6 @@
 			isa = PBXAggregateTarget;
 			buildConfigurationList = 2AEA8E2C37E14294A4D0DA4D /* Build configuration list for PBXAggregateTarget "ZERO_CHECK" */;
 			buildPhases = (
-				DFEE540244C44F73B163A985 /* CMake Rules */,
 			);
 			dependencies = (
 			);
@@ -958,7 +957,6 @@
 			buildConfigurationList = 89F442DF26C2466AA6A44262 /* Build configuration list for PBXNativeTarget "cppnetlib-client-connections" */;
 			buildPhases = (
 				1D740D95424B416E9FB02065 /* Sources */,
-				F42C8A3F4DC94CBFA92BE6F6 /* CMake PostBuild Rules */,
 			);
 			buildRules = (
 			);
@@ -1086,7 +1084,6 @@
 			buildConfigurationList = 0DD223B546374483927A6036 /* Build configuration list for PBXNativeTarget "cppnetlib-server-parsers" */;
 			buildPhases = (
 				3E13F26CB8EB4ECF9AAF816B /* Sources */,
-				BD61B5C86B294C10BB8BB607 /* CMake PostBuild Rules */,
 			);
 			buildRules = (
 			);
@@ -1121,7 +1118,6 @@
 			buildConfigurationList = A5AE2B4F94AD448B90ACBE81 /* Build configuration list for PBXNativeTarget "cppnetlib-uri" */;
 			buildPhases = (
 				07D99ABCA2A1404680E2A3D0 /* Sources */,
-				726B935CDF05472D8E344B13 /* CMake PostBuild Rules */,
 			);
 			buildRules = (
 			);
@@ -1654,17 +1650,6 @@
 			shellScript = "make -C /Users/avr/code/scratch/cpp-netlib-0.9.4/libs/network/test/uri -f /Users/avr/code/scratch/cpp-netlib-0.9.4/libs/network/test/uri/CMakeScripts/cpp-netlib-uri_encoding_test_postBuildPhase.make$CONFIGURATION all";
 			showEnvVarsInLog = 0;
 		};
-		726B935CDF05472D8E344B13 /* CMake PostBuild Rules */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			name = "CMake PostBuild Rules";
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "make -C /Users/avr/code/scratch/cpp-netlib-0.9.4/libs/network/src -f /Users/avr/code/scratch/cpp-netlib-0.9.4/libs/network/src/CMakeScripts/cppnetlib-uri_postBuildPhase.make$CONFIGURATION all";
-			showEnvVarsInLog = 0;
-		};
 		75955361A12B4B4D852EA69D /* CMake PostBuild Rules */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1731,17 +1716,6 @@
 			shellScript = "make -C /Users/avr/code/scratch/cpp-netlib-0.9.4/libs/network/example -f /Users/avr/code/scratch/cpp-netlib-0.9.4/libs/network/example/CMakeScripts/http_client_postBuildPhase.make$CONFIGURATION all";
 			showEnvVarsInLog = 0;
 		};
-		BD61B5C86B294C10BB8BB607 /* CMake PostBuild Rules */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			name = "CMake PostBuild Rules";
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "make -C /Users/avr/code/scratch/cpp-netlib-0.9.4/libs/network/src -f /Users/avr/code/scratch/cpp-netlib-0.9.4/libs/network/src/CMakeScripts/cppnetlib-server-parsers_postBuildPhase.make$CONFIGURATION all";
-			showEnvVarsInLog = 0;
-		};
 		C737CBE108534C1E98181786 /* CMake PostBuild Rules */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1762,17 +1736,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "make -C /Users/avr/code/scratch/cpp-netlib-0.9.4/libs/network/test/uri -f /Users/avr/code/scratch/cpp-netlib-0.9.4/libs/network/test/uri/CMakeScripts/cpp-netlib-uri_builder_test_postBuildPhase.make$CONFIGURATION all";
-			showEnvVarsInLog = 0;
-		};
-		DFEE540244C44F73B163A985 /* CMake Rules */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			name = "CMake Rules";
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "make -C /Users/avr/code/scratch/cpp-netlib-0.9.4 -f /Users/avr/code/scratch/cpp-netlib-0.9.4/CMakeScripts/ZERO_CHECK_cmakeRulesBuildPhase.make$CONFIGURATION all";
 			showEnvVarsInLog = 0;
 		};
 		E2FC2AA04C1649BAA58063B8 /* CMake PostBuild Rules */ = {
@@ -1817,17 +1780,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "make -C /Users/avr/code/scratch/cpp-netlib-0.9.4 -f /Users/avr/code/scratch/cpp-netlib-0.9.4/CMakeScripts/ALL_BUILD_cmakeRulesBuildPhase.make$CONFIGURATION all";
-			showEnvVarsInLog = 0;
-		};
-		F42C8A3F4DC94CBFA92BE6F6 /* CMake PostBuild Rules */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			name = "CMake PostBuild Rules";
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "make -C /Users/avr/code/scratch/cpp-netlib-0.9.4/libs/network/src -f /Users/avr/code/scratch/cpp-netlib-0.9.4/libs/network/src/CMakeScripts/cppnetlib-client-connections_postBuildPhase.make$CONFIGURATION all";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -2216,6 +2168,7 @@
 				HEADER_SEARCH_PATHS = (
 					/usr/include/boost_1_50,
 					"/Users/avr/code/scratch/cpp-netlib-0.9.4",
+					/opt/local/include,
 				);
 				INSTALL_PATH = "";
 				LIBRARY_STYLE = STATIC;
@@ -2225,7 +2178,7 @@
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = "cppnetlib-client-connections";
 				SECTORDER_FLAGS = "";
-				SYMROOT = "/Users/avr/code/scratch/cpp-netlib-0.9.4/libs/network/src";
+				SYMROOT = build;
 				USE_HEADERMAP = NO;
 				WARNING_CFLAGS = (
 					"-Wmost",
@@ -2352,7 +2305,7 @@
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = RUN_TESTS;
 				SECTORDER_FLAGS = "";
-				SYMROOT = "/Users/avr/code/scratch/cpp-netlib-0.9.4";
+				SYMROOT = build;
 				USE_HEADERMAP = NO;
 				WARNING_CFLAGS = (
 					"-Wmost",
@@ -2530,6 +2483,7 @@
 				HEADER_SEARCH_PATHS = (
 					/usr/include/boost_1_50,
 					"/Users/avr/code/scratch/cpp-netlib-0.9.4",
+					/opt/local/include,
 				);
 				INSTALL_PATH = "";
 				LIBRARY_STYLE = STATIC;
@@ -2539,7 +2493,7 @@
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = "cppnetlib-client-connections";
 				SECTORDER_FLAGS = "";
-				SYMROOT = "/Users/avr/code/scratch/cpp-netlib-0.9.4/libs/network/src";
+				SYMROOT = build;
 				USE_HEADERMAP = NO;
 				WARNING_CFLAGS = (
 					"-Wmost",
@@ -2772,7 +2726,7 @@
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = ALL_BUILD;
 				SECTORDER_FLAGS = "";
-				SYMROOT = "/Users/avr/code/scratch/cpp-netlib-0.9.4";
+				SYMROOT = build;
 				USE_HEADERMAP = NO;
 				WARNING_CFLAGS = (
 					"-Wmost",
@@ -2853,6 +2807,7 @@
 				HEADER_SEARCH_PATHS = (
 					/usr/include/boost_1_50,
 					"/Users/avr/code/scratch/cpp-netlib-0.9.4",
+					/opt/local/include,
 				);
 				INSTALL_PATH = "";
 				LIBRARY_STYLE = STATIC;
@@ -2862,7 +2817,7 @@
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = "cppnetlib-server-parsers";
 				SECTORDER_FLAGS = "";
-				SYMROOT = "/Users/avr/code/scratch/cpp-netlib-0.9.4/libs/network/src";
+				SYMROOT = build;
 				USE_HEADERMAP = NO;
 				WARNING_CFLAGS = (
 					"-Wmost",
@@ -2890,6 +2845,7 @@
 				HEADER_SEARCH_PATHS = (
 					/usr/include/boost_1_50,
 					"/Users/avr/code/scratch/cpp-netlib-0.9.4",
+					/opt/local/include,
 				);
 				INSTALL_PATH = "";
 				LIBRARY_STYLE = STATIC;
@@ -2899,7 +2855,7 @@
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = "cppnetlib-server-parsers";
 				SECTORDER_FLAGS = "";
-				SYMROOT = "/Users/avr/code/scratch/cpp-netlib-0.9.4/libs/network/src";
+				SYMROOT = build;
 				USE_HEADERMAP = NO;
 				WARNING_CFLAGS = (
 					"-Wmost",
@@ -2979,7 +2935,7 @@
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = ZERO_CHECK;
 				SECTORDER_FLAGS = "";
-				SYMROOT = "/Users/avr/code/scratch/cpp-netlib-0.9.4";
+				SYMROOT = build;
 				USE_HEADERMAP = NO;
 				WARNING_CFLAGS = (
 					"-Wmost",
@@ -3060,6 +3016,7 @@
 				HEADER_SEARCH_PATHS = (
 					/usr/include/boost_1_50,
 					"/Users/avr/code/scratch/cpp-netlib-0.9.4",
+					/opt/local/include,
 				);
 				INSTALL_PATH = "";
 				LIBRARY_STYLE = STATIC;
@@ -3069,7 +3026,7 @@
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = "cppnetlib-server-parsers";
 				SECTORDER_FLAGS = "";
-				SYMROOT = "/Users/avr/code/scratch/cpp-netlib-0.9.4/libs/network/src";
+				SYMROOT = build;
 				USE_HEADERMAP = NO;
 				WARNING_CFLAGS = (
 					"-Wmost",
@@ -3864,7 +3821,7 @@
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = ALL_BUILD;
 				SECTORDER_FLAGS = "";
-				SYMROOT = "/Users/avr/code/scratch/cpp-netlib-0.9.4";
+				SYMROOT = build;
 				USE_HEADERMAP = NO;
 				WARNING_CFLAGS = (
 					"-Wmost",
@@ -3928,10 +3885,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				HEADER_SEARCH_PATHS = /opt/local/include/;
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.7.sdk;
-				SYMROOT = "/Users/avr/code/scratch/cpp-netlib-0.9.4/build";
+				SYMROOT = build;
 			};
 			name = RelWithDebInfo;
 		};
@@ -3953,6 +3911,7 @@
 				HEADER_SEARCH_PATHS = (
 					/usr/include/boost_1_50,
 					"/Users/avr/code/scratch/cpp-netlib-0.9.4",
+					/opt/local/include,
 				);
 				INSTALL_PATH = "";
 				LIBRARY_STYLE = STATIC;
@@ -3962,7 +3921,7 @@
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = "cppnetlib-uri";
 				SECTORDER_FLAGS = "";
-				SYMROOT = "/Users/avr/code/scratch/cpp-netlib-0.9.4/libs/network/src";
+				SYMROOT = build;
 				USE_HEADERMAP = NO;
 				WARNING_CFLAGS = (
 					"-Wmost",
@@ -4134,6 +4093,7 @@
 				HEADER_SEARCH_PATHS = (
 					/usr/include/boost_1_50,
 					"/Users/avr/code/scratch/cpp-netlib-0.9.4",
+					/opt/local/include,
 				);
 				INSTALL_PATH = "";
 				LIBRARY_STYLE = STATIC;
@@ -4143,7 +4103,7 @@
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = "cppnetlib-uri";
 				SECTORDER_FLAGS = "";
-				SYMROOT = "/Users/avr/code/scratch/cpp-netlib-0.9.4/libs/network/src";
+				SYMROOT = build;
 				USE_HEADERMAP = NO;
 				WARNING_CFLAGS = (
 					"-Wmost",
@@ -4363,10 +4323,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				HEADER_SEARCH_PATHS = /opt/local/include/;
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.7.sdk;
-				SYMROOT = "/Users/avr/code/scratch/cpp-netlib-0.9.4/build";
+				SYMROOT = build;
 			};
 			name = Release;
 		};
@@ -4438,6 +4399,7 @@
 				HEADER_SEARCH_PATHS = (
 					/usr/include/boost_1_50,
 					"/Users/avr/code/scratch/cpp-netlib-0.9.4",
+					/opt/local/include,
 				);
 				INSTALL_PATH = "";
 				LIBRARY_STYLE = STATIC;
@@ -4447,7 +4409,7 @@
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = "cppnetlib-client-connections";
 				SECTORDER_FLAGS = "";
-				SYMROOT = "/Users/avr/code/scratch/cpp-netlib-0.9.4/libs/network/src";
+				SYMROOT = build;
 				USE_HEADERMAP = NO;
 				WARNING_CFLAGS = (
 					"-Wmost",
@@ -4561,10 +4523,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				HEADER_SEARCH_PATHS = /opt/local/include/;
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.7.sdk;
-				SYMROOT = "/Users/avr/code/scratch/cpp-netlib-0.9.4/build";
+				SYMROOT = build;
 			};
 			name = MinSizeRel;
 		};
@@ -4875,10 +4838,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				HEADER_SEARCH_PATHS = /opt/local/include/;
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.7.sdk;
-				SYMROOT = "/Users/avr/code/scratch/cpp-netlib-0.9.4/build";
+				SYMROOT = build;
 			};
 			name = Debug;
 		};
@@ -4900,6 +4864,7 @@
 				HEADER_SEARCH_PATHS = (
 					/usr/include/boost_1_50,
 					"/Users/avr/code/scratch/cpp-netlib-0.9.4",
+					/opt/local/include,
 				);
 				INSTALL_PATH = "";
 				LIBRARY_STYLE = STATIC;
@@ -4909,7 +4874,7 @@
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = "cppnetlib-server-parsers";
 				SECTORDER_FLAGS = "";
-				SYMROOT = "/Users/avr/code/scratch/cpp-netlib-0.9.4/libs/network/src";
+				SYMROOT = build;
 				USE_HEADERMAP = NO;
 				WARNING_CFLAGS = (
 					"-Wmost",
@@ -5601,7 +5566,7 @@
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = RUN_TESTS;
 				SECTORDER_FLAGS = "";
-				SYMROOT = "/Users/avr/code/scratch/cpp-netlib-0.9.4";
+				SYMROOT = build;
 				USE_HEADERMAP = NO;
 				WARNING_CFLAGS = (
 					"-Wmost",
@@ -5929,6 +5894,7 @@
 				HEADER_SEARCH_PATHS = (
 					/usr/include/boost_1_50,
 					"/Users/avr/code/scratch/cpp-netlib-0.9.4",
+					/opt/local/include,
 				);
 				INSTALL_PATH = "";
 				LIBRARY_STYLE = STATIC;
@@ -5938,7 +5904,7 @@
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = "cppnetlib-uri";
 				SECTORDER_FLAGS = "";
-				SYMROOT = "/Users/avr/code/scratch/cpp-netlib-0.9.4/libs/network/src";
+				SYMROOT = build;
 				USE_HEADERMAP = NO;
 				WARNING_CFLAGS = (
 					"-Wmost",
@@ -6018,7 +5984,7 @@
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = RUN_TESTS;
 				SECTORDER_FLAGS = "";
-				SYMROOT = "/Users/avr/code/scratch/cpp-netlib-0.9.4";
+				SYMROOT = build;
 				USE_HEADERMAP = NO;
 				WARNING_CFLAGS = (
 					"-Wmost",
@@ -6151,7 +6117,7 @@
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = ZERO_CHECK;
 				SECTORDER_FLAGS = "";
-				SYMROOT = "/Users/avr/code/scratch/cpp-netlib-0.9.4";
+				SYMROOT = build;
 				USE_HEADERMAP = NO;
 				WARNING_CFLAGS = (
 					"-Wmost",
@@ -6531,7 +6497,7 @@
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = ALL_BUILD;
 				SECTORDER_FLAGS = "";
-				SYMROOT = "/Users/avr/code/scratch/cpp-netlib-0.9.4";
+				SYMROOT = build;
 				USE_HEADERMAP = NO;
 				WARNING_CFLAGS = (
 					"-Wmost",
@@ -7167,7 +7133,7 @@
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = ALL_BUILD;
 				SECTORDER_FLAGS = "";
-				SYMROOT = "/Users/avr/code/scratch/cpp-netlib-0.9.4";
+				SYMROOT = build;
 				USE_HEADERMAP = NO;
 				WARNING_CFLAGS = (
 					"-Wmost",
@@ -7295,6 +7261,7 @@
 				HEADER_SEARCH_PATHS = (
 					/usr/include/boost_1_50,
 					"/Users/avr/code/scratch/cpp-netlib-0.9.4",
+					/opt/local/include,
 				);
 				INSTALL_PATH = "";
 				LIBRARY_STYLE = STATIC;
@@ -7304,7 +7271,7 @@
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = "cppnetlib-uri";
 				SECTORDER_FLAGS = "";
-				SYMROOT = "/Users/avr/code/scratch/cpp-netlib-0.9.4/libs/network/src";
+				SYMROOT = build;
 				USE_HEADERMAP = NO;
 				WARNING_CFLAGS = (
 					"-Wmost",
@@ -7482,6 +7449,7 @@
 				HEADER_SEARCH_PATHS = (
 					/usr/include/boost_1_50,
 					"/Users/avr/code/scratch/cpp-netlib-0.9.4",
+					/opt/local/include,
 				);
 				INSTALL_PATH = "";
 				LIBRARY_STYLE = STATIC;
@@ -7491,7 +7459,7 @@
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = "cppnetlib-client-connections";
 				SECTORDER_FLAGS = "";
-				SYMROOT = "/Users/avr/code/scratch/cpp-netlib-0.9.4/libs/network/src";
+				SYMROOT = build;
 				USE_HEADERMAP = NO;
 				WARNING_CFLAGS = (
 					"-Wmost",
@@ -7521,7 +7489,7 @@
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = RUN_TESTS;
 				SECTORDER_FLAGS = "";
-				SYMROOT = "/Users/avr/code/scratch/cpp-netlib-0.9.4";
+				SYMROOT = build;
 				USE_HEADERMAP = NO;
 				WARNING_CFLAGS = (
 					"-Wmost",
@@ -7601,7 +7569,7 @@
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = ZERO_CHECK;
 				SECTORDER_FLAGS = "";
-				SYMROOT = "/Users/avr/code/scratch/cpp-netlib-0.9.4";
+				SYMROOT = build;
 				USE_HEADERMAP = NO;
 				WARNING_CFLAGS = (
 					"-Wmost",
@@ -7631,7 +7599,7 @@
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = ZERO_CHECK;
 				SECTORDER_FLAGS = "";
-				SYMROOT = "/Users/avr/code/scratch/cpp-netlib-0.9.4";
+				SYMROOT = build;
 				USE_HEADERMAP = NO;
 				WARNING_CFLAGS = (
 					"-Wmost",
