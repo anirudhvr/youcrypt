@@ -28,8 +28,3 @@ AbstractCipherKey::~AbstractCipherKey()
 {
 }
 
-int AbstractCipherKey::keyDataSize() { return 0; }
-
-void AbstractCipherKey::copyKeyData(char *) {}
-
-void AbstractCipherKey::setKeyData(const char *) {}

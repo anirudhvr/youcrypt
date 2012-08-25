@@ -303,6 +303,9 @@ bool YoucryptFolder::loadConfigAtPath(const path &_rootPath,
         //     return false;
         // }
 
+        volumeKey = cipher->newRandomKey();
+        if (cred->encodedKeySize(volumeKey, cipher) != config->keyData.size())
+            return false;
         volumeKey = cred->decryptVolumeKey(config->getKeyData(), cipher);
 
         if(!volumeKey)
@@ -327,8 +330,6 @@ bool YoucryptFolder::loadConfigAtPath(const path &_rootPath,
             if (!volumeKey)
                 return false;
         }
-
-
 
         shared_ptr<NameIO> nameCoder = NameIO::New( config->nameIface, 
                 cipher, volumeKey );
@@ -449,8 +450,6 @@ bool YoucryptFolder::createAtPath(const path& _rootPath,
     // Create Volume Key
 
     // This should really come from the cred. object.
-    int encodedKeySize = cipher->encodedKeySize();
-    unsigned char *encodedKey = new unsigned char[ encodedKeySize ];
     volumeKey = cipher->newRandomKey();
     if(!volumeKey)
         return false;
@@ -458,6 +457,9 @@ bool YoucryptFolder::createAtPath(const path& _rootPath,
     /* easyenc - get first user key (existing code) */
     config->easyencNumUsers = numusers;
     config->easyencKeys.resize(numusers);
+
+    int encodedKeySize = cred->encodedKeySize(volumeKey, cipher);
+    unsigned char *encodedKey = new unsigned char[ encodedKeySize ];
 
     // get the volume key encrypted using cred.
     cred->encryptVolumeKey (volumeKey, cipher, encodedKey);

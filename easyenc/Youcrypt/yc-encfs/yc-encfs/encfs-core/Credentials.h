@@ -13,15 +13,19 @@
 #include <boost/shared_ptr.hpp>
 
 using std::string;
+using boost::shared_ptr;
 
 namespace youcrypt {
 
     class AbstractCredentials {
     public:
-        virtual CipherKey decryptVolumeKey(const unsigned char *) = 0;
+        virtual CipherKey decryptVolumeKey(const unsigned char *,
+                                           const shared_ptr<Cipher>&) = 0;
         virtual void encryptVolumeKey(const CipherKey &,
+                                      const shared_ptr<Cipher> &,
                                       unsigned char *) = 0;
-        virtual int  encodedKeySize(const CipherKey&) = 0;
+        virtual int  encodedKeySize(const CipherKey&,
+                                    const shared_ptr<Cipher> &) = 0;
     };
 
     typedef boost::shared_ptr<AbstractCredentials> Credentials;

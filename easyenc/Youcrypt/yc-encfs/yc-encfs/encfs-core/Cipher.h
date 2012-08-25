@@ -102,7 +102,8 @@ public:
 			      bool checkKey = true) =0;
     virtual void writeKey(const CipherKey &key, unsigned char *data, 
 	                  const CipherKey &encodingKey) =0; 
-
+    virtual void writeRawKey(const CipherKey &, unsigned char *) = 0;
+    virtual CipherKey readRawKey(const unsigned char *data, bool) = 0;
 
     virtual std::string encodeAsString(const CipherKey &key,
                                   const CipherKey &encodingKey );

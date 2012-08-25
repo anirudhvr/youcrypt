@@ -122,6 +122,16 @@ void NullCipher::writeKey(const CipherKey &, unsigned char *,
 {
 }
 
+
+void NullCipher::writeRawKey(const CipherKey &, unsigned char *)
+{
+}
+
+CipherKey NullCipher::readRawKey(const unsigned char *, bool) 
+{
+    return gNullKey;
+}
+
 bool NullCipher::compareKey(const CipherKey &A_, 
 	const CipherKey &B_) const
 {

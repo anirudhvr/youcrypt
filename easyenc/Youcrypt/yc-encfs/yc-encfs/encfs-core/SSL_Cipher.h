@@ -101,6 +101,9 @@ public:
 			      bool checkKey);
     virtual void writeKey(const CipherKey &key, unsigned char *data, 
 	          const CipherKey &encodingKey); 
+    virtual void writeRawKey(const CipherKey &, unsigned char *);
+    virtual CipherKey readRawKey(const unsigned char *data, bool);
+
     virtual bool compareKey( const CipherKey &A, 
 	                     const CipherKey &B ) const;
 

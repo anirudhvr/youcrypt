@@ -27,9 +27,6 @@ class AbstractCipherKey
 {
 public:
     AbstractCipherKey();
-    virtual int keyDataSize();
-    virtual void copyKeyData(char *);
-    virtual void setKeyData(const char *);
     virtual ~AbstractCipherKey();
 };
 
