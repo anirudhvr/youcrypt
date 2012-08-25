@@ -7,6 +7,38 @@
 //
 
 #include "testhttpclient.h"
+#include <string>
+#include <fstream>
+#include <iostream>
+#include "HttpLib.h"
+#include "UserAccount.h"
+#include "KeyManager.h"
+#include "PasswordManager.h"
+
+using namespace youcrypt;
+
+int
+testServer(void) {
+    
+    std::string url = APP_URL+"/keys/5.json";
+    UserAccount user("hardik988@gmail.com","Nouvou1","/Users/hr/.youcrypt");
+    /*
+    try {
+        youcrypt::HttpClient client(url);
+        client.get();
+        std::string response = client.getResponse();
+        std::cout << "Response: "<<response<< std::endl;
+    }
+    catch (std::exception &e) {
+        std::cerr << e.what() << std::endl;
+        return 1;
+    }
+     */
+    std::cout<<user.getKey();
+    return 0;
+}
+
+
 
 //          Copyright Dean Michael Berris 2008.
 // Distributed under the Boost Software License, Version 1.0.

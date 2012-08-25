@@ -257,10 +257,6 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
     if (!([fm fileExistsAtPath:path isDirectory:&isDir] && isDir && ([[path pathExtension] isEqualToString:ENCRYPTED_DIRECTORY_EXTENSION])))
         return NO;
     
-    // Construct the new mount point dir name
-    NSString *timeStr = [[[NSDate date] descriptionWithCalendarFormat:nil timeZone:nil locale:nil] stringByReplacingOccurrencesOfString:@" " withString:@"_"];
-    NSString *mountPoint = [configDir.youCryptVolDir stringByAppendingPathComponent:
-                            [timeStr stringByAppendingPathComponent:[[path stringByDeletingPathExtension] lastPathComponent]]];
     
     // Check if a YoucryptDirectory already exists for this folder
     YoucryptDirectory *dir;
@@ -274,8 +270,15 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
     dir.alias = [[path stringByDeletingPathExtension] lastPathComponent];
     [directories addObject:dir]; // FIXME do this later
     
-FoundOne:      
-    dir.mountedPath = mountPoint;
+FoundOne:
+    // If dir is not mounted yet, construct mount point dir name
+    if ([dir status] == YoucryptDirectoryStatusInitialized) {
+        // Construct the new mount point dir name
+        NSString *timeStr = [[[NSDate date] descriptionWithCalendarFormat:nil timeZone:nil locale:nil] stringByReplacingOccurrencesOfString:@" " withString:@"_"];
+        NSString *mountPoint = [configDir.youCryptVolDir stringByAppendingPathComponent:
+                                [timeStr stringByAppendingPathComponent:[[path stringByDeletingPathExtension] lastPathComponent]]];
+        dir.mountedPath = mountPoint;
+    }
     
     switch([dir status]) {
         case YoucryptDirectoryStatusUnknown:
