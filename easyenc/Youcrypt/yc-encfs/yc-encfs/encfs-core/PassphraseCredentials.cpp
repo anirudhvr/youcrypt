@@ -38,15 +38,16 @@ CipherKey PassphraseCredentials::decryptVolumeKey(const unsigned char *data,
 {
     // Cipher tell us what type of cipher is used in
     // encrypting/decrypting the data.
-    new PassphraseCredentials("hi");
     if (cipher && masterKey) {
         // Process data, and check sum
         unsigned int checksum = 0;
-        for(int i=0; i<KEY_CHECKSUM_BYTES; ++i)
-            checksum = (checksum << 8) | (unsigned int)data[i];
-
+        for(int i=0; i<KEY_CHECKSUM_BYTES; ++i) {
+            checksum <<= 8;
+            checksum |= (unsigned int)data[i];
+        }
         int bufLen = kc->encodedKeySize();
         scoped_ptr<unsigned char> tmpBuf(new unsigned char[bufLen]);
+        memcpy(tmpBuf.get(), data+KEY_CHECKSUM_BYTES, bufLen);
         cipher->streamDecode(tmpBuf.get(), bufLen, checksum, masterKey);
         unsigned int checksum2 = cipher->MAC_32(tmpBuf.get(),
                                                 bufLen,

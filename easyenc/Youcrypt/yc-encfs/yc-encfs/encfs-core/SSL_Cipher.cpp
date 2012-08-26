@@ -661,19 +661,17 @@ void SSL_Cipher::writeRawKey(const CipherKey &ckey, unsigned char *data)
     shared_ptr<SSLKey> key = dynamic_pointer_cast<SSLKey>(ckey);
     rAssert(key->keySize == _keySize);
     rAssert(key->ivLength == _ivLength);
-    unsigned char tmpBuf[ MAX_KEYLENGTH + MAX_IVLENGTH ];
-
+    unsigned char *tmpBuf = data + KEY_CHECKSUM_BYTES;
     int bufLen = _keySize + _ivLength;
+
     memcpy( tmpBuf, key->buffer, bufLen );
     unsigned int checksum = _xor_checksum_32 ( tmpBuf, bufLen );
-    memcpy( data+KEY_CHECKSUM_BYTES, tmpBuf, bufLen );
     // first N bytes contain HMAC derived checksum..
     for(int i=1; i<=KEY_CHECKSUM_BYTES; ++i)
     {
         data[KEY_CHECKSUM_BYTES-i] = checksum & 0xff;
         checksum >>= 8;
     }
-    memset( tmpBuf, 0, sizeof(tmpBuf) );
 }
 
 void SSL_Cipher::writeKey(const CipherKey &ckey, unsigned char *data, 
