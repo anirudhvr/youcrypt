@@ -24,7 +24,8 @@ UserAccount::~UserAccount()
 
 std::string UserAccount::getKey()
 {
-    std::string url = APP_URL+"/keys/5.json";
+    std::string url(APP_URL);
+    url += "/keys/5.json";
     try {
         HttpClient client(url);
         client.get();

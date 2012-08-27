@@ -109,10 +109,12 @@ static NSMutableArray *mountedFuseVolumes;
     if (encfnames)
         opts.filenameEncryption = YoucryptFolderOpts::filenameEncrypt;
     
-    folder.reset(new YoucryptFolder(ph, opts, creds));
+    YoucryptFolder tmpFolder(ph, opts, creds);
     
-    if (folder->importContent(boost::filesystem::path(srcfolder))) {
-        // succeeded
+   // folder.reset(new YoucryptFolder(ph, opts, creds));
+    
+    if (tmpFolder.importContent(boost::filesystem::path(srcfolder))) {
+        // encrypting content to temporary folder succeeded
         NSFileManager *fm = [NSFileManager defaultManager];
         NSArray *files = [fm contentsOfDirectoryAtPath:path error:nil];
         NSError *err;
@@ -121,26 +123,35 @@ static NSMutableArray *mountedFuseVolumes;
             if (!([file isEqualToString:@"."] || [file isEqualToString:@".."])) {
                 if (![fm removeItemAtPath:[path stringByAppendingPathComponent:file] error:&err]) {
                     DDLogInfo(@"Error removing dir: %@", [err localizedDescription]);
-                    folder.reset();
-                    ret = NO;
+                    return NO;
                 }
             }
         }
         
-        // Move everything from the encrypted folder back to the source folder
+        
+        // Move everything from the tmp encrypted folder back to the source folder
         files = [fm contentsOfDirectoryAtPath:tempFolder error:nil];
         for (NSString *file in files) {
             if (![fm moveItemAtPath:[tempFolder stringByAppendingPathComponent:file]
                              toPath:[path stringByAppendingPathComponent:file] error:&err]) {
                 DDLogInfo(@"Error moving contents: %@", [err localizedDescription]);
-                folder.reset();
-                ret = NO;
+                return NO;
             }
         }
+        
     } else {
         DDLogInfo(@"Encrypt: could not import content of %@ to temp folder /%@", path, ENCRYPTION_TEMPORARY_FOLDER);
         folder.reset();
         ret = NO;
+    }
+    
+    // Things seem to have worked. Now we reset the instance variable folder with the original source folder
+    folder.reset(new YoucryptFolder(boost::filesystem::path(srcfolder), opts, creds));
+    if (folder->currStatus() != YoucryptFolder::initialized) {
+        // Something went wrong during the whole process
+        DDLogInfo(@"Error resetting instance variable 'folder' to newly encrypted folder");
+        folder.reset(new YoucryptFolder(boost::filesystem::path(srcfolder)));
+        return NO;
     }
     
     return ret;

@@ -1,13 +1,13 @@
 //
 //  UserAccount.h
-//  cppnetlib
+//  Youcrypt
 //
 //  Created by avr on 7/29/12.
 //
 //
 
-#ifndef __cppnetlib__UserAccount__
-#define __cppnetlib__UserAccount__
+#ifndef __Youcrypt__UserAccount__
+#define __Youcrypt__UserAccount__
 
 #include <iostream>
 #include "KeyManager.h"
@@ -37,4 +37,4 @@ private:
     
 };
 
-#endif /* defined(__cppnetlib__UserAccount__) */
+#endif /* defined(__Youcrypt__UserAccount__) */

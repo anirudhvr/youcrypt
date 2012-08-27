@@ -14,9 +14,9 @@
     NSString *tempFolder;
 }
 
-@property (readwrite,copy) IBOutlet NSString *path;
-@property (readwrite,copy) YoucryptDirectory *dir;
-@property (readwrite,copy) NSString *passwd;
+@property (atomic,strong) IBOutlet NSString *path;
+@property (atomic,strong) YoucryptDirectory *dir;
+@property (atomic,strong) NSString *passwd;
 @property (readwrite,assign) BOOL keychainHasPassphrase;
 
 - (IBAction) restore:(id)sender;

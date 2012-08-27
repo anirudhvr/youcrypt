@@ -1,13 +1,13 @@
 //
 //  PasswordManager.h
-//  cppnetlib
+//  Youcrypt
 //
 //  Created by avr on 7/29/12.
 //
 //
 
-#ifndef __cppnetlib__PasswordManager__
-#define __cppnetlib__PasswordManager__
+#ifndef __Youcrypt__PasswordManager__
+#define __Youcrypt__PasswordManager__
 
 #include <iostream>
 
@@ -27,4 +27,4 @@ private:
     
 };
 
-#endif /* defined(__cppnetlib__PasswordManager__) */
+#endif /* defined(__Youcrypt__PasswordManager__) */

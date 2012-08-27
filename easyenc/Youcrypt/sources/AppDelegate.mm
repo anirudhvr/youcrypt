@@ -233,11 +233,11 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
     
     NSUpdateDynamicServices(); // Equivalent to calling /System/Library/CoreServices/pbs
     
-    NSArray *args = [[NSProcessInfo processInfo] arguments];
-    if ([args count] > 1) {
-        NSLog(@"args:%@ ", args);
-        [self openEncryptedFolder:[args objectAtIndex:1]];
-    }
+//    NSArray *args = [[NSProcessInfo processInfo] arguments];
+//    if ([args count] > 1) {
+//        NSLog(@"args:%@ ", args);
+//        [self openEncryptedFolder:[args objectAtIndex:1]];
+//    }
 
 }
 // --------------------------------------------------------------------------------------
@@ -415,6 +415,7 @@ FoundOne:
     } else {
         [self doEncrypt:path];
     }
+    return YES;
 }
 
 - (BOOL)doEncrypt:(NSString *)path {

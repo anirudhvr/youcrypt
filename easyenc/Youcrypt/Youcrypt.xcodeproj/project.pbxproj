@@ -748,7 +748,7 @@
 				E06E2B3F15A7671B00E52B2D /* constants.h */,
 				256C356D158EA75F00E2BEC4 /* Youcrypt-Prefix.pch */,
 				256C356E158EA75F00E2BEC4 /* Credits.rtf */,
-				E64AC0FA15E7597E00D2E046 /* yc-networking */,
+				E64AC0FA15E7597E00D2E046 /* yc-core */,
 				25F3D154159243E300E3383C /* Classes */,
 				25F3D1521592436000E3383C /* UI */,
 				25F3D1531592437700E3383C /* Plists */,
@@ -979,11 +979,11 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		E64AC0FA15E7597E00D2E046 /* yc-networking */ = {
+		E64AC0FA15E7597E00D2E046 /* yc-core */ = {
 			isa = PBXGroup;
 			children = (
-				E64AC1B015E769D500D2E046 /* HttpLib.cpp */,
 				E64AC1B115E769D500D2E046 /* HttpLib.h */,
+				E64AC1B015E769D500D2E046 /* HttpLib.cpp */,
 				E64AC1B215E769D500D2E046 /* Key.h */,
 				E64AC1B315E769D500D2E046 /* KeyManager.cpp */,
 				E64AC1B415E769D500D2E046 /* KeyManager.h */,
@@ -994,6 +994,7 @@
 				E64AC0EF15E7575700D2E046 /* testhttpclient.cpp */,
 				E64AC0F015E7575700D2E046 /* testhttpclient.h */,
 			);
+			name = "yc-core";
 			path = "yc-networking";
 			sourceTree = "<group>";
 		};

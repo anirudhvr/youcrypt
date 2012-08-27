@@ -36,7 +36,7 @@
 }
 
 
-- (IBAction) restore:(NSString *)path
+- (IBAction) restore:(id)sender
 {
     if (!self.keychainHasPassphrase)
         passwd = [passwordField stringValue];

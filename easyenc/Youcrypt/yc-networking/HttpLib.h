@@ -1,25 +1,24 @@
 //
 //  HttpLib.h
-//  cppnetlib
+//  Youcrypt
 //
 //  Created by avr on 7/29/12.
 //
 //
 
-#ifndef __cppnetlib__HttpLib__
-#define __cppnetlib__HttpLib__
+#ifndef __Youcrypt__HttpLib__
+#define __Youcrypt__HttpLib__
 
 // Include whatever boost and cpp-netlib headers here
-#define BOOST_NETWORK_ENABLE_HTTPS
 
 #include <boost/network/protocol/http/client.hpp>
 #include <boost/network/uri.hpp>
 
+
+const std::string APP_URL = "https://pacific-ridge-8141.herokuapp.com/";
+
 namespace youcrypt {
     
-const std::string APP_URL = "https://pacific-ridge-8141.herokuapp.com/";;
-
-
 class HttpClient
 {
 public:
@@ -45,4 +44,4 @@ private:
     
 };
 
-#endif /* defined(__cppnetlib__HttpLib__) */
+#endif /* defined(__Youcrypt__HttpLib__) */
