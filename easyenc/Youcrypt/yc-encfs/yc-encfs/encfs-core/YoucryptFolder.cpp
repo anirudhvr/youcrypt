@@ -467,19 +467,18 @@ bool YoucryptFolder::createAtPath(const path& _rootPath,
     config->easyencKeys.resize(numusers);
 
     int encodedKeySize = cred->encodedKeySize(volumeKey, cipher);
-    unsigned char *encodedKey = new unsigned char[ encodedKeySize ];
+    boost::scoped_ptr<unsigned char> encodedKey (new unsigned char[ encodedKeySize ]);
 
     // get the volume key encrypted using cred.
-    cred->encryptVolumeKey (volumeKey, cipher, encodedKey);
+    cred->encryptVolumeKey (volumeKey, cipher, encodedKey.get());
 
     // YC: This is really for backward compatibility with vanilla
     //   encfs.  When multiple creds exist, vanilla encfs can only
     //   mount with the first cred.  We can of course decode the vol.
     //   key using multiple creds.
-    config->assignKeyData ( encodedKey, encodedKeySize );
+    config->assignKeyData ( encodedKey.get(), encodedKeySize );
 
-    config->easyencKeys[0].assign(encodedKey, encodedKey+encodedKeySize);
-    delete[] encodedKey;
+    config->easyencKeys[0].assign(encodedKey.get(), encodedKey.get()+encodedKeySize);
 
     // /* easyenc set and encodedKeys */ 
     // config->easyencKeys[0].assign(encodedKey, encodedKey+encodedKeySize);
@@ -604,15 +603,15 @@ bool YoucryptFolder::addCredential(const Credentials& newCred)
     if (readConfig ( mountPoint.string(), config ) == Config_YC) {
         // volumeKey and cipher should already be initialized.
 
-        int encodedKeySize = cipher->encodedKeySize();
-        unsigned char *encodedKey = new unsigned char[ encodedKeySize ];
-
-        newCred->encryptVolumeKey (volumeKey, cipher, encodedKey);
+        int encodedKeySize = newCred->encodedKeySize(volumeKey,
+                                                     cipher);
+        boost::scoped_ptr<unsigned char> encodedKey(
+            new unsigned char[ encodedKeySize ]);
+        newCred->encryptVolumeKey(volumeKey, cipher, encodedKey.get());
+        config->easyencKeys.push_back(vector<unsigned char>());
         config->easyencNumUsers++;
-        config->easyencKeys.resize(config->easyencNumUsers);
-        config->easyencKeys[config->easyencNumUsers - 1].
-            assign(encodedKey, encodedKey+encodedKeySize);
-
+        config->easyencKeys[config->easyencKeys.size() - 1].assign(
+            encodedKey.get(), encodedKey.get()+encodedKeySize);
         status = ostatus;
         return saveConfig(Config_YC, mountPoint.string(), config);
     } else {
