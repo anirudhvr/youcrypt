@@ -100,14 +100,10 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
     restoreQ = [[NSMutableArray alloc] init];
     
     
+    [[[NSWorkspace sharedWorkspace] notificationCenter] addObserver:self selector:@selector(unarchiveDirectoryList:) name:@"YoucryptReceivedPassphraseFromUser" object:nil];
+    
     passphraseManager = [[PassphraseManager alloc] initWithPrefController:preferenceController saveInKeychain:NO];
     
-    directories = [libFunctions unarchiveDirectoryListFromFile:configDir.youCryptListFile];
-    if (directories == nil) {
-        directories = [[NSMutableArray alloc] init];
-    } else {
-        // Do stuff here to check if dirs are all fine?
-    }
     
     // XXX FIXME Change for Release
 #ifdef DEBUG
@@ -117,6 +113,17 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
 #endif
     
     return self;
+}
+
+
+-(id) unarchiveDirectoryList:(id) sender {
+    directories = [libFunctions unarchiveDirectoryListFromFile:configDir.youCryptListFile];
+    if (directories == nil) {
+        directories = [[NSMutableArray alloc] init];
+    } else {
+        // Do stuff here to check if dirs are all fine?
+    }
+    return nil;
 }
 
 

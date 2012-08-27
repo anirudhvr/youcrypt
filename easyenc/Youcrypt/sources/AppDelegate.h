@@ -111,6 +111,9 @@
 
 - (void) showTour;
 
+-(id) unarchiveDirectoryList:(id) sender;
+    
+
 // Setters and getters
 @property (readonly) NSMutableArray *directories;
 @property (assign) IBOutlet NSWindow *window;
