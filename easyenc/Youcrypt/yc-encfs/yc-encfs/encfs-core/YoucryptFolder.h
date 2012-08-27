@@ -125,7 +125,9 @@ namespace youcrypt {
             //! / deleted, key is being changed, etc.)
             processing,            
             //! Directory is initialized at mounted.
-            mounted
+            mounted,
+            //! Creds could not decrypt any volume key
+            credFail,
         };
         
         //! The status, except in words

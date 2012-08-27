@@ -304,6 +304,8 @@ SSLKey::~SSLKey()
 }
 
 
+
+
 inline unsigned char* KeyData( const shared_ptr<SSLKey> &key )
 {
     return key->buffer;
@@ -581,6 +583,43 @@ uint64_t SSL_Cipher::MAC_64( const unsigned char *data, int len,
     return tmp;
 }
 
+unsigned int _xor_checksum_32(const unsigned char *data, int len)
+{
+    unsigned int checksum = 0;
+    for (int i=0; i<len; i++) {
+        checksum = (checksum << 8) | (unsigned int)data[i];
+    }
+    return checksum;
+}
+
+CipherKey SSL_Cipher::readRawKey(const unsigned char * data,
+                              bool checkKey)
+{
+    // First N bytes are checksum bytes.
+    unsigned int checksum = 0;
+    for(int i=0; i<KEY_CHECKSUM_BYTES; ++i)
+	checksum = (checksum << 8) | (unsigned int)data[i];
+    unsigned char tmpBuf[ MAX_KEYLENGTH + MAX_IVLENGTH ];
+    memcpy( tmpBuf, data+KEY_CHECKSUM_BYTES, _keySize + _ivLength );
+
+    unsigned int checksum2 = _xor_checksum_32 (tmpBuf, _keySize + _ivLength);
+    if(checksum2 != checksum && checkKey)
+    {
+	rDebug("checksum mismatch: expected %u, got %u", checksum, checksum2);
+	rDebug("on decode of %i bytes", _keySize + _ivLength);
+	memset( tmpBuf, 0, sizeof(tmpBuf) );
+	return CipherKey();
+    }
+    shared_ptr<SSLKey> key( new SSLKey( _keySize, _ivLength) );
+    
+    memcpy( key->buffer, tmpBuf, _keySize + _ivLength );
+    memset( tmpBuf, 0, sizeof(tmpBuf) );
+
+    initKey( key, _blockCipher, _streamCipher, _keySize );
+
+    return key;
+}
+
 CipherKey SSL_Cipher::readKey(const unsigned char *data, 
 	const CipherKey &masterKey, bool checkKey)
 {
@@ -615,6 +654,24 @@ CipherKey SSL_Cipher::readKey(const unsigned char *data,
     initKey( key, _blockCipher, _streamCipher, _keySize );
 
     return key;
+}
+
+void SSL_Cipher::writeRawKey(const CipherKey &ckey, unsigned char *data)
+{
+    shared_ptr<SSLKey> key = dynamic_pointer_cast<SSLKey>(ckey);
+    rAssert(key->keySize == _keySize);
+    rAssert(key->ivLength == _ivLength);
+    unsigned char *tmpBuf = data + KEY_CHECKSUM_BYTES;
+    int bufLen = _keySize + _ivLength;
+
+    memcpy( tmpBuf, key->buffer, bufLen );
+    unsigned int checksum = _xor_checksum_32 ( tmpBuf, bufLen );
+    // first N bytes contain HMAC derived checksum..
+    for(int i=1; i<=KEY_CHECKSUM_BYTES; ++i)
+    {
+        data[KEY_CHECKSUM_BYTES-i] = checksum & 0xff;
+        checksum >>= 8;
+    }
 }
 
 void SSL_Cipher::writeKey(const CipherKey &ckey, unsigned char *data, 

@@ -129,6 +129,90 @@ namespace boost
 {
     namespace serialization
     {
+
+        template<class Elem, class ElemCast>
+        class ArchVector {
+            friend class access;
+            vector<Elem> &_v;
+            const vector<Elem> &_cv;
+            vector<Elem> t;
+            template<class A>
+            void save(A &ar, const unsigned int version) const {
+                unsigned int count = _cv.size();
+                ar << make_nvp("count", count);
+                for (auto beg=_cv.begin(), en=_cv.end();
+                     beg != en; beg++) {
+                    ElemCast cst(*beg);
+                    ar & make_nvp(ElemCast::className(), 
+                                  cst);
+                }
+            }
+            template<class A>
+            void load(A &ar, const unsigned int) {
+                unsigned int count;
+                ar >> make_nvp("count", count);
+                _v.resize(count);
+                for (auto beg=_v.begin(), en=_v.end();
+                     beg != en; beg++) {
+                    ElemCast cst(*beg);
+                    ar & make_nvp(ElemCast::className(), 
+                                  cst);
+                }
+            }
+            
+            BOOST_SERIALIZATION_SPLIT_MEMBER()
+
+        public:
+            ArchVector(std::vector<Elem> &v): _v(v), _cv(v) {}
+            ArchVector(const std::vector<Elem> &v): _cv(v), _v(t) {}
+        };
+
+        class EncKey {
+            vector<unsigned char> &key;
+            const vector<unsigned char> &ckey;
+            vector<unsigned char> t;
+        public:
+            static const char *className() { return "userKey"; }
+            EncKey(vector<unsigned char> &k): key(k), ckey(k) {}
+            EncKey(const vector<unsigned char> &k): key(t), ckey(k) {}
+            
+            template<class A>
+            void save(A &ar, const unsigned int) const {
+                unsigned int count = ckey.size();
+                ar << make_nvp("keyDataSize", count);
+                ar << make_nvp("keyData", serial::make_binary_object(const_cast<unsigned char *>(&ckey.front()), ckey.size()));
+            }
+            template <class A>
+            void load(A &ar, const unsigned int) {
+                unsigned int count;
+                ar >> make_nvp("keyDataSize", count);
+                key.resize(count);
+                ar >> make_nvp("keyData", serial::make_binary_object(const_cast<unsigned char *>(&key.front()), key.size()));
+            }
+            
+            BOOST_SERIALIZATION_SPLIT_MEMBER()
+        };
+
+        class WhiteList {
+            string &filename;
+            const string &cf;
+            string tmp;
+        public:
+            static const char *className() { return "whiteList"; }
+            WhiteList(string &s): filename(s), cf(s) {}
+            WhiteList(const string &s): cf(s), filename(tmp) {}
+            BOOST_SERIALIZATION_SPLIT_MEMBER()
+            template <class A>
+            void save(A &ar, const unsigned int) const {
+                ar << make_nvp("filename", cf);
+            }
+            template <class A>
+            void load(A &ar, const unsigned int) {
+                ar >> make_nvp("filename", filename);
+            }
+        };
+
+
         template<class Archive>
         void save(Archive &ar, const EncFSConfig &cfg, 
                 unsigned int version)
@@ -158,21 +242,13 @@ namespace boost
                     serial::make_binary_object(cfg.getKeyData(), encodedSize));
 
             /* easyenc */
-            ar << make_nvp("easyencNumUsers", cfg.easyencNumUsers);
-            for (int i = 0; i < cfg.easyencNumUsers; ++i) {
-                ar << make_nvp(autosprintf("easyencKey%d", i),
-                        serial::make_binary_object(
-                            const_cast<unsigned char *>(&cfg.easyencKeys[i].front()),
-                            cfg.easyencKeys[i].size()));
-            }
-
-	    /* Rajsekar: easyenc whitelist */
-	    int ignListSize = cfg.ignoreList.size();
-	    ar << make_nvp("ignoreListSize", ignListSize);
-	    for (int i = 0; i < ignListSize; i++) {
-		ar << make_nvp(autosprintf("ignoreList%d", i),
-			       cfg.ignoreList[i]);
-	    }
+            ar << make_nvp("users", cfg.easyencNumUsers);
+            ArchVector<std::vector<unsigned char>, EncKey> keys(cfg.easyencKeys);
+            ar << make_nvp("userKeys", keys);
+            
+            /* Rajsekar: easyenc whitelist */
+            ArchVector<std::string, WhiteList> whiteList(cfg.ignoreList);
+            ar << make_nvp("ignoreList", whiteList);
 			       
 
             // version 20080816
@@ -225,37 +301,21 @@ namespace boost
       
             int encodedSize;
             ar >> make_nvp("encodedKeySize", encodedSize);
-            rAssert(encodedSize == cfg.getCipher()->encodedKeySize());
 
             unsigned char *key = new unsigned char[encodedSize];
             ar >> make_nvp("encodedKeyData",
                     serial::make_binary_object(key, encodedSize));
             cfg.assignKeyData(key, encodedSize);
             delete [] key;
-
+            
             /* easyenc */
-            unsigned char *encodeduserkey = new unsigned char[encodedSize];
-            ar >> make_nvp("easyencNumUsers", cfg.easyencNumUsers);
-            rAssert(cfg.easyencNumUsers > 0);
-            cfg.easyencKeys.resize(cfg.easyencNumUsers);
-
-            for (int i = 0; i < cfg.easyencNumUsers; ++i) {
-                ar >> make_nvp(autosprintf("easyencKey%d", i),
-                        serial::make_binary_object(encodeduserkey, encodedSize));
-                cfg.easyencKeys[i].assign(encodeduserkey, 
-                        encodeduserkey + encodedSize);
-            }
-
-	    int ignListSize;
-	    ar >> make_nvp("ignoreListSize", ignListSize);
-	    for (int i=0; i<ignListSize; i++) {
-		std::string ignFile;
-		ar >> make_nvp(autosprintf("ignoreList%d", i),
-			       ignFile);
-		cfg.ignoreList.push_back(ignFile);
-	    }
-
-            delete [] encodeduserkey;
+            ar >> make_nvp("users", cfg.easyencNumUsers);
+            ArchVector<std::vector<unsigned char>, EncKey> keys(cfg.easyencKeys);
+            ar >> make_nvp("userKeys", keys);
+            
+            /* Rajsekar: easyenc whitelist */
+            ArchVector<std::string, WhiteList> whiteList(cfg.ignoreList);
+            ar >> make_nvp("ignoreList", whiteList);
 
             if(cfg.subVersion >= 20080816)
             {

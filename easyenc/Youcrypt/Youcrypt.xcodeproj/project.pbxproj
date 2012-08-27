@@ -193,6 +193,13 @@
 			remoteGlobalIDString = 256C355A158EA75F00E2BEC4;
 			remoteInfo = "Youcrypt Mac alpha";
 		};
+		E04515A315E99DBF00291C25 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E6D7D2A015D26AD100780915 /* yc-encfs.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = E045154315E9507900291C25;
+			remoteInfo = TestBed;
+		};
 		E635DE8C15AE2BAA00A81117 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = E66988C3159D403B002323AD /* StartOnLogin.xcodeproj */;
@@ -481,7 +488,7 @@
 		256C356F158EA75F00E2BEC4 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
 		256C3571158EA75F00E2BEC4 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = sources/AppDelegate.h; sourceTree = "<group>"; };
 		256C3572158EA75F00E2BEC4 /* AppDelegate.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = AppDelegate.mm; path = sources/AppDelegate.mm; sourceTree = "<group>"; };
-		256C357C158EA75F00E2BEC4 /* Youcrypt Mac alphaTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = "Youcrypt Mac alphaTests.octest"; path = YoucryptTest.octest; sourceTree = BUILT_PRODUCTS_DIR; };
+		256C357C158EA75F00E2BEC4 /* YoucryptTest.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = YoucryptTest.octest; sourceTree = BUILT_PRODUCTS_DIR; };
 		256C357D158EA75F00E2BEC4 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
 		256C3584158EA75F00E2BEC4 /* Tests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Tests-Info.plist"; sourceTree = "<group>"; };
 		256C3586158EA75F00E2BEC4 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -766,7 +773,7 @@
 			isa = PBXGroup;
 			children = (
 				256C355B158EA75F00E2BEC4 /* Youcrypt.app */,
-				256C357C158EA75F00E2BEC4 /* Youcrypt Mac alphaTests.octest */,
+				256C357C158EA75F00E2BEC4 /* YoucryptTest.octest */,
 				E0BF0E9A1596D01F002F9FB9 /* TestBed */,
 			);
 			name = Products;
@@ -1289,6 +1296,7 @@
 			isa = PBXGroup;
 			children = (
 				E6D7D2AC15D26AD100780915 /* libyc-encfs-static.a */,
+				E04515A415E99DBF00291C25 /* TestBed */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1330,7 +1338,7 @@
 			);
 			name = YoucryptTest;
 			productName = "Youcrypt Mac alphaTests";
-			productReference = 256C357C158EA75F00E2BEC4 /* Youcrypt Mac alphaTests.octest */;
+			productReference = 256C357C158EA75F00E2BEC4 /* YoucryptTest.octest */;
 			productType = "com.apple.product-type.bundle";
 		};
 		E0BF0E991596D01F002F9FB9 /* TestBed */ = {
@@ -1394,6 +1402,13 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
+		E04515A415E99DBF00291C25 /* TestBed */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = TestBed;
+			remoteRef = E04515A315E99DBF00291C25 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		E635DE8D15AE2BAA00A81117 /* StartOnLogin.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
@@ -1868,6 +1883,10 @@
 				"INFOPLIST_FILE[sdk=*]" = Youcrypt.plist;
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				ONLY_ACTIVE_ARCH = YES;
+				OTHER_CFLAGS = (
+					"-Wno-unused-variable",
+					"-Wno-deprecated-writable-strings",
+				);
 				PRODUCT_NAME = Youcrypt;
 				SDKROOT = macosx;
 			};
@@ -1890,6 +1909,10 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				"INFOPLIST_FILE[sdk=*]" = Youcrypt.plist;
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				OTHER_CFLAGS = (
+					"-Wno-unused-variable",
+					"-Wno-deprecated-writable-strings",
+				);
 				PRODUCT_NAME = Youcrypt;
 				SDKROOT = macosx;
 			};
@@ -1924,7 +1947,7 @@
 					/usr/local/lib,
 				);
 				OTHER_CPLUSPLUSFLAGS = (
-					"$(OTHER_CFLAGS)$(OTHER_CFLAGS)",
+					"$(OTHER_CFLAGS)",
 					"-D_FILE_OFFSET_BITS=64",
 					"-DFUSE_USE_VERSION=26",
 					"-D__STDC_FORMAT_MACROS",
@@ -1981,7 +2004,7 @@
 					/usr/local/lib,
 				);
 				OTHER_CPLUSPLUSFLAGS = (
-					"$(OTHER_CFLAGS)$(OTHER_CFLAGS)",
+					"$(OTHER_CFLAGS)",
 					"-D_FILE_OFFSET_BITS=64",
 					"-DFUSE_USE_VERSION=26",
 					"-D__STDC_FORMAT_MACROS",
@@ -2010,6 +2033,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Youcrypt Mac alpha.app/Contents/MacOS/Youcrypt Mac alpha";
+				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(DEVELOPER_LIBRARY_DIR)/Frameworks",
 					"\"$(SRCROOT)\"",
@@ -2027,6 +2051,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Youcrypt Mac alpha.app/Contents/MacOS/Youcrypt Mac alpha";
+				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(DEVELOPER_LIBRARY_DIR)/Frameworks",
 					"\"$(SRCROOT)\"",

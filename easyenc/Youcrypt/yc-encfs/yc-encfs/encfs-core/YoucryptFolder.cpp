@@ -210,7 +210,8 @@ const char *YoucryptFolder::statusString[] = {
             "Folder initialized",
             "Folder processing",
             "Folder mounted",
-            "Folder unmounted"
+            "Folder unmounted",
+            "Authentication failed"
 };
 
 /*! Implementation: Create a YoucryptFolder object
@@ -229,8 +230,10 @@ YoucryptFolder::YoucryptFolder(const path &_rootPath,
                                const YoucryptFolderOpts& _opts,
                                const Credentials& creds) 
 {
-    if (!loadConfigAtPath (_rootPath, creds))
-        createAtPath (_rootPath, _opts, creds);
+    if (!loadConfigAtPath (_rootPath, creds)) 
+        if ((status == YoucryptFolder::statusUnknown) || 
+            (status == YoucryptFolder::uninitialized))
+            createAtPath (_rootPath, _opts, creds);
 }
 
 /*! Implementation: must be very simialr to createV6Config (except for
@@ -303,16 +306,22 @@ bool YoucryptFolder::loadConfigAtPath(const path &_rootPath,
         //     return false;
         // }
 
-        volumeKey = cred->decryptVolumeKey(config->getKeyData(), cipher);
+        volumeKey = cipher->newRandomKey();
+        if (cred->encodedKeySize(volumeKey, cipher) != config->keyData.size())
+            volumeKey = CipherKey();
+        else
+            volumeKey = cred->decryptVolumeKey(config->getKeyData(), cipher);
 
         if(!volumeKey)
         {
             /* easyenc mods; old code below */
             /* try other keys */
             int i;
-            for (i = 1; i < config->easyencNumUsers; ++i)
+            for (i = 1; ((i < config->easyencNumUsers) && !volumeKey); ++i)
             {
-                volumeKey = cred->decryptVolumeKey(
+                if (cred->encodedKeySize(volumeKey, cipher) ==
+                    config->easyencKeys[i].size())
+                    volumeKey = cred->decryptVolumeKey(
                         const_cast<unsigned char *>
                         (&(config->easyencKeys[i].front())),
                         cipher);
@@ -324,11 +333,11 @@ bool YoucryptFolder::loadConfigAtPath(const path &_rootPath,
                 }
             }
 
-            if (!volumeKey)
+            if (!volumeKey) {
+                status = YoucryptFolder::credFail;
                 return false;
+            }
         }
-
-
 
         shared_ptr<NameIO> nameCoder = NameIO::New( config->nameIface, 
                 cipher, volumeKey );
@@ -449,8 +458,6 @@ bool YoucryptFolder::createAtPath(const path& _rootPath,
     // Create Volume Key
 
     // This should really come from the cred. object.
-    int encodedKeySize = cipher->encodedKeySize();
-    unsigned char *encodedKey = new unsigned char[ encodedKeySize ];
     volumeKey = cipher->newRandomKey();
     if(!volumeKey)
         return false;
@@ -458,6 +465,9 @@ bool YoucryptFolder::createAtPath(const path& _rootPath,
     /* easyenc - get first user key (existing code) */
     config->easyencNumUsers = numusers;
     config->easyencKeys.resize(numusers);
+
+    int encodedKeySize = cred->encodedKeySize(volumeKey, cipher);
+    unsigned char *encodedKey = new unsigned char[ encodedKeySize ];
 
     // get the volume key encrypted using cred.
     cred->encryptVolumeKey (volumeKey, cipher, encodedKey);
