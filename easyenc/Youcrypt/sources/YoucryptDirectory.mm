@@ -192,8 +192,15 @@ static NSMutableArray *mountedFuseVolumes;
         fuse_opts.push_back(std::string([opt cStringUsingEncoding:NSASCIIStringEncoding]));
     }
     fuse_opts.push_back(std::string("-ofsname=YoucryptFS"));
-         
-    bool m = folder->mount(dst, fuse_opts, idletime);
+    bool m = folder->loadConfigAtPath(src, creds);
+    if (m) {
+        if (folder->currStatus() == YoucryptFolder::initialized) {
+            m = folder->mount(dst, fuse_opts, idletime);
+        }
+        else {
+            m = false;
+        }
+    }
     if (!m || (folder->currStatus() != YoucryptFolder::mounted)) {
         DDLogInfo(@"Mounting %@ at %@ failed!", path, destFolder);
         ret = NO;
