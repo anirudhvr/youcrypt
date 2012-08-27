@@ -99,8 +99,7 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
     decryptQ = [[NSMutableArray alloc] init];
     restoreQ = [[NSMutableArray alloc] init];
     
-    
-    [[[NSWorkspace sharedWorkspace] notificationCenter] addObserver:self selector:@selector(unarchiveDirectoryList:) name:@"YoucryptReceivedPassphraseFromUser" object:nil];
+//    [[[NSWorkspace sharedWorkspace] notificationCenter] addObserver:self selector:@selector(unarchiveDirectoryList:) name:@"YoucryptReceivedPassphraseFromUser" object:nil];
     
     passphraseManager = [[PassphraseManager alloc] initWithPrefController:preferenceController saveInKeychain:NO];
     
@@ -123,6 +122,7 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
     } else {
         // Do stuff here to check if dirs are all fine?
     }
+//    [[[NSWorkspace sharedWorkspace] notificationCenter] removeObserver:self name:@"YoucryptReceivedPassphraseFromUser" object:nil];
     return nil;
 }
 
