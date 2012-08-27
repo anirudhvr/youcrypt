@@ -25,6 +25,7 @@ enum {
     YoucryptDirectoryStatusInitialized = YoucryptFolder::initialized,
     YoucryptDirectoryStatusProcessing = YoucryptFolder::processing,
     YoucryptDirectoryStatusMounted = YoucryptFolder::mounted,
+    YoucryptDirectoryStatusAuthFailed = YoucryptFolder::credFail,
 } YoucryptDirectoryStatus;
 
 @interface YoucryptDirectory : NSObject <NSCoding> {

@@ -43,8 +43,8 @@ int testImport (string encRoot, string dn)
 
 int main(int argc, char **argv) {
     //testImport("/Users/rajsekar/tmp/test/5.yc", "/Users/rajsekar/tmp/test/data");
-    testMount("/Users/rajsekar/tmp/test/3   .yc", "/Users/rajsekar/tmp/test/mntpoint");
-    cout << "Mounted at .../tmount\n";
+    testMount("/Users/rajsekar/tmp/test/2.yc", "/Users/rajsekar/tmp/test/mntpoint");
+    cout << "Mounted at .../mntpoint\n";
     int a;
     cin >> a;
     return 0;

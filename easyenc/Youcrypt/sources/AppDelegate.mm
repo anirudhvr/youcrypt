@@ -294,6 +294,7 @@ FoundOne:
             ret = NO;
             break;
             
+        case YoucryptDirectoryStatusAuthFailed:
         case YoucryptDirectoryStatusInitialized:
             [self doDecrypt:dir];
             break;
