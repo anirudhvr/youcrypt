@@ -33,7 +33,7 @@ int testImportRSA (string encRoot, string dn)
     string srcFolder = dn;
     
     YoucryptFolderOpts opts;
-    boost::unordered_map<string,string> empty;
+        boost::unordered_map<string,string> empty;
     string priv("/tmp/priv.pem"), pub("/tmp/pub.pem");
     CredentialStorage cs(new RSACredentialStorage(priv, pub, empty));
     Credentials creds(new RSACredentials("yet_another", cs));

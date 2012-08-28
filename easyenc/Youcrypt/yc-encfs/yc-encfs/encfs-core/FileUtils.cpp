@@ -178,6 +178,27 @@ namespace boost
                 ar & make_nvp("filename", filename);
             }
         };
+        typedef ArchVector<std::vector<unsigned char>, EncKey> Keys;
+        typedef ArchVector<std::string, WhiteList> WhiteLists;
+
+        template<class T, class U,
+                 const char *elemName, const char *sizeName>
+        class SerializeVectorAs {
+            vector<T> &v;
+
+            friend class access;
+            template <class A>
+            void serialize (A &ar, SerializeVectorAs &s, const unsigned int){
+                unsigned int size = v.size();
+                ar & make_nvp(sizeName, size);
+                v.resize(size);
+                for (typename vector<T>::iterator beg=v.begin(), en=v.end(); 
+                     beg != en; ++beg)
+                    ar & make_nvp(elemName, static_cast<U &>(*beg));
+            }
+        };
+        // typedef SerializeVectorAs<std::vector<unsigned char>, 
+        //                           EncKey,     "userKey", "count"> AKeys;
 
 
         template<class Archive>
@@ -209,11 +230,11 @@ namespace boost
 
             /* easyenc */
             ar & make_nvp("users", cfg.easyencNumUsers);
-            ArchVector<std::vector<unsigned char>, EncKey> keys(cfg.easyencKeys);
+            Keys keys(cfg.easyencKeys);
             ar & make_nvp("userKeys", keys);
             
             /* Rajsekar: easyenc whitelist */
-            ArchVector<std::string, WhiteList> whiteList(cfg.ignoreList);
+            WhiteLists whiteList(cfg.ignoreList);
             ar & make_nvp("ignoreList", whiteList);
 			       
 
@@ -226,6 +247,7 @@ namespace boost
             ar & make_nvp("kdfIterations", cfg.kdfIterations);
             ar & make_nvp("desiredKDFDuration", cfg.desiredKDFDuration);
         }
+
 
 
         template<class Archive>
