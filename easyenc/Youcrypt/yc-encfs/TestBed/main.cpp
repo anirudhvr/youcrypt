@@ -35,7 +35,7 @@ int testImport (string encRoot, string dn)
     YoucryptFolder folder(path(encRoot), opts, creds);
     
     string destSuffix = path(srcFolder).filename().string();
-    cout << "Encrypting contents of " << srcFolder << " into " << encRoot << endl
+    cout << "Encrypting contents of " << srcFolder <<   " into " << encRoot << endl
     << "at " << "/" << destSuffix << endl;
     folder.importContent(path(srcFolder), destSuffix);
     return 0;
@@ -43,7 +43,7 @@ int testImport (string encRoot, string dn)
 
 int main(int argc, char **argv) {
     //testImport("/Users/rajsekar/tmp/test/5.yc", "/Users/rajsekar/tmp/test/data");
-    testMount("/Users/rajsekar/tmp/test/2.yc", "/Users/rajsekar/tmp/test/mntpoint");
+    testMount("/Users/rajsekar/tmp/test/encroot", "/Users/rajsekar/tmp/test/mntpoint");
     cout << "Mounted at .../mntpoint\n";
     int a;
     cin >> a;
