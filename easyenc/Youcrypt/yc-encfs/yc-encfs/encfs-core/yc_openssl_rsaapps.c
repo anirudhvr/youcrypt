@@ -496,7 +496,8 @@ int rsa(int argc, char **argv)
     int informat,outformat,text=0,check=0,noout=0;
     int pubin = 0, pubout = 0;
     char *infile,*outfile,*prog;
-    char *passargin = NULL, *passargout = NULL;
+    char *passargin = NULL, *passargout = NULL,
+    *ycpassarg = NULL, *pass = NULL;
     char *passin = NULL, *passout = NULL;
 #ifndef OPENSSL_NO_ENGINE
     char *engine=NULL;
@@ -543,6 +544,11 @@ int rsa(int argc, char **argv)
         {
             if (--argc < 1) goto bad;
             outfile= *(++argv);
+        }
+        else if (strcmp(*argv,"-ycpass") == 0)
+        {
+            if (--argc < 1) goto bad;
+            ycpassarg= *(++argv);
         }
         else if (strcmp(*argv,"-passin") == 0)
         {
@@ -641,11 +647,17 @@ bad:
     e = setup_engine(bio_err, engine, 0);
 #endif
 
-    if(!app_passwd(bio_err, passargin, passargout, &passin, &passout)) {
-        BIO_printf(bio_err, "Error getting passwords\n");
+//    if(!app_passwd(bio_err, passargin, passargout, &passin, &passout)) {
+//        BIO_printf(bio_err, "Error getting passwords\n");
+//        goto end;
+//    }
+    
+    if (!app_passwd(bio_err, ycpassarg, NULL, &pass, NULL))
+    {
+        BIO_puts(bio_err, "Error getting password\n");
         goto end;
     }
-
+        
     if(check && pubin) {
         BIO_printf(bio_err, "Only private keys can be checked\n");
         goto end;
@@ -675,11 +687,15 @@ bad:
                     passin, e, "Public Key");
         }
         else
-            pkey = load_key(bio_err, infile,
+//        pkey = load_key(bio_err, infile,
+//                    (informat == FORMAT_NETSCAPE && sgckey ?
+//                     FORMAT_IISSGC : informat), 1,
+//                    passin, e, "Private Key");
+        pkey = load_key(bio_err, infile,
                     (informat == FORMAT_NETSCAPE && sgckey ?
-                     FORMAT_IISSGC : informat), 1,
-                    passin, e, "Private Key");
-
+                     FORMAT_IISSGC : informat), 0,
+                    pass, e, "Private Key");
+        
         if (pkey != NULL)
             rsa = EVP_PKEY_get1_RSA(pkey);
         EVP_PKEY_free(pkey);
