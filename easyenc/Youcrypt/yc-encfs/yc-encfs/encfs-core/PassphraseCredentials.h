@@ -21,13 +21,11 @@ namespace youcrypt {
     public:
         PassphraseCredentials(string passphrase);
 
-        virtual CipherKey decryptVolumeKey(const unsigned char *,
-                                           const shared_ptr<Cipher>&);
+        virtual CipherKey decryptVolumeKey(const KeydataType &,
+                                           const shared_ptr<Cipher>&) = 0;
         virtual void encryptVolumeKey(const CipherKey &,
                                       const shared_ptr<Cipher> &,
-                                      unsigned char *);
-        virtual int  encodedKeySize(const CipherKey &,
-                                    const shared_ptr<Cipher> &);
+                                      KeydataType &) = 0;
 
     private:
         string _passphrase;    

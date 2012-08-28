@@ -306,39 +306,14 @@ bool YoucryptFolder::loadConfigAtPath(const path &_rootPath,
         //     return false;
         // }
 
-        volumeKey = cipher->newRandomKey();
-        if (cred->encodedKeySize(volumeKey, cipher) != config->keyData.size())
-            volumeKey = CipherKey();
-        else
-            volumeKey = cred->decryptVolumeKey(config->getKeyData(), cipher);
+        for (int i=0; i<config->easyencNumUsers && !volumeKey; ++i)
+            volumeKey = cred->decryptVolumeKey(config->easyencKeys[i], 
+                                               cipher);
 
-        if(!volumeKey)
-        {
-            /* easyenc mods; old code below */
-            /* try other keys */
-            int i;
-            for (i = 1; ((i < config->easyencNumUsers) && !volumeKey); ++i)
-            {
-                if (cred->encodedKeySize(volumeKey, cipher) ==
-                    config->easyencKeys[i].size())
-                    volumeKey = cred->decryptVolumeKey(
-                        const_cast<unsigned char *>
-                        (&(config->easyencKeys[i].front())),
-                        cipher);
-                if (!volumeKey) {
-                    continue;
-                } else {
-                    /* cout << "Match found in easyenc key %d" << i << endl; */
-                    break;
-                }
-            }
-
-            if (!volumeKey) {
-                status = YoucryptFolder::credFail;
-                return false;
-            }
+        if (!volumeKey) {
+            status = YoucryptFolder::credFail;
+            return false;
         }
-
         shared_ptr<NameIO> nameCoder = NameIO::New( config->nameIface, 
                 cipher, volumeKey );
         if(!nameCoder)
@@ -466,19 +441,19 @@ bool YoucryptFolder::createAtPath(const path& _rootPath,
     config->easyencNumUsers = numusers;
     config->easyencKeys.resize(numusers);
 
-    int encodedKeySize = cred->encodedKeySize(volumeKey, cipher);
-    boost::scoped_ptr<unsigned char> encodedKey (new unsigned char[ encodedKeySize ]);
+    // int encodedKeySize = cred->encodedKeySize(volumeKey, cipher);
+    // boost::scoped_ptr<unsigned char> encodedKey (new unsigned char[ encodedKeySize ]);
 
     // get the volume key encrypted using cred.
-    cred->encryptVolumeKey (volumeKey, cipher, encodedKey.get());
-
+    cred->encryptVolumeKey (volumeKey, cipher, config->easyencKeys[0]);
+    int encodedKeySize = config->easyencKeys[0].size();
     // YC: This is really for backward compatibility with vanilla
     //   encfs.  When multiple creds exist, vanilla encfs can only
     //   mount with the first cred.  We can of course decode the vol.
     //   key using multiple creds.
-    config->assignKeyData ( encodedKey.get(), encodedKeySize );
 
-    config->easyencKeys[0].assign(encodedKey.get(), encodedKey.get()+encodedKeySize);
+    std::copy(config->easyencKeys[0].begin(), config->easyencKeys[0].end(),
+              config->keyData.begin());
 
     // /* easyenc set and encodedKeys */ 
     // config->easyencKeys[0].assign(encodedKey, encodedKey+encodedKeySize);
@@ -603,15 +578,10 @@ bool YoucryptFolder::addCredential(const Credentials& newCred)
     if (readConfig ( mountPoint.string(), config ) == Config_YC) {
         // volumeKey and cipher should already be initialized.
 
-        int encodedKeySize = newCred->encodedKeySize(volumeKey,
-                                                     cipher);
-        boost::scoped_ptr<unsigned char> encodedKey(
-            new unsigned char[ encodedKeySize ]);
-        newCred->encryptVolumeKey(volumeKey, cipher, encodedKey.get());
         config->easyencKeys.push_back(vector<unsigned char>());
         config->easyencNumUsers++;
-        config->easyencKeys[config->easyencKeys.size() - 1].assign(
-            encodedKey.get(), encodedKey.get()+encodedKeySize);
+        newCred->encryptVolumeKey(volumeKey, cipher, 
+                                  config->easyencKeys.back());
         status = ostatus;
         return saveConfig(Config_YC, mountPoint.string(), config);
     } else {
@@ -633,7 +603,7 @@ bool YoucryptFolder::deleteCredential(const Credentials& cred)
     status = YoucryptFolder::processing;
 
     config.reset( new EncFSConfig );
-    if (readConfig ( mountPoint.string(), config ) == Config_YC) {
+    if (readConfig( mountPoint.string(), config ) == Config_YC) {
         // volumeKey and cipher should already be initialized.
 
         int numUsers = config->easyencNumUsers;
@@ -641,41 +611,20 @@ bool YoucryptFolder::deleteCredential(const Credentials& cred)
         if (numUsers = 1)
             return false;
         for (int i=0; i<numUsers; i++) {
-            decodedKey = cred->decryptVolumeKey
-                (const_cast<unsigned char *>(&(config->easyencKeys[i].front())),
-                 cipher);
-            if (decodedKey) {                
-                if (!cipher->compareKey(decodedKey, volumeKey)) {
-                    // The cred. decoded the key, and it's not the one in use.
-
-                    config->easyencKeys.erase(config->easyencKeys.begin() + 5);
-                    config->easyencNumUsers--;
-
-                    // For backward compatibility, we also check if
-                    // the "main" key got deleted.
-                    if (cred->decryptVolumeKey(config->getKeyData(), 
-                                               cipher)) {
-                        config->assignKeyData(const_cast<unsigned char *>
-                                              (&(config->easyencKeys[i].front())),
-                                              cipher->encodedKeySize());
-                    }
-
-                    status = ostatus;
-                    return saveConfig(Config_YC, rootPath.string(), config);
-                }
-                else {
-                    status = ostatus;
-                    return false;
-                }
+            decodedKey = cred->decryptVolumeKey( config->easyencKeys[i], 
+                                                 cipher);
+            if (decodedKey && cipher->compareKey( decodedKey, volumeKey )) {
+                // Found a match for the cred.
+                config->easyencKeys.erase( config->easyencKeys.begin()+i );
+                config->easyencNumUsers--;
             }
+            status = ostatus;
+            return saveConfig(Config_YC, rootPath.string(), config);
         }
-        // Nothing decoded.
-        return false;
     }
-    // readConfig failed!  Update status?
-    // We could also ignore this.
-    status = ostatus;
+    return false;
 }
+
 
 
 /*! Mount the decrypted folder at mountPoint.

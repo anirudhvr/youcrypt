@@ -26,52 +26,52 @@ PassphraseCredentials::PassphraseCredentials(string passphrase) {
                                _passphrase.length());
 }
 
-//! return encoded key size
-int PassphraseCredentials::encodedKeySize(const CipherKey &key,
-                                          const shared_ptr<Cipher> &c) {
-    return c->encodedKeySize() + KEY_CHECKSUM_BYTES;
-}
-
 //! decrypt a volume key (data) of type (cipher)
-CipherKey PassphraseCredentials::decryptVolumeKey(const unsigned char *data,
-                                                  const shared_ptr<Cipher> &kc)
+CipherKey PassphraseCredentials::decryptVolumeKey(
+    const vector<unsigned char> &data,
+    const shared_ptr<Cipher> &kc)
 {
     // Cipher tell us what type of cipher is used in
     // encrypting/decrypting the data.
-    if (cipher && masterKey) {
-        // Process data, and check sum
-        unsigned int checksum = 0;
-        for(int i=0; i<KEY_CHECKSUM_BYTES; ++i) {
-            checksum <<= 8;
-            checksum |= (unsigned int)data[i];
-        }
-        int bufLen = kc->encodedKeySize();
-        scoped_ptr<unsigned char> tmpBuf(new unsigned char[bufLen]);
-        memcpy(tmpBuf.get(), data+KEY_CHECKSUM_BYTES, bufLen);
-        cipher->streamDecode(tmpBuf.get(), bufLen, checksum, masterKey);
-        unsigned int checksum2 = cipher->MAC_32(tmpBuf.get(),
-                                                bufLen,
-                                                masterKey);
-        if (checksum2 != checksum)
-            return CipherKey();
-        else
-            return kc->readRawKey(tmpBuf.get(), true);
-    }
-    else
+    if (!cipher || !masterKey || 
+        (data.size() != kc->encodedKeySize() + KEY_CHECKSUM_BYTES))
         return CipherKey();
+    
+    // Process data, and check sum
+    unsigned int checksum = 0;
+    for(int i=0; i<KEY_CHECKSUM_BYTES; ++i) {
+        checksum <<= 8;
+        checksum |= (unsigned int)data[i];
+    }
+    
+    int bufLen = kc->encodedKeySize();
+    scoped_ptr<unsigned char> tmpBuf(new unsigned char[bufLen]);
+    std::copy(data.begin()+KEY_CHECKSUM_BYTES, data.end(), tmpBuf.get());
+    cipher->streamDecode(tmpBuf.get(), bufLen, checksum, masterKey);
+    unsigned int checksum2 = cipher->MAC_32(tmpBuf.get(),
+                                            bufLen,
+                                            masterKey);
+    if (checksum2 != checksum)
+        return CipherKey();
+    else
+        return kc->readRawKey(tmpBuf.get(), true);
 }
 
 
 //! encrypt volume key (data) using encryption mech. defined by cipher
-void PassphraseCredentials::encryptVolumeKey(const CipherKey& key, 
-                      const boost::shared_ptr<Cipher> &keyCipher,
-                      unsigned char *data) {
-    unsigned char *tmpBuf = data + KEY_CHECKSUM_BYTES;
+void PassphraseCredentials::encryptVolumeKey(
+    const CipherKey& key, 
+    const boost::shared_ptr<Cipher> &keyCipher,
+    vector<unsigned char> &data) {
+
     int bufLen = keyCipher->encodedKeySize();
+    data.resize(bufLen + KEY_CHECKSUM_BYTES);
+    unsigned char *tmpBuf = &(data.front());
+    tmpBuf += KEY_CHECKSUM_BYTES;
     keyCipher->writeRawKey(key, tmpBuf);
     unsigned int checksum = cipher->MAC_32(tmpBuf,
-                                              bufLen,
-                                              masterKey);
+                                           bufLen,
+                                           masterKey);
     cipher->streamEncode(tmpBuf, bufLen, checksum, masterKey);
     for (int i=1; i<=KEY_CHECKSUM_BYTES; ++i)
     {

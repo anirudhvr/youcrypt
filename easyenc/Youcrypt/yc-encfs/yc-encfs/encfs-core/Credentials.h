@@ -8,24 +8,28 @@
 #define _Youcrypt_Credentials_incl_
 
 #include <string>
+#include <vector>
 #include "CipherKey.h"
 #include "Cipher.h"
 #include <boost/shared_ptr.hpp>
 
 using std::string;
+using std::vector;
 using boost::shared_ptr;
 
 namespace youcrypt {
 
     class AbstractCredentials {
     public:
-        virtual CipherKey decryptVolumeKey(const unsigned char *,
+        typedef vector<unsigned char> KeydataType;
+        virtual CipherKey decryptVolumeKey(const KeydataType &,
                                            const shared_ptr<Cipher>&) = 0;
         virtual void encryptVolumeKey(const CipherKey &,
                                       const shared_ptr<Cipher> &,
-                                      unsigned char *) = 0;
+                                      KeydataType &) = 0;
+        //! Obsolete
         virtual int  encodedKeySize(const CipherKey&,
-                                    const shared_ptr<Cipher> &) = 0;
+                                    const shared_ptr<Cipher> &);
     };
     
 
