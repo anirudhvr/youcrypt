@@ -1968,7 +1968,7 @@
 				);
 				"OTHER_LDFLAGS[arch=*]" = "-lz";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = macosx;
+				SDKROOT = macosx10.7;
 				USER_HEADER_SEARCH_PATHS = "";
 				WRAPPER_EXTENSION = app;
 			};
@@ -2023,7 +2023,7 @@
 				);
 				"OTHER_LDFLAGS[arch=*]" = "-lz";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = macosx;
+				SDKROOT = macosx10.7;
 				USER_HEADER_SEARCH_PATHS = "";
 				WRAPPER_EXTENSION = app;
 			};

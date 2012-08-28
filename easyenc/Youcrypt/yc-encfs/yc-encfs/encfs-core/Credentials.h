@@ -27,8 +27,22 @@ namespace youcrypt {
         virtual int  encodedKeySize(const CipherKey&,
                                     const shared_ptr<Cipher> &) = 0;
     };
+    
 
     typedef boost::shared_ptr<AbstractCredentials> Credentials;
+    
+    
+    struct AbstractCredentialStorage {
+        enum CRED_TYPE {
+            CRED_TYPE_PASSPHRASE = 0,
+            CRED_TYPE_RSA,
+            CRED_TYPE_DSA
+        };
+        
+        virtual std::string getCredData(std::string credName) = 0;
+    };
+    
+    typedef boost::shared_ptr<AbstractCredentialStorage> CredentialStorage;
 }
 
 #endif

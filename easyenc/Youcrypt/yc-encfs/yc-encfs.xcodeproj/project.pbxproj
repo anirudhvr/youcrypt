@@ -11,6 +11,10 @@
 		E045154E15E9507900291C25 /* TestBed.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = E045154D15E9507900291C25 /* TestBed.1 */; };
 		E045155615E950F600291C25 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E045155415E950F600291C25 /* main.cpp */; };
 		E045155715E9535500291C25 /* libyc-encfs-static.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E6B544D715D2633F0045E3B3 /* libyc-encfs-static.a */; };
+		E61B8B8715EC399A00BCC3F5 /* yc_openssl_rsaapps.h in Headers */ = {isa = PBXBuildFile; fileRef = E61B8B8515EC399A00BCC3F5 /* yc_openssl_rsaapps.h */; };
+		E61B8B8815EC399A00BCC3F5 /* yc_openssl_rsaapps.c in Sources */ = {isa = PBXBuildFile; fileRef = E61B8B8615EC399A00BCC3F5 /* yc_openssl_rsaapps.c */; };
+		E61B8B8B15EC3B0100BCC3F5 /* RSACredentials.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E61B8B8915EC3B0100BCC3F5 /* RSACredentials.cpp */; };
+		E61B8B8C15EC3B0100BCC3F5 /* RSACredentials.h in Headers */ = {isa = PBXBuildFile; fileRef = E61B8B8A15EC3B0100BCC3F5 /* RSACredentials.h */; };
 		E6B544DC15D2636C0045E3B3 /* base64.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E6B5443E15D1ECD30045E3B3 /* base64.cpp */; };
 		E6B544DE15D2636C0045E3B3 /* BlockFileIO.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E6B5444015D1ECD30045E3B3 /* BlockFileIO.cpp */; };
 		E6B544E015D2636C0045E3B3 /* BlockNameIO.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E6B5444215D1ECD30045E3B3 /* BlockNameIO.cpp */; };
@@ -64,6 +68,10 @@
 		E045154D15E9507900291C25 /* TestBed.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = TestBed.1; sourceTree = "<group>"; };
 		E045155415E950F600291C25 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		E045155515E950F600291C25 /* main.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = main.h; sourceTree = "<group>"; };
+		E61B8B8515EC399A00BCC3F5 /* yc_openssl_rsaapps.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = yc_openssl_rsaapps.h; sourceTree = "<group>"; };
+		E61B8B8615EC399A00BCC3F5 /* yc_openssl_rsaapps.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = yc_openssl_rsaapps.c; sourceTree = "<group>"; };
+		E61B8B8915EC3B0100BCC3F5 /* RSACredentials.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RSACredentials.cpp; sourceTree = "<group>"; };
+		E61B8B8A15EC3B0100BCC3F5 /* RSACredentials.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSACredentials.h; sourceTree = "<group>"; };
 		E63D208F15D1D42500B57720 /* yc_encfs.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = yc_encfs.1; sourceTree = "<group>"; };
 		E6B5443E15D1ECD30045E3B3 /* base64.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = base64.cpp; sourceTree = "<group>"; };
 		E6B5443F15D1ECD30045E3B3 /* base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = base64.h; sourceTree = "<group>"; };
@@ -257,8 +265,6 @@
 				E6B5444E15D1ECD30045E3B3 /* ConfigVar.h */,
 				E6B5444F15D1ECD30045E3B3 /* Context.cpp */,
 				E6B5445015D1ECD30045E3B3 /* Context.h */,
-				E6B5445115D1ECD30045E3B3 /* Credentials.cpp */,
-				E6B5445215D1ECD30045E3B3 /* Credentials.h */,
 				E6B5445315D1ECD30045E3B3 /* DirNode.cpp */,
 				E6B5445415D1ECD30045E3B3 /* DirNode.h */,
 				E6B5445515D1ECD30045E3B3 /* encfs.cpp */,
@@ -286,8 +292,6 @@
 				E6B5446F15D1ECD30045E3B3 /* NullNameIO.h */,
 				E6B5447015D1ECD30045E3B3 /* openssl.cpp */,
 				E6B5447115D1ECD30045E3B3 /* openssl.h */,
-				E6B5447215D1ECD30045E3B3 /* PassphraseCredentials.cpp */,
-				E6B5447315D1ECD30045E3B3 /* PassphraseCredentials.h */,
 				E6B5447415D1ECD30045E3B3 /* Range.h */,
 				E6B5447515D1ECD30045E3B3 /* RawFileIO.cpp */,
 				E6B5447615D1ECD30045E3B3 /* RawFileIO.h */,
@@ -297,12 +301,20 @@
 				E6B5447A15D1ECD30045E3B3 /* SSL_Cipher.h */,
 				E6B5447B15D1ECD30045E3B3 /* StreamNameIO.cpp */,
 				E6B5447C15D1ECD30045E3B3 /* StreamNameIO.h */,
+				E6B5445115D1ECD30045E3B3 /* Credentials.cpp */,
+				E6B5445215D1ECD30045E3B3 /* Credentials.h */,
+				E61B8B8915EC3B0100BCC3F5 /* RSACredentials.cpp */,
+				E61B8B8A15EC3B0100BCC3F5 /* RSACredentials.h */,
+				E6B5447215D1ECD30045E3B3 /* PassphraseCredentials.cpp */,
+				E6B5447315D1ECD30045E3B3 /* PassphraseCredentials.h */,
 				E6B5448015D1ECD30045E3B3 /* YCNameIO.cpp */,
 				E6B5448115D1ECD30045E3B3 /* YCNameIO.h */,
 				E6B5448215D1ECD30045E3B3 /* YoucryptFolder.cpp */,
 				E6B5448315D1ECD30045E3B3 /* YoucryptFolder.h */,
 				E6B5448415D1ECD30045E3B3 /* youcryptMountHelpers.cpp */,
 				E6B5448515D1ECD30045E3B3 /* youcryptMountHelpers.h */,
+				E61B8B8515EC399A00BCC3F5 /* yc_openssl_rsaapps.h */,
+				E61B8B8615EC399A00BCC3F5 /* yc_openssl_rsaapps.c */,
 			);
 			name = "encfs-core";
 			path = "yc-encfs/encfs-core";
@@ -334,6 +346,8 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E61B8B8715EC399A00BCC3F5 /* yc_openssl_rsaapps.h in Headers */,
+				E61B8B8C15EC3B0100BCC3F5 /* RSACredentials.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -445,6 +459,8 @@
 				E6B5451915D2636C0045E3B3 /* YoucryptFolder.cpp in Sources */,
 				E6B5451B15D2636C0045E3B3 /* youcryptMountHelpers.cpp in Sources */,
 				E6B5451D15D263830045E3B3 /* autosprintf.cpp in Sources */,
+				E61B8B8815EC399A00BCC3F5 /* yc_openssl_rsaapps.c in Sources */,
+				E61B8B8B15EC3B0100BCC3F5 /* RSACredentials.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -487,6 +503,7 @@
 				HEADER_SEARCH_PATHS = (
 					/opt/local/include,
 					/usr/local/include/osxfuse,
+					"$(SRCROOT)/../pubkey_crypto",
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -676,6 +693,7 @@
 				HEADER_SEARCH_PATHS = (
 					/opt/local/include,
 					/usr/local/include/osxfuse,
+					"$(SRCROOT)/../pubkey_crypto",
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -715,6 +733,7 @@
 				HEADER_SEARCH_PATHS = (
 					/opt/local/include,
 					/usr/local/include/osxfuse,
+					"$(SRCROOT)/../pubkey_crypto",
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -757,6 +776,7 @@
 				E045155115E9507900291C25 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		E63D208315D1D42500B57720 /* Build configuration list for PBXProject "yc-encfs" */ = {
 			isa = XCConfigurationList;
