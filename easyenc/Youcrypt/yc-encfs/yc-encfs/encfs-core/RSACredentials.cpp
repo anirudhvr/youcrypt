@@ -14,6 +14,7 @@
 using std::string;
 using namespace youcrypt;
 using boost::scoped_ptr;
+using boost::shared_ptr;
 using boost::unordered_map;
 
 
@@ -21,16 +22,10 @@ RSACredentials::RSACredentials(string passphrase, CredentialStorage &cstore) :
 _passphrase(passphrase), _cstore(cstore)
 { }
 
-//! return encoded key size
-int RSACredentials::encodedKeySize(const CipherKey &key,
-                                   const shared_ptr<Cipher> &c) {
-    return MAX_RSA_CIPHERTEXT_LENGTH;
-}
-
 //! encrypt volume key (data) using encryption mech. defined by cipher
 void RSACredentials::encryptVolumeKey(const CipherKey& key, 
-                      const boost::shared_ptr<Cipher> &keyCipher,
-                      unsigned char *data) {
+                      const shared_ptr<Cipher> &keyCipher,
+                      vector<unsigned char> &data) {
     
     int bufLen = keyCipher->encodedKeySize();
     unsigned char *tmpBuf = new unsigned char [bufLen], *cipher = NULL;
@@ -53,25 +48,20 @@ void RSACredentials::encryptVolumeKey(const CipherKey& key,
     rsautl(6, rsautl_encrypt_argv,
            &rsaargs);
     
-    if (pubkeyfilename) free(pubkeyfilename);
-    
     if (rsaargs.outsize > 0) { // something got written
-        memcpy(data, *rsaargs.outbuf, rsaargs.outsize);
-        memset((data + rsaargs.outsize),
-               0,
-               (MAX_RSA_CIPHERTEXT_LENGTH - rsaargs.outsize));
+        data.resize(rsaargs.outsize);
+        data.assign(*rsaargs.outbuf, *rsaargs.outbuf + rsaargs.outsize);
+        free(*rsaargs.outbuf);
     } else {
-        memset(data, 0,
-               MAX_RSA_CIPHERTEXT_LENGTH);
+        data.clear();
         std::cerr << "Shit's all fucked up, yo" << std::endl;
     }
-
     
 }
 
 
 //! decrypt a volume key (data) of type (cipher)
-CipherKey RSACredentials::decryptVolumeKey(const unsigned char *data,
+CipherKey RSACredentials::decryptVolumeKey(const vector<unsigned char> &data,
                                            const shared_ptr<Cipher> &kc)
 {
     // XXX <- Not a good idea to guess 'data's size this way
@@ -83,8 +73,8 @@ CipherKey RSACredentials::decryptVolumeKey(const unsigned char *data,
     passwordarg += _passphrase;
     char *pwarg = strdup(passwordarg.c_str());
     
-    rsaargs.inbuf = const_cast<unsigned char*>(data);
-    rsaargs.insize = 128; // XXX FIXME
+    rsaargs.inbuf = const_cast<unsigned char*>(&data[0]);
+    rsaargs.insize = data.size(); // XXX FIXME
     rsaargs.outsize = 0;
     char *rsautl_decrypt_argv[] = {"rsautl",
         "-decrypt",
@@ -99,31 +89,9 @@ CipherKey RSACredentials::decryptVolumeKey(const unsigned char *data,
     if (pwarg) free(pwarg);
     if (privkeyfilename) free(privkeyfilename);
     
-    return kc->readRawKey(*rsaargs.outbuf, true);
-    
-//    // encrypting/decrypting the data.
-//    if (cipher && masterKey) {
-//        // Process data, and check sum
-//        unsigned int checksum = 0;
-//        for(int i=0; i<KEY_CHECKSUM_BYTES; ++i) {
-//            checksum <<= 8;
-//            checksum |= (unsigned int)data[i];
-//        }
-//        int bufLen = kc->encodedKeySize();
-//        scoped_ptr<unsigned char> tmpBuf(new unsigned char[bufLen]);
-//        memcpy(tmpBuf.get(), data+KEY_CHECKSUM_BYTES, bufLen);
-//        cipher->streamDecode(tmpBuf.get(), bufLen, checksum, masterKey);
-//        unsigned int checksum2 = cipher->MAC_32(tmpBuf.get(),
-//                                                bufLen,
-//                                                masterKey);
-//        if (checksum2 != checksum)
-//            return CipherKey();
-//        else
-//            return kc->readRawKey(tmpBuf.get(), true);
-//    }
-//    else
-//        return CipherKey();
-//    return CipherKey();
+    CipherKey ret = kc->readRawKey(*rsaargs.outbuf, true);
+    if (*rsaargs.outbuf) free (*rsaargs.outbuf);
+    return ret;
 }
 
 

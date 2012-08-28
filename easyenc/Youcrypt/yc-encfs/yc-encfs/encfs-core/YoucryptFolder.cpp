@@ -452,6 +452,7 @@ bool YoucryptFolder::createAtPath(const path& _rootPath,
     //   mount with the first cred.  We can of course decode the vol.
     //   key using multiple creds.
 
+    config->keyData.resize(encodedKeySize);
     std::copy(config->easyencKeys[0].begin(), config->easyencKeys[0].end(),
               config->keyData.begin());
 
@@ -575,13 +576,15 @@ bool YoucryptFolder::addCredential(const Credentials& newCred)
     status = YoucryptFolder::processing;
 
     config.reset( new EncFSConfig );
-    if (readConfig ( mountPoint.string(), config ) == Config_YC) {
+    string rootDir = rootPath.string();
+    slashTerminate(rootDir);
+    if (readConfig ( rootDir, config ) == Config_YC) {
         // volumeKey and cipher should already be initialized.
 
         config->easyencKeys.push_back(vector<unsigned char>());
         config->easyencNumUsers++;
         newCred->encryptVolumeKey(volumeKey, cipher, 
-                                  config->easyencKeys.back());
+                                  config->easyencKeys[config->easyencKeys.size()-1]);
         status = ostatus;
         return saveConfig(Config_YC, mountPoint.string(), config);
     } else {
@@ -603,7 +606,9 @@ bool YoucryptFolder::deleteCredential(const Credentials& cred)
     status = YoucryptFolder::processing;
 
     config.reset( new EncFSConfig );
-    if (readConfig( mountPoint.string(), config ) == Config_YC) {
+    string rootDir = rootPath.string();
+    slashTerminate(rootDir);
+    if (readConfig( rootDir, config ) == Config_YC) {
         // volumeKey and cipher should already be initialized.
 
         int numUsers = config->easyencNumUsers;

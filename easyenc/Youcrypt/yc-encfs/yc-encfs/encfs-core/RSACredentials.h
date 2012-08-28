@@ -48,14 +48,12 @@ namespace youcrypt {
     public:
         RSACredentials(string passphrase, CredentialStorage &cstore);
 
-        virtual CipherKey decryptVolumeKey(const unsigned char *,
+        virtual CipherKey decryptVolumeKey(const vector<unsigned char> &,
                                            const shared_ptr<Cipher>&);
         virtual void encryptVolumeKey(const CipherKey &,
                                       const shared_ptr<Cipher> &,
-                                      unsigned char *);
-        virtual int  encodedKeySize(const CipherKey &,
-                                    const shared_ptr<Cipher> &);
-
+                                      vector<unsigned char> &);
+        
     private:
         string _passphrase;
         CredentialStorage _cstore;

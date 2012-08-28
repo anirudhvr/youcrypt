@@ -22,10 +22,10 @@ namespace youcrypt {
         PassphraseCredentials(string passphrase);
 
         virtual CipherKey decryptVolumeKey(const KeydataType &,
-                                           const shared_ptr<Cipher>&) = 0;
+                                           const shared_ptr<Cipher>&);
         virtual void encryptVolumeKey(const CipherKey &,
                                       const shared_ptr<Cipher> &,
-                                      KeydataType &) = 0;
+                                      KeydataType &);
 
     private:
         string _passphrase;    

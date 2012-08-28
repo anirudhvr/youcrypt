@@ -46,7 +46,9 @@ int testImportRSA (string encRoot, string dn)
     cout << "Encrypting contents of " << srcFolder << " into " << encRoot << endl
     << "at " << "/" << destSuffix << endl;
     folder.importContent(path(srcFolder), destSuffix);
+    folder.addCredential(Credentials(new PassphraseCredentials("asdf")));
     folder.mount(path("/tmp/mountpt"));
+    
     return 0;
 }
 
