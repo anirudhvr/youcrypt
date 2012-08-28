@@ -134,23 +134,10 @@ namespace boost
         class ArchVector {
             friend class access;
             vector<Elem> &_v;
-            const vector<Elem> &_cv;
-            vector<Elem> t;
             template<class A>
-            void save(A &ar, const unsigned int version) const {
-                unsigned int count = _cv.size();
-                ar << make_nvp("count", count);
-                for (auto beg=_cv.begin(), en=_cv.end();
-                     beg != en; beg++) {
-                    ElemCast cst(*beg);
-                    ar & make_nvp(ElemCast::className(), 
-                                  cst);
-                }
-            }
-            template<class A>
-            void load(A &ar, const unsigned int) {
-                unsigned int count;
-                ar >> make_nvp("count", count);
+            void serialize(A &ar, const unsigned int version)  {
+                unsigned int count = _v.size();
+                ar & make_nvp("count", count);
                 _v.resize(count);
                 for (auto beg=_v.begin(), en=_v.end();
                      beg != en; beg++) {
@@ -159,189 +146,169 @@ namespace boost
                                   cst);
                 }
             }
-            
-            BOOST_SERIALIZATION_SPLIT_MEMBER()
 
         public:
-            ArchVector(std::vector<Elem> &v): _v(v), _cv(v) {}
-            ArchVector(const std::vector<Elem> &v): _cv(v), _v(t) {}
+            ArchVector(std::vector<Elem> &v): _v(v) {}
         };
 
         class EncKey {
             vector<unsigned char> &key;
-            const vector<unsigned char> &ckey;
-            vector<unsigned char> t;
         public:
             static const char *className() { return "userKey"; }
-            EncKey(vector<unsigned char> &k): key(k), ckey(k) {}
-            EncKey(const vector<unsigned char> &k): key(t), ckey(k) {}
+            EncKey(vector<unsigned char> &k): key(k){}
             
             template<class A>
-            void save(A &ar, const unsigned int) const {
-                unsigned int count = ckey.size();
-                ar << make_nvp("keyDataSize", count);
-                ar << make_nvp("keyData", serial::make_binary_object(const_cast<unsigned char *>(&ckey.front()), ckey.size()));
-            }
-            template <class A>
-            void load(A &ar, const unsigned int) {
-                unsigned int count;
-                ar >> make_nvp("keyDataSize", count);
+            void serialize(A &ar, const unsigned int)  {
+                unsigned int count = key.size();
+                ar & make_nvp("keyDataSize", count);
                 key.resize(count);
-                ar >> make_nvp("keyData", serial::make_binary_object(const_cast<unsigned char *>(&key.front()), key.size()));
+                ar & make_nvp("keyData", serial::make_binary_object(
+                                  const_cast<unsigned char *>(&key.front()), 
+                                  key.size()));
             }
-            
-            BOOST_SERIALIZATION_SPLIT_MEMBER()
         };
 
         class WhiteList {
             string &filename;
-            const string &cf;
-            string tmp;
         public:
             static const char *className() { return "whiteList"; }
-            WhiteList(string &s): filename(s), cf(s) {}
-            WhiteList(const string &s): cf(s), filename(tmp) {}
-            BOOST_SERIALIZATION_SPLIT_MEMBER()
+            WhiteList(string &s): filename(s) {}
             template <class A>
-            void save(A &ar, const unsigned int) const {
-                ar << make_nvp("filename", cf);
-            }
-            template <class A>
-            void load(A &ar, const unsigned int) {
-                ar >> make_nvp("filename", filename);
+            void serialize(A &ar, const unsigned int) {
+                ar & make_nvp("filename", filename);
             }
         };
 
 
         template<class Archive>
-        void save(Archive &ar, const EncFSConfig &cfg, 
+        void serialize(Archive &ar, EncFSConfig &cfg, 
                 unsigned int version)
         {
             (void)version;
             // version 20 (aka 20100613)
-            if (cfg.subVersion == 0)
-                ar << make_nvp("version", V6SubVersion);
-            else
-                ar << make_nvp("version", cfg.subVersion);
+            ar & make_nvp("version", cfg.subVersion);
 
-            ar << make_nvp("creator", cfg.creator);
-            ar << make_nvp("cipherAlg", cfg.cipherIface);
-            ar << make_nvp("nameAlg", cfg.nameIface);
-            ar << make_nvp("keySize", cfg.keySize);
-            ar << make_nvp("blockSize", cfg.blockSize);
-            ar << make_nvp("uniqueIV", cfg.uniqueIV);
-            ar << make_nvp("chainedNameIV", cfg.chainedNameIV);
-            ar << make_nvp("externalIVChaining", cfg.externalIVChaining);
-            ar << make_nvp("blockMACBytes", cfg.blockMACBytes);
-            ar << make_nvp("blockMACRandBytes", cfg.blockMACRandBytes);
-            ar << make_nvp("allowHoles", cfg.allowHoles);
+            ar & make_nvp("creator", cfg.creator);
+            ar & make_nvp("cipherAlg", cfg.cipherIface);
+            ar & make_nvp("nameAlg", cfg.nameIface);
+            ar & make_nvp("keySize", cfg.keySize);
+            ar & make_nvp("blockSize", cfg.blockSize);
+            ar & make_nvp("uniqueIV", cfg.uniqueIV);
+            ar & make_nvp("chainedNameIV", cfg.chainedNameIV);
+            ar & make_nvp("externalIVChaining", cfg.externalIVChaining);
+            ar & make_nvp("blockMACBytes", cfg.blockMACBytes);
+            ar & make_nvp("blockMACRandBytes", cfg.blockMACRandBytes);
+            ar & make_nvp("allowHoles", cfg.allowHoles);
 
             int encodedSize = cfg.keyData.size();
-            ar << make_nvp("encodedKeySize", encodedSize);
-            ar << make_nvp("encodedKeyData",
-                    serial::make_binary_object(cfg.getKeyData(), encodedSize));
+            ar & make_nvp("encodedKeySize", encodedSize);
+            cfg.keyData.resize(encodedSize);
+            ar & make_nvp("encodedKeyData",
+                          serial::make_binary_object(
+                              cfg.getKeyData(), encodedSize));
 
             /* easyenc */
-            ar << make_nvp("users", cfg.easyencNumUsers);
+            ar & make_nvp("users", cfg.easyencNumUsers);
             ArchVector<std::vector<unsigned char>, EncKey> keys(cfg.easyencKeys);
-            ar << make_nvp("userKeys", keys);
+            ar & make_nvp("userKeys", keys);
             
             /* Rajsekar: easyenc whitelist */
             ArchVector<std::string, WhiteList> whiteList(cfg.ignoreList);
-            ar << make_nvp("ignoreList", whiteList);
+            ar & make_nvp("ignoreList", whiteList);
 			       
 
             // version 20080816
             int size = cfg.salt.size();
-            ar << make_nvp("saltLen", size);
-            ar << make_nvp("saltData",
+            ar & make_nvp("saltLen", size);
+            cfg.salt.resize(size);
+            ar & make_nvp("saltData",
                     serial::make_binary_object(cfg.getSaltData(), size));
-            ar << make_nvp("kdfIterations", cfg.kdfIterations);
-            ar << make_nvp("desiredKDFDuration", cfg.desiredKDFDuration);
+            ar & make_nvp("kdfIterations", cfg.kdfIterations);
+            ar & make_nvp("desiredKDFDuration", cfg.desiredKDFDuration);
         }
 
-        template<class Archive>
-        void load(Archive &ar, EncFSConfig &cfg, unsigned int version)
-        {
-            rInfo("version = %i", version);
-	    // TODO: figure out how to deprecate all but the first case..
-            if (version == 20 || version >= 20100713)
-            {
-		rInfo("found new serialization format");
-                ar >> make_nvp("version", cfg.subVersion);
-	    } else if (version == 26800)
-	    {
-		rInfo("found 20080816 version");
-                cfg.subVersion = 20080816;
-	    } else if (version == 26797)
-	    {
-		rInfo("found 20080813");
-                cfg.subVersion = 20080813;
-	    } else if (version < (unsigned int)V5SubVersion)
-	    {
-		rError("Invalid version %i - please fix config file", version);
-            } else
-            {
-                rInfo("Boost <= 1.41 compatibility mode");
-                cfg.subVersion = version;
-            }
-            rInfo("subVersion = %i", cfg.subVersion);
+        // template<class Archive>
+        // void load(Archive &ar, EncFSConfig &cfg, unsigned int version)
+        // {
+        //     rInfo("version = %i", version);
+	//     // TODO: figure out how to deprecate all but the first case..
+        //     if (version == 20 || version >= 20100713)
+        //     {
+	// 	rInfo("found new serialization format");
+        //         ar >> make_nvp("version", cfg.subVersion);
+	//     } else if (version == 26800)
+	//     {
+	// 	rInfo("found 20080816 version");
+        //         cfg.subVersion = 20080816;
+	//     } else if (version == 26797)
+	//     {
+	// 	rInfo("found 20080813");
+        //         cfg.subVersion = 20080813;
+	//     } else if (version < (unsigned int)V5SubVersion)
+	//     {
+	// 	rError("Invalid version %i - please fix config file", version);
+        //     } else
+        //     {
+        //         rInfo("Boost <= 1.41 compatibility mode");
+        //         cfg.subVersion = version;
+        //     }
+        //     rInfo("subVersion = %i", cfg.subVersion);
 
-            ar >> make_nvp("creator", cfg.creator);
-            ar >> make_nvp("cipherAlg", cfg.cipherIface);
-            ar >> make_nvp("nameAlg", cfg.nameIface);
-            ar >> make_nvp("keySize", cfg.keySize);
-            ar >> make_nvp("blockSize", cfg.blockSize);
-            ar >> make_nvp("uniqueIV", cfg.uniqueIV);
-            ar >> make_nvp("chainedNameIV", cfg.chainedNameIV);
-            ar >> make_nvp("externalIVChaining", cfg.externalIVChaining);
-            ar >> make_nvp("blockMACBytes", cfg.blockMACBytes);
-            ar >> make_nvp("blockMACRandBytes", cfg.blockMACRandBytes);
-            ar >> make_nvp("allowHoles", cfg.allowHoles);
+        //     ar >> make_nvp("creator", cfg.creator);
+        //     ar >> make_nvp("cipherAlg", cfg.cipherIface);
+        //     ar >> make_nvp("nameAlg", cfg.nameIface);
+        //     ar >> make_nvp("keySize", cfg.keySize);
+        //     ar >> make_nvp("blockSize", cfg.blockSize);
+        //     ar >> make_nvp("uniqueIV", cfg.uniqueIV);
+        //     ar >> make_nvp("chainedNameIV", cfg.chainedNameIV);
+        //     ar >> make_nvp("externalIVChaining", cfg.externalIVChaining);
+        //     ar >> make_nvp("blockMACBytes", cfg.blockMACBytes);
+        //     ar >> make_nvp("blockMACRandBytes", cfg.blockMACRandBytes);
+        //     ar >> make_nvp("allowHoles", cfg.allowHoles);
       
-            int encodedSize;
-            ar >> make_nvp("encodedKeySize", encodedSize);
+        //     int encodedSize;
+        //     ar >> make_nvp("encodedKeySize", encodedSize);
 
-            unsigned char *key = new unsigned char[encodedSize];
-            ar >> make_nvp("encodedKeyData",
-                    serial::make_binary_object(key, encodedSize));
-            cfg.assignKeyData(key, encodedSize);
-            delete [] key;
+        //     unsigned char *key = new unsigned char[encodedSize];
+        //     ar >> make_nvp("encodedKeyData",
+        //             serial::make_binary_object(key, encodedSize));
+        //     cfg.assignKeyData(key, encodedSize);
+        //     delete [] key;
             
-            /* easyenc */
-            ar >> make_nvp("users", cfg.easyencNumUsers);
-            ArchVector<std::vector<unsigned char>, EncKey> keys(cfg.easyencKeys);
-            ar >> make_nvp("userKeys", keys);
+        //     /* easyenc */
+        //     ar >> make_nvp("users", cfg.easyencNumUsers);
+        //     ArchVector<std::vector<unsigned char>, EncKey> keys(cfg.easyencKeys);
+        //     ar >> make_nvp("userKeys", keys);
             
-            /* Rajsekar: easyenc whitelist */
-            ArchVector<std::string, WhiteList> whiteList(cfg.ignoreList);
-            ar >> make_nvp("ignoreList", whiteList);
+        //     /* Rajsekar: easyenc whitelist */
+        //     ArchVector<std::string, WhiteList> whiteList(cfg.ignoreList);
+        //     ar >> make_nvp("ignoreList", whiteList);
 
-            if(cfg.subVersion >= 20080816)
-            {
-                int saltLen;
-                ar >> make_nvp("saltLen", saltLen);
-                unsigned char *salt = new unsigned char[saltLen];
-                ar >> make_nvp("saltData",
-                        serial::make_binary_object(salt, saltLen));
-                cfg.assignSaltData(salt, saltLen);
-                delete[] salt;
+        //     if(cfg.subVersion >= 20080816)
+        //     {
+        //         int saltLen;
+        //         ar >> make_nvp("saltLen", saltLen);
+        //         unsigned char *salt = new unsigned char[saltLen];
+        //         ar >> make_nvp("saltData",
+        //                 serial::make_binary_object(salt, saltLen));
+        //         cfg.assignSaltData(salt, saltLen);
+        //         delete[] salt;
 
-                ar >> make_nvp("kdfIterations", cfg.kdfIterations);
-                ar >> make_nvp("desiredKDFDuration", cfg.desiredKDFDuration);
-            } else
-            {
-                cfg.salt.clear();
-                cfg.kdfIterations = 16;
-                cfg.desiredKDFDuration = NormalKDFDuration;
-            }
-        }
+        //         ar >> make_nvp("kdfIterations", cfg.kdfIterations);
+        //         ar >> make_nvp("desiredKDFDuration", cfg.desiredKDFDuration);
+        //     } else
+        //     {
+        //         cfg.salt.clear();
+        //         cfg.kdfIterations = 16;
+        //         cfg.desiredKDFDuration = NormalKDFDuration;
+        //     }
+        // }
         
-        template<class Archive>
-        void serialize(Archive &ar, EncFSConfig &cfg, unsigned int version)
-        {
-            split_free(ar, cfg, version);
-        }
+        // template<class Archive>
+        // void serialize(Archive &ar, EncFSConfig &cfg, unsigned int version)
+        // {
+        //     split_free(ar, cfg, version);
+        // }
 
         template<class Archive>
         void serialize(Archive &ar, Interface &i, const unsigned int version)
