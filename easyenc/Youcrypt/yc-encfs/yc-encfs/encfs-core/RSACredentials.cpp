@@ -45,7 +45,9 @@ void RSACredentials::encryptVolumeKey(const CipherKey& key,
     char *rsautl_encrypt_argv[] = {"rsautl", "-encrypt",
         "-inkey", pubkeyfilename,
         "-pubin",
-        "-inbuf"
+//        "-in", "/tmp/plain.txt",
+//        "-out", "/tmp/cipher.txt",
+         "-inbuf"
     };
 
     rsautl(6, rsautl_encrypt_argv,
@@ -54,21 +56,16 @@ void RSACredentials::encryptVolumeKey(const CipherKey& key,
     if (pubkeyfilename) free(pubkeyfilename);
     
     if (rsaargs.outsize > 0) { // something got written
-        memcpy(data, rsaargs.outbuf, rsaargs.outsize);
+        memcpy(data, *rsaargs.outbuf, rsaargs.outsize);
         memset((data + rsaargs.outsize),
                0,
-               (this->encodedKeySize(key, keyCipher) - rsaargs.outsize));
+               (MAX_RSA_CIPHERTEXT_LENGTH - rsaargs.outsize));
     } else {
         memset(data, 0,
-               this->encodedKeySize(key, keyCipher));
+               MAX_RSA_CIPHERTEXT_LENGTH);
         std::cerr << "Shit's all fucked up, yo" << std::endl;
     }
 
-//    char *rsautl_decrypt_argv[] = {"rsautl", "-decrypt", "-inkey",
-//        "priv.pem", "-in", "cipher.txt", "-out", "plain2.txt",
-//        "-passin", "pass:asdfgh"};
-//    rsautl(sizeof(rsautl_decrypt_argv)/sizeof(rsautl_decrypt_argv[0]),
-//            rsautl_decrypt_argv);
     
 }
 
@@ -77,7 +74,33 @@ void RSACredentials::encryptVolumeKey(const CipherKey& key,
 CipherKey RSACredentials::decryptVolumeKey(const unsigned char *data,
                                            const shared_ptr<Cipher> &kc)
 {
-//    // Cipher tell us what type of cipher is used in
+    // XXX <- Not a good idea to guess 'data's size this way
+    int bufLen = MAX_RSA_CIPHERTEXT_LENGTH;
+    
+    struct rsautl_args rsaargs;
+    char *privkeyfilename = strdup(_cstore->getCredData(RSA_PRIVKEYFILE_KEY).c_str());
+    string passwordarg("pass:");
+    passwordarg += _passphrase;
+    char *pwarg = strdup(passwordarg.c_str());
+    
+    rsaargs.inbuf = const_cast<unsigned char*>(data);
+    rsaargs.insize = 128; // XXX FIXME
+    rsaargs.outsize = 0;
+    char *rsautl_decrypt_argv[] = {"rsautl",
+        "-decrypt",
+        "-passin", "pass:asdfgh", // pwarg, 
+        "-inkey", privkeyfilename,
+        "-inbuf"
+        // "-in", "cipher.txt", "-out", "plain2.txt",
+        };
+    
+    rsautl(7, rsautl_decrypt_argv, &rsaargs);
+    
+    if (pwarg) free(pwarg);
+    if (privkeyfilename) free(privkeyfilename);
+    
+    return kc->readRawKey(*rsaargs.outbuf, true);
+    
 //    // encrypting/decrypting the data.
 //    if (cipher && masterKey) {
 //        // Process data, and check sum
@@ -100,7 +123,7 @@ CipherKey RSACredentials::decryptVolumeKey(const unsigned char *data,
 //    }
 //    else
 //        return CipherKey();
-    return CipherKey();
+//    return CipherKey();
 }
 
 

@@ -28,7 +28,8 @@ using boost::unordered_map;
 // XXX FIXME HACK - because we don't know how mcuh the ciphertext will be
 // in advance. To fix this, have encryptVolumeKey return vector<char> so
 // we can get rid of encodedKeySize
-#define MAX_RSA_CIPHERTEXT_LENGTH 3072
+#define MAX_RSA_CIPHERTEXT_LENGTH 256 // Safe max for a 52-byte plaintext
+
 const string RSA_PRIVKEYFILE_KEY = "__yc_rsaprivkeyfile";
 const string RSA_PUBKEYFILE_KEY = "__yc_rsapubkeyfile";
 

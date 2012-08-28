@@ -46,6 +46,7 @@ int testImportRSA (string encRoot, string dn)
     cout << "Encrypting contents of " << srcFolder << " into " << encRoot << endl
     << "at " << "/" << destSuffix << endl;
     folder.importContent(path(srcFolder), destSuffix);
+    folder.mount(path("/tmp/mountpt"));
     return 0;
 }
 
@@ -70,6 +71,7 @@ int testImport (string encRoot, string dn)
 int main(int argc, char **argv) {
     //testImport("/Users/rajsekar/tmp/test/5.yc", "/Users/rajsekar/tmp/test/data");
     testImportRSA("/tmp/test.yc", "/tmp/copy");
+    
     //    testMount("/Users/rajsekar/tmp/test/2.yc", "/Users/rajsekar/tmp/test/mntpoint");
     cout << "Mounted at .../mntpoint\n";
     int a;
