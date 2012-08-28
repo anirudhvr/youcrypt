@@ -13,6 +13,7 @@
 #include "encfs-core/YoucryptFolder.h"
 #include "encfs-core/Credentials.h"
 #include "encfs-core/PassphraseCredentials.h"
+#include "encfs-core/RSACredentials.h"
 
 @class PeriodicActionTimer;
 @class PassphraseManager;
