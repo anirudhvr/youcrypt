@@ -63,7 +63,7 @@ int main(void)
     char *genprivkey_argv[] = {"genpkey", "-out", "priv.pem", "-outform", "PEM", "-pass",
         "pass:asdfgh", "-aes-256-cbc", "-algorithm", "RSA"};
     char *genpubkey_argv[] = {"rsa", "-pubout", "-in", "priv.pem",
-        "-out", "pub.pem"};
+        "-out", "pub.pem", "-ycpass", "pass:asdfgh"};
     char *rsautl_encrypt_argv[] = {"rsautl", "-encrypt", "-inkey",
         "pub.pem", "-pubin", "-in", "plain.txt", "-out", "cipher.txt"};
     char *rsautl_decrypt_argv[] = {"rsautl", "-decrypt", "-inkey",
@@ -1442,7 +1442,7 @@ EVP_PKEY *load_key(BIO *err, const char *file, int format, int maybe_stdin,
         //pkey=PEM_read_bio_PrivateKey(key,NULL,
                 //(pem_password_cb *)password_callback, &cb_data);
         pkey=PEM_read_bio_PrivateKey(key,NULL,
-                NULL, "asdfgh");
+                NULL, pass);
     }
 #if !defined(OPENSSL_NO_RC4) && !defined(OPENSSL_NO_RSA)
     //else if (format == FORMAT_NETSCAPE || format == FORMAT_IISSGC)

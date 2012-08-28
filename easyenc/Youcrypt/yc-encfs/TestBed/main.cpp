@@ -12,6 +12,7 @@
 #include "RSACredentials.h"
 #include "Credentials.h"
 #include <iostream>
+#include "yc_openssl_rsaapps.h"
 
 #include <boost/unordered_map.hpp>
 
@@ -71,9 +72,37 @@ int testImport (string encRoot, string dn)
     return 0;
 }
 
+int testRSAkeygen(void)
+{
+    char *genprivkey_argv[] = {"genpkey", "-out", "priv.pem", "-outform", "PEM", "-pass",
+        "pass:asdfgh", "-aes-256-cbc", "-algorithm", "RSA",
+        "-pkeyopt", "rsa_keygen_bits:2048"
+    };
+    char *genpubkey_argv[] = {"rsa", "-pubout", "-in", "priv.pem",
+        "-out", "pub.pem", "-ycpass", "pass:asdfgh"};
+    char *rsautl_encrypt_argv[] = {"rsautl", "-encrypt", "-inkey",
+        "pub.pem", "-pubin", "-in", "plain.txt", "-out", "cipher.txt"};
+    char *rsautl_decrypt_argv[] = {"rsautl", "-decrypt", "-inkey",
+        "priv.pem", "-in", "cipher.txt", "-out", "plain2.txt",
+        "-passin", "pass:asdfgh"};
+
+    genpkey(sizeof(genprivkey_argv)/sizeof(genprivkey_argv[0]),
+            genprivkey_argv);
+    rsa(sizeof(genpubkey_argv)/sizeof(genpubkey_argv[0]),
+            genpubkey_argv);
+
+//    rsautl(sizeof(rsautl_encrypt_argv)/sizeof(rsautl_encrypt_argv[0]),
+//            rsautl_encrypt_argv);
+
+//    rsautl(sizeof(rsautl_decrypt_argv)/sizeof(rsautl_decrypt_argv[0]),
+//            rsautl_decrypt_argv);
+
+}
+
 int main(int argc, char **argv) {
     //testImport("/Users/rajsekar/tmp/test/5.yc", "/Users/rajsekar/tmp/test/data");
-    testImportRSA("/tmp/test.yc", "/tmp/copy");
+//    testImportRSA("/tmp/test.yc", "/tmp/copy");
+    testRSAkeygen();
     int a;
     cin >> a;
     return 0;
