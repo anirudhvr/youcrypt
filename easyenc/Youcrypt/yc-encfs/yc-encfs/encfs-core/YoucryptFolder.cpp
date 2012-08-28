@@ -586,7 +586,7 @@ bool YoucryptFolder::addCredential(const Credentials& newCred)
         newCred->encryptVolumeKey(volumeKey, cipher, 
                                   config->easyencKeys[config->easyencKeys.size()-1]);
         status = ostatus;
-        return saveConfig(Config_YC, mountPoint.string(), config);
+        return saveConfig(Config_YC, rootDir, config);
     } else {
         // Seems to be a config. error.  
         // Update the status
@@ -624,7 +624,7 @@ bool YoucryptFolder::deleteCredential(const Credentials& cred)
                 config->easyencNumUsers--;
             }
             status = ostatus;
-            return saveConfig(Config_YC, rootPath.string(), config);
+            return saveConfig(Config_YC, rootDir, config);
         }
     }
     return false;

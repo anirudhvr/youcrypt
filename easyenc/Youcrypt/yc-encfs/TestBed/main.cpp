@@ -47,6 +47,7 @@ int testImportRSA (string encRoot, string dn)
     << "at " << "/" << destSuffix << endl;
     folder.importContent(path(srcFolder), destSuffix);
     folder.addCredential(Credentials(new PassphraseCredentials("asdf")));
+    folder.loadConfigAtPath(path(encRoot), Credentials(new PassphraseCredentials("asdf")));
     folder.mount(path("/tmp/mountpt"));
     
     return 0;
