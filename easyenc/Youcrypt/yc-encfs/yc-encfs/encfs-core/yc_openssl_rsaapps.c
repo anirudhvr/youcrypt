@@ -1104,7 +1104,12 @@ int rsautl(int argc, char **argv, struct rsautl_args *rsautlargs)
         BIO_dump(out, (char *)rsa_out, rsa_outlen);
     } else if (ycargs) {
 //        ycargs->outsize = BIO_get_mem_data(rsa_out, &ycargs->outbuf);
-        ycargs->outsize = bio_to_mem(ycargs->outbuf, rsa_outlen, (char*)rsa_out);
+//        ycargs->outsize = bio_to_mem(ycargs->outbuf, rsa_outlen, (char*)rsa_out);
+        ycargs->outsize = rsa_outlen;
+        *ycargs->outbuf = (unsigned char*)malloc(rsa_outlen);
+        if (*ycargs->outbuf) {
+            memcpy(*ycargs->outbuf, rsa_out, rsa_outlen);
+        }
     } else
         BIO_write(out, rsa_out, rsa_outlen);
     
