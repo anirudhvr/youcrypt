@@ -14,67 +14,104 @@
 #include <iostream>
 
 #include <boost/unordered_map.hpp>
+#include <boost/scoped_ptr.hpp>
 
 using namespace std;
 using namespace youcrypt;
 
-int testMount (string encRoot, string mntPoint)
+
+static boost::filesystem::path mountPath, encRoot, sourcePath;
+static Credentials creds;
+static YoucryptFolderOpts opts;
+boost::scoped_ptr<YoucryptFolder> pFolder;
+
+extern void openssl_init(bool);
+
+
+int testMount ()
 {
-    YoucryptFolderOpts opts;
-    Credentials creds(new PassphraseCredentials("yabba"));
-    YoucryptFolder folder(path(encRoot), opts, creds);
-    folder.mount(path(mntPoint));
-    return 0;
+    cout << "Mounting folder(" << encRoot.string() << ") @ " <<
+        mountPath.string() << "...";
+    pFolder.reset(new YoucryptFolder(encRoot, opts, creds));
+    if (pFolder->mount(mountPath))
+    {
+        cout << "success" << endl;
+        return 0;
+    }
+    else
+    {
+        cout << "failed" << endl;
+        return -1;
+    }
 }
 
-int testImportRSA (string encRoot, string dn)
-{
-    // Write test program below
-    string srcFolder = dn;
-    
-    YoucryptFolderOpts opts;
-        boost::unordered_map<string,string> empty;
+int testMakeRSACreds() {
+    boost::unordered_map<string,string> empty;
+    cout << "Generating RSA creds from /tmp/{priv,pub}.pem...";
     string priv("/tmp/priv.pem"), pub("/tmp/pub.pem");
     CredentialStorage cs(new RSACredentialStorage(priv, pub, empty));
-    Credentials creds(new RSACredentials("yet_another", cs));
-    
-    cout << "Encrypted Folder is " << encRoot << endl;
-    //opts.filenameEncryption = YoucryptFolderOpts::filenameEncrypt;
-    YoucryptFolder folder(path(encRoot), opts, creds);
-    
-    string destSuffix = path(srcFolder).filename().string();
-    cout << "Encrypting contents of " << srcFolder << " into " << encRoot << endl
-    << "at " << "/" << destSuffix << endl;
-    folder.importContent(path(srcFolder), destSuffix);
-    folder.addCredential(Credentials(new PassphraseCredentials("asdf")));
-    folder.loadConfigAtPath(path(encRoot), Credentials(new PassphraseCredentials("asdf")));
-    folder.mount(path("/tmp/mountpt"));
-    
-    return 0;
+    creds.reset(new RSACredentials("yet_another", cs));
+    if (creds == Credentials()) {
+        cout << "failed\n";
+        return -1;
+    }
+    else
+    {
+        cout << "success\n";
+        return 0;
+    }
 }
 
-int testImport (string encRoot, string dn)
+int testPassphraseCreds() {
+    cout << "Generating passphrase cred. for yabba...";
+    creds.reset(new PassphraseCredentials("yabba"));
+    if (creds == Credentials()) {
+        cout << "failed\n";
+        return -1;
+    }
+    else
+    {
+        cout << "success\n";
+        return 0;
+    }
+
+}
+
+int testImport ()
 {
     // Write test program below
-    string srcFolder = dn;
-    
-    YoucryptFolderOpts opts;
-    Credentials creds(new PassphraseCredentials("yet_another"));
+
     cout << "Encrypted Folder is " << encRoot << endl;
-    //opts.filenameEncryption = YoucryptFolderOpts::filenameEncrypt;
-    YoucryptFolder folder(path(encRoot), opts, creds);
-    
-    string destSuffix = path(srcFolder).filename().string();
-    cout << "Encrypting contents of " << srcFolder <<   " into " << encRoot << endl
-    << "at " << "/" << destSuffix << endl;
-    folder.importContent(path(srcFolder), destSuffix);
-    return 0;
+    pFolder.reset(new YoucryptFolder(encRoot, opts, creds));
+    if (pFolder->currStatus() != YoucryptFolder::initialized) {
+        cout << "Error initializing folder.\n";
+        return -1;
+    }
+    string destSuffix = sourcePath.filename().string();
+    cout << "Encrypting contents of " << sourcePath <<   " into " << encRoot << endl
+    << "at " << "/" << destSuffix << "...";
+    if (pFolder->importContent(sourcePath, destSuffix)) {
+        cout << "success" << endl;
+        return 0;
+    }
+    else {
+        cout << "failed" << endl;
+        return -1;
+    }
 }
 
 int main(int argc, char **argv) {
-    //testImport("/Users/rajsekar/tmp/test/5.yc", "/Users/rajsekar/tmp/test/data");
-    testImportRSA("/tmp/test.yc", "/tmp/copy");
+    openssl_init(true);
+
+    mountPath  = path("/Users/rajsekar/tmp/test/mntpoint");
+    encRoot    = path("/Users/rajsekar/tmp/test/encroot");
+    sourcePath = path("/Users/rajsekar/tmp/test/data");
+    
+    testMakeRSACreds();
+    testImport();
+    testMount();
+    cout << "Enter a number to exit...";
     int a;
     cin >> a;
-    return 0;
+    return a;
 }

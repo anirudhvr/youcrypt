@@ -76,6 +76,8 @@ CipherKey RSACredentials::decryptVolumeKey(const vector<unsigned char> &data,
     rsaargs.inbuf = const_cast<unsigned char*>(&data[0]);
     rsaargs.insize = data.size(); // XXX FIXME
     rsaargs.outsize = 0;
+    rsaargs.outbuf = (unsigned char **)malloc(sizeof(unsigned char *));
+
     char *rsautl_decrypt_argv[] = {"rsautl",
         "-decrypt",
         "-passin", "pass:asdfgh", // pwarg, 

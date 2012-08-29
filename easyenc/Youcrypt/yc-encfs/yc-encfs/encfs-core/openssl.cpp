@@ -75,7 +75,9 @@ void openssl_init(bool threaded)
 {
     // initialize the SSL library
     SSL_load_error_strings();
+    ERR_load_crypto_strings();
     SSL_library_init();
+    OpenSSL_add_all_algorithms();
 
     unsigned int randSeed = 0;
     RAND_bytes( (unsigned char*)&randSeed, sizeof(randSeed) );
