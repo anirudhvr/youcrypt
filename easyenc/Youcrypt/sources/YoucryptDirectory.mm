@@ -16,6 +16,7 @@
 #include <boost/filesystem/path.hpp>
 #include <boost/filesystem/operations.hpp>
 #include <boost/unordered_map.hpp>
+#include <map>
 using boost::shared_ptr;
 using boost::unordered_map;
 using std::cout;
@@ -110,7 +111,8 @@ static NSMutableArray *mountedFuseVolumes;
     CredentialStorage cs;
     Credentials creds;
     {
-        unordered_map<string,string> empty;
+//        unordered_map<string,string> empty;
+        std::map<string,string> empty;
         string priv([theApp.configDir.youCryptPrivKeyFile cStringUsingEncoding:NSASCIIStringEncoding]);
         string pub([theApp.configDir.youCryptPubKeyFile cStringUsingEncoding:NSASCIIStringEncoding]);
         
@@ -189,7 +191,8 @@ static NSMutableArray *mountedFuseVolumes;
     create_directories(dst);
     
     YoucryptFolderOpts opts;
-    unordered_map<string,string> empty;
+//    unordered_map<string,string> empty;
+    map<string,string> empty;
     string priv([theApp.configDir.youCryptPrivKeyFile cStringUsingEncoding:NSASCIIStringEncoding]);
     string pub([theApp.configDir.youCryptPubKeyFile cStringUsingEncoding:NSASCIIStringEncoding]);
     CredentialStorage cs(new RSACredentialStorage(priv, pub, empty));

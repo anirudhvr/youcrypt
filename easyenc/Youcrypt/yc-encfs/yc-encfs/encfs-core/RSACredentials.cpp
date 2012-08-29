@@ -101,7 +101,7 @@ CipherKey RSACredentials::decryptVolumeKey(const vector<unsigned char> &data,
 
 
 RSACredentialStorage::RSACredentialStorage(string privkeyfile, string pubkeyfile,
-                                           const unordered_map<string, string> &otherparams)
+                                           const map<string, string> &otherparams)
 {
 //    _creds = otherparams;
     _creds[RSA_PRIVKEYFILE_KEY] = privkeyfile;
@@ -111,7 +111,7 @@ RSACredentialStorage::RSACredentialStorage(string privkeyfile, string pubkeyfile
 string
 RSACredentialStorage::getCredData(const string credname)
 {
-    unordered_map<string, string>::const_iterator map_it;
+    map<string, string>::const_iterator map_it;
     map_it = _creds.find(credname);
     if (map_it == _creds.end())
         return string();

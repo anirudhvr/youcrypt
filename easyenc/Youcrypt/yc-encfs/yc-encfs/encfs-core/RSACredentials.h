@@ -16,6 +16,7 @@
 #include "CipherKey.h"
 
 #include <boost/unordered_map.hpp>
+#include <map>
 
 extern "C" {
 #include "yc_openssl_rsaapps.h"
@@ -24,6 +25,7 @@ extern "C" {
 using std::string;
 using boost::shared_ptr;
 using boost::unordered_map;
+using std::map;
 
 // XXX FIXME HACK - because we don't know how mcuh the ciphertext will be
 // in advance. To fix this, have encryptVolumeKey return vector<char> so
@@ -38,7 +40,7 @@ namespace youcrypt {
     struct RSACredentialStorage : public AbstractCredentialStorage {
         
         RSACredentialStorage(string privkeyfile, string pubkeyfile,
-                             const unordered_map<string, string> &otherparams);
+                             const map<string, string> &otherparams);
         virtual string getCredData(const string credName);
         virtual ~RSACredentialStorage()
         {
@@ -46,7 +48,7 @@ namespace youcrypt {
         }
         
     private:
-        unordered_map<string, string> _creds;
+        map<string, string> _creds;
     };
 
     class RSACredentials : public AbstractCredentials {
