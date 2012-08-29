@@ -12,9 +12,13 @@
 		E045155615E950F600291C25 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E045155415E950F600291C25 /* main.cpp */; };
 		E045155715E9535500291C25 /* libyc-encfs-static.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E6B544D715D2633F0045E3B3 /* libyc-encfs-static.a */; };
 		E61B8B8715EC399A00BCC3F5 /* yc_openssl_rsaapps.h in Headers */ = {isa = PBXBuildFile; fileRef = E61B8B8515EC399A00BCC3F5 /* yc_openssl_rsaapps.h */; };
-		E61B8B8815EC399A00BCC3F5 /* yc_openssl_rsaapps.c in Sources */ = {isa = PBXBuildFile; fileRef = E61B8B8615EC399A00BCC3F5 /* yc_openssl_rsaapps.c */; };
+		E61B8B8815EC399A00BCC3F5 /* yc_openssl_rsaapps.c in Sources */ = {isa = PBXBuildFile; fileRef = E61B8B8615EC399A00BCC3F5 /* yc_openssl_rsaapps.c */; settings = {COMPILER_FLAGS = "-DMONOLITH  -DOPENSSL_THREADS -D_REENTRANT  -DHAVE_DLFCN_H  -O3 -fomit-frame-pointer -DOPENSSL_BN_ASM_PART_WORDS -DOPENSSL_IA32_SSE2 -DOPENSSL_BN_ASM_MONT -DOPENSSL_BN_ASM_GF2m -DSHA1_ASM -DSHA256_ASM -DSHA512_ASM -DMD5_ASM"; }; };
 		E61B8B8B15EC3B0100BCC3F5 /* RSACredentials.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E61B8B8915EC3B0100BCC3F5 /* RSACredentials.cpp */; };
 		E61B8B8C15EC3B0100BCC3F5 /* RSACredentials.h in Headers */ = {isa = PBXBuildFile; fileRef = E61B8B8A15EC3B0100BCC3F5 /* RSACredentials.h */; };
+		E636BC2615ED8FEE0029767A /* main_avr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E636BC1F15ED8FA20029767A /* main_avr.cpp */; };
+		E636BC2815ED8FEE0029767A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E045154615E9507900291C25 /* Foundation.framework */; };
+		E636BC2915ED8FEE0029767A /* libyc-encfs-static.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E6B544D715D2633F0045E3B3 /* libyc-encfs-static.a */; };
+		E636BC2B15ED8FEE0029767A /* TestBed.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = E045154D15E9507900291C25 /* TestBed.1 */; };
 		E6B544DC15D2636C0045E3B3 /* base64.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E6B5443E15D1ECD30045E3B3 /* base64.cpp */; };
 		E6B544DE15D2636C0045E3B3 /* BlockFileIO.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E6B5444015D1ECD30045E3B3 /* BlockFileIO.cpp */; };
 		E6B544E015D2636C0045E3B3 /* BlockNameIO.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E6B5444215D1ECD30045E3B3 /* BlockNameIO.cpp */; };
@@ -59,12 +63,21 @@
 			);
 			runOnlyForDeploymentPostprocessing = 1;
 		};
+		E636BC2A15ED8FEE0029767A /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+				E636BC2B15ED8FEE0029767A /* TestBed.1 in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		E045154315E9507900291C25 /* TestBed */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = TestBed; sourceTree = BUILT_PRODUCTS_DIR; };
 		E045154615E9507900291C25 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		E045154C15E9507900291C25 /* TestBed-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TestBed-Prefix.pch"; sourceTree = "<group>"; };
 		E045154D15E9507900291C25 /* TestBed.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = TestBed.1; sourceTree = "<group>"; };
 		E045155415E950F600291C25 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		E045155515E950F600291C25 /* main.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = main.h; sourceTree = "<group>"; };
@@ -72,6 +85,8 @@
 		E61B8B8615EC399A00BCC3F5 /* yc_openssl_rsaapps.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = yc_openssl_rsaapps.c; sourceTree = "<group>"; };
 		E61B8B8915EC3B0100BCC3F5 /* RSACredentials.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RSACredentials.cpp; sourceTree = "<group>"; };
 		E61B8B8A15EC3B0100BCC3F5 /* RSACredentials.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSACredentials.h; sourceTree = "<group>"; };
+		E636BC1F15ED8FA20029767A /* main_avr.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main_avr.cpp; sourceTree = "<group>"; };
+		E636BC3015ED8FEE0029767A /* TestBed copy */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "TestBed copy"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E63D208F15D1D42500B57720 /* yc_encfs.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = yc_encfs.1; sourceTree = "<group>"; };
 		E6B5443E15D1ECD30045E3B3 /* base64.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = base64.cpp; sourceTree = "<group>"; };
 		E6B5443F15D1ECD30045E3B3 /* base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = base64.h; sourceTree = "<group>"; };
@@ -161,6 +176,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		E636BC2715ED8FEE0029767A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E636BC2815ED8FEE0029767A /* Foundation.framework in Frameworks */,
+				E636BC2915ED8FEE0029767A /* libyc-encfs-static.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		E6B544D415D2633F0045E3B3 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -182,20 +206,12 @@
 		E045154815E9507900291C25 /* TestBed */ = {
 			isa = PBXGroup;
 			children = (
+				E636BC1F15ED8FA20029767A /* main_avr.cpp */,
 				E045154D15E9507900291C25 /* TestBed.1 */,
 				E045155415E950F600291C25 /* main.cpp */,
 				E045155515E950F600291C25 /* main.h */,
-				E045154B15E9507900291C25 /* Supporting Files */,
 			);
 			path = TestBed;
-			sourceTree = "<group>";
-		};
-		E045154B15E9507900291C25 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				E045154C15E9507900291C25 /* TestBed-Prefix.pch */,
-			);
-			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
 		E63D207E15D1D42500B57720 = {
@@ -218,6 +234,7 @@
 			children = (
 				E6B544D715D2633F0045E3B3 /* libyc-encfs-static.a */,
 				E045154315E9507900291C25 /* TestBed */,
+				E636BC3015ED8FEE0029767A /* TestBed copy */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -371,6 +388,23 @@
 			productReference = E045154315E9507900291C25 /* TestBed */;
 			productType = "com.apple.product-type.tool";
 		};
+		E636BC2315ED8FEE0029767A /* TestBed avr */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E636BC2C15ED8FEE0029767A /* Build configuration list for PBXNativeTarget "TestBed avr" */;
+			buildPhases = (
+				E636BC2415ED8FEE0029767A /* Sources */,
+				E636BC2715ED8FEE0029767A /* Frameworks */,
+				E636BC2A15ED8FEE0029767A /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "TestBed avr";
+			productName = TestBed;
+			productReference = E636BC3015ED8FEE0029767A /* TestBed copy */;
+			productType = "com.apple.product-type.tool";
+		};
 		E6B544D615D2633F0045E3B3 /* yc-encfs-static */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = E6B544DA15D2633F0045E3B3 /* Build configuration list for PBXNativeTarget "yc-encfs-static" */;
@@ -411,6 +445,7 @@
 			targets = (
 				E6B544D615D2633F0045E3B3 /* yc-encfs-static */,
 				E045154215E9507900291C25 /* TestBed */,
+				E636BC2315ED8FEE0029767A /* TestBed avr */,
 			);
 		};
 /* End PBXProject section */
@@ -421,6 +456,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				E045155615E950F600291C25 /* main.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E636BC2415ED8FEE0029767A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E636BC2615ED8FEE0029767A /* main_avr.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -639,6 +682,108 @@
 			};
 			name = Release;
 		};
+		E636BC2D15ED8FEE0029767A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "TestBed/TestBed-Prefix.pch";
+				HEADER_SEARCH_PATHS = (
+					/opt/local/include,
+					/usr/local/include/osxfuse,
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)\"",
+					/usr/local/lib,
+					/opt/local/lib,
+				);
+				OTHER_CPLUSPLUSFLAGS = (
+					"$(OTHER_CFLAGS)",
+					"-D_FILE_OFFSET_BITS=64",
+					"-DFUSE_USE_VERSION=26",
+					"-D__STDC_FORMAT_MACROS",
+					"-DRLOG_COMPONENT=\"encfs\"",
+					"-W",
+					"-Wall",
+					"-Wpointer-arith",
+					"-Wwrite-strings",
+					"-D__FreeBSD__=10",
+				);
+				OTHER_LDFLAGS = (
+					"-lrlog",
+					"-lz",
+					"-lboost_system-mt",
+					"-lboost_filesystem-mt",
+					"-lboost_serialization-mt",
+					"-lssl",
+					"-lcrypto",
+					"-lintl",
+					"-lfuse_ino64",
+				);
+				PRODUCT_NAME = "TestBed copy";
+			};
+			name = Debug;
+		};
+		E636BC2E15ED8FEE0029767A /* NoWarn */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "TestBed/TestBed-Prefix.pch";
+				HEADER_SEARCH_PATHS = (
+					/opt/local/include,
+					/usr/local/include/osxfuse,
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)\"",
+					/usr/local/lib,
+					/opt/local/lib,
+				);
+				OTHER_LDFLAGS = (
+					"-lrlog",
+					"-lz",
+					"-lboost_system-mt",
+					"-lboost_filesystem-mt",
+					"-lboost_serialization-mt",
+					"-lssl",
+					"-lcrypto",
+					"-lintl",
+					"-lfuse_ino64",
+				);
+				PRODUCT_NAME = "TestBed copy";
+			};
+			name = NoWarn;
+		};
+		E636BC2F15ED8FEE0029767A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "TestBed/TestBed-Prefix.pch";
+				HEADER_SEARCH_PATHS = (
+					/opt/local/include,
+					/usr/local/include/osxfuse,
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)\"",
+					/usr/local/lib,
+					/opt/local/lib,
+				);
+				OTHER_LDFLAGS = (
+					"-lrlog",
+					"-lz",
+					"-lboost_system-mt",
+					"-lboost_filesystem-mt",
+					"-lboost_serialization-mt",
+					"-lssl",
+					"-lcrypto",
+					"-lintl",
+					"-lfuse_ino64",
+				);
+				PRODUCT_NAME = "TestBed copy";
+			};
+			name = Release;
+		};
 		E63D209115D1D42500B57720 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -774,6 +919,16 @@
 				E045154F15E9507900291C25 /* Debug */,
 				E045155015E9507900291C25 /* NoWarn */,
 				E045155115E9507900291C25 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E636BC2C15ED8FEE0029767A /* Build configuration list for PBXNativeTarget "TestBed avr" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E636BC2D15ED8FEE0029767A /* Debug */,
+				E636BC2E15ED8FEE0029767A /* NoWarn */,
+				E636BC2F15ED8FEE0029767A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

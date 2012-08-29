@@ -16,6 +16,7 @@
 @property (atomic,strong) NSString* youCryptVolDir;
 @property (atomic,strong) NSString* youCryptTmpDir;
 @property (atomic,strong) NSString* youCryptLogDir;
+@property (atomic,strong) NSString* youCryptKeyDir;
 @property (nonatomic, strong) NSString *youCryptLockFile;
 @property (nonatomic,strong) NSString *youCryptListFile;
 @property (nonatomic) BOOL firstRun;

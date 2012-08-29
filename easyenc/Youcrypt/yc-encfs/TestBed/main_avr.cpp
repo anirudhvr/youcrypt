@@ -1,12 +1,11 @@
 //
-//  main.cpp
+//  main_avr.cpp
 //  yc-encfs
 //
-//  Created by Rajsekar Manokaran on 8/25/12.
+//  Created by avr on 8/28/12.
 //  Copyright (c) 2012 avr. All rights reserved.
 //
 
-#include "main.h"
 #include "YoucryptFolder.h"
 #include "PassphraseCredentials.h"
 #include "RSACredentials.h"

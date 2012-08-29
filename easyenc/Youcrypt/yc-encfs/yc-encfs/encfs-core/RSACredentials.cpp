@@ -50,8 +50,8 @@ void RSACredentials::encryptVolumeKey(const CipherKey& key,
     
     if (rsaargs.outsize > 0) { // something got written
         data.resize(rsaargs.outsize);
-        data.assign(*rsaargs.outbuf, *rsaargs.outbuf + rsaargs.outsize);
-        free(*rsaargs.outbuf);
+        data.assign(rsaargs.outbuf, rsaargs.outbuf + rsaargs.outsize);
+        free(rsaargs.outbuf);
     } else {
         data.clear();
         std::cerr << "Shit's all fucked up, yo" << std::endl;
@@ -89,8 +89,8 @@ CipherKey RSACredentials::decryptVolumeKey(const vector<unsigned char> &data,
     if (pwarg) free(pwarg);
     if (privkeyfilename) free(privkeyfilename);
     
-    CipherKey ret = kc->readRawKey(*rsaargs.outbuf, true);
-    if (*rsaargs.outbuf) free (*rsaargs.outbuf);
+    CipherKey ret = kc->readRawKey(rsaargs.outbuf, true);
+//    if (*rsaargs.outbuf) free (*rsaargs.outbuf);
     return ret;
 }
 
