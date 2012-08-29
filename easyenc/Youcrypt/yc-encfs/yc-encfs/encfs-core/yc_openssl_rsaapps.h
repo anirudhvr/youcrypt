@@ -105,7 +105,7 @@ int password_callback(char *buf, int bufsiz, int verify,
 struct rsautl_args {
     unsigned char *inbuf;
     int insize;
-    unsigned char **outbuf;
+    unsigned char *outbuf;
     int outsize;
 };
 

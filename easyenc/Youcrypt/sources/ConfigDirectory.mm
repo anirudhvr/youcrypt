@@ -8,6 +8,7 @@
 
 #import "ConfigDirectory.h"
 #import "libFunctions.h"
+#include "encfs-core/yc_openssl_rsaapps.h"
 
 @implementation ConfigDirectory
 
@@ -28,6 +29,7 @@
     youCryptVolDir = [homedir stringByAppendingPathComponent:@"/.youcrypt/volumes"];
     youCryptTmpDir = [homedir stringByAppendingPathComponent:@"/.youcrypt/tmp"];
     youCryptLogDir = [homedir stringByAppendingFormat:@"/.youcrypt/logs"];
+    youCryptKeyDir = [homedir stringByAppendingFormat:@"/.youcrypt/keys"];
     youCryptListFile = [homedir stringByAppendingPathComponent:@"/.youcrypt/dirs.plist"];
     youcryptUserUUID = [homedir stringByAppendingPathComponent:@"/.youcrypt/uuid.txt"];
 
@@ -52,7 +54,15 @@
         DDLogVerbose(@"First run: could not create Youcrypt vol dir");
     } else if (![libFunctions mkdirRecursive:youCryptTmpDir]) {
         DDLogVerbose(@"First run: could not create Youcrypt Tmp dir");
-    } else {    
+    } else if (![libFunctions mkdirRecursive:youCryptKeyDir]) {
+        DDLogVerbose(@"First run: could not create Youcrypt Tmp dir");
+    } else {
+        // Do all initialization here
+        
+        // Create a keypair for that user
+        
+        
+        // Create unique ID for this user for anonymous tracking
         NSString *uuid = [[NSProcessInfo processInfo] globallyUniqueString];
         NSError *error;
         [uuid writeToFile:youcryptUserUUID atomically:YES encoding:NSASCIIStringEncoding error:&error];
