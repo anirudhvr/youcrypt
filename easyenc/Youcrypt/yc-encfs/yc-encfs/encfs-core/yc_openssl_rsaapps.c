@@ -25,8 +25,6 @@
 #include <openssl/ossl_typ.h>
 
 
-
-
 BIO *bio_err = NULL;
 static UI_METHOD *ui_method = NULL;
 
@@ -118,7 +116,7 @@ int genpkey(int argc, char **argv)
     ERR_load_crypto_strings();
     OpenSSL_add_all_algorithms();
     args = argv + 1;
-    while (!badarg && *args && *args[0] == '-')
+    while ((args-argv < 12) && !badarg && *args && *args[0] == '-')
     {
         if (!strcmp(*args,"-outform"))
         {

@@ -207,6 +207,13 @@
 			remoteGlobalIDString = E6695611159D1B7B002323AD;
 			remoteInfo = StartOnLogin;
 		};
+		E63DB70E15ED9A8600B7A653 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E6D7D2A015D26AD100780915 /* yc-encfs.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = E636BC3015ED8FEE0029767A;
+			remoteInfo = "TestBed avr";
+		};
 		E64AC00615E724A700D2E046 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = E64ABFCA15E724A600D2E046 /* CPP-NETLIB.xcodeproj */;
@@ -1297,6 +1304,7 @@
 			children = (
 				E6D7D2AC15D26AD100780915 /* libyc-encfs-static.a */,
 				E04515A415E99DBF00291C25 /* TestBed */,
+				E63DB70F15ED9A8600B7A653 /* TestBed copy */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1414,6 +1422,13 @@
 			fileType = wrapper.framework;
 			path = StartOnLogin.framework;
 			remoteRef = E635DE8C15AE2BAA00A81117 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E63DB70F15ED9A8600B7A653 /* TestBed copy */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = "TestBed copy";
+			remoteRef = E63DB70E15ED9A8600B7A653 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		E64AC00715E724A700D2E046 /* libcppnetlib-client-connections.a */ = {

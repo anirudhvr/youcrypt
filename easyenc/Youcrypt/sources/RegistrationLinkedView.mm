@@ -45,6 +45,8 @@
     //[name setStringValue:[preferenceController getPreference:YC_USERREALNAME]];
     //[email setStringValue:[preferenceController getPreference:YC_USEREMAIL]];
     // Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
+    
+    [[[NSWorkspace sharedWorkspace] notificationCenter] addObserver:self selector:@selector(updateStatusMessage:) name:@"RegistrationLinkedViewUpdateStatus" object:nil];
 }
 
 - (void)continueClicked:(id)sender {
