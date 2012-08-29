@@ -37,8 +37,13 @@ namespace youcrypt {
     
     struct RSACredentialStorage : public AbstractCredentialStorage {
         
-        RSACredentialStorage(string &privkeyfile, string &pubkeyfile, unordered_map<string, string> &otherParams);
+        RSACredentialStorage(string privkeyfile, string pubkeyfile,
+                             const unordered_map<string, string> &otherparams);
         virtual string getCredData(const string credName);
+        virtual ~RSACredentialStorage()
+        {
+            _creds.clear();
+        }
         
     private:
         unordered_map<string, string> _creds;
@@ -46,13 +51,16 @@ namespace youcrypt {
 
     class RSACredentials : public AbstractCredentials {
     public:
-        RSACredentials(string passphrase, CredentialStorage &cstore);
+        RSACredentials(string passphrase, const CredentialStorage &cstore);
 
         virtual CipherKey decryptVolumeKey(const vector<unsigned char> &,
                                            const shared_ptr<Cipher>&);
         virtual void encryptVolumeKey(const CipherKey &,
                                       const shared_ptr<Cipher> &,
                                       vector<unsigned char> &);
+        virtual ~RSACredentials() {
+            
+        }
         
     private:
         string _passphrase;
