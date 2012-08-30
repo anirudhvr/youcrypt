@@ -29,7 +29,7 @@
     youCryptVolDir = [homedir stringByAppendingPathComponent:@"/.youcrypt/volumes"];
     youCryptTmpDir = [homedir stringByAppendingPathComponent:@"/.youcrypt/tmp"];
     youCryptLogDir = [homedir stringByAppendingFormat:@"/.youcrypt/logs"];
-    youCryptKeyDir = [homedir stringByAppendingFormat:@"/.youcrypt/keys"];
+    _youCryptKeyDir = [homedir stringByAppendingFormat:@"/.youcrypt/keys"];
     youCryptListFile = [homedir stringByAppendingPathComponent:@"/.youcrypt/dirs.plist"];
     youcryptUserUUID = [homedir stringByAppendingPathComponent:@"/.youcrypt/uuid.txt"];
 
@@ -54,7 +54,7 @@
         DDLogVerbose(@"First run: could not create Youcrypt vol dir");
     } else if (![libFunctions mkdirRecursive:youCryptTmpDir]) {
         DDLogVerbose(@"First run: could not create Youcrypt Tmp dir");
-    } else if (![libFunctions mkdirRecursive:youCryptKeyDir]) {
+    } else if (![libFunctions mkdirRecursive:_youCryptKeyDir]) {
         DDLogVerbose(@"First run: could not create Youcrypt Tmp dir");
     } else {
         // Do all initialization here

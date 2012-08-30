@@ -41,7 +41,6 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
 @synthesize decryptController;
 @synthesize listDirectories;
 @synthesize configDir;
-@synthesize directories;
 @synthesize firstRunSheetController;
 @synthesize feedbackSheetController;
 @synthesize keyDown;
@@ -111,18 +110,16 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
     mixpanel.dontLog = NO;
 #endif
     
+    if (!directories) directories.reset(new DirectoryMap);
     return self;
 }
 
 
 -(id) unarchiveDirectoryList:(id) sender {
     directories = [libFunctions unarchiveDirectoryListFromFile:configDir.youCryptListFile];
-    if (directories == nil) {
-        directories = [[NSMutableArray alloc] init];
-    } else {
-        // Do stuff here to check if dirs are all fine?
+    if (!directories) {
+        directories.reset(new DirectoryMap);
     }
-//    [[[NSWorkspace sharedWorkspace] notificationCenter] removeObserver:self name:@"YoucryptReceivedPassphraseFromUser" object:nil];
     return nil;
 }
 
@@ -170,8 +167,10 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
     
     // Unmount all mounted directories
     // XXX check unmount status!
-    for (id dir in directories) {
-        [libFunctions execCommand:UMOUNT_CMD arguments:[NSArray arrayWithObject:[dir mountedPath]]
+    for (auto dir: *(directories.get()))
+    {
+        YoucryptDirectory *d = dir.second.get()->Object;
+        [libFunctions execCommand:UMOUNT_CMD arguments:[NSArray arrayWithObject:[d mountedPath]]
                               env:nil];
     }
     [[[NSWorkspace sharedWorkspace] notificationCenter] removeObserver:self];
@@ -266,16 +265,25 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
     
     
     // Check if a YoucryptDirectory already exists for this folder
+    DirectoryMap &dirs = *(directories.get());
+    std::string strPath([path cStringUsingEncoding:NSASCIIStringEncoding]);
     YoucryptDirectory *dir;
-    for (dir in directories) {
-        if ([path isEqualToString:dir.path])
-            goto FoundOne;
+    
+    DDLogError(@"Enumerating directories map:\n");
+    for (auto d: dirs) {
+        DDLogError(@"Path: %s\n", d.first.c_str());
+    }
+    
+    DirectoryMap::iterator it;
+    if (dirs.find(strPath) != dirs.end()) {
+        dir = dirs[strPath].get()->Object;
+        goto FoundOne;
     }
     
     // No directory exists; so create a new one
     dir = [[YoucryptDirectory alloc] initWithPath:path];
     dir.alias = [[path stringByDeletingPathExtension] lastPathComponent];
-    [directories addObject:dir]; // FIXME do this later
+    dirs[strPath].reset(new cppObjcWrapper<YoucryptDirectory>(dir));
     
 FoundOne:
     // If dir is not mounted yet, construct mount point dir name
@@ -492,7 +500,9 @@ FoundOne:
     
     dir.alias = [[dir.path stringByDeletingPathExtension] lastPathComponent];
     dir.mountedDateAsString = [[NSDate date] descriptionWithCalendarFormat:@"%H:%M %m-%d-%Y" timeZone:nil locale:nil];
-    [directories addObject:dir];
+    DirectoryMap &dmap = *(directories.get());
+    std::string strPath([dir.path cStringUsingEncoding:NSASCIIStringEncoding]);
+    dmap[strPath].reset(new cppObjcWrapper<YoucryptDirectory>(dir));
     if (listDirectories != nil) {
         [listDirectories.statusLabel setStringValue:@""];
         [listDirectories.progressIndicator stopAnimation:listDirectories.window];
@@ -520,21 +530,14 @@ FoundOne:
 // --------------------------------------------------------------------------------------
 // --------------------------------------------------------------------------------------
 
-- (void) removeFSAtRow:(long) row {
-    YoucryptDirectory *dir = [directories objectAtIndex:row];
-    [self doRestore:dir.path];
-}
-
 - (void) removeFSAtPath:(NSString*) path {
-
-    int i = 0, found = 0;
-    for (YoucryptDirectory *dir in directories) {
-        if ([dir.path isEqualToString:path]) {
-            [self doRestore:path];
-            found = 1;
-            break;
-        }
-        i++;
+    DirectoryMap &dmap = *(directories.get());
+    std::string stdPath([path cStringUsingEncoding:NSASCIIStringEncoding]);
+    int found;
+    YoucryptDirectory *dir = dmap[stdPath].get()->Object;
+    if (dir) {
+        [self doRestore:dir.path];
+        found = 1;
     }
     
     if (!found) {
@@ -587,12 +590,10 @@ FoundOne:
     }
     
     YoucryptDirectory *d = nil;
-    for (YoucryptDirectory *dir in directories) {
-        if ([dir.path isEqualToString:path]) {
-            d = dir;
-            break;
-        }
-    }
+    DirectoryMap &dmap = *(directories.get());
+    std::string strPath([path cStringUsingEncoding:NSASCIIStringEncoding]);
+    d = dmap[strPath].get()->Object;
+    
     if (d == nil) {
         d = [[YoucryptDirectory alloc] initWithPath:path];
         
@@ -628,13 +629,9 @@ FoundOne:
 }
 
 - (void)didRestore:(NSString *)path {
-    for (YoucryptDirectory *dir in directories) {
-        if ([path isEqualToString:dir.path]) {
-            [directories removeObject:dir];
-            break;
-        }
-        
-    }
+    DirectoryMap &dmap = *(directories.get());
+    std::string strPath([path cStringUsingEncoding:NSASCIIStringEncoding]);
+    dmap.erase(strPath);
     
     if (listDirectories != nil) {
         [listDirectories.statusLabel setStringValue:@""];
@@ -649,14 +646,6 @@ FoundOne:
 }
 
 -(void) cancelRestore:(NSString *)path {
-//    for (YoucryptDirectory *dir in directories) {
-//        if ([path isEqualToString:dir.path]) {
-//            dir.status = YoucryptDirectoryStatusUnmounted; // Should've been processing
-//            [dir updateInfo];
-//            break;
-//        }
-//        
-//    }    
     @synchronized(self) {
         [restoreQ removeObjectAtIndex:reQIndex];
     }
@@ -764,7 +753,7 @@ FoundOne:
 //--------------------------------------------------------------------------------------------------
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView {
     if (directories)
-        return directories.count;
+        return directories->size();
     else {
         return 0;
     }
@@ -782,7 +771,10 @@ FoundOne:
     if (!directories)
         return nil;
     
-    YoucryptDirectory *dirAtRow = [directories objectAtIndex:row];
+    DirectoryMap::iterator pos = directories->begin();
+    for (int i=0; i<row; i++)
+        ++pos;
+    YoucryptDirectory *dirAtRow = pos->second.get()->Object;
     if (!dirAtRow)
         return nil;
     
@@ -874,7 +866,10 @@ FoundOne:
     if (!directories)
         return;
     
-    YoucryptDirectory *dirAtRow = [directories objectAtIndex:row];
+    DirectoryMap::iterator pos = directories->begin();
+    for (int i=0; i<row; i++)
+        ++pos;
+    YoucryptDirectory *dirAtRow = pos->second.get()->Object;
     if (!dirAtRow)
         return;
         
@@ -916,7 +911,11 @@ FoundOne:
 {   
     NSString *tooltip;
     if (rowIndex >= 0) {
-        YoucryptDirectory *dir = [directories objectAtIndex:rowIndex];
+        
+        DirectoryMap::iterator pos = directories->begin();
+        for (int i=0; i<rowIndex; i++)
+            ++pos;
+        YoucryptDirectory *dir = pos->second.get()->Object;
         tooltip = [NSString stringWithFormat:@"Source folder: %@\n\n"
                              "Status: %@"
                              "%@", dir.path, [dir getStatus],
@@ -952,14 +951,16 @@ FoundOne:
 -(id) someUnMount:(id) sender {
     // Someone unmount us a bomb.
     DDLogVerbose(@"Something unmounted\n");
-//    [YoucryptDirectory refreshMountedFuseVolumes];
-//    YoucryptDirectory *dir;
-//    for (dir in directories) {
-//        [dir updateInfo];
-//    }
     if (listDirectories != nil)
         [listDirectories.table reloadData];
     return nil;
+}
+
+-(boost::shared_ptr<DirectoryMap>) getDirectories {
+    if (!directories) {
+        directories.reset(new DirectoryMap);
+    }
+    return directories;
 }
 
 @end

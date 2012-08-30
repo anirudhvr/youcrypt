@@ -92,7 +92,7 @@
         DDLogError(@"Encrypt: cannot move items at %@ to %@", srcFolder, destFolder);
         return;
     }
-    
+
     /* change folder icon of encrypted folder */
     {
         NSNumber *num = [NSNumber numberWithBool:YES];

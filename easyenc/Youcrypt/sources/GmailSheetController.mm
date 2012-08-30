@@ -27,7 +27,7 @@
     return self;
 }
 
-- (void) setPreferenceController:(PreferenceController*)prefsController;
+- (void) setPreferenceController:(PreferenceController*)prefsController
 {
     preferenceController = prefsController;
 }
@@ -53,6 +53,7 @@
 // Mark: Action methods
 
 - (IBAction)saveClicked:(id)sender {
+    (void)sender;
    //     [libFunctions registerWithKeychain:[password stringValue]:@"ycgmail"];
         [preferenceController setPreference:YC_GMAILUSERNAME value:[username stringValue]];
         [username setStringValue:@""];
@@ -62,6 +63,7 @@
 }
 
 - (void)cancelClicked:(id)sender {
+    (void)sender;
     [self endSheetWithReturnCode:kSheetReturnedCancel];
 }
 

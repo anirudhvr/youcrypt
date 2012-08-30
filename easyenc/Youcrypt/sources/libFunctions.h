@@ -19,6 +19,7 @@
 #import <sys/types.h>
 #import <sys/un.h>
 #import <string.h>
+#import "AppDelegate.h"
 
 @interface libFunctions : NSObject {
     
@@ -39,10 +40,10 @@
                  newPasswd:(NSString *)newPasswd;
 
 
-
-+ (void) archiveDirectoryList:(id)directories
++ (void) archiveDirectoryList:(boost::shared_ptr<DirectoryMap>)directories
                        toFile:(NSString*)file;
-+ (id) unarchiveDirectoryListFromFile:(NSString*)file;
+
++ (boost::shared_ptr<DirectoryMap>) unarchiveDirectoryListFromFile:(NSString*)file;
 
 
 + (BOOL)fileHandleIsReadable:(NSFileHandle*)fh;

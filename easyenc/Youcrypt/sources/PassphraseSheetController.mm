@@ -45,7 +45,7 @@
 // Mark: Action methods
 
 - (void)saveClicked:(id)sender {
-    
+    (void)sender;
     storedpassphrase = [ppman getPassphrase];
     if (storedpassphrase == nil) {
         
@@ -68,7 +68,7 @@
         [ppman setPassPhrase:[newpassphrase stringValue]];
         long count = arr.count;
         for(int i=0;i<count;i++) {
-            NSString *path = [[arr objectAtIndex:i] path];
+            NSString *path = [arr objectAtIndex:i];
             [message setStringValue:[NSString stringWithFormat:@"Updating %ld%%",((i+1)*100)/count]];
             BOOL ret = [libFunctions changeEncFSPasswd:path oldPasswd:[oldpassphrase stringValue] newPasswd:[newpassphrase stringValue]];
             if (!ret)
@@ -79,6 +79,7 @@
 }
 
 - (void)cancelClicked:(id)sender {
+    (void)sender;
     [self endSheetWithReturnCode:kSheetReturnedCancel];
 }
 

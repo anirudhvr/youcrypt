@@ -8,5 +8,5 @@
 
 using namespace youcrypt;
 int  AbstractCredentials::encodedKeySize(const CipherKey&,
-                                         const shared_ptr<Cipher> &){}
+                                         const shared_ptr<Cipher> &){ return 0; }
 

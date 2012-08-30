@@ -68,15 +68,17 @@
     [message setStringValue:[currentView.message stringValue]];
 }
 
-- (IBAction)nextView:(id)sender;
+- (IBAction)nextView:(id)sender
 {
+    (void)sender;
     if (![[self currentView] nextView]) return;
     [transition setSubtype:kCATransitionFromRight];
     [self setCurrentView:[[self currentView] nextView]];
 }
 
-- (IBAction)previousView:(id)sender;
+- (IBAction)previousView:(id)sender
 {
+    (void)sender;
     if (![[self currentView] previousView]) return;
     [transition setSubtype:kCATransitionFromLeft];
     [self setCurrentView:[[self currentView] previousView]];

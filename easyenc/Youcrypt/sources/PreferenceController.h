@@ -89,8 +89,6 @@
 
 // Services tab methods
 -(NSString*) locateBoxFolder;
-static NSArray *openFiles();
-
 
 - (IBAction)chooseDBLocation:(id)sender;
 

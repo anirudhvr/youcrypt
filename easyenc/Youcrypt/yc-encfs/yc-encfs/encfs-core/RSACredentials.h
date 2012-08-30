@@ -37,7 +37,8 @@ namespace youcrypt {
     
     struct RSACredentialStorage : public AbstractCredentialStorage {
         
-        RSACredentialStorage(string &privkeyfile, string &pubkeyfile, unordered_map<string, string> &otherParams);
+        RSACredentialStorage(string &privkeyfile, string &pubkeyfile, 
+                             unordered_map<string, string> &otherParams);
         virtual string getCredData(const string credName);
         
     private:
