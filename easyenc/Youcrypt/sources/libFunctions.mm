@@ -16,7 +16,8 @@
 #define ENCFSCTL @"/yc-encfsctl"
 
 #include <string>
-#include <iostream>
+#include "DirectoryMap.h"
+#include <boost/filesystem/fstream.hpp>
 #include "encfs-core/YoucryptFolder.h"
 #include "encfs-core/Credentials.h"
 #include "encfs-core/PassphraseCredentials.h"
@@ -24,6 +25,8 @@
 using std::cout;
 using std::string;
 using std::endl;
+using boost::filesystem::ofstream;
+using boost::filesystem::ifstream;
 using namespace youcrypt;
 
 
@@ -154,16 +157,29 @@ using namespace youcrypt;
     return (select(fd + 1, &fdset, NULL, NULL, &tmout) > 0);
 }
 
-+ (void) archiveDirectoryList:(id)directories 
+
+
++ (void) archiveDirectoryList:(boost::shared_ptr<DirectoryMap>)directories
                        toFile:(NSString*)file 
 {
-    [NSKeyedArchiver archiveRootObject:directories toFile:file];
-
+    string strFile([file cStringUsingEncoding:NSASCIIStringEncoding]);
+    ofstream ofile(strFile);
+    if (ofile.is_open()) {
+        const DirectoryMap &dmap = *directories.get();
+        ofile << dmap;
+    }    
 }
 
-+ (id) unarchiveDirectoryListFromFile:(NSString*)file
++ (boost::shared_ptr<DirectoryMap>) unarchiveDirectoryListFromFile:(NSString*)file
 {
-    return [NSKeyedUnarchiver unarchiveObjectWithFile:file];    
+    boost::shared_ptr<DirectoryMap> dirs(new DirectoryMap);
+    DirectoryMap &dmap = *dirs.get();
+    string strFile([file cStringUsingEncoding:NSASCIIStringEncoding]);
+    ifstream ifile(strFile);
+    if (ifile.is_open()) {
+        ifile >> dmap;
+    }
+    return dirs;
 }
 
 #include <stdio.h>

@@ -87,6 +87,7 @@
 
 -(IBAction)getFolderList:(id)sender
 {
+    (void)sender;
     NSString *reqURL = @"/2.0/folders/0.xml";
     
     [self makeRestCall:reqURL:NO];

@@ -31,25 +31,24 @@ void RSACredentials::encryptVolumeKey(const CipherKey& key,
                       vector<unsigned char> &data) {
     
     int bufLen = keyCipher->encodedKeySize();
-    unsigned char *tmpBuf = new unsigned char [bufLen], *cipher = NULL;
-    keyCipher->writeRawKey(key, tmpBuf);
+    scoped_ptr<unsigned char> tmpBuf(new unsigned char [bufLen]);
+    //, *cipher = NULL;
+    keyCipher->writeRawKey(key, tmpBuf.get());
+
     struct rsautl_args rsaargs;
     char *pubkeyfilename = strdup(_cstore->getCredData(RSACredentialStorage::RSA_PUBKEYFILE_KEY).c_str());
     
-    rsaargs.inbuf = tmpBuf;
+    rsaargs.inbuf = tmpBuf.get();
     rsaargs.insize = bufLen;
     rsaargs.outsize = 0;
     
     char *rsautl_encrypt_argv[] = {"rsautl", "-encrypt",
-        "-inkey", pubkeyfilename,
-        "-pubin",
-//        "-in", "/tmp/plain.txt",
-//        "-out", "/tmp/cipher.txt",
-         "-inbuf"
+                                   "-inkey", pubkeyfilename,
+                                   "-pubin",
+                                   "-inbuf"
     };
 
-    rsautl(6, rsautl_encrypt_argv,
-           &rsaargs);
+    rsautl(6, rsautl_encrypt_argv, &rsaargs);
     
     if (rsaargs.outsize > 0) { // something got written
         data.resize(rsaargs.outsize);
@@ -69,7 +68,7 @@ CipherKey RSACredentials::decryptVolumeKey(const vector<unsigned char> &data,
                                            const shared_ptr<Cipher> &kc)
 {
     // XXX <- Not a good idea to guess 'data's size this way
-    int bufLen = MAX_RSA_CIPHERTEXT_LENGTH;
+    int bufLen = data.size();
     
     struct rsautl_args rsaargs;
     char *privkeyfilename = strdup(_cstore->getCredData(RSACredentialStorage::RSA_PRIVKEYFILE_KEY).c_str());
@@ -77,8 +76,8 @@ CipherKey RSACredentials::decryptVolumeKey(const vector<unsigned char> &data,
     passwordarg += _passphrase;
     char *pwarg = strdup(passwordarg.c_str());
     
-    rsaargs.inbuf = const_cast<unsigned char*>(&data[0]);
-    rsaargs.insize = data.size(); // XXX FIXME
+    rsaargs.inbuf = const_cast<unsigned char*>(&data.front());
+    rsaargs.insize = bufLen;
     rsaargs.outsize = 0;
 
     char *rsautl_decrypt_argv[] = {"rsautl",

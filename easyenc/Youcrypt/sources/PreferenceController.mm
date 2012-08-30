@@ -200,6 +200,7 @@
 
 -(IBAction)linkBoxAccount:(id)sender
 {
+    (void)sender;
     DDLogVerbose(@"box status: %@",[self getPreference:YC_BOXSTATUS]);
     if(([self getPreference:YC_BOXSTATUS] == nil) || ([[self getPreference:YC_BOXSTATUS] isEqualToString:@""]) ) {
         [boxClient auth];
@@ -222,6 +223,7 @@
 
 -(IBAction)linkGmailAccount:(id)sender
 {
+    (void)sender;
         gmailSheetController.preferenceController = self;
         [gmailSheetController beginSheetModalForWindow:self.window completionHandler:^(NSUInteger returnCode) {
             if (returnCode == kSheetReturnedSave) {
@@ -257,6 +259,7 @@
 
 -(void)boxAuthDone:(NSAlert *)alert returnCode:(NSInteger)returnCode
 {
+    (void)alert;
     if (returnCode == NSAlertFirstButtonReturn) {
         DDLogVerbose(@"BOX AUTH DONE!");
         //[self sendEmail];
@@ -270,11 +273,13 @@
 
 -(IBAction)windowDidLoad:(id)sender
 {
+    (void)sender;
 //    NSLog(@"Windowdidload called");
 }
 
 -(IBAction)windowWillLoad:(id)sender
 {
+    (void)sender;
 //    NSLog(@"Windowwillload called");
 }
 
@@ -282,6 +287,7 @@
 
 - (BOOL)windowShouldClose:(id)sender
 {
+    (void)sender;
     
     [self setPreference:YC_USERREALNAME value:[realName stringValue]];
     [self setPreference:YC_USEREMAIL value:[email stringValue]];
@@ -299,7 +305,15 @@
 
 -(IBAction)changePassphrase:(id)sender
 {
-    passphraseSheetController.arr = theApp.directories;
+    (void)sender;
+    DirectoryMap &dmap = *([theApp getDirectories].get());
+
+    NSMutableArray *arr = [[NSMutableArray alloc] init];
+    for (auto d: dmap) {
+        [arr addObject:[NSString stringWithCString:d.first.c_str()
+                                          encoding:NSASCIIStringEncoding]];
+    }
+    passphraseSheetController.arr = arr;
     [passphraseSheetController beginSheetModalForWindow:self.window completionHandler:^(NSUInteger returnCode) {
         if (returnCode == kSheetReturnedSave) {
             DDLogVerbose(@"changePassphrase: Passphrase change saved");
@@ -347,7 +361,8 @@ static NSArray *openFiles()
 }   
 
 - (IBAction)chooseDBLocation:(id)sender
-{   
+{
+    (void)sender;
     NSArray *path = openFiles();
     
     if(!path){ 
@@ -361,6 +376,7 @@ static NSArray *openFiles()
 
 - (IBAction)chooseBoxLocation:(id)sender
 {
+    (void)sender;
     NSArray *path = openFiles();
     
     if(!path){ 
@@ -373,6 +389,7 @@ static NSArray *openFiles()
 }
 - (IBAction)filenameEncryptionChecked:(id)sender
 {
+    (void)sender;
     long encState = [enableFilenameEncryption state];
     if (encState != [[preferences objectForKey:YC_ENCRYPTFILENAMES] intValue]) {
         // NSDictionary* dict = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:encState], YC_ENCRYPTFILENAMES, nil];
@@ -383,6 +400,7 @@ static NSArray *openFiles()
 
 - (IBAction)startOnBootChecked:(id)sender
 {
+    (void)sender;
     long onBootState = [startOnBoot state];
   //  NSLog(@"checkbox state: %d, stored state: %d", onBootState, [[preferences objectForKey:YC_STARTONBOOT] intValue]);
     if (onBootState != [[preferences objectForKey:YC_STARTONBOOT] intValue]) {
@@ -402,7 +420,7 @@ static NSArray *openFiles()
 
 - (IBAction)allowAnonymousUsageStatisticsChecked:(id)sender
 {
-
+    (void)sender;
     long state = [allowAnonymousUsageStatistics state];
     if (state != [[self getPreference:YC_ANONYMOUSSTATISTICS] intValue]) {
         DDLogInfo(@"old anonym feedback checkbox state: %ld, new: %d", state, [[self getPreference:YC_ANONYMOUSSTATISTICS] intValue]);
@@ -412,6 +430,7 @@ static NSArray *openFiles()
 
 - (IBAction)idleTimeChanged:(id)sender
 {
+    (void)sender;
     DDLogInfo(@"idle time changed to %@", [idleTime stringValue]);
     [self setPreference:YC_IDLETIME value:[idleTime stringValue]];
 }

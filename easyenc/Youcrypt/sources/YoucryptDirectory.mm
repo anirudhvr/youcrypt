@@ -15,14 +15,29 @@
 
 #include <boost/filesystem/path.hpp>
 #include <boost/filesystem/operations.hpp>
-#include <boost/unordered_map.hpp>
+#include "DirectoryMap.h"
+#include <string>
+#include <boost/filesystem/path.hpp>
+#include <boost/filesystem/fstream.hpp>
+#include <boost/archive/xml_oarchive.hpp>
+#include <boost/archive/xml_iarchive.hpp>
+
+using boost::filesystem::path;
+using boost::filesystem::ofstream;
+using boost::filesystem::ifstream;
+using boost::archive::xml_oarchive;
+using boost::archive::xml_iarchive;
+using boost::serialization::make_nvp;
+using std::string;
 #include <map>
 using boost::shared_ptr;
 using boost::unordered_map;
 using std::cout;
 using std::string;
 using std::endl;
+using std::map;
 using namespace youcrypt;
+
 
 @implementation YoucryptDirectory
 
@@ -36,30 +51,22 @@ static BOOL globalsAllocated = NO;
 static NSMutableArray *mountedFuseVolumes;
 //static int minRefreshTime = 5; // at most every 30 seconds
 
-- (id) initWithPath:(NSString*)p
-{
+- (id) initWithArchive:(boost::archive::xml_iarchive &)ar {
     self = [super init];
-    if (self != nil)
-    {
-        path = [NSString stringWithString:p];
-        boost::filesystem::path ph([path cStringUsingEncoding:NSASCIIStringEncoding]);
-        folder.reset(new YoucryptFolder(ph));
-    }
-    return self;
-}
-    
-- (id)initWithCoder:(NSCoder *)decoder {
-    self = [super init];
-    
-    NSString *pp = [theApp.passphraseManager getPassphrase];
-    
+
     if (self != nil) {
-        path = [decoder decodeObjectForKey:@"path"];
-        mountedPath = [decoder decodeObjectForKey:@"mountedPath"];
-        alias = [decoder decodeObjectForKey:@"alias"];
-        mountedDateAsString = [decoder decodeObjectForKey:@"mountedDateAsString"];
-//        status = [decoder decodeIntegerForKey:@"status"];
+        NSString *pp = [theApp.passphraseManager getPassphrase];
         
+        string strPath;
+        ar >> boost::serialization::make_nvp("path", strPath);
+        path = [NSString stringWithCString:strPath.c_str() encoding:NSASCIIStringEncoding];
+        ar >> boost::serialization::make_nvp("mountedPath", strPath);
+        mountedPath = [NSString stringWithCString:strPath.c_str() encoding:NSASCIIStringEncoding];
+        ar >> boost::serialization::make_nvp("alias", strPath);
+        alias = [NSString stringWithCString:strPath.c_str() encoding:NSASCIIStringEncoding];
+        ar >> boost::serialization::make_nvp("mountedDateAsString", strPath);
+        mountedDateAsString = [NSString stringWithCString:strPath.c_str() encoding:NSASCIIStringEncoding];
+
         boost::filesystem::path ph([path cStringUsingEncoding:NSASCIIStringEncoding]);
         if (pp != nil) {
             YoucryptFolderOpts opts;
@@ -76,22 +83,63 @@ static NSMutableArray *mountedFuseVolumes;
             alias = [path lastPathComponent];
         }
         
-//        @synchronized(self) {
-//            if (globalsAllocated == NO) {
-//                mountedFuseVolumes = [[NSMutableArray alloc] init];
-//                [YoucryptDirectory refreshMountedFuseVolumes];
-//                globalsAllocated = YES;
-//            } 
-//        }
+        //        @synchronized(self) {
+        //            if (globalsAllocated == NO) {
+        //                mountedFuseVolumes = [[NSMutableArray alloc] init];
+        //                [YoucryptDirectory refreshMountedFuseVolumes];
+        //                globalsAllocated = YES;
+        //            }
+        //        }
     }
+    return self;
+
+}
+
+- (void) saveToArchive:(boost::archive::xml_oarchive &)ar {
+    string strPath, strMPath, strAlias, strMDate;
+    strPath = string([path cStringUsingEncoding:NSASCIIStringEncoding]);
+    if (mountedPath != nil)
+        strMPath = string([mountedPath cStringUsingEncoding:NSASCIIStringEncoding]);
+    else
+        strMPath = string("");
+    if (alias != nil)
+        strAlias = string([alias cStringUsingEncoding:NSASCIIStringEncoding]);
+    else
+        strAlias = "";
+    if (mountedDateAsString != nil)
+        strMDate = string([mountedDateAsString cStringUsingEncoding:NSASCIIStringEncoding]);
+    else
+        strMDate = "";
+    
+    
+    ar << make_nvp("path", strPath);
+    ar << make_nvp("mountedPath", strMPath);
+    ar << make_nvp("alias", strAlias);
+    ar << make_nvp("mountedDateAsString", strMDate);
+}
+
+- (id) initWithPath:(NSString*)p
+{
+    self = [super init];
+    if (self != nil)
+    {
+        path = [NSString stringWithString:p];
+        boost::filesystem::path ph([path cStringUsingEncoding:NSASCIIStringEncoding]);
+        folder.reset(new YoucryptFolder(ph));
+    }
+    return self;
+}
+    
+- (id)initWithCoder:(NSCoder *)decoder {
+    // THIS FUNCTION IS DEPRECATED
+    // See above initWithArchive
+    self = [super init];
     return self;
 }   
 
 - (void)encodeWithCoder:(NSCoder *)encoder {
-    [encoder encodeObject:path forKey:@"path"];
-    [encoder encodeObject:mountedPath forKey:@"mountedPath"];
-    [encoder encodeObject:alias forKey:@"alias"];
-    [encoder encodeObject:mountedDateAsString forKey:@"mountedDateAsString"];
+    // THIS FUNCTION IS DEPRECATED
+    // See above saveToArchive
 //    [encoder encodeInteger:status forKey:@"status"];
 }
 
@@ -286,9 +334,11 @@ getout:
 
 - (BOOL) closeEncryptedFolder
 {
-    if (folder->currStatus() == YoucryptFolder::mounted)
-        folder->unmount();
-    folder.reset();
+    if (folder) {
+        if (folder->currStatus() == YoucryptFolder::mounted)
+            folder->unmount();
+        folder.reset();
+    }
 }
 
 - (int) status
@@ -309,121 +359,6 @@ getout:
     return [NSString stringWithFormat:@"%s", folder->statusAsString()];
 }
 
-//- (void) updateInfo
-//{
-//    [self checkYoucryptDirectoryStatus:NO];
-//}
-//
-//- (BOOL)checkYoucryptDirectoryStatus:(BOOL)forceRefresh
-//{  
-//    if (forceRefresh)
-//        [YoucryptDirectory refreshMountedFuseVolumes];
-//    
-//    NSUInteger indexOfPath = [mountedFuseVolumes indexOfObject:mountedPath];
-//    BOOL isDir = NO;
-//    BOOL sourcedirExists = [[NSFileManager defaultManager] fileExistsAtPath:path isDirectory:nil];
-//    BOOL mountpathExists = [[NSFileManager defaultManager] fileExistsAtPath:mountedPath isDirectory:&isDir];
-//    
-//    if (status == YoucryptDirectoryStatusProcessing) // We don't handle this.
-//        return YES;    
-//    else if (!sourcedirExists) {
-//        status = YoucryptDirectoryStatusSourceNotFound;
-//        return YES;
-//    }
-//    else if (mountpathExists && indexOfPath != NSNotFound) {        
-//        status = YoucryptDirectoryStatusMounted;
-//        return YES;
-//    }
-//    else {
-//        status = YoucryptDirectoryStatusUnmounted;
-//        mountedPath = @"";
-//        return YES;
-//    }
-//    
-//    return YES;
-//}
-
-// Refreshes the static variable mountedFuseVolumes at most every 5 minutes
-//+ (void) refreshMountedFuseVolumes
-//{
-//    NSFileHandle *fh = [NSFileHandle alloc];
-//    NSTask *mountTask = [NSTask alloc];
-//    NSArray *argsArray = [NSArray arrayWithObjects:@"-t", @"osxfusefs", nil];
-//    NSString *mountOutput;
-//    NSMutableArray *tmpMountedFuseVolumes = [[NSMutableArray alloc] init];
-//    
-//    
-//    if ([libFunctions execWithSocket:MOUNT_CMD arguments:argsArray env:nil io:fh proc:mountTask]) {
-//        [mountTask waitUntilExit];
-//        if (![libFunctions fileHandleIsReadable:fh]) {
-//            mountedFuseVolumes = tmpMountedFuseVolumes;
-//            return;
-//        }
-//
-//        NSData *bytes = [fh availableData];
-//        mountOutput = [[NSString alloc] initWithData:bytes encoding:NSUTF8StringEncoding];
-//        
-//        [fh closeFile];
-//    } else {
-//        DDLogVerbose(@"Could not exec mount -t osxfusefs");
-//        return;
-//    }
-//        
-//
-//    NSMutableArray *mountLines = [[NSMutableArray alloc] initWithArray:[mountOutput componentsSeparatedByString:@"\n"]];
-//    
-//    
-//    for (NSString *line in mountLines) {
-//        NSError *error = NULL;
-//        NSRegularExpression *regex = [NSRegularExpression         
-//                                      regularExpressionWithPattern:@"^YoucryptFS on (.*) \\(osxfusefs*"
-//                                      options:NSRegularExpressionCaseInsensitive
-//                                      error:&error];
-//        [regex enumerateMatchesInString:line options:0 range:NSMakeRange(0, [line length]) usingBlock:^(NSTextCheckingResult *match, NSMatchingFlags flags, BOOL *stop){
-//            [tmpMountedFuseVolumes addObject:[line substringWithRange:[match rangeAtIndex:1]]];
-//        }];
-//     
-//    }
-//    [mountedFuseVolumes removeAllObjects]; // clear existing array
-//    mountedFuseVolumes = tmpMountedFuseVolumes;
-//    NSString *mnted;
-//    DDLogInfo(@"Mounted fuse volumes:\n");
-//    for (mnted in mountedFuseVolumes) {
-//        DDLogInfo(@"mounted : %@\n", mnted);
-//    }
-//}
-
-//+ (BOOL) pathIsMounted:(NSString *)path {
-//    [YoucryptDirectory refreshMountedFuseVolumes];    
-//    if ([mountedFuseVolumes indexOfObject:path] == NSNotFound)
-//        return NO;
-//    else {
-//        return YES;
-//    }
-//}
-
-//+ (NSString*) statusToString:(NSUInteger)status
-//{
-//    switch(status) {
-//        case YoucryptDirectoryStatusNotFound:
-//            return @"Directory not found";
-//            break;
-//        case YoucryptDirectoryStatusMounted:
-//            return @"Open";
-//            break;
-//        case YoucryptDirectoryStatusUnmounted:
-//            return @"Closed";
-//            break;
-//        case YoucryptDirectoryStatusProcessing:
-//            return @"Processing";
-//            break;
-//        case YoucryptDirectoryStatusSourceNotFound:
-//            return @"Source directory not found";
-//            break;
-//        default:
-//            return nil;
-//    }
-//}
 
 @end
 

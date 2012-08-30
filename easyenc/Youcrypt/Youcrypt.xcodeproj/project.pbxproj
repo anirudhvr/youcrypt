@@ -67,6 +67,7 @@
 		E054042315AB1CE10011E5CC /* RestoreController.mm in Sources */ = {isa = PBXBuildFile; fileRef = E054042115AB1CE10011E5CC /* RestoreController.mm */; };
 		E054042415AB1CE10011E5CC /* Restore.xib in Resources */ = {isa = PBXBuildFile; fileRef = E054042215AB1CE10011E5CC /* Restore.xib */; };
 		E06E2B4115A76ABE00E52B2D /* ListRightClick.xib in Resources */ = {isa = PBXBuildFile; fileRef = E06E2B4015A76ABE00E52B2D /* ListRightClick.xib */; };
+		E09C592915EEE23500F51B1D /* DirectoryMap.mm in Sources */ = {isa = PBXBuildFile; fileRef = E09C592815EEE23500F51B1D /* DirectoryMap.mm */; };
 		E0A2849815A61A26008A949A /* logo-512x512-alpha.icns in Resources */ = {isa = PBXBuildFile; fileRef = E0A2849715A61A26008A949A /* logo-512x512-alpha.icns */; };
 		E0BF0E951596B9C8002F9FB9 /* YoucryptDirectory.mm in Sources */ = {isa = PBXBuildFile; fileRef = E0BF0E941596B9C8002F9FB9 /* YoucryptDirectory.mm */; };
 		E0BF0E9D1596D01F002F9FB9 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E0BF0E9C1596D01F002F9FB9 /* Foundation.framework */; };
@@ -529,6 +530,8 @@
 		E054042215AB1CE10011E5CC /* Restore.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Restore.xib; sourceTree = "<group>"; };
 		E06E2B3F15A7671B00E52B2D /* constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = constants.h; path = sources/constants.h; sourceTree = "<group>"; };
 		E06E2B4015A76ABE00E52B2D /* ListRightClick.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ListRightClick.xib; sourceTree = "<group>"; };
+		E09C592715EEE23500F51B1D /* DirectoryMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DirectoryMap.h; path = sources/DirectoryMap.h; sourceTree = "<group>"; };
+		E09C592815EEE23500F51B1D /* DirectoryMap.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = DirectoryMap.mm; path = sources/DirectoryMap.mm; sourceTree = "<group>"; };
 		E0A2849715A61A26008A949A /* logo-512x512-alpha.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = "logo-512x512-alpha.icns"; sourceTree = "<group>"; };
 		E0BF0E931596B9C8002F9FB9 /* YoucryptDirectory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = YoucryptDirectory.h; path = sources/YoucryptDirectory.h; sourceTree = "<group>"; };
 		E0BF0E941596B9C8002F9FB9 /* YoucryptDirectory.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = YoucryptDirectory.mm; path = sources/YoucryptDirectory.mm; sourceTree = "<group>"; };
@@ -885,6 +888,8 @@
 				25617DC515ABD54A00EED7F7 /* ListDirTable.h */,
 				25617DC615ABD54B00EED7F7 /* ListDirTable.mm */,
 				256C359B158EA88700E2BEC4 /* PreferenceController.h */,
+				E09C592715EEE23500F51B1D /* DirectoryMap.h */,
+				E09C592815EEE23500F51B1D /* DirectoryMap.mm */,
 				256C359C158EA88700E2BEC4 /* PreferenceController.mm */,
 				E6649C7B15A53CE40096886F /* Encrypt.h */,
 				E6649C7915A53CD80096886F /* Encrypt.mm */,
@@ -1808,6 +1813,7 @@
 				E64AC1BB15E769D500D2E046 /* KeyManager.cpp in Sources */,
 				E64AC1BD15E769D500D2E046 /* PasswordManager.cpp in Sources */,
 				E64AC1BE15E769D500D2E046 /* UserAccount.cpp in Sources */,
+				E09C592915EEE23500F51B1D /* DirectoryMap.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1946,6 +1952,8 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "sources/Youcrypt-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS_NOT_USED_IN_PRECOMPS = "";
+				GCC_WARN_UNUSED_VALUE = NO;
+				GCC_WARN_UNUSED_VARIABLE = NO;
 				HEADER_SEARCH_PATHS = (
 					"\"$(SRCROOT)\"",
 					"\"$(SRCROOT)/yc-encfs/yc-encfs\"",
@@ -1961,13 +1969,18 @@
 					/opt/local/lib,
 					/usr/local/lib,
 				);
+				OTHER_CFLAGS = (
+					"-Wunused-variable",
+					"-Wdeprecated-writable-strings",
+					"-w",
+				);
 				OTHER_CPLUSPLUSFLAGS = (
 					"$(OTHER_CFLAGS)",
 					"-D_FILE_OFFSET_BITS=64",
 					"-DFUSE_USE_VERSION=26",
 					"-D__STDC_FORMAT_MACROS",
 					"-DRLOG_COMPONENT=\"encfs\"",
-					"-W",
+					"-w",
 					"-Wall",
 					"-Wpointer-arith",
 					"-Wwrite-strings",
@@ -2003,6 +2016,8 @@
 				GCC_PREFIX_HEADER = "sources/Youcrypt-Prefix.pch";
 				"GCC_PREPROCESSOR_DEFINITIONS[sdk=macosx10.7][arch=x86_64]" = "RELEASE=1";
 				GCC_PREPROCESSOR_DEFINITIONS_NOT_USED_IN_PRECOMPS = "";
+				GCC_WARN_UNUSED_VALUE = NO;
+				GCC_WARN_UNUSED_VARIABLE = NO;
 				HEADER_SEARCH_PATHS = (
 					"\"$(SRCROOT)\"",
 					"\"$(SRCROOT)/yc-encfs/yc-encfs\"",
@@ -2018,13 +2033,18 @@
 					/opt/local/lib,
 					/usr/local/lib,
 				);
+				OTHER_CFLAGS = (
+					"-Wunused-variable",
+					"-Wdeprecated-writable-strings",
+					"-w",
+				);
 				OTHER_CPLUSPLUSFLAGS = (
 					"$(OTHER_CFLAGS)",
 					"-D_FILE_OFFSET_BITS=64",
 					"-DFUSE_USE_VERSION=26",
 					"-D__STDC_FORMAT_MACROS",
 					"-DRLOG_COMPONENT=\"encfs\"",
-					"-W",
+					"-w",
 					"-Wall",
 					"-Wpointer-arith",
 					"-Wwrite-strings",

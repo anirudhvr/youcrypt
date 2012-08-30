@@ -96,16 +96,29 @@
 }
 
 - (void)doOpenProxy:(NSInteger) row {
-    if (row < [theApp.directories count]) {
-        YoucryptDirectory *dir = [theApp.directories objectAtIndex:row];
+    DirectoryMap &dmap = *([theApp getDirectories].get());
+    int count = dmap.size();
+    if (row == -1) return;
+    if (row < count) {
+        DirectoryMap::iterator beg = dmap.begin();
+        for (int i=0; i<row; i++)
+            ++beg;
+        YoucryptDirectory *dir = beg->second.get()->Object;
         [theApp openEncryptedFolder:[dir path]];
     }
 }
 
 - (IBAction)doProps:(id)sender {
-    
-    if ([table selectedRow] < [theApp.directories count]) {
-        YoucryptDirectory *dir = [theApp.directories objectAtIndex:[table selectedRow]];
+    DirectoryMap &dmap = *([theApp getDirectories].get());
+    int row = [table selectedRow];
+    int count = dmap.size();
+    if (row == -1) return;
+    if (row < count) {
+        DirectoryMap::iterator beg = dmap.begin();
+        for (int i=0; i<row; i++)
+            ++beg;
+        YoucryptDirectory *dir = beg->second.get()->Object;
+        [theApp openEncryptedFolder:[dir path]];
         volumePropsSheet.sp = dir.path;
         volumePropsSheet.mp = dir.mountedPath;
         volumePropsSheet.stat = [dir getStatus];
@@ -122,17 +135,29 @@
 }
 
 - (IBAction)selectRow:(id)sender {
+
+    DirectoryMap &dmap = *([theApp getDirectories].get());
+    int count = dmap.size();
+
 //    NSLog(@"Selected row %ld", [sender selectedRow]);
-    if ([sender clickedRow] < [theApp.directories count]) {
+    if ([sender clickedRow] < count) {
         [self setStatusToSelectedRow:[sender clickedRow]];
     }
 }
 
 - (void)setStatusToSelectedRow:(NSInteger)row {
 //    NSLog(@"Selected row %ld", row);
-    
-    YoucryptDirectory *dir = [theApp.directories objectAtIndex:row];
-    [dirName setStringValue:[NSString stringWithFormat:@"   %@",[dir.path stringByDeletingPathExtension]]];
+    DirectoryMap &dmap = *([theApp getDirectories].get());
+    int count = dmap.size();
+    if (row == -1)
+        return;
+    if (row < count) {
+        DirectoryMap::iterator beg = dmap.begin();
+        for (int i=0; i<row; i++)
+            ++beg;
+        YoucryptDirectory *dir = beg->second.get()->Object;
+        [dirName setStringValue:[NSString stringWithFormat:@"   %@",[dir.path stringByDeletingPathExtension]]];
+    }
 }
 
 - (IBAction)addNew:(id)sender {
@@ -156,8 +181,14 @@
 
 - (IBAction)removeFS:(id)sender {
     NSInteger row = [table selectedRow];
-    if (row < [theApp.directories count] && row != -1) {
-        YoucryptDirectory *dir = [theApp.directories objectAtIndex:row];
+    
+    DirectoryMap &dmap = *([theApp getDirectories].get());
+    int count = dmap.size();
+    if (row < count && row != -1) {
+        DirectoryMap::iterator beg = dmap.begin();
+        for (int i=0; i<row; i++)
+            ++beg;
+        YoucryptDirectory *dir = beg->second.get()->Object;
         
         if (dir.status == YoucryptDirectoryStatusMounted) {
             int ret = [self closeMountedFolder:dir];
@@ -174,21 +205,20 @@
             [table beginUpdates];
             [table removeRowsAtIndexes:[[NSIndexSet alloc] initWithIndex:row] withAnimation:NSTableViewAnimationSlideUp];
             [table endUpdates];
-            [theApp.directories removeObjectAtIndex:row];
+            dmap.erase(beg);
         } else if (dirstatus == YoucryptDirectoryStatusInitialized) {
             long retCode;
             if((retCode = [[NSAlert alertWithMessageText:@"Decrypt and Restore" defaultButton:@"Yes" alternateButton:@"No, delete the data." otherButton:@"Cancel" informativeTextWithFormat:@"You have chosen to permanently decrypt the encrypted folder at %@.  Restore contents?", [dir.path stringByDeletingLastPathComponent]] runModal]) == NSAlertDefaultReturn) {
                 [theApp removeFSAtRow:row];
             }
             else if (retCode == NSAlertAlternateReturn) {
-                [theApp.directories removeObject:dir];
+                dmap.erase(beg);
             }
 //            NSImage *generic = [[NSWorkspace sharedWorkspace] iconForFileType:NSFileTypeForHFSTypeCode(kGenericFolderIcon)];
 //            BOOL didSetIcon = [[NSWorkspace sharedWorkspace] setIcon:generic forFile:[[dir path] stringByDeletingLastPathComponent] options:0];
 //            NSLog(@"Icon reset : %d for %@",didSetIcon,[[dir path] stringByDeletingLastPathComponent]);
             
         }
-        
     }
     [dirName setStringValue:@""];
     [table reloadData];
@@ -216,9 +246,13 @@ void printCloseError(int ret)
 
 - (IBAction)close:(id)sender {
     NSInteger row = [table selectedRow];
-    if (row < [theApp.directories count] && row != -1) {
-        YoucryptDirectory *dir = [theApp.directories objectAtIndex:row];
-        
+    DirectoryMap &dmap = *([theApp getDirectories].get());
+    int count = dmap.size();
+    if (row < count) {
+        DirectoryMap::iterator beg = dmap.begin();
+        for (int i=0; i<row; i++)
+            ++beg;
+        YoucryptDirectory *dir = beg->second.get()->Object;
         int ret = [self closeMountedFolder:dir];
         printCloseError(ret);
         
@@ -452,7 +486,15 @@ void printCloseError(int ret)
 - (void) showChangePassphraseSheet 
 {
     [passphraseSheet.message setStringValue:@"HELLO!"];
-    passphraseSheet.arr = theApp.directories;
+    
+    DirectoryMap &dmap = *([theApp getDirectories].get());
+    
+    NSMutableArray *arr = [[NSMutableArray alloc] init];
+    for (auto d: dmap) {
+        [arr addObject:[NSString stringWithCString:d.first.c_str()
+                                          encoding:NSASCIIStringEncoding]];
+    }
+    passphraseSheet.arr = arr;
     [passphraseSheet beginSheetModalForWindow:theApp.listDirectories.window completionHandler:^(NSUInteger returnCode) {
         if (returnCode == kSheetReturnedSave) {
             DDLogVerbose(@"showChangePassphraseSheet: Change Passphrase done");

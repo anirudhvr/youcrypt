@@ -8,6 +8,9 @@
 
 #import <Cocoa/Cocoa.h>
 #import "RestoreController.h"
+#import <boost/shared_ptr.hpp>
+#import "DirectoryMap.h"
+#import <map>
 
 @class PreferenceController;
 @class FileSystemsController;
@@ -27,6 +30,8 @@
 @class MixpanelAPI;
 @class AboutController;
 @class PassphraseManager;
+
+
 
 @interface AppDelegate : NSObject <NSTableViewDataSource, NSTableViewDelegate, NSApplicationDelegate> { // changed from NSApplicationDelegate
     
@@ -57,7 +62,8 @@
 
     // List of directories maintained by us.
     // Objects added should be (YoucryptDirectory *)
-    NSMutableArray *directories;
+//    NSMutableArray *directories;    
+    boost::shared_ptr<DirectoryMap> directories;
     
     DDFileLogger *fileLogger;
     NSString *mixpanelUUID;
@@ -112,10 +118,11 @@
 - (void) showTour;
 
 -(id) passphraseReceivedFromUser:(id) sender;
+-(boost::shared_ptr<DirectoryMap>) getDirectories;
     
 
 // Setters and getters
-@property (readonly) NSMutableArray *directories;
+//@property (readonly) NSMutableArray *directories;
 @property (assign) IBOutlet NSWindow *window;
 @property (atomic,strong) Encrypt *encryptController;
 @property (atomic,strong) Decrypt *decryptController;

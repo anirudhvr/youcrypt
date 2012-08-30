@@ -65,6 +65,7 @@
 
 
 - (void)okClicked:(id)sender {
+    (void)sender;
     [self endSheetWithReturnCode:0];
 }
 

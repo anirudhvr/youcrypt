@@ -40,7 +40,8 @@
 **/
 
 - (IBAction)decrypt:(id)sender
-{	
+{
+    (void)sender;
 	srcFolder = dir.path;
 	destFolder = dir.mountedPath;
 	NSString *yourPasswordString;
@@ -81,6 +82,7 @@
 }
 
 - (IBAction)cancel:(id)sender {
+    (void)sender;
     DDLogVerbose(@"Cancel decrypt : %@",dir.path);
     [self close];
     [theApp cancelDecrypt:dir];

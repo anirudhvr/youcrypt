@@ -53,7 +53,7 @@
 
 -(IBAction)send:(id)sender
 {
-
+    (void)sender;
     NSString *curlEmail;
    
     if([anonymize state]) {
@@ -143,6 +143,7 @@
 
 -(IBAction)cancel:(id)sender
 {
+    (void)sender;
     [self endSheetWithReturnCode:kSheetReturnedCancel];
 }
 

@@ -38,6 +38,7 @@
 
 - (IBAction) restore:(id)sender
 {
+    (void)sender;
     if (!self.keychainHasPassphrase)
         passwd = [passwordField stringValue];
     
@@ -106,6 +107,7 @@
 //}
 
 - (IBAction)cancel:(id)sender {
+    (void)sender;
     [self.window close];
     [theApp cancelRestore:path];
 }

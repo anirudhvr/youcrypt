@@ -30,7 +30,7 @@
     return self;
 }
 
-- (void) setPreferenceController:(PreferenceController*)prefsController;
+- (void) setPreferenceController:(PreferenceController*)prefsController
 {
     preferenceController = prefsController;
 }
@@ -46,6 +46,7 @@
 }
 
 - (void)saveClicked:(id)sender {
+    (void)sender;
     if([[password stringValue] isEqualToString:@""] || 
        [[password stringValue] isNotEqualTo:[confirmPassword stringValue]]) {
         

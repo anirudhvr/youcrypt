@@ -23,7 +23,7 @@
     listDirObj = listDirObject;
 }
 
-- (void) keyDown:(NSEvent *)theEvent;
+- (void) keyDown:(NSEvent *)theEvent
 {
     [super keyDown:theEvent];	
     
@@ -101,6 +101,7 @@
 
 - (void)mouseEntered:(NSEvent*)event
 {
+    (void)event;
 //    [listDirObj.backgroundImageView.animator alpha
     [listDirObj.backgroundImageView.animator setAlphaValue:1.5];
     [[NSCursor pointingHandCursor] set];
@@ -111,6 +112,7 @@
 
 - (void)mouseExited:(NSEvent*)event
 {
+    (void)event;
     //    [listDirObj.backgroundImageView.animator alpha
     [listDirObj.backgroundImageView.animator setAlphaValue:0.65];
     [[NSCursor arrowCursor] set];
@@ -136,7 +138,7 @@
 
 
 - (void)drawBackgroundInClipRect:(NSRect)clipRect {
-    
+    (void)clipRect;
     // don't draw a background rect
 }
 
@@ -231,7 +233,7 @@
 
 
 
-- (NSMenu *)menuForEvent:(NSEvent *)theEvent;
+- (NSMenu *)menuForEvent:(NSEvent *)theEvent
 {
     // what row are we at?
     long row = [self rowAtPoint: [self convertPoint: [theEvent locationInWindow] fromView: nil]];
