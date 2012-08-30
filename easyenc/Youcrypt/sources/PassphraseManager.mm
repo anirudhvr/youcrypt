@@ -62,7 +62,7 @@
 }
 
 -(IBAction)goClicked:(id) sender {
-    if ([[pass stringValue] isNotEqualTo:@""]) {
+    if ([[pass stringValue] isNotEqualTo:@""] && ([[pass stringValue] length] >= 4)) {
         passPhrase = [pass stringValue];
         NSString *errmsgBuf = nil;
         if ((errmsgBuf = [theApp.configDir checkKeys]) != nil) {
@@ -73,7 +73,7 @@
             [message setStringValue:@""];
         }
     } else {
-        [message setStringValue:@"Passphrase cannot be empty"];
+        [message setStringValue:@"Passphrase empty or too short"];
         return;
     }
     if (saveInKeychain)
