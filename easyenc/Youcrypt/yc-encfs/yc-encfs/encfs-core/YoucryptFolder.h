@@ -67,6 +67,8 @@ namespace youcrypt {
     };
 
     class YoucryptFolder {
+    protected:
+        YoucryptFolder(); //! For inherited classes
     public:
         //! Create a new object representing encrypted content at path.
         YoucryptFolder(const path&, 
@@ -134,7 +136,7 @@ namespace youcrypt {
         // Defined in YoucryptFolder.cpp
         static const char *statusString[];
 
-    private:
+    protected:
         EncFS_Context ctx;
         boost::shared_ptr<Cipher> cipher;
         CipherKey volumeKey;

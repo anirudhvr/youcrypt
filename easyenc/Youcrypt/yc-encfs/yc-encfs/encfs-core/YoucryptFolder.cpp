@@ -214,6 +214,12 @@ const char *YoucryptFolder::statusString[] = {
             "Authentication failed"
 };
 
+/*! Implementation: Creates an empty object */
+YoucryptFolder::YoucryptFolder()
+{
+    status = YoucryptFolder::statusUnknown;
+}
+
 /*! Implementation: Create a YoucryptFolder object
  */
 YoucryptFolder::YoucryptFolder(const path &_rootPath)
