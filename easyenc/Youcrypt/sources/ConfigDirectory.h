@@ -32,7 +32,7 @@
 
 -(BOOL)isFirstRun;
 -(void)firstRunSuccessful;
--(BOOL) checkKeys; // Called after passphrase received from user
+-(NSString*) checkKeys; // Called after passphrase received from user
 -(youcrypt::CredentialStorage) getCredStorage;
 
 

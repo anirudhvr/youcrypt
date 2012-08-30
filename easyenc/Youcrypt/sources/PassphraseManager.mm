@@ -11,6 +11,7 @@
 #import "contrib/SSKeychain/SSKeychain.h"
 #import "PreferenceController.h"
 #import "AppDelegate.h"
+#import "ConfigDirectory.h"
 #import "contrib/passwdqc/passwdqc.h"
 
 #define YC_KEYCHAIN_SERVICENAME @"com.Youcrypt"
@@ -62,8 +63,15 @@
 
 -(IBAction)goClicked:(id) sender {
     if ([[pass stringValue] isNotEqualTo:@""]) {
-        [message setStringValue:@""];
         passPhrase = [pass stringValue];
+        NSString *errmsgBuf = nil;
+        if ((errmsgBuf = [theApp.configDir checkKeys]) != nil) {
+            [message setStringValue:errmsgBuf];
+            passPhrase = @"";
+            return;
+        } else {
+            [message setStringValue:@""];
+        }
     } else {
         [message setStringValue:@"Passphrase cannot be empty"];
         return;
