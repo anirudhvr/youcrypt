@@ -881,6 +881,7 @@
 		25F3D154159243E300E3383C /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				E077154115EF1BEA009AB1C2 /* Core */,
 				256C3571158EA75F00E2BEC4 /* AppDelegate.h */,
 				256C3572158EA75F00E2BEC4 /* AppDelegate.mm */,
 				E0BF0EBA159838DD002F9FB9 /* ListDirectoriesWindow.h */,
@@ -926,6 +927,13 @@
 				E68F196A15B4A979008A90FC /* Firstrun_Tour */,
 			);
 			name = Classes;
+			sourceTree = "<group>";
+		};
+		E077154115EF1BEA009AB1C2 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Core;
 			sourceTree = "<group>";
 		};
 		E0BF0E9E1596D01F002F9FB9 /* TestBed */ = {

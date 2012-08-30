@@ -129,20 +129,6 @@ static NSMutableArray *mountedFuseVolumes;
     }
     return self;
 }
-    
-- (id)initWithCoder:(NSCoder *)decoder {
-    // THIS FUNCTION IS DEPRECATED
-    // See above initWithArchive
-    self = [super init];
-    return self;
-}   
-
-- (void)encodeWithCoder:(NSCoder *)encoder {
-    // THIS FUNCTION IS DEPRECATED
-    // See above saveToArchive
-//    [encoder encodeInteger:status forKey:@"status"];
-}
-
 
 - (BOOL)encryptFolderInPlaceWithPassphrase:(NSString*)pp
                           encryptFilenames:(BOOL)encfnames

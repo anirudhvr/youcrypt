@@ -73,6 +73,7 @@
     BOOL encfnames = NO;
     if ([[theApp.preferenceController getPreference:YC_ENCRYPTFILENAMES] intValue] != 0)
         encfnames = YES;
+    destFolder = [srcFolder stringByAppendingPathExtension:ENCRYPTED_DIRECTORY_EXTENSION];
     
     dir = [[YoucryptDirectory alloc] initWithPath:srcFolder];
     if ([dir status] != YoucryptDirectoryStatusUnknown) {
@@ -87,7 +88,6 @@
     
     NSFileManager *fm = [NSFileManager defaultManager];
     NSError *err;
-    destFolder = [srcFolder stringByAppendingPathExtension:ENCRYPTED_DIRECTORY_EXTENSION];
     if (![fm moveItemAtPath:srcFolder toPath:destFolder error:&err]) {
         DDLogError(@"Encrypt: cannot move items at %@ to %@", srcFolder, destFolder);
         return;
