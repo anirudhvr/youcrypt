@@ -65,13 +65,8 @@ extern "C"  {
         DDLogVerbose(@"First run: could not create Youcrypt vol dir");
     } else if (![libFunctions mkdirRecursive:youCryptTmpDir]) {
         DDLogVerbose(@"First run: could not create Youcrypt Tmp dir");
-<<<<<<< HEAD
-    } else if (![libFunctions mkdirRecursive:_youCryptKeyDir]) {
-        DDLogVerbose(@"First run: could not create Youcrypt Tmp dir");
-=======
     } else if (![libFunctions mkdirRecursive:youCryptKeyDir]) {
         DDLogVerbose(@"First run: could not create Youcrypt keys dir");
->>>>>>> origin/dev
     } else {
         // Do all initialization here
         

@@ -201,13 +201,6 @@
 			remoteGlobalIDString = E045154315E9507900291C25;
 			remoteInfo = TestBed;
 		};
-		E0778D8C15EDAA8100AEDFC4 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = E6D7D2A015D26AD100780915 /* yc-encfs.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = E636BC3015ED8FEE0029767A;
-			remoteInfo = "TestBed avr";
-		};
 		E635DE8C15AE2BAA00A81117 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = E66988C3159D403B002323AD /* StartOnLogin.xcodeproj */;
@@ -1427,13 +1420,6 @@
 			fileType = "compiled.mach-o.executable";
 			path = TestBed;
 			remoteRef = E04515A315E99DBF00291C25 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		E0778D8D15EDAA8100AEDFC4 /* TestBed copy */ = {
-			isa = PBXReferenceProxy;
-			fileType = "compiled.mach-o.executable";
-			path = "TestBed copy";
-			remoteRef = E0778D8C15EDAA8100AEDFC4 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		E635DE8D15AE2BAA00A81117 /* StartOnLogin.framework */ = {
