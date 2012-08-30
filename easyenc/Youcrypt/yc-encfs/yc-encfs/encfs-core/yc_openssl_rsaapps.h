@@ -6,9 +6,12 @@
 //  Copyright (c) 2012 Nouvou Inc. All rights reserved.
 //
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+    
 #ifndef Youcrypt_youcrypt_openssl_apps_h
 #define Youcrypt_youcrypt_openssl_apps_h
-
 
 ///////////////////////////////////////////////////////
 // Copypaste from apps.h
@@ -117,4 +120,9 @@ int rsa(int argc, char **argv);
 int rsautl(int argc, char **argv, struct rsautl_args *rsautlargs);
 
 
+#endif
+
+
+#ifdef __cplusplus
+}
 #endif

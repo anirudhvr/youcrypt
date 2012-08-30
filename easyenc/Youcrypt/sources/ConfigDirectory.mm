@@ -8,9 +8,7 @@
 
 #import "ConfigDirectory.h"
 #import "libFunctions.h"
-extern "C"  {
 #include "encfs-core/yc_openssl_rsaapps.h"
-}
 #include "PassphraseManager.h"
 #include "AppDelegate.h"
 #include <string>

@@ -28,7 +28,7 @@
 - (NSString*)getPassphrase;
 - (BOOL)changePassphrase:(NSString*)newPassphrase
                  oldPass:(NSString*)oldPassphrase;
-- (BOOL)setPassphrase:(NSString*) passphrase;
+- (BOOL)setPassphrase:(NSString*) passphrase error:(NSError**)err;
 - (BOOL)savePassphraseToKeychain;
 - (BOOL)deletePassphraseFromKeychain;
 - (void)getPassphraseFromUser;

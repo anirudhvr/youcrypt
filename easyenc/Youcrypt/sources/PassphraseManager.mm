@@ -11,6 +11,7 @@
 #import "contrib/SSKeychain/SSKeychain.h"
 #import "PreferenceController.h"
 #import "AppDelegate.h"
+#import "contrib/passwdqc/passwdqc.h"
 
 #define YC_KEYCHAIN_SERVICENAME @"com.Youcrypt"
 
@@ -77,8 +78,20 @@
 }
 
 - (BOOL)setPassphrase:(NSString*) passphrase
+                error:(NSError**)err
 {
     BOOL ret = YES;
+    char *bad_pass_reason = NULL;
+    NSMutableDictionary* errdetails = [NSMutableDictionary dictionary];
+    
+    if (yc_check_pass([passphrase cStringUsingEncoding:NSASCIIStringEncoding], &bad_pass_reason)) {
+        [errdetails setValue:[NSString stringWithFormat:@"%s", bad_pass_reason] forKey:NSLocalizedDescriptionKey];
+        // populate the error object with the details
+        *err = [NSError errorWithDomain:YC_ERRORDOMAIN code:200 userInfo:errdetails];
+        if(bad_pass_reason) free(bad_pass_reason);
+        return NO;
+    }
+    
     passPhrase = passphrase;
     if (saveInKeychain)
         ret = [self savePassphraseToKeychain];

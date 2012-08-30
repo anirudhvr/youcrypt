@@ -18,9 +18,7 @@
 #include <boost/unordered_map.hpp>
 #include <map>
 
-extern "C" {
 #include "yc_openssl_rsaapps.h"
-}
 
 using std::string;
 using boost::shared_ptr;
