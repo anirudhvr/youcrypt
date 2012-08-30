@@ -13,6 +13,8 @@ extern "C"  {
 }
 #include "PassphraseManager.h"
 #include "AppDelegate.h"
+#include <string>
+#include <map>
 
 @implementation ConfigDirectory
 
@@ -41,8 +43,11 @@ extern "C"  {
     youCryptPubKeyFile = [youCryptKeyDir stringByAppendingPathComponent:@"pub.pem"];
     youCryptListFile = [homedir stringByAppendingPathComponent:@"/.youcrypt/dirs.plist"];
     youcryptUserUUID = [homedir stringByAppendingPathComponent:@"/.youcrypt/uuid.txt"];
-
-      
+    
+    std::string priv([youCryptPrivKeyFile cStringUsingEncoding:NSASCIIStringEncoding]), pub([youCryptPubKeyFile cStringUsingEncoding:NSASCIIStringEncoding]);
+    std::map<std::string, std::string> empty;
+    cs.reset(new youcrypt::RSACredentialStorage(priv, pub, empty));
+    
     return self;
 }
 
@@ -57,6 +62,21 @@ extern "C"  {
     return firstRun;
 }
 
+-(BOOL) checkKeys // Called after passphrase received from user
+{
+    string pass([[theApp.passphraseManager getPassphrase] cStringUsingEncoding:NSASCIIStringEncoding]);
+    if (!cs->checkCredentials(pass))
+        return NO;
+    else
+        return YES;
+    
+}
+
+-(youcrypt::CredentialStorage) getCredStorage
+{
+    return cs;
+}
+
 -(void)firstRunSuccessful
 {    
     if (![libFunctions mkdirRecursive:youCryptLogDir]) {
@@ -67,51 +87,9 @@ extern "C"  {
         DDLogVerbose(@"First run: could not create Youcrypt Tmp dir");
     } else if (![libFunctions mkdirRecursive:youCryptKeyDir]) {
         DDLogVerbose(@"First run: could not create Youcrypt keys dir");
+    } else if (![self checkKeys]) { // Will create keys if they don't exist
+        DDLogError(@"Something went wrong in credentialstorage checks");
     } else {
-        // Do all initialization here
-        
-        // Create a keypair for that user
-        // XXX FIXME make this more modular - wrap this in a class or something
-        NSString *pp = [theApp.passphraseManager getPassphrase];
-        
-        if (pp == nil || pp == @"") {
-            DDLogError(@"Passphrase should be set by now but isnt!");
-            return;
-        }
-        pp = [@"pass:" stringByAppendingString:pp];
-        
-        char *genprivkey_argv[] = {"genpkey",
-            "-out", (char*)[youCryptPrivKeyFile cStringUsingEncoding:NSASCIIStringEncoding],
-            "-outform", "PEM",
-            "-pass", (char*)[pp cStringUsingEncoding:NSASCIIStringEncoding],
-            "-aes-256-cbc",
-            "-algorithm", "RSA",
-            "-pkeyopt", "rsa_keygen_bits:2048"
-        };
-        
-        if (genpkey(sizeof(genprivkey_argv)/sizeof(genprivkey_argv[0]),
-                    genprivkey_argv)) {
-            DDLogError(@"RSA private key generation failed");
-            return;
-        }
-        
-        // Set mode of private key to 600
-        [[NSFileManager defaultManager] setAttributes:
-         [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithShort:0600], NSFilePosixPermissions, nil] ofItemAtPath:youCryptPrivKeyFile error:nil];
-        
-        char *genpubkey_argv[] = {"rsa",
-            "-pubout",
-            "-in", (char*)[youCryptPrivKeyFile cStringUsingEncoding:NSASCIIStringEncoding],
-            "-out", (char*)[youCryptPubKeyFile cStringUsingEncoding:NSASCIIStringEncoding],
-            "-ycpass", (char*)[pp cStringUsingEncoding:NSASCIIStringEncoding],
-        };
-        
-        if (rsa(sizeof(genpubkey_argv)/sizeof(genpubkey_argv[0]),
-                 genpubkey_argv)) {
-            DDLogError(@"RSA pubkey extraction failed");
-            return;
-        }
-        
         // Create unique ID for this user for anonymous tracking
         NSString *uuid = [[NSProcessInfo processInfo] globallyUniqueString];
         NSError *error;

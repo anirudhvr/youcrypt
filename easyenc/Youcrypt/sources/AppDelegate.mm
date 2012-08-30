@@ -114,7 +114,12 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
 }
 
 
--(id) unarchiveDirectoryList:(id) sender {
+-(id) passphraseReceivedFromUser:(id) sender {
+    
+    if (![configDir checkKeys]) {
+        NSLog(@"Error checking config dir - key decrypt problem?");
+    }
+    
     directories = [libFunctions unarchiveDirectoryListFromFile:configDir.youCryptListFile];
     if (directories == nil) {
         directories = [[NSMutableArray alloc] init];

@@ -43,7 +43,8 @@ namespace youcrypt {
             CRED_TYPE_DSA
         };
         
-        virtual std::string getCredData(std::string credName) = 0;
+        virtual string getCredData(string credName) = 0;
+        virtual bool checkCredentials(string passphrase) = 0;
     };
     
     typedef boost::shared_ptr<AbstractCredentialStorage> CredentialStorage;

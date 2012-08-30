@@ -12,7 +12,7 @@
 		E045155615E950F600291C25 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E045155415E950F600291C25 /* main.cpp */; };
 		E045155715E9535500291C25 /* libyc-encfs-static.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E6B544D715D2633F0045E3B3 /* libyc-encfs-static.a */; };
 		E61B8B8715EC399A00BCC3F5 /* yc_openssl_rsaapps.h in Headers */ = {isa = PBXBuildFile; fileRef = E61B8B8515EC399A00BCC3F5 /* yc_openssl_rsaapps.h */; };
-		E61B8B8815EC399A00BCC3F5 /* yc_openssl_rsaapps.c in Sources */ = {isa = PBXBuildFile; fileRef = E61B8B8615EC399A00BCC3F5 /* yc_openssl_rsaapps.c */; };
+		E61B8B8815EC399A00BCC3F5 /* yc_openssl_rsaapps.c in Sources */ = {isa = PBXBuildFile; fileRef = E61B8B8615EC399A00BCC3F5 /* yc_openssl_rsaapps.c */; settings = {COMPILER_FLAGS = "-DOPENSSL_THREADS -D_REENTRANT    -O3 -fomit-frame-pointer -DOPENSSL_BN_ASM_PART_WORDS -DOPENSSL_IA32_SSE2 -DOPENSSL_BN_ASM_MONT -DOPENSSL_BN_ASM_GF2m -DSHA1_ASM -DSHA256_ASM -DSHA512_ASM -DMD5_ASM  -DAES_ASM"; }; };
 		E61B8B8B15EC3B0100BCC3F5 /* RSACredentials.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E61B8B8915EC3B0100BCC3F5 /* RSACredentials.cpp */; };
 		E61B8B8C15EC3B0100BCC3F5 /* RSACredentials.h in Headers */ = {isa = PBXBuildFile; fileRef = E61B8B8A15EC3B0100BCC3F5 /* RSACredentials.h */; };
 		E636BC2615ED8FEE0029767A /* main_avr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E636BC1F15ED8FA20029767A /* main_avr.cpp */; };

@@ -111,7 +111,7 @@
 
 - (void) showTour;
 
--(id) unarchiveDirectoryList:(id) sender;
+-(id) passphraseReceivedFromUser:(id) sender;
     
 
 // Setters and getters

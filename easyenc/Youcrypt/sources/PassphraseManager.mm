@@ -73,7 +73,7 @@
     [NSApp endSheet:self.window];
     [self.window setIsVisible:NO];
     [self.window close];
-    [theApp unarchiveDirectoryList:self];
+    [theApp passphraseReceivedFromUser:self];
 }
 
 - (BOOL)setPassphrase:(NSString*) passphrase

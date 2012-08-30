@@ -108,16 +108,15 @@ static NSMutableArray *mountedFuseVolumes;
     NSString *tempFolder = [NSString stringWithFormat:@"%s", ph.string().c_str()];
     
     YoucryptFolderOpts opts;
-    CredentialStorage cs;
+    CredentialStorage cs([theApp.configDir getCredStorage]);
     Credentials creds;
     {
-//        unordered_map<string,string> empty;
         std::map<string,string> empty;
         string priv([theApp.configDir.youCryptPrivKeyFile cStringUsingEncoding:NSASCIIStringEncoding]);
         string pub([theApp.configDir.youCryptPubKeyFile cStringUsingEncoding:NSASCIIStringEncoding]);
         
-        cs.reset(new RSACredentialStorage(priv, pub, empty));
-        //    Credentials creds(new PassphraseCredentials(pass));
+//      cs.reset(new RSACredentialStorage(priv, pub, empty));
+//      Credentials creds(new PassphraseCredentials(pass));
         creds.reset(new RSACredentials(pass, cs));
     }
     
@@ -195,8 +194,9 @@ static NSMutableArray *mountedFuseVolumes;
     map<string,string> empty;
     string priv([theApp.configDir.youCryptPrivKeyFile cStringUsingEncoding:NSASCIIStringEncoding]);
     string pub([theApp.configDir.youCryptPubKeyFile cStringUsingEncoding:NSASCIIStringEncoding]);
-    CredentialStorage cs(new RSACredentialStorage(priv, pub, empty));
-//    Credentials creds(new PassphraseCredentials(pass));
+//    CredentialStorage cs(new RSACredentialStorage(priv, pub, empty));
+    CredentialStorage cs([theApp.configDir getCredStorage]);
+    //    Credentials creds(new PassphraseCredentials(pass));
     Credentials creds(new RSACredentials(pass, cs));
     
     if (idletime < 0)

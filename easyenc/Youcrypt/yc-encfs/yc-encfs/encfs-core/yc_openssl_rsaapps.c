@@ -636,6 +636,7 @@ bad:
 #ifndef OPENSSL_NO_ENGINE
         BIO_printf(bio_err," -engine e       use engine e, possibly a hardware device.\n");
 #endif
+        ret = 1;
         goto end;
     }
 
@@ -653,11 +654,13 @@ bad:
     if (!app_passwd(bio_err, ycpassarg, NULL, &pass, NULL))
     {
         BIO_puts(bio_err, "Error getting password\n");
+        ret = 1;
         goto end;
     }
         
     if(check && pubin) {
         BIO_printf(bio_err, "Only private keys can be checked\n");
+        ret = 1;
         goto end;
     }
 
@@ -756,6 +759,7 @@ bad:
             {
                 BIO_printf(out, "RSA key error: %s\n", ERR_reason_error_string(err));
                 ERR_get_error(); /* remove e from error stack */
+                ret = 1;
             }
         }
 
@@ -793,6 +797,7 @@ bad:
         if ((p=(unsigned char *)OPENSSL_malloc(size)) == NULL)
         {
             BIO_printf(bio_err,"Memory allocation failure\n");
+            ret = 1;
             goto end;
         }
         pp=p;
@@ -826,12 +831,14 @@ bad:
 #endif
     } else	{
         BIO_printf(bio_err,"bad output format specified for outfile\n");
+        ret = 1;
         goto end;
     }
     if (i <= 0)
     {
         BIO_printf(bio_err,"unable to write key\n");
         ERR_print_errors(bio_err);
+        ret = 1;
     }
     else
         ret=0;

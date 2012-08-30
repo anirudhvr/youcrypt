@@ -27,43 +27,45 @@ using boost::shared_ptr;
 using boost::unordered_map;
 using std::map;
 
-// XXX FIXME HACK - because we don't know how mcuh the ciphertext will be
-// in advance. To fix this, have encryptVolumeKey return vector<char> so
-// we can get rid of encodedKeySize
-#define MAX_RSA_CIPHERTEXT_LENGTH 256 // Safe max for a 52-byte plaintext
-
-const string RSA_PRIVKEYFILE_KEY = "__yc_rsaprivkeyfile";
-const string RSA_PUBKEYFILE_KEY = "__yc_rsapubkeyfile";
+#define MAX_RSA_CIPHERTEXT_LENGTH 256
 
 namespace youcrypt {
     
     struct RSACredentialStorage : public AbstractCredentialStorage {
+        static const string RSA_PRIVKEYFILE_KEY, RSA_PUBKEYFILE_KEY;
         
         RSACredentialStorage(string privkeyfile, string pubkeyfile,
                              const map<string, string> &otherparams);
         virtual string getCredData(const string credName);
-        virtual ~RSACredentialStorage()
-        {
-            _creds.clear();
-        }
+        bool checkCredentials(string passphrase);
+        bool createKeys(string passphrase);
+        enum Status {
+            PrivKeyFound = 0,
+            PrivKeyNotFound,
+            PrivKeyCreateError,
+            PrivKeyReadError,
+            PubKeyCreateError,
+            KeyCreateSuccess,
+            KeyReadSuccess
+        };
+        Status status() { return _status; }
         
     private:
+        
+        Status _status;
         map<string, string> _creds;
     };
 
     class RSACredentials : public AbstractCredentials {
     public:
-        RSACredentials(string passphrase, const CredentialStorage &cstore);
+        
 
+        RSACredentials(string passphrase, const CredentialStorage &cstore);
         virtual CipherKey decryptVolumeKey(const vector<unsigned char> &,
                                            const shared_ptr<Cipher>&);
         virtual void encryptVolumeKey(const CipherKey &,
                                       const shared_ptr<Cipher> &,
                                       vector<unsigned char> &);
-        virtual ~RSACredentials() {
-            
-        }
-        
     private:
         string _passphrase;
         CredentialStorage _cstore;
