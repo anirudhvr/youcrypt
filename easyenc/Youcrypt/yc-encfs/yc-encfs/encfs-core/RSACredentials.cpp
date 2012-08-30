@@ -18,9 +18,10 @@ using boost::shared_ptr;
 using boost::unordered_map;
 
 
-RSACredentials::RSACredentials(string passphrase, CredentialStorage &cstore) :
+RSACredentials::RSACredentials(string passphrase, const CredentialStorage &cstore) :
 _passphrase(passphrase), _cstore(cstore)
-{ }
+{
+}
 
 //! encrypt volume key (data) using encryption mech. defined by cipher
 void RSACredentials::encryptVolumeKey(const CipherKey& key, 
@@ -52,6 +53,7 @@ void RSACredentials::encryptVolumeKey(const CipherKey& key,
         data.resize(rsaargs.outsize);
         data.assign(rsaargs.outbuf, rsaargs.outbuf + rsaargs.outsize);
         free(rsaargs.outbuf);
+        if (pubkeyfilename) free(pubkeyfilename);
     } else {
         data.clear();
         std::cerr << "Shit's all fucked up, yo" << std::endl;
@@ -80,7 +82,7 @@ CipherKey RSACredentials::decryptVolumeKey(const vector<unsigned char> &data,
 
     char *rsautl_decrypt_argv[] = {"rsautl",
         "-decrypt",
-        "-passin", "pass:asdfgh", // pwarg, 
+        "-passin", pwarg,
         "-inkey", privkeyfilename,
         "-inbuf"
         // "-in", "cipher.txt", "-out", "plain2.txt",
@@ -88,20 +90,21 @@ CipherKey RSACredentials::decryptVolumeKey(const vector<unsigned char> &data,
     
     rsautl(7, rsautl_decrypt_argv, &rsaargs);
     
+    CipherKey ret = kc->readRawKey(rsaargs.outbuf, true);
+    
+    if (rsaargs.outbuf) free (rsaargs.outbuf);
     if (pwarg) free(pwarg);
     if (privkeyfilename) free(privkeyfilename);
     
-    CipherKey ret = kc->readRawKey(rsaargs.outbuf, true);
-//    if (*rsaargs.outbuf) free (*rsaargs.outbuf);
     return ret;
 }
 
 
 
-RSACredentialStorage::RSACredentialStorage(
-    string &privkeyfile, string &pubkeyfile,
-    unordered_map<string, string> &otherparams):_creds(otherparams)
+RSACredentialStorage::RSACredentialStorage(string privkeyfile, string pubkeyfile,
+                                           const map<string, string> &otherparams)
 {
+//    _creds = otherparams;
     _creds[RSA_PRIVKEYFILE_KEY] = privkeyfile;
     _creds[RSA_PUBKEYFILE_KEY] = pubkeyfile;
 }
@@ -109,7 +112,7 @@ RSACredentialStorage::RSACredentialStorage(
 string
 RSACredentialStorage::getCredData(const string credname)
 {
-    unordered_map<string, string>::iterator map_it;
+    map<string, string>::const_iterator map_it;
     map_it = _creds.find(credname);
     if (map_it == _creds.end())
         return string();

@@ -75,8 +75,7 @@ int testRSAkeygen(void)
 {
     char *genprivkey_argv[] = {"genpkey", "-out", "priv.pem", "-outform", "PEM", "-pass",
         "pass:asdfgh", "-aes-256-cbc", "-algorithm", "RSA",
-        "-pkeyopt", "rsa_keygen_bits:2048"
-    };
+        "-pkeyopt", "rsa_keygen_bits:2048" };
     char *genpubkey_argv[] = {"rsa", "-pubout", "-in", "priv.pem",
         "-out", "pub.pem", "-ycpass", "pass:asdfgh"};
     char *rsautl_encrypt_argv[] = {"rsautl", "-encrypt", "-inkey",
@@ -100,8 +99,8 @@ int testRSAkeygen(void)
 
 int main(int argc, char **argv) {
     //testImport("/Users/rajsekar/tmp/test/5.yc", "/Users/rajsekar/tmp/test/data");
-    testImportRSA("/tmp/test.yc", "/tmp/copy");
-//    testRSAkeygen();
+//    testImportRSA("/tmp/test.yc", "/tmp/copy");
+    testRSAkeygen();
     int a;
     cin >> a;
     return 0;

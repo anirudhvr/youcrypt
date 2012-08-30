@@ -7,6 +7,7 @@
 //
 
 #import "YoucryptDirectory.h"
+#import "ConfigDirectory.h"
 #import "libFunctions.h"
 #import "PeriodicActionTimer.h"
 #import "AppDelegate.h"
@@ -28,10 +29,13 @@ using boost::archive::xml_oarchive;
 using boost::archive::xml_iarchive;
 using boost::serialization::make_nvp;
 using std::string;
+#include <map>
 using boost::shared_ptr;
+using boost::unordered_map;
 using std::cout;
 using std::string;
 using std::endl;
+using std::map;
 using namespace youcrypt;
 
 
@@ -152,14 +156,23 @@ static NSMutableArray *mountedFuseVolumes;
     NSString *tempFolder = [NSString stringWithFormat:@"%s", ph.string().c_str()];
     
     YoucryptFolderOpts opts;
-    Credentials creds(new PassphraseCredentials(pass));
+    CredentialStorage cs;
+    Credentials creds;
+    {
+//        unordered_map<string,string> empty;
+        std::map<string,string> empty;
+        string priv([theApp.configDir.youCryptPrivKeyFile cStringUsingEncoding:NSASCIIStringEncoding]);
+        string pub([theApp.configDir.youCryptPubKeyFile cStringUsingEncoding:NSASCIIStringEncoding]);
+        
+        cs.reset(new RSACredentialStorage(priv, pub, empty));
+        //    Credentials creds(new PassphraseCredentials(pass));
+        creds.reset(new RSACredentials(pass, cs));
+    }
     
     if (encfnames)
         opts.filenameEncryption = YoucryptFolderOpts::filenameEncrypt;
     
     YoucryptFolder tmpFolder(ph, opts, creds);
-    
-   // folder.reset(new YoucryptFolder(ph, opts, creds));
     
     if (tmpFolder.importContent(boost::filesystem::path(srcfolder))) {
         // encrypting content to temporary folder succeeded
@@ -226,7 +239,13 @@ static NSMutableArray *mountedFuseVolumes;
     create_directories(dst);
     
     YoucryptFolderOpts opts;
-    Credentials creds(new PassphraseCredentials(pass));
+//    unordered_map<string,string> empty;
+    map<string,string> empty;
+    string priv([theApp.configDir.youCryptPrivKeyFile cStringUsingEncoding:NSASCIIStringEncoding]);
+    string pub([theApp.configDir.youCryptPubKeyFile cStringUsingEncoding:NSASCIIStringEncoding]);
+    CredentialStorage cs(new RSACredentialStorage(priv, pub, empty));
+//    Credentials creds(new PassphraseCredentials(pass));
+    Credentials creds(new RSACredentials(pass, cs));
     
     if (idletime < 0)
         idletime = 0;
