@@ -11,6 +11,7 @@
 #import <boost/shared_ptr.hpp>
 #import "DirectoryMap.h"
 #import "PortingCM.h"
+#import "PortingQ.h"
 #import <map>
 
 using namespace youcrypt;
@@ -74,7 +75,8 @@ extern "C" NSString *nsstrFromCpp(std::string);
     
     BOOL callFinderScript;
     
-    NSMutableArray *encryptQ, *decryptQ, *restoreQ;
+    NSMutableArray *decryptQ, *restoreQ;
+    EncryptQ encQ;
     long enQIndex, deQIndex, reQIndex;
 }
 

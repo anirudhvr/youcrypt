@@ -60,6 +60,7 @@
 		E054042415AB1CE10011E5CC /* Restore.xib in Resources */ = {isa = PBXBuildFile; fileRef = E054042215AB1CE10011E5CC /* Restore.xib */; };
 		E05DB60915F0A7F800F70DF0 /* PortingCM.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E05DB60715F0A7F800F70DF0 /* PortingCM.cpp */; };
 		E05DB60C15F0B38200F70DF0 /* ProcessQ.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E05DB60A15F0B38200F70DF0 /* ProcessQ.cpp */; };
+		E05DB68D15F0C81A00F70DF0 /* PortingQ.mm in Sources */ = {isa = PBXBuildFile; fileRef = E05DB68B15F0C81A00F70DF0 /* PortingQ.mm */; };
 		E06E2B4115A76ABE00E52B2D /* ListRightClick.xib in Resources */ = {isa = PBXBuildFile; fileRef = E06E2B4015A76ABE00E52B2D /* ListRightClick.xib */; };
 		E077154715EF1CA4009AB1C2 /* YCFolder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E077154515EF1CA4009AB1C2 /* YCFolder.cpp */; };
 		E077154A15EF276C009AB1C2 /* CredentialsManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E077154815EF276C009AB1C2 /* CredentialsManager.cpp */; };
@@ -553,6 +554,8 @@
 		E05DB60815F0A7F800F70DF0 /* PortingCM.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PortingCM.h; path = sources/PortingCM.h; sourceTree = "<group>"; };
 		E05DB60A15F0B38200F70DF0 /* ProcessQ.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ProcessQ.cpp; path = sources/core/ProcessQ.cpp; sourceTree = "<group>"; };
 		E05DB60B15F0B38200F70DF0 /* ProcessQ.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ProcessQ.h; path = sources/core/ProcessQ.h; sourceTree = "<group>"; };
+		E05DB68B15F0C81A00F70DF0 /* PortingQ.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = PortingQ.mm; path = sources/PortingQ.mm; sourceTree = "<group>"; };
+		E05DB68C15F0C81A00F70DF0 /* PortingQ.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PortingQ.h; path = sources/PortingQ.h; sourceTree = "<group>"; };
 		E06E2B3F15A7671B00E52B2D /* constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = constants.h; path = sources/constants.h; sourceTree = "<group>"; };
 		E06E2B4015A76ABE00E52B2D /* ListRightClick.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ListRightClick.xib; sourceTree = "<group>"; };
 		E077154515EF1CA4009AB1C2 /* YCFolder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = YCFolder.cpp; path = sources/core/YCFolder.cpp; sourceTree = "<group>"; };
@@ -945,8 +948,10 @@
 				256C3572158EA75F00E2BEC4 /* AppDelegate.mm */,
 				E0BF0EBA159838DD002F9FB9 /* ListDirectoriesWindow.h */,
 				E0BF0EBB159838DD002F9FB9 /* ListDirectoriesWindow.mm */,
-				E05DB60715F0A7F800F70DF0 /* PortingCM.cpp */,
+				E05DB68C15F0C81A00F70DF0 /* PortingQ.h */,
+				E05DB68B15F0C81A00F70DF0 /* PortingQ.mm */,
 				E05DB60815F0A7F800F70DF0 /* PortingCM.h */,
+				E05DB60715F0A7F800F70DF0 /* PortingCM.cpp */,
 				25617DC515ABD54A00EED7F7 /* ListDirTable.h */,
 				25617DC615ABD54B00EED7F7 /* ListDirTable.mm */,
 				256C359B158EA88700E2BEC4 /* PreferenceController.h */,
@@ -1930,6 +1935,7 @@
 				E0812F3315F09466007EE3AF /* DirectoryMap.cpp in Sources */,
 				E05DB60915F0A7F800F70DF0 /* PortingCM.cpp in Sources */,
 				E05DB60C15F0B38200F70DF0 /* ProcessQ.cpp in Sources */,
+				E05DB68D15F0C81A00F70DF0 /* PortingQ.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

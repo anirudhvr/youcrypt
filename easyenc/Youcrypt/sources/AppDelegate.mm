@@ -25,6 +25,9 @@
 #import "MixpanelAPI.h"
 #import "AboutController.h"
 #import "PassphraseManager.h"
+#import "PortingQ.h"
+
+using namespace youcrypt;
 
 /* Global Variables Accessible to everyone */
 /* These variables should be initialized */
@@ -95,7 +98,6 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
     [mixpanelUUID stringByReplacingOccurrencesOfString:@"\n" withString:@""];
     DDLogVerbose(@"mixpanel uuid : %@",mixpanelUUID);
 
-    encryptQ = [[NSMutableArray alloc] init];
     decryptQ = [[NSMutableArray alloc] init];
     restoreQ = [[NSMutableArray alloc] init];
     
@@ -437,40 +439,16 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
             [self removeFSAtPath:path];
         }
     } else {
-        [self doEncrypt:path];
+        encQ.queueJob(cppString(path));
+        dispatch_queue_t taskQ =
+            dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+        dispatch_async(taskQ, ^{
+            encQ.runTillEmpty();});
     }
     return YES;
 }
 
 - (BOOL)doEncrypt:(NSString *)path {
-    if (path == nil) {
-        BOOL doReturn = NO;
-        // Pick the next object from the queue and encrypt.
-        @synchronized(self) {
-            if ([encryptQ count] > 0) {
-                path = [encryptQ lastObject];
-                enQIndex = [encryptQ count] - 1;
-            }
-            else {
-                // Nothing to service.
-                doReturn = YES;
-            }
-        }
-        if (doReturn)
-            return NO;
-    } else {
-        BOOL doReturn = NO;
-        @synchronized(self) {
-            [encryptQ addObject:path];
-            if ([encryptQ count] > 1)
-                doReturn = YES;
-            else
-                enQIndex = 0;
-        }
-        if (doReturn)
-            return NO;
-    }
-    
     // Is encryptController nil?
     if (!encryptController) {
         encryptController = [[Encrypt alloc] init];
@@ -521,19 +499,10 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
         [listDirectories.progressIndicator setHidden:YES];
         [listDirectories.table reloadData];
     }
-    @synchronized(self) {
-        [encryptQ removeObjectAtIndex:enQIndex];
-    }
-    [self doEncrypt:nil]; // To process other items in encryptQ
-    
+   
 }
 
 - (void)cancelEncrypt:(NSString *)path {
-    @synchronized(self) {
-        [encryptQ removeObjectAtIndex:enQIndex];
-    }
-    DDLogInfo(@"Canceling encryption for %@", path);
-    [self doEncrypt:nil]; // To process other items in encryptQ
 }
 
 // --------------------------------------------------------------------------------------

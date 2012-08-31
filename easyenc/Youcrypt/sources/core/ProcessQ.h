@@ -10,6 +10,7 @@
 #define __Youcrypt__ProcessQ__
 
 #include <boost/thread/mutex.hpp>
+#include <boost/thread/locks.hpp>
 #include <queue>
 
 using boost::mutex;
@@ -25,8 +26,31 @@ protected:
     virtual void doJob(const ProcD &) = 0;
 public:
     ProcessQ() { _isRunning = false; }
-    void queueJob(const ProcD &);
-    void runTillEmpty();
+    void queueJob(const ProcD &newJob) {
+        mutex::scoped_lock lock(_readwriteLock);
+        _jobs.push(newJob);
+    }
+    void runTillEmpty() {
+        { mutex::scoped_lock lock(_readwriteLock);
+            if (isRunning()) return;
+            _isRunning = true;
+        }
+        ProcD currJob;
+        while (_isRunning) {
+            {
+                mutex::scoped_lock lock(_readwriteLock);
+                if (_jobs.size() == 0)
+                    _isRunning = false;
+                else {
+                    currJob = _jobs.front();
+                    _jobs.pop();
+                }
+            }
+            if (_isRunning)
+                doJob(currJob);
+        }
+    }
+ 
     bool isRunning() { return _isRunning; }
 };
 }
