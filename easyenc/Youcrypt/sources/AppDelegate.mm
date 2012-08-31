@@ -120,7 +120,13 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
     if (![configDir checkKeys]) {
         NSLog(@"Error checking config dir - key decrypt problem?");
     }
-    
+    NSString *s = [passphraseManager getPassphrase];
+    PortingCM *pcm = new PortingCM;
+    pcm->setPassphrase(cppString(s));
+    shared_ptr<youcrypt::CredentialsManager> p;
+    p.reset(pcm);
+    setGlobalCM(p);
+    Credentials c = getGlobalCM()->getActiveCreds();
     directories = [libFunctions unarchiveDirectoryListFromFile:configDir.youCryptListFile];
     if (!directories) {
         directories.reset(new DirectoryMap);

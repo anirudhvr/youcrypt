@@ -270,7 +270,7 @@ void printCloseError(int ret)
         DirectoryMap::iterator beg = dmap.begin();
         for (int i=0; i<row; i++)
             ++beg;
-        YoucryptDirectory *dir = beg->second.get()->Object;
+        Folder dir = beg->second;
         [sharingPopover showRelativeToRect:[table rectOfRow:row] ofView:table preferredEdge:NSMaxYEdge];
         
         if ([[theApp.preferenceController getPreference:YC_ANONYMOUSSTATISTICS] intValue])

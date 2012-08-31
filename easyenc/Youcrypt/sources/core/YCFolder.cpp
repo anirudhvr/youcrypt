@@ -35,6 +35,27 @@ static const char*statusInString[] = {
     "Ready to mount"
 };
 
+using boost::filesystem::path;
+static void moveDirectory(path src, path dest) 
+{
+    // src and dest are presumed to exist.
+    using namespace boost::filesystem;
+    if (exists(src)) {
+        for (directory_iterator si = directory_iterator(src),
+                 se = directory_iterator();
+             si != se;
+             ++si) {
+            if (is_regular_file(*si))
+                copy_file(*si, 
+                          dest / si->path().filename());
+            else if (is_directory(*si)) {
+                create_directories( dest / si->path().filename());
+                moveDirectory(*si, dest / si->path().filename());
+            }
+        }
+    }
+}
+
 shared_ptr<YCFolder> 
 YCFolder::initEncryptedFolderInPlaceAddExtension
     (string path,
@@ -66,7 +87,7 @@ YCFolder::initEncryptedFolderInPlaceAddExtension
         return out;
     }
 
-    if (!out->importContent(boost::filesystem::path(path))) {
+    if (!out->importContent(boost::filesystem::path(path), "/")) {
         // FIXME: Import failed.
         out.reset();
         return out;
@@ -76,22 +97,22 @@ YCFolder::initEncryptedFolderInPlaceAddExtension
     boost::filesystem::path p(path);
     using boost::filesystem::directory_iterator;
     for (directory_iterator pi = directory_iterator(p),
-         en = directory_iterator(); pi!=en; ++pi) {
+             en = directory_iterator(); pi!=en; ++pi) {
         boost::filesystem::remove_all(pi->path());
     }
 
     // 5. (move files from dest to source)
-    for (directory_iterator pi = directory_iterator(dest),
-         en = directory_iterator(); pi!=en; ++pi) {
-        boost::filesystem::copy_file(pi->path(), p/(pi->path().filename()));
-        boost::filesystem::remove_all(pi->path());
-    }
+    moveDirectory(dest, p);
     boost::filesystem::remove_all(dest);
 
-    // 6. (sanity check)
+    // 6. (rename source to dest)
+    boost::filesystem::rename(p, dest);
+
+
+    // 7. (sanity check)
     //   open the encrypted folder at source and verify status is
     //   OK on open.
-    out.reset(new YCFolder(p, creds));
+    out.reset(new YCFolder(dest, creds));
     if (out->currStatus() != YoucryptFolder::initialized) {
         out.reset();
         return out;
