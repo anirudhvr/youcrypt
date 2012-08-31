@@ -16,7 +16,7 @@
 #define ENCFSCTL @"/yc-encfsctl"
 
 #include <string>
-#include "DirectoryMap.h"
+#include "core/DirectoryMap.h"
 #include <boost/filesystem/fstream.hpp>
 #include "encfs-core/YoucryptFolder.h"
 #include "encfs-core/Credentials.h"
@@ -25,8 +25,6 @@
 using std::cout;
 using std::string;
 using std::endl;
-using boost::filesystem::ofstream;
-using boost::filesystem::ifstream;
 using namespace youcrypt;
 
 
@@ -163,7 +161,7 @@ using namespace youcrypt;
                        toFile:(NSString*)file 
 {
     string strFile([file cStringUsingEncoding:NSASCIIStringEncoding]);
-    ofstream ofile(strFile);
+    boost::filesystem::ofstream ofile(strFile);
     if (ofile.is_open()) {
         const DirectoryMap &dmap = *directories.get();
         ofile << dmap;
@@ -175,7 +173,7 @@ using namespace youcrypt;
     boost::shared_ptr<DirectoryMap> dirs(new DirectoryMap);
     DirectoryMap &dmap = *dirs.get();
     string strFile([file cStringUsingEncoding:NSASCIIStringEncoding]);
-    ifstream ifile(strFile);
+    boost::filesystem::ifstream ifile(strFile);
     if (ifile.is_open()) {
         ifile >> dmap;
     }

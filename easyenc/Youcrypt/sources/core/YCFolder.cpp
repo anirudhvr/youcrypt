@@ -6,16 +6,40 @@
 //  Copyright (c) 2012 Nouvou Inc. All rights reserved.
 //
 
+// Design Details:
+
+// * Static Constructor functions to create new folders
+// ** Scenarios
+// *** An yet unseen path comes into the system.
+//  Handled by initFromScanningPath
+// *** User asks to create an encrypted folder
+//  Current YC implementation is to add an extension, and
+//  move stuff around.
+//  Handled by initEncryptedFolderInPlaceAddExtension
+// *** 
+
 #include "YCFolder.h"
 #include "CredentialsManager.h"
 #include <boost/filesystem/path.hpp>
 
 using namespace youcrypt;
 
+static const char*statusInString[] = {
+    "Status unknown",
+    "Config not found",
+    "Config error",
+    "Authentication failed",
+    "Initialized",
+    "Processing",
+    "Mounted",
+    "Ready to mount"
+};
+
 shared_ptr<YCFolder> 
 YCFolder::initEncryptedFolderInPlaceAddExtension
     (string path,
-     YoucryptFolderOpts opts) {
+     YoucryptFolderOpts opts)
+{
 
 
     // 1. (setup parameters) 
@@ -75,9 +99,138 @@ YCFolder::initEncryptedFolderInPlaceAddExtension
     return out;
 }
 
-shared_ptr<YCFolder> YCFolder::importFolderAtPath(string) {
-    return shared_ptr<YCFolder>();
+Folder YCFolder::initFromScanningPath(string p) {
+    using boost::filesystem::path;
+    path pt(p);
+    Folder out;
+    out.reset(new YCFolder(p));
+    return out;
 }
+
+string YCFolder::mountedPath() {
+    if (status == YoucryptDirectoryStatusReadyToMount
+        || status == YoucryptDirectoryStatusMounted)
+        return _mountedPath;
+    else
+        return "";
+}
+
+string YCFolder::mountedDate() 
+{
+    if (status == YoucryptDirectoryStatusReadyToMount
+        || status == YoucryptDirectoryStatusMounted)
+        return _mountedDate;
+    else
+        return "";
+}
+
+string YCFolder::rootPath() 
+{
+    return YoucryptFolder::rootPath.string();
+}
+
+int YCFolder::currStatus() 
+{
+    updateStatus();
+    return status;
+}
+
+string YCFolder::stringStatus() 
+{
+    return statusInString[status];
+}
+
+void YCFolder::updateStatus() 
+{
+}
+
+bool YCFolder::isMounted() 
+{
+    return _isMounted;
+}
+
+bool YCFolder::isCreatable() 
+{
+    if (boost::filesystem::exists(YoucryptFolder::rootPath) &&
+        boost::filesystem::is_directory(YoucryptFolder::rootPath))
+        return true;
+    else
+        return false;
+}
+
+bool YCFolder::isUnlocked() 
+{
+    if (status == YoucryptDirectoryStatusUninitialized
+        || status == YoucryptDirectoryStatusUnknown)
+        return false;
+    if (volumeKey)
+        return true;
+    Credentials cred = getGlobalCM()->getActiveCreds();
+    YoucryptFolder::loadConfigAtPath(YoucryptFolder::rootPath, cred);
+    if (volumeKey)
+        return true;
+    else
+        return false;
+}
+
+string &YCFolder::alias() 
+{
+    return _alias;
+}
+
+void YCFolder::setMountLocation(string mountPoint) 
+{
+    if (status == YoucryptDirectoryStatusInitialized) {
+        _mountedPath = mountPoint;
+        status = YoucryptDirectoryStatusReadyToMount;
+    }
+}
+
+void YCFolder::setMountOpts(const vector<string> &opts, int idleTimeOut) 
+{
+    if (status == YoucryptDirectoryStatusReadyToMount) {
+        _mountOpts = opts;
+        _idleTO = idleTimeOut;
+    }
+}
+
+bool YCFolder::mount() 
+{
+    if (status == YoucryptDirectoryStatusReadyToMount) {
+        return YoucryptFolder::mount(boost::filesystem::path(
+                                         _mountedPath),
+                                     _mountOpts, _idleTO);
+    }
+    return false;
+}
+
+bool YCFolder::unmount() 
+{
+    return YoucryptFolder::unmount();
+}
+
+bool YCFolder::cleanUpRoot() 
+{
+    if (isCreatable()) {
+        //FIXME:  Delete everything here
+    }
+}
+
+bool YCFolder::addCredential(const Credentials &cred) 
+{
+    return YoucryptFolder::addCredential(cred);
+}
+
+bool YCFolder::deleteCredential(const Credentials &cred) 
+{
+    return YoucryptFolder::deleteCredential(cred);
+}
+
+bool YCFolder::restoreFolderInPlace() 
+{
+    //FIXME
+}
+
 
 YCFolder::YCFolder(const path &p,
                    const YoucryptFolderOpts &o,
@@ -87,4 +240,8 @@ YCFolder::YCFolder(const path &p,
 YCFolder::YCFolder(const path &p,
                    const Credentials &c):YoucryptFolder() {
     YoucryptFolder::loadConfigAtPath(p, c);
+}
+
+YCFolder::YCFolder(const path &p): YoucryptFolder(p) 
+{
 }

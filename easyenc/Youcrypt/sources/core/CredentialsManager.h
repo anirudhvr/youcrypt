@@ -10,11 +10,15 @@
 #define __Youcrypt__CredentialsManager__
 
 #include "encfs-core/Credentials.h"
+#include <vector>
+
+using std::vector;
 
 namespace youcrypt {
     class CredentialsManager {
     public:
         Credentials getActiveCreds();
+        vector<Credentials> getEncodingCreds();
     };
 
     shared_ptr<CredentialsManager> getGlobalCM();

@@ -103,8 +103,7 @@
         DirectoryMap::iterator beg = dmap.begin();
         for (int i=0; i<row; i++)
             ++beg;
-        YoucryptDirectory *dir = beg->second.get()->Object;
-        [theApp openEncryptedFolder:[dir path]];
+        [theApp openEncryptedFolder:nsstrFromCpp(beg->second->rootPath())];
     }
 }
 
@@ -117,13 +116,13 @@
         DirectoryMap::iterator beg = dmap.begin();
         for (int i=0; i<row; i++)
             ++beg;
-        YoucryptDirectory *dir = beg->second.get()->Object;
-        [theApp openEncryptedFolder:[dir path]];
-        volumePropsSheet.sp = dir.path;
-        volumePropsSheet.mp = dir.mountedPath;
-        volumePropsSheet.stat = [dir getStatus];
-        if (dir.status == YoucryptDirectoryStatusMounted) {
-            volumePropsSheet.mntdate = dir.mountedDateAsString;
+        Folder dir = beg->second;
+        [theApp openEncryptedFolder:nsstrFromCpp(dir->rootPath())];
+        volumePropsSheet.sp = nsstrFromCpp(dir->rootPath());
+        volumePropsSheet.mp = nsstrFromCpp(dir->mountedPath());
+        volumePropsSheet.stat = nsstrFromCpp(dir->stringStatus());
+        if (dir->currStatus() == YoucryptDirectoryStatusMounted) {
+            volumePropsSheet.mntdate = nsstrFromCpp(dir->mountedDate());
             volumePropsSheet.openedby = NSFullUserName();
         }
         [volumePropsSheet beginSheetModalForWindow:self.window completionHandler:^(NSUInteger returnCode) {
@@ -155,8 +154,9 @@
         DirectoryMap::iterator beg = dmap.begin();
         for (int i=0; i<row; i++)
             ++beg;
-        YoucryptDirectory *dir = beg->second.get()->Object;
-        [dirName setStringValue:[NSString stringWithFormat:@"   %@",[dir.path stringByDeletingPathExtension]]];
+        Folder dir = beg->second;
+        NSString *pth = nsstrFromCpp(dir->rootPath());
+        [dirName setStringValue:[NSString stringWithFormat:@"   %@",[pth stringByDeletingPathExtension]]];
     }
 }
 
@@ -188,9 +188,9 @@
         DirectoryMap::iterator beg = dmap.begin();
         for (int i=0; i<row; i++)
             ++beg;
-        YoucryptDirectory *dir = beg->second.get()->Object;
+        Folder dir = beg->second;
         
-        if (dir.status == YoucryptDirectoryStatusMounted) {
+        if (dir->currStatus() == YoucryptDirectoryStatusMounted) {
             int ret = [self closeMountedFolder:dir];
             if (ret) {
                 printCloseError(ret);
@@ -198,8 +198,8 @@
             }
         }
         
-        int dirstatus = [dir status];
-        if (dirstatus == YoucryptDirectoryStatusConfigError ||
+        int dirstatus = dir->currStatus();
+        if (dirstatus == YoucryptDirectoryStatusNeedAuth ||
             dirstatus == YoucryptDirectoryStatusUnknown ||
             dirstatus == YoucryptDirectoryStatusUninitialized) {
             [table beginUpdates];
@@ -208,7 +208,8 @@
             dmap.erase(beg);
         } else if (dirstatus == YoucryptDirectoryStatusInitialized) {
             long retCode;
-            if((retCode = [[NSAlert alertWithMessageText:@"Decrypt and Restore" defaultButton:@"Yes" alternateButton:@"No, delete the data." otherButton:@"Cancel" informativeTextWithFormat:@"You have chosen to permanently decrypt the encrypted folder at %@.  Restore contents?", [dir.path stringByDeletingLastPathComponent]] runModal]) == NSAlertDefaultReturn) {
+            NSString *pth = nsstrFromCpp(dir->rootPath());
+            if((retCode = [[NSAlert alertWithMessageText:@"Decrypt and Restore" defaultButton:@"Yes" alternateButton:@"No, delete the data." otherButton:@"Cancel" informativeTextWithFormat:@"You have chosen to permanently decrypt the encrypted folder at %@.  Restore contents?", [pth stringByDeletingLastPathComponent]] runModal]) == NSAlertDefaultReturn) {
                 [theApp removeFSAtRow:row];
             }
             else if (retCode == NSAlertAlternateReturn) {
@@ -224,12 +225,9 @@
     [table reloadData];
 }
 
-- (int)closeMountedFolder:(YoucryptDirectory*)dir
+- (int)closeMountedFolder:(Folder)dir
 {
-    NSString *mountedPath = [dir mountedPath];
-    DDLogVerbose(@"Trying to unmount %@",mountedPath);
-    int ret = [libFunctions execCommand:UMOUNT_CMD arguments:[NSArray arrayWithObject:mountedPath] env:nil];
-    return ret;
+    return dir->unmount();
 }
 
 void printCloseError(int ret)
@@ -252,7 +250,7 @@ void printCloseError(int ret)
         DirectoryMap::iterator beg = dmap.begin();
         for (int i=0; i<row; i++)
             ++beg;
-        YoucryptDirectory *dir = beg->second.get()->Object;
+        Folder dir = beg->second;
         int ret = [self closeMountedFolder:dir];
         printCloseError(ret);
         

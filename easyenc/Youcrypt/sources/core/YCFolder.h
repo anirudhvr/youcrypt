@@ -25,9 +25,37 @@ using std::string;
 
 namespace youcrypt {
 
+    enum {
+        //! Directory does not exist / unreadable
+        YoucryptDirectoryStatusUnknown
+        = YoucryptFolder::statusUnknown,
+        //! Directory is uninitialized (exists, no config)
+        YoucryptDirectoryStatusUninitialized
+        = YoucryptFolder::uninitialized,
+        //! Directory contains a config that is unreadable
+        YoucryptDirectoryStatusBadConfig
+        = YoucryptFolder::configError,
+        //! Dir. has a config but can't be unlocked with 
+        //! the creds
+        YoucryptDirectoryStatusNeedAuth 
+        = YoucryptFolder::credFail,
+        //! Dir. has a config, that can be read and unlocked
+        //! using creds from the global cred manager.
+        YoucryptDirectoryStatusInitialized
+        = YoucryptFolder::initialized,
+        //! Is being processed
+        YoucryptDirectoryStatusProcessing
+        = YoucryptFolder::processing,
+        //! Is mounted
+        YoucryptDirectoryStatusMounted
+        = YoucryptFolder::mounted,
+        //! Unlocked, has a mount point set up
+        YoucryptDirectoryStatusReadyToMount,
+    };
+
 //! Class YCFolder: should implement all use cases
 //   of YoucryptFolder from our perspective.
-class YCFolder : public YoucryptFolder {
+class YCFolder : protected YoucryptFolder {
 protected:
     //! Constructors are protected.  Use the static methods for constr.
 
@@ -39,30 +67,56 @@ protected:
     //! Constructor for opening an existing folder
     YCFolder(const path& p,
              const Credentials &c);
+
+    //! Constructor to scan an existing folder
+    YCFolder(const path &);
 protected:
     string _mountedPath;
     string _mountedDate;
+    vector<string> _mountOpts;
+    int _idleTO;
     string _alias;
 public:
     // Properties (read-only)
-    bool isMounted();
     string mountedPath();
     string mountedDate();
     string rootPath();    
-    
-public:
-    // Operations
-    string &alias();
-    bool mount(string location);
 
+
+    // States
+    int currStatus();
+    string stringStatus();
+    void updateStatus();
+    bool isMounted();
+    bool isCreatable();
+    bool isUnlocked();
+
+public:
+    //! Read/write alias
+    string &alias();
+
+    //! Set up mount
+    void setMountLocation(string);
+    void setMountOpts(const vector<string> &, int);
+    //! Mount: status say it's mountable
+    bool mount();
+    //! Unmount: status should say it is mounted
+    bool unmount();
+    //! Clean up root path for a new filesystem
+    bool cleanUpRoot();
+    //! Add/delete a credential.
+    bool addCredential(const Credentials &);
+    bool deleteCredential(const Credentials &);
+    bool restoreFolderInPlace();
 public:
     static shared_ptr<YCFolder> 
         initEncryptedFolderInPlaceAddExtension(
             string,
             YoucryptFolderOpts=YoucryptFolderOpts());
     static shared_ptr<YCFolder>
-        importFolderAtPath(string);
+        initFromScanningPath(string);
 };
+typedef shared_ptr<YCFolder> Folder;
 
 }
 
@@ -83,12 +137,10 @@ public:
 //
 //@class PeriodicActionTimer;
 //@class PassphraseManager;
-//@class YoucryptDirectory;
 //
 //using namespace youcrypt;
 //
 //
-//@interface YoucryptDirectory : NSObject <NSCoding> {
 //    boost::shared_ptr<YoucryptFolder> folder;
 //}
 //

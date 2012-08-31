@@ -9,15 +9,15 @@
 #import "RestoreController.h"
 #import "libFunctions.h"
 #import "AppDelegate.h"
-#import "YoucryptDirectory.h"
+#import "core/YCFolder.h"
 
 
 @implementation RestoreController
 
 @synthesize path;
-@synthesize dir;
 @synthesize passwd;
 @synthesize keychainHasPassphrase;
+@synthesize dir;
 
 - (id)init //WithWindow:(NSWindow *)window
 {
@@ -47,7 +47,7 @@
         return;
     }
     
-    if (![dir decryptFolderInPlaceWithPassphrase:passwd]) {
+    if (!dir->restoreFolderInPlace()) {
         DDLogError(@"Restoring of %@ failed \n", path);
         NSAlert *alert = [NSAlert alertWithMessageText:@"Incorrect passphrase" defaultButton:nil alternateButton:nil otherButton:nil informativeTextWithFormat:@"The passphrase does not decrypt %@", [path stringByDeletingLastPathComponent]];
             [alert runModal];

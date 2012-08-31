@@ -15,7 +15,7 @@
 
 #include <boost/filesystem/path.hpp>
 #include <boost/filesystem/operations.hpp>
-#include "DirectoryMap.h"
+#include "core/DirectoryMap.h"
 #include <string>
 #include <boost/filesystem/path.hpp>
 #include <boost/filesystem/fstream.hpp>
@@ -273,8 +273,7 @@ getout:
     // A folder object should have been created for sure, with
     // status set to YoucryptFolder::statusUnkown
     assert(folder.get() != NULL);
-    
-    return [NSString stringWithFormat:@"%s", folder->statusAsString()];
+    return [NSString stringWithFormat:@""];
 }
 
 

@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "YoucryptDirectory.h"
+#import "core/YCFolder.h"
 #import "libFunctions.h"
 
 
@@ -22,15 +22,12 @@ int main_dirs_plis(int argc, const char * argv[])
         /*
         NSString *dirConfigPath = @"/Users/hr/.youcrypt/dirs.plist";
         NSMutableArray *youcryptDirectories = [[NSMutableArray alloc] init];
-        YoucryptDirectory *directory = [[YoucryptDirectory alloc] init];    
         [directory setPath:@"/Users/hr/tmp/sth.yc"];	
         [directory setMountedPath:@""];    
         [youcryptDirectories addObject:directory];
-        directory = [[YoucryptDirectory alloc] init];    
         [directory setPath:@"/Users/hr/tmp/sthelse.yc"];
         [directory setMountedPath:@"mounted path"];    
         [youcryptDirectories addObject:directory];
-        directory = [[YoucryptDirectory alloc] init];    
         [directory setPath:@"/Users/hr/tmp/sthmore.yc"];
         [directory setMountedPath:@""];    
         [youcryptDirectories addObject:directory];
