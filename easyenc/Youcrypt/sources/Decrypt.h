@@ -26,5 +26,6 @@ using namespace youcrypt;
 @property (atomic, copy) NSString *passphraseFromKeychain;
 @property (atomic, assign) BOOL keychainHasPassphrase;
 @property (nonatomic, assign) Folder dir;
+@property (nonatomic, assign) NSString *mountPath;
 
 @end

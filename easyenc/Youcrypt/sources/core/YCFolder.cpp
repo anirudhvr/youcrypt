@@ -165,6 +165,11 @@ string YCFolder::stringStatus()
 
 void YCFolder::updateStatus() 
 {
+    string msg = YoucryptFolder::getFuseMessage();
+    if (msg == "unmount") {
+        _isMounted = false;
+        status = YoucryptDirectoryStatusInitialized;
+    }
 }
 
 bool YCFolder::isMounted() 
@@ -201,12 +206,24 @@ string &YCFolder::alias()
     return _alias;
 }
 
-void YCFolder::setMountLocation(string mountPoint) 
+bool YCFolder::setMountLocation(string mountPoint) 
 {
+    using boost::filesystem::path;
+    using boost::filesystem::create_directories;
+    using boost::filesystem::exists;
+
     if (status == YoucryptDirectoryStatusInitialized) {
+        path p(mountPoint);
+        if (exists(p))
+            return false;
+        create_directories(p);
+        if (!is_directory(p))
+            return false;
         _mountedPath = mountPoint;
         status = YoucryptDirectoryStatusReadyToMount;
-    }
+        return true;
+    } else 
+        return false;
 }
 
 void YCFolder::setMountOpts(const vector<string> &opts, int idleTimeOut) 
@@ -220,16 +237,22 @@ void YCFolder::setMountOpts(const vector<string> &opts, int idleTimeOut)
 bool YCFolder::mount() 
 {
     if (status == YoucryptDirectoryStatusReadyToMount) {
-        return YoucryptFolder::mount(boost::filesystem::path(
+        status = YoucryptDirectoryStatusInitialized;        
+        if (YoucryptFolder::mount(boost::filesystem::path(
                                          _mountedPath),
-                                     _mountOpts, _idleTO);
+                                  _mountOpts, _idleTO)) {
+            _isMounted = true;
+            return true;
+        }
     }
     return false;
 }
 
 bool YCFolder::unmount() 
 {
-    return YoucryptFolder::unmount();
+    if (YoucryptFolder::unmount()) {
+        _isMounted = false;
+    }    
 }
 
 bool YCFolder::cleanUpRoot() 

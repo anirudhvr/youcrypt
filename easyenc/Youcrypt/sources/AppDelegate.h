@@ -75,8 +75,9 @@ extern "C" NSString *nsstrFromCpp(std::string);
     
     BOOL callFinderScript;
     
-    NSMutableArray *decryptQ, *restoreQ;
     EncryptQ encQ;
+    DecryptQ decQ;
+    RestoreQ resQ;
     long enQIndex, deQIndex, reQIndex;
 }
 
@@ -104,7 +105,7 @@ extern "C" NSString *nsstrFromCpp(std::string);
 - (IBAction)showAboutWindow:(id)sender;
 
 -(BOOL)openEncryptedFolder:(NSString *)path;
--(BOOL)doDecrypt:(Folder)dir;
+-(BOOL)doDecrypt:(NSString *)path mountedPath:(NSString *)mPath;
 -(void)didDecrypt:(Folder)dir;
 -(void)cancelDecrypt:(Folder)dir;
 

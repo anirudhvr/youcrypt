@@ -24,6 +24,7 @@
 #include <rlog/Error.h>
 #include <rlog/SyslogNode.h>
 #include <rlog/RLogChannel.h>
+#include <poll.h>
 
 
 #include <iostream>
@@ -34,7 +35,16 @@
 #include <boost/scoped_ptr.hpp>
 #include <boost/shared_ptr.hpp>
 #include <boost/foreach.hpp>
+#include <boost/iostreams/device/file_descriptor.hpp>
+#include <boost/iostreams/stream.hpp>
+#include <boost/archive/xml_iarchive.hpp>
+#include <boost/serialization/nvp.hpp>
 
+using boost::iostreams::file_descriptor_source;
+using boost::iostreams::stream;
+using boost::archive::xml_iarchive;
+using std::string;
+using boost::serialization::make_nvp;
 using boost::filesystem::path;
 using boost::filesystem::directory_iterator;
 using boost::filesystem::ifstream;
@@ -210,7 +220,7 @@ YoucryptFolder::YoucryptFolder()
 
 /*! Implementation: Create a YoucryptFolder object
  */
-YoucryptFolder::YoucryptFolder(const path &_rootPath)
+YoucryptFolder::YoucryptFolder(const path &_rootPath) : YoucryptFolder()
 {
     YoucryptFolder::YoucryptFolder();
     rootPath = _rootPath;
@@ -225,6 +235,7 @@ YoucryptFolder::YoucryptFolder(const path &_rootPath,
                                const YoucryptFolderOpts& _opts,
                                const Credentials& creds) : YoucryptFolder(_rootPath)
 {
+    loadConfigAtPath(_rootPath, creds);
     if (status == YoucryptFolder::uninitialized)
         createAtPath(rootPath, _opts, creds);
 }
@@ -656,12 +667,25 @@ bool YoucryptFolder::mount(const path &_mountPoint,
         ctx.idleTracking = true;
     if (!(exists(mountPoint) && is_directory(mountPoint)))
         return false;
+
+    int fromParent[2], toParent[2];
+    pipe(fromParent);
+    pipe(toParent);
+    _fuseIn = toParent[0];
+    _fuseOut = fromParent[1];
+
     pid_t newPid = fork();    
     if (newPid < 0)
         return false; // Error on fork.
 
     else if (newPid == 0) {
         // Child process
+        // Close the out of fromParent
+        close(fromParent[1]);
+        // Close in of toParent
+        close(toParent[0]);
+        _fuseIn = fromParent[0];
+        _fuseOut = toParent[1];
 
         // Code copied from main.cpp(encfs)
 
@@ -733,6 +757,7 @@ bool YoucryptFolder::mount(const path &_mountPoint,
         ctx.setRoot(rootNode);
         ctx.args.reset();
         ctx.opts.reset();
+        ctx.folder.reset(this);
 
         // Create fuse args
         rAssert(mountOptions.size() <= 30);
@@ -760,7 +785,6 @@ bool YoucryptFolder::mount(const path &_mountPoint,
         try
         {
             time_t startTime, endTime;
-            // FIXME: workaround for fuse_main returning an error on normal
             // exit.  Only print information if fuse_main returned
             // immediately..
             time( &startTime );
@@ -792,15 +816,39 @@ bool YoucryptFolder::mount(const path &_mountPoint,
     }
 
     else if (newPid > 0) {
+
         // Parent process.
+        close(fromParent[0]);
+        close(toParent[1]);
+        _fuseOut = fromParent[1];
+        _fuseIn = toParent[0];
+
         int stat;
         do {
             waitpid(newPid, &stat, 0);
         } while (!(WIFEXITED(stat)));
         if (WIFEXITED(stat) && !(WEXITSTATUS(stat))) {
-            this->status = YoucryptFolder::mounted;
-            _isMounted = true;
-            return true;
+            status = YoucryptFolder::mounted;            
+            
+            struct pollfd pf;
+            pf.fd = _fuseIn;
+            pf.events = POLLRDNORM;
+            pf.revents = 0;
+            
+            ::poll(&pf, 1, 5000);
+            if (!(pf.revents & POLLRDNORM)) {
+                return false;
+            }
+            
+            file_descriptor_source fdin(_fuseIn, boost::iostreams::never_close_handle);
+            stream<file_descriptor_source> in(fdin);
+            xml_iarchive xi(in);
+            string msg;
+            xi & make_nvp("Message", msg);
+            if (msg == "initialized")
+                return true;
+            else
+                return false;
         }
         else
             return false;
@@ -817,7 +865,6 @@ bool YoucryptFolder::unmount(void)
 {
     if (status == YoucryptFolder::mounted) {
         fuse_unmount( mountPoint.c_str() );
-        _isMounted = false;
         return true;
     } else {
         rWarning(_("Not umounnting since folder not mounted"),
@@ -825,5 +872,28 @@ bool YoucryptFolder::unmount(void)
         // fuse_unmount( mountPoint.c_str() );
         return false;
     }
+}
+
+
+
+string YoucryptFolder::getFuseMessage(bool block) {
+    if (status != YoucryptFolder::mounted)
+        return "";
+    struct pollfd pf;
+    pf.fd = _fuseIn;
+    pf.events = POLLRDNORM;
+    pf.revents = 0;
+    
+    ::poll(&pf, 1, (block ? -1 : 0));
+    if (!(pf.revents & POLLRDNORM)) {
+        return "";
+    }
+    
+    file_descriptor_source fdin(_fuseIn, boost::iostreams::never_close_handle);
+    stream<file_descriptor_source> in(fdin);
+    xml_iarchive xi(in);
+    string msg;
+    xi & make_nvp("Message", msg);
+    return msg;
 }
 

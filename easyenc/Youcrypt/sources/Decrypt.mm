@@ -17,6 +17,7 @@
 @synthesize dir;
 @synthesize passphraseFromKeychain;
 @synthesize keychainHasPassphrase;
+@synthesize mountPath;
 
 -(id)init
 {
@@ -41,10 +42,10 @@
 - (IBAction)decrypt:(id)sender
 {
     (void)sender;
-    if (dir->currStatus() != YoucryptDirectoryStatusReadyToMount)
-        return;
+    
+    
 	srcFolder = nsstrFromCpp(dir->rootPath());
-	destFolder = nsstrFromCpp(dir->mountedPath());
+	destFolder = self.mountPath;
 	NSString *yourPasswordString;
     if (keychainHasPassphrase)
         yourPasswordString = passphraseFromKeychain;
@@ -56,10 +57,28 @@
         
     int idletime = [[theApp.preferenceController getPreference:YC_IDLETIME] intValue];
     BOOL res;
-    if (res == YES) {
-        [self close];
-        [theApp didDecrypt:dir];
-        return;
+    std::vector<std::string> mount_opts, &fuse_opts = mount_opts;
+    NSDictionary *fuseOpts = dict;
+    for (NSString *key in [fuseOpts allKeys]) {
+        NSString *opt;
+        if ([key isEqualToString:@"volicon"]) {
+            opt = [NSString stringWithFormat:@"-ovolicon=%@/Contents/Resources/%@", [libFunctions appBundlePath], [fuseOpts objectForKey:key]];
+        } else {
+            opt = [NSString stringWithFormat:@"-o%@=%@", key, [fuseOpts objectForKey:key]];
+        }
+        fuse_opts.push_back(std::string([opt cStringUsingEncoding:NSASCIIStringEncoding]));
+    }
+    fuse_opts.push_back(std::string("-ofsname=YoucryptFS"));
+
+    if (idletime < 0) idletime = 0;
+    
+    if (dir->isUnlocked()) {
+        dir->setMountLocation(cppString(destFolder));
+        dir->setMountOpts(mount_opts, idletime);
+        if (dir->mount()) {
+            [self close];
+            [theApp didDecrypt:dir];
+        }
     } else {
         if (keychainHasPassphrase) {
             // The error wasn't the user's fault.

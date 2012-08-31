@@ -16,7 +16,10 @@ using boost::filesystem::path;
 using std::string;
 using std::vector;
 
+struct fuse_conn_info;
 extern "C" void youcrypt_mount_destroy(void *);
+extern "C" void *youcrypt_mount_init(fuse_conn_info *conn);
+
 
 namespace youcrypt {
 
@@ -111,6 +114,7 @@ namespace youcrypt {
         bool deleteCredential(const Credentials&);
 
         int currStatus() { return status; }
+        string getFuseMessage(bool=false);
     public:
         enum Status {
             //! Status is not known (not parseable, not readable, etc.)
@@ -143,11 +147,11 @@ namespace youcrypt {
         vector<string> mountOptions;
         int status;
 
-        //! FIXME:  Not yet implemented.  Need to do this.
         bool idleTracking;   
-        bool _isMounted;
+        int _fuseIn, _fuseOut;
+        friend void *::youcrypt_mount_init(fuse_conn_info *conn);
+        friend void ::youcrypt_mount_destroy(void *_ctx);
 
-        friend void ::youcrypt_mount_destroy(void *);
     };
 }
 

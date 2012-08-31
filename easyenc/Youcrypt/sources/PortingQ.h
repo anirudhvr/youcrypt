@@ -11,14 +11,25 @@
 
 #include "core/ProcessQ.h"
 #include <string>
+#include <boost/tuple/tuple.hpp>
 
 using std::string;
+using boost::tuple;
 
 namespace youcrypt {
 
     class EncryptQ : public ProcessQ<string> {
         virtual void doJob(const string &);
-    };        
+    };
+    
+    class DecryptQ : public ProcessQ<tuple<string, string> > {
+        virtual void doJob(const tuple<string, string> &);
+    };
+    
+    class RestoreQ : public ProcessQ<string> {
+        virtual void doJob(const string &);
+    };
+    
 }
 
 #endif /* defined(__Youcrypt__PortingQ__) */

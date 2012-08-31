@@ -29,6 +29,7 @@
 #include <sys/statvfs.h>
 #include <sys/time.h>
 #include <unistd.h>
+#include <signal.h>
 #include <fcntl.h>
 #include <dirent.h>
 #include <sys/types.h>
@@ -821,7 +822,7 @@ extern "C" void fuse_unmount_compat22(const char *mountpoint);
 
 
 static bool _unmountFS(EncFS_Context *ctx)
-{
+{    
     fuse_unmount( ctx->mountPoint.c_str() );
     return true;
 }
@@ -831,6 +832,11 @@ static
 void *_idleMonitor(void *_arg)
 {
     EncFS_Context *ctx = (EncFS_Context*)_arg;
+    sigset_t setSigs;
+    sigemptyset(&setSigs);
+    sigaddset(&setSigs, SIGHUP);
+    pthread_sigmask(SIG_BLOCK, &setSigs, 0);
+
 
     const int timeoutCycles = 60 * ctx->idleTimeout / ActivityCheckInterval;
     int idleCycles = 0;
@@ -880,23 +886,64 @@ void *_idleMonitor(void *_arg)
 
 
 
+
+#include <boost/iostreams/device/file_descriptor.hpp>
+#include <boost/iostreams/stream.hpp>
+#include <boost/archive/xml_oarchive.hpp>
+#include <boost/serialization/nvp.hpp>
+#include <boost/filesystem/fstream.hpp>
+
+using boost::iostreams::file_descriptor_sink;
+using boost::iostreams::stream;
+using boost::archive::xml_oarchive;
+using std::string;
+using boost::serialization::make_nvp;
+
+void youcrypt_mount_destroy(void *_ctx) {
+    EncFS_Context *ectx = (EncFS_Context *)_ctx;
+    if (ectx->folder) {
+        // The following line is unfortunately wrong
+        // since this is a really different process.
+        ectx->folder->status = youcrypt::YoucryptFolder::initialized;
+
+        // Instead we attempt to write to _fuseOut;
+        file_descriptor_sink fdout(ectx->folder->_fuseOut, boost::iostreams::never_close_handle);
+        stream<file_descriptor_sink> out(fdout);
+        xml_oarchive xo(out);
+        string msg = "unmount";
+        xo & make_nvp("Message", msg); 
+    }
+}
+
 void *youcrypt_mount_init(fuse_conn_info *conn) {
     conn->async_read = true;
     EncFS_Context *ctx = (EncFS_Context *)fuse_get_context()->private_data;
     
+    sigset_t setSigs;
+    sigemptyset(&setSigs);
+    sigaddset(&setSigs, SIGHUP);
+    pthread_sigmask(SIG_UNBLOCK, &setSigs, 0);
+    
+    
     conn->async_read = true;
-
+    
     if (ctx->idleTimeout > 0) {
         ctx->running = true;
         int res = pthread_create (&ctx->monitorThread, 0, _idleMonitor,
                                   ((void *)ctx));
     }
+    
+    if (ctx->folder) {
+        // Instead we attempt to write to _fuseOut;
+        file_descriptor_sink fdout(ctx->folder->_fuseOut, boost::iostreams::never_close_handle);
+        stream<file_descriptor_sink> out(fdout);
+        xml_oarchive xo(out);
+        string msg = "initialized";
+        xo & make_nvp("Message", msg);
+    }
+    
+    
     return ((void *)ctx);
-}
-
-void youcrypt_mount_destroy(void *_ctx) {
-    EncFS_Context *ectx = (EncFS_Context *)_ctx;
-    ectx->folder->status = youcrypt::YoucryptFolder::initialized;
 }
 
 

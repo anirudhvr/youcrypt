@@ -76,6 +76,7 @@ protected:
     vector<string> _mountOpts;
     int _idleTO;
     string _alias;
+    bool _isMounted;
 public:
     // Properties (read-only)
     string mountedPath();
@@ -96,7 +97,7 @@ public:
     string &alias();
 
     //! Set up mount
-    void setMountLocation(string);
+    bool setMountLocation(string);
     void setMountOpts(const vector<string> &, int);
     //! Mount: status say it's mountable
     bool mount();
