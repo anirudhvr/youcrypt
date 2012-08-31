@@ -11,7 +11,6 @@
 #import "AppDelegate.h"
 #import "PreferenceController.h"
 #import "PassphraseManager.h"
-#import "YoucryptDirectory.h"
 
 @implementation Decrypt
 
@@ -42,8 +41,10 @@
 - (IBAction)decrypt:(id)sender
 {
     (void)sender;
-	srcFolder = dir.path;
-	destFolder = dir.mountedPath;
+    if (dir->currStatus() != YoucryptDirectoryStatusReadyToMount)
+        return;
+	srcFolder = nsstrFromCpp(dir->rootPath());
+	destFolder = nsstrFromCpp(dir->mountedPath());
 	NSString *yourPasswordString;
     if (keychainHasPassphrase)
         yourPasswordString = passphraseFromKeychain;
@@ -54,12 +55,7 @@
     NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:@"logo-512x512-alpha.icns", @"volicon", volname, @"volname", nil];
         
     int idletime = [[theApp.preferenceController getPreference:YC_IDLETIME] intValue];
-    
-    
-    BOOL res =  [dir openEncryptedFolderAtMountPoint:destFolder
-                                        withPassphrase:yourPasswordString
-                                              idleTime:idletime
-                                              fuseOpts:dict];
+    BOOL res;
     if (res == YES) {
         [self close];
         [theApp didDecrypt:dir];
@@ -83,7 +79,6 @@
 
 - (IBAction)cancel:(id)sender {
     (void)sender;
-    DDLogVerbose(@"Cancel decrypt : %@",dir.path);
     [self close];
     [theApp cancelDecrypt:dir];
 }

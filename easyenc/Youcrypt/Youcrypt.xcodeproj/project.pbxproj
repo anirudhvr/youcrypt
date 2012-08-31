@@ -59,7 +59,9 @@
 		E054042315AB1CE10011E5CC /* RestoreController.mm in Sources */ = {isa = PBXBuildFile; fileRef = E054042115AB1CE10011E5CC /* RestoreController.mm */; };
 		E054042415AB1CE10011E5CC /* Restore.xib in Resources */ = {isa = PBXBuildFile; fileRef = E054042215AB1CE10011E5CC /* Restore.xib */; };
 		E06E2B4115A76ABE00E52B2D /* ListRightClick.xib in Resources */ = {isa = PBXBuildFile; fileRef = E06E2B4015A76ABE00E52B2D /* ListRightClick.xib */; };
-		E09C592915EEE23500F51B1D /* DirectoryMap.mm in Sources */ = {isa = PBXBuildFile; fileRef = E09C592815EEE23500F51B1D /* DirectoryMap.mm */; };
+		E077154715EF1CA4009AB1C2 /* YCFolder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E077154515EF1CA4009AB1C2 /* YCFolder.cpp */; };
+		E077154A15EF276C009AB1C2 /* CredentialsManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E077154815EF276C009AB1C2 /* CredentialsManager.cpp */; };
+		E0812F3315F09466007EE3AF /* DirectoryMap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E0812F3115F09466007EE3AF /* DirectoryMap.cpp */; };
 		E0A2849815A61A26008A949A /* logo-512x512-alpha.icns in Resources */ = {isa = PBXBuildFile; fileRef = E0A2849715A61A26008A949A /* logo-512x512-alpha.icns */; };
 		E0BF0E951596B9C8002F9FB9 /* YoucryptDirectory.mm in Sources */ = {isa = PBXBuildFile; fileRef = E0BF0E941596B9C8002F9FB9 /* YoucryptDirectory.mm */; };
 		E0BF0E9D1596D01F002F9FB9 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E0BF0E9C1596D01F002F9FB9 /* Foundation.framework */; };
@@ -547,8 +549,12 @@
 		E054042215AB1CE10011E5CC /* Restore.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Restore.xib; sourceTree = "<group>"; };
 		E06E2B3F15A7671B00E52B2D /* constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = constants.h; path = sources/constants.h; sourceTree = "<group>"; };
 		E06E2B4015A76ABE00E52B2D /* ListRightClick.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ListRightClick.xib; sourceTree = "<group>"; };
-		E09C592715EEE23500F51B1D /* DirectoryMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DirectoryMap.h; path = sources/DirectoryMap.h; sourceTree = "<group>"; };
-		E09C592815EEE23500F51B1D /* DirectoryMap.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = DirectoryMap.mm; path = sources/DirectoryMap.mm; sourceTree = "<group>"; };
+		E077154515EF1CA4009AB1C2 /* YCFolder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = YCFolder.cpp; path = sources/core/YCFolder.cpp; sourceTree = "<group>"; };
+		E077154615EF1CA4009AB1C2 /* YCFolder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = YCFolder.h; path = sources/core/YCFolder.h; sourceTree = "<group>"; };
+		E077154815EF276C009AB1C2 /* CredentialsManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CredentialsManager.cpp; path = sources/core/CredentialsManager.cpp; sourceTree = "<group>"; };
+		E077154915EF276C009AB1C2 /* CredentialsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CredentialsManager.h; path = sources/core/CredentialsManager.h; sourceTree = "<group>"; };
+		E0812F3115F09466007EE3AF /* DirectoryMap.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = DirectoryMap.cpp; path = sources/core/DirectoryMap.cpp; sourceTree = "<group>"; };
+		E0812F3215F09466007EE3AF /* DirectoryMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DirectoryMap.h; path = sources/core/DirectoryMap.h; sourceTree = "<group>"; };
 		E0A2849715A61A26008A949A /* logo-512x512-alpha.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = "logo-512x512-alpha.icns"; sourceTree = "<group>"; };
 		E0BF0E931596B9C8002F9FB9 /* YoucryptDirectory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = YoucryptDirectory.h; path = sources/YoucryptDirectory.h; sourceTree = "<group>"; };
 		E0BF0E941596B9C8002F9FB9 /* YoucryptDirectory.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = YoucryptDirectory.mm; path = sources/YoucryptDirectory.mm; sourceTree = "<group>"; };
@@ -936,8 +942,6 @@
 				25617DC515ABD54A00EED7F7 /* ListDirTable.h */,
 				25617DC615ABD54B00EED7F7 /* ListDirTable.mm */,
 				256C359B158EA88700E2BEC4 /* PreferenceController.h */,
-				E09C592715EEE23500F51B1D /* DirectoryMap.h */,
-				E09C592815EEE23500F51B1D /* DirectoryMap.mm */,
 				256C359C158EA88700E2BEC4 /* PreferenceController.mm */,
 				E6649C7B15A53CE40096886F /* Encrypt.h */,
 				E6649C7915A53CD80096886F /* Encrypt.mm */,
@@ -980,6 +984,12 @@
 		E077154115EF1BEA009AB1C2 /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				E077154515EF1CA4009AB1C2 /* YCFolder.cpp */,
+				E077154615EF1CA4009AB1C2 /* YCFolder.h */,
+				E077154815EF276C009AB1C2 /* CredentialsManager.cpp */,
+				E077154915EF276C009AB1C2 /* CredentialsManager.h */,
+				E0812F3115F09466007EE3AF /* DirectoryMap.cpp */,
+				E0812F3215F09466007EE3AF /* DirectoryMap.h */,
 			);
 			name = Core;
 			sourceTree = "<group>";
@@ -1897,7 +1907,6 @@
 				E64AC1BB15E769D500D2E046 /* KeyManager.cpp in Sources */,
 				E64AC1BD15E769D500D2E046 /* PasswordManager.cpp in Sources */,
 				E64AC1BE15E769D500D2E046 /* UserAccount.cpp in Sources */,
-				E09C592915EEE23500F51B1D /* DirectoryMap.mm in Sources */,
 				E633656315EF24B3003EC0F9 /* concat.c in Sources */,
 				E633656415EF24B3003EC0F9 /* passwdqc_check.c in Sources */,
 				E633656515EF24B3003EC0F9 /* passwdqc_load.c in Sources */,
@@ -1906,6 +1915,9 @@
 				E633656815EF24B3003EC0F9 /* wordset_4k.c in Sources */,
 				E6E5821015EF766F00ED4CEE /* SharingGetEmailsView.mm in Sources */,
 				E6310AD415F07A670078F61E /* ServerConnection.cpp in Sources */,
+				E077154715EF1CA4009AB1C2 /* YCFolder.cpp in Sources */,
+				E077154A15EF276C009AB1C2 /* CredentialsManager.cpp in Sources */,
+				E0812F3315F09466007EE3AF /* DirectoryMap.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

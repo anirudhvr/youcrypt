@@ -202,39 +202,38 @@ static bool decryptFolder( shared_ptr<DirNode> root,
     return true;
 }
 
-
-const char *YoucryptFolder::statusString[] = {
-            "Status Unknown",
-            "Folder uninitialized",
-            "Error reading config",
-            "Folder initialized",
-            "Folder processing",
-            "Folder mounted",
-            "Folder unmounted",
-            "Authentication failed"
-};
+/*! Implementation: Creates an empty object */
+YoucryptFolder::YoucryptFolder()
+{
+    status = YoucryptFolder::statusUnknown;
+}
 
 /*! Implementation: Create a YoucryptFolder object
  */
 YoucryptFolder::YoucryptFolder(const path &_rootPath)
 {
-    status = YoucryptFolder::statusUnknown;
+    YoucryptFolder::YoucryptFolder();
     rootPath = _rootPath;
     string rootDir = _rootPath.string();
     slashTerminate(rootDir);
+    loadConfigAtPath(_rootPath, Credentials());
 }
                                
 /*! Implementation: Try to loadConfig and createAtPath otherwise.
  */
-YoucryptFolder::YoucryptFolder(const path &_rootPath, 
+YoucryptFolder::YoucryptFolder(const path &_rootPath,
                                const YoucryptFolderOpts& _opts,
-                               const Credentials& creds) 
+                               const Credentials& creds) : YoucryptFolder(_rootPath)
 {
-    if (!loadConfigAtPath (_rootPath, creds)) 
-        if ((status == YoucryptFolder::statusUnknown) || 
-            (status == YoucryptFolder::uninitialized))
-            createAtPath (_rootPath, _opts, creds);
+    if (status == YoucryptFolder::uninitialized)
+        createAtPath(rootPath, _opts, creds);
 }
+
+YoucryptFolder::~YoucryptFolder() {
+    if (status == YoucryptFolder::mounted)
+        unmount();
+}
+
 
 /*! Implementation: must be very simialr to createV6Config (except for
  *  Youcrypt specific customizations).
@@ -250,11 +249,16 @@ bool YoucryptFolder::loadConfigAtPath(const path &_rootPath,
 {
  
     status = YoucryptFolder::statusUnknown;
-
-    config.reset(new EncFSConfig);
     rootPath = _rootPath;
     string rootDir = _rootPath.string();
     slashTerminate(rootDir);
+
+    if (exists(rootPath) && is_directory(rootPath))
+        status = YoucryptFolder::uninitialized;
+    else
+        return false;
+
+    config.reset(new EncFSConfig);
 
     if(readConfig( rootDir, config ) != Config_None)
     {
@@ -306,9 +310,11 @@ bool YoucryptFolder::loadConfigAtPath(const path &_rootPath,
         //     return false;
         // }
 
-        for (int i=0; i<config->easyencNumUsers && !volumeKey; ++i)
-            volumeKey = cred->decryptVolumeKey(config->easyencKeys[i], 
-                                               cipher);
+        if (cred) {
+            for (int i=0; i<config->easyencNumUsers && !volumeKey; ++i)
+                volumeKey = cred->decryptVolumeKey(config->easyencKeys[i], 
+                                                   cipher);
+        }
 
         if (!volumeKey) {
             status = YoucryptFolder::credFail;
@@ -528,7 +534,7 @@ bool YoucryptFolder::importContent(const path& sourcePath,
         (status != YoucryptFolder::mounted)) 
         return false;
     
-    YoucryptFolder::Status ostatus = status;
+    int ostatus = status;
     status = YoucryptFolder::processing;
 
     if (destSuffix[0] != '/')
@@ -548,7 +554,7 @@ bool YoucryptFolder::exportContent(const path& toPath, string volPath)
         (status != YoucryptFolder::mounted)) 
         return false;
     
-    YoucryptFolder::Status ostatus = status;
+    int ostatus = status;
     status = YoucryptFolder::processing;
 
     if (volPath[0] != '/')
@@ -572,7 +578,7 @@ bool YoucryptFolder::addCredential(const Credentials& newCred)
         return false;
 
     // Let other threads know that we're processing the config.
-    YoucryptFolder::Status ostatus = status;
+    int ostatus = status;
     status = YoucryptFolder::processing;
 
     config.reset( new EncFSConfig );
@@ -602,7 +608,7 @@ bool YoucryptFolder::deleteCredential(const Credentials& cred)
         return false;
 
     // Let other threads know that we're processing the config.
-    YoucryptFolder::Status ostatus = status;
+    int ostatus = status;
     status = YoucryptFolder::processing;
 
     config.reset( new EncFSConfig );
@@ -793,6 +799,7 @@ bool YoucryptFolder::mount(const path &_mountPoint,
         } while (!(WIFEXITED(stat)));
         if (WIFEXITED(stat) && !(WEXITSTATUS(stat))) {
             this->status = YoucryptFolder::mounted;
+            _isMounted = true;
             return true;
         }
         else
@@ -809,9 +816,8 @@ extern "C" void fuse_unmount_compat22(const char *mountpoint);
 bool YoucryptFolder::unmount(void)
 {
     if (status == YoucryptFolder::mounted) {
-	rWarning(_("Unmounting filesystem %s due to inactivity"),
-             mountPoint.c_str());
         fuse_unmount( mountPoint.c_str() );
+        _isMounted = false;
         return true;
     } else {
         rWarning(_("Not umounnting since folder not mounted"),
@@ -819,11 +825,5 @@ bool YoucryptFolder::unmount(void)
         // fuse_unmount( mountPoint.c_str() );
         return false;
     }
-}
-
-
-YoucryptFolder::~YoucryptFolder() {
-    if (status == YoucryptFolder::mounted)
-        unmount();
 }
 

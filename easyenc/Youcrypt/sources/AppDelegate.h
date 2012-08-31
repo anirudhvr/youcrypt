@@ -1,5 +1,5 @@
 //
-//  AppDelegate.h
+//  AppDelegate.h
 //  Youcrypt Mac alpha
 //
 //  Created by Hardik Ruparel on 6/17/12.
@@ -12,12 +12,13 @@
 #import "DirectoryMap.h"
 #import <map>
 
+using namespace youcrypt;
+
 @class PreferenceController;
 @class FileSystemsController;
 @class Decrypt;
 @class Encrypt;
 @class ConfigDirectory;
-@class YoucryptDirectory;
 @class YoucryptService;
 @class ListDirectoriesWindow;
 @class FirstRunSheetController;
@@ -31,6 +32,8 @@
 @class AboutController;
 @class PassphraseManager;
 
+extern "C" std::string cppString(NSString *);
+extern "C" NSString *nsstrFromCpp(std::string);
 
 
 @interface AppDelegate : NSObject <NSTableViewDataSource, NSTableViewDelegate, NSApplicationDelegate> { // changed from NSApplicationDelegate
@@ -61,7 +64,7 @@
     keyDownView *keyDown;
 
     // List of directories maintained by us.
-    // Objects added should be (YoucryptDirectory *)
+    // Objects added should be (Folder)
 //    NSMutableArray *directories;    
     boost::shared_ptr<DirectoryMap> directories;
     
@@ -98,13 +101,13 @@
 - (IBAction)showAboutWindow:(id)sender;
 
 -(BOOL)openEncryptedFolder:(NSString *)path;
--(BOOL)doDecrypt:(YoucryptDirectory*)dir;
--(void)didDecrypt:(YoucryptDirectory *)dir;
--(void)cancelDecrypt:(YoucryptDirectory *)dir;
+-(BOOL)doDecrypt:(Folder)dir;
+-(void)didDecrypt:(Folder)dir;
+-(void)cancelDecrypt:(Folder)dir;
 
 -(BOOL)encryptFolder:(NSString *)path;
 -(BOOL)doEncrypt:(NSString *)path;
--(void)didEncrypt:(YoucryptDirectory *)dir;
+-(void)didEncrypt:(Folder)dir;
 -(void)cancelEncrypt:(NSString *)path;
 
 -(void)removeFSAtRow:(long) row ;

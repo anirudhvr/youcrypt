@@ -67,6 +67,8 @@ namespace youcrypt {
     };
 
     class YoucryptFolder {
+    protected:
+        YoucryptFolder(); //! For inherited classes
     public:
         //! Create a new object representing encrypted content at path.
         YoucryptFolder(const path&, 
@@ -109,16 +111,17 @@ namespace youcrypt {
         bool deleteCredential(const Credentials&);
 
         int currStatus() { return status; }
-        const char *statusAsString()  { return statusString[status]; }
     public:
         enum Status {
             //! Status is not known (not parseable, not readable, etc.)
-            statusUnknown = 0,
+            statusUnknown,
             //! Directory exists but is not a Youcrypt folder. (no
             //! config files, etc.)
             uninitialized,
             //! Directory contains a (partially) corrupt config.
             configError,
+            //! Creds could not decrypt any volume key
+            credFail,
             //! Directory is a proper Youcrypt folder.
             initialized,
             //! Directory is being processed.  (files are being added
@@ -126,15 +129,9 @@ namespace youcrypt {
             processing,            
             //! Directory is initialized at mounted.
             mounted,
-            //! Creds could not decrypt any volume key
-            credFail,
         };
         
-        //! The status, except in words
-        // Defined in YoucryptFolder.cpp
-        static const char *statusString[];
-
-    private:
+    protected:
         EncFS_Context ctx;
         boost::shared_ptr<Cipher> cipher;
         CipherKey volumeKey;
@@ -144,10 +141,11 @@ namespace youcrypt {
         path mountPoint;
         path rootPath;
         vector<string> mountOptions;
-        Status status;
+        int status;
 
         //! FIXME:  Not yet implemented.  Need to do this.
-        bool idleTracking;     
+        bool idleTracking;   
+        bool _isMounted;
 
         friend void ::youcrypt_mount_destroy(void *);
     };

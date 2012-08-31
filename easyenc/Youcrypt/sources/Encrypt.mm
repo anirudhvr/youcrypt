@@ -1,5 +1,5 @@
 //
-//  SpeakLineAppDelegate.m
+//  Encrypt.mm
 //  SpeakLine
 //
 //  Created by Anirudh Ramachandran on 6/1/12.
@@ -13,7 +13,6 @@
 #import "AppDelegate.h"
 #import "PassphraseManager.h"
 #import "MixpanelAPI.h"
-#import "YoucryptDirectory.h"
 
 @implementation Encrypt
 
@@ -49,19 +48,20 @@
     srcFolder = sourceFolderPath;
     
     // Enumerate DIR contents to get number of objects in dir
-    NSDirectoryEnumerator *direnum = [[NSFileManager defaultManager] enumeratorAtPath:srcFolder];
+    NSDirectoryEnumerator *direnum = 
+        [[NSFileManager defaultManager] enumeratorAtPath:srcFolder];
     
     int dirCount = 0;
     unsigned long long fileSize = 0;
     NSString *file;
     while(file = [direnum nextObject]) {
-        fileSize += [[[NSFileManager defaultManager] attributesOfItemAtPath:file error:nil] fileSize];
+        fileSize += [[[NSFileManager defaultManager] 
+                      attributesOfItemAtPath:file error:nil] fileSize];
         dirCount++;
     }
     DDLogInfo(@"Encrypting folder of size: %llu, #files: %d",fileSize, dirCount);
     
-	// -------------------------- Figure out the password, sharing options, etc. ------------------------------------
-
+   // -- Figure out the password, sharing options, etc. --
     NSString *yourPasswordString =  nil;
     if (keychainHasPassphrase) {
         yourPasswordString = passphraseFromKeychain;
@@ -69,30 +69,21 @@
         yourPasswordString = [yourPassword stringValue];
     }
         
-    
     BOOL encfnames = NO;
-    if ([[theApp.preferenceController getPreference:YC_ENCRYPTFILENAMES] intValue] != 0)
+    if ([[theApp.preferenceController getPreference:YC_ENCRYPTFILENAMES] 
+         intValue] != 0)
         encfnames = YES;
-    destFolder = [srcFolder stringByAppendingPathExtension:ENCRYPTED_DIRECTORY_EXTENSION];
-    
-    dir = [[YoucryptDirectory alloc] initWithPath:srcFolder];
-    if ([dir status] != YoucryptDirectoryStatusUnknown) {
-        DDLogError(@"Directory to be encrypted looks like something else; status %@", [dir getStatus]);
-        return ;
-    }
-    
-    if (![dir encryptFolderInPlaceWithPassphrase:yourPasswordString encryptFilenames:encfnames]) {
-        DDLogInfo(@"Encrypt error");
-        return ;
-    }
-    
-    NSFileManager *fm = [NSFileManager defaultManager];
-    NSError *err;
-    if (![fm moveItemAtPath:srcFolder toPath:destFolder error:&err]) {
-        DDLogError(@"Encrypt: cannot move items at %@ to %@", srcFolder, destFolder);
-        return;
-    }
+    youcrypt::YoucryptFolderOpts opts;
+    if (encfnames == YES)
+        opts.filenameEncryption = youcrypt::YoucryptFolderOpts::filenameEncrypt;
+    else
+        opts.filenameEncryption = youcrypt::YoucryptFolderOpts::filenamePlain;
 
+    destFolder = [srcFolder stringByAppendingPathExtension:
+                  ENCRYPTED_DIRECTORY_EXTENSION];
+
+    dir = YCFolder::initEncryptedFolderInPlaceAddExtension(cppString(srcFolder),
+                                                           opts);
     /* change folder icon of encrypted folder */
     {
         NSNumber *num = [NSNumber numberWithBool:YES];
@@ -111,9 +102,7 @@
                          nil]];
     
     [self.window close];
-    dir.path = destFolder;
     [theApp didEncrypt:dir];
-    
     return;
 }
 
@@ -203,7 +192,7 @@
 
 -(IBAction)cancel:(id)sender {
     [self.window close];
-    dir = nil;
+    dir.reset();
     [theApp cancelEncrypt:destFolder];
 }
 
