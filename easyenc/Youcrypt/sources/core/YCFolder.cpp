@@ -245,3 +245,5 @@ YCFolder::YCFolder(const path &p,
 YCFolder::YCFolder(const path &p): YoucryptFolder(p) 
 {
 }
+
+//BOOST_SERIALIZATION_SPLIT_FREE(Folder);

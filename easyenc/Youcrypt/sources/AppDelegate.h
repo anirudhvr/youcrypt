@@ -32,8 +32,8 @@ using namespace youcrypt;
 @class AboutController;
 @class PassphraseManager;
 
-extern std::string cppString(NSString *);
-extern NSString *nsstrFromCpp(std::string);
+extern "C" std::string cppString(NSString *);
+extern "C" NSString *nsstrFromCpp(std::string);
 
 
 @interface AppDelegate : NSObject <NSTableViewDataSource, NSTableViewDelegate, NSApplicationDelegate> { // changed from NSApplicationDelegate

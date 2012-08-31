@@ -19,7 +19,7 @@ using namespace youcrypt;
 @property (atomic,strong) IBOutlet NSString *path;
 @property (atomic,strong) NSString *passwd;
 @property (readwrite,assign) BOOL keychainHasPassphrase;
-@property (assign) Folder dir;
+@property (nonatomic, assign) Folder dir;
 
 - (IBAction) restore:(id)sender;
 

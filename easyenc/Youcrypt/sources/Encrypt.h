@@ -38,7 +38,7 @@ using namespace youcrypt;
 @property (atomic, assign) BOOL keychainHasPassphrase;
 @property (atomic, strong) NSString *passphraseFromKeychain;
 @property (atomic, strong) IBOutlet NSButton *checkStorePasswd;
-@property (assign) Folder dir;
+@property (nonatomic, assign) Folder dir;
 
 -(IBAction)encrypt:(id)sender;
 -(IBAction)shareCheckClicked:(id)sender;

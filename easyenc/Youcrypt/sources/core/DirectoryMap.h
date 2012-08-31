@@ -23,6 +23,6 @@ using namespace youcrypt;
 typedef map<string, Folder> DirectoryMap;
 
 ofstream& operator<< (ofstream &, const DirectoryMap &);
-ifstream& operator>> (ifstream &, const DirectoryMap &);
+ifstream& operator>> (ifstream &, DirectoryMap &);
 
 #endif /* defined(__Youcrypt__DirectoryMap__) */

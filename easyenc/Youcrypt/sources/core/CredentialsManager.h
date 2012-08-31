@@ -11,14 +11,16 @@
 
 #include "encfs-core/Credentials.h"
 #include <vector>
+#include <boost/shared_ptr.hpp>
 
 using std::vector;
+using boost::shared_ptr;
 
 namespace youcrypt {
     class CredentialsManager {
     public:
-        Credentials getActiveCreds();
-        vector<Credentials> getEncodingCreds();
+        virtual Credentials getActiveCreds()=0;
+        virtual vector<Credentials> getEncodingCreds()=0;
     };
 
     shared_ptr<CredentialsManager> getGlobalCM();

@@ -983,5 +983,18 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
 
 @end
 
+std::string cppString(NSString *s) {
+    return std::string
+    ([s cStringUsingEncoding:NSASCIIStringEncoding]);
+}
+
+NSString *nsstrFromCpp(std::string st) {
+    NSString *s =
+            [NSString stringWithCString:st.c_str()
+                               encoding:NSASCIIStringEncoding];
+    return s;
+}
+
+
 
 

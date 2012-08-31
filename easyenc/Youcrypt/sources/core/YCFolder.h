@@ -115,9 +115,55 @@ public:
             YoucryptFolderOpts=YoucryptFolderOpts());
     static shared_ptr<YCFolder>
         initFromScanningPath(string);
-};
-typedef shared_ptr<YCFolder> Folder;
 
+    template<class A>
+        friend void boost::serialization::save(
+            A &, 
+            const shared_ptr<YCFolder> &,
+            const unsigned int);
+    template<class A>
+        friend void boost::serialization::load(
+            A &, 
+            shared_ptr<YCFolder> &,
+            const unsigned int);
+    friend boost::serialization::access;
+};
+
+}
+
+typedef shared_ptr<youcrypt::YCFolder> Folder;
+
+
+using boost::serialization::make_nvp;
+namespace boost {
+    namespace serialization {
+        template<class A>
+        void save(A &ar, const Folder &f, const unsigned int) {
+            string r = f->rootPath();
+            ar & make_nvp("path", r);
+            r = f->mountedPath();
+            ar & make_nvp("mountedPath", r);
+            r = f->mountedDate();
+            ar & make_nvp("mountedDate", r);
+            r = f->alias();
+            ar & make_nvp("alias", r);
+        }
+        
+        template<class A>
+        void load(A &ar, Folder &f, const unsigned int) {
+            string rp, mp, md, al;
+            ar & make_nvp("path", rp);
+            ar & make_nvp("mountedPath", mp);
+            ar & make_nvp("mountedDate", md);
+            ar & make_nvp("alias", al);
+            f.reset(new youcrypt::YCFolder(boost::filesystem::path(rp)));            
+        }
+
+        template<class A>
+        void serialize(A &ar, Folder &f, const unsigned int v) {
+            split_free(ar, f, v);
+        }
+    }
 }
 
 
