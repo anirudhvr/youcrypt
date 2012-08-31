@@ -10,8 +10,8 @@
 
 using namespace youcrypt;
 
-UserAccount::UserAccount(std::string e, std::string password, std::string ydir) : 
-email(e),  youcryptdir(ydir) , pwdmgr(PasswordManager(password))
+UserAccount::UserAccount(std::string e, std::string password) :
+_email(e), _password(password)
 {
     
     

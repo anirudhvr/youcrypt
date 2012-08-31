@@ -28,7 +28,7 @@
 - (NSString*)getPassphrase;
 - (BOOL)changePassphrase:(NSString*)newPassphrase
                  oldPass:(NSString*)oldPassphrase;
-- (BOOL)setPassphrase:(NSString*) passphrase;
+- (BOOL)setPassphrase:(NSString*) passphrase error:(NSError**)err;
 - (BOOL)savePassphraseToKeychain;
 - (BOOL)deletePassphraseFromKeychain;
 - (void)getPassphraseFromUser;
@@ -36,6 +36,7 @@
 -(IBAction)goClicked:(id) sender;
 -(IBAction)closeButtonClicked:(id) sender;
 - (IBAction)IdRatherQuitThanEnterAPassword:(id)sender;
+-(void)updateMessageNotificationHandler:(NSString*) msg;
 
 @property (nonatomic, strong) NSString *passPhrase;
 @property (nonatomic, strong) NSString *serviceName;

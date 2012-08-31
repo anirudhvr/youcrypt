@@ -10,6 +10,7 @@
 #import "YoucryptDirectory.h"
 #import "VolumePropertiesSheetController.h"
 #import "ListDirTable.h"
+#import "LinkedView.h"
 
 #define AddToolbarItemIdentifier @"Add"
 #define RemoveToolbarItemIdentifier @"Remove"
@@ -34,6 +35,9 @@
     VolumePropertiesSheetController *volumePropsSheet;
     
     PassphraseSheetController *passphraseSheet;
+    
+    IBOutlet LinkedView *currentView;
+    IBOutlet NSPopover *sharingPopover;
         
 }
 
@@ -43,6 +47,8 @@
 @property (atomic, strong) IBOutlet NSProgressIndicator *progressIndicator;
 
 @property (nonatomic, strong) PassphraseSheetController *passphraseSheet;
+@property(nonatomic, strong) LinkedView *currentView;
+@property(nonatomic, strong) NSPopover *sharingPopover;
 
 - (IBAction)doEncrypt:(id)sender;
 - (IBAction)doOpen:(id)sender;

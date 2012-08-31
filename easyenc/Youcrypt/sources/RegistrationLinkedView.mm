@@ -65,13 +65,22 @@
         [email setFocusRingType:NSFocusRingTypeExterior];
         return;
     } else {
+        
+        NSError *err;
+        if (![theApp.passphraseManager setPassphrase:[password stringValue] error:&err]) {
+            [msg setStringValue:[@"Insecure password: " stringByAppendingString:[err localizedDescription]]];
+            [password setFocusRingType:NSFocusRingTypeExterior];
+            [confirmPassword setFocusRingType:NSFocusRingTypeExterior];
+            return;
+        }
+              
         //[preferenceController setPreference:[email stringValue] value:YC_USEREMAIL];
         //[preferenceController setPreference:[name stringValue] value:YC_USERREALNAME];
         [[NSUserDefaults standardUserDefaults] setValue:[name stringValue] forKey:YC_USERREALNAME];
         [[NSUserDefaults standardUserDefaults] setValue:[email stringValue] forKey:YC_USEREMAIL];
         [[NSUserDefaults standardUserDefaults] synchronize];
         
-        [theApp.passphraseManager setPassphrase:[password stringValue]];
+              
         // [libFunctions registerWithKeychain:[password stringValue]:@"Youcrypt"];
         [theApp.configDir firstRunSuccessful];
 

@@ -31,6 +31,7 @@
 
     switch (theEvent.keyCode) {
         case 125: // down
+            [[listDirObj sharingPopover] close];
         case 126: // up
             [listDirObj setStatusToSelectedRow:[listDirObj.table selectedRow]];
             break;
@@ -54,6 +55,10 @@
             if (theEvent.modifierFlags & NSCommandKeyMask) {
                 [listDirObj close:listDirObj.window];
             }
+            break;
+            
+        case 53: // Escape - close all popover windows
+            [[listDirObj sharingPopover] close];
             break;
 
         default:

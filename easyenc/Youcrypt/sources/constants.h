@@ -4,6 +4,8 @@
 //              ERRORS
 ///////////////////////////////////////
 #define YOUCRYPT_DECRYPT_INCORRECT_PASSWD 1
+#define YC_ERRORDOMAIN             @"com.youcrypt.errors"
+#define YC_PASSPHRASEERROR_NOTIFICATION @"__yc_passphraseerror_notification"
 
 
 ///////////////////////////////////////

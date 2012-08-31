@@ -21,6 +21,8 @@
 @synthesize backgroundImageView;
 @synthesize progressIndicator;
 @synthesize statusLabel;
+@synthesize currentView;
+@synthesize sharingPopover;
 
 - (id)init
 {
@@ -262,16 +264,27 @@ void printCloseError(int ret)
 
 - (IBAction) shareFolder:(id) sender {
     
-//    NSInteger row = [table selectedRow];
-
-    if ([[theApp.preferenceController getPreference:YC_ANONYMOUSSTATISTICS] intValue])
-        [mixpanel track:theApp.mixpanelUUID
-             properties:[NSDictionary dictionaryWithObjectsAndKeys:
-                         @"YES", @"shareClicked",
-                         nil]];
+    DirectoryMap &dmap = *([theApp getDirectories].get());
+    int row = [table selectedRow];
+    int count = dmap.size();
+    if (row == -1) return;
+    if (row < count) {
+        DirectoryMap::iterator beg = dmap.begin();
+        for (int i=0; i<row; i++)
+            ++beg;
+        YoucryptDirectory *dir = beg->second.get()->Object;
+        [sharingPopover showRelativeToRect:[table rectOfRow:row] ofView:table preferredEdge:NSMaxYEdge];
+        
+        if ([[theApp.preferenceController getPreference:YC_ANONYMOUSSTATISTICS] intValue])
+            [mixpanel track:theApp.mixpanelUUID
+                 properties:[NSDictionary dictionaryWithObjectsAndKeys:
+                             @"YES", @"shareClicked",
+                             nil]];
+    }
     
-    [[NSAlert alertWithMessageText:@"Sharing is not yet supported but will be in the next version of YouCrypt!" 
-      " Please send feature requests to feedback@youcrypt.com" defaultButton:@"OK" alternateButton:nil  otherButton:nil informativeTextWithFormat:@""] runModal]; 
+//    [[NSAlert alertWithMessageText:@"Sharing is not yet supported but will be in the next version of YouCrypt!" 
+//      " Please send feature requests to feedback@youcrypt.com" defaultButton:@"OK" alternateButton:nil  otherButton:nil informativeTextWithFormat:@""] runModal];
+    
 }
 
 /***

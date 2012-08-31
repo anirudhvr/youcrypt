@@ -8,9 +8,7 @@
 
 #import "ConfigDirectory.h"
 #import "libFunctions.h"
-extern "C"  {
 #include "encfs-core/yc_openssl_rsaapps.h"
-}
 #include "PassphraseManager.h"
 #include "AppDelegate.h"
 #include <string>
@@ -62,13 +60,13 @@ extern "C"  {
     return firstRun;
 }
 
--(BOOL) checkKeys // Called after passphrase received from user
+-(NSString*) checkKeys // Called after passphrase received from user
 {
     string pass([[theApp.passphraseManager getPassphrase] cStringUsingEncoding:NSASCIIStringEncoding]);
     if (!cs->checkCredentials(pass))
-        return NO;
+        return @"Passphrase incorrect? (Cannot decrypt keys)";
     else
-        return YES;
+        return nil;
     
 }
 
@@ -87,8 +85,8 @@ extern "C"  {
         DDLogVerbose(@"First run: could not create Youcrypt Tmp dir");
     } else if (![libFunctions mkdirRecursive:youCryptKeyDir]) {
         DDLogVerbose(@"First run: could not create Youcrypt keys dir");
-    } else if (![self checkKeys]) { // Will create keys if they don't exist
-        DDLogError(@"Something went wrong in credentialstorage checks");
+    } else if ([self checkKeys] != nil) { // Will create keys if they don't exist
+        DDLogError(@"Something went wrong in decrypting credentials");
     } else {
         // Create unique ID for this user for anonymous tracking
         NSString *uuid = [[NSProcessInfo processInfo] globallyUniqueString];

@@ -14,24 +14,23 @@
 #include "PasswordManager.h"
 #include "HttpLib.h"
 
+using std::string;
+using std::vector;
+
 namespace youcrypt {
 
 class UserAccount
 {
 public:
-    UserAccount(std::string email, std::string password, std::string youcryptdir);
+    UserAccount(string email, string password);
     ~UserAccount();
     
     int authenticate();
     std::string getKey();
   
 private:
-    std::string email;
-    KeyManager keymgr;
-    PasswordManager pwdmgr;
-    std::string youcryptdir;
-    
-    
+    std::string _email;
+    std::string _password;
     
 };
     
