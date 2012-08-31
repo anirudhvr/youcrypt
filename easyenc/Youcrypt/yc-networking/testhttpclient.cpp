@@ -21,7 +21,7 @@ int
 testServer(void) {
     
     std::string url = APP_URL+"/keys/5.json";
-    UserAccount user("hardik988@gmail.com","Nouvou1","/Users/hr/.youcrypt");
+    UserAccount user("hardik988@gmail.com","Nouvou1");
     /*
     try {
         youcrypt::HttpClient client(url);
