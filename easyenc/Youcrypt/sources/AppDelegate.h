@@ -10,7 +10,7 @@
 #import "RestoreController.h"
 #import <boost/shared_ptr.hpp>
 #import "DirectoryMap.h"
-#import "core/PortingCM.h"
+#import "PortingCM.h"
 #import <map>
 
 using namespace youcrypt;

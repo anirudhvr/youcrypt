@@ -67,7 +67,7 @@ YCFolder::initEncryptedFolderInPlaceAddExtension
     //   shared_ptr to store the folder we create
     shared_ptr<YCFolder> out; 
     //   get active credentials from the global cred. manager
-    Credentials creds = getGlobalCM()->getActiveCreds();
+    vector<Credentials> credss = getGlobalCM()->getEncodingCreds();
     //   destination path is path + YC_EXTENSION
     string destPath = path + YC_EXTENSION;
 
@@ -81,7 +81,7 @@ YCFolder::initEncryptedFolderInPlaceAddExtension
     boost::filesystem::path dest(destPath);
     boost::filesystem::create_directories(destPath);
 
-    out.reset(new YCFolder(dest, opts, creds));
+    out.reset(new YCFolder(dest, opts, credss[0]));
     if (out->currStatus() != YoucryptFolder::initialized) {
         out.reset();
         return out;
@@ -112,11 +112,13 @@ YCFolder::initEncryptedFolderInPlaceAddExtension
     // 7. (sanity check)
     //   open the encrypted folder at source and verify status is
     //   OK on open.
-    out.reset(new YCFolder(dest, creds));
+    out.reset(new YCFolder(dest, credss[0]));
     if (out->currStatus() != YoucryptFolder::initialized) {
         out.reset();
         return out;
     }
+    for (int i=1; i<credss.size(); i++)
+        out->addCredential(credss[i]);
     return out;
 }
 
@@ -256,15 +258,26 @@ bool YCFolder::restoreFolderInPlace()
 YCFolder::YCFolder(const path &p,
                    const YoucryptFolderOpts &o,
                    const Credentials &c): YoucryptFolder(p,o,c) {
+    _alias = p.filename().stem().string();
 }
 
 YCFolder::YCFolder(const path &p,
                    const Credentials &c):YoucryptFolder() {
     YoucryptFolder::loadConfigAtPath(p, c);
+    _alias = p.filename().stem().string();
 }
 
 YCFolder::YCFolder(const path &p): YoucryptFolder(p) 
 {
+    if (status == YoucryptDirectoryStatusNeedAuth) {
+        if (getGlobalCM()) {
+            Credentials cred;
+            if ((cred = getGlobalCM()->getActiveCreds())) {
+                loadConfigAtPath(p, cred);
+            }
+        }
+    }
+    _alias = p.filename().stem().string();
 }
 
 //BOOST_SERIALIZATION_SPLIT_FREE(Folder);

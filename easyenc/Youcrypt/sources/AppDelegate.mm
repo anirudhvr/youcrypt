@@ -126,7 +126,6 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
     shared_ptr<youcrypt::CredentialsManager> p;
     p.reset(pcm);
     setGlobalCM(p);
-    Credentials c = getGlobalCM()->getActiveCreds();
     directories = [libFunctions unarchiveDirectoryListFromFile:configDir.youCryptListFile];
     if (!directories) {
         directories.reset(new DirectoryMap);

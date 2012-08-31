@@ -9,7 +9,7 @@
 #ifndef __Youcrypt__PortingCM__
 #define __Youcrypt__PortingCM__
 
-#include "CredentialsManager.h"
+#include "core/CredentialsManager.h"
 
 using std::vector;
 using boost::shared_ptr;
