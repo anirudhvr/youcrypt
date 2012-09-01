@@ -10,33 +10,45 @@
 #include <string>
 #include <fstream>
 #include <iostream>
-#include "HttpLib.h"
+//#include "HttpLib.h"
 #include "UserAccount.h"
-#include "KeyManager.h"
-#include "PasswordManager.h"
+//#include "KeyManager.h"
+//#include "PasswordManager.h"
+#include "Key.h"
+#include "ServerConnection.h"
 
 using namespace youcrypt;
 
-int
-testServer(void) {
-    
-    std::string url = APP_URL+"/keys/5.json";
-    UserAccount user("hardik988@gmail.com","Nouvou1");
-    /*
-    try {
-        youcrypt::HttpClient client(url);
-        client.get();
-        std::string response = client.getResponse();
-        std::cout << "Response: "<<response<< std::endl;
-    }
-    catch (std::exception &e) {
-        std::cerr << e.what() << std::endl;
-        return 1;
-    }
-     */
-    std::cout<<user.getKey();
-    return 0;
+#define APP_URL "https://pacific-ridge-8141.herokuapp.com/"
+
+void
+testjson()
+{
+    ServerConnection s(APP_URL);
+    UserAccount ua("hardik988@gmail.com", "Nouvou1");
+    Key k = s.getPublicKey(ua);
+    std::cout << k.value() << std::endl;
 }
+
+//int
+//testServer(void) {
+//    
+//    std::string url(APP_URL);
+//    url += "/keys/5.json";
+//    UserAccount user("hardik988@gmail.com","Nouvou1");
+//    try {
+//        youcrypt::HttpClient client(url);
+//        client.get();
+//        std::string response = client.getResponse();
+//        std::cout << "Response: "<<response<< std::endl;
+//    }
+//    catch (std::exception &e) {
+//        std::cerr << e.what() << std::endl;
+//        return 1;
+//    }
+//    std::cout<<user.getKey();
+//    return 0;
+//}
 
 
 

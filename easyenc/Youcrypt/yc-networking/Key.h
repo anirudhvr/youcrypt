@@ -8,28 +8,49 @@
 
 #ifndef Youcrypt_Key_h
 #define Youcrypt_Key_h
+#include <string>
+
 using std::string;
 
+namespace youcrypt {
 struct Key
 {
+    // Per-account key ID on the local machine and on the server
     int id;
-    int type;
-    
-    string name;
+
+    enum KeyType {
+        Private = 0,
+        Public,
+        Other
+    };
+    KeyType type;
+
+    enum KeyAlgType {
+        RSA = 0,
+        DSA,
+        ECDSA
+    };
+    KeyAlgType algtype;
+
+    // A name assigned to this key
+    string name; 
+
+    // Additional info for this key
     string description;
-    
-    int unlock_privatekey();
-    
-    enum {
-        PRIV = 0,
-        FRIENDS,
-        PUB
-    } privacy_level;
-    
+
+    Key();
+
+    string value() { return _value; }
+    bool setValue(string value) { _value = value; }
+    bool setValueFromFile(string filename);
+    bool writeValueToFile(string filename);
+
 private:
-    string privkeyfile;
-    string pubkeyfile;
+    // The actual data for the key in ASCII
+    string _value; 
+
 };
 
+};
 
 #endif

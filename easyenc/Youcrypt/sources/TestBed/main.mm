@@ -5,20 +5,30 @@
 //  Created by Rajsekar Manokaran on 6/23/12.
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
-
-#import <Foundation/Foundation.h>
 #include "contrib/passwdqc/passwdqc.h"
+#include "yc-networking/testhttpclient.h"
 
+
+//void checkpass()
+//{
+//    char *reason = NULL;
+//    if(yc_check_pass("asdfgh", &reason)) {
+//        printf("badpass: %s\n", reason);
+//        if (reason) free(reason);
+//    }
+//    
+//}
+
+void jsontest()
+{
+    testjson(); // in testhttpclient
+    
+}
 
 int main(int argc, const char *argv[]) {
     @autoreleasepool {
-        printf ("Hey!\n");
+        testjson();
         
-        char *reason = NULL;
-        if(yc_check_pass("asdfgh", &reason)) {
-            printf("badpass: %s\n", reason);
-            if (reason) free(reason);
-        }
     }
     return 0;
 }

@@ -12,4 +12,6 @@
 int test(void);
 
 int testServer(void);
+
+void testjson();
 #endif /* defined(__Youcrypt__testhttpclient__) */

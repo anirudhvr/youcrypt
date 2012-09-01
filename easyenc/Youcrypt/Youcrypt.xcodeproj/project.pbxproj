@@ -105,12 +105,6 @@
 		E633657315EF2D6F003EC0F9 /* libboost_filesystem-mt.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E633657215EF2D6F003EC0F9 /* libboost_filesystem-mt.dylib */; };
 		E633657815EF2E9E003EC0F9 /* librlog.5.0.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E633657715EF2E9E003EC0F9 /* librlog.5.0.0.dylib */; };
 		E633657A15EF2F00003EC0F9 /* libosxfuse_i64.2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E633657915EF2EFF003EC0F9 /* libosxfuse_i64.2.dylib */; };
-		E633657B15EF3069003EC0F9 /* concat.c in Sources */ = {isa = PBXBuildFile; fileRef = E633655A15EF24B3003EC0F9 /* concat.c */; };
-		E633657C15EF3069003EC0F9 /* passwdqc_check.c in Sources */ = {isa = PBXBuildFile; fileRef = E633655C15EF24B3003EC0F9 /* passwdqc_check.c */; };
-		E633657D15EF3069003EC0F9 /* passwdqc_load.c in Sources */ = {isa = PBXBuildFile; fileRef = E633655D15EF24B3003EC0F9 /* passwdqc_load.c */; };
-		E633657E15EF3069003EC0F9 /* passwdqc_parse.c in Sources */ = {isa = PBXBuildFile; fileRef = E633655E15EF24B3003EC0F9 /* passwdqc_parse.c */; };
-		E633657F15EF3069003EC0F9 /* pwqcheck.c in Sources */ = {isa = PBXBuildFile; fileRef = E633656015EF24B3003EC0F9 /* pwqcheck.c */; };
-		E633658015EF3069003EC0F9 /* wordset_4k.c in Sources */ = {isa = PBXBuildFile; fileRef = E633656115EF24B3003EC0F9 /* wordset_4k.c */; };
 		E64AC03D15E72B3F00D2E046 /* libcppnetlib-client-connections.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E64AC00715E724A700D2E046 /* libcppnetlib-client-connections.a */; };
 		E64AC03E15E72B3F00D2E046 /* libcppnetlib-server-parsers.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E64AC00915E724A700D2E046 /* libcppnetlib-server-parsers.a */; };
 		E64AC03F15E72B3F00D2E046 /* libcppnetlib-uri.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E64AC00B15E724A700D2E046 /* libcppnetlib-uri.a */; };
@@ -122,9 +116,6 @@
 		E64AC1AD15E7699500D2E046 /* bcrypt_wrapper.c in Sources */ = {isa = PBXBuildFile; fileRef = E64AC1A815E7699500D2E046 /* bcrypt_wrapper.c */; };
 		E64AC1AE15E7699500D2E046 /* bcrypt.c in Sources */ = {isa = PBXBuildFile; fileRef = E64AC1AA15E7699500D2E046 /* bcrypt.c */; };
 		E64AC1AF15E7699500D2E046 /* blowfish.c in Sources */ = {isa = PBXBuildFile; fileRef = E64AC1AB15E7699500D2E046 /* blowfish.c */; };
-		E64AC1BA15E769D500D2E046 /* HttpLib.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E64AC1B015E769D500D2E046 /* HttpLib.cpp */; };
-		E64AC1BB15E769D500D2E046 /* KeyManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E64AC1B315E769D500D2E046 /* KeyManager.cpp */; };
-		E64AC1BD15E769D500D2E046 /* PasswordManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E64AC1B615E769D500D2E046 /* PasswordManager.cpp */; };
 		E64AC1BE15E769D500D2E046 /* UserAccount.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E64AC1B815E769D500D2E046 /* UserAccount.cpp */; };
 		E64B307115AEE1A600827591 /* tableview-background.png in Resources */ = {isa = PBXBuildFile; fileRef = E64B307015AEE1A500827591 /* tableview-background.png */; };
 		E64B309015AEE9C300827591 /* MPCJSONDataSerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = E64B308415AEE9C300827591 /* MPCJSONDataSerializer.m */; };
@@ -156,6 +147,7 @@
 		E68F199615B4EE67008A90FC /* screenshot-rightclick.png in Resources */ = {isa = PBXBuildFile; fileRef = E68F199515B4EE67008A90FC /* screenshot-rightclick.png */; };
 		E6A3907D15CA0C73007388BE /* PassphraseManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = E6A3907C15CA0C73007388BE /* PassphraseManager.mm */; };
 		E6A3907F15CB3104007388BE /* AskPassphrase.xib in Resources */ = {isa = PBXBuildFile; fileRef = E6A3907E15CB3104007388BE /* AskPassphrase.xib */; };
+		E6A739C915F0C005001B317C /* Key.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E6A739C815F0C005001B317C /* Key.cpp */; };
 		E6BEB6F015A4BB4F00878D4B /* Exit.png in Resources */ = {isa = PBXBuildFile; fileRef = E6BEB6EC15A4BB4F00878D4B /* Exit.png */; };
 		E6BEB6F115A4BB4F00878D4B /* Help.png in Resources */ = {isa = PBXBuildFile; fileRef = E6BEB6ED15A4BB4F00878D4B /* Help.png */; };
 		E6BEB6F215A4BB4F00878D4B /* Preferences.png in Resources */ = {isa = PBXBuildFile; fileRef = E6BEB6EE15A4BB4F00878D4B /* Preferences.png */; };
@@ -170,7 +162,6 @@
 		E6C0468F15AE18B4004B52E5 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = E6C0468C15AE18B4004B52E5 /* MainMenu.xib */; };
 		E6C0469315AE1972004B52E5 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = E6C0469115AE1972004B52E5 /* InfoPlist.strings */; };
 		E6C0469915AE1A35004B52E5 /* dsa_pub.pem in Resources */ = {isa = PBXBuildFile; fileRef = E6C0469815AE1A35004B52E5 /* dsa_pub.pem */; };
-		E6C046A015AE1A58004B52E5 /* get_dropbox_folder.sh in Resources */ = {isa = PBXBuildFile; fileRef = E6C0469C15AE1A58004B52E5 /* get_dropbox_folder.sh */; };
 		E6C046A115AE1A58004B52E5 /* simple-mailer.py in Resources */ = {isa = PBXBuildFile; fileRef = E6C0469D15AE1A58004B52E5 /* simple-mailer.py */; };
 		E6C046B215AE1A84004B52E5 /* ActionGear.png in Resources */ = {isa = PBXBuildFile; fileRef = E6C046A215AE1A83004B52E5 /* ActionGear.png */; };
 		E6C046B315AE1A84004B52E5 /* box-logo.png in Resources */ = {isa = PBXBuildFile; fileRef = E6C046A315AE1A83004B52E5 /* box-logo.png */; };
@@ -200,6 +191,15 @@
 		E6D7D2B215D27D6700780915 /* libosxfuse_i64.2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E6D7D2B115D27D6700780915 /* libosxfuse_i64.2.dylib */; };
 		E6D7D2B315D27E2400780915 /* libosxfuse_i64.2.dylib in Resources */ = {isa = PBXBuildFile; fileRef = E6D7D2B115D27D6700780915 /* libosxfuse_i64.2.dylib */; };
 		E6D7D2B515D27E9E00780915 /* librlog.5.0.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2537E34A15B125320034E6E3 /* librlog.5.0.0.dylib */; };
+		E6DEDD6915F0F5FB00DD7C80 /* testhttpclient.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E64AC0EF15E7575700D2E046 /* testhttpclient.cpp */; };
+		E6DEDD6A15F0F5FB00DD7C80 /* testhttpclient.h in Sources */ = {isa = PBXBuildFile; fileRef = E64AC0F015E7575700D2E046 /* testhttpclient.h */; };
+		E6DEDD6B15F0F82D00DD7C80 /* Key.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E6A739C815F0C005001B317C /* Key.cpp */; };
+		E6DEDD6C15F0F82D00DD7C80 /* UserAccount.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E64AC1B815E769D500D2E046 /* UserAccount.cpp */; };
+		E6DEDD6D15F0F82D00DD7C80 /* ServerConnection.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E6310AD215F07A670078F61E /* ServerConnection.cpp */; };
+		E6DEDD6E15F0F85900DD7C80 /* bcrypt_wrapper.c in Sources */ = {isa = PBXBuildFile; fileRef = E64AC1A815E7699500D2E046 /* bcrypt_wrapper.c */; };
+		E6DEDD6F15F0F85900DD7C80 /* bcrypt.c in Sources */ = {isa = PBXBuildFile; fileRef = E64AC1AA15E7699500D2E046 /* bcrypt.c */; };
+		E6DEDD7015F0F85900DD7C80 /* blowfish.c in Sources */ = {isa = PBXBuildFile; fileRef = E64AC1AB15E7699500D2E046 /* blowfish.c */; };
+		E6DEDD7215F1737A00DD7C80 /* curl-ca-bundle.crt in Resources */ = {isa = PBXBuildFile; fileRef = E6DEDD7115F1737A00DD7C80 /* curl-ca-bundle.crt */; };
 		E6E5821015EF766F00ED4CEE /* SharingGetEmailsView.mm in Sources */ = {isa = PBXBuildFile; fileRef = E6E5820E15EF766F00ED4CEE /* SharingGetEmailsView.mm */; };
 /* End PBXBuildFile section */
 
@@ -526,10 +526,6 @@
 		25C3FE4315A7A804006606DF /* FeedbackSheetController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = FeedbackSheetController.mm; path = sources/FeedbackSheetController.mm; sourceTree = "<group>"; };
 		25C3FE4415A7A804006606DF /* Feedback.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Feedback.xib; sourceTree = "<group>"; };
 		25E8BC2315AE4F5F00A323D8 /* get_dropbox_folder.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = get_dropbox_folder.sh; sourceTree = "<group>"; };
-		25E8BC2415AE4F5F00A323D8 /* simple-mailer.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; path = "simple-mailer.py"; sourceTree = "<group>"; };
-		25E8BC2515AE4F5F00A323D8 /* yc-encfs */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = "yc-encfs"; sourceTree = "<group>"; };
-		25E8BC2615AE4F5F00A323D8 /* yc-encfsctl */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = "yc-encfsctl"; sourceTree = "<group>"; };
-		25E8BC2715AE4F5F00A323D8 /* yc-encfssh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = "yc-encfssh"; sourceTree = "<group>"; };
 		25E8BC2F15AE4F7200A323D8 /* libencfs.6.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libencfs.6.dylib; sourceTree = "<group>"; };
 		25E8BC3015AE4F7200A323D8 /* libencfs.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libencfs.dylib; sourceTree = "<group>"; };
 		25E8BC3115AE4F7200A323D8 /* libencfs.la */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = libencfs.la; sourceTree = "<group>"; };
@@ -619,13 +615,7 @@
 		E64AC1AA15E7699500D2E046 /* bcrypt.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = bcrypt.c; sourceTree = "<group>"; };
 		E64AC1AB15E7699500D2E046 /* blowfish.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = blowfish.c; sourceTree = "<group>"; };
 		E64AC1AC15E7699500D2E046 /* pybc_blf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pybc_blf.h; sourceTree = "<group>"; };
-		E64AC1B015E769D500D2E046 /* HttpLib.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HttpLib.cpp; sourceTree = "<group>"; };
-		E64AC1B115E769D500D2E046 /* HttpLib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HttpLib.h; sourceTree = "<group>"; };
 		E64AC1B215E769D500D2E046 /* Key.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Key.h; sourceTree = "<group>"; };
-		E64AC1B315E769D500D2E046 /* KeyManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = KeyManager.cpp; sourceTree = "<group>"; };
-		E64AC1B415E769D500D2E046 /* KeyManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeyManager.h; sourceTree = "<group>"; };
-		E64AC1B615E769D500D2E046 /* PasswordManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PasswordManager.cpp; sourceTree = "<group>"; };
-		E64AC1B715E769D500D2E046 /* PasswordManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PasswordManager.h; sourceTree = "<group>"; };
 		E64AC1B815E769D500D2E046 /* UserAccount.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UserAccount.cpp; sourceTree = "<group>"; };
 		E64AC1B915E769D500D2E046 /* UserAccount.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserAccount.h; sourceTree = "<group>"; };
 		E64B307015AEE1A500827591 /* tableview-background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tableview-background.png"; sourceTree = "<group>"; };
@@ -675,6 +665,7 @@
 		E6A3907B15CA0C73007388BE /* PassphraseManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PassphraseManager.h; path = sources/PassphraseManager.h; sourceTree = "<group>"; };
 		E6A3907C15CA0C73007388BE /* PassphraseManager.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = PassphraseManager.mm; path = sources/PassphraseManager.mm; sourceTree = "<group>"; };
 		E6A3907E15CB3104007388BE /* AskPassphrase.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AskPassphrase.xib; sourceTree = "<group>"; };
+		E6A739C815F0C005001B317C /* Key.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Key.cpp; sourceTree = "<group>"; };
 		E6BEB6EC15A4BB4F00878D4B /* Exit.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Exit.png; sourceTree = "<group>"; };
 		E6BEB6ED15A4BB4F00878D4B /* Help.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Help.png; sourceTree = "<group>"; };
 		E6BEB6EE15A4BB4F00878D4B /* Preferences.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Preferences.png; sourceTree = "<group>"; };
@@ -689,7 +680,6 @@
 		E6C0468C15AE18B4004B52E5 /* MainMenu.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainMenu.xib; sourceTree = "<group>"; };
 		E6C0469215AE1972004B52E5 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		E6C0469815AE1A35004B52E5 /* dsa_pub.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = dsa_pub.pem; sourceTree = "<group>"; };
-		E6C0469C15AE1A58004B52E5 /* get_dropbox_folder.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = get_dropbox_folder.sh; sourceTree = "<group>"; };
 		E6C0469D15AE1A58004B52E5 /* simple-mailer.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; path = "simple-mailer.py"; sourceTree = "<group>"; };
 		E6C046A215AE1A83004B52E5 /* ActionGear.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ActionGear.png; sourceTree = "<group>"; };
 		E6C046A315AE1A83004B52E5 /* box-logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "box-logo.png"; sourceTree = "<group>"; };
@@ -718,6 +708,7 @@
 		E6D7D2A015D26AD100780915 /* yc-encfs.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "yc-encfs.xcodeproj"; path = "yc-encfs/yc-encfs.xcodeproj"; sourceTree = "<group>"; };
 		E6D7D2AF15D27CD100780915 /* librlog.5.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = librlog.5.0.0.dylib; path = lib/librlog.5.0.0.dylib; sourceTree = "<group>"; };
 		E6D7D2B115D27D6700780915 /* libosxfuse_i64.2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libosxfuse_i64.2.dylib; path = lib/libosxfuse_i64.2.dylib; sourceTree = "<group>"; };
+		E6DEDD7115F1737A00DD7C80 /* curl-ca-bundle.crt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "curl-ca-bundle.crt"; sourceTree = "<group>"; };
 		E6E2A0B6159266F6003E3F6C /* YoucryptService.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = YoucryptService.mm; path = sources/YoucryptService.mm; sourceTree = "<group>"; };
 		E6E2A0B7159266F6003E3F6C /* YoucryptService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = YoucryptService.h; path = sources/YoucryptService.h; sourceTree = "<group>"; };
 		E6E5820D15EF766F00ED4CEE /* SharingGetEmailsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SharingGetEmailsView.h; path = sources/SharingGetEmailsView.h; sourceTree = "<group>"; };
@@ -1065,13 +1056,8 @@
 		E64AC0FA15E7597E00D2E046 /* yc-core */ = {
 			isa = PBXGroup;
 			children = (
-				E64AC1B115E769D500D2E046 /* HttpLib.h */,
-				E64AC1B015E769D500D2E046 /* HttpLib.cpp */,
+				E6A739C815F0C005001B317C /* Key.cpp */,
 				E64AC1B215E769D500D2E046 /* Key.h */,
-				E64AC1B315E769D500D2E046 /* KeyManager.cpp */,
-				E64AC1B415E769D500D2E046 /* KeyManager.h */,
-				E64AC1B615E769D500D2E046 /* PasswordManager.cpp */,
-				E64AC1B715E769D500D2E046 /* PasswordManager.h */,
 				E64AC1B815E769D500D2E046 /* UserAccount.cpp */,
 				E64AC1B915E769D500D2E046 /* UserAccount.h */,
 				E64AC0EF15E7575700D2E046 /* testhttpclient.cpp */,
@@ -1280,6 +1266,7 @@
 		E6C0469715AE1A35004B52E5 /* share */ = {
 			isa = PBXGroup;
 			children = (
+				E6DEDD7115F1737A00DD7C80 /* curl-ca-bundle.crt */,
 				E6C0469815AE1A35004B52E5 /* dsa_pub.pem */,
 			);
 			path = share;
@@ -1289,11 +1276,6 @@
 			isa = PBXGroup;
 			children = (
 				25E8BC2315AE4F5F00A323D8 /* get_dropbox_folder.sh */,
-				25E8BC2415AE4F5F00A323D8 /* simple-mailer.py */,
-				25E8BC2515AE4F5F00A323D8 /* yc-encfs */,
-				25E8BC2615AE4F5F00A323D8 /* yc-encfsctl */,
-				25E8BC2715AE4F5F00A323D8 /* yc-encfssh */,
-				E6C0469C15AE1A58004B52E5 /* get_dropbox_folder.sh */,
 				E6C0469D15AE1A58004B52E5 /* simple-mailer.py */,
 			);
 			path = bin;
@@ -1723,7 +1705,6 @@
 				E61DF4FC15BA6EC00011A05D /* libssl.1.0.0.dylib in Resources */,
 				2537E35C15B127300034E6E3 /* libintl.dylib in Resources */,
 				2537E35D15B127300034E6E3 /* librlog.dylib in Resources */,
-				E6C046A015AE1A58004B52E5 /* get_dropbox_folder.sh in Resources */,
 				E6C046A115AE1A58004B52E5 /* simple-mailer.py in Resources */,
 				2537E34F15B126520034E6E3 /* libintl.8.dylib in Resources */,
 				2537E35115B126520034E6E3 /* librlog.5.dylib in Resources */,
@@ -1801,6 +1782,7 @@
 				2537E39515B4F1660034E6E3 /* About.xib in Resources */,
 				E6A3907F15CB3104007388BE /* AskPassphrase.xib in Resources */,
 				E6D72B8615D0936900C2A13F /* rightclickoptions.png in Resources */,
+				E6DEDD7215F1737A00DD7C80 /* curl-ca-bundle.crt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1885,9 +1867,6 @@
 				E64AC1AD15E7699500D2E046 /* bcrypt_wrapper.c in Sources */,
 				E64AC1AE15E7699500D2E046 /* bcrypt.c in Sources */,
 				E64AC1AF15E7699500D2E046 /* blowfish.c in Sources */,
-				E64AC1BA15E769D500D2E046 /* HttpLib.cpp in Sources */,
-				E64AC1BB15E769D500D2E046 /* KeyManager.cpp in Sources */,
-				E64AC1BD15E769D500D2E046 /* PasswordManager.cpp in Sources */,
 				E64AC1BE15E769D500D2E046 /* UserAccount.cpp in Sources */,
 				E09C592915EEE23500F51B1D /* DirectoryMap.mm in Sources */,
 				E633656315EF24B3003EC0F9 /* concat.c in Sources */,
@@ -1898,6 +1877,7 @@
 				E633656815EF24B3003EC0F9 /* wordset_4k.c in Sources */,
 				E6E5821015EF766F00ED4CEE /* SharingGetEmailsView.mm in Sources */,
 				E6310AD415F07A670078F61E /* ServerConnection.cpp in Sources */,
+				E6A739C915F0C005001B317C /* Key.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1913,13 +1893,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E6DEDD6E15F0F85900DD7C80 /* bcrypt_wrapper.c in Sources */,
+				E6DEDD6F15F0F85900DD7C80 /* bcrypt.c in Sources */,
+				E6DEDD7015F0F85900DD7C80 /* blowfish.c in Sources */,
+				E6DEDD6B15F0F82D00DD7C80 /* Key.cpp in Sources */,
+				E6DEDD6C15F0F82D00DD7C80 /* UserAccount.cpp in Sources */,
+				E6DEDD6D15F0F82D00DD7C80 /* ServerConnection.cpp in Sources */,
+				E6DEDD6915F0F5FB00DD7C80 /* testhttpclient.cpp in Sources */,
+				E6DEDD6A15F0F5FB00DD7C80 /* testhttpclient.h in Sources */,
 				E0BF0EA01596D01F002F9FB9 /* main.mm in Sources */,
-				E633657B15EF3069003EC0F9 /* concat.c in Sources */,
-				E633657C15EF3069003EC0F9 /* passwdqc_check.c in Sources */,
-				E633657D15EF3069003EC0F9 /* passwdqc_load.c in Sources */,
-				E633657E15EF3069003EC0F9 /* passwdqc_parse.c in Sources */,
-				E633657F15EF3069003EC0F9 /* pwqcheck.c in Sources */,
-				E633658015EF3069003EC0F9 /* wordset_4k.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1967,9 +1949,11 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
+				CLANG_CXX_LIBRARY = "compiler-default";
 				CLANG_ENABLE_OBJC_ARC = YES;
 				COPY_PHASE_STRIP = NO;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_C_LANGUAGE_STANDARD = "compiler-default";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -1978,7 +1962,7 @@
 					"$(inherited)",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_VERSION = "";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
@@ -2000,12 +1984,14 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
+				CLANG_CXX_LIBRARY = "compiler-default";
 				CLANG_ENABLE_OBJC_ARC = YES;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_C_LANGUAGE_STANDARD = "compiler-default";
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_VERSION = "";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
@@ -2031,7 +2017,7 @@
 					"\"$(SRCROOT)\"",
 					"\"$(SRCROOT)/frameworks\"",
 				);
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				GCC_PREFIX_HEADER = "sources/Youcrypt-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS_NOT_USED_IN_PRECOMPS = "";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
@@ -2095,7 +2081,7 @@
 					"\"$(SRCROOT)\"",
 					"\"$(SRCROOT)/frameworks\"",
 				);
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				GCC_PREFIX_HEADER = "sources/Youcrypt-Prefix.pch";
 				"GCC_PREPROCESSOR_DEFINITIONS[sdk=macosx10.7][arch=x86_64]" = "RELEASE=1";
 				GCC_PREPROCESSOR_DEFINITIONS_NOT_USED_IN_PRECOMPS = "";
@@ -2157,8 +2143,8 @@
 					"$(DEVELOPER_LIBRARY_DIR)/Frameworks",
 					"\"$(SRCROOT)\"",
 				);
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Youcrypt Mac alpha/Youcrypt Mac alpha-Prefix.pch";
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
+				GCC_PREFIX_HEADER = "";
 				INFOPLIST_FILE = "Youcrypt Mac alphaTests/Youcrypt Mac alphaTests-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
@@ -2175,8 +2161,8 @@
 					"$(DEVELOPER_LIBRARY_DIR)/Frameworks",
 					"\"$(SRCROOT)\"",
 				);
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Youcrypt Mac alpha/Youcrypt Mac alpha-Prefix.pch";
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
+				GCC_PREFIX_HEADER = "";
 				INFOPLIST_FILE = "Youcrypt Mac alphaTests/Youcrypt Mac alphaTests-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
