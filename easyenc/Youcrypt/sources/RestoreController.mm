@@ -52,16 +52,9 @@
         NSAlert *alert = [NSAlert alertWithMessageText:@"Incorrect passphrase" defaultButton:nil alternateButton:nil otherButton:nil informativeTextWithFormat:@"The passphrase does not decrypt %@", [path stringByDeletingLastPathComponent]];
             [alert runModal];
     } else { // success
-        NSFileManager *fm = [NSFileManager defaultManager];
-        NSError *err;
-        NSString *finalFolder = [path stringByDeletingPathExtension];
-        if (![fm moveItemAtPath:path toPath:finalFolder error:&err])
-            DDLogError(@"Restore: cannot move items at %@ to %@", path, finalFolder);
         [self.window close];
         [theApp didRestore:path];
-    }
-    
-    
+    }        
     return;
 }
 

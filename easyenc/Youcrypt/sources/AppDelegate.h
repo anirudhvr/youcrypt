@@ -114,7 +114,6 @@ extern "C" NSString *nsstrFromCpp(std::string);
 -(void)didEncrypt:(Folder)dir;
 -(void)cancelEncrypt:(NSString *)path;
 
--(void)removeFSAtRow:(long) row ;
 -(void)removeFSAtPath:(NSString*) path;
 -(void)didRestore:(NSString *)path;
 -(void)cancelRestore:(NSString *)path;
