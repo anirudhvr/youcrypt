@@ -58,10 +58,14 @@
 		E01A6CD915AE3ED3004F442C /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 256C355F158EA75F00E2BEC4 /* Cocoa.framework */; };
 		E054042315AB1CE10011E5CC /* RestoreController.mm in Sources */ = {isa = PBXBuildFile; fileRef = E054042115AB1CE10011E5CC /* RestoreController.mm */; };
 		E054042415AB1CE10011E5CC /* Restore.xib in Resources */ = {isa = PBXBuildFile; fileRef = E054042215AB1CE10011E5CC /* Restore.xib */; };
+		E05DB60915F0A7F800F70DF0 /* PortingCM.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E05DB60715F0A7F800F70DF0 /* PortingCM.cpp */; };
+		E05DB60C15F0B38200F70DF0 /* ProcessQ.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E05DB60A15F0B38200F70DF0 /* ProcessQ.cpp */; };
+		E05DB68D15F0C81A00F70DF0 /* PortingQ.mm in Sources */ = {isa = PBXBuildFile; fileRef = E05DB68B15F0C81A00F70DF0 /* PortingQ.mm */; };
 		E06E2B4115A76ABE00E52B2D /* ListRightClick.xib in Resources */ = {isa = PBXBuildFile; fileRef = E06E2B4015A76ABE00E52B2D /* ListRightClick.xib */; };
-		E09C592915EEE23500F51B1D /* DirectoryMap.mm in Sources */ = {isa = PBXBuildFile; fileRef = E09C592815EEE23500F51B1D /* DirectoryMap.mm */; };
+		E077154715EF1CA4009AB1C2 /* YCFolder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E077154515EF1CA4009AB1C2 /* YCFolder.cpp */; };
+		E077154A15EF276C009AB1C2 /* CredentialsManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E077154815EF276C009AB1C2 /* CredentialsManager.cpp */; };
+		E0812F3315F09466007EE3AF /* DirectoryMap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E0812F3115F09466007EE3AF /* DirectoryMap.cpp */; };
 		E0A2849815A61A26008A949A /* logo-512x512-alpha.icns in Resources */ = {isa = PBXBuildFile; fileRef = E0A2849715A61A26008A949A /* logo-512x512-alpha.icns */; };
-		E0BF0E951596B9C8002F9FB9 /* YoucryptDirectory.mm in Sources */ = {isa = PBXBuildFile; fileRef = E0BF0E941596B9C8002F9FB9 /* YoucryptDirectory.mm */; };
 		E0BF0E9D1596D01F002F9FB9 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E0BF0E9C1596D01F002F9FB9 /* Foundation.framework */; };
 		E0BF0EA01596D01F002F9FB9 /* main.mm in Sources */ = {isa = PBXBuildFile; fileRef = E0BF0E9F1596D01F002F9FB9 /* main.mm */; };
 		E0BF0EA41596D01F002F9FB9 /* TestBed.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = E0BF0EA31596D01F002F9FB9 /* TestBed.1 */; };
@@ -70,6 +74,7 @@
 		E0C5ACA315A50BC1000FC253 /* ConfigDirectory.mm in Sources */ = {isa = PBXBuildFile; fileRef = E0C5ACA215A50BC1000FC253 /* ConfigDirectory.mm */; };
 		E0C5ACAF15A5670A000FC253 /* lockedfolder2.icns in Resources */ = {isa = PBXBuildFile; fileRef = E0C5ACAE15A56709000FC253 /* lockedfolder2.icns */; };
 		E0C5ACB115A56D0D000FC253 /* logo-512x512-alpha.png in Resources */ = {isa = PBXBuildFile; fileRef = E0C5ACB015A56D0C000FC253 /* logo-512x512-alpha.png */; };
+		E0F85A7B15F10F8200A4D821 /* libboost_iostreams-mt.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E0F85A7A15F10F8200A4D821 /* libboost_iostreams-mt.dylib */; };
 		E603DB9B15AEC19F00ABB170 /* box_closed.png in Resources */ = {isa = PBXBuildFile; fileRef = E603DB9315AEC19F00ABB170 /* box_closed.png */; };
 		E603DB9C15AEC19F00ABB170 /* box_closed2.png in Resources */ = {isa = PBXBuildFile; fileRef = E603DB9415AEC19F00ABB170 /* box_closed2.png */; };
 		E603DB9D15AEC19F00ABB170 /* box_closed3.png in Resources */ = {isa = PBXBuildFile; fileRef = E603DB9515AEC19F00ABB170 /* box_closed3.png */; };
@@ -541,13 +546,21 @@
 		E054042015AB1CE10011E5CC /* RestoreController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RestoreController.h; path = sources/RestoreController.h; sourceTree = "<group>"; };
 		E054042115AB1CE10011E5CC /* RestoreController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = RestoreController.mm; path = sources/RestoreController.mm; sourceTree = "<group>"; };
 		E054042215AB1CE10011E5CC /* Restore.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Restore.xib; sourceTree = "<group>"; };
+		E05DB60715F0A7F800F70DF0 /* PortingCM.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = PortingCM.cpp; path = sources/PortingCM.cpp; sourceTree = "<group>"; };
+		E05DB60815F0A7F800F70DF0 /* PortingCM.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PortingCM.h; path = sources/PortingCM.h; sourceTree = "<group>"; };
+		E05DB60A15F0B38200F70DF0 /* ProcessQ.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ProcessQ.cpp; path = sources/core/ProcessQ.cpp; sourceTree = "<group>"; };
+		E05DB60B15F0B38200F70DF0 /* ProcessQ.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ProcessQ.h; path = sources/core/ProcessQ.h; sourceTree = "<group>"; };
+		E05DB68B15F0C81A00F70DF0 /* PortingQ.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = PortingQ.mm; path = sources/PortingQ.mm; sourceTree = "<group>"; };
+		E05DB68C15F0C81A00F70DF0 /* PortingQ.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PortingQ.h; path = sources/PortingQ.h; sourceTree = "<group>"; };
 		E06E2B3F15A7671B00E52B2D /* constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = constants.h; path = sources/constants.h; sourceTree = "<group>"; };
 		E06E2B4015A76ABE00E52B2D /* ListRightClick.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ListRightClick.xib; sourceTree = "<group>"; };
-		E09C592715EEE23500F51B1D /* DirectoryMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DirectoryMap.h; path = sources/DirectoryMap.h; sourceTree = "<group>"; };
-		E09C592815EEE23500F51B1D /* DirectoryMap.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = DirectoryMap.mm; path = sources/DirectoryMap.mm; sourceTree = "<group>"; };
+		E077154515EF1CA4009AB1C2 /* YCFolder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = YCFolder.cpp; path = sources/core/YCFolder.cpp; sourceTree = "<group>"; };
+		E077154615EF1CA4009AB1C2 /* YCFolder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = YCFolder.h; path = sources/core/YCFolder.h; sourceTree = "<group>"; };
+		E077154815EF276C009AB1C2 /* CredentialsManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CredentialsManager.cpp; path = sources/core/CredentialsManager.cpp; sourceTree = "<group>"; };
+		E077154915EF276C009AB1C2 /* CredentialsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CredentialsManager.h; path = sources/core/CredentialsManager.h; sourceTree = "<group>"; };
+		E0812F3115F09466007EE3AF /* DirectoryMap.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = DirectoryMap.cpp; path = sources/core/DirectoryMap.cpp; sourceTree = "<group>"; };
+		E0812F3215F09466007EE3AF /* DirectoryMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DirectoryMap.h; path = sources/core/DirectoryMap.h; sourceTree = "<group>"; };
 		E0A2849715A61A26008A949A /* logo-512x512-alpha.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = "logo-512x512-alpha.icns"; sourceTree = "<group>"; };
-		E0BF0E931596B9C8002F9FB9 /* YoucryptDirectory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = YoucryptDirectory.h; path = sources/YoucryptDirectory.h; sourceTree = "<group>"; };
-		E0BF0E941596B9C8002F9FB9 /* YoucryptDirectory.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = YoucryptDirectory.mm; path = sources/YoucryptDirectory.mm; sourceTree = "<group>"; };
 		E0BF0E9A1596D01F002F9FB9 /* TestBed */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = TestBed; sourceTree = BUILT_PRODUCTS_DIR; };
 		E0BF0E9C1596D01F002F9FB9 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		E0BF0E9F1596D01F002F9FB9 /* main.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = main.mm; sourceTree = "<group>"; };
@@ -560,6 +573,7 @@
 		E0C5ACA215A50BC1000FC253 /* ConfigDirectory.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = ConfigDirectory.mm; path = sources/ConfigDirectory.mm; sourceTree = "<group>"; };
 		E0C5ACAE15A56709000FC253 /* lockedfolder2.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = lockedfolder2.icns; sourceTree = "<group>"; };
 		E0C5ACB015A56D0C000FC253 /* logo-512x512-alpha.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "logo-512x512-alpha.png"; sourceTree = "<group>"; };
+		E0F85A7A15F10F8200A4D821 /* libboost_iostreams-mt.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libboost_iostreams-mt.dylib"; path = "../../../../../../../../opt/local/lib/libboost_iostreams-mt.dylib"; sourceTree = "<group>"; };
 		E603DB9315AEC19F00ABB170 /* box_closed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = box_closed.png; sourceTree = "<group>"; };
 		E603DB9415AEC19F00ABB170 /* box_closed2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = box_closed2.png; sourceTree = "<group>"; };
 		E603DB9515AEC19F00ABB170 /* box_closed3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = box_closed3.png; sourceTree = "<group>"; };
@@ -735,6 +749,7 @@
 				E6C0468115AE1733004B52E5 /* Sparkle.framework in Frameworks */,
 				25EE6A5915928D2C008A0DC8 /* Security.framework in Frameworks */,
 				256C3560158EA75F00E2BEC4 /* Cocoa.framework in Frameworks */,
+				E0F85A7B15F10F8200A4D821 /* libboost_iostreams-mt.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -793,6 +808,7 @@
 				E64AC0F215E7582500D2E046 /* libboost_date_time-mt.dylib */,
 				E64AC0F315E7582500D2E046 /* libboost_program_options-mt.dylib */,
 				E64AC0F415E7582500D2E046 /* libboost_regex-mt.dylib */,
+				E0F85A7A15F10F8200A4D821 /* libboost_iostreams-mt.dylib */,
 				E64AC0F515E7582500D2E046 /* libboost_thread-mt.dylib */,
 				E64ABFCA15E724A600D2E046 /* CPP-NETLIB.xcodeproj */,
 				E6D7D2B115D27D6700780915 /* libosxfuse_i64.2.dylib */,
@@ -919,15 +935,18 @@
 		25F3D154159243E300E3383C /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				E077154115EF1BEA009AB1C2 /* Core */,
 				256C3571158EA75F00E2BEC4 /* AppDelegate.h */,
 				256C3572158EA75F00E2BEC4 /* AppDelegate.mm */,
 				E0BF0EBA159838DD002F9FB9 /* ListDirectoriesWindow.h */,
 				E0BF0EBB159838DD002F9FB9 /* ListDirectoriesWindow.mm */,
+				E05DB68C15F0C81A00F70DF0 /* PortingQ.h */,
+				E05DB68B15F0C81A00F70DF0 /* PortingQ.mm */,
+				E05DB60815F0A7F800F70DF0 /* PortingCM.h */,
+				E05DB60715F0A7F800F70DF0 /* PortingCM.cpp */,
 				25617DC515ABD54A00EED7F7 /* ListDirTable.h */,
 				25617DC615ABD54B00EED7F7 /* ListDirTable.mm */,
 				256C359B158EA88700E2BEC4 /* PreferenceController.h */,
-				E09C592715EEE23500F51B1D /* DirectoryMap.h */,
-				E09C592815EEE23500F51B1D /* DirectoryMap.mm */,
 				256C359C158EA88700E2BEC4 /* PreferenceController.mm */,
 				E6649C7B15A53CE40096886F /* Encrypt.h */,
 				E6649C7915A53CD80096886F /* Encrypt.mm */,
@@ -943,8 +962,6 @@
 				253C3D7E159BBF9400120B8D /* BoxFSA.mm */,
 				E054042015AB1CE10011E5CC /* RestoreController.h */,
 				E054042115AB1CE10011E5CC /* RestoreController.mm */,
-				E0BF0E931596B9C8002F9FB9 /* YoucryptDirectory.h */,
-				E0BF0E941596B9C8002F9FB9 /* YoucryptDirectory.mm */,
 				E6E2A0B7159266F6003E3F6C /* YoucryptService.h */,
 				E6E2A0B6159266F6003E3F6C /* YoucryptService.mm */,
 				E67FF2F015A8D5180033A63A /* PeriodicActionTimer.h */,
@@ -965,6 +982,21 @@
 				E68F196A15B4A979008A90FC /* Firstrun_Tour */,
 			);
 			name = Classes;
+			sourceTree = "<group>";
+		};
+		E077154115EF1BEA009AB1C2 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				E077154515EF1CA4009AB1C2 /* YCFolder.cpp */,
+				E077154615EF1CA4009AB1C2 /* YCFolder.h */,
+				E077154815EF276C009AB1C2 /* CredentialsManager.cpp */,
+				E077154915EF276C009AB1C2 /* CredentialsManager.h */,
+				E0812F3115F09466007EE3AF /* DirectoryMap.cpp */,
+				E0812F3215F09466007EE3AF /* DirectoryMap.h */,
+				E05DB60A15F0B38200F70DF0 /* ProcessQ.cpp */,
+				E05DB60B15F0B38200F70DF0 /* ProcessQ.h */,
+			);
+			name = Core;
 			sourceTree = "<group>";
 		};
 		E0BF0E9E1596D01F002F9FB9 /* TestBed */ = {
@@ -1829,7 +1861,6 @@
 				252C3A6A1593CB9B0044EB3C /* DDASLLogger.m in Sources */,
 				252C3A6B1593CBA00044EB3C /* DDFileLogger.m in Sources */,
 				252C3A6C1593CBA50044EB3C /* DDTTYLogger.m in Sources */,
-				E0BF0E951596B9C8002F9FB9 /* YoucryptDirectory.mm in Sources */,
 				E0BF0EBD159838DD002F9FB9 /* ListDirectoriesWindow.mm in Sources */,
 				253C3D7F159BBF9400120B8D /* BoxFSA.mm in Sources */,
 				E66988D9159E63BE002323AD /* JCSSheetController.m in Sources */,
@@ -1868,7 +1899,6 @@
 				E64AC1AE15E7699500D2E046 /* bcrypt.c in Sources */,
 				E64AC1AF15E7699500D2E046 /* blowfish.c in Sources */,
 				E64AC1BE15E769D500D2E046 /* UserAccount.cpp in Sources */,
-				E09C592915EEE23500F51B1D /* DirectoryMap.mm in Sources */,
 				E633656315EF24B3003EC0F9 /* concat.c in Sources */,
 				E633656415EF24B3003EC0F9 /* passwdqc_check.c in Sources */,
 				E633656515EF24B3003EC0F9 /* passwdqc_load.c in Sources */,
@@ -1878,6 +1908,12 @@
 				E6E5821015EF766F00ED4CEE /* SharingGetEmailsView.mm in Sources */,
 				E6310AD415F07A670078F61E /* ServerConnection.cpp in Sources */,
 				E6A739C915F0C005001B317C /* Key.cpp in Sources */,
+				E077154715EF1CA4009AB1C2 /* YCFolder.cpp in Sources */,
+				E077154A15EF276C009AB1C2 /* CredentialsManager.cpp in Sources */,
+				E0812F3315F09466007EE3AF /* DirectoryMap.cpp in Sources */,
+				E05DB60915F0A7F800F70DF0 /* PortingCM.cpp in Sources */,
+				E05DB60C15F0B38200F70DF0 /* ProcessQ.cpp in Sources */,
+				E05DB68D15F0C81A00F70DF0 /* PortingQ.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

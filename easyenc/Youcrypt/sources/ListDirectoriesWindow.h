@@ -7,10 +7,12 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "YoucryptDirectory.h"
 #import "VolumePropertiesSheetController.h"
 #import "ListDirTable.h"
 #import "LinkedView.h"
+#import "core/YCFolder.h"
+
+using namespace youcrypt;
 
 #define AddToolbarItemIdentifier @"Add"
 #define RemoveToolbarItemIdentifier @"Remove"
@@ -61,7 +63,7 @@
 
 - (void)setStatusToSelectedRow:(NSInteger)row;
 - (void)doOpenProxy:(NSInteger)row ;
-- (int)closeMountedFolder:(YoucryptDirectory*) dir;
+- (int)closeMountedFolder:(Folder) dir;
 - (void)getPassphraseFromUser:(id) sender;
 
 // Toolbar / UI stuff

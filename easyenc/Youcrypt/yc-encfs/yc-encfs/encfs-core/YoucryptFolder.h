@@ -16,7 +16,10 @@ using boost::filesystem::path;
 using std::string;
 using std::vector;
 
+struct fuse_conn_info;
 extern "C" void youcrypt_mount_destroy(void *);
+extern "C" void *youcrypt_mount_init(fuse_conn_info *conn);
+
 
 namespace youcrypt {
 
@@ -67,6 +70,8 @@ namespace youcrypt {
     };
 
     class YoucryptFolder {
+    protected:
+        YoucryptFolder(); //! For inherited classes
     public:
         //! Create a new object representing encrypted content at path.
         YoucryptFolder(const path&, 
@@ -109,16 +114,18 @@ namespace youcrypt {
         bool deleteCredential(const Credentials&);
 
         int currStatus() { return status; }
-        const char *statusAsString()  { return statusString[status]; }
+        string getFuseMessage(bool=false);
     public:
         enum Status {
             //! Status is not known (not parseable, not readable, etc.)
-            statusUnknown = 0,
+            statusUnknown,
             //! Directory exists but is not a Youcrypt folder. (no
             //! config files, etc.)
             uninitialized,
             //! Directory contains a (partially) corrupt config.
             configError,
+            //! Creds could not decrypt any volume key
+            credFail,
             //! Directory is a proper Youcrypt folder.
             initialized,
             //! Directory is being processed.  (files are being added
@@ -126,15 +133,9 @@ namespace youcrypt {
             processing,            
             //! Directory is initialized at mounted.
             mounted,
-            //! Creds could not decrypt any volume key
-            credFail,
         };
         
-        //! The status, except in words
-        // Defined in YoucryptFolder.cpp
-        static const char *statusString[];
-
-    private:
+    protected:
         EncFS_Context ctx;
         boost::shared_ptr<Cipher> cipher;
         CipherKey volumeKey;
@@ -144,12 +145,13 @@ namespace youcrypt {
         path mountPoint;
         path rootPath;
         vector<string> mountOptions;
-        Status status;
+        int status;
 
-        //! FIXME:  Not yet implemented.  Need to do this.
-        bool idleTracking;     
+        bool idleTracking;   
+        int _fuseIn, _fuseOut;
+        friend void *::youcrypt_mount_init(fuse_conn_info *conn);
+        friend void ::youcrypt_mount_destroy(void *_ctx);
 
-        friend void ::youcrypt_mount_destroy(void *);
     };
 }
 

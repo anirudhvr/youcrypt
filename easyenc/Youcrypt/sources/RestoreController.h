@@ -7,17 +7,19 @@
 //
 
 #import <Cocoa/Cocoa.h>
-@class YoucryptDirectory;
+#import "core/YCFolder.h"
+using namespace youcrypt;
 
 @interface RestoreController : NSWindowController {
     IBOutlet NSSecureTextField *passwordField;
     NSString *tempFolder;
+    Folder dir;
 }
 
 @property (atomic,strong) IBOutlet NSString *path;
-@property (atomic,strong) YoucryptDirectory *dir;
 @property (atomic,strong) NSString *passwd;
 @property (readwrite,assign) BOOL keychainHasPassphrase;
+@property (nonatomic, assign) Folder dir;
 
 - (IBAction) restore:(id)sender;
 

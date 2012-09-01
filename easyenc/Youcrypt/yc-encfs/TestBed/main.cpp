@@ -45,22 +45,22 @@ int testMount ()
     }
 }
 
-int testMakeRSACreds() {
-    boost::unordered_map<string,string> empty;
-    cout << "Generating RSA creds from /tmp/{priv,pub}.pem...";
-    string priv("/tmp/priv.pem"), pub("/tmp/pub.pem");
-    CredentialStorage cs(new RSACredentialStorage(priv, pub, empty));
-    creds.reset(new RSACredentials("yet_another", cs));
-    if (creds == Credentials()) {
-        cout << "failed\n";
-        return -1;
-    }
-    else
-    {
-        cout << "success\n";
-        return 0;
-    }
-}
+//int testMakeRSACreds() {
+//    boost::unordered_map<string,string> empty;
+//    cout << "Generating RSA creds from /tmp/{priv,pub}.pem...";
+//    string priv("/tmp/priv.pem"), pub("/tmp/pub.pem");
+//    CredentialStorage cs(new RSACredentialStorage(priv, pub, empty));
+//    creds.reset(new RSACredentials("yet_another", cs));
+//    if (creds == Credentials()) {
+//        cout << "failed\n";
+//        return -1;
+//    }
+//    else
+//    {
+//        cout << "success\n";
+//        return 0;
+//    }
+//}
 
 int testPassphraseCreds() {
     cout << "Generating passphrase cred. for yabba...";
@@ -104,14 +104,14 @@ int main(int argc, char **argv) {
     openssl_init(true);
 
     mountPath  = path("/Users/rajsekar/tmp/test/mntpoint");
-    encRoot    = path("/Users/rajsekar/tmp/test/encroot");
+    encRoot    = path("/Users/rajsekar/tmp/test/2.yc");
     sourcePath = path("/Users/rajsekar/tmp/test/data");
     
-    testMakeRSACreds();
-    testImport();
+    testPassphraseCreds();
     testMount();
     cout << "Enter a number to exit...";
     int a;
     cin >> a;
+    cout << pFolder->getFuseMessage() << endl;
     return a;
 }

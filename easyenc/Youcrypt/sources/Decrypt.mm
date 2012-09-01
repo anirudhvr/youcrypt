@@ -11,13 +11,13 @@
 #import "AppDelegate.h"
 #import "PreferenceController.h"
 #import "PassphraseManager.h"
-#import "YoucryptDirectory.h"
 
 @implementation Decrypt
 
 @synthesize dir;
 @synthesize passphraseFromKeychain;
 @synthesize keychainHasPassphrase;
+@synthesize mountPath;
 
 -(id)init
 {
@@ -42,8 +42,10 @@
 - (IBAction)decrypt:(id)sender
 {
     (void)sender;
-	srcFolder = dir.path;
-	destFolder = dir.mountedPath;
+    
+    
+	srcFolder = nsstrFromCpp(dir->rootPath());
+	destFolder = self.mountPath;
 	NSString *yourPasswordString;
     if (keychainHasPassphrase)
         yourPasswordString = passphraseFromKeychain;
@@ -54,16 +56,29 @@
     NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:@"logo-512x512-alpha.icns", @"volicon", volname, @"volname", nil];
         
     int idletime = [[theApp.preferenceController getPreference:YC_IDLETIME] intValue];
+    BOOL res;
+    std::vector<std::string> mount_opts, &fuse_opts = mount_opts;
+    NSDictionary *fuseOpts = dict;
+    for (NSString *key in [fuseOpts allKeys]) {
+        NSString *opt;
+        if ([key isEqualToString:@"volicon"]) {
+            opt = [NSString stringWithFormat:@"-ovolicon=%@/Contents/Resources/%@", [libFunctions appBundlePath], [fuseOpts objectForKey:key]];
+        } else {
+            opt = [NSString stringWithFormat:@"-o%@=%@", key, [fuseOpts objectForKey:key]];
+        }
+        fuse_opts.push_back(std::string([opt cStringUsingEncoding:NSASCIIStringEncoding]));
+    }
+    fuse_opts.push_back(std::string("-ofsname=YoucryptFS"));
+
+    if (idletime < 0) idletime = 0;
     
-    
-    BOOL res =  [dir openEncryptedFolderAtMountPoint:destFolder
-                                        withPassphrase:yourPasswordString
-                                              idleTime:idletime
-                                              fuseOpts:dict];
-    if (res == YES) {
-        [self close];
-        [theApp didDecrypt:dir];
-        return;
+    if (dir->isUnlocked()) {
+        dir->setMountLocation(cppString(destFolder));
+        dir->setMountOpts(mount_opts, idletime);
+        if (dir->mount()) {
+            [self close];
+            [theApp didDecrypt:dir];
+        }
     } else {
         if (keychainHasPassphrase) {
             // The error wasn't the user's fault.
@@ -83,7 +98,6 @@
 
 - (IBAction)cancel:(id)sender {
     (void)sender;
-    DDLogVerbose(@"Cancel decrypt : %@",dir.path);
     [self close];
     [theApp cancelDecrypt:dir];
 }

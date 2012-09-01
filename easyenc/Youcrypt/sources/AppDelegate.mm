@@ -25,6 +25,9 @@
 #import "MixpanelAPI.h"
 #import "AboutController.h"
 #import "PassphraseManager.h"
+#import "PortingQ.h"
+
+using namespace youcrypt;
 
 /* Global Variables Accessible to everyone */
 /* These variables should be initialized */
@@ -33,6 +36,7 @@ CompressingLogFileManager *logFileManager;
 MixpanelAPI *mixpanel;
 
 int ddLogLevel = LOG_LEVEL_VERBOSE;
+
 
 @implementation AppDelegate
 
@@ -94,10 +98,6 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
     [mixpanelUUID stringByReplacingOccurrencesOfString:@"\n" withString:@""];
     DDLogVerbose(@"mixpanel uuid : %@",mixpanelUUID);
 
-    encryptQ = [[NSMutableArray alloc] init];
-    decryptQ = [[NSMutableArray alloc] init];
-    restoreQ = [[NSMutableArray alloc] init];
-    
     
     passphraseManager = [[PassphraseManager alloc] initWithPrefController:preferenceController saveInKeychain:NO];
     
@@ -119,7 +119,12 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
     if (![configDir checkKeys]) {
         NSLog(@"Error checking config dir - key decrypt problem?");
     }
-    
+    NSString *s = [passphraseManager getPassphrase];
+    PortingCM *pcm = new PortingCM;
+    pcm->setPassphrase(cppString(s));
+    shared_ptr<youcrypt::CredentialsManager> p;
+    p.reset(pcm);
+    setGlobalCM(p);
     directories = [libFunctions unarchiveDirectoryListFromFile:configDir.youCryptListFile];
     if (!directories) {
         directories.reset(new DirectoryMap);
@@ -134,16 +139,16 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
     
     // Logging
     logFileManager = [[CompressingLogFileManager alloc] initWithLogsDirectory:configDir.youCryptLogDir];
-
+    
     [DDLog addLogger:[DDASLLogger sharedInstance]];
     [DDLog addLogger:[DDTTYLogger sharedInstance]];
     fileLogger = [[DDFileLogger alloc] initWithLogFileManager:logFileManager];
     fileLogger.rollingFrequency = 60 * 60 * 24; // 24 hour rolling
     fileLogger.logFileManager.maximumNumberOfLogFiles = 7;
-    [DDLog addLogger:fileLogger];    
+    [DDLog addLogger:fileLogger];
     
     // Make sure only one instance of Youcrypt runs
-    NSArray *apps = [[NSWorkspace sharedWorkspace] runningApplications]; 
+    NSArray *apps = [[NSWorkspace sharedWorkspace] runningApplications];
     int ycAppCount = 0;
     
     for(NSRunningApplication *app in apps) {
@@ -156,13 +161,10 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
         }
     }
     
-    YoucryptDirectory *dir;
-    
     [[[NSWorkspace sharedWorkspace] notificationCenter] addObserver:self selector:@selector(someUnMount:) name:NSWorkspaceDidUnmountNotification object:nil];
     [self someUnMount:nil];
-
+    
     DDLogVerbose(@"App did, in fact, finish launching!!!");
-
 }
 
 - (void)applicationWillTerminate:(NSNotification *)aNotification {
@@ -173,11 +175,8 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
     // XXX check unmount status!
     for (auto dir: *(directories.get()))
     {
-        YoucryptDirectory *d = dir.second.get()->Object;
-        [libFunctions execCommand:UMOUNT_CMD arguments:[NSArray arrayWithObject:[d mountedPath]]
-                              env:nil];
+        dir.second->unmount();
     }
-    [[[NSWorkspace sharedWorkspace] notificationCenter] removeObserver:self];
 }
 
 - (void) applicationDidResignActive:(NSNotification *)notification
@@ -187,14 +186,14 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
         // XXX break this off into a new thread?
         /// XX might want to use a dispatch queue here instead
         [libFunctions archiveDirectoryList:directories toFile:configDir.youCryptListFile];
-//        [NSKeyedArchiver archiveRootObject:directories toFile:configDir.youCryptListFile];
+        //        [NSKeyedArchiver archiveRootObject:directories toFile:configDir.youCryptListFile];
         
         configDirBeingSynced = NO;
     }
 }
 - (void) applicationDidBecomeActive:(NSNotification *)notification
 {
-//    NSLog(@"Became active");
+    //    NSLog(@"Became active");
 }
 
 - (BOOL)applicationShouldHandleReopen:(NSApplication *)theApplication hasVisibleWindows:(BOOL)flag
@@ -230,161 +229,134 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
     if([configDir isFirstRun]) {
         //[self showListDirectories:self];
         DDLogInfo(@"Initiating First Run! ");
-
+        
         [self showTour];
         
-//        NSString *error;
-//        if (![self updatePBS:&error]) {
-//            DDLogVerbose(@"Update PBS failed: %@", error);
-//        }
+        //        NSString *error;
+        //        if (![self updatePBS:&error]) {
+        //            DDLogVerbose(@"Update PBS failed: %@", error);
+        //        }
     } else {
         [passphraseManager getPassphraseFromUser]; // get passphrase
     }
     
     NSUpdateDynamicServices(); // Equivalent to calling /System/Library/CoreServices/pbs
     
-//    NSArray *args = [[NSProcessInfo processInfo] arguments];
-//    if ([args count] > 1) {
-//        NSLog(@"args:%@ ", args);
-//        [self openEncryptedFolder:[args objectAtIndex:1]];
-//    }
-
+    //    NSArray *args = [[NSProcessInfo processInfo] arguments];
+    //    if ([args count] > 1) {
+    //        NSLog(@"args:%@ ", args);
+    //        [self openEncryptedFolder:[args objectAtIndex:1]];
+    //    }
+    
 }
+
 // --------------------------------------------------------------------------------------
 // --------------------------------------------------------------------------------------
 // Decryption methods
 // --------------------------------------------------------------------------------------
 // --------------------------------------------------------------------------------------
 - (BOOL)openEncryptedFolder:(NSString *)path {
-    //--------------------------------------------------------------------------------------------------
-    // 1.  Check if path is really a folder
-    // 2.  Check if we know bout it in our list of folders. If not, create and add it to list
-    // 3.  Open it using Applescript or openFile
-    //--------------------------------------------------------------------------------------------------
+    
+    // Procedure:
+    // 1.  check if path is a folder
+    // 2.  check if path is an encrypted file
+    // 3.  check/add path to our managed list
+    // 4.  open the (mounted) path
+    
     NSFileManager *fm = [NSFileManager defaultManager];
     BOOL isDir;
     BOOL ret = YES;
     if (!([fm fileExistsAtPath:path isDirectory:&isDir] && isDir && ([[path pathExtension] isEqualToString:ENCRYPTED_DIRECTORY_EXTENSION])))
         return NO;
     
-    
-    // Check if a YoucryptDirectory already exists for this folder
+    // Check if a Folder already exists for this folder
     DirectoryMap &dirs = *(directories.get());
     std::string strPath([path cStringUsingEncoding:NSASCIIStringEncoding]);
-    YoucryptDirectory *dir;
-    
-    DDLogError(@"Enumerating directories map:\n");
-    for (auto d: dirs) {
-        DDLogError(@"Path: %s\n", d.first.c_str());
+    Folder dir;
+    dir = dirs[strPath];
+    if (!dir)
+    {
+        dir = YCFolder::initFromScanningPath(strPath);
+        // verify that we could read it
+        switch (dir->currStatus()) {
+            case YoucryptDirectoryStatusInitialized:
+            case YoucryptDirectoryStatusNeedAuth:
+                // Implies a folder that can be opened.
+                break;
+            default:
+                return NO;
+        }
+        // good idea to go ahead and add it to our maintained list
+        dirs[strPath] = dir;
     }
     
-    DirectoryMap::iterator it;
-    if (dirs.find(strPath) != dirs.end()) {
-        dir = dirs[strPath].get()->Object;
-        goto FoundOne;
-    }
+    NSString *timeStr = [[[NSDate date] descriptionWithCalendarFormat:nil timeZone:nil locale:nil] stringByReplacingOccurrencesOfString:@" " withString:@"_"];
+    NSString *mountPoint = [configDir.youCryptVolDir stringByAppendingPathComponent:
+                            [timeStr stringByAppendingPathComponent:[[path stringByDeletingPathExtension] lastPathComponent]]];
     
-    // No directory exists; so create a new one
-    dir = [[YoucryptDirectory alloc] initWithPath:path];
-    dir.alias = [[path stringByDeletingPathExtension] lastPathComponent];
-    dirs[strPath].reset(new cppObjcWrapper<YoucryptDirectory>(dir));
-    
-FoundOne:
-    // If dir is not mounted yet, construct mount point dir name
-    if ([dir status] == YoucryptDirectoryStatusInitialized) {
-        // Construct the new mount point dir name
-        NSString *timeStr = [[[NSDate date] descriptionWithCalendarFormat:nil timeZone:nil locale:nil] stringByReplacingOccurrencesOfString:@" " withString:@"_"];
-        NSString *mountPoint = [configDir.youCryptVolDir stringByAppendingPathComponent:
-                                [timeStr stringByAppendingPathComponent:[[path stringByDeletingPathExtension] lastPathComponent]]];
-        dir.mountedPath = mountPoint;
-    }
-    
-    switch([dir status]) {
+    // We have a valid dir object.  Let us go ahead and open it.
+    switch (dir->currStatus()) {
         case YoucryptDirectoryStatusUnknown:
-        case YoucryptDirectoryStatusConfigError:
-            DDLogError(@"Error opening supposedly Youcrypted dir: %@", [dir getStatus]);
-            ret = NO;
-            break;
-            
-        case YoucryptDirectoryStatusAuthFailed:
+            // This should really never happen.
+        case YoucryptDirectoryStatusUninitialized:
+            // The folder does not have a config.
+            return NO;
+        case YoucryptDirectoryStatusBadConfig:
+            return NO;
         case YoucryptDirectoryStatusInitialized:
-            [self doDecrypt:dir];
-            break;
-            
+        case YoucryptDirectoryStatusReadyToMount:
+        case YoucryptDirectoryStatusNeedAuth:
         case YoucryptDirectoryStatusMounted:
-            [libFunctions openMountedPathInFinderSomehow:dir.path mountedPath:dir.mountedPath];
             break;
     }
     
-    return ret;
+    if (dir->currStatus() == YoucryptDirectoryStatusMounted){
+        [libFunctions openMountedPathInFinderSomehow:nsstrFromCpp(dir->rootPath())
+                                         mountedPath:nsstrFromCpp(dir->mountedPath())];
+    }
+    
+    decQ.queueJob(boost::make_tuple(dir->rootPath(), cppString(mountPoint)));
+    dispatch_queue_t taskQ =
+    dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    dispatch_async(taskQ, ^{
+        decQ.runTillEmpty();});
+
+    
+    return YES;
 }
 
-- (void)didDecrypt:(YoucryptDirectory *)dir {
+- (void)didDecrypt:(Folder)dir {
+    if (!dir) return;
     
-    if (dir == nil) return;
-    
-    
-    dir.mountedDateAsString = [[NSDate date] descriptionWithCalendarFormat:@"%H:%M %m-%d-%Y" timeZone:nil locale:nil];
-    [libFunctions openMountedPathInFinderSomehow:dir.path mountedPath:dir.mountedPath];
-    
-    DDLogVerbose(@"didDecrypt folder %@\n", dir.path);
+    // FIXME:  implement mountdateasstring in YCFolder
+    [libFunctions openMountedPathInFinderSomehow:nsstrFromCpp(dir->rootPath())
+                                     mountedPath:nsstrFromCpp(dir->mountedPath())];
+    DDLogVerbose(@"didDecrypt folder %@\n", nsstrFromCpp(dir->rootPath()));
     
     if (listDirectories != nil) {
         [listDirectories.table reloadData];
     }
-    @synchronized(self) {
-        [decryptQ removeObjectAtIndex:deQIndex];
-    }
-    [self doDecrypt:nil];
 }
 
-- (BOOL)doDecrypt:(YoucryptDirectory *)dir  {
+- (BOOL)doDecrypt:(NSString *)path
+      mountedPath:(NSString *)mountPath {
     
     if ([configDir isFirstRun])
         return NO;
-    NSString *path, *mountPath;
-    
-    if (dir == nil) {
-        // Pick the next object from the queue and decrypt.        
-        BOOL doReturn;
-        doReturn = NO;
-        @synchronized(self) {
-            if ([decryptQ count] > 0) {
-                NSDictionary *dict = [decryptQ lastObject];
-                path = [dict objectForKey:@"path"];
-                mountPath = [dict objectForKey:@"mountPoint"];
-                deQIndex = [decryptQ count] - 1;
-            }
-            else {
-                // Nothing to service.
-                doReturn = YES;
-            }
-        }
-        if (doReturn)
-            return NO;
-    } else {
-        NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:
-                              dir.path, @"path", dir.mountedPath, @"mountPoint", nil];
-        BOOL doReturn = NO;
-        @synchronized(self) {
-            [decryptQ addObject:dict];
-            if ([decryptQ count] > 1)
-                doReturn = YES;
-            else {
-                deQIndex = 0; // Index of the object being processed.
-            }
-        }
-        if (doReturn)
-            return NO;
-    }
     
     // Is decryptController nil?
     if (!decryptController) {
         decryptController = [[Decrypt alloc] init];
     }
+    Folder dir;
+    DirectoryMap &dmap = *(directories.get());
+    string strPath = cppString(path);
+    dir = dmap[strPath];
+    if (!dir)
+        return NO;
     
     decryptController.dir = dir;
-    
+    decryptController.mountPath = mountPath;
     NSString *pp = [passphraseManager getPassphrase];
     
     // NSString *pp =[libFunctions getPassphraseFromKeychain:@"Youcrypt"];
@@ -403,12 +375,7 @@ FoundOne:
     return YES;
 }
 
--(void) cancelDecrypt:(YoucryptDirectory *)dir {
-    @synchronized(self) {
-        [decryptQ removeObjectAtIndex:deQIndex];
-    }
-    dir = nil;
-    [self doDecrypt:nil];
+- (void) cancelDecrypt:(Folder)dir {
 }
 
 
@@ -433,40 +400,16 @@ FoundOne:
             [self removeFSAtPath:path];
         }
     } else {
-        [self doEncrypt:path];
+        encQ.queueJob(cppString(path));
+        dispatch_queue_t taskQ =
+        dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+        dispatch_async(taskQ, ^{
+            encQ.runTillEmpty();});
     }
     return YES;
 }
 
 - (BOOL)doEncrypt:(NSString *)path {
-    if (path == nil) {
-        BOOL doReturn = NO;
-        // Pick the next object from the queue and encrypt.
-        @synchronized(self) {
-            if ([encryptQ count] > 0) {
-                path = [encryptQ lastObject];
-                enQIndex = [encryptQ count] - 1;
-            }
-            else {
-                // Nothing to service.
-                doReturn = YES;
-            }
-        }
-        if (doReturn)
-            return NO;
-    } else {
-        BOOL doReturn = NO;
-        @synchronized(self) {
-            [encryptQ addObject:path];
-            if ([encryptQ count] > 1)
-                doReturn = YES;
-            else
-                enQIndex = 0;
-        }
-        if (doReturn)
-            return NO;
-    }
-    
     // Is encryptController nil?
     if (!encryptController) {
         encryptController = [[Encrypt alloc] init];
@@ -490,42 +433,37 @@ FoundOne:
         [storePasswd setState:NSOnState];
         encryptController.passphraseFromKeychain = nil;
         encryptController.keychainHasPassphrase = NO;
-        [encryptController showWindow:self];        
+        [encryptController showWindow:self];
     }
     return YES;
 }
 
 
-- (void)didEncrypt:(YoucryptDirectory *)dir {
-    NSImage *overlay = [[NSImage alloc] initWithContentsOfFile:[[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"/youcrypt-overlay.icns"]];
-    BOOL didSetIcon = [[NSWorkspace sharedWorkspace] setIcon:overlay forFile:dir.path options:0];
+- (void)didEncrypt:(Folder)dir {
+    NSImage *overlay = [[NSImage alloc] initWithContentsOfFile:
+                        [[[NSBundle mainBundle] resourcePath]
+                         stringByAppendingPathComponent:@"/youcrypt-overlay.icns"]];
+    BOOL didSetIcon = [[NSWorkspace sharedWorkspace]
+                       setIcon:overlay forFile:nsstrFromCpp(dir->rootPath()) options:0];
     if(!didSetIcon)
-        DDLogInfo(@"ERROR: Could not set Icon for %@", dir.path);
+        DDLogInfo(@"ERROR: Could not set Icon for %@", nsstrFromCpp(dir->rootPath()));
     
-    dir.alias = [[dir.path stringByDeletingPathExtension] lastPathComponent];
-    dir.mountedDateAsString = [[NSDate date] descriptionWithCalendarFormat:@"%H:%M %m-%d-%Y" timeZone:nil locale:nil];
+    NSString *p = nsstrFromCpp(dir->rootPath());
+    dir->alias() = cppString([[p stringByDeletingPathExtension]
+                              lastPathComponent]);
     DirectoryMap &dmap = *(directories.get());
-    std::string strPath([dir.path cStringUsingEncoding:NSASCIIStringEncoding]);
-    dmap[strPath].reset(new cppObjcWrapper<YoucryptDirectory>(dir));
+    std::string strPath = dir->rootPath();
+    dmap[strPath] = dir;
     if (listDirectories != nil) {
         [listDirectories.statusLabel setStringValue:@""];
         [listDirectories.progressIndicator stopAnimation:listDirectories.window];
         [listDirectories.progressIndicator setHidden:YES];
         [listDirectories.table reloadData];
     }
-    @synchronized(self) {
-        [encryptQ removeObjectAtIndex:enQIndex];
-    }
-    [self doEncrypt:nil]; // To process other items in encryptQ
     
 }
 
 - (void)cancelEncrypt:(NSString *)path {
-    @synchronized(self) {
-        [encryptQ removeObjectAtIndex:enQIndex];
-    }
-    DDLogInfo(@"Canceling encryption for %@", path);
-    [self doEncrypt:nil]; // To process other items in encryptQ
 }
 
 // --------------------------------------------------------------------------------------
@@ -538,9 +476,14 @@ FoundOne:
     DirectoryMap &dmap = *(directories.get());
     std::string stdPath([path cStringUsingEncoding:NSASCIIStringEncoding]);
     int found;
-    YoucryptDirectory *dir = dmap[stdPath].get()->Object;
+    
+    Folder dir = dmap[stdPath];
+    
+    dispatch_queue_t taskQ =
+    dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    
     if (dir) {
-        [self doRestore:dir.path];
+        resQ.queueJob(stdPath);
         found = 1;
     }
     
@@ -552,61 +495,38 @@ FoundOne:
             if (ret == NSAlertDefaultReturn) {
                 [self openEncryptedFolder:path];
             } else if (ret == NSAlertAlternateReturn) {
-                [self doRestore:path];
+                resQ.queueJob(cppString(path));
+                found = 1;
             } else {
                 return;
             }
         }
-            
+        
+    }
+    if (found) {
+        dispatch_async(taskQ, ^{
+            resQ.runTillEmpty();});
     }
 }
 
-- (BOOL)doRestore:(NSString *)path {
-
-    if ([configDir isFirstRun])
-        return NO;
-
-    if (path == nil) {
-        BOOL doReturn = NO;
-        // Pick the next object from the queue and restore.        
-        @synchronized(self) {
-            if ([restoreQ count] > 0) {
-                path = [restoreQ lastObject];
-                reQIndex = [restoreQ count] - 1;
-            }
-            else {
-                doReturn = YES;
-            }
-        }
-        if (doReturn)
-            return NO;
-    } else {
-        BOOL doReturn = NO;
-        @synchronized(self) {
-            [restoreQ addObject:path];
-            if ([restoreQ count] > 1)
-                doReturn = YES;
-            else
-                reQIndex = 0;
-        }
-        if (doReturn)
-            return NO;
-    }
-    
-    YoucryptDirectory *d = nil;
+- (BOOL)doRestore:(NSString *)path {    
     DirectoryMap &dmap = *(directories.get());
     std::string strPath([path cStringUsingEncoding:NSASCIIStringEncoding]);
-    d = dmap[strPath].get()->Object;
+    Folder d = dmap[strPath];
+    if (!d)
+        d = YCFolder::initFromScanningPath(strPath);
     
-    if (d == nil) {
-        d = [[YoucryptDirectory alloc] initWithPath:path];
-        
-        if ([d status] != YoucryptDirectoryStatusInitialized) {
-            DDLogError(@"Directory to be restored looks like something something else; status %@", [d getStatus]);
+    switch (d->currStatus()) {
+        case YoucryptDirectoryStatusUnknown:
+        case YoucryptDirectoryStatusUninitialized:
+        case YoucryptDirectoryStatusBadConfig:
             return NO;
-        }
+        case YoucryptDirectoryStatusInitialized:
+        case YoucryptDirectoryStatusNeedAuth:
+            break;
     }
-        
+    
+    
     if (!restoreController) {
         restoreController = [[RestoreController alloc] init];
     }
@@ -643,17 +563,9 @@ FoundOne:
         [listDirectories.progressIndicator setHidden:YES];
         [listDirectories.table reloadData];
     }
-    @synchronized(self) {
-        [restoreQ removeObjectAtIndex:reQIndex];
-    }
-    [self doRestore:nil];
 }
 
 -(void) cancelRestore:(NSString *)path {
-    @synchronized(self) {
-        [restoreQ removeObjectAtIndex:reQIndex];
-    }
-    [self doRestore:nil];
 }
 
 
@@ -674,7 +586,7 @@ FoundOne:
 - (IBAction)showMainApp:(id)sender {
     if ([configDir isFirstRun])
         return;
-        
+    
     [listDirectories.window makeKeyAndOrderFront:self];
 }
 
@@ -683,9 +595,9 @@ FoundOne:
         return;
     
     // Is list directories nil?
-//    if (!listDirectories) {
-//        listDirectories = [[ListDirectoriesWindow alloc] init];
-//    }
+    //    if (!listDirectories) {
+    //        listDirectories = [[ListDirectoriesWindow alloc] init];
+    //    }
     //[listDirectories.window makeKeyAndOrderFront:self];
     [listDirectories showWindow:self];
     [NSApp activateIgnoringOtherApps:YES];
@@ -697,9 +609,9 @@ FoundOne:
         return;
     
     // Is preferenceController nil?
-//    if (!preferenceController) {
-//        preferenceController = [[PreferenceController alloc] init];
-//    }
+    //    if (!preferenceController) {
+    //        preferenceController = [[PreferenceController alloc] init];
+    //    }
     [preferenceController showWindow:self];
 }
 
@@ -708,12 +620,12 @@ FoundOne:
 //    if (!preferenceController) {
 //        preferenceController = [[PreferenceController alloc] init];
 //    }
-//    [self showFirstRun]; 
-//    
+//    [self showFirstRun];
+//
 //}
 
 - (IBAction)showAboutWindow:(id)sender {
-
+    
     // Is preferenceController nil?
     if (!aboutController) {
         aboutController = [[AboutController alloc] init];
@@ -744,7 +656,7 @@ FoundOne:
             DDLogVerbose(@"feedbackSheetController: Unknown return code");
         }
     }];
-
+    
 }
 
 - (IBAction)openHelpPage:(id)sender
@@ -769,7 +681,7 @@ FoundOne:
 
 
 - (id)tableView:(NSTableView *)tableView objectValueForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
-   
+    
     NSString *colId = [tableColumn identifier];
     
     if (!directories)
@@ -778,27 +690,27 @@ FoundOne:
     DirectoryMap::iterator pos = directories->begin();
     for (int i=0; i<row; i++)
         ++pos;
-    YoucryptDirectory *dirAtRow = pos->second.get()->Object;
+    Folder dirAtRow = pos->second;
     if (!dirAtRow)
         return nil;
     
-//    [dirAtRow updateInfo];
+    //    [dirAtRow updateInfo];
     
     
     if ([colId isEqualToString:@"alias"]) {
-        NSMutableAttributedString *str = [[NSMutableAttributedString alloc] initWithString:dirAtRow.alias];
-        NSRange selectedRange = NSRangeFromString(dirAtRow.alias);
+        NSMutableAttributedString *str = [[NSMutableAttributedString alloc] initWithString:nsstrFromCpp(dirAtRow->alias())];
+        NSRange selectedRange = NSRangeFromString(nsstrFromCpp(dirAtRow->alias()));
         [str addAttribute:NSForegroundColorAttributeName
-                       value:[NSColor blueColor]
-                       range:selectedRange];
+                    value:[NSColor blueColor]
+                    range:selectedRange];
         [str addAttribute:NSUnderlineStyleAttributeName
-                       value:[NSNumber numberWithInt:NSSingleUnderlineStyle]
-                       range:selectedRange];
+                    value:[NSNumber numberWithInt:NSSingleUnderlineStyle]
+                    range:selectedRange];
         
         return str;
-    } 
+    }
     else if ([colId isEqualToString:@"mountedPath"])
-        return dirAtRow.mountedPath;    
+        return nsstrFromCpp(dirAtRow->mountedPath());
     else {
         return nil;
     }
@@ -826,23 +738,23 @@ FoundOne:
     
     NSPasteboard *pb = [info draggingPasteboard];
     
-    BOOL ret = NO;    
+    BOOL ret = NO;
     NSArray *fileURLs = nil;
     {
-        NSArray *classes = [NSArray arrayWithObject:[NSURL class]];        
+        NSArray *classes = [NSArray arrayWithObject:[NSURL class]];
         fileURLs = [pb readObjectsForClasses:classes options:nil];
     }
-            
+    
     
     // Check if the pboard contains a URL that's a diretory.
-    if ([[pb types] containsObject:NSURLPboardType]) {        
+    if ([[pb types] containsObject:NSURLPboardType]) {
         NSFileManager *fm = [NSFileManager defaultManager];
-       [listDirectories.table setDefaultImage];
+        [listDirectories.table setDefaultImage];
         NSURL *url;
         for (url in fileURLs) {
             BOOL isDir;
             NSString *path = [url path];
-            if ([fm fileExistsAtPath:path isDirectory:&isDir] && isDir) {                  
+            if ([fm fileExistsAtPath:path isDirectory:&isDir] && isDir) {
                 // If it's a .yc folder and if it contains YOUCRYPT_XMLCONFIG_FILENAME ,
                 //  we open it, otherwise, we encrypt it
                 if ([[path pathExtension] isEqualToString:ENCRYPTED_DIRECTORY_EXTENSION] &&
@@ -864,43 +776,46 @@ FoundOne:
 //--------------------------------------------------------------------------------------------------
 - (void)tableView:(NSTableView*)tableView willDisplayCell:(id)cell forTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
     NSString *colId = [tableColumn identifier];
-
- //  NSLog(@"This code called");
-					
+    
+    //  NSLog(@"This code called");
+    
     if (!directories)
         return;
     
     DirectoryMap::iterator pos = directories->begin();
     for (int i=0; i<row; i++)
         ++pos;
-    YoucryptDirectory *dirAtRow = pos->second.get()->Object;
+    Folder dirAtRow = pos->second;
     if (!dirAtRow)
         return;
-        
-//    [dirAtRow updateInfo];
     
-    if ([dirAtRow status] == YoucryptDirectoryStatusMounted) { // mounted => unlocked
+    //    [dirAtRow updateInfo];
+    
+    if (dirAtRow->currStatus() == YoucryptDirectoryStatusMounted)
+    {
+        // mounted => unlocked
         if ([cell isKindOfClass:[NSTextFieldCell class]]) {
-//            [cell setTextColor:[NSColor redColor]];
-//            [cell setBackgroundColor:[NSColor grayColor]];
+            //            [cell setTextColor:[NSColor redColor]];
+            //            [cell setBackgroundColor:[NSColor grayColor]];
         } else if ([cell isKindOfClass:[NSButtonCell class]] && [colId isEqualToString:@"status"]) {
             [cell setImage:[NSImage imageNamed:@"box_open_48x48.png"]];
         } else if ([cell isKindOfClass:[NSPopUpButtonCell class]] && [colId isEqualToString:@"props"]) {
             /*NSPopUpButtonCell *dataTypeDropDownCell = [tableColumn dataCell];
-            [[dataTypeDropDownCell itemAtIndex:1] setTitle:@"Close"];*/
+             [[dataTypeDropDownCell itemAtIndex:1] setTitle:@"Close"];*/
             [[[tableColumn dataCell] itemAtIndex:2] setHidden:NO];
         }
     } else  { // unmounted => locked
         if ([cell isKindOfClass:[NSTextFieldCell class]]) {
-//            [cell setTextColor:[NSColor blackColor]];
-//            [cell setBackgroundColor:[NSColor darkGrayColor]];
+            //            [cell setTextColor:[NSColor blackColor]];
+            //            [cell setBackgroundColor:[NSColor darkGrayColor]];
             
         } else if ([cell isKindOfClass:[NSButtonCell class]] && [colId isEqualToString:@"status"]) {
-            if ([dirAtRow status] == YoucryptDirectoryStatusInitialized)
+            if (dirAtRow->currStatus() == YoucryptDirectoryStatusInitialized)
                 [cell setImage:[NSImage imageNamed:@"box_closed_48x48.png"]];
-            else if ([dirAtRow status] == YoucryptDirectoryStatusConfigError || [dirAtRow status] == YoucryptDirectoryStatusUnknown)
+            else if (dirAtRow->currStatus() == YoucryptDirectoryStatusBadConfig
+                     || dirAtRow->currStatus() == YoucryptDirectoryStatusUnknown)
                 [cell setImage:[NSImage imageNamed:@"error-22x22.png"]];
-            if ([dirAtRow status] == YoucryptDirectoryStatusProcessing)
+            if (dirAtRow->currStatus() == YoucryptDirectoryStatusProcessing)
                 [cell setImage:[NSImage imageNamed:@"processing-22x22.gif"]];
         } else if ([cell isKindOfClass:[NSPopUpButtonCell class]] && [colId isEqualToString:@"props"]) {
             //NSPopUpButtonCell *dataTypeDropDownCell = [tableColumn dataCell];
@@ -912,22 +827,25 @@ FoundOne:
 }
 
 - (NSString *)tableView:(NSTableView *)aTableView toolTipForTableColumn:(NSTableColumn *)aTableColumn row:(NSInteger)rowIndex
-{   
+{
     NSString *tooltip;
     if (rowIndex >= 0) {
         
         DirectoryMap::iterator pos = directories->begin();
         for (int i=0; i<rowIndex; i++)
             ++pos;
-        YoucryptDirectory *dir = pos->second.get()->Object;
+        Folder dir = pos->second;
         tooltip = [NSString stringWithFormat:@"Source folder: %@\n\n"
-                             "Status: %@"
-                             "%@", dir.path, [dir getStatus],
-                             ([dir status] == YoucryptDirectoryStatusMounted ? [NSString stringWithFormat:@"\n\nMounted at %@", dir.mountedPath] : @"")];
+                   "Status: %@"
+                   "%@", nsstrFromCpp(dir->rootPath()),
+                   nsstrFromCpp(dir->stringStatus()),
+                   ((dir->currStatus() == YoucryptDirectoryStatusMounted) ?
+                    [NSString stringWithFormat:@"\n\nMounted at %@", nsstrFromCpp(dir->mountedPath())]
+                    : @"")];
     } else {
         tooltip = @"Drag folders here to encrypt them with YouCrypt";
     }
-
+    
     return tooltip;
 }
 
@@ -935,18 +853,18 @@ FoundOne:
 {
     
     /*
-    NSString *colId = [tableColumn identifier];
-
-    if ([colId isEqualToString:@"props"]) {
-        NSPopUpButtonCell *dataTypeDropDownCell = [[NSPopUpButtonCell alloc] initTextCell:@"Actions..." pullsDown:YES];
-        [dataTypeDropDownCell setBordered:NO];
-        [dataTypeDropDownCell setEditable:YES];
-        NSArray *dataTypeNames = [NSArray arrayWithObjects:@"NULLOrignal", @"String", @"Money", @"Date", @"Int", nil];
-        [dataTypeDropDownCell addItemsWithTitles:dataTypeNames];
-        return dataTypeDropDownCell;
-    } else {
-        return nil;
-    }
+     NSString *colId = [tableColumn identifier];
+     
+     if ([colId isEqualToString:@"props"]) {
+     NSPopUpButtonCell *dataTypeDropDownCell = [[NSPopUpButtonCell alloc] initTextCell:@"Actions..." pullsDown:YES];
+     [dataTypeDropDownCell setBordered:NO];
+     [dataTypeDropDownCell setEditable:YES];
+     NSArray *dataTypeNames = [NSArray arrayWithObjects:@"NULLOrignal", @"String", @"Money", @"Date", @"Int", nil];
+     [dataTypeDropDownCell addItemsWithTitles:dataTypeNames];
+     return dataTypeDropDownCell;
+     } else {
+     return nil;
+     }
      */
     return nil;
 }
@@ -968,3 +886,19 @@ FoundOne:
 }
 
 @end
+
+std::string cppString(NSString *s) {
+    return std::string
+    ([s cStringUsingEncoding:NSASCIIStringEncoding]);
+}
+
+NSString *nsstrFromCpp(std::string st) {
+    NSString *s =
+    [NSString stringWithCString:st.c_str()
+                       encoding:NSASCIIStringEncoding];
+    return s;
+}
+
+
+
+
