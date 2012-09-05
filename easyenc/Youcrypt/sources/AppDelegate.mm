@@ -734,7 +734,10 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
     return NSDragOperationNone;
 }
 
-- (BOOL)tableView:(NSTableView *)tableView acceptDrop:(id<NSDraggingInfo>)info row:(NSInteger)row dropOperation:(NSTableViewDropOperation)dropOperation {
+- (BOOL)tableView:(NSTableView *)tableView
+       acceptDrop:(id<NSDraggingInfo>)info
+              row:(NSInteger)row
+    dropOperation:(NSTableViewDropOperation)dropOperation {
     
     NSPasteboard *pb = [info draggingPasteboard];
     
