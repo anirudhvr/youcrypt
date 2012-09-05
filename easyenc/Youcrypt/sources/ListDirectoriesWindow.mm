@@ -228,7 +228,7 @@ namespace yc = youcrypt;
             long retCode;
             NSString *pth = nsstrFromCpp(dir->rootPath());
             if((retCode = [[NSAlert alertWithMessageText:@"Decrypt and Restore" defaultButton:@"Yes" alternateButton:@"No, delete the data." otherButton:@"Cancel" informativeTextWithFormat:@"You have chosen to permanently decrypt the encrypted folder at %@.  Restore contents?", [pth stringByDeletingLastPathComponent]] runModal]) == NSAlertDefaultReturn) {
-                [theApp removeFSAtRow:row];
+                [theApp removeFSAtPath:pth];
             }
             else if (retCode == NSAlertAlternateReturn) {
                 dmap.erase(beg);

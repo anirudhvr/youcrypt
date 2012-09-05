@@ -325,7 +325,8 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
     dispatch_queue_t taskQ =
     dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
     dispatch_async(taskQ, ^{
-        decQ.runTillEmpty();});
+        @autoreleasepool {
+            decQ.runTillEmpty();}});
 
     
     return YES;
@@ -409,8 +410,8 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
         encQ.queueJob(cppString(path));
         dispatch_queue_t taskQ =
         dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
-        dispatch_async(taskQ, ^{
-            encQ.runTillEmpty();});
+        dispatch_async(taskQ, ^{ @autoreleasepool{
+            encQ.runTillEmpty();}});
     }
     return YES;
 }
@@ -510,8 +511,8 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
         
     }
     if (found) {
-        dispatch_async(taskQ, ^{
-            resQ.runTillEmpty();});
+        dispatch_async(taskQ, ^{@autoreleasepool{
+            resQ.runTillEmpty();}});
     }
 }
 
@@ -531,8 +532,7 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
         case YoucryptDirectoryStatusNeedAuth:
             break;
     }
-    
-    
+        
     if (!restoreController) {
         restoreController = [[RestoreController alloc] init];
     }

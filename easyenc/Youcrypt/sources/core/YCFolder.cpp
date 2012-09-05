@@ -274,7 +274,49 @@ bool YCFolder::deleteCredential(const Credentials &cred)
 
 bool YCFolder::restoreFolderInPlace() 
 {
-    //FIXME
+    if (status != YoucryptDirectoryStatusInitialized)
+        return false;
+    int ostatus = status;
+    status = YoucryptDirectoryStatusProcessing;
+
+    path newPath(YoucryptFolder::rootPath);
+    path encPath(newPath);
+
+    newPath = newPath.parent_path() / newPath.stem();
+    if (exists(newPath)) {
+        newPath = newPath.parent_path() / path(
+            string("decrypted data from ") 
+            + newPath.filename().string());
+    }
+    int cnt = 1;
+    string destStr = newPath.string();
+    while (exists(newPath)) {
+        cnt++;
+        string sCnt;
+        std::ostringstream(sCnt) << cnt;
+        newPath = path(destStr + sCnt);
+    }
+    status = YoucryptDirectoryStatusInitialized;
+    YoucryptFolder::exportContent(newPath, "/");
+
+    // 4. (delete directories in the source)
+    encPath = YoucryptFolder::rootPath;
+    using boost::filesystem::directory_iterator;
+    for (directory_iterator pi = directory_iterator(encPath),
+             en = directory_iterator(); pi!=en; ++pi) {
+        boost::filesystem::remove_all(pi->path());
+    }
+
+    // 5. (move files from dest to source)
+    moveDirectory(newPath, encPath);
+    boost::filesystem::remove_all(newPath);
+
+    // 6. (rename source to dest)
+    boost::filesystem::rename(encPath, newPath);
+
+
+    status = ostatus;
+    return true;
 }
 
 
