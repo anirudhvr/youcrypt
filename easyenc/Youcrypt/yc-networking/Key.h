@@ -31,6 +31,9 @@ struct Key
         ECDSA
     };
     KeyAlgType algtype;
+    
+    // Is this key empty or filled?
+    bool empty;
 
     // A name assigned to this key
     string name; 
@@ -41,7 +44,7 @@ struct Key
     Key();
 
     string value() { return _value; }
-    bool setValue(string value) { _value = value; }
+    bool setValue(string value) { empty = false; _value = value; }
     bool setValueFromFile(string filename);
     bool writeValueToFile(string filename);
 

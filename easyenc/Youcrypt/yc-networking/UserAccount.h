@@ -30,6 +30,6 @@ private:
     
 };
     
-};
+}
 
 #endif /* defined(__Youcrypt__UserAccount__) */

@@ -17,6 +17,7 @@ Key::Key()
     algtype = Key::RSA;
     name = "";
     description = "";
+    empty = true;
 }
 
 bool
@@ -44,6 +45,7 @@ Key::setValueFromFile(string filename)
     } catch (ifstream::failure e) {
         std::cerr << "Key::setValueFromFile failed: " << e.what() << std::endl;
     }
+    empty = false;
     return ret;
 }
 

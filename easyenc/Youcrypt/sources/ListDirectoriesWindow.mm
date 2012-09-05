@@ -13,6 +13,17 @@
 #import "libFunctions.h"
 #import "Contrib/Mixpanel_fpotter.github.com/MPLib/MixpanelAPI.h"
 #import "PreferenceController.h"
+#import "SharingGetEmailsView.h"
+
+#import <boost/shared_ptr.hpp>
+#import <boost/scoped_ptr.hpp>
+#import "yc-networking/UserAccount.h"
+#import "yc-networking/Key.h"
+#import "yc-networking/ServerConnectionWrapper.h"
+
+#import <iostream>
+
+namespace yc = youcrypt;
 
 @implementation ListDirectoriesWindow
 
@@ -21,7 +32,7 @@
 @synthesize backgroundImageView;
 @synthesize progressIndicator;
 @synthesize statusLabel;
-@synthesize currentView;
+@synthesize sharingGetEmailsView;
 @synthesize sharingPopover;
 
 - (id)init
@@ -34,8 +45,13 @@
     
     volumePropsSheet = [[VolumePropertiesSheetController alloc] init];
     passphraseSheet = [[PassphraseSheetController alloc] init];
-    return self;
     
+    
+    // Connect to server
+    string api_base(API_BASE_URL);
+    serverConnectionWrapper.reset(new yc::ServerConnectionWrapper(api_base));
+    
+    return self;
 }
 
 - (id)initWithWindow:(NSWindow *)window
@@ -271,6 +287,7 @@ void printCloseError(int ret)
         for (int i=0; i<row; i++)
             ++beg;
         Folder dir = beg->second;
+        [sharingGetEmailsView setListDirWindow:self];
         [sharingPopover showRelativeToRect:[table rectOfRow:row] ofView:table preferredEdge:NSMaxYEdge];
         
         if ([[theApp.preferenceController getPreference:YC_ANONYMOUSSTATISTICS] intValue])
@@ -280,9 +297,19 @@ void printCloseError(int ret)
                              nil]];
     }
     
-//    [[NSAlert alertWithMessageText:@"Sharing is not yet supported but will be in the next version of YouCrypt!" 
-//      " Please send feature requests to feedback@youcrypt.com" defaultButton:@"OK" alternateButton:nil  otherButton:nil informativeTextWithFormat:@""] runModal];
-    
+}
+         
+-(BOOL)performShare:(NSString*)email
+            message:(NSString*)msg
+{
+    yc::UserAccount ua_to_search(cppString(email), "");
+    NSLog(@"Searching for email %@ in database", email);
+    yc::Key k = serverConnectionWrapper->getPublicKey(ua_to_search);
+    if (!k.empty)
+        std::cout << k.value() << std::endl;
+    else
+        std::cout << "Key not found / is empty" << std::endl;
+    return YES;
 }
 
 /***

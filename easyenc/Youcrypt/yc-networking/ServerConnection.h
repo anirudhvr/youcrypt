@@ -8,9 +8,10 @@
 
 #ifndef __Youcrypt__ServerConnection__
 #define __Youcrypt__ServerConnection__
+#define __ASSERT_MACROS_DEFINE_VERSIONS_WITHOUT_UNDERSCORES 0
 
 #include <string>
-#include <boost/network/protocol/http/client.hpp>
+#include <boost/network/protocol/http.hpp>
 #include <boost/network/uri.hpp>
 #include "Key.h"
 #include "UserAccount.h"

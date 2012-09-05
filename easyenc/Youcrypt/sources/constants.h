@@ -49,4 +49,6 @@
 ///////////////////////////////////////
 //          SERVER CONFIG
 ///////////////////////////////////////
+#define API_BASE_URL "https://pacific-ridge-8141.herokuapp.com/"
+//#define API_BASE_URL "http://localhost:3000/"
 

@@ -83,7 +83,7 @@
 		E045154D15E9507900291C25 /* TestBed.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = TestBed.1; sourceTree = "<group>"; };
 		E045155415E950F600291C25 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		E045155515E950F600291C25 /* main.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = main.h; sourceTree = "<group>"; };
-		E0F85A7C15F10F9500A4D821 /* libboost_iostreams-mt.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libboost_iostreams-mt.dylib"; path = "/Users/rajsekar/work/encint/repos/easyenc/easyenc/Youcrypt/../../../../../../../../opt/local/lib/libboost_iostreams-mt.dylib"; sourceTree = "<absolute>"; };
+		E0F85A7C15F10F9500A4D821 /* libboost_iostreams-mt.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libboost_iostreams-mt.dylib"; path = "/opt/local/lib/libboost_iostreams-mt.dylib"; sourceTree = "<absolute>"; };
 		E61B8B8515EC399A00BCC3F5 /* yc_openssl_rsaapps.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = yc_openssl_rsaapps.h; sourceTree = "<group>"; };
 		E61B8B8615EC399A00BCC3F5 /* yc_openssl_rsaapps.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = yc_openssl_rsaapps.c; sourceTree = "<group>"; };
 		E61B8B8915EC3B0100BCC3F5 /* RSACredentials.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RSACredentials.cpp; sourceTree = "<group>"; };

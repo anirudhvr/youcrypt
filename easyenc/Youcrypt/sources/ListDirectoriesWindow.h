@@ -11,8 +11,8 @@
 #import "ListDirTable.h"
 #import "LinkedView.h"
 #import "core/YCFolder.h"
+#import "yc-networking/ServerConnectionWrapper.h"
 
-using namespace youcrypt;
 
 #define AddToolbarItemIdentifier @"Add"
 #define RemoveToolbarItemIdentifier @"Remove"
@@ -22,6 +22,7 @@ using namespace youcrypt;
 #define HelpToolbarItemIdentifier @"Help"
 
 @class PassphraseSheetController;
+@class SharingGetEmailsView;
 
 @interface ListDirectoriesWindow : NSWindowController <NSWindowDelegate, NSDraggingDestination, NSToolbarDelegate> {
     IBOutlet ListDirTable *table;
@@ -38,8 +39,11 @@ using namespace youcrypt;
     
     PassphraseSheetController *passphraseSheet;
     
-    IBOutlet LinkedView *currentView;
+    IBOutlet SharingGetEmailsView *sharingGetEmailsView;
     IBOutlet NSPopover *sharingPopover;
+    
+    // For server connection
+    boost::shared_ptr<youcrypt::ServerConnectionWrapper> serverConnectionWrapper;
         
 }
 
@@ -49,7 +53,7 @@ using namespace youcrypt;
 @property (atomic, strong) IBOutlet NSProgressIndicator *progressIndicator;
 
 @property (nonatomic, strong) PassphraseSheetController *passphraseSheet;
-@property(nonatomic, strong) LinkedView *currentView;
+@property(nonatomic, strong) SharingGetEmailsView *sharingGetEmailsView;
 @property(nonatomic, strong) NSPopover *sharingPopover;
 
 - (IBAction)doEncrypt:(id)sender;
@@ -59,6 +63,7 @@ using namespace youcrypt;
 - (IBAction)addNew:(id)sender;
 - (IBAction)close:(id)sender;
 - (IBAction) shareFolder:(id) sender;
+- (BOOL) performShare:(NSString*)email message:(NSString*)msg;
 - (IBAction)removeFS:(id)sender;
 
 - (void)setStatusToSelectedRow:(NSInteger)row;

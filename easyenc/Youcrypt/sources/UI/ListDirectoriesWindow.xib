@@ -354,7 +354,6 @@
 							<string key="NSFrame">{{539, 2}, {22, 16}}</string>
 							<reference key="NSSuperview" ref="1006"/>
 							<reference key="NSWindow"/>
-							<reference key="NSNextKeyView"/>
 							<string key="NSReuseIdentifierKey">_NS:9</string>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSImageCell" key="NSCell" id="139831049">
@@ -402,7 +401,7 @@
 					<reference key="NSWindow"/>
 					<reference key="NSNextKeyView" ref="741920390"/>
 				</object>
-				<string key="NSScreenRect">{{0, 0}, {1920, 1058}}</string>
+				<string key="NSScreenRect">{{0, 0}, {1440, 878}}</string>
 				<string key="NSMinSize">{578, 370}</string>
 				<string key="NSMaxSize">{10000000000000, 10000000000000}</string>
 				<bool key="NSWindowIsRestorable">YES</bool>
@@ -485,7 +484,6 @@
 						<string key="NSFrame">{{330, 12}, {79, 32}}</string>
 						<reference key="NSSuperview" ref="289132597"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSButtonCell" key="NSCell" id="192396218">
@@ -647,6 +645,22 @@
 						<reference key="destination" ref="573279383"/>
 					</object>
 					<int key="connectionID">2675</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">sharingPopover</string>
+						<reference key="source" ref="1001"/>
+						<reference key="destination" ref="573279383"/>
+					</object>
+					<int key="connectionID">2681</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">sharingGetEmailsView</string>
+						<reference key="source" ref="1001"/>
+						<reference key="destination" ref="289132597"/>
+					</object>
+					<int key="connectionID">2682</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
@@ -1786,7 +1800,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">2680</int>
+			<int key="maxID">2682</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -1899,8 +1913,9 @@
 						<string key="backgroundImageView">NSImageView</string>
 						<string key="currentView">LinkedView</string>
 						<string key="dirName">NSTextField</string>
-						<string key="popover">NSPopover</string>
 						<string key="progressIndicator">NSProgressIndicator</string>
+						<string key="sharingGetEmailsView">SharingGetEmailsView</string>
+						<string key="sharingPopover">NSPopover</string>
 						<string key="statusLabel">NSTextField</string>
 						<string key="table">ListDirTable</string>
 						<string key="toolbar">NSToolbar</string>
@@ -1918,13 +1933,17 @@
 							<string key="name">dirName</string>
 							<string key="candidateClassName">NSTextField</string>
 						</object>
-						<object class="IBToOneOutletInfo" key="popover">
-							<string key="name">popover</string>
-							<string key="candidateClassName">NSPopover</string>
-						</object>
 						<object class="IBToOneOutletInfo" key="progressIndicator">
 							<string key="name">progressIndicator</string>
 							<string key="candidateClassName">NSProgressIndicator</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="sharingGetEmailsView">
+							<string key="name">sharingGetEmailsView</string>
+							<string key="candidateClassName">SharingGetEmailsView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="sharingPopover">
+							<string key="name">sharingPopover</string>
+							<string key="candidateClassName">NSPopover</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="statusLabel">
 							<string key="name">statusLabel</string>
@@ -1969,6 +1988,8 @@
 					<dictionary class="NSMutableDictionary" key="outlets">
 						<string key="emailField">NSTextField</string>
 						<string key="emailMessageField">NSTextField</string>
+						<string key="errmsg">NSTextField</string>
+						<string key="shareButton">NSButton</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
 						<object class="IBToOneOutletInfo" key="emailField">
@@ -1978,6 +1999,14 @@
 						<object class="IBToOneOutletInfo" key="emailMessageField">
 							<string key="name">emailMessageField</string>
 							<string key="candidateClassName">NSTextField</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="errmsg">
+							<string key="name">errmsg</string>
+							<string key="candidateClassName">NSTextField</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="shareButton">
+							<string key="name">shareButton</string>
+							<string key="candidateClassName">NSButton</string>
 						</object>
 					</dictionary>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">

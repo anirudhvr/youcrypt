@@ -22,5 +22,3 @@ UserAccount::getBcryptedPassword(string salt)
     char *output = bcrypt_hashpw((char*)salt.c_str(), (char*)_password.c_str());
     return output ? string(output) : string();
 }
-
-
