@@ -4,6 +4,7 @@
 
 #ifdef __OBJC__
     #import <Cocoa/Cocoa.h>
-    #import "constants.h"
+
+#import "constants.h"
     #import "Contrib/Lumberjack/logging.h"
 #endif

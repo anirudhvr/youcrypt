@@ -9,13 +9,9 @@
 #ifndef __Youcrypt__UserAccount__
 #define __Youcrypt__UserAccount__
 
-#include <iostream>
-#include "KeyManager.h"
-#include "PasswordManager.h"
-#include "HttpLib.h"
+#include <string>
 
 using std::string;
-using std::vector;
 
 namespace youcrypt {
 
@@ -23,17 +19,17 @@ class UserAccount
 {
 public:
     UserAccount(string email, string password);
-    ~UserAccount();
+    string getBcryptedPassword(string salt);
     
-    int authenticate();
-    std::string getKey();
-  
+    string email() { return _email; }
+    string password() { return _password; }
+    
 private:
     std::string _email;
     std::string _password;
     
 };
     
-};
+}
 
 #endif /* defined(__Youcrypt__UserAccount__) */

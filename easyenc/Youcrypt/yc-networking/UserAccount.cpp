@@ -7,34 +7,18 @@
 //
 
 #include "UserAccount.h"
+#include "contrib/bcrypt/bcrypt_wrapper.h"
 
 using namespace youcrypt;
 
-UserAccount::UserAccount(std::string e, std::string password) :
-_email(e), _password(password)
+UserAccount::UserAccount(std::string e, std::string p) :
+_email(e), _password(p)
 {
-    
-    
 }
 
-UserAccount::~UserAccount()
+string
+UserAccount::getBcryptedPassword(string salt)
 {
-    
+    char *output = bcrypt_hashpw((char*)salt.c_str(), (char*)_password.c_str());
+    return output ? string(output) : string();
 }
-
-std::string UserAccount::getKey()
-{
-    std::string url(APP_URL);
-    url += "/keys/5.json";
-    try {
-        HttpClient client(url);
-        client.get();
-        std::string response = client.getResponse();
-        return response;
-    } catch (std::exception &e) {
-        std::cerr << e.what() << std::endl;
-        return "ERROR";
-    }
-}
-
-

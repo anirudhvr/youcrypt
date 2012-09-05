@@ -8,12 +8,12 @@
 
 #import <Cocoa/Cocoa.h>
 #import "LinkedView.h"
-#import "YoucryptDirectory.h"
+#import "ListDirectoriesWindow.h"
 
 @interface SharingGetEmailsView : LinkedView
 {
-    YoucryptDirectory *dir;
     BOOL emailStatus;
+    ListDirectoriesWindow *_listDirWindow;
 }
 
 @property (nonatomic, strong) NSMutableArray *emails;
@@ -23,9 +23,7 @@
 @property (nonatomic, strong) IBOutlet NSButton *shareButton;
 
 
-- (void) setYoucryptDirectory:(YoucryptDirectory*)d;
-- (BOOL)sendEmail:(NSString*)emailaddress
-           folder:(YoucryptDirectory*)dir;
+- (void)setListDirWindow:(ListDirectoriesWindow*)listDirWindow;
 - (IBAction)shareButtonClicked:(id)sender;
 
 @end

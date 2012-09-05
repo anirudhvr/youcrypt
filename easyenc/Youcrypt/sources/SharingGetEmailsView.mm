@@ -29,9 +29,9 @@
     return self;
 }
 
-- (void) setYoucryptDirectory:(YoucryptDirectory*)d
+-(BOOL)setListDirWindow:(ListDirectoriesWindow*)ldw
 {
-    dir = d;
+    _listDirWindow = ldw;
 }
 
 - (void) awakeFromNib
@@ -52,13 +52,18 @@
 {
     emailStatus = NO;
     NSString *e = [emailField stringValue];
+    NSString *m = [emailMessageField stringValue];
     if (![libFunctions validateEmail:e]) {
         [errmsg setStringValue:@"Malformed email"];
         return;
     }
     
-    if ([self sendEmail:e folder:dir]) {
-        emailStatus = YES;
+    if (!_listDirWindow) {
+        [errmsg setStringValue:@"Sharing not correctly initialized"];
+        return;
+    }
+    
+    if ([_listDirWindow performShare:e message:m]) {
         [errmsg setStringValue:[NSString stringWithFormat:@"Successfully added user %@", e]];
         // Wait for a while for user to read msg
         [NSThread sleepForTimeInterval:1.0f]; 
@@ -75,14 +80,6 @@
     }
     
 //    [super goToNextView];
-}
-
-- (BOOL)sendEmail:(NSString*)emailaddress
-           folder:(YoucryptDirectory*)dir
-{
-    [errmsg setStringValue:@"Not Implemented Yet"];
-    emailStatus = NO;
-    return NO;
 }
 
 

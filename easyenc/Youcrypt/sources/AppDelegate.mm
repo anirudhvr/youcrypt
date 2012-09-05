@@ -27,6 +27,7 @@
 #import "PassphraseManager.h"
 #import "PortingQ.h"
 
+
 using namespace youcrypt;
 
 /* Global Variables Accessible to everyone */
@@ -120,8 +121,10 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
         NSLog(@"Error checking config dir - key decrypt problem?");
     }
     NSString *s = [passphraseManager getPassphrase];
+    std::string pass_cppstr = cppString(s);
+    
     PortingCM *pcm = new PortingCM;
-    pcm->setPassphrase(cppString(s));
+    pcm->setPassphrase(pass_cppstr);
     shared_ptr<youcrypt::CredentialsManager> p;
     p.reset(pcm);
     setGlobalCM(p);
@@ -129,6 +132,9 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
     if (!directories) {
         directories.reset(new DirectoryMap);
     }
+    
+    std::string userEmail = cppString([preferenceController getPreference:YC_USEREMAIL]);
+    userAccount.reset(new UserAccount(userEmail, pass_cppstr));
     return nil;
 }
 
@@ -886,6 +892,17 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
         directories.reset(new DirectoryMap);
     }
     return directories;
+}
+
+-(boost::shared_ptr<UserAccount>) getUserAccount {
+    if (!userAccount) {
+        
+        std::string userEmail = cppString([preferenceController getPreference:YC_USEREMAIL]);
+        std::string userPW = cppString([passphraseManager getPassphrase]);
+        userAccount.reset(new UserAccount(userEmail, userPW));
+    }
+    
+    return userAccount;
 }
 
 @end

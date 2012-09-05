@@ -13,6 +13,7 @@
 #import "PortingCM.h"
 #import "PortingQ.h"
 #import <map>
+#import "yc-networking/UserAccount.h"
 
 using namespace youcrypt;
 
@@ -61,6 +62,10 @@ extern "C" NSString *nsstrFromCpp(std::string);
     YoucryptService *youcryptService;
     PassphraseManager *passphraseManager;
     
+    // This user's account
+    boost::shared_ptr<UserAccount> userAccount;
+    
+    
     FirstRunSheetController *firstRunSheetController;
     FeedbackSheetController *feedbackSheetController;
     keyDownView *keyDown;
@@ -79,10 +84,9 @@ extern "C" NSString *nsstrFromCpp(std::string);
     DecryptQ decQ;
     RestoreQ resQ;
     long enQIndex, deQIndex, reQIndex;
+    
+
 }
-
-
-
 // Built in methods
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification;
 - (void)awakeFromNib;
@@ -119,13 +123,12 @@ extern "C" NSString *nsstrFromCpp(std::string);
 -(void)cancelRestore:(NSString *)path;
 -(BOOL)doRestore:(NSString *)path;
 
-
-
 - (void) showTour;
 
 -(id) passphraseReceivedFromUser:(id) sender;
 -(boost::shared_ptr<DirectoryMap>) getDirectories;
-    
+-(boost::shared_ptr<UserAccount>) getUserAccount;
+
 
 // Setters and getters
 //@property (readonly) NSMutableArray *directories;
