@@ -10,7 +10,7 @@
 #import "RestoreController.h"
 #import <boost/shared_ptr.hpp>
 #import "DirectoryMap.h"
-#import "PortingCM.h"
+#import "RSACredentialManager.h"
 #import "PortingQ.h"
 #import <map>
 #import "yc-networking/UserAccount.h"
@@ -126,6 +126,8 @@ extern "C" NSString *nsstrFromCpp(std::string);
 - (void) showTour;
 
 -(id) passphraseReceivedFromUser:(id) sender;
+-(BOOL) createCredentials:(NSString*)pass;
+
 -(boost::shared_ptr<DirectoryMap>) getDirectories;
 -(boost::shared_ptr<UserAccount>) getUserAccount;
 

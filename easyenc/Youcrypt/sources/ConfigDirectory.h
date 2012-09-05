@@ -7,14 +7,10 @@
 //
 
 #import <Foundation/Foundation.h>
-#include <boost/shared_ptr.hpp>
-#include "encfs-core/Credentials.h"
-#include "encfs-core/RSACredentials.h"
 
 #define YoucryptFolderName @".youcrypt"
 
 @interface ConfigDirectory : NSObject {
-    youcrypt::CredentialStorage cs;
 }
 
 @property (atomic,strong) NSString* youCryptVolDir;
@@ -32,8 +28,6 @@
 
 -(BOOL)isFirstRun;
 -(void)firstRunSuccessful;
--(NSString*) checkKeys; // Called after passphrase received from user
--(youcrypt::CredentialStorage) getCredStorage;
 
 
 /*

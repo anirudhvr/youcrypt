@@ -80,7 +80,10 @@
         [[NSUserDefaults standardUserDefaults] setValue:[email stringValue] forKey:YC_USEREMAIL];
         [[NSUserDefaults standardUserDefaults] synchronize];
         
-              
+        if (![theApp createCredentials:[password stringValue]]) {
+            [msg setStringValue:@"Unknown error creating credentials."];
+            return;
+        }
         // [libFunctions registerWithKeychain:[password stringValue]:@"Youcrypt"];
         [theApp.configDir firstRunSuccessful];
 

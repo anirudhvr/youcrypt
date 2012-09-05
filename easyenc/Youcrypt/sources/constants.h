@@ -31,6 +31,7 @@
 #define YC_BOXSTATUS        @"yc.boxstatus"
 #define YC_ANONYMOUSSTATISTICS @"yc.anonymousstatistics"
 #define YC_IDLETIME         @"yc.idletime"
+#define YC_KEYCHAIN_SERVICENAME @"com.Youcrypt"
 
 
 ///////////////////////////////////////
@@ -51,4 +52,5 @@
 ///////////////////////////////////////
 #define API_BASE_URL "https://pacific-ridge-8141.herokuapp.com/"
 //#define API_BASE_URL "http://localhost:3000/"
+
 

@@ -115,19 +115,30 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
 }
 
 
+-(BOOL) createCredentials:(NSString*)pass
+{
+    try {
+        RSACredentialManager *pcm =
+        new RSACredentialManager(cppString(configDir.youCryptPrivKeyFile),
+                                 cppString(configDir.youCryptPubKeyFile),
+                                 cppString(pass));
+        //    pcm->setPassphrase(pass_cppstr);
+        shared_ptr<youcrypt::CredentialsManager> p;
+        p.reset(pcm);
+        setGlobalCM(p);
+        return YES;
+    } catch (std::exception e) {
+        NSLog(@"Error unlocking credentials. Key decrypt problem?: %s", e.what());
+        return NO;
+    }
+    
+}
+
 -(id) passphraseReceivedFromUser:(id) sender {
     
-    if (![configDir checkKeys]) {
-        NSLog(@"Error checking config dir - key decrypt problem?");
-    }
     NSString *s = [passphraseManager getPassphrase];
     std::string pass_cppstr = cppString(s);
     
-    PortingCM *pcm = new PortingCM;
-    pcm->setPassphrase(pass_cppstr);
-    shared_ptr<youcrypt::CredentialsManager> p;
-    p.reset(pcm);
-    setGlobalCM(p);
     directories = [libFunctions unarchiveDirectoryListFromFile:configDir.youCryptListFile];
     if (!directories) {
         directories.reset(new DirectoryMap);

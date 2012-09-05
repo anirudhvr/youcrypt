@@ -13,8 +13,8 @@
 #import "AppDelegate.h"
 #import "ConfigDirectory.h"
 #import "contrib/passwdqc/passwdqc.h"
+#import "RSACredentialManager.h"
 
-#define YC_KEYCHAIN_SERVICENAME @"com.Youcrypt"
 
 @implementation PassphraseManager
 
@@ -65,12 +65,13 @@
     if ([[pass stringValue] isNotEqualTo:@""] && ([[pass stringValue] length] >= 4)) {
         passPhrase = [pass stringValue];
         NSString *errmsgBuf = nil;
-        if ((errmsgBuf = [theApp.configDir checkKeys]) != nil) {
-            [message setStringValue:errmsgBuf];
+        
+        if ([theApp createCredentials:passPhrase]) {
+            [message setStringValue:@""];
+        } else {
+            [message setStringValue:@"Cannot unlock credentials - wrong passprhase?"];
             passPhrase = @"";
             return;
-        } else {
-            [message setStringValue:@""];
         }
     } else {
         [message setStringValue:@"Passphrase empty or too short"];

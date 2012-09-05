@@ -8,8 +8,6 @@
 
 #import "ConfigDirectory.h"
 #import "libFunctions.h"
-#include "encfs-core/yc_openssl_rsaapps.h"
-#include "PassphraseManager.h"
 #include "AppDelegate.h"
 #include <string>
 #include <map>
@@ -42,9 +40,9 @@
     youCryptListFile = [homedir stringByAppendingPathComponent:@"/.youcrypt/dirs.plist"];
     youcryptUserUUID = [homedir stringByAppendingPathComponent:@"/.youcrypt/uuid.txt"];
     
-    std::string priv([youCryptPrivKeyFile cStringUsingEncoding:NSASCIIStringEncoding]), pub([youCryptPubKeyFile cStringUsingEncoding:NSASCIIStringEncoding]);
-    std::map<std::string, std::string> empty;
-    cs.reset(new youcrypt::RSACredentialStorage(priv, pub, empty));
+//    std::string priv([youCryptPrivKeyFile cStringUsingEncoding:NSASCIIStringEncoding]), pub([youCryptPubKeyFile cStringUsingEncoding:NSASCIIStringEncoding]);
+//    std::map<std::string, std::string> empty;
+//    cs.reset(new youcrypt::RSACredentialStorage(priv, pub, empty));
     
     return self;
 }
@@ -60,20 +58,6 @@
     return firstRun;
 }
 
--(NSString*) checkKeys // Called after passphrase received from user
-{
-    string pass([[theApp.passphraseManager getPassphrase] cStringUsingEncoding:NSASCIIStringEncoding]);
-    if (!cs->checkCredentials(pass))
-        return @"Passphrase incorrect? (Cannot decrypt keys)";
-    else
-        return nil;
-    
-}
-
--(youcrypt::CredentialStorage) getCredStorage
-{
-    return cs;
-}
 
 -(void)firstRunSuccessful
 {    
@@ -85,8 +69,6 @@
         DDLogVerbose(@"First run: could not create Youcrypt Tmp dir");
     } else if (![libFunctions mkdirRecursive:youCryptKeyDir]) {
         DDLogVerbose(@"First run: could not create Youcrypt keys dir");
-    } else if ([self checkKeys] != nil) { // Will create keys if they don't exist
-        DDLogError(@"Something went wrong in decrypting credentials");
     } else {
         // Create unique ID for this user for anonymous tracking
         NSString *uuid = [[NSProcessInfo processInfo] globallyUniqueString];
