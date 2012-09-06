@@ -157,29 +157,6 @@ using namespace youcrypt;
 
 
 
-+ (void) archiveDirectoryList:(boost::shared_ptr<DirectoryMap>)directories
-                       toFile:(NSString*)file 
-{
-    string strFile([file cStringUsingEncoding:NSASCIIStringEncoding]);
-    boost::filesystem::ofstream ofile(strFile);
-    if (ofile.is_open()) {
-        const DirectoryMap &dmap = *directories.get();
-        ofile << dmap;
-    }    
-}
-
-+ (boost::shared_ptr<DirectoryMap>) unarchiveDirectoryListFromFile:(NSString*)file
-{
-    boost::shared_ptr<DirectoryMap> dirs(new DirectoryMap);
-    DirectoryMap &dmap = *dirs.get();
-    string strFile([file cStringUsingEncoding:NSASCIIStringEncoding]);
-    boost::filesystem::ifstream ifile(strFile);
-    if (ifile.is_open()) {
-        ifile >> dmap;
-    }
-    return dirs;
-}
-
 #include <stdio.h>
 
 + (NSString*) locateDropboxFolder

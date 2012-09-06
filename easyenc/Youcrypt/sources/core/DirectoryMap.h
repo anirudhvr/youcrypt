@@ -20,9 +20,25 @@ using boost::filesystem::ifstream;
 using boost::filesystem::ofstream;
 using namespace youcrypt;
 
-typedef map<string, Folder> DirectoryMap;
+namespace youcrypt {
+    class DirectoryMap : public map<string, Folder> {
+        friend ofstream& operator<< (ofstream &, const DirectoryMap &);
+        friend ifstream& operator>> (ifstream &, DirectoryMap &);
+        map<string, Folder> &getMap();
+        map<string, Folder>::iterator getIterAtRow(int index);
+    public:
+        Folder operator[](int index);
+        Folder &operator[](const string &str);
+        void erase(int index);
+        void erase(const string &);
+        void archiveToFile(string file);
+        
+        static void unarchiveFromFile(string file);
+};
 
-ofstream& operator<< (ofstream &, const DirectoryMap &);
-ifstream& operator>> (ifstream &, DirectoryMap &);
+DirectoryMap &getDirectories();
+void setDirectories(const shared_ptr<DirectoryMap> &);
+}
+
 
 #endif /* defined(__Youcrypt__DirectoryMap__) */

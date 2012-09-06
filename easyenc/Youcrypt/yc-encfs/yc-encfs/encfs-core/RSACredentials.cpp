@@ -79,6 +79,7 @@ CipherKey RSACredentials::decryptVolumeKey(const vector<unsigned char> &data,
     rsaargs.inbuf = const_cast<unsigned char*>(&data.front());
     rsaargs.insize = bufLen;
     rsaargs.outsize = 0;
+    rsaargs.outbuf = 0;
 
     char *rsautl_decrypt_argv[] = {"rsautl",
         "-decrypt",
@@ -87,10 +88,14 @@ CipherKey RSACredentials::decryptVolumeKey(const vector<unsigned char> &data,
         "-inbuf"
         // "-in", "cipher.txt", "-out", "plain2.txt",
         };
-    
-    rsautl(7, rsautl_decrypt_argv, &rsaargs);
-    
-    CipherKey ret = kc->readRawKey(rsaargs.outbuf, true);
+    CipherKey ret;
+    int res = rsautl(7, rsautl_decrypt_argv, &rsaargs);
+    if (res != 0) {
+        ret = CipherKey();
+    } else {
+        ret = kc->readRawKey(rsaargs.outbuf, true);
+
+    }
     
     if (rsaargs.outbuf) free (rsaargs.outbuf);
     if (pwarg) free(pwarg);

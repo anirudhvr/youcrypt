@@ -114,27 +114,15 @@ namespace yc = youcrypt;
 }
 
 - (void)doOpenProxy:(NSInteger) row {
-    DirectoryMap &dmap = *([theApp getDirectories].get());
-    int count = dmap.size();
-    if (row == -1) return;
-    if (row < count) {
-        DirectoryMap::iterator beg = dmap.begin();
-        for (int i=0; i<row; i++)
-            ++beg;
-        [theApp openEncryptedFolder:nsstrFromCpp(beg->second->rootPath())];
+    Folder f = getDirectories()[row];
+    if (f) {
+        [theApp openEncryptedFolder:nsstrFromCpp(f->rootPath())];
     }
 }
 
 - (IBAction)doProps:(id)sender {
-    DirectoryMap &dmap = *([theApp getDirectories].get());
-    int row = [table selectedRow];
-    int count = dmap.size();
-    if (row == -1) return;
-    if (row < count) {
-        DirectoryMap::iterator beg = dmap.begin();
-        for (int i=0; i<row; i++)
-            ++beg;
-        Folder dir = beg->second;
+    Folder dir = getDirectories()[[table selectedRow]];
+    if (dir) {
         [theApp openEncryptedFolder:nsstrFromCpp(dir->rootPath())];
         volumePropsSheet.sp = nsstrFromCpp(dir->rootPath());
         volumePropsSheet.mp = nsstrFromCpp(dir->mountedPath());
@@ -151,28 +139,16 @@ namespace yc = youcrypt;
     }
 }
 
-- (IBAction)selectRow:(id)sender {
-
-    DirectoryMap &dmap = *([theApp getDirectories].get());
-    int count = dmap.size();
-
-//    NSLog(@"Selected row %ld", [sender selectedRow]);
-    if ([sender clickedRow] < count) {
+- (IBAction)selectRow:(id)sender {    
+    Folder dir = getDirectories()[[sender clickedRow]];
+    if (dir) {
         [self setStatusToSelectedRow:[sender clickedRow]];
     }
 }
 
 - (void)setStatusToSelectedRow:(NSInteger)row {
-//    NSLog(@"Selected row %ld", row);
-    DirectoryMap &dmap = *([theApp getDirectories].get());
-    int count = dmap.size();
-    if (row == -1)
-        return;
-    if (row < count) {
-        DirectoryMap::iterator beg = dmap.begin();
-        for (int i=0; i<row; i++)
-            ++beg;
-        Folder dir = beg->second;
+    Folder dir = getDirectories()[row];
+    if (dir) {
         NSString *pth = nsstrFromCpp(dir->rootPath());
         [dirName setStringValue:[NSString stringWithFormat:@"   %@",[pth stringByDeletingPathExtension]]];
     }
@@ -198,16 +174,10 @@ namespace yc = youcrypt;
 }
 
 - (IBAction)removeFS:(id)sender {
-    NSInteger row = [table selectedRow];
-    
-    DirectoryMap &dmap = *([theApp getDirectories].get());
-    int count = dmap.size();
-    if (row < count && row != -1) {
-        DirectoryMap::iterator beg = dmap.begin();
-        for (int i=0; i<row; i++)
-            ++beg;
-        Folder dir = beg->second;
-        
+    DirectoryMap &dmap = getDirectories();
+    int row = [table selectedRow];
+    Folder dir =  dmap[row];
+    if (dir) {
         if (dir->currStatus() == YoucryptDirectoryStatusMounted) {
             int ret = [self closeMountedFolder:dir];
             if (ret) {
@@ -223,7 +193,7 @@ namespace yc = youcrypt;
             [table beginUpdates];
             [table removeRowsAtIndexes:[[NSIndexSet alloc] initWithIndex:row] withAnimation:NSTableViewAnimationSlideUp];
             [table endUpdates];
-            dmap.erase(beg);
+            dmap.erase(row);
         } else if (dirstatus == YoucryptDirectoryStatusInitialized) {
             long retCode;
             NSString *pth = nsstrFromCpp(dir->rootPath());
@@ -231,7 +201,7 @@ namespace yc = youcrypt;
                 [theApp removeFSAtPath:pth];
             }
             else if (retCode == NSAlertAlternateReturn) {
-                dmap.erase(beg);
+                dmap.erase(row);
             }
 //            NSImage *generic = [[NSWorkspace sharedWorkspace] iconForFileType:NSFileTypeForHFSTypeCode(kGenericFolderIcon)];
 //            BOOL didSetIcon = [[NSWorkspace sharedWorkspace] setIcon:generic forFile:[[dir path] stringByDeletingLastPathComponent] options:0];
@@ -262,7 +232,7 @@ void printCloseError(int ret)
 
 - (IBAction)close:(id)sender {
     NSInteger row = [table selectedRow];
-    DirectoryMap &dmap = *([theApp getDirectories].get());
+    DirectoryMap &dmap = getDirectories();
     int count = dmap.size();
     if (row < count) {
         DirectoryMap::iterator beg = dmap.begin();
@@ -278,7 +248,7 @@ void printCloseError(int ret)
 
 - (IBAction) shareFolder:(id) sender {
     
-    DirectoryMap &dmap = *([theApp getDirectories].get());
+    DirectoryMap &dmap = getDirectories();
     int row = [table selectedRow];
     int count = dmap.size();
     if (row == -1) return;
@@ -524,8 +494,8 @@ void printCloseError(int ret)
 - (void) showChangePassphraseSheet 
 {
     [passphraseSheet.message setStringValue:@"HELLO!"];
-    
-    DirectoryMap &dmap = *([theApp getDirectories].get());
+        
+    DirectoryMap &dmap = getDirectories();
     
     NSMutableArray *arr = [[NSMutableArray alloc] init];
     for (auto d: dmap) {

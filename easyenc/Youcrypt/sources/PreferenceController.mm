@@ -306,7 +306,7 @@
 -(IBAction)changePassphrase:(id)sender
 {
     (void)sender;
-    DirectoryMap &dmap = *([theApp getDirectories].get());
+    DirectoryMap &dmap = getDirectories();
 
     NSMutableArray *arr = [[NSMutableArray alloc] init];
     for (auto d: dmap) {

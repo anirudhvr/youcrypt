@@ -76,8 +76,6 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
     
     //[youcryptService setApp:self];
     
-    // TODO:  Load up directories array from the list file.
-    
     // Notifiers to indicate when app gains and loses focus
     // This is to do background stuffl ike syncing the config directory to disk
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -110,7 +108,12 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
     mixpanel.dontLog = NO;
 #endif
     
-    if (!directories) directories.reset(new DirectoryMap);
+    try {
+        getDirectories();
+    }
+    catch (std::exception e) {
+        setDirectories(boost::shared_ptr<DirectoryMap>(new DirectoryMap));
+    }
     return self;
 }
 
@@ -128,7 +131,7 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
         setGlobalCM(p);
         return YES;
     } catch (std::exception e) {
-        NSLog(@"Error unlocking credentials. Key decrypt problem?: %s", e.what());
+        DDLogError(@"Error unlocking credentials. Key decrypt problem?: %s", e.what());
         return NO;
     }
     
@@ -139,9 +142,12 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
     NSString *s = [passphraseManager getPassphrase];
     std::string pass_cppstr = cppString(s);
     
-    directories = [libFunctions unarchiveDirectoryListFromFile:configDir.youCryptListFile];
-    if (!directories) {
-        directories.reset(new DirectoryMap);
+    try {
+    DirectoryMap::unarchiveFromFile(cppString(configDir.youCryptListFile));
+    }
+    catch (std::exception e) {
+        DDLogError(@"Error: %s", e.what());
+        setDirectories(shared_ptr<DirectoryMap>(new DirectoryMap));
     }
     
     std::string userEmail = cppString([preferenceController getPreference:YC_USEREMAIL]);
@@ -185,12 +191,11 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
 }
 
 - (void)applicationWillTerminate:(NSNotification *)aNotification {
-    //[NSKeyedArchiver archiveRootObject:directories toFile:configDir.youCryptListFile];
-    [libFunctions archiveDirectoryList:directories toFile:configDir.youCryptListFile];
+    getDirectories().archiveToFile(cppString(configDir.youCryptListFile));
     
     // Unmount all mounted directories
     // XXX check unmount status!
-    for (auto dir: *(directories.get()))
+    for (auto dir: getDirectories())
     {
         dir.second->unmount();
     }
@@ -202,7 +207,7 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
         configDirBeingSynced = YES;
         // XXX break this off into a new thread?
         /// XX might want to use a dispatch queue here instead
-        [libFunctions archiveDirectoryList:directories toFile:configDir.youCryptListFile];
+        getDirectories().archiveToFile(cppString(configDir.youCryptListFile));
         //        [NSKeyedArchiver archiveRootObject:directories toFile:configDir.youCryptListFile];
         
         configDirBeingSynced = NO;
@@ -287,7 +292,7 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
         return NO;
     
     // Check if a Folder already exists for this folder
-    DirectoryMap &dirs = *(directories.get());
+    DirectoryMap &dirs = getDirectories();
     std::string strPath([path cStringUsingEncoding:NSASCIIStringEncoding]);
     Folder dir;
     dir = dirs[strPath];
@@ -366,10 +371,7 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
     if (!decryptController) {
         decryptController = [[Decrypt alloc] init];
     }
-    Folder dir;
-    DirectoryMap &dmap = *(directories.get());
-    string strPath = cppString(path);
-    dir = dmap[strPath];
+    Folder dir = (getDirectories())[cppString(path)];
     if (!dir)
         return NO;
     
@@ -469,9 +471,7 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
     NSString *p = nsstrFromCpp(dir->rootPath());
     dir->alias() = cppString([[p stringByDeletingPathExtension]
                               lastPathComponent]);
-    DirectoryMap &dmap = *(directories.get());
-    std::string strPath = dir->rootPath();
-    dmap[strPath] = dir;
+    (getDirectories())[dir->rootPath()] = dir;
     if (listDirectories != nil) {
         [listDirectories.statusLabel setStringValue:@""];
         [listDirectories.progressIndicator stopAnimation:listDirectories.window];
@@ -491,15 +491,14 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
 // --------------------------------------------------------------------------------------
 
 - (void) removeFSAtPath:(NSString*) path {
-    DirectoryMap &dmap = *(directories.get());
     std::string stdPath([path cStringUsingEncoding:NSASCIIStringEncoding]);
     int found;
     
-    Folder dir = dmap[stdPath];
     
     dispatch_queue_t taskQ =
     dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
-    
+   
+    Folder dir = (getDirectories())[stdPath];
     if (dir) {
         resQ.queueJob(stdPath);
         found = 1;
@@ -527,10 +526,9 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
     }
 }
 
-- (BOOL)doRestore:(NSString *)path {    
-    DirectoryMap &dmap = *(directories.get());
+- (BOOL)doRestore:(NSString *)path {
     std::string strPath([path cStringUsingEncoding:NSASCIIStringEncoding]);
-    Folder d = dmap[strPath];
+    Folder d = (getDirectories())[strPath];
     if (!d)
         d = YCFolder::initFromScanningPath(strPath);
     
@@ -570,9 +568,8 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
 }
 
 - (void)didRestore:(NSString *)path {
-    DirectoryMap &dmap = *(directories.get());
     std::string strPath([path cStringUsingEncoding:NSASCIIStringEncoding]);
-    dmap.erase(strPath);
+    (getDirectories()).erase(strPath);
     
     if (listDirectories != nil) {
         [listDirectories.statusLabel setStringValue:@""];
@@ -685,11 +682,8 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
 // The AppDelegate is also our tableview's data source.  It populates shit using the directories array.
 //--------------------------------------------------------------------------------------------------
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView {
-    if (directories)
-        return directories->size();
-    else {
-        return 0;
-    }
+        int r =getDirectories().size();
+    return r;
 }
 
 - (void)keyDown:(NSEvent *)theEvent
@@ -701,13 +695,7 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
     
     NSString *colId = [tableColumn identifier];
     
-    if (!directories)
-        return nil;
-    
-    DirectoryMap::iterator pos = directories->begin();
-    for (int i=0; i<row; i++)
-        ++pos;
-    Folder dirAtRow = pos->second;
+    Folder dirAtRow = getDirectories()[row];
     if (!dirAtRow)
         return nil;
     
@@ -799,13 +787,7 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
     
     //  NSLog(@"This code called");
     
-    if (!directories)
-        return;
-    
-    DirectoryMap::iterator pos = directories->begin();
-    for (int i=0; i<row; i++)
-        ++pos;
-    Folder dirAtRow = pos->second;
+    Folder dirAtRow = getDirectories()[row];
     if (!dirAtRow)
         return;
     
@@ -850,11 +832,7 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
 {
     NSString *tooltip;
     if (rowIndex >= 0) {
-        
-        DirectoryMap::iterator pos = directories->begin();
-        for (int i=0; i<rowIndex; i++)
-            ++pos;
-        Folder dir = pos->second;
+        Folder dir = getDirectories()[rowIndex];
         tooltip = [NSString stringWithFormat:@"Source folder: %@\n\n"
                    "Status: %@"
                    "%@", nsstrFromCpp(dir->rootPath()),
@@ -896,13 +874,6 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
     if (listDirectories != nil)
         [listDirectories.table reloadData];
     return nil;
-}
-
--(boost::shared_ptr<DirectoryMap>) getDirectories {
-    if (!directories) {
-        directories.reset(new DirectoryMap);
-    }
-    return directories;
 }
 
 -(boost::shared_ptr<UserAccount>) getUserAccount {

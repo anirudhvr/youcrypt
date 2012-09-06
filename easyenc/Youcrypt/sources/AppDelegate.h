@@ -73,7 +73,6 @@ extern "C" NSString *nsstrFromCpp(std::string);
     // List of directories maintained by us.
     // Objects added should be (Folder)
 //    NSMutableArray *directories;    
-    boost::shared_ptr<DirectoryMap> directories;
     
     DDFileLogger *fileLogger;
     NSString *mixpanelUUID;
@@ -128,7 +127,6 @@ extern "C" NSString *nsstrFromCpp(std::string);
 -(id) passphraseReceivedFromUser:(id) sender;
 -(BOOL) createCredentials:(NSString*)pass;
 
--(boost::shared_ptr<DirectoryMap>) getDirectories;
 -(boost::shared_ptr<UserAccount>) getUserAccount;
 
 
