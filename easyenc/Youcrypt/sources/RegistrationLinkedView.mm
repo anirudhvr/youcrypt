@@ -80,7 +80,8 @@
         [[NSUserDefaults standardUserDefaults] setValue:[email stringValue] forKey:YC_USEREMAIL];
         [[NSUserDefaults standardUserDefaults] synchronize];
         
-        if (![theApp createCredentials:[password stringValue]]) {
+        if (![theApp checkCredentials:[password stringValue]
+                    createIfNotFound:YES]) {
             [msg setStringValue:@"Unknown error creating credentials."];
             return;
         }

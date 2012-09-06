@@ -126,10 +126,13 @@ extern "C" NSString *nsstrFromCpp(std::string);
 - (void) showTour;
 
 -(id) passphraseReceivedFromUser:(id) sender;
--(BOOL) createCredentials:(NSString*)pass;
+-(BOOL) checkCredentials:(NSString*)pass
+        createIfNotFound:(BOOL)val;
 
 -(boost::shared_ptr<DirectoryMap>) getDirectories;
 -(boost::shared_ptr<UserAccount>) getUserAccount;
+
+
 
 
 // Setters and getters

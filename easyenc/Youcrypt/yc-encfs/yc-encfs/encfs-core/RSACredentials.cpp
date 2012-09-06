@@ -32,7 +32,6 @@ void RSACredentials::encryptVolumeKey(const CipherKey& key,
     
     int bufLen = keyCipher->encodedKeySize();
     scoped_ptr<unsigned char> tmpBuf(new unsigned char [bufLen]);
-    //, *cipher = NULL;
     keyCipher->writeRawKey(key, tmpBuf.get());
 
     struct rsautl_args rsaargs;
@@ -41,12 +40,12 @@ void RSACredentials::encryptVolumeKey(const CipherKey& key,
     rsaargs.inbuf = tmpBuf.get();
     rsaargs.insize = bufLen;
     rsaargs.outsize = 0;
+    rsaargs.outbuf = NULL;
     
     char *rsautl_encrypt_argv[] = {"rsautl", "-encrypt",
                                    "-inkey", pubkeyfilename,
                                    "-pubin",
-                                   "-inbuf"
-    };
+                                   "-inbuf" };
 
     rsautl(6, rsautl_encrypt_argv, &rsaargs);
     
@@ -79,6 +78,7 @@ CipherKey RSACredentials::decryptVolumeKey(const vector<unsigned char> &data,
     rsaargs.inbuf = const_cast<unsigned char*>(&data.front());
     rsaargs.insize = bufLen;
     rsaargs.outsize = 0;
+    rsaargs.outbuf = NULL;
 
     char *rsautl_decrypt_argv[] = {"rsautl",
         "-decrypt",
@@ -88,9 +88,11 @@ CipherKey RSACredentials::decryptVolumeKey(const vector<unsigned char> &data,
         // "-in", "cipher.txt", "-out", "plain2.txt",
         };
     
-    rsautl(7, rsautl_decrypt_argv, &rsaargs);
-    
-    CipherKey ret = kc->readRawKey(rsaargs.outbuf, true);
+    CipherKey ret;
+    if (rsautl(7, rsautl_decrypt_argv, &rsaargs))
+        ret = CipherKey();
+    else
+        ret = kc->readRawKey(rsaargs.outbuf, true);
     
     if (rsaargs.outbuf) free (rsaargs.outbuf);
     if (pwarg) free(pwarg);
@@ -109,7 +111,7 @@ RSACredentialStorage::RSACredentialStorage(string privkeyfile, string pubkeyfile
     _creds[RSA_PRIVKEYFILE_KEY] = privkeyfile;
     _creds[RSA_PUBKEYFILE_KEY] = pubkeyfile;
     
-    // Test to see if keys exist at given location. Else create them
+    // Test to see if keys exist at given location.
     if (fs::exists(privkeyfile))
         _status = PrivKeyFound;
     else
@@ -117,7 +119,7 @@ RSACredentialStorage::RSACredentialStorage(string privkeyfile, string pubkeyfile
 }
 
 bool
-RSACredentialStorage::checkCredentials(string passphrase)
+RSACredentialStorage::checkCredentials(string passphrase, bool create_if_not_found)
 {
     if (fs::exists(_creds[RSA_PRIVKEYFILE_KEY])) {
         bool ret = true;
@@ -172,9 +174,11 @@ RSACredentialStorage::checkCredentials(string passphrase)
         if(pubkeyfile) free(pubkeyfile);
         return ret;
     } else {
-        return createKeys(passphrase);
+        if (create_if_not_found)
+            return createKeys(passphrase);
+        else
+            return true;
     }
-    
 }
 
 bool

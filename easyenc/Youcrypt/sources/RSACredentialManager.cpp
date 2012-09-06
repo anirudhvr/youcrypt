@@ -17,14 +17,13 @@ using namespace youcrypt;
 
 namespace youcrypt {
     
-    RSACredentialManager::RSACredentialManager(string privkeyfile, string pubkeyfile, string passphrase)
+    RSACredentialManager::RSACredentialManager(string privkeyfile, string pubkeyfile, string passphrase, bool create_if_not_found)
     {
         map<string,string> empty;
         _cs.reset(new RSACredentialStorage(privkeyfile, pubkeyfile, empty));
-        if (_cs->checkCredentials(passphrase)) {
+        if (_cs->checkCredentials(passphrase, create_if_not_found)) {
             _cred.reset(new RSACredentials(passphrase, _cs));
         } else {
-//            _cred.reset(new PassphraseCredentials(passphrase));
             throw std::runtime_error("Passphrase cannot decrypt private key");
         }
     }

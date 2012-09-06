@@ -35,7 +35,7 @@ namespace youcrypt {
         RSACredentialStorage(string privkeyfile, string pubkeyfile,
                              const map<string, string> &otherparams);
         virtual string getCredData(const string credName);
-        bool checkCredentials(string passphrase);
+        bool checkCredentials(string passphrase, bool create_if_not_found = true);
         bool createKeys(string passphrase);
         enum Status {
             PrivKeyFound = 0,

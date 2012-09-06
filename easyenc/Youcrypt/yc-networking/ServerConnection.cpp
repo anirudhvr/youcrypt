@@ -26,7 +26,9 @@ using std::string;
 yc::ServerConnection::ServerConnection(string api_base_uri) :
 _status(yc::ServerConnection::NotConnected),
 _base_uri(api_base_uri),
-_client(bn::http::_follow_redirects=true, bn::http::_cache_resolved=true, bn::http::_openssl_verify_path="/opt/local/share/curl/curl-ca-bundle.crt")
+_client(bn::http::_follow_redirects=true,
+        bn::http::_cache_resolved=true,
+        bn::http::_openssl_verify_path="/opt/local/share/curl/curl-ca-bundle.crt") // FIXME
 {}
 
 yc::Key
@@ -85,7 +87,6 @@ yc::ServerConnection::addPublicKey(yc::Key &key, yc::UserAccount &account)
     return s;
     
 }
-
 
 yc::ServerConnection::OperationStatus
 yc::ServerConnection::createNewAccount(yc::UserAccount &account)
