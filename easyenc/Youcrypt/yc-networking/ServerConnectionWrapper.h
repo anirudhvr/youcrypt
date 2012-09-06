@@ -27,7 +27,8 @@ private:
     boost::shared_ptr<ServerConnection> _sc;
     
 public:
-    ServerConnectionWrapper(std::string server_api_base_url);
+    ServerConnectionWrapper(std::string server_api_base_url,
+                            std::string certs_bundle_path);
     
     // Gets key of provided account using search key (if it is public) from sc
     Key getPublicKey(UserAccount &account);

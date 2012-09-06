@@ -12,6 +12,7 @@
 #include <boost/network/protocol/http/client.hpp>
 #include <boost/network/uri.hpp>
 #include <boost/assert.hpp>
+#include <boost/exception/exception.hpp>
 #include "ServerConnection.h"
 #include "UserAccount.h"
 #include "Key.h"
@@ -23,12 +24,12 @@ namespace yc = youcrypt;
 namespace bn = boost::network;
 using std::string;
 
-yc::ServerConnection::ServerConnection(string api_base_uri) :
+yc::ServerConnection::ServerConnection(string api_base_uri, string certs_bundle_path) :
 _status(yc::ServerConnection::NotConnected),
 _base_uri(api_base_uri),
 _client(bn::http::_follow_redirects=true,
         bn::http::_cache_resolved=true,
-        bn::http::_openssl_verify_path="/opt/local/share/curl/curl-ca-bundle.crt") // FIXME
+        bn::http::_openssl_certificate=certs_bundle_path) // FIXME
 {}
 
 yc::Key
@@ -49,24 +50,30 @@ yc::ServerConnection::getPublicKey(yc::UserAccount &account)
 //    find_by_email_uri.host() << ", " << find_by_email_uri.path() <<
 //    ", " << find_by_email_uri.query() << std::endl;
     
-    http_client::response resp = _client.get(req);
-    
-    Document d;
-    const char *tmp = resp.body().c_str();
-    if (!d.Parse<0>(tmp).HasParseError()) {
-        const Value &r = d["response"];
-        string s = r.GetString();
-        if (s == "OK") {
-            const Value &keys = d["keys"];
-            if (keys.IsArray()) {
-                SizeType j = 0;
-                k.setValue(keys[j]["key"].GetString());
-            } else {
-                k.setValue(keys["key"].GetString());
+    try {
+        http_client::response resp = _client.get(req);
+        
+        Document d;
+        const char *tmp = resp.body().c_str();
+        if (!d.Parse<0>(tmp).HasParseError()) {
+            const Value &r = d["response"];
+            string s = r.GetString();
+            if (s == "OK") {
+                const Value &keys = d["keys"];
+                if (keys.IsArray()) {
+                    SizeType j = 0;
+                    k.setValue(keys[j]["key"].GetString());
+                } else {
+                    k.setValue(keys["key"].GetString());
+                }
+                k.id = 0;
+                k.name = k.description = e;
             }
-            k.id = 0;
-            k.name = k.description = e;
         }
+        
+    } catch (std::exception &ex) {
+        std::cerr << "Server Error searching for email " << e << ":" <<
+        ex.what() << std::endl;
     }
     return k;
 }

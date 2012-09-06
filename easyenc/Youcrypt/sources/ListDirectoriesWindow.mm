@@ -55,8 +55,9 @@ namespace yc = youcrypt;
     
     // Connect to server
     string api_base(API_BASE_URL);
-    serverConnectionWrapper.reset(new yc::ServerConnectionWrapper(api_base));
-    
+    string certs_path = cppString([[NSBundle mainBundle] resourcePath]) + "/curl-ca-bundle.crt";
+    serverConnectionWrapper.reset(new yc::ServerConnectionWrapper(api_base, certs_path));
+                                        
     return self;
 }
 

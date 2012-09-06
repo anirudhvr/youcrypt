@@ -9,8 +9,9 @@
 #include "ServerConnectionWrapper.h"
 #include "ServerConnection.h"
 
-youcrypt::ServerConnectionWrapper::ServerConnectionWrapper(string api_base_url) :
-_sc(new ServerConnection(api_base_url))
+youcrypt::ServerConnectionWrapper::
+ServerConnectionWrapper(string api_base_url, string certs_bundle_path) :
+_sc(new ServerConnection(api_base_url, certs_bundle_path))
 { }
 
 

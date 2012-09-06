@@ -39,7 +39,7 @@ class ServerConnection {
             AccountExists
         };
 
-        ServerConnection(string api_base_uri);
+        ServerConnection(string api_base_uri, string certs_bundle_path);
 
         // Gets key of provided account using search key (if it is public)
         Key getPublicKey(UserAccount &account);

@@ -86,6 +86,8 @@
 		E603DBB115AEC5C400ABB170 /* box_closed_48x48.png in Resources */ = {isa = PBXBuildFile; fileRef = E603DBAF15AEC5C400ABB170 /* box_closed_48x48.png */; };
 		E603DBB215AEC5C400ABB170 /* box_open_48x48.png in Resources */ = {isa = PBXBuildFile; fileRef = E603DBB015AEC5C400ABB170 /* box_open_48x48.png */; };
 		E603DBB615AEC9DE00ABB170 /* AMToolTipTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = E603DBB515AEC9DE00ABB170 /* AMToolTipTableView.m */; };
+		E60AEFC315F894BF00C723FF /* get_dropbox_folder.sh in Resources */ = {isa = PBXBuildFile; fileRef = 25E8BC2315AE4F5F00A323D8 /* get_dropbox_folder.sh */; };
+		E60AEFC615F8A11E00C723FF /* PeriodicActionTimer.m in Sources */ = {isa = PBXBuildFile; fileRef = E60AEFC515F8A11E00C723FF /* PeriodicActionTimer.m */; };
 		E61DF4FC15BA6EC00011A05D /* libssl.1.0.0.dylib in Resources */ = {isa = PBXBuildFile; fileRef = E61DF4FA15BA6E8B0011A05D /* libssl.1.0.0.dylib */; };
 		E61DF4FF15BB48070011A05D /* libiconv.2.dylib in Resources */ = {isa = PBXBuildFile; fileRef = E61DF4FD15BB47DF0011A05D /* libiconv.2.dylib */; };
 		E61DF50615BB49190011A05D /* libboost_filesystem.dylib in Resources */ = {isa = PBXBuildFile; fileRef = E61DF50015BB49080011A05D /* libboost_filesystem.dylib */; };
@@ -147,7 +149,6 @@
 		E67AC5BA15AF9BE3005A7938 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 253C3D79159BBF4000120B8D /* QuartzCore.framework */; };
 		E67AC5C715AFA7AD005A7938 /* Grey_Add_Folder.png in Resources */ = {isa = PBXBuildFile; fileRef = E67AC5C615AFA7AD005A7938 /* Grey_Add_Folder.png */; };
 		E67AC5C915AFB0C4005A7938 /* Grey_Open_Folder.png in Resources */ = {isa = PBXBuildFile; fileRef = E67AC5C815AFB0C4005A7938 /* Grey_Open_Folder.png */; };
-		E67FF2F215A8D5190033A63A /* PeriodicActionTimer.m in Sources */ = {isa = PBXBuildFile; fileRef = E67FF2F115A8D5190033A63A /* PeriodicActionTimer.m */; };
 		E68F196915B4A96D008A90FC /* RegistrationLinkedView.mm in Sources */ = {isa = PBXBuildFile; fileRef = E68F196815B4A96D008A90FC /* RegistrationLinkedView.mm */; };
 		E68F199415B4E265008A90FC /* screenshot-open.png in Resources */ = {isa = PBXBuildFile; fileRef = E68F199315B4E265008A90FC /* screenshot-open.png */; };
 		E68F199615B4EE67008A90FC /* screenshot-rightclick.png in Resources */ = {isa = PBXBuildFile; fileRef = E68F199515B4EE67008A90FC /* screenshot-rightclick.png */; };
@@ -587,6 +588,8 @@
 		E603DBB015AEC5C400ABB170 /* box_open_48x48.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = box_open_48x48.png; sourceTree = "<group>"; };
 		E603DBB415AEC9DE00ABB170 /* AMToolTipTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AMToolTipTableView.h; path = AMToolTipTableView/AMToolTipTableView.h; sourceTree = "<group>"; };
 		E603DBB515AEC9DE00ABB170 /* AMToolTipTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AMToolTipTableView.m; path = AMToolTipTableView/AMToolTipTableView.m; sourceTree = "<group>"; };
+		E60AEFC415F8A11E00C723FF /* PeriodicActionTimer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PeriodicActionTimer.h; path = sources/PeriodicActionTimer.h; sourceTree = "<group>"; };
+		E60AEFC515F8A11E00C723FF /* PeriodicActionTimer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PeriodicActionTimer.m; path = sources/PeriodicActionTimer.m; sourceTree = "<group>"; };
 		E61DF4F415BA69360011A05D /* libencfs.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libencfs.a; sourceTree = "<group>"; };
 		E61DF4F515BA69360011A05D /* libintl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libintl.a; sourceTree = "<group>"; };
 		E61DF4FA15BA6E8B0011A05D /* libssl.1.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libssl.1.0.0.dylib; sourceTree = "<group>"; };
@@ -673,8 +676,6 @@
 		E67AC5B815AF989E005A7938 /* TourWizard.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = TourWizard.mm; path = sources/TourWizard.mm; sourceTree = "<group>"; };
 		E67AC5C615AFA7AD005A7938 /* Grey_Add_Folder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Grey_Add_Folder.png; sourceTree = "<group>"; };
 		E67AC5C815AFB0C4005A7938 /* Grey_Open_Folder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Grey_Open_Folder.png; sourceTree = "<group>"; };
-		E67FF2F015A8D5180033A63A /* PeriodicActionTimer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PeriodicActionTimer.h; path = sources/PeriodicActionTimer.h; sourceTree = "<group>"; };
-		E67FF2F115A8D5190033A63A /* PeriodicActionTimer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PeriodicActionTimer.m; path = sources/PeriodicActionTimer.m; sourceTree = "<group>"; };
 		E68F196715B4A96D008A90FC /* RegistrationLinkedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RegistrationLinkedView.h; path = sources/RegistrationLinkedView.h; sourceTree = "<group>"; };
 		E68F196815B4A96D008A90FC /* RegistrationLinkedView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = RegistrationLinkedView.mm; path = sources/RegistrationLinkedView.mm; sourceTree = "<group>"; };
 		E68F199315B4E265008A90FC /* screenshot-open.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "screenshot-open.png"; sourceTree = "<group>"; };
@@ -967,12 +968,12 @@
 				E054042115AB1CE10011E5CC /* RestoreController.mm */,
 				E6E2A0B7159266F6003E3F6C /* YoucryptService.h */,
 				E6E2A0B6159266F6003E3F6C /* YoucryptService.mm */,
-				E67FF2F015A8D5180033A63A /* PeriodicActionTimer.h */,
-				E67FF2F115A8D5190033A63A /* PeriodicActionTimer.m */,
 				E66988DA159E63CF002323AD /* PassphraseSheetController.h */,
 				E66988DB159E63CF002323AD /* PassphraseSheetController.mm */,
 				25300E8815A385BD009CDA08 /* GmailSheetController.h */,
 				25300E8915A385BE009CDA08 /* GmailSheetController.mm */,
+				E60AEFC415F8A11E00C723FF /* PeriodicActionTimer.h */,
+				E60AEFC515F8A11E00C723FF /* PeriodicActionTimer.m */,
 				E6649C9315A70FB00096886F /* VolumePropertiesSheetController.h */,
 				E6649C9415A70FB00096886F /* VolumePropertiesSheetController.mm */,
 				25C3FE4215A7A803006606DF /* FeedbackSheetController.h */,
@@ -1733,6 +1734,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E60AEFC315F894BF00C723FF /* get_dropbox_folder.sh in Resources */,
 				E6D7D2B315D27E2400780915 /* libosxfuse_i64.2.dylib in Resources */,
 				E61DF50615BB49190011A05D /* libboost_filesystem.dylib in Resources */,
 				E61DF50715BB49190011A05D /* libboost_serialization.dylib in Resources */,
@@ -1876,7 +1878,6 @@
 				E6649C9615A70FB00096886F /* VolumePropertiesSheetController.mm in Sources */,
 				25C3FE4515A7A805006606DF /* FeedbackSheetController.mm in Sources */,
 				E054042315AB1CE10011E5CC /* RestoreController.mm in Sources */,
-				E67FF2F215A8D5190033A63A /* PeriodicActionTimer.m in Sources */,
 				25617DC715ABD54B00EED7F7 /* ListDirTable.mm in Sources */,
 				E6C046D115AE2321004B52E5 /* XMLDictionary.m in Sources */,
 				E6C046D215AE2321004B52E5 /* XMLReader.m in Sources */,
@@ -1919,6 +1920,7 @@
 				E05DB60C15F0B38200F70DF0 /* ProcessQ.cpp in Sources */,
 				E05DB68D15F0C81A00F70DF0 /* PortingQ.mm in Sources */,
 				E61F694115F1AC57009990C6 /* ServerConnectionWrapper.cpp in Sources */,
+				E60AEFC615F8A11E00C723FF /* PeriodicActionTimer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
