@@ -89,9 +89,10 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
 {
     try {
         RSACredentialManager *pcm =
-        new RSACredentialManager(cppString(configDir.youCryptPrivKeyFile),
-                                 cppString(configDir.youCryptPubKeyFile),
-                                 cppString(pass), val ? true : false);
+        new RSACredentialManager(appSettings()->privKeyFile.string(),
+                                 appSettings()->pubKeyFile.string(),
+                                 cppString(pass),
+                                 val ? true: false);
         //    pcm->setPassphrase(pass_cppstr);
         shared_ptr<youcrypt::CredentialsManager> p;
         p.reset(pcm);

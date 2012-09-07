@@ -300,7 +300,7 @@ void printCloseError(int ret)
         Credentials c(new RSACredentials("", cs));
             
         // Get the currently selected folder's YCFolder object
-        DirectoryMap &dmap = *([theApp getDirectories].get());
+        DirectoryMap &dmap = getDirectories();
         int row = [table selectedRow];
         int count = dmap.size();
         if (row < count) {

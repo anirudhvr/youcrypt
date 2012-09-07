@@ -89,7 +89,6 @@
 		E603DBB215AEC5C400ABB170 /* box_open_48x48.png in Resources */ = {isa = PBXBuildFile; fileRef = E603DBB015AEC5C400ABB170 /* box_open_48x48.png */; };
 		E603DBB615AEC9DE00ABB170 /* AMToolTipTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = E603DBB515AEC9DE00ABB170 /* AMToolTipTableView.m */; };
 		E60AEFC315F894BF00C723FF /* get_dropbox_folder.sh in Resources */ = {isa = PBXBuildFile; fileRef = 25E8BC2315AE4F5F00A323D8 /* get_dropbox_folder.sh */; };
-		E60AEFC615F8A11E00C723FF /* PeriodicActionTimer.m in Sources */ = {isa = PBXBuildFile; fileRef = E60AEFC515F8A11E00C723FF /* PeriodicActionTimer.m */; };
 		E61DF4FC15BA6EC00011A05D /* libssl.1.0.0.dylib in Resources */ = {isa = PBXBuildFile; fileRef = E61DF4FA15BA6E8B0011A05D /* libssl.1.0.0.dylib */; };
 		E61DF4FF15BB48070011A05D /* libiconv.2.dylib in Resources */ = {isa = PBXBuildFile; fileRef = E61DF4FD15BB47DF0011A05D /* libiconv.2.dylib */; };
 		E61DF50615BB49190011A05D /* libboost_filesystem.dylib in Resources */ = {isa = PBXBuildFile; fileRef = E61DF50015BB49080011A05D /* libboost_filesystem.dylib */; };
