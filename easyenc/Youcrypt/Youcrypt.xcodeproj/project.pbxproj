@@ -65,6 +65,8 @@
 		E077154715EF1CA4009AB1C2 /* YCFolder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E077154515EF1CA4009AB1C2 /* YCFolder.cpp */; };
 		E077154A15EF276C009AB1C2 /* CredentialsManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E077154815EF276C009AB1C2 /* CredentialsManager.cpp */; };
 		E0812F3315F09466007EE3AF /* DirectoryMap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E0812F3115F09466007EE3AF /* DirectoryMap.cpp */; };
+		E09146F015F8C97B00DB8051 /* Settings.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E09146EE15F8C97B00DB8051 /* Settings.cpp */; };
+		E09146F315F9819C00DB8051 /* MacUISettings.mm in Sources */ = {isa = PBXBuildFile; fileRef = E09146F215F9819B00DB8051 /* MacUISettings.mm */; };
 		E0A2849815A61A26008A949A /* logo-512x512-alpha.icns in Resources */ = {isa = PBXBuildFile; fileRef = E0A2849715A61A26008A949A /* logo-512x512-alpha.icns */; };
 		E0BF0E9D1596D01F002F9FB9 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E0BF0E9C1596D01F002F9FB9 /* Foundation.framework */; };
 		E0BF0EA01596D01F002F9FB9 /* main.mm in Sources */ = {isa = PBXBuildFile; fileRef = E0BF0E9F1596D01F002F9FB9 /* main.mm */; };
@@ -147,7 +149,6 @@
 		E67AC5BA15AF9BE3005A7938 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 253C3D79159BBF4000120B8D /* QuartzCore.framework */; };
 		E67AC5C715AFA7AD005A7938 /* Grey_Add_Folder.png in Resources */ = {isa = PBXBuildFile; fileRef = E67AC5C615AFA7AD005A7938 /* Grey_Add_Folder.png */; };
 		E67AC5C915AFB0C4005A7938 /* Grey_Open_Folder.png in Resources */ = {isa = PBXBuildFile; fileRef = E67AC5C815AFB0C4005A7938 /* Grey_Open_Folder.png */; };
-		E67FF2F215A8D5190033A63A /* PeriodicActionTimer.m in Sources */ = {isa = PBXBuildFile; fileRef = E67FF2F115A8D5190033A63A /* PeriodicActionTimer.m */; };
 		E68F196915B4A96D008A90FC /* RegistrationLinkedView.mm in Sources */ = {isa = PBXBuildFile; fileRef = E68F196815B4A96D008A90FC /* RegistrationLinkedView.mm */; };
 		E68F199415B4E265008A90FC /* screenshot-open.png in Resources */ = {isa = PBXBuildFile; fileRef = E68F199315B4E265008A90FC /* screenshot-open.png */; };
 		E68F199615B4EE67008A90FC /* screenshot-rightclick.png in Resources */ = {isa = PBXBuildFile; fileRef = E68F199515B4EE67008A90FC /* screenshot-rightclick.png */; };
@@ -561,6 +562,10 @@
 		E077154915EF276C009AB1C2 /* CredentialsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CredentialsManager.h; path = sources/core/CredentialsManager.h; sourceTree = "<group>"; };
 		E0812F3115F09466007EE3AF /* DirectoryMap.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = DirectoryMap.cpp; path = sources/core/DirectoryMap.cpp; sourceTree = "<group>"; };
 		E0812F3215F09466007EE3AF /* DirectoryMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DirectoryMap.h; path = sources/core/DirectoryMap.h; sourceTree = "<group>"; };
+		E09146EE15F8C97B00DB8051 /* Settings.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Settings.cpp; path = sources/core/Settings.cpp; sourceTree = "<group>"; };
+		E09146EF15F8C97B00DB8051 /* Settings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Settings.h; path = sources/core/Settings.h; sourceTree = "<group>"; };
+		E09146F115F9819B00DB8051 /* MacUISettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MacUISettings.h; path = sources/MacUISettings.h; sourceTree = "<group>"; };
+		E09146F215F9819B00DB8051 /* MacUISettings.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MacUISettings.mm; path = sources/MacUISettings.mm; sourceTree = "<group>"; };
 		E0A2849715A61A26008A949A /* logo-512x512-alpha.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = "logo-512x512-alpha.icns"; sourceTree = "<group>"; };
 		E0BF0E9A1596D01F002F9FB9 /* TestBed */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = TestBed; sourceTree = BUILT_PRODUCTS_DIR; };
 		E0BF0E9C1596D01F002F9FB9 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -673,8 +678,6 @@
 		E67AC5B815AF989E005A7938 /* TourWizard.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = TourWizard.mm; path = sources/TourWizard.mm; sourceTree = "<group>"; };
 		E67AC5C615AFA7AD005A7938 /* Grey_Add_Folder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Grey_Add_Folder.png; sourceTree = "<group>"; };
 		E67AC5C815AFB0C4005A7938 /* Grey_Open_Folder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Grey_Open_Folder.png; sourceTree = "<group>"; };
-		E67FF2F015A8D5180033A63A /* PeriodicActionTimer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PeriodicActionTimer.h; path = sources/PeriodicActionTimer.h; sourceTree = "<group>"; };
-		E67FF2F115A8D5190033A63A /* PeriodicActionTimer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PeriodicActionTimer.m; path = sources/PeriodicActionTimer.m; sourceTree = "<group>"; };
 		E68F196715B4A96D008A90FC /* RegistrationLinkedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RegistrationLinkedView.h; path = sources/RegistrationLinkedView.h; sourceTree = "<group>"; };
 		E68F196815B4A96D008A90FC /* RegistrationLinkedView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = RegistrationLinkedView.mm; path = sources/RegistrationLinkedView.mm; sourceTree = "<group>"; };
 		E68F199315B4E265008A90FC /* screenshot-open.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "screenshot-open.png"; sourceTree = "<group>"; };
@@ -942,6 +945,8 @@
 				256C3571158EA75F00E2BEC4 /* AppDelegate.h */,
 				256C3572158EA75F00E2BEC4 /* AppDelegate.mm */,
 				E0BF0EBA159838DD002F9FB9 /* ListDirectoriesWindow.h */,
+				E09146F115F9819B00DB8051 /* MacUISettings.h */,
+				E09146F215F9819B00DB8051 /* MacUISettings.mm */,
 				E0BF0EBB159838DD002F9FB9 /* ListDirectoriesWindow.mm */,
 				E05DB68C15F0C81A00F70DF0 /* PortingQ.h */,
 				E05DB68B15F0C81A00F70DF0 /* PortingQ.mm */,
@@ -967,8 +972,6 @@
 				E054042115AB1CE10011E5CC /* RestoreController.mm */,
 				E6E2A0B7159266F6003E3F6C /* YoucryptService.h */,
 				E6E2A0B6159266F6003E3F6C /* YoucryptService.mm */,
-				E67FF2F015A8D5180033A63A /* PeriodicActionTimer.h */,
-				E67FF2F115A8D5190033A63A /* PeriodicActionTimer.m */,
 				E66988DA159E63CF002323AD /* PassphraseSheetController.h */,
 				E66988DB159E63CF002323AD /* PassphraseSheetController.mm */,
 				25300E8815A385BD009CDA08 /* GmailSheetController.h */,
@@ -992,6 +995,8 @@
 			children = (
 				E077154515EF1CA4009AB1C2 /* YCFolder.cpp */,
 				E077154615EF1CA4009AB1C2 /* YCFolder.h */,
+				E09146EE15F8C97B00DB8051 /* Settings.cpp */,
+				E09146EF15F8C97B00DB8051 /* Settings.h */,
 				E077154815EF276C009AB1C2 /* CredentialsManager.cpp */,
 				E077154915EF276C009AB1C2 /* CredentialsManager.h */,
 				E0812F3115F09466007EE3AF /* DirectoryMap.cpp */,
@@ -1876,7 +1881,6 @@
 				E6649C9615A70FB00096886F /* VolumePropertiesSheetController.mm in Sources */,
 				25C3FE4515A7A805006606DF /* FeedbackSheetController.mm in Sources */,
 				E054042315AB1CE10011E5CC /* RestoreController.mm in Sources */,
-				E67FF2F215A8D5190033A63A /* PeriodicActionTimer.m in Sources */,
 				25617DC715ABD54B00EED7F7 /* ListDirTable.mm in Sources */,
 				E6C046D115AE2321004B52E5 /* XMLDictionary.m in Sources */,
 				E6C046D215AE2321004B52E5 /* XMLReader.m in Sources */,
@@ -1919,6 +1923,8 @@
 				E05DB60C15F0B38200F70DF0 /* ProcessQ.cpp in Sources */,
 				E05DB68D15F0C81A00F70DF0 /* PortingQ.mm in Sources */,
 				E61F694115F1AC57009990C6 /* ServerConnectionWrapper.cpp in Sources */,
+				E09146F015F8C97B00DB8051 /* Settings.cpp in Sources */,
+				E09146F315F9819C00DB8051 /* MacUISettings.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2060,6 +2066,7 @@
 					"\"$(SRCROOT)\"",
 					"\"$(SRCROOT)/frameworks\"",
 				);
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				GCC_PREFIX_HEADER = "sources/Youcrypt-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS_NOT_USED_IN_PRECOMPS = "";
@@ -2124,10 +2131,12 @@
 					"\"$(SRCROOT)\"",
 					"\"$(SRCROOT)/frameworks\"",
 				);
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				GCC_PREFIX_HEADER = "sources/Youcrypt-Prefix.pch";
 				"GCC_PREPROCESSOR_DEFINITIONS[sdk=macosx10.7][arch=x86_64]" = "RELEASE=1";
 				GCC_PREPROCESSOR_DEFINITIONS_NOT_USED_IN_PRECOMPS = "";
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;

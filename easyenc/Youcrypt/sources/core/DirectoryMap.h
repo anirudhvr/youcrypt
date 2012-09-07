@@ -16,6 +16,7 @@
 
 using std::map;
 using std::string;
+using boost::filesystem::path;
 using boost::filesystem::ifstream;
 using boost::filesystem::ofstream;
 using namespace youcrypt;
@@ -31,9 +32,8 @@ namespace youcrypt {
         Folder &operator[](const string &str);
         void erase(int index);
         void erase(const string &);
-        void archiveToFile(string file);
-        
-        static void unarchiveFromFile(string file);
+        void archiveToFile(path file);
+        static void unarchiveFromFile(path file);
 };
 
 DirectoryMap &getDirectories();

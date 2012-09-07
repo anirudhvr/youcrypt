@@ -12,6 +12,7 @@
 #import "DirectoryMap.h"
 #import "RSACredentialManager.h"
 #import "PortingQ.h"
+#import "MacUISettings.h"
 #import <map>
 #import "yc-networking/UserAccount.h"
 
@@ -26,7 +27,6 @@ using namespace youcrypt;
 @class ListDirectoriesWindow;
 @class FirstRunSheetController;
 @class FeedbackSheetController;
-@class PeriodicActionTimer;
 @class keyDownView;
 @class DDFileLogger;
 @class CompressingLogFileManager;
@@ -37,6 +37,8 @@ using namespace youcrypt;
 
 extern "C" std::string cppString(NSString *);
 extern "C" NSString *nsstrFromCpp(std::string);
+
+class youcrypt::MacUISettings;
 
 
 @interface AppDelegate : NSObject <NSTableViewDataSource, NSTableViewDelegate, NSApplicationDelegate> { // changed from NSApplicationDelegate
@@ -54,12 +56,6 @@ extern "C" NSString *nsstrFromCpp(std::string);
     TourWizard *tourWizard;
     AboutController *aboutController;
 
-    // Config directory
-    ConfigDirectory *configDir;
-    BOOL configDirBeingSynced;
-    PeriodicActionTimer *timer;
-    
-    YoucryptService *youcryptService;
     PassphraseManager *passphraseManager;
     
     // This user's account
@@ -75,7 +71,6 @@ extern "C" NSString *nsstrFromCpp(std::string);
 //    NSMutableArray *directories;    
     
     DDFileLogger *fileLogger;
-    NSString *mixpanelUUID;
     
     BOOL callFinderScript;
     
@@ -83,6 +78,9 @@ extern "C" NSString *nsstrFromCpp(std::string);
     DecryptQ decQ;
     RestoreQ resQ;
     long enQIndex, deQIndex, reQIndex;
+    
+    MacUISettings *macSettings;
+    YoucryptService *youcryptService;
     
 
 }
@@ -135,16 +133,13 @@ extern "C" NSString *nsstrFromCpp(std::string);
 @property (assign) IBOutlet NSWindow *window;
 @property (atomic,strong) Encrypt *encryptController;
 @property (atomic,strong) Decrypt *decryptController;
-@property (atomic,strong) ConfigDirectory *configDir;
 @property (nonatomic,strong) ListDirectoriesWindow *listDirectories;
 @property (nonatomic, strong) FirstRunSheetController *firstRunSheetController;
 @property (nonatomic, strong) FeedbackSheetController *feedbackSheetController;
 @property (nonatomic, strong) keyDownView *keyDown;
 @property (nonatomic, strong) PreferenceController *preferenceController;
-@property (nonatomic, strong) DDFileLogger *fileLogger;
 @property (nonatomic, strong) NSMutableSet *dropboxEncryptedFolders;
 @property (nonatomic, strong) TourWizard *tourWizard;
-@property (nonatomic, strong) NSString *mixpanelUUID;
 @property (nonatomic, strong) AboutController *aboutController;
 @property (nonatomic, strong) PassphraseManager *passphraseManager;
 

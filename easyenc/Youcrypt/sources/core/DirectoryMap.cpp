@@ -71,14 +71,14 @@ namespace youcrypt {
         getMap().erase(str);
     }
 
-    void DirectoryMap::archiveToFile(string file) {
+    void DirectoryMap::archiveToFile(path file) {
         boost::filesystem::ofstream ofile(file);
         if (ofile.is_open()) {
             ofile << (*this);
         }
     }
     
-    void DirectoryMap::unarchiveFromFile(string file) {
+    void DirectoryMap::unarchiveFromFile(path file) {
         boost::shared_ptr<DirectoryMap> dirs(new DirectoryMap);
         boost::filesystem::ifstream ifile(file);
         if (ifile.is_open()) {

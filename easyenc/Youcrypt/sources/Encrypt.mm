@@ -13,6 +13,7 @@
 #import "AppDelegate.h"
 #import "PassphraseManager.h"
 #import "MixpanelAPI.h"
+#import "core/Settings.h"
 
 @implementation Encrypt
 
@@ -95,7 +96,7 @@
     NSString *dirCountS = [NSString stringWithFormat:@"%d",dirCount];
     NSString *fileSizeS = [NSString stringWithFormat:@"%llu",fileSize];
     if ([[theApp.preferenceController getPreference:YC_ANONYMOUSSTATISTICS] intValue])
-        [mixpanel track:theApp.mixpanelUUID
+        [mixpanel track:nsstrFromCpp(appSettings()->mixPanelUUID)
              properties:[NSDictionary dictionaryWithObjectsAndKeys:
                          dirCountS, @"dirCount",
                          fileSizeS, @"dirSize",

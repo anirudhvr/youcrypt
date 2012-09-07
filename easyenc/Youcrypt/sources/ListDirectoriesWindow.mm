@@ -8,6 +8,7 @@
 
 #import "ListDirectoriesWindow.h"
 #import "AppDelegate.h"
+#import "core/Settings.h"
 #import "ListDirTable.h"
 #import "PassphraseSheetController.h"
 #import "libFunctions.h"
@@ -261,7 +262,7 @@ void printCloseError(int ret)
         [sharingPopover showRelativeToRect:[table rectOfRow:row] ofView:table preferredEdge:NSMaxYEdge];
         
         if ([[theApp.preferenceController getPreference:YC_ANONYMOUSSTATISTICS] intValue])
-            [mixpanel track:theApp.mixpanelUUID
+            [mixpanel track:nsstrFromCpp(appSettings()->mixPanelUUID)
                  properties:[NSDictionary dictionaryWithObjectsAndKeys:
                              @"YES", @"shareClicked",
                              nil]];

@@ -15,6 +15,7 @@
 #import "AppDelegate.h"
 #import "DDFileLogger.h"
 #import "LFCGzipUtility.h"
+#import "core/Settings.h"
 
 @interface FeedbackSheetController ()
 
@@ -103,7 +104,8 @@
         logFile = [NSString stringWithFormat:@"attachment=@%@",mostRecentLogFile];
         NSData *logFileData = [[NSData alloc] initWithContentsOfFile:mostRecentLogFile];
         NSData *compressedLogFileData = [[NSData alloc] initWithData:[LFCGzipUtility gzipData:logFileData]];
-        compressedLogFile = [NSString stringWithFormat:@"%@/logFile.gz",theApp.configDir.youCryptLogDir];
+        compressedLogFile = [NSString stringWithFormat:@"%@/logFile.gz",
+                             nsstrFromCpp(appSettings()->logDirectory.string())];
        // DDLogInfo(@"Compressed log file : %@",compressedLogFile);
         BOOL wrote = [compressedLogFileData writeToFile:compressedLogFile atomically:YES];
         if(wrote) {

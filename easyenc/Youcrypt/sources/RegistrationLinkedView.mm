@@ -12,6 +12,7 @@
 #import "AppDelegate.h"
 #import "ConfigDirectory.h"
 #import "PassphraseManager.h"
+#import "core/Settings.h"
 
 @implementation RegistrationLinkedView
 
@@ -66,13 +67,13 @@
         return;
     } else {
         
-        NSError *err;
-        if (![theApp.passphraseManager setPassphrase:[password stringValue] error:&err]) {
-            [msg setStringValue:[@"Insecure password: " stringByAppendingString:[err localizedDescription]]];
-            [password setFocusRingType:NSFocusRingTypeExterior];
-            [confirmPassword setFocusRingType:NSFocusRingTypeExterior];
-            return;
-        }
+//        NSError *err;
+//        if (![theApp.passphraseManager setPassphrase:[password stringValue] error:&err]) {
+//            [msg setStringValue:[@"Insecure password: " stringByAppendingString:[err localizedDescription]]];
+//            [password setFocusRingType:NSFocusRingTypeExterior];
+//            [confirmPassword setFocusRingType:NSFocusRingTypeExterior];
+//            return;
+//        }
               
         //[preferenceController setPreference:[email stringValue] value:YC_USEREMAIL];
         //[preferenceController setPreference:[name stringValue] value:YC_USERREALNAME];
@@ -80,13 +81,13 @@
         [[NSUserDefaults standardUserDefaults] setValue:[email stringValue] forKey:YC_USEREMAIL];
         [[NSUserDefaults standardUserDefaults] synchronize];
         
+        // [libFunctions registerWithKeychain:[password stringValue]:@"Youcrypt"];
+        YCSettings::settingsUp();
+        
         if (![theApp createCredentials:[password stringValue]]) {
             [msg setStringValue:@"Unknown error creating credentials."];
             return;
         }
-        // [libFunctions registerWithKeychain:[password stringValue]:@"Youcrypt"];
-        [theApp.configDir firstRunSuccessful];
-
     }
     
     [super goToNextView];
