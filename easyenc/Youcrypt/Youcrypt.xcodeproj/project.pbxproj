@@ -593,8 +593,6 @@
 		E603DBB015AEC5C400ABB170 /* box_open_48x48.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = box_open_48x48.png; sourceTree = "<group>"; };
 		E603DBB415AEC9DE00ABB170 /* AMToolTipTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AMToolTipTableView.h; path = AMToolTipTableView/AMToolTipTableView.h; sourceTree = "<group>"; };
 		E603DBB515AEC9DE00ABB170 /* AMToolTipTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AMToolTipTableView.m; path = AMToolTipTableView/AMToolTipTableView.m; sourceTree = "<group>"; };
-		E60AEFC415F8A11E00C723FF /* PeriodicActionTimer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PeriodicActionTimer.h; path = sources/PeriodicActionTimer.h; sourceTree = "<group>"; };
-		E60AEFC515F8A11E00C723FF /* PeriodicActionTimer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PeriodicActionTimer.m; path = sources/PeriodicActionTimer.m; sourceTree = "<group>"; };
 		E61DF4F415BA69360011A05D /* libencfs.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libencfs.a; sourceTree = "<group>"; };
 		E61DF4F515BA69360011A05D /* libintl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libintl.a; sourceTree = "<group>"; };
 		E61DF4FA15BA6E8B0011A05D /* libssl.1.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libssl.1.0.0.dylib; sourceTree = "<group>"; };
@@ -979,8 +977,6 @@
 				E66988DB159E63CF002323AD /* PassphraseSheetController.mm */,
 				25300E8815A385BD009CDA08 /* GmailSheetController.h */,
 				25300E8915A385BE009CDA08 /* GmailSheetController.mm */,
-				E60AEFC415F8A11E00C723FF /* PeriodicActionTimer.h */,
-				E60AEFC515F8A11E00C723FF /* PeriodicActionTimer.m */,
 				E6649C9315A70FB00096886F /* VolumePropertiesSheetController.h */,
 				E6649C9415A70FB00096886F /* VolumePropertiesSheetController.mm */,
 				25C3FE4215A7A803006606DF /* FeedbackSheetController.h */,

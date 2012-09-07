@@ -54,39 +54,56 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
 @synthesize aboutController;
 @synthesize passphraseManager;
 
+/*
+ * Main App:  delegates services to the different components.
+ *
+ * Startup Design:
+ *
+ * Required Components:
+ *   1.  Working Settings (appSettings()->isSetup == true)
+ *   2.  Working directory list
+ *   3.  Working credential manager
+ *
+ * Init:
+ *   1.  Allocate controllers
+ *   2.  Load settings
+ *
+ * UI Init: (awakeFromNib)
+ *   3.  If first run
+ *          run tour
+ *       else run password manager to get user passwd, unlock keys, etc.
+ */
 
-// --------------------------------------------------------------------------------------
+
+// ----------------------------------------------------------------------
 // App events
-// --------------------------------------------------------------------------------------
+// ----------------------------------------------------------------------
 - (id) init {
+    appIsUp = NO;
     self = [super init];
-    NSString *base = [NSHomeDirectory() stringByAppendingPathComponent:@".youcrypt"];
+    NSString *base = [NSHomeDirectory() stringByAppendingPathComponent:
+                      @".youcrypt"];
     macSettings = new MacUISettings(cppString(base));
-    
     
     preferenceController = [[PreferenceController alloc] init];
     listDirectories = [[ListDirectoriesWindow alloc] init];
-    
-    
     firstRunSheetController = [[FirstRunSheetController alloc] init];
     feedbackSheetController = [[FeedbackSheetController alloc] init];
-    
-    //[youcryptService setApp:self];
-    
-    // Notifiers to indicate when app gains and loses focus
-    // This is to do background stuffl ike syncing the config directory to disk
-
-    theApp = self;
     dropboxEncryptedFolders = [[NSMutableSet alloc] init];
-    passphraseManager = [[PassphraseManager alloc] initWithPrefController:preferenceController saveInKeychain:NO];
-
+    passphraseManager = [[PassphraseManager alloc] 
+                         initWithPrefController:preferenceController 
+                          saveInKeychain:NO];
+    
+    
+    theApp = self;
     return self;
 }
 
 
--(BOOL) checkCredentials:(NSString*)pass
+-(BOOL) setupCM:(NSString*)pass
         createIfNotFound:(BOOL)val
 {
+    string pass_cppstr = cppString(pass);
     try {
         RSACredentialManager *pcm =
         new RSACredentialManager(appSettings()->privKeyFile.string(),
@@ -97,38 +114,42 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
         shared_ptr<youcrypt::CredentialsManager> p;
         p.reset(pcm);
         setGlobalCM(p);
-        return YES;
     } catch (std::exception &e) {
-        DDLogError(@"Error unlocking credentials. Key decrypt problem?: %s", e.what());
+        DDLogError(@"Error unlocking credentials. Key decrypt problem?: %s", 
+                   e.what());
         return NO;
     }
-    
-}
-
--(id) passphraseReceivedFromUser:(id) sender {
-    NSString *s = [passphraseManager getPassphrase];
-    std::string pass_cppstr = cppString(s);
-            
     try {
         DirectoryMap::unarchiveFromFile(appSettings()->listFile);
     } catch (...) {
         setDirectories(shared_ptr<DirectoryMap>(new DirectoryMap));
     }
     
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(appResignedActive:)
-                                                 name:NSApplicationDidResignActiveNotification
-                                               object:nil ];
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(appBecameActive:)
-                                                 name:NSApplicationDidBecomeActiveNotification
-                                               object:nil ];
+    [[NSNotificationCenter defaultCenter]
+     addObserver:self
+     selector:@selector(appResignedActive:)
+     name:NSApplicationDidResignActiveNotification
+     object:nil ];
+    [[NSNotificationCenter defaultCenter]
+     addObserver:self
+     selector:@selector(appBecameActive:)
+     name:NSApplicationDidBecomeActiveNotification
+     object:nil ];
     youcryptService = [[YoucryptService alloc] init];
     [NSApp setServicesProvider:youcryptService];
     NSUpdateDynamicServices();
     
-    std::string userEmail = cppString([preferenceController getPreference:YC_USEREMAIL]);
+    std::string userEmail = cppString([preferenceController
+                                       getPreference:YC_USEREMAIL]);
     userAccount.reset(new UserAccount(userEmail, pass_cppstr));
+    appIsUp = YES;
+    return YES;
+}
+
+-(id) passphraseReceivedFromUser:(id) sender {
+    NSString *s = [passphraseManager getPassphrase];
+    std::string pass_cppstr = cppString(s);
+            
     return nil;
 }
 
@@ -139,7 +160,8 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
     int ycAppCount = 0;
     
     for(NSRunningApplication *app in apps) {
-        if([[app localizedName] isEqualToString:[[NSProcessInfo processInfo] processName]]) {
+        if([[app localizedName] isEqualToString:[[NSProcessInfo processInfo] 
+                                                 processName]]) {
             ycAppCount++;
             if(ycAppCount > 1) {
                 DDLogVerbose(@"FATAL. Cannot run multiple instances. Terminating!!");
@@ -208,30 +230,16 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
     [statusItem setHighlightMode:YES];
     
     
-    NSLog(@"Awakefromnib");
     if (macSettings->appFirstRun) {
-        //[self showListDirectories:self];
-        DDLogInfo(@"Initiating First Run! ");
-        
+        boost::filesystem::create_directories(macSettings->baseDirectory);
+        YCSettings::settingsUp();
         [self showTour];
-        
-        //        NSString *error;
-        //        if (![self updatePBS:&error]) {
-        //            DDLogVerbose(@"Update PBS failed: %@", error);
-        //        }
     } else {
         YCSettings::settingsUp();
+        if (!macSettings->isSetup)
+            throw std::runtime_error("Error initializing Youcrypt settings.");
         [passphraseManager getPassphraseFromUser]; // get passphrase
     }
-    
-     // Equivalent to calling /System/Library/CoreServices/pbs
-    
-    //    NSArray *args = [[NSProcessInfo processInfo] arguments];
-    //    if ([args count] > 1) {
-    //        NSLog(@"args:%@ ", args);
-    //        [self openEncryptedFolder:[args objectAtIndex:1]];
-    //    }
-    
 }
 
 // --------------------------------------------------------------------------------------

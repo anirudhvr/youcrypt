@@ -24,16 +24,16 @@ namespace youcrypt{
 
     YCSettings::YCSettings(string b) {
         isSetup = false;
+        baseDirectory = b;
+        initializeSettings();
         if (_theAppSettings) 
             throw std::runtime_error(
                 "Application already has a settings object.");
         else
             _theAppSettings.reset(this);
 
-        baseDirectory = path(b);
-        initializeSettings();
 
-        if (fs::exists(privKeyFile)) {
+        if (fs::exists(baseDirectory)) {
             // Not first run.
             appFirstRun = false;            
         } else {
@@ -58,8 +58,9 @@ namespace youcrypt{
         pubKeyFile = keyDirectory / path("pub.pem");
         listFile = keyDirectory / path("folders.xml");
         userUUIDFile = baseDirectory / path("uuid.txt");
-
+        
         folderExtension = ".yc";
+
     }
     
     void YCSettings::settingsUp() {

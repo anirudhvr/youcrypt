@@ -20,6 +20,9 @@ using std::string;
 namespace youcrypt {
     MacUISettings::MacUISettings(string base): YCSettings(base)
     {
+        
+        folderExtension = ".yc";
+
         if (appFirstRun)
             firstRun();
     }

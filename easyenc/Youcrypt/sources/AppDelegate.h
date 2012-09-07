@@ -81,6 +81,7 @@ class youcrypt::MacUISettings;
     
     MacUISettings *macSettings;
     YoucryptService *youcryptService;
+    BOOL appIsUp;
     
 
 }
@@ -123,7 +124,7 @@ class youcrypt::MacUISettings;
 - (void) showTour;
 
 -(id) passphraseReceivedFromUser:(id) sender;
--(BOOL) checkCredentials:(NSString*)pass
+-(BOOL) setupCM:(NSString*)pass
         createIfNotFound:(BOOL)val;
 
 -(boost::shared_ptr<UserAccount>) getUserAccount;

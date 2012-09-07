@@ -66,7 +66,7 @@
         passPhrase = [pass stringValue];
         NSString *errmsgBuf = nil;
         
-        if ([theApp checkCredentials:passPhrase createIfNotFound:NO]) {
+        if ([theApp setupCM:passPhrase createIfNotFound:NO]) {
             [message setStringValue:@""];
         } else {
             [message setStringValue:@"Cannot unlock credentials - wrong passprhase?"];
@@ -83,7 +83,6 @@
     [NSApp endSheet:self.window];
     [self.window setIsVisible:NO];
     [self.window close];
-    [theApp passphraseReceivedFromUser:self];
 }
 
 - (BOOL)setPassphrase:(NSString*) passphrase
