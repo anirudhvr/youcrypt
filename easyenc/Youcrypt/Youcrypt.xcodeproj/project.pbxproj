@@ -676,6 +676,7 @@
 		E67AC5B815AF989E005A7938 /* TourWizard.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = TourWizard.mm; path = sources/TourWizard.mm; sourceTree = "<group>"; };
 		E67AC5C615AFA7AD005A7938 /* Grey_Add_Folder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Grey_Add_Folder.png; sourceTree = "<group>"; };
 		E67AC5C815AFB0C4005A7938 /* Grey_Open_Folder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Grey_Open_Folder.png; sourceTree = "<group>"; };
+		E68D51F615F9BA9F000DC47C /* ycencode.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ycencode.hpp; sourceTree = "<group>"; };
 		E68F196715B4A96D008A90FC /* RegistrationLinkedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RegistrationLinkedView.h; path = sources/RegistrationLinkedView.h; sourceTree = "<group>"; };
 		E68F196815B4A96D008A90FC /* RegistrationLinkedView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = RegistrationLinkedView.mm; path = sources/RegistrationLinkedView.mm; sourceTree = "<group>"; };
 		E68F199315B4E265008A90FC /* screenshot-open.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "screenshot-open.png"; sourceTree = "<group>"; };
@@ -1092,6 +1093,7 @@
 		E64AC0FA15E7597E00D2E046 /* yc-networking */ = {
 			isa = PBXGroup;
 			children = (
+				E68D51F615F9BA9F000DC47C /* ycencode.hpp */,
 				E6A739C815F0C005001B317C /* Key.cpp */,
 				E64AC1B215E769D500D2E046 /* Key.h */,
 				E64AC1B815E769D500D2E046 /* UserAccount.cpp */,

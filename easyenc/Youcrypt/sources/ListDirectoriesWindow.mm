@@ -341,6 +341,11 @@ void printCloseError(int ret)
             DDLogError(@"row (%d)< count (%d)!", row, count);
             ret = NO;
         }
+        
+        if (!)boost::filesystem::remove(boost::filesystem::path(tmp_pub))) {
+            DDLogError(@"Error removing temporary file %s", tmp_pub.c_str());
+        }
+        
     } else {
         DDLogError(@"Cannot create tmp pubkey file for %@'s cred!", email);
         ret = NO;

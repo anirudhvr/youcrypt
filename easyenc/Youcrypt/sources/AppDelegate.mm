@@ -128,7 +128,7 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
         p.reset(pcm);
         setGlobalCM(p);
         return YES;
-    } catch (std::exception e) {
+    } catch (std::exception &e) {
         NSLog(@"Error unlocking credentials. Key decrypt problem?: %s", e.what());
         return NO;
     }
