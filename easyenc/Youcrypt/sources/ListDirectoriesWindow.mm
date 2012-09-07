@@ -18,11 +18,17 @@
 
 #import <boost/shared_ptr.hpp>
 #import <boost/scoped_ptr.hpp>
+
+#import "core/CredentialsManager.h"
 #import "yc-networking/UserAccount.h"
 #import "yc-networking/Key.h"
 #import "yc-networking/ServerConnectionWrapper.h"
+#include "encfs-core/Credentials.h"
+#include "encfs-core/PassphraseCredentials.h"
+#include "encfs-core/RSACredentials.h"
 
 #import <iostream>
+#import <cstdio>
 
 namespace yc = youcrypt;
 
@@ -50,8 +56,9 @@ namespace yc = youcrypt;
     
     // Connect to server
     string api_base(API_BASE_URL);
-    serverConnectionWrapper.reset(new yc::ServerConnectionWrapper(api_base));
-    
+    string certs_path = cppString([[NSBundle mainBundle] resourcePath]) + "/curl-ca-bundle.crt";
+    serverConnectionWrapper.reset(new yc::ServerConnectionWrapper(api_base, certs_path));
+                                        
     return self;
 }
 
@@ -267,20 +274,50 @@ void printCloseError(int ret)
                              @"YES", @"shareClicked",
                              nil]];
     }
-    
 }
          
 -(BOOL)performShare:(NSString*)email
             message:(NSString*)msg
 {
+    BOOL ret = YES;
     yc::UserAccount ua_to_search(cppString(email), "");
     NSLog(@"Searching for email %@ in database", email);
     yc::Key k = serverConnectionWrapper->getPublicKey(ua_to_search);
-    if (!k.empty)
-        std::cout << k.value() << std::endl;
-    else
+    if (k.empty) {
         std::cout << "Key not found / is empty" << std::endl;
-    return YES;
+        return NO;
+    }
+    
+    std::cout << "Got key " << k.value() << std::endl;
+    // Create a Credential object wtih the retrieved key
+    char *tmpfile = tmpnam(NULL);
+    if (tmpfile) {
+        // Create new credentials object with this user's keys
+        std::string tmp_pub(tmpfile);
+        std::map <std::string, std::string> empty;
+        k.writeValueToFile(tmp_pub);
+        CredentialStorage cs(new RSACredentialStorage("", tmp_pub, empty));
+        Credentials c(new RSACredentials("", cs));
+            
+        // Get the currently selected folder's YCFolder object
+        DirectoryMap &dmap = *([theApp getDirectories].get());
+        int row = [table selectedRow];
+        int count = dmap.size();
+        if (row < count) {
+            DirectoryMap::iterator beg = dmap.begin();
+            for (int i=0; i<row; i++, ++beg);
+            Folder dir = beg->second;
+            dir->addCredential(c);
+        } else {
+            DDLogError(@"row (%d)< count (%d)!", row, count);
+            ret = NO;
+        }
+    } else {
+        DDLogError(@"Cannot create tmp pubkey file for %@'s cred!", email);
+        ret = NO;
+    }
+            
+    return ret;
 }
 
 /***

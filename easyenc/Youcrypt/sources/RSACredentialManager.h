@@ -18,11 +18,10 @@ using boost::shared_ptr;
 namespace youcrypt {
     class RSACredentialManager : public CredentialsManager {
     public:
-        RSACredentialManager(string privkeyfile, string pubkeyfile, string passphrase);
+        RSACredentialManager(string privkeyfile, string pubkeyfile, string passphrase, bool create_if_not_found);
         virtual Credentials getActiveCreds();
         virtual CredentialStorage getActiveCredStorage();
         virtual vector<Credentials> getEncodingCreds();
-//        void setPassphrase(string);
     protected:
         Credentials _cred;
         CredentialStorage _cs;

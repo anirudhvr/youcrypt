@@ -84,7 +84,8 @@
         // [libFunctions registerWithKeychain:[password stringValue]:@"Youcrypt"];
         YCSettings::settingsUp();
         
-        if (![theApp createCredentials:[password stringValue]]) {
+        if (![theApp checkCredentials:[password stringValue]
+                    createIfNotFound:YES]) {
             [msg setStringValue:@"Unknown error creating credentials."];
             return;
         }

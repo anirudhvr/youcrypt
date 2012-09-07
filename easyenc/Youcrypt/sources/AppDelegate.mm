@@ -84,13 +84,14 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
 }
 
 
--(BOOL) createCredentials:(NSString*)pass
+-(BOOL) checkCredentials:(NSString*)pass
+        createIfNotFound:(BOOL)val
 {
     try {
         RSACredentialManager *pcm =
-        new RSACredentialManager(appSettings()->privKeyFile.string(),
-                                 appSettings()->pubKeyFile.string(),
-                                 cppString(pass));
+        new RSACredentialManager(cppString(configDir.youCryptPrivKeyFile),
+                                 cppString(configDir.youCryptPubKeyFile),
+                                 cppString(pass), val ? true : false);
         //    pcm->setPassphrase(pass_cppstr);
         shared_ptr<youcrypt::CredentialsManager> p;
         p.reset(pcm);

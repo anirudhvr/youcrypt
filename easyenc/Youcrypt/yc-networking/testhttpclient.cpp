@@ -24,7 +24,7 @@ using namespace youcrypt;
 void
 testjson()
 {
-    ServerConnection s(APP_URL);
+    ServerConnection s(APP_URL, "/opt/local/share/curl/curl-ca-bundle.crt");
     UserAccount ua("hardik988@gmail.com", "Nouvou1");
     Key k = s.getPublicKey(ua);
     std::cout << k.value() << std::endl;

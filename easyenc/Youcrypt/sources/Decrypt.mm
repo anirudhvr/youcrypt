@@ -62,7 +62,7 @@
     for (NSString *key in [fuseOpts allKeys]) {
         NSString *opt;
         if ([key isEqualToString:@"volicon"]) {
-            opt = [NSString stringWithFormat:@"-ovolicon=%@/Contents/Resources/%@", [libFunctions appBundlePath], [fuseOpts objectForKey:key]];
+            opt = [NSString stringWithFormat:@"-ovolicon=%@/%@", [[NSBundle mainBundle] resourcePath], [fuseOpts objectForKey:key]];
         } else {
             opt = [NSString stringWithFormat:@"-o%@=%@", key, [fuseOpts objectForKey:key]];
         }

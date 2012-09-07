@@ -44,7 +44,7 @@ namespace youcrypt {
         };
         
         virtual string getCredData(string credName) = 0;
-        virtual bool checkCredentials(string passphrase) = 0;
+        virtual bool checkCredentials(string passphrase, bool create_if_not_found = false) = 0;
     };
     
     typedef boost::shared_ptr<AbstractCredentialStorage> CredentialStorage;

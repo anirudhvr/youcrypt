@@ -44,6 +44,19 @@
 //    std::map<std::string, std::string> empty;
 //    cs.reset(new youcrypt::RSACredentialStorage(priv, pub, empty));
     
+    if (![libFunctions mkdirRecursive:youCryptLogDir]) {
+        DDLogVerbose(@"First run: could not create youcrypt logdir");
+    }
+    if (![libFunctions mkdirRecursive:youCryptVolDir]) {
+        DDLogVerbose(@"First run: could not create Youcrypt vol dir");
+    }
+    if (![libFunctions mkdirRecursive:youCryptTmpDir]) {
+        DDLogVerbose(@"First run: could not create Youcrypt Tmp dir");
+    }
+    if (![libFunctions mkdirRecursive:youCryptKeyDir]) {
+        DDLogVerbose(@"First run: could not create Youcrypt keys dir");
+    }
+     
     return self;
 }
 
@@ -59,26 +72,17 @@
 }
 
 
+/// XXX this needs to happen before RegistrationLinkedView's calls
 -(void)firstRunSuccessful
 {    
-    if (![libFunctions mkdirRecursive:youCryptLogDir]) {
-        DDLogVerbose(@"First run: could not create youcrypt logdir");
-    } else if (![libFunctions mkdirRecursive:youCryptVolDir]) {
-        DDLogVerbose(@"First run: could not create Youcrypt vol dir");
-    } else if (![libFunctions mkdirRecursive:youCryptTmpDir]) {
-        DDLogVerbose(@"First run: could not create Youcrypt Tmp dir");
-    } else if (![libFunctions mkdirRecursive:youCryptKeyDir]) {
-        DDLogVerbose(@"First run: could not create Youcrypt keys dir");
+    // Create unique ID for this user for anonymous tracking
+    NSString *uuid = [[NSProcessInfo processInfo] globallyUniqueString];
+    NSError *error;
+    [uuid writeToFile:youcryptUserUUID atomically:YES encoding:NSASCIIStringEncoding error:&error];
+    if(!error) {
+        firstRun = NO;
     } else {
-        // Create unique ID for this user for anonymous tracking
-        NSString *uuid = [[NSProcessInfo processInfo] globallyUniqueString];
-        NSError *error;
-        [uuid writeToFile:youcryptUserUUID atomically:YES encoding:NSASCIIStringEncoding error:&error];
-        if(!error) {
-            firstRun = NO;
-        } else {
-            DDLogVerbose(@"Could not create uuid.txt : %@",[error localizedDescription]);
-        }
+        DDLogVerbose(@"Could not create uuid.txt : %@",[error localizedDescription]);
     }
 }
 
