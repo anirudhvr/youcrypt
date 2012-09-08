@@ -81,6 +81,7 @@ class youcrypt::MacUISettings;
     EncryptQ encQ;
     DecryptQ decQ;
     RestoreQ resQ;
+    OpenFileQ openFilesQ;
     long enQIndex, deQIndex, reQIndex;
     
     MacUISettings *macSettings;

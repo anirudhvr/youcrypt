@@ -67,13 +67,13 @@
         return;
     } else {
         
-//        NSError *err;
-//        if (![theApp.passphraseManager setPassphrase:[password stringValue] error:&err]) {
-//            [msg setStringValue:[@"Insecure password: " stringByAppendingString:[err localizedDescription]]];
-//            [password setFocusRingType:NSFocusRingTypeExterior];
-//            [confirmPassword setFocusRingType:NSFocusRingTypeExterior];
-//            return;
-//        }
+        NSError *err;
+        if (![theApp.passphraseManager setPassphrase:[password stringValue] error:&err]) {
+            [msg setStringValue:[@"Insecure password: " stringByAppendingString:[err localizedDescription]]];
+            [password setFocusRingType:NSFocusRingTypeExterior];
+            [confirmPassword setFocusRingType:NSFocusRingTypeExterior];
+            return;
+        }
               
         //[preferenceController setPreference:[email stringValue] value:YC_USEREMAIL];
         //[preferenceController setPreference:[name stringValue] value:YC_USERREALNAME];
