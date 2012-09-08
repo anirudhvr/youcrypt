@@ -56,7 +56,7 @@ namespace youcrypt{
         keyDirectory = baseDirectory / path("keys");
         privKeyFile = keyDirectory / path("priv.pem");
         pubKeyFile = keyDirectory / path("pub.pem");
-        listFile = keyDirectory / path("folders.xml");
+        listFile =  baseDirectory / path("folders.xml");
         userUUIDFile = baseDirectory / path("uuid.txt");
         
         folderExtension = ".yc";
