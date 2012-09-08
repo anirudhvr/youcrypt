@@ -30,6 +30,9 @@ namespace youcrypt {
         virtual void doJob(const string &);
     };
     
+    class OpenFileQ : public ProcessQ<string> {
+        virtual void doJob(const string &);
+    };
 }
 
 #endif /* defined(__Youcrypt__PortingQ__) */

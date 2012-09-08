@@ -26,6 +26,9 @@ protected:
     virtual void doJob(const ProcD &) = 0;
 public:
     ProcessQ() { _isRunning = false; }
+    int size() {
+        return _jobs.size();
+    }
     void queueJob(const ProcD &newJob) {
         mutex::scoped_lock lock(_readwriteLock);
         _jobs.push(newJob);

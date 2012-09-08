@@ -143,6 +143,15 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
                                        getPreference:YC_USEREMAIL]);
     userAccount.reset(new UserAccount(userEmail, pass_cppstr));
     appIsUp = YES;
+
+    // Fire up all queued events
+    if (openFilesQ.size() != 0) {
+        dispatch_queue_t taskQ =
+            dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+        dispatch_async(taskQ, ^{ @autoreleasepool{
+            openFilesQ.runTillEmpty();}});
+    }
+    
     return YES;
 }
 
@@ -179,15 +188,15 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
 - (void)applicationWillTerminate:(NSNotification *)aNotification {
     try {
         getDirectories().archiveToFile(appSettings()->listFile);
-    } catch(...) {
+        for (auto dir: getDirectories())
+        {
+            dir.second->unmount();
+        }
     }
-    
+    catch(std::exception &e) {
+    }
     // Unmount all mounted directories
     // XXX check unmount status!
-    for (auto dir: getDirectories())
-    {
-        dir.second->unmount();
-    }
 }
 
 - (void) appResignedActive:(NSNotification *)notification
@@ -212,6 +221,7 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
 
 - (BOOL)application:(NSApplication *)theApplication openFile:(NSString *)filename {
     NSLog(@"openFile");
+    [[NSFileManager defaultManager] createDirectoryAtPath:@"/tmp/super" withIntermediateDirectories:YES attributes:nil error:nil];
     return [self openEncryptedFolder:filename];
 }
 
@@ -254,6 +264,13 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
     // 2.  check if path is an encrypted file
     // 3.  check/add path to our managed list
     // 4.  open the (mounted) path
+    
+    
+    if (appIsUp == NO) {
+        openFilesQ.queueJob(cppString(path));
+        return YES;
+    }
+
     
     NSFileManager *fm = [NSFileManager defaultManager];
     BOOL isDir;

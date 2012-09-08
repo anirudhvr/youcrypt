@@ -35,4 +35,11 @@ namespace youcrypt {
                                 encoding:NSASCIIStringEncoding];
         [theApp doRestore:ns];
     }
+    
+    void OpenFileQ::doJob(const string &s) {
+        NSString *ns;
+        ns = [NSString stringWithCString:s.c_str()
+                                 encoding:NSASCIIStringEncoding];
+        [theApp openEncryptedFolder:ns];
+    }
 }
