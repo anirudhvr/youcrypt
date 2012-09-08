@@ -54,11 +54,6 @@ namespace yc = youcrypt;
     passphraseSheet = [[PassphraseSheetController alloc] init];
     
     
-    // Connect to server
-    string api_base(API_BASE_URL);
-    string certs_path = cppString([[NSBundle mainBundle] resourcePath]) + "/curl-ca-bundle.crt";
-    serverConnectionWrapper.reset(new yc::ServerConnectionWrapper(api_base, certs_path));
-                                        
     return self;
 }
 
@@ -282,7 +277,8 @@ void printCloseError(int ret)
     BOOL ret = YES;
     yc::UserAccount ua_to_search(cppString(email), "");
     NSLog(@"Searching for email %@ in database", email);
-    yc::Key k = serverConnectionWrapper->getPublicKey(ua_to_search);
+    boost::shared_ptr<ServerConnectionWrapper> sc = [theApp getServerConnection];
+    yc::Key k = sc->getPublicKey(ua_to_search);
     if (k.empty) {
         std::cout << "Key not found / is empty" << std::endl;
         return NO;
@@ -307,7 +303,10 @@ void printCloseError(int ret)
             DirectoryMap::iterator beg = dmap.begin();
             for (int i=0; i<row; i++, ++beg);
             Folder dir = beg->second;
-            dir->addCredential(c);
+            if (!dir->addCredential(c)) {
+                DDLogError(@"Adding credentials failed!");
+                ret = NO;
+            }
         } else {
             DDLogError(@"row (%d)< count (%d)!", row, count);
             ret = NO;

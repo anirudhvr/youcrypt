@@ -9,15 +9,29 @@
 #include "ServerConnectionWrapper.h"
 #include "ServerConnection.h"
 
-youcrypt::ServerConnectionWrapper::
-ServerConnectionWrapper(string api_base_url, string certs_bundle_path) :
+using namespace youcrypt;
+
+ServerConnectionWrapper::ServerConnectionWrapper(string api_base_url, string certs_bundle_path) :
 _sc(new ServerConnection(api_base_url, certs_bundle_path))
 { }
 
 
-youcrypt::Key
-youcrypt::ServerConnectionWrapper::getPublicKey(youcrypt::UserAccount &account)
+Key
+ServerConnectionWrapper::getPublicKey(UserAccount &account)
 {
     return _sc->getPublicKey(account);
 }
 
+
+ServerConnectionWrapper::OperationStatus
+ServerConnectionWrapper::createNewAccount(UserAccount &account)
+{
+    return (ServerConnectionWrapper::OperationStatus)_sc->createNewAccount(account);
+}
+
+
+ServerConnectionWrapper::OperationStatus
+ServerConnectionWrapper::addPublicKey(Key &key, UserAccount &account)
+{
+    return (ServerConnectionWrapper::OperationStatus)_sc->addPublicKey(key, account);
+}

@@ -27,6 +27,7 @@
 #import "MacUISettings.h"
 #import "core/Settings.h"
 
+#import "yc-networking/Key.h"
 
 using namespace youcrypt;
 
@@ -102,6 +103,8 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
 
 -(BOOL) setupCM:(NSString*)pass
         createIfNotFound:(BOOL)val
+  createAccount:(BOOL)createacct
+       pushKeys:(BOOL)pushkeys
 {
     string pass_cppstr = cppString(pass);
     try {
@@ -130,18 +133,48 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
      selector:@selector(appResignedActive:)
      name:NSApplicationDidResignActiveNotification
      object:nil ];
+    
     [[NSNotificationCenter defaultCenter]
      addObserver:self
      selector:@selector(appBecameActive:)
      name:NSApplicationDidBecomeActiveNotification
      object:nil ];
+    
     youcryptService = [[YoucryptService alloc] init];
     [NSApp setServicesProvider:youcryptService];
     NSUpdateDynamicServices();
     
-    std::string userEmail = cppString([preferenceController
-                                       getPreference:YC_USEREMAIL]);
-    userAccount.reset(new UserAccount(userEmail, pass_cppstr));
+    std::string userEmail = cppString([preferenceController getPreference:YC_USEREMAIL]);
+    std::string userName = cppString([preferenceController getPreference:YC_USERREALNAME]);
+    userAccount.reset(new UserAccount(userEmail, pass_cppstr, userName));
+    
+    serverConnectionWrapper = [self getServerConnection];
+     
+    if (serverConnectionWrapper) {
+        ServerConnectionWrapper::OperationStatus stat;
+        if (createacct) {
+            stat = serverConnectionWrapper->createNewAccount(*userAccount);
+            if (stat != ServerConnectionWrapper::Success) {
+                DDLogError(@"Creating user account failed!");
+            }
+        }
+        
+        if (pushkeys) {
+            Key k;
+            k.algtype = Key::RSA;
+            k.type = Key::Public;
+            if (!k.setValueFromFile(appSettings()->pubKeyFile.string())) {
+                DDLogError(@"Key set value from file %s failed",
+                           appSettings()->pubKeyFile.string().c_str());
+            } else {
+                stat = serverConnectionWrapper->addPublicKey(k, *userAccount);
+                if (stat != ServerConnectionWrapper::Success) {
+                    DDLogError(@"Pushinng account failed!");
+                }
+            }
+        }
+    }
+    
     appIsUp = YES;
     return YES;
 }
@@ -833,6 +866,18 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
     if (listDirectories != nil)
         [listDirectories.table reloadData];
     return nil;
+}
+
+
+-(boost::shared_ptr<ServerConnectionWrapper>) getServerConnection {
+    if (!serverConnectionWrapper) {
+        // Connect to server
+        string api_base(API_BASE_URL);
+        string certs_path = cppString([[NSBundle mainBundle] resourcePath]) + "/curl-ca-bundle.crt";
+        serverConnectionWrapper.reset(new ServerConnectionWrapper(api_base, certs_path));
+    }
+    
+    return serverConnectionWrapper;
 }
 
 -(boost::shared_ptr<UserAccount>) getUserAccount {

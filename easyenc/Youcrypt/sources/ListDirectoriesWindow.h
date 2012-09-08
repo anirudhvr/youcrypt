@@ -11,7 +11,6 @@
 #import "ListDirTable.h"
 #import "LinkedView.h"
 #import "core/YCFolder.h"
-#import "yc-networking/ServerConnectionWrapper.h"
 
 
 #define AddToolbarItemIdentifier @"Add"
@@ -42,8 +41,6 @@
     IBOutlet SharingGetEmailsView *sharingGetEmailsView;
     IBOutlet NSPopover *sharingPopover;
     
-    // For server connection
-    boost::shared_ptr<youcrypt::ServerConnectionWrapper> serverConnectionWrapper;
         
 }
 

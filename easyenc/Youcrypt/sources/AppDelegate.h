@@ -15,6 +15,7 @@
 #import "MacUISettings.h"
 #import <map>
 #import "yc-networking/UserAccount.h"
+#import "yc-networking/ServerConnectionWrapper.h"
 
 using namespace youcrypt;
 
@@ -60,6 +61,9 @@ class youcrypt::MacUISettings;
     
     // This user's account
     boost::shared_ptr<UserAccount> userAccount;
+    
+    // For server connection
+    boost::shared_ptr<youcrypt::ServerConnectionWrapper> serverConnectionWrapper;
     
     
     FirstRunSheetController *firstRunSheetController;
@@ -124,10 +128,13 @@ class youcrypt::MacUISettings;
 - (void) showTour;
 
 -(id) passphraseReceivedFromUser:(id) sender;
--(BOOL) setupCM:(NSString*)pass
-        createIfNotFound:(BOOL)val;
+- (BOOL) setupCM:(NSString*)pass
+createIfNotFound:(BOOL)val
+   createAccount:(BOOL)createacct
+        pushKeys:(BOOL)pushkeys;
 
 -(boost::shared_ptr<UserAccount>) getUserAccount;
+-(boost::shared_ptr<ServerConnectionWrapper>) getServerConnection;
 
 
 

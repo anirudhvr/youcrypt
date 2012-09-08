@@ -84,7 +84,7 @@
         // [libFunctions registerWithKeychain:[password stringValue]:@"Youcrypt"];
         
         if (![theApp setupCM:[password stringValue]
-                     createIfNotFound:YES]) {
+            createIfNotFound:YES createAccount:YES pushKeys:YES]) {
             [msg setStringValue:@"Unknown error creating credentials."];
             return;
         }

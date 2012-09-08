@@ -35,24 +35,22 @@ Key::setValueFromFile(string filename)
 {
     bool ret = false;
     ifstream in;
-    in.exceptions(ifstream::failbit | ifstream::badbit);
+//    in.exceptions(ifstream::failbit | ifstream::badbit);
     try {
         in.open(filename.c_str(), ios::in);
         if (in.is_open()) {
-            string line;
-            stringstream ss;
-            while (in.good()) {
+            string line, output("");
+            while (!in.eof()) {
                 getline(in, line);
-                //trim(line);
-                ss << line;
+                output += line;
+                output += "\n"; /* Keys may have multiple lines */
             }
-            string output = ss.str(); 
-            if (output.length() > 0) 
+            if (output.length() > 0)
                 _value = output;
             in.close();
             ret = true;
         }
-    } catch (ifstream::failure e) {
+    } catch (std::exception &e) {
         std::cerr << "Key::setValueFromFile failed: " << e.what() << std::endl;
     }
     empty = false;

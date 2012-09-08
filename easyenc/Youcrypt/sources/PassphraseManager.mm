@@ -66,7 +66,7 @@
         passPhrase = [pass stringValue];
         NSString *errmsgBuf = nil;
         
-        if ([theApp setupCM:passPhrase createIfNotFound:NO]) {
+        if ([theApp setupCM:passPhrase createIfNotFound:NO createAccount:NO pushKeys:NO]) {
             [message setStringValue:@""];
         } else {
             [message setStringValue:@"Cannot unlock credentials - wrong passprhase?"];

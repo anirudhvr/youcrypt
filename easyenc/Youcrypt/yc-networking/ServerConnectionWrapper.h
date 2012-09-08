@@ -30,8 +30,27 @@ public:
     ServerConnectionWrapper(std::string server_api_base_url,
                             std::string certs_bundle_path);
     
+    enum ConnectionStatus {
+        NotConnected = 0,
+        Connected,
+        ConnectionError
+    };
+    
+    enum OperationStatus {
+        UnknownError = 0,
+        CredentialsInvalid,
+        AccountExists,
+        Success
+    };
+    
     // Gets key of provided account using search key (if it is public) from sc
     Key getPublicKey(UserAccount &account);
+    
+    // Create a new user account on server using supplied account credentials. Returns status
+    OperationStatus createNewAccount(UserAccount &account);
+    
+    // Push new public key for supplied account to server
+    OperationStatus addPublicKey(Key &key, UserAccount &account);
     
 };
 }
