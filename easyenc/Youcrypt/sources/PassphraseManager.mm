@@ -88,14 +88,24 @@
                 error:(NSError**)err
 {
     BOOL ret = YES;
-    char *bad_pass_reason = NULL;
     NSMutableDictionary* errdetails = [NSMutableDictionary dictionary];
     
-    if (yc_check_pass([passphrase cStringUsingEncoding:NSASCIIStringEncoding], &bad_pass_reason)) {
-        [errdetails setValue:[NSString stringWithFormat:@"%s", bad_pass_reason] forKey:NSLocalizedDescriptionKey];
+    ////////////////////////////////////////
+    //// Re-enable this for a real release
+    ////////////////////////////////////////
+//    char *bad_pass_reason = NULL;
+//    if (yc_check_pass([passphrase cStringUsingEncoding:NSASCIIStringEncoding], &bad_pass_reason)) {
+//        [errdetails setValue:[NSString stringWithFormat:@"%s", bad_pass_reason] forKey:NSLocalizedDescriptionKey];
+//        // populate the error object with the details
+//        *err = [NSError errorWithDomain:YC_ERRORDOMAIN code:200 userInfo:errdetails];
+//        if(bad_pass_reason) free(bad_pass_reason);
+//        return NO;
+//    }
+    
+    if ([passphrase length] < 8) {
+        [errdetails setValue:@"Please enter a password more than 8 characters long" forKey:NSLocalizedDescriptionKey];
         // populate the error object with the details
         *err = [NSError errorWithDomain:YC_ERRORDOMAIN code:200 userInfo:errdetails];
-        if(bad_pass_reason) free(bad_pass_reason);
         return NO;
     }
     

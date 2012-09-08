@@ -73,7 +73,7 @@
 							<string key="NSReuseIdentifierKey">_NS:1505</string>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSTextFieldCell" key="NSCell" id="968524143">
-								<int key="NSCellFlags">68288064</int>
+								<int key="NSCellFlags">70385217</int>
 								<int key="NSCellFlags2">272630784</int>
 								<string key="NSContents"/>
 								<object class="NSFont" key="NSSupport" id="874784264">
@@ -354,6 +354,7 @@
 							<string key="NSFrame">{{539, 2}, {22, 16}}</string>
 							<reference key="NSSuperview" ref="1006"/>
 							<reference key="NSWindow"/>
+							<reference key="NSNextKeyView"/>
 							<string key="NSReuseIdentifierKey">_NS:9</string>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSImageCell" key="NSCell" id="139831049">
@@ -401,7 +402,7 @@
 					<reference key="NSWindow"/>
 					<reference key="NSNextKeyView" ref="741920390"/>
 				</object>
-				<string key="NSScreenRect">{{0, 0}, {1440, 878}}</string>
+				<string key="NSScreenRect">{{0, 0}, {1920, 1058}}</string>
 				<string key="NSMinSize">{578, 370}</string>
 				<string key="NSMaxSize">{10000000000000, 10000000000000}</string>
 				<bool key="NSWindowIsRestorable">YES</bool>
@@ -484,6 +485,7 @@
 						<string key="NSFrame">{{330, 12}, {79, 32}}</string>
 						<reference key="NSSuperview" ref="289132597"/>
 						<reference key="NSWindow"/>
+						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSButtonCell" key="NSCell" id="192396218">
@@ -1473,8 +1475,8 @@
 							</object>
 							<reference ref="960526261"/>
 							<reference ref="245959316"/>
-							<reference ref="552582429"/>
 							<reference ref="426396332"/>
+							<reference ref="552582429"/>
 						</array>
 						<reference key="parent" ref="0"/>
 					</object>
@@ -1911,7 +1913,6 @@
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="outlets">
 						<string key="backgroundImageView">NSImageView</string>
-						<string key="currentView">LinkedView</string>
 						<string key="dirName">NSTextField</string>
 						<string key="progressIndicator">NSProgressIndicator</string>
 						<string key="sharingGetEmailsView">SharingGetEmailsView</string>
@@ -1924,10 +1925,6 @@
 						<object class="IBToOneOutletInfo" key="backgroundImageView">
 							<string key="name">backgroundImageView</string>
 							<string key="candidateClassName">NSImageView</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="currentView">
-							<string key="name">currentView</string>
-							<string key="candidateClassName">LinkedView</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="dirName">
 							<string key="name">dirName</string>
