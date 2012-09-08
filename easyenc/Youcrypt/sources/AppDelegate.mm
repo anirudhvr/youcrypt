@@ -856,8 +856,9 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
     if (!userAccount) {
         
         std::string userEmail = cppString([preferenceController getPreference:YC_USEREMAIL]);
+        std::string userName = cppString([preferenceController getPreference:YC_USERREALNAME]);
         std::string userPW = cppString([passphraseManager getPassphrase]);
-        userAccount.reset(new UserAccount(userEmail, userPW));
+        userAccount.reset(new UserAccount(userEmail, userPW, userName));
     }
     
     return userAccount;

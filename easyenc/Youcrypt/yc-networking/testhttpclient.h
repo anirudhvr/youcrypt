@@ -14,4 +14,6 @@ int test(void);
 int testServer(void);
 
 void testjson();
+void testcreateuser();
+void testaddkey();
 #endif /* defined(__Youcrypt__testhttpclient__) */

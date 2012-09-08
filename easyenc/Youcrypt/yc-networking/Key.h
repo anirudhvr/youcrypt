@@ -19,9 +19,9 @@ struct Key
     int id;
 
     enum KeyType {
-        Private = 0,
-        Public,
-        Other
+        Public = 0,
+        Friends,
+        Private
     };
     KeyType type;
 
@@ -42,7 +42,8 @@ struct Key
     string description;
 
     Key();
-
+    Key(string val);
+    
     string value() { return _value; }
     bool setValue(string value) { empty = false; _value = value; }
     bool setValueFromFile(string filename);

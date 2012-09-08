@@ -19,7 +19,8 @@
 
 using namespace youcrypt;
 
-#define APP_URL "https://pacific-ridge-8141.herokuapp.com/"
+//#define APP_URL "https://pacific-ridge-8141.herokuapp.com/"
+#define APP_URL "http://localhost:3000/"
 
 void
 testjson()
@@ -28,6 +29,24 @@ testjson()
     UserAccount ua("hardik988@gmail.com", "Nouvou1");
     Key k = s.getPublicKey(ua);
     std::cout << k.value() << std::endl;
+}
+
+void
+testaddkey()
+{
+    ServerConnection s(APP_URL, "/opt/local/share/curl/curl-ca-bundle.crt");
+    UserAccount ua("avr4@gmail.com", "Nouvou11", "Anirudh Ramachandran");
+    Key k("asdfgh123");
+    k.type = Key::Public;
+    s.addPublicKey(k, ua);
+}
+
+void
+testcreateuser()
+{
+    ServerConnection s(APP_URL, "/opt/local/share/curl/curl-ca-bundle.crt");
+    UserAccount ua("avr4@gmail.com", "Nouvou1", "Anirudh Ramachandran");
+    s.createNewAccount(ua);
 }
 
 //int

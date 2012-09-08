@@ -3,8 +3,9 @@
 //
 
 #ifdef __OBJC__
-    #import <Cocoa/Cocoa.h>
-
-#import "constants.h"
-    #import "Contrib/Lumberjack/logging.h"
+#import <Cocoa/Cocoa.h>
+#import "Contrib/Lumberjack/logging.h"
 #endif
+
+// This is a C header
+#import "constants.h"

@@ -290,7 +290,7 @@ void printCloseError(int ret)
     
     std::cout << "Got key " << k.value() << std::endl;
     // Create a Credential object wtih the retrieved key
-    char *tmpfile = tmpnam(NULL);
+    char *tmpfile = tmpnam(NULL); // tmpfile is a static buffer so doesn't need dealloc
     if (tmpfile) {
         // Create new credentials object with this user's keys
         std::string tmp_pub(tmpfile);
@@ -311,6 +311,10 @@ void printCloseError(int ret)
         } else {
             DDLogError(@"row (%d)< count (%d)!", row, count);
             ret = NO;
+        }
+        
+        if (!boost::filesystem::remove(boost::filesystem::path(tmp_pub))) {
+            DDLogError(@"Error removing temporary file %s", tmp_pub.c_str());
         }
     } else {
         DDLogError(@"Cannot create tmp pubkey file for %@'s cred!", email);

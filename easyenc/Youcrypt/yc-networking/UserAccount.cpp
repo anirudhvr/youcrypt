@@ -12,13 +12,25 @@
 using namespace youcrypt;
 
 UserAccount::UserAccount(std::string e, std::string p) :
-_email(e), _password(p)
+_email(e), _password(p), _name("")
 {
 }
 
-string
-UserAccount::getBcryptedPassword(string salt)
+UserAccount::UserAccount(std::string e, std::string p, std::string name) :
+_email(e), _password(p), _name(name)
 {
-    char *output = bcrypt_hashpw((char*)salt.c_str(), (char*)_password.c_str());
+}
+
+
+string
+UserAccount::generateBcryptSalt(int log_rounds)
+{
+    return string(gensalt(log_rounds));
+}
+
+string
+UserAccount::bcryptedPassword(string salt)
+{
+    char *output = bcrypt_hashpw((char*)_password.c_str(), (char*)salt.c_str());
     return output ? string(output) : string();
 }

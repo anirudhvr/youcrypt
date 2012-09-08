@@ -27,7 +27,8 @@ void jsontest()
 
 int main(int argc, const char *argv[]) {
     @autoreleasepool {
-        testjson();
+//        testcreateuser();
+        testaddkey();
         
     }
     return 0;
