@@ -50,8 +50,8 @@
 ///////////////////////////////////////
 //          SERVER CONFIG
 ///////////////////////////////////////
-//#define API_BASE_URL "https://pacific-ridge-8141.herokuapp.com/"
-#define API_BASE_URL "http://localhost:3000/"
+#define API_BASE_URL "https://pacific-ridge-8141.herokuapp.com/"
+//#define API_BASE_URL "http://localhost:3000/"
 // This string should match the one set on the server (config/initializers/youcrypt_constants.rb)
 #define YC_USER_AGENT "YouCrypt_User_Agent_e4946cc8f61edaaccb8239c3f1b43cc3"
 

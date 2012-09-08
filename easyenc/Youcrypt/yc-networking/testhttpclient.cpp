@@ -6,6 +6,7 @@
 //  Copyright (c) 2012 Nouvou Inc. All rights reserved.
 //
 
+#include "constants.h"
 #include "testhttpclient.h"
 #include <string>
 #include <fstream>
@@ -19,13 +20,11 @@
 
 using namespace youcrypt;
 
-//#define APP_URL "https://pacific-ridge-8141.herokuapp.com/"
-#define APP_URL "http://localhost:3000/"
 
 void
 testjson()
 {
-    ServerConnection s(APP_URL, "/opt/local/share/curl/curl-ca-bundle.crt");
+    ServerConnection s(API_BASE_URL, "/opt/local/share/curl/curl-ca-bundle.crt");
     UserAccount ua("hardik988@gmail.com", "Nouvou1");
     Key k = s.getPublicKey(ua);
     std::cout << k.value() << std::endl;
@@ -34,7 +33,7 @@ testjson()
 void
 testaddkey()
 {
-    ServerConnection s(APP_URL, "/opt/local/share/curl/curl-ca-bundle.crt");
+    ServerConnection s(API_BASE_URL, "/opt/local/share/curl/curl-ca-bundle.crt");
     UserAccount ua("avr4@gmail.com", "Nouvou11", "Anirudh Ramachandran");
     Key k("asdfgh123");
     k.type = Key::Public;
@@ -44,7 +43,7 @@ testaddkey()
 void
 testcreateuser()
 {
-    ServerConnection s(APP_URL, "/opt/local/share/curl/curl-ca-bundle.crt");
+    ServerConnection s(API_BASE_URL, "/opt/local/share/curl/curl-ca-bundle.crt");
     UserAccount ua("avr4@gmail.com", "Nouvou1", "Anirudh Ramachandran");
     s.createNewAccount(ua);
 }
@@ -52,7 +51,7 @@ testcreateuser()
 //int
 //testServer(void) {
 //    
-//    std::string url(APP_URL);
+//    std::string url(API_BASE_URL);
 //    url += "/keys/5.json";
 //    UserAccount user("hardik988@gmail.com","Nouvou1");
 //    try {
