@@ -20,6 +20,16 @@ Key::Key()
     empty = true;
 }
 
+Key::Key(string val) : _value(val)
+{
+    type = Key::Public;
+    algtype = Key::RSA;
+    name = "";
+    description = "";
+    if (val.length() > 0)
+        empty = false;
+}
+    
 bool
 Key::setValueFromFile(string filename)
 {

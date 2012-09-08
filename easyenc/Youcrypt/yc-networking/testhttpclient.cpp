@@ -32,10 +32,20 @@ testjson()
 }
 
 void
+testaddkey()
+{
+    ServerConnection s(APP_URL, "/opt/local/share/curl/curl-ca-bundle.crt");
+    UserAccount ua("avr4@gmail.com", "Nouvou11", "Anirudh Ramachandran");
+    Key k("asdfgh123");
+    k.type = Key::Public;
+    s.addPublicKey(k, ua);
+}
+
+void
 testcreateuser()
 {
     ServerConnection s(APP_URL, "/opt/local/share/curl/curl-ca-bundle.crt");
-    UserAccount ua("hardik988@gmail.com", "Nouvou1");
+    UserAccount ua("avr4@gmail.com", "Nouvou1", "Anirudh Ramachandran");
     s.createNewAccount(ua);
 }
 

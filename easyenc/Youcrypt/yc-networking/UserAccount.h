@@ -19,12 +19,16 @@ class UserAccount
 {
 public:
     UserAccount(string email, string password);
-    string getBcryptedPassword(string salt);
+    UserAccount(string email, string password, string name);
     
     string email() { return _email; }
-    string password() { return _password; }
+    string name() { return _name; }
+    
+    string generateBcryptSalt(int log_rounds=10);
+    string bcryptedPassword(string salt);
     
 private:
+    std::string _name;
     std::string _email;
     std::string _password;
     
