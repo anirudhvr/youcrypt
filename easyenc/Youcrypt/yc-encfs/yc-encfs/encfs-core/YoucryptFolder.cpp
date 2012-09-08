@@ -823,32 +823,37 @@ bool YoucryptFolder::mount(const path &_mountPoint,
         _fuseOut = fromParent[1];
         _fuseIn = toParent[0];
 
-        int stat;
-        do {
-            waitpid(newPid, &stat, 0);
-        } while (!(WIFEXITED(stat)));
-        if (WIFEXITED(stat) && !(WEXITSTATUS(stat))) {
-            status = YoucryptFolder::mounted;            
-            
+//        int stat;
+//        do {
+//            waitpid(newPid, &stat, 0);
+//        } while (!(WIFEXITED(stat)));
+        if (1) { //(WIFEXITED(stat) && !(WEXITSTATUS(stat))) {
+            status = YoucryptFolder::mounted;
+            return true;
             struct pollfd pf;
             pf.fd = _fuseIn;
             pf.events = POLLRDNORM;
             pf.revents = 0;
             
-            ::poll(&pf, 1, 5000);
+            ::poll(&pf, 1, -1);
             if (!(pf.revents & POLLRDNORM)) {
                 return false;
             }
-            
+            try {
             file_descriptor_source fdin(_fuseIn, boost::iostreams::never_close_handle);
             stream<file_descriptor_source> in(fdin);
             xml_iarchive xi(in);
             string msg;
             xi & make_nvp("Message", msg);
-            if (msg == "initialized")
+            if (msg == "initialized") {
+                status = YoucryptFolder::mounted;
                 return true;
+            }
             else
                 return false;
+            } catch (...) {
+                return false;
+            }
         }
         else
             return false;

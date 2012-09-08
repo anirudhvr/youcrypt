@@ -76,8 +76,8 @@
         dir->setMountLocation(cppString(destFolder));
         dir->setMountOpts(mount_opts, idletime);
         if (dir->mount()) {
-            [self close];
             [theApp didDecrypt:dir];
+            [self close];
         }
     } else {
         if (keychainHasPassphrase) {

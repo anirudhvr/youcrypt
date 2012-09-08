@@ -275,7 +275,8 @@ using namespace youcrypt;
         if (![libFunctions openMountedPathInTopFinderWindow:mountedpath])
             [[NSWorkspace sharedWorkspace] openFile:mountedpath];
         
-    } else {
+    } else
+    {
         [[NSWorkspace sharedWorkspace] openFile:mountedpath];
     }
 }
