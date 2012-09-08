@@ -117,10 +117,13 @@ yc::ServerConnection::createNewAccount(yc::UserAccount &account)
         http_client::response resp = _client.get(req);
         if (resp.status() == 200u) {
             stat = yc::ServerConnection::Success;
+        } else if (resp.status() == 500) {
+            stat = yc::ServerConnection::Success;
+            std::cerr << "Server returned 500 but things may have worked" << std::endl;
         } else if (resp.status() == 400u) {
             stat = yc::ServerConnection::AccountExists;
         }
-        std::cout << resp.status_message() << "," << resp.status() << "\n" <<resp.body() << std::endl;
+//        std::cout << resp.status_message() << "," << resp.status() << "\n" <<resp.body() << std::endl;
     } catch (std::exception &ex) {
         std::cerr << "Server error creating user" << ex.what() << std::endl;
     }

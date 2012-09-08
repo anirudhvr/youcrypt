@@ -862,7 +862,7 @@ end:
 #define KEY_CERT	3
 
 ////////////////////////////////////////////////////////////////
-// Generates public key from private key. Taken from openssl 1.0.1c's
+// RSA encryption . Taken from openssl 1.0.1c's
 // apps/rsautl.c
 // See arguments accpted by doing `$ openssl rsautl help`
 // Additional options to pass data as buffers and not files:
@@ -1113,7 +1113,7 @@ int rsautl(int argc, char **argv, struct rsautl_args *rsautlargs)
     
 	if(rsa_outlen <= 0) {
 		BIO_printf(bio_err, "RSA operation error\n");
-		ERR_print_errors(bio_err);
+//		ERR_print_errors(bio_err);
 		goto end;
 	}
 	ret = 0;
