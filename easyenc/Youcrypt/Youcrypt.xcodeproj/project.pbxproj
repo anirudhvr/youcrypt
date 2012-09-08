@@ -73,7 +73,6 @@
 		E0BF0EA41596D01F002F9FB9 /* TestBed.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = E0BF0EA31596D01F002F9FB9 /* TestBed.1 */; };
 		E0BF0EBD159838DD002F9FB9 /* ListDirectoriesWindow.mm in Sources */ = {isa = PBXBuildFile; fileRef = E0BF0EBB159838DD002F9FB9 /* ListDirectoriesWindow.mm */; };
 		E0BF0EBE159838DD002F9FB9 /* ListDirectoriesWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = E0BF0EBC159838DD002F9FB9 /* ListDirectoriesWindow.xib */; };
-		E0C5ACA315A50BC1000FC253 /* ConfigDirectory.mm in Sources */ = {isa = PBXBuildFile; fileRef = E0C5ACA215A50BC1000FC253 /* ConfigDirectory.mm */; };
 		E0C5ACAF15A5670A000FC253 /* lockedfolder2.icns in Resources */ = {isa = PBXBuildFile; fileRef = E0C5ACAE15A56709000FC253 /* lockedfolder2.icns */; };
 		E0C5ACB115A56D0D000FC253 /* logo-512x512-alpha.png in Resources */ = {isa = PBXBuildFile; fileRef = E0C5ACB015A56D0C000FC253 /* logo-512x512-alpha.png */; };
 		E0F85A7B15F10F8200A4D821 /* libboost_iostreams-mt.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E0F85A7A15F10F8200A4D821 /* libboost_iostreams-mt.dylib */; };
@@ -576,8 +575,6 @@
 		E0BF0EBA159838DD002F9FB9 /* ListDirectoriesWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ListDirectoriesWindow.h; path = sources/ListDirectoriesWindow.h; sourceTree = "<group>"; };
 		E0BF0EBB159838DD002F9FB9 /* ListDirectoriesWindow.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = ListDirectoriesWindow.mm; path = sources/ListDirectoriesWindow.mm; sourceTree = "<group>"; };
 		E0BF0EBC159838DD002F9FB9 /* ListDirectoriesWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ListDirectoriesWindow.xib; sourceTree = "<group>"; };
-		E0C5AC9F15A50B5B000FC253 /* ConfigDirectory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ConfigDirectory.h; path = sources/ConfigDirectory.h; sourceTree = "<group>"; };
-		E0C5ACA215A50BC1000FC253 /* ConfigDirectory.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = ConfigDirectory.mm; path = sources/ConfigDirectory.mm; sourceTree = "<group>"; };
 		E0C5ACAE15A56709000FC253 /* lockedfolder2.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = lockedfolder2.icns; sourceTree = "<group>"; };
 		E0C5ACB015A56D0C000FC253 /* logo-512x512-alpha.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "logo-512x512-alpha.png"; sourceTree = "<group>"; };
 		E0F85A7A15F10F8200A4D821 /* libboost_iostreams-mt.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libboost_iostreams-mt.dylib"; path = "/opt/local/lib/libboost_iostreams-mt.dylib"; sourceTree = "<absolute>"; };
@@ -962,8 +959,6 @@
 				E6649C7915A53CD80096886F /* Encrypt.mm */,
 				25F3D14915923FE800E3383C /* Decrypt.h */,
 				25F3D14A15923FE800E3383C /* Decrypt.mm */,
-				E0C5AC9F15A50B5B000FC253 /* ConfigDirectory.h */,
-				E0C5ACA215A50BC1000FC253 /* ConfigDirectory.mm */,
 				E6649C7C15A53CFC0096886F /* libFunctions.h */,
 				25F3D1501592435600E3383C /* libFunctions.mm */,
 				E6E2A0B7159266F6003E3F6C /* YoucryptService.h */,
@@ -1880,7 +1875,6 @@
 				E66988DC159E63CF002323AD /* PassphraseSheetController.mm in Sources */,
 				25300E8B15A385BE009CDA08 /* GmailSheetController.mm in Sources */,
 				25300E9015A3BE74009CDA08 /* FirstRunSheetController.mm in Sources */,
-				E0C5ACA315A50BC1000FC253 /* ConfigDirectory.mm in Sources */,
 				E6649C7A15A53CD80096886F /* Encrypt.mm in Sources */,
 				E6649C9615A70FB00096886F /* VolumePropertiesSheetController.mm in Sources */,
 				25C3FE4515A7A805006606DF /* FeedbackSheetController.mm in Sources */,

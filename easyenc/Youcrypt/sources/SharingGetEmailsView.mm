@@ -7,9 +7,9 @@
 //
 
 #import "SharingGetEmailsView.h"
-#import "AppDelegate.h"
 #import "libFunctions.h"
 #import "ListDirectoriesWindow.h"
+#import "AppDelegate.h"
 
 @implementation SharingGetEmailsView
 

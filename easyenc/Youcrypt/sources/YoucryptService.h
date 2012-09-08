@@ -7,7 +7,6 @@
 //
 
 #import <AppKit/AppKit.h>
-#import "AppDelegate.h"
 
 @interface YoucryptService : NSObject{
 }

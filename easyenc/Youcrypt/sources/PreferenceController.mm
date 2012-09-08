@@ -13,7 +13,7 @@
 #import <StartOnLogin/StartOnLogin.h>
 #import "libFunctions.h"
 #import "XMLDictionary.h"
-#import "AppDelegate.h"
+#import "core/DirectoryMap.h"
 
 @implementation PreferenceController
 

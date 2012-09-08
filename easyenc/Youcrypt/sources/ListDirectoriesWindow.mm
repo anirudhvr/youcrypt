@@ -7,7 +7,6 @@
 //
 
 #import "ListDirectoriesWindow.h"
-#import "AppDelegate.h"
 #import "core/Settings.h"
 #import "ListDirTable.h"
 #import "PassphraseSheetController.h"
@@ -26,6 +25,7 @@
 #include "encfs-core/Credentials.h"
 #include "encfs-core/PassphraseCredentials.h"
 #include "encfs-core/RSACredentials.h"
+#import "AppDelegate.h"
 
 #import <iostream>
 #import <cstdio>

@@ -19,7 +19,6 @@
 #import <sys/types.h>
 #import <sys/un.h>
 #import <string.h>
-#import "AppDelegate.h"
 
 @interface libFunctions : NSObject {
     
@@ -38,12 +37,6 @@
 + (BOOL) changeEncFSPasswd:(NSString *)path
                  oldPasswd:(NSString *)oldPasswd
                  newPasswd:(NSString *)newPasswd;
-
-
-+ (void) archiveDirectoryList:(boost::shared_ptr<DirectoryMap>)directories
-                       toFile:(NSString*)file;
-
-+ (boost::shared_ptr<DirectoryMap>) unarchiveDirectoryListFromFile:(NSString*)file;
 
 
 + (BOOL)fileHandleIsReadable:(NSFileHandle*)fh;

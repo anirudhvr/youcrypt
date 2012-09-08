@@ -11,7 +11,6 @@
 #import "CompressingLogFileManager.h"
 #import "libFunctions.h"
 #import "PreferenceController.h"
-#import "ConfigDirectory.h"
 #import "AppDelegate.h"
 #import "DDFileLogger.h"
 #import "LFCGzipUtility.h"

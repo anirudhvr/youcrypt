@@ -8,9 +8,8 @@
 
 #import "DBLinkedView.h"
 #import "DBSetupSheetController.h"
-#import "AppDelegate.h"
-#import "ConfigDirectory.h"
 #import "libFunctions.h"
+#import "AppDelegate.h"
 @implementation DBLinkedView
 
 @synthesize dbSetupSheet;
@@ -81,9 +80,7 @@
         NSString *dbloc = [libFunctions locateDropboxFolder];
         if ([dbloc isNotEqualTo:@""]) {
             NSString* newYCfolder = [dbloc stringByAppendingPathComponent:@"/YouCrypt"];
-            if ([libFunctions mkdirRecursive:newYCfolder]) {
-                [selectedDBFolders addObject:newYCfolder];
-            }
+            [selectedDBFolders addObject:newYCfolder];
         }
     }
     

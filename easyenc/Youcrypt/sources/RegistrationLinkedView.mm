@@ -9,10 +9,9 @@
 #import "RegistrationLinkedView.h"
 #import "libFunctions.h"
 #import "PreferenceController.h"
-#import "AppDelegate.h"
-#import "ConfigDirectory.h"
 #import "PassphraseManager.h"
 #import "core/Settings.h"
+#import "AppDelegate.h"
 
 @implementation RegistrationLinkedView
 

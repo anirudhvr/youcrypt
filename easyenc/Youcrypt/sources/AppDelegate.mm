@@ -43,8 +43,6 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
 @implementation AppDelegate
 
 @synthesize window = _window;
-@synthesize encryptController;
-@synthesize decryptController;
 @synthesize listDirectories;
 @synthesize firstRunSheetController;
 @synthesize feedbackSheetController;
@@ -553,6 +551,7 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
         case YoucryptDirectoryStatusUnknown:
         case YoucryptDirectoryStatusUninitialized:
         case YoucryptDirectoryStatusBadConfig:
+        case YoucryptDirectoryStatusMounted:
             return NO;
         case YoucryptDirectoryStatusInitialized:
         case YoucryptDirectoryStatusNeedAuth:

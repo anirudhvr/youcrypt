@@ -7,9 +7,7 @@
 //
 
 #import "YoucryptService.h"
-#import "Encrypt.h"
-#import "Decrypt.h"
-#import "ConfigDirectory.h"
+#import "AppDelegate.h"
 
 @implementation YoucryptService
 

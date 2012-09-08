@@ -143,8 +143,6 @@ createIfNotFound:(BOOL)val
 // Setters and getters
 //@property (readonly) NSMutableArray *directories;
 @property (assign) IBOutlet NSWindow *window;
-@property (atomic,strong) Encrypt *encryptController;
-@property (atomic,strong) Decrypt *decryptController;
 @property (nonatomic,strong) ListDirectoriesWindow *listDirectories;
 @property (nonatomic, strong) FirstRunSheetController *firstRunSheetController;
 @property (nonatomic, strong) FeedbackSheetController *feedbackSheetController;

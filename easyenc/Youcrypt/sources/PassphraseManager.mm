@@ -11,7 +11,6 @@
 #import "contrib/SSKeychain/SSKeychain.h"
 #import "PreferenceController.h"
 #import "AppDelegate.h"
-#import "ConfigDirectory.h"
 #import "contrib/passwdqc/passwdqc.h"
 #import "RSACredentialManager.h"
 
