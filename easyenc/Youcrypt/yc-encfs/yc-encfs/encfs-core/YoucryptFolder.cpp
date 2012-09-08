@@ -760,6 +760,7 @@ bool YoucryptFolder::mount(const path &_mountPoint,
         ctx.folder.reset(this);
 
         // Create fuse args
+        mountOptions.push_back("-f");
         rAssert(mountOptions.size() <= 30);
         
         const char **fuseArgv = new char const *[32];
@@ -828,14 +829,15 @@ bool YoucryptFolder::mount(const path &_mountPoint,
 //            waitpid(newPid, &stat, 0);
 //        } while (!(WIFEXITED(stat)));
         if (1) { //(WIFEXITED(stat) && !(WEXITSTATUS(stat))) {
-            status = YoucryptFolder::mounted;
-            return true;
+//            status = YoucryptFolder::mounted;
+//            return true;
             struct pollfd pf;
             pf.fd = _fuseIn;
             pf.events = POLLRDNORM;
             pf.revents = 0;
             
-            ::poll(&pf, 1, -1);
+            // Wait for about 5 seconds to get a reply.
+            ::poll(&pf, 1, 5000);
             if (!(pf.revents & POLLRDNORM)) {
                 return false;
             }

@@ -176,7 +176,7 @@ RSACredentialStorage::checkCredentials(string passphrase, bool create_if_not_fou
         if (create_if_not_found)
             return createKeys(passphrase);
         else
-            return true;
+            return false;
     }
 }
 
