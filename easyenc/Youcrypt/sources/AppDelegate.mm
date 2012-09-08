@@ -14,11 +14,9 @@
 #import "Encrypt.h"
 #import "YoucryptService.h"
 #import "libFunctions.h"
-#import "ConfigDirectory.h"
 #import "ListDirectoriesWindow.h"
 #import "FirstRunSheetController.h"
 #import "FeedbackSheetController.h"
-#import "PeriodicActionTimer.h"
 #import "CompressingLogFileManager.h"
 #import "TourWizard.h"
 #import "DBLinkedView.h"
@@ -26,6 +24,8 @@
 #import "AboutController.h"
 #import "PassphraseManager.h"
 #import "PortingQ.h"
+#import "MacUISettings.h"
+#import "core/Settings.h"
 
 
 using namespace youcrypt;
@@ -45,133 +45,123 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
 @synthesize encryptController;
 @synthesize decryptController;
 @synthesize listDirectories;
-@synthesize configDir;
 @synthesize firstRunSheetController;
 @synthesize feedbackSheetController;
 @synthesize keyDown;
 @synthesize preferenceController;
 @synthesize tourWizard;
-@synthesize fileLogger;
 @synthesize dropboxEncryptedFolders;
-@synthesize mixpanelUUID;
 @synthesize aboutController;
 @synthesize passphraseManager;
 
+/*
+ * Main App:  delegates services to the different components.
+ *
+ * Startup Design:
+ *
+ * Required Components:
+ *   1.  Working Settings (appSettings()->isSetup == true)
+ *   2.  Working directory list
+ *   3.  Working credential manager
+ *
+ * Init:
+ *   1.  Allocate controllers
+ *   2.  Load settings
+ *
+ * UI Init: (awakeFromNib)
+ *   3.  If first run
+ *          run tour
+ *       else run password manager to get user passwd, unlock keys, etc.
+ */
 
-// --------------------------------------------------------------------------------------
+
+// ----------------------------------------------------------------------
 // App events
-// --------------------------------------------------------------------------------------
+// ----------------------------------------------------------------------
 - (id) init {
+    appIsUp = NO;
     self = [super init];
-    
-    configDir = [[ConfigDirectory alloc] init];
-    youcryptService = [[YoucryptService alloc] init];
+    NSString *base = [NSHomeDirectory() stringByAppendingPathComponent:
+                      @".youcrypt"];
+    macSettings = new MacUISettings(cppString(base));
     
     preferenceController = [[PreferenceController alloc] init];
     listDirectories = [[ListDirectoriesWindow alloc] init];
-    
-    
     firstRunSheetController = [[FirstRunSheetController alloc] init];
     feedbackSheetController = [[FeedbackSheetController alloc] init];
+    dropboxEncryptedFolders = [[NSMutableSet alloc] init];
+    passphraseManager = [[PassphraseManager alloc] 
+                         initWithPrefController:preferenceController 
+                          saveInKeychain:NO];
     
-    //[youcryptService setApp:self];
-    
-    // TODO:  Load up directories array from the list file.
-    
-    // Notifiers to indicate when app gains and loses focus
-    // This is to do background stuffl ike syncing the config directory to disk
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(applicationDidResignActive:)
-                                                 name:NSApplicationDidResignActiveNotification
-                                               object:nil ];
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(applicationDidBecomeActive:)
-                                                 name:NSApplicationDidBecomeActiveNotification
-                                               object:nil ];
-    timer = [[PeriodicActionTimer alloc] initWithMinRefreshTime:5];
-    configDirBeingSynced = NO;
     
     theApp = self;
-    dropboxEncryptedFolders = [[NSMutableSet alloc] init];
-    mixpanel = [MixpanelAPI sharedAPIWithToken:MIXPANEL_TOKEN];
-    NSError *error = nil;
-    mixpanelUUID = [NSString stringWithContentsOfFile:configDir.youcryptUserUUID encoding:NSASCIIStringEncoding error:&error];
-    [mixpanelUUID stringByReplacingOccurrencesOfString:@"\n" withString:@""];
-    DDLogVerbose(@"mixpanel uuid : %@",mixpanelUUID);
-
-    
-    passphraseManager = [[PassphraseManager alloc] initWithPrefController:preferenceController saveInKeychain:NO];
-    
-    
-    // XXX FIXME Change for Release
-#ifdef DEBUG
-    mixpanel.dontLog = YES;
-#elif RELEASE
-    mixpanel.dontLog = NO;
-#endif
-    
-    if (!directories) directories.reset(new DirectoryMap);
     return self;
 }
 
 
--(BOOL) checkCredentials:(NSString*)pass
+-(BOOL) setupCM:(NSString*)pass
         createIfNotFound:(BOOL)val
 {
+    string pass_cppstr = cppString(pass);
     try {
         RSACredentialManager *pcm =
-        new RSACredentialManager(cppString(configDir.youCryptPrivKeyFile),
-                                 cppString(configDir.youCryptPubKeyFile),
-                                 cppString(pass), val ? true : false);
+        new RSACredentialManager(appSettings()->privKeyFile.string(),
+                                 appSettings()->pubKeyFile.string(),
+                                 cppString(pass),
+                                 val ? true: false);
         //    pcm->setPassphrase(pass_cppstr);
         shared_ptr<youcrypt::CredentialsManager> p;
         p.reset(pcm);
         setGlobalCM(p);
-        return YES;
     } catch (std::exception &e) {
-        NSLog(@"Error unlocking credentials. Key decrypt problem?: %s", e.what());
+        DDLogError(@"Error unlocking credentials. Key decrypt problem?: %s", 
+                   e.what());
         return NO;
     }
+    try {
+        DirectoryMap::unarchiveFromFile(appSettings()->listFile);
+    } catch (...) {
+        setDirectories(shared_ptr<DirectoryMap>(new DirectoryMap));
+    }
     
+    [[NSNotificationCenter defaultCenter]
+     addObserver:self
+     selector:@selector(appResignedActive:)
+     name:NSApplicationDidResignActiveNotification
+     object:nil ];
+    [[NSNotificationCenter defaultCenter]
+     addObserver:self
+     selector:@selector(appBecameActive:)
+     name:NSApplicationDidBecomeActiveNotification
+     object:nil ];
+    youcryptService = [[YoucryptService alloc] init];
+    [NSApp setServicesProvider:youcryptService];
+    NSUpdateDynamicServices();
+    
+    std::string userEmail = cppString([preferenceController
+                                       getPreference:YC_USEREMAIL]);
+    userAccount.reset(new UserAccount(userEmail, pass_cppstr));
+    appIsUp = YES;
+    return YES;
 }
 
 -(id) passphraseReceivedFromUser:(id) sender {
-    
     NSString *s = [passphraseManager getPassphrase];
     std::string pass_cppstr = cppString(s);
-    
-    directories = [libFunctions unarchiveDirectoryListFromFile:configDir.youCryptListFile];
-    if (!directories) {
-        directories.reset(new DirectoryMap);
-    }
-    
-    std::string userEmail = cppString([preferenceController getPreference:YC_USEREMAIL]);
-    std::string userName = cppString([preferenceController getPreference:YC_USERREALNAME]);
-    userAccount.reset(new UserAccount(userEmail, pass_cppstr, userName));
+            
     return nil;
 }
 
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
-    // Insert code here to initialize your application
-    [NSApp setServicesProvider:youcryptService];
-    
-    // Logging
-    logFileManager = [[CompressingLogFileManager alloc] initWithLogsDirectory:configDir.youCryptLogDir];
-    
-    [DDLog addLogger:[DDASLLogger sharedInstance]];
-    [DDLog addLogger:[DDTTYLogger sharedInstance]];
-    fileLogger = [[DDFileLogger alloc] initWithLogFileManager:logFileManager];
-    fileLogger.rollingFrequency = 60 * 60 * 24; // 24 hour rolling
-    fileLogger.logFileManager.maximumNumberOfLogFiles = 7;
-    [DDLog addLogger:fileLogger];
-    
     // Make sure only one instance of Youcrypt runs
     NSArray *apps = [[NSWorkspace sharedWorkspace] runningApplications];
     int ycAppCount = 0;
     
     for(NSRunningApplication *app in apps) {
-        if([[app localizedName] isEqualToString:[[NSProcessInfo processInfo] processName]]) {
+        if([[app localizedName] isEqualToString:[[NSProcessInfo processInfo] 
+                                                 processName]]) {
             ycAppCount++;
             if(ycAppCount > 1) {
                 DDLogVerbose(@"FATAL. Cannot run multiple instances. Terminating!!");
@@ -187,30 +177,27 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
 }
 
 - (void)applicationWillTerminate:(NSNotification *)aNotification {
-    //[NSKeyedArchiver archiveRootObject:directories toFile:configDir.youCryptListFile];
-    [libFunctions archiveDirectoryList:directories toFile:configDir.youCryptListFile];
+    try {
+        getDirectories().archiveToFile(appSettings()->listFile);
+    } catch(...) {
+    }
     
     // Unmount all mounted directories
     // XXX check unmount status!
-    for (auto dir: *(directories.get()))
+    for (auto dir: getDirectories())
     {
         dir.second->unmount();
     }
 }
 
-- (void) applicationDidResignActive:(NSNotification *)notification
+- (void) appResignedActive:(NSNotification *)notification
 {
-    if (configDirBeingSynced == NO && [timer timerElapsed]) {
-        configDirBeingSynced = YES;
-        // XXX break this off into a new thread?
-        /// XX might want to use a dispatch queue here instead
-        [libFunctions archiveDirectoryList:directories toFile:configDir.youCryptListFile];
-        //        [NSKeyedArchiver archiveRootObject:directories toFile:configDir.youCryptListFile];
-        
-        configDirBeingSynced = NO;
+    try {
+        getDirectories().archiveToFile(appSettings()->listFile);
+    } catch(...) {
     }
 }
-- (void) applicationDidBecomeActive:(NSNotification *)notification
+- (void) appBecameActive:(NSNotification *)notification
 {
     //    NSLog(@"Became active");
 }
@@ -243,30 +230,16 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
     [statusItem setHighlightMode:YES];
     
     
-    NSLog(@"Awakefromnib");
-    
-    if([configDir isFirstRun]) {
-        //[self showListDirectories:self];
-        DDLogInfo(@"Initiating First Run! ");
-        
+    if (macSettings->appFirstRun) {
+        boost::filesystem::create_directories(macSettings->baseDirectory);
+        YCSettings::settingsUp();
         [self showTour];
-        
-        //        NSString *error;
-        //        if (![self updatePBS:&error]) {
-        //            DDLogVerbose(@"Update PBS failed: %@", error);
-        //        }
     } else {
+        YCSettings::settingsUp();
+        if (!macSettings->isSetup)
+            throw std::runtime_error("Error initializing Youcrypt settings.");
         [passphraseManager getPassphraseFromUser]; // get passphrase
     }
-    
-    NSUpdateDynamicServices(); // Equivalent to calling /System/Library/CoreServices/pbs
-    
-    //    NSArray *args = [[NSProcessInfo processInfo] arguments];
-    //    if ([args count] > 1) {
-    //        NSLog(@"args:%@ ", args);
-    //        [self openEncryptedFolder:[args objectAtIndex:1]];
-    //    }
-    
 }
 
 // --------------------------------------------------------------------------------------
@@ -289,7 +262,7 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
         return NO;
     
     // Check if a Folder already exists for this folder
-    DirectoryMap &dirs = *(directories.get());
+    DirectoryMap &dirs = getDirectories();
     std::string strPath([path cStringUsingEncoding:NSASCIIStringEncoding]);
     Folder dir;
     dir = dirs[strPath];
@@ -310,7 +283,7 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
     }
     
     NSString *timeStr = [[[NSDate date] descriptionWithCalendarFormat:nil timeZone:nil locale:nil] stringByReplacingOccurrencesOfString:@" " withString:@"_"];
-    NSString *mountPoint = [configDir.youCryptVolDir stringByAppendingPathComponent:
+    NSString *mountPoint = [nsstrFromCpp(appSettings()->volumeDirectory.string()) stringByAppendingPathComponent:
                             [timeStr stringByAppendingPathComponent:[[path stringByDeletingPathExtension] lastPathComponent]]];
     
     // We have a valid dir object.  Let us go ahead and open it.
@@ -360,18 +333,12 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
 
 - (BOOL)doDecrypt:(NSString *)path
       mountedPath:(NSString *)mountPath {
-    
-    if ([configDir isFirstRun])
-        return NO;
-    
+        
     // Is decryptController nil?
     if (!decryptController) {
         decryptController = [[Decrypt alloc] init];
     }
-    Folder dir;
-    DirectoryMap &dmap = *(directories.get());
-    string strPath = cppString(path);
-    dir = dmap[strPath];
+    Folder dir = (getDirectories())[cppString(path)];
     if (!dir)
         return NO;
     
@@ -471,9 +438,7 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
     NSString *p = nsstrFromCpp(dir->rootPath());
     dir->alias() = cppString([[p stringByDeletingPathExtension]
                               lastPathComponent]);
-    DirectoryMap &dmap = *(directories.get());
-    std::string strPath = dir->rootPath();
-    dmap[strPath] = dir;
+    (getDirectories())[dir->rootPath()] = dir;
     if (listDirectories != nil) {
         [listDirectories.statusLabel setStringValue:@""];
         [listDirectories.progressIndicator stopAnimation:listDirectories.window];
@@ -493,15 +458,14 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
 // --------------------------------------------------------------------------------------
 
 - (void) removeFSAtPath:(NSString*) path {
-    DirectoryMap &dmap = *(directories.get());
     std::string stdPath([path cStringUsingEncoding:NSASCIIStringEncoding]);
     int found;
     
-    Folder dir = dmap[stdPath];
     
     dispatch_queue_t taskQ =
     dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
-    
+   
+    Folder dir = (getDirectories())[stdPath];
     if (dir) {
         resQ.queueJob(stdPath);
         found = 1;
@@ -529,10 +493,9 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
     }
 }
 
-- (BOOL)doRestore:(NSString *)path {    
-    DirectoryMap &dmap = *(directories.get());
+- (BOOL)doRestore:(NSString *)path {
     std::string strPath([path cStringUsingEncoding:NSASCIIStringEncoding]);
-    Folder d = dmap[strPath];
+    Folder d = (getDirectories())[strPath];
     if (!d)
         d = YCFolder::initFromScanningPath(strPath);
     
@@ -572,9 +535,8 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
 }
 
 - (void)didRestore:(NSString *)path {
-    DirectoryMap &dmap = *(directories.get());
     std::string strPath([path cStringUsingEncoding:NSASCIIStringEncoding]);
-    dmap.erase(strPath);
+    (getDirectories()).erase(strPath);
     
     if (listDirectories != nil) {
         [listDirectories.statusLabel setStringValue:@""];
@@ -602,16 +564,11 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
 // --------------------------------------------------------------------------------------
 // Helper functions to show any window; you name it, we've it.
 // --------------------------------------------------------------------------------------
-- (IBAction)showMainApp:(id)sender {
-    if ([configDir isFirstRun])
-        return;
-    
+- (IBAction)showMainApp:(id)sender {    
     [listDirectories.window makeKeyAndOrderFront:self];
 }
 
 - (IBAction)showListDirectories:(id)sender {
-    if ([configDir isFirstRun])
-        return;
     
     // Is list directories nil?
     //    if (!listDirectories) {
@@ -623,10 +580,7 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
     
 }
 
-- (IBAction)showPreferencePanel:(id)sender {
-    if ([configDir isFirstRun])
-        return;
-    
+- (IBAction)showPreferencePanel:(id)sender {    
     // Is preferenceController nil?
     //    if (!preferenceController) {
     //        preferenceController = [[PreferenceController alloc] init];
@@ -687,11 +641,8 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
 // The AppDelegate is also our tableview's data source.  It populates shit using the directories array.
 //--------------------------------------------------------------------------------------------------
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView {
-    if (directories)
-        return directories->size();
-    else {
-        return 0;
-    }
+        int r =getDirectories().size();
+    return r;
 }
 
 - (void)keyDown:(NSEvent *)theEvent
@@ -703,13 +654,7 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
     
     NSString *colId = [tableColumn identifier];
     
-    if (!directories)
-        return nil;
-    
-    DirectoryMap::iterator pos = directories->begin();
-    for (int i=0; i<row; i++)
-        ++pos;
-    Folder dirAtRow = pos->second;
+    Folder dirAtRow = getDirectories()[row];
     if (!dirAtRow)
         return nil;
     
@@ -801,13 +746,7 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
     
     //  NSLog(@"This code called");
     
-    if (!directories)
-        return;
-    
-    DirectoryMap::iterator pos = directories->begin();
-    for (int i=0; i<row; i++)
-        ++pos;
-    Folder dirAtRow = pos->second;
+    Folder dirAtRow = getDirectories()[row];
     if (!dirAtRow)
         return;
     
@@ -852,11 +791,7 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
 {
     NSString *tooltip;
     if (rowIndex >= 0) {
-        
-        DirectoryMap::iterator pos = directories->begin();
-        for (int i=0; i<rowIndex; i++)
-            ++pos;
-        Folder dir = pos->second;
+        Folder dir = getDirectories()[rowIndex];
         tooltip = [NSString stringWithFormat:@"Source folder: %@\n\n"
                    "Status: %@"
                    "%@", nsstrFromCpp(dir->rootPath()),
@@ -898,13 +833,6 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
     if (listDirectories != nil)
         [listDirectories.table reloadData];
     return nil;
-}
-
--(boost::shared_ptr<DirectoryMap>) getDirectories {
-    if (!directories) {
-        directories.reset(new DirectoryMap);
-    }
-    return directories;
 }
 
 -(boost::shared_ptr<UserAccount>) getUserAccount {

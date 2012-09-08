@@ -7,6 +7,7 @@
 //
 
 #include "CredentialsManager.h"
+#include <stdexcept>
 
 using namespace youcrypt;
 
@@ -14,7 +15,10 @@ static shared_ptr<CredentialsManager> theGlobalCM;
 
 namespace youcrypt {
 shared_ptr<CredentialsManager> getGlobalCM() {
-    return theGlobalCM;
+    if (theGlobalCM)
+        return theGlobalCM;
+    else
+        throw std::runtime_error("Credential Manager not set.");
 }
 
 void setGlobalCM(const shared_ptr<CredentialsManager> &cm)

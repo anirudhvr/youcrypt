@@ -87,7 +87,6 @@ CipherKey RSACredentials::decryptVolumeKey(const vector<unsigned char> &data,
         "-inbuf"
         // "-in", "cipher.txt", "-out", "plain2.txt",
         };
-    
     CipherKey ret;
     if (rsautl(7, rsautl_decrypt_argv, &rsaargs))
         ret = CipherKey();
