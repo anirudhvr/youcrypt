@@ -183,7 +183,7 @@ using namespace youcrypt;
     }
     
    // dropboxURL = @"get_dropbox_folder.sh: Dropbox database not found, is dropbox installed?\n";
-    NSLog(@"Dropbox folder loc: %@",dropboxURL);
+    DDLogVerbose(@"Dropbox folder found at: %@",dropboxURL);
     if (dropboxURL) {
         dropboxURL = [dropboxURL stringByReplacingOccurrencesOfString:@"\n" withString:@""];
         

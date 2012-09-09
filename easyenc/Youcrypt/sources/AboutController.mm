@@ -18,7 +18,6 @@
 {
     if (![super initWithWindowNibName:@"About"])
         return nil;
-    NSLog(@"About init");
     return self;
 }
 
@@ -31,7 +30,6 @@
 
 - (IBAction)ok:(id)sender
 {
-    NSLog(@"Trying to close");
     [self.window close];
 }
 

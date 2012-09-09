@@ -213,7 +213,7 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
     [[[NSWorkspace sharedWorkspace] notificationCenter] addObserver:self selector:@selector(someUnMount:) name:NSWorkspaceDidUnmountNotification object:nil];
     [self someUnMount:nil];
     
-    DDLogVerbose(@"App did, in fact, finish launching!!!");
+    DDLogVerbose(@"App launched successfully!");
 }
 
 - (void)applicationWillTerminate:(NSNotification *)aNotification {
@@ -239,7 +239,6 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
 }
 - (void) appBecameActive:(NSNotification *)notification
 {
-    //    NSLog(@"Became active");
 }
 
 - (BOOL)applicationShouldHandleReopen:(NSApplication *)theApplication hasVisibleWindows:(BOOL)flag
@@ -251,7 +250,6 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
 
 
 - (BOOL)application:(NSApplication *)theApplication openFile:(NSString *)filename {
-    NSLog(@"openFile");
     [[NSFileManager defaultManager] createDirectoryAtPath:@"/tmp/super" withIntermediateDirectories:YES attributes:nil error:nil];
     return [self openEncryptedFolder:filename];
 }
@@ -793,7 +791,6 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
 - (void)tableView:(NSTableView*)tableView willDisplayCell:(id)cell forTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
     NSString *colId = [tableColumn identifier];
     
-    //  NSLog(@"This code called");
     
     Folder dirAtRow = getDirectories()[row];
     if (!dirAtRow)
@@ -878,7 +875,7 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
 
 -(id) someUnMount:(id) sender {
     // Someone unmount us a bomb.
-    DDLogVerbose(@"Something unmounted\n");
+//    DDLogVerbose(@"Something unmounted\n");
     if (listDirectories != nil)
         [listDirectories.table reloadData];
     return nil;

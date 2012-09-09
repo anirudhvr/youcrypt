@@ -50,8 +50,8 @@
 }
 
 - (void)continueClicked:(id)sender {
-    NSLog(@" username %@",[preferenceController getPreference:YC_USERREALNAME]);
-    if([[password stringValue] isEqualToString:@""] || 
+//    NSLog(@" username %@",[preferenceController getPreference:YC_USERREALNAME]);
+    if([[password stringValue] isEqualToString:@""] ||
        [[password stringValue] isNotEqualTo:[confirmPassword stringValue]]) {
         
         [msg setTextColor:[NSColor redColor]];

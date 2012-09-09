@@ -276,7 +276,7 @@ void printCloseError(int ret)
 {
     BOOL ret = YES;
     yc::UserAccount ua_to_search(cppString(email), "");
-    NSLog(@"Searching for email %@ in database", email);
+    DDLogVerbose(@"Searching for email %@ in server database", email);
     boost::shared_ptr<ServerConnectionWrapper> sc = [theApp getServerConnection];
     yc::Key k = sc->getPublicKey(ua_to_search);
     if (k.empty) {

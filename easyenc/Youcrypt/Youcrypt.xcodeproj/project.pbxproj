@@ -17,14 +17,7 @@
 		25300E8C15A385BE009CDA08 /* Gmail.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25300E8A15A385BE009CDA08 /* Gmail.xib */; };
 		25300E9015A3BE74009CDA08 /* FirstRunSheetController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 25300E8E15A3BE73009CDA08 /* FirstRunSheetController.mm */; };
 		2537E32E15B0E4E80034E6E3 /* LFCGzipUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 2537E32D15B0E4E80034E6E3 /* LFCGzipUtility.m */; };
-		2537E33F15B101480034E6E3 /* libboost_filesystem-mt.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 2537E32F15B1012F0034E6E3 /* libboost_filesystem-mt.dylib */; };
-		2537E34015B101480034E6E3 /* libboost_serialization-mt.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 2537E33015B1012F0034E6E3 /* libboost_serialization-mt.dylib */; };
-		2537E34115B101480034E6E3 /* libboost_system-mt.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 2537E33115B1012F0034E6E3 /* libboost_system-mt.dylib */; };
-		2537E34F15B126520034E6E3 /* libintl.8.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 2537E34915B125320034E6E3 /* libintl.8.dylib */; };
 		2537E35015B126520034E6E3 /* librlog.5.0.0.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 2537E34A15B125320034E6E3 /* librlog.5.0.0.dylib */; };
-		2537E35115B126520034E6E3 /* librlog.5.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 2537E34B15B125320034E6E3 /* librlog.5.dylib */; };
-		2537E35C15B127300034E6E3 /* libintl.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 2537E35815B1271D0034E6E3 /* libintl.dylib */; };
-		2537E35D15B127300034E6E3 /* librlog.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 2537E35915B1271D0034E6E3 /* librlog.dylib */; };
 		2537E38115B492720034E6E3 /* StartOnLogin.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E635DE8D15AE2BAA00A81117 /* StartOnLogin.framework */; };
 		2537E38815B496400034E6E3 /* StartOnLogin.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = E635DE8D15AE2BAA00A81117 /* StartOnLogin.framework */; };
 		2537E39515B4F1660034E6E3 /* About.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2537E39415B4F1660034E6E3 /* About.xib */; };
@@ -75,7 +68,6 @@
 		E0BF0EBE159838DD002F9FB9 /* ListDirectoriesWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = E0BF0EBC159838DD002F9FB9 /* ListDirectoriesWindow.xib */; };
 		E0C5ACAF15A5670A000FC253 /* lockedfolder2.icns in Resources */ = {isa = PBXBuildFile; fileRef = E0C5ACAE15A56709000FC253 /* lockedfolder2.icns */; };
 		E0C5ACB115A56D0D000FC253 /* logo-512x512-alpha.png in Resources */ = {isa = PBXBuildFile; fileRef = E0C5ACB015A56D0C000FC253 /* logo-512x512-alpha.png */; };
-		E0F85A7B15F10F8200A4D821 /* libboost_iostreams-mt.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E0F85A7A15F10F8200A4D821 /* libboost_iostreams-mt.dylib */; };
 		E603DB9B15AEC19F00ABB170 /* box_closed.png in Resources */ = {isa = PBXBuildFile; fileRef = E603DB9315AEC19F00ABB170 /* box_closed.png */; };
 		E603DB9C15AEC19F00ABB170 /* box_closed2.png in Resources */ = {isa = PBXBuildFile; fileRef = E603DB9415AEC19F00ABB170 /* box_closed2.png */; };
 		E603DB9D15AEC19F00ABB170 /* box_closed3.png in Resources */ = {isa = PBXBuildFile; fileRef = E603DB9515AEC19F00ABB170 /* box_closed3.png */; };
@@ -89,10 +81,6 @@
 		E603DBB615AEC9DE00ABB170 /* AMToolTipTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = E603DBB515AEC9DE00ABB170 /* AMToolTipTableView.m */; };
 		E60AEFC315F894BF00C723FF /* get_dropbox_folder.sh in Resources */ = {isa = PBXBuildFile; fileRef = 25E8BC2315AE4F5F00A323D8 /* get_dropbox_folder.sh */; };
 		E61DF4FC15BA6EC00011A05D /* libssl.1.0.0.dylib in Resources */ = {isa = PBXBuildFile; fileRef = E61DF4FA15BA6E8B0011A05D /* libssl.1.0.0.dylib */; };
-		E61DF4FF15BB48070011A05D /* libiconv.2.dylib in Resources */ = {isa = PBXBuildFile; fileRef = E61DF4FD15BB47DF0011A05D /* libiconv.2.dylib */; };
-		E61DF50615BB49190011A05D /* libboost_filesystem.dylib in Resources */ = {isa = PBXBuildFile; fileRef = E61DF50015BB49080011A05D /* libboost_filesystem.dylib */; };
-		E61DF50715BB49190011A05D /* libboost_serialization.dylib in Resources */ = {isa = PBXBuildFile; fileRef = E61DF50115BB49080011A05D /* libboost_serialization.dylib */; };
-		E61DF50815BB49190011A05D /* libboost_system.dylib in Resources */ = {isa = PBXBuildFile; fileRef = E61DF50215BB49080011A05D /* libboost_system.dylib */; };
 		E61F694115F1AC57009990C6 /* ServerConnectionWrapper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E61F693F15F1AC57009990C6 /* ServerConnectionWrapper.cpp */; };
 		E6310AD415F07A670078F61E /* ServerConnection.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E6310AD215F07A670078F61E /* ServerConnection.cpp */; };
 		E633656315EF24B3003EC0F9 /* concat.c in Sources */ = {isa = PBXBuildFile; fileRef = E633655A15EF24B3003EC0F9 /* concat.c */; };
@@ -106,21 +94,20 @@
 		E633656B15EF2D0E003EC0F9 /* libcppnetlib-uri.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E64AC00B15E724A700D2E046 /* libcppnetlib-uri.a */; };
 		E633656C15EF2D12003EC0F9 /* libyc-encfs-static.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E6D7D2AC15D26AD100780915 /* libyc-encfs-static.a */; };
 		E633656D15EF2D15003EC0F9 /* StartOnLogin.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E635DE8D15AE2BAA00A81117 /* StartOnLogin.framework */; };
-		E633656E15EF2D6E003EC0F9 /* libboost_date_time-mt.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E64AC0F215E7582500D2E046 /* libboost_date_time-mt.dylib */; };
-		E633656F15EF2D6E003EC0F9 /* libboost_program_options-mt.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E64AC0F315E7582500D2E046 /* libboost_program_options-mt.dylib */; };
-		E633657015EF2D6E003EC0F9 /* libboost_regex-mt.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E64AC0F415E7582500D2E046 /* libboost_regex-mt.dylib */; };
-		E633657115EF2D6E003EC0F9 /* libboost_thread-mt.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E64AC0F515E7582500D2E046 /* libboost_thread-mt.dylib */; };
-		E633657315EF2D6F003EC0F9 /* libboost_filesystem-mt.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E633657215EF2D6F003EC0F9 /* libboost_filesystem-mt.dylib */; };
-		E633657815EF2E9E003EC0F9 /* librlog.5.0.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E633657715EF2E9E003EC0F9 /* librlog.5.0.0.dylib */; };
-		E633657A15EF2F00003EC0F9 /* libosxfuse_i64.2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E633657915EF2EFF003EC0F9 /* libosxfuse_i64.2.dylib */; };
+		E63561B215FC61CC00167B1B /* libcrypto.1.0.0.dylib in Resources */ = {isa = PBXBuildFile; fileRef = E65C97AF15FC0F090061A26C /* libcrypto.1.0.0.dylib */; };
+		E63561B615FC62A900167B1B /* libicuuc.48.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E63561B415FC62A800167B1B /* libicuuc.48.dylib */; };
+		E63561B815FC62C100167B1B /* libicuuc.48.dylib in Resources */ = {isa = PBXBuildFile; fileRef = E63561B415FC62A800167B1B /* libicuuc.48.dylib */; };
+		E63561B915FC62EA00167B1B /* libosxfuse_i64.2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E65C97B115FC0F090061A26C /* libosxfuse_i64.2.dylib */; };
+		E63561BE15FC63BF00167B1B /* libicui18n.48.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E63561BD15FC63BE00167B1B /* libicui18n.48.dylib */; };
+		E63561BF15FC63CC00167B1B /* libicui18n.48.dylib in Resources */ = {isa = PBXBuildFile; fileRef = E63561BD15FC63BE00167B1B /* libicui18n.48.dylib */; };
+		E63561C215FC641700167B1B /* libicudata.48.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E63561C115FC641700167B1B /* libicudata.48.dylib */; };
+		E63561C315FC641B00167B1B /* libicudata.48.dylib in Resources */ = {isa = PBXBuildFile; fileRef = E63561C115FC641700167B1B /* libicudata.48.dylib */; };
+		E63561C515FC645400167B1B /* libboost_chrono-mt.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E63561C415FC645300167B1B /* libboost_chrono-mt.dylib */; };
+		E63561C615FC645700167B1B /* libboost_chrono-mt.dylib in Resources */ = {isa = PBXBuildFile; fileRef = E63561C415FC645300167B1B /* libboost_chrono-mt.dylib */; };
 		E64AC03D15E72B3F00D2E046 /* libcppnetlib-client-connections.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E64AC00715E724A700D2E046 /* libcppnetlib-client-connections.a */; };
 		E64AC03E15E72B3F00D2E046 /* libcppnetlib-server-parsers.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E64AC00915E724A700D2E046 /* libcppnetlib-server-parsers.a */; };
 		E64AC03F15E72B3F00D2E046 /* libcppnetlib-uri.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E64AC00B15E724A700D2E046 /* libcppnetlib-uri.a */; };
 		E64AC0F115E7575700D2E046 /* testhttpclient.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E64AC0EF15E7575700D2E046 /* testhttpclient.cpp */; };
-		E64AC0F615E7582500D2E046 /* libboost_date_time-mt.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E64AC0F215E7582500D2E046 /* libboost_date_time-mt.dylib */; };
-		E64AC0F715E7582500D2E046 /* libboost_program_options-mt.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E64AC0F315E7582500D2E046 /* libboost_program_options-mt.dylib */; };
-		E64AC0F815E7582500D2E046 /* libboost_regex-mt.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E64AC0F415E7582500D2E046 /* libboost_regex-mt.dylib */; };
-		E64AC0F915E7582500D2E046 /* libboost_thread-mt.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E64AC0F515E7582500D2E046 /* libboost_thread-mt.dylib */; };
 		E64AC1AD15E7699500D2E046 /* bcrypt_wrapper.c in Sources */ = {isa = PBXBuildFile; fileRef = E64AC1A815E7699500D2E046 /* bcrypt_wrapper.c */; };
 		E64AC1AE15E7699500D2E046 /* bcrypt.c in Sources */ = {isa = PBXBuildFile; fileRef = E64AC1AA15E7699500D2E046 /* bcrypt.c */; };
 		E64AC1AF15E7699500D2E046 /* blowfish.c in Sources */ = {isa = PBXBuildFile; fileRef = E64AC1AB15E7699500D2E046 /* blowfish.c */; };
@@ -133,6 +120,26 @@
 		E64B309415AEE9C300827591 /* MixpanelAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = E64B308D15AEE9C300827591 /* MixpanelAPI.m */; };
 		E64B309515AEE9C300827591 /* MixpanelEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = E64B308F15AEE9C300827591 /* MixpanelEvent.m */; };
 		E65C4B5515ABAD9F00AF9D8E /* processing-22x22.png in Resources */ = {isa = PBXBuildFile; fileRef = E65C4B5415ABAD9F00AF9D8E /* processing-22x22.png */; };
+		E65C978B15FC06080061A26C /* libboost_date_time-mt.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E65C977A15FC06080061A26C /* libboost_date_time-mt.dylib */; };
+		E65C978D15FC06080061A26C /* libboost_filesystem-mt.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E65C977C15FC06080061A26C /* libboost_filesystem-mt.dylib */; };
+		E65C978F15FC06080061A26C /* libboost_iostreams-mt.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E65C977E15FC06080061A26C /* libboost_iostreams-mt.dylib */; };
+		E65C979015FC06080061A26C /* libboost_program_options-mt.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E65C977F15FC06080061A26C /* libboost_program_options-mt.a */; };
+		E65C979115FC06080061A26C /* libboost_program_options-mt.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E65C978015FC06080061A26C /* libboost_program_options-mt.dylib */; };
+		E65C979315FC06080061A26C /* libboost_regex-mt.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E65C978215FC06080061A26C /* libboost_regex-mt.dylib */; };
+		E65C979515FC06080061A26C /* libboost_serialization-mt.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E65C978415FC06080061A26C /* libboost_serialization-mt.dylib */; };
+		E65C979615FC06080061A26C /* libboost_serialization.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E65C978515FC06080061A26C /* libboost_serialization.dylib */; };
+		E65C979815FC06080061A26C /* libboost_system-mt.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E65C978715FC06080061A26C /* libboost_system-mt.dylib */; };
+		E65C979A15FC06080061A26C /* libboost_thread-mt.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E65C978915FC06080061A26C /* libboost_thread-mt.dylib */; };
+		E65C979C15FC063D0061A26C /* libboost_date_time-mt.dylib in Resources */ = {isa = PBXBuildFile; fileRef = E65C977A15FC06080061A26C /* libboost_date_time-mt.dylib */; };
+		E65C979E15FC063D0061A26C /* libboost_filesystem-mt.dylib in Resources */ = {isa = PBXBuildFile; fileRef = E65C977C15FC06080061A26C /* libboost_filesystem-mt.dylib */; };
+		E65C97A015FC063D0061A26C /* libboost_iostreams-mt.dylib in Resources */ = {isa = PBXBuildFile; fileRef = E65C977E15FC06080061A26C /* libboost_iostreams-mt.dylib */; };
+		E65C97A215FC063D0061A26C /* libboost_program_options-mt.dylib in Resources */ = {isa = PBXBuildFile; fileRef = E65C978015FC06080061A26C /* libboost_program_options-mt.dylib */; };
+		E65C97A415FC063D0061A26C /* libboost_regex-mt.dylib in Resources */ = {isa = PBXBuildFile; fileRef = E65C978215FC06080061A26C /* libboost_regex-mt.dylib */; };
+		E65C97A615FC063D0061A26C /* libboost_serialization-mt.dylib in Resources */ = {isa = PBXBuildFile; fileRef = E65C978415FC06080061A26C /* libboost_serialization-mt.dylib */; };
+		E65C97A915FC063D0061A26C /* libboost_system-mt.dylib in Resources */ = {isa = PBXBuildFile; fileRef = E65C978715FC06080061A26C /* libboost_system-mt.dylib */; };
+		E65C97AB15FC063D0061A26C /* libboost_thread-mt.dylib in Resources */ = {isa = PBXBuildFile; fileRef = E65C978915FC06080061A26C /* libboost_thread-mt.dylib */; };
+		E65C97B315FC0F090061A26C /* libcrypto.1.0.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E65C97AF15FC0F090061A26C /* libcrypto.1.0.0.dylib */; };
+		E65C97B515FC0F090061A26C /* libosxfuse_i64.2.dylib in Resources */ = {isa = PBXBuildFile; fileRef = E65C97B115FC0F090061A26C /* libosxfuse_i64.2.dylib */; };
 		E6649C7A15A53CD80096886F /* Encrypt.mm in Sources */ = {isa = PBXBuildFile; fileRef = E6649C7915A53CD80096886F /* Encrypt.mm */; };
 		E6649C8815A642DA0096886F /* logo-513x560-alpha.icns in Resources */ = {isa = PBXBuildFile; fileRef = E6649C8715A642DA0096886F /* logo-513x560-alpha.icns */; };
 		E6649C8E15A706D40096886F /* locked-24x24.png in Resources */ = {isa = PBXBuildFile; fileRef = E6649C8D15A706D40096886F /* locked-24x24.png */; };
@@ -195,8 +202,6 @@
 		E6C046DD15AE2B63004B52E5 /* Sparkle.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = E6C0468015AE1733004B52E5 /* Sparkle.framework */; };
 		E6D72B8615D0936900C2A13F /* rightclickoptions.png in Resources */ = {isa = PBXBuildFile; fileRef = E6D72B8515D0936900C2A13F /* rightclickoptions.png */; };
 		E6D7D2AE15D273F400780915 /* libyc-encfs-static.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E6D7D2AC15D26AD100780915 /* libyc-encfs-static.a */; };
-		E6D7D2B215D27D6700780915 /* libosxfuse_i64.2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E6D7D2B115D27D6700780915 /* libosxfuse_i64.2.dylib */; };
-		E6D7D2B315D27E2400780915 /* libosxfuse_i64.2.dylib in Resources */ = {isa = PBXBuildFile; fileRef = E6D7D2B115D27D6700780915 /* libosxfuse_i64.2.dylib */; };
 		E6D7D2B515D27E9E00780915 /* librlog.5.0.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2537E34A15B125320034E6E3 /* librlog.5.0.0.dylib */; };
 		E6DEDD6915F0F5FB00DD7C80 /* testhttpclient.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E64AC0EF15E7575700D2E046 /* testhttpclient.cpp */; };
 		E6DEDD6A15F0F5FB00DD7C80 /* testhttpclient.h in Sources */ = {isa = PBXBuildFile; fileRef = E64AC0F015E7575700D2E046 /* testhttpclient.h */; };
@@ -208,6 +213,8 @@
 		E6DEDD7015F0F85900DD7C80 /* blowfish.c in Sources */ = {isa = PBXBuildFile; fileRef = E64AC1AB15E7699500D2E046 /* blowfish.c */; };
 		E6DEDD7215F1737A00DD7C80 /* curl-ca-bundle.crt in Resources */ = {isa = PBXBuildFile; fileRef = E6DEDD7115F1737A00DD7C80 /* curl-ca-bundle.crt */; };
 		E6E5821015EF766F00ED4CEE /* SharingGetEmailsView.mm in Sources */ = {isa = PBXBuildFile; fileRef = E6E5820E15EF766F00ED4CEE /* SharingGetEmailsView.mm */; };
+		E6EB3E3F15FCC68400123085 /* libiconv.2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E6EB3E3E15FCC68400123085 /* libiconv.2.dylib */; };
+		E6EB3E4015FCC68B00123085 /* libiconv.2.dylib in Resources */ = {isa = PBXBuildFile; fileRef = E6EB3E3E15FCC68400123085 /* libiconv.2.dylib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -482,14 +489,7 @@
 		25300E8E15A3BE73009CDA08 /* FirstRunSheetController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = FirstRunSheetController.mm; path = sources/FirstRunSheetController.mm; sourceTree = "<group>"; };
 		2537E32C15B0E4E80034E6E3 /* LFCGzipUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LFCGzipUtility.h; path = ../sources/LFCGzipUtility.h; sourceTree = "<group>"; };
 		2537E32D15B0E4E80034E6E3 /* LFCGzipUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LFCGzipUtility.m; path = ../sources/LFCGzipUtility.m; sourceTree = "<group>"; };
-		2537E32F15B1012F0034E6E3 /* libboost_filesystem-mt.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = "libboost_filesystem-mt.dylib"; sourceTree = "<group>"; };
-		2537E33015B1012F0034E6E3 /* libboost_serialization-mt.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = "libboost_serialization-mt.dylib"; sourceTree = "<group>"; };
-		2537E33115B1012F0034E6E3 /* libboost_system-mt.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = "libboost_system-mt.dylib"; sourceTree = "<group>"; };
-		2537E34915B125320034E6E3 /* libintl.8.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libintl.8.dylib; sourceTree = "<group>"; };
 		2537E34A15B125320034E6E3 /* librlog.5.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = librlog.5.0.0.dylib; sourceTree = "<group>"; };
-		2537E34B15B125320034E6E3 /* librlog.5.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = librlog.5.dylib; sourceTree = "<group>"; };
-		2537E35815B1271D0034E6E3 /* libintl.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libintl.dylib; sourceTree = "<group>"; };
-		2537E35915B1271D0034E6E3 /* librlog.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = librlog.dylib; sourceTree = "<group>"; };
 		2537E39415B4F1660034E6E3 /* About.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = About.xib; sourceTree = "<group>"; };
 		2537E39B15B4FD260034E6E3 /* AboutController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AboutController.h; path = sources/AboutController.h; sourceTree = "<group>"; };
 		2537E39C15B4FD260034E6E3 /* AboutController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = AboutController.mm; path = sources/AboutController.mm; sourceTree = "<group>"; };
@@ -533,9 +533,6 @@
 		25C3FE4315A7A804006606DF /* FeedbackSheetController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = FeedbackSheetController.mm; path = sources/FeedbackSheetController.mm; sourceTree = "<group>"; };
 		25C3FE4415A7A804006606DF /* Feedback.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Feedback.xib; sourceTree = "<group>"; };
 		25E8BC2315AE4F5F00A323D8 /* get_dropbox_folder.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = get_dropbox_folder.sh; sourceTree = "<group>"; };
-		25E8BC2F15AE4F7200A323D8 /* libencfs.6.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libencfs.6.dylib; sourceTree = "<group>"; };
-		25E8BC3015AE4F7200A323D8 /* libencfs.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libencfs.dylib; sourceTree = "<group>"; };
-		25E8BC3115AE4F7200A323D8 /* libencfs.la */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = libencfs.la; sourceTree = "<group>"; };
 		25E8BC4715AE6D7F00A323D8 /* youcrypt-overlay.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = "youcrypt-overlay.icns"; sourceTree = "<group>"; };
 		25EE6A5815928D2C008A0DC8 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		25F3D14915923FE800E3383C /* Decrypt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Decrypt.h; path = sources/Decrypt.h; sourceTree = "<group>"; };
@@ -577,7 +574,6 @@
 		E0BF0EBC159838DD002F9FB9 /* ListDirectoriesWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ListDirectoriesWindow.xib; sourceTree = "<group>"; };
 		E0C5ACAE15A56709000FC253 /* lockedfolder2.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = lockedfolder2.icns; sourceTree = "<group>"; };
 		E0C5ACB015A56D0C000FC253 /* logo-512x512-alpha.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "logo-512x512-alpha.png"; sourceTree = "<group>"; };
-		E0F85A7A15F10F8200A4D821 /* libboost_iostreams-mt.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libboost_iostreams-mt.dylib"; path = "/opt/local/lib/libboost_iostreams-mt.dylib"; sourceTree = "<absolute>"; };
 		E603DB9315AEC19F00ABB170 /* box_closed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = box_closed.png; sourceTree = "<group>"; };
 		E603DB9415AEC19F00ABB170 /* box_closed2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = box_closed2.png; sourceTree = "<group>"; };
 		E603DB9515AEC19F00ABB170 /* box_closed3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = box_closed3.png; sourceTree = "<group>"; };
@@ -590,13 +586,7 @@
 		E603DBB015AEC5C400ABB170 /* box_open_48x48.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = box_open_48x48.png; sourceTree = "<group>"; };
 		E603DBB415AEC9DE00ABB170 /* AMToolTipTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AMToolTipTableView.h; path = AMToolTipTableView/AMToolTipTableView.h; sourceTree = "<group>"; };
 		E603DBB515AEC9DE00ABB170 /* AMToolTipTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AMToolTipTableView.m; path = AMToolTipTableView/AMToolTipTableView.m; sourceTree = "<group>"; };
-		E61DF4F415BA69360011A05D /* libencfs.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libencfs.a; sourceTree = "<group>"; };
-		E61DF4F515BA69360011A05D /* libintl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libintl.a; sourceTree = "<group>"; };
 		E61DF4FA15BA6E8B0011A05D /* libssl.1.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libssl.1.0.0.dylib; sourceTree = "<group>"; };
-		E61DF4FD15BB47DF0011A05D /* libiconv.2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libiconv.2.dylib; sourceTree = "<group>"; };
-		E61DF50015BB49080011A05D /* libboost_filesystem.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libboost_filesystem.dylib; sourceTree = "<group>"; };
-		E61DF50115BB49080011A05D /* libboost_serialization.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libboost_serialization.dylib; sourceTree = "<group>"; };
-		E61DF50215BB49080011A05D /* libboost_system.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libboost_system.dylib; sourceTree = "<group>"; };
 		E61F693F15F1AC57009990C6 /* ServerConnectionWrapper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ServerConnectionWrapper.cpp; sourceTree = "<group>"; };
 		E61F694015F1AC57009990C6 /* ServerConnectionWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServerConnectionWrapper.h; sourceTree = "<group>"; };
 		E6310AD215F07A670078F61E /* ServerConnection.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ServerConnection.cpp; sourceTree = "<group>"; };
@@ -610,16 +600,14 @@
 		E633656015EF24B3003EC0F9 /* pwqcheck.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = pwqcheck.c; sourceTree = "<group>"; };
 		E633656115EF24B3003EC0F9 /* wordset_4k.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = wordset_4k.c; sourceTree = "<group>"; };
 		E633656215EF24B3003EC0F9 /* wordset_4k.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = wordset_4k.h; sourceTree = "<group>"; };
-		E633657215EF2D6F003EC0F9 /* libboost_filesystem-mt.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libboost_filesystem-mt.dylib"; path = "../../../../../../opt/local/lib/libboost_filesystem-mt.dylib"; sourceTree = "<group>"; };
-		E633657715EF2E9E003EC0F9 /* librlog.5.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = librlog.5.0.0.dylib; path = ../../../../../../opt/local/lib/librlog.5.0.0.dylib; sourceTree = "<group>"; };
-		E633657915EF2EFF003EC0F9 /* libosxfuse_i64.2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libosxfuse_i64.2.dylib; path = ../../../../libosxfuse_i64.2.dylib; sourceTree = "<group>"; };
+		E63561B415FC62A800167B1B /* libicuuc.48.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libicuuc.48.dylib; sourceTree = "<group>"; };
+		E63561BA15FC62EA00167B1B /* Youcrypt.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = Youcrypt.xcodeproj; sourceTree = "<group>"; };
+		E63561BD15FC63BE00167B1B /* libicui18n.48.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libicui18n.48.dylib; sourceTree = "<group>"; };
+		E63561C115FC641700167B1B /* libicudata.48.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libicudata.48.dylib; sourceTree = "<group>"; };
+		E63561C415FC645300167B1B /* libboost_chrono-mt.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = "libboost_chrono-mt.dylib"; sourceTree = "<group>"; };
 		E64ABFCA15E724A600D2E046 /* CPP-NETLIB.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "CPP-NETLIB.xcodeproj"; path = "cpp-netlib-0.9.4/CPP-NETLIB.xcodeproj"; sourceTree = "<group>"; };
 		E64AC0EF15E7575700D2E046 /* testhttpclient.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = testhttpclient.cpp; sourceTree = "<group>"; };
 		E64AC0F015E7575700D2E046 /* testhttpclient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = testhttpclient.h; sourceTree = "<group>"; };
-		E64AC0F215E7582500D2E046 /* libboost_date_time-mt.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libboost_date_time-mt.dylib"; path = "/opt/local/lib/libboost_date_time-mt.dylib"; sourceTree = "<absolute>"; };
-		E64AC0F315E7582500D2E046 /* libboost_program_options-mt.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libboost_program_options-mt.dylib"; path = "/opt/local/lib/libboost_program_options-mt.dylib"; sourceTree = "<absolute>"; };
-		E64AC0F415E7582500D2E046 /* libboost_regex-mt.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libboost_regex-mt.dylib"; path = "/opt/local/lib/libboost_regex-mt.dylib"; sourceTree = "<absolute>"; };
-		E64AC0F515E7582500D2E046 /* libboost_thread-mt.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libboost_thread-mt.dylib"; path = "/opt/local/lib/libboost_thread-mt.dylib"; sourceTree = "<absolute>"; };
 		E64AC19C15E7698200D2E046 /* document.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = document.h; sourceTree = "<group>"; };
 		E64AC19D15E7698200D2E046 /* filestream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = filestream.h; sourceTree = "<group>"; };
 		E64AC19F15E7698200D2E046 /* pow10.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pow10.h; sourceTree = "<group>"; };
@@ -652,6 +640,18 @@
 		E64B308E15AEE9C300827591 /* MixpanelEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MixpanelEvent.h; path = Mixpanel_fpotter.github.com/MPLib/MixpanelEvent.h; sourceTree = "<group>"; };
 		E64B308F15AEE9C300827591 /* MixpanelEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MixpanelEvent.m; path = Mixpanel_fpotter.github.com/MPLib/MixpanelEvent.m; sourceTree = "<group>"; };
 		E65C4B5415ABAD9F00AF9D8E /* processing-22x22.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "processing-22x22.png"; sourceTree = "<group>"; };
+		E65C977A15FC06080061A26C /* libboost_date_time-mt.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = "libboost_date_time-mt.dylib"; sourceTree = "<group>"; };
+		E65C977C15FC06080061A26C /* libboost_filesystem-mt.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = "libboost_filesystem-mt.dylib"; sourceTree = "<group>"; };
+		E65C977E15FC06080061A26C /* libboost_iostreams-mt.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = "libboost_iostreams-mt.dylib"; sourceTree = "<group>"; };
+		E65C977F15FC06080061A26C /* libboost_program_options-mt.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libboost_program_options-mt.a"; sourceTree = "<group>"; };
+		E65C978015FC06080061A26C /* libboost_program_options-mt.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = "libboost_program_options-mt.dylib"; sourceTree = "<group>"; };
+		E65C978215FC06080061A26C /* libboost_regex-mt.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = "libboost_regex-mt.dylib"; sourceTree = "<group>"; };
+		E65C978415FC06080061A26C /* libboost_serialization-mt.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = "libboost_serialization-mt.dylib"; sourceTree = "<group>"; };
+		E65C978515FC06080061A26C /* libboost_serialization.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libboost_serialization.dylib; sourceTree = "<group>"; };
+		E65C978715FC06080061A26C /* libboost_system-mt.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = "libboost_system-mt.dylib"; sourceTree = "<group>"; };
+		E65C978915FC06080061A26C /* libboost_thread-mt.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = "libboost_thread-mt.dylib"; sourceTree = "<group>"; };
+		E65C97AF15FC0F090061A26C /* libcrypto.1.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libcrypto.1.0.0.dylib; sourceTree = "<group>"; };
+		E65C97B115FC0F090061A26C /* libosxfuse_i64.2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libosxfuse_i64.2.dylib; sourceTree = "<group>"; };
 		E6649C7915A53CD80096886F /* Encrypt.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = Encrypt.mm; path = sources/Encrypt.mm; sourceTree = "<group>"; };
 		E6649C7B15A53CE40096886F /* Encrypt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Encrypt.h; path = sources/Encrypt.h; sourceTree = "<group>"; };
 		E6649C7C15A53CFC0096886F /* libFunctions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = libFunctions.h; path = sources/libFunctions.h; sourceTree = "<group>"; };
@@ -725,13 +725,12 @@
 		E6C046DA15AE29AA004B52E5 /* SSKeychain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSKeychain.m; sourceTree = "<group>"; };
 		E6D72B8515D0936900C2A13F /* rightclickoptions.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = rightclickoptions.png; sourceTree = "<group>"; };
 		E6D7D2A015D26AD100780915 /* yc-encfs.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "yc-encfs.xcodeproj"; path = "yc-encfs/yc-encfs.xcodeproj"; sourceTree = "<group>"; };
-		E6D7D2AF15D27CD100780915 /* librlog.5.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = librlog.5.0.0.dylib; path = lib/librlog.5.0.0.dylib; sourceTree = "<group>"; };
-		E6D7D2B115D27D6700780915 /* libosxfuse_i64.2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libosxfuse_i64.2.dylib; path = lib/libosxfuse_i64.2.dylib; sourceTree = "<group>"; };
 		E6DEDD7115F1737A00DD7C80 /* curl-ca-bundle.crt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "curl-ca-bundle.crt"; sourceTree = "<group>"; };
 		E6E2A0B6159266F6003E3F6C /* YoucryptService.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = YoucryptService.mm; path = sources/YoucryptService.mm; sourceTree = "<group>"; };
 		E6E2A0B7159266F6003E3F6C /* YoucryptService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = YoucryptService.h; path = sources/YoucryptService.h; sourceTree = "<group>"; };
 		E6E5820D15EF766F00ED4CEE /* SharingGetEmailsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SharingGetEmailsView.h; path = sources/SharingGetEmailsView.h; sourceTree = "<group>"; };
 		E6E5820E15EF766F00ED4CEE /* SharingGetEmailsView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = SharingGetEmailsView.mm; path = sources/SharingGetEmailsView.mm; sourceTree = "<group>"; };
+		E6EB3E3E15FCC68400123085 /* libiconv.2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libiconv.2.dylib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -739,22 +738,33 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E64AC0F615E7582500D2E046 /* libboost_date_time-mt.dylib in Frameworks */,
-				E64AC0F715E7582500D2E046 /* libboost_program_options-mt.dylib in Frameworks */,
-				E64AC0F815E7582500D2E046 /* libboost_regex-mt.dylib in Frameworks */,
-				E64AC0F915E7582500D2E046 /* libboost_thread-mt.dylib in Frameworks */,
 				E64AC03D15E72B3F00D2E046 /* libcppnetlib-client-connections.a in Frameworks */,
+				E63561B915FC62EA00167B1B /* libosxfuse_i64.2.dylib in Frameworks */,
 				E64AC03E15E72B3F00D2E046 /* libcppnetlib-server-parsers.a in Frameworks */,
 				E64AC03F15E72B3F00D2E046 /* libcppnetlib-uri.a in Frameworks */,
 				E6D7D2B515D27E9E00780915 /* librlog.5.0.0.dylib in Frameworks */,
-				E6D7D2B215D27D6700780915 /* libosxfuse_i64.2.dylib in Frameworks */,
 				E6D7D2AE15D273F400780915 /* libyc-encfs-static.a in Frameworks */,
 				2537E38115B492720034E6E3 /* StartOnLogin.framework in Frameworks */,
 				E67AC5BA15AF9BE3005A7938 /* QuartzCore.framework in Frameworks */,
 				E6C0468115AE1733004B52E5 /* Sparkle.framework in Frameworks */,
 				25EE6A5915928D2C008A0DC8 /* Security.framework in Frameworks */,
 				256C3560158EA75F00E2BEC4 /* Cocoa.framework in Frameworks */,
-				E0F85A7B15F10F8200A4D821 /* libboost_iostreams-mt.dylib in Frameworks */,
+				E65C978B15FC06080061A26C /* libboost_date_time-mt.dylib in Frameworks */,
+				E65C978D15FC06080061A26C /* libboost_filesystem-mt.dylib in Frameworks */,
+				E65C978F15FC06080061A26C /* libboost_iostreams-mt.dylib in Frameworks */,
+				E65C979015FC06080061A26C /* libboost_program_options-mt.a in Frameworks */,
+				E65C979115FC06080061A26C /* libboost_program_options-mt.dylib in Frameworks */,
+				E65C979315FC06080061A26C /* libboost_regex-mt.dylib in Frameworks */,
+				E65C979515FC06080061A26C /* libboost_serialization-mt.dylib in Frameworks */,
+				E65C979615FC06080061A26C /* libboost_serialization.dylib in Frameworks */,
+				E65C979815FC06080061A26C /* libboost_system-mt.dylib in Frameworks */,
+				E65C979A15FC06080061A26C /* libboost_thread-mt.dylib in Frameworks */,
+				E65C97B315FC0F090061A26C /* libcrypto.1.0.0.dylib in Frameworks */,
+				E63561B615FC62A900167B1B /* libicuuc.48.dylib in Frameworks */,
+				E63561BE15FC63BF00167B1B /* libicui18n.48.dylib in Frameworks */,
+				E63561C215FC641700167B1B /* libicudata.48.dylib in Frameworks */,
+				E63561C515FC645400167B1B /* libboost_chrono-mt.dylib in Frameworks */,
+				E6EB3E3F15FCC68400123085 /* libiconv.2.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -772,13 +782,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E633657A15EF2F00003EC0F9 /* libosxfuse_i64.2.dylib in Frameworks */,
-				E633657815EF2E9E003EC0F9 /* librlog.5.0.0.dylib in Frameworks */,
-				E633657315EF2D6F003EC0F9 /* libboost_filesystem-mt.dylib in Frameworks */,
-				E633656E15EF2D6E003EC0F9 /* libboost_date_time-mt.dylib in Frameworks */,
-				E633656F15EF2D6E003EC0F9 /* libboost_program_options-mt.dylib in Frameworks */,
-				E633657015EF2D6E003EC0F9 /* libboost_regex-mt.dylib in Frameworks */,
-				E633657115EF2D6E003EC0F9 /* libboost_thread-mt.dylib in Frameworks */,
 				E633656D15EF2D15003EC0F9 /* StartOnLogin.framework in Frameworks */,
 				E633656C15EF2D12003EC0F9 /* libyc-encfs-static.a in Frameworks */,
 				E633656A15EF2D0E003EC0F9 /* libcppnetlib-server-parsers.a in Frameworks */,
@@ -807,17 +810,8 @@
 		256C3550158EA75F00E2BEC4 = {
 			isa = PBXGroup;
 			children = (
-				E633657915EF2EFF003EC0F9 /* libosxfuse_i64.2.dylib */,
-				E633657715EF2E9E003EC0F9 /* librlog.5.0.0.dylib */,
-				E633657215EF2D6F003EC0F9 /* libboost_filesystem-mt.dylib */,
-				E64AC0F215E7582500D2E046 /* libboost_date_time-mt.dylib */,
-				E64AC0F315E7582500D2E046 /* libboost_program_options-mt.dylib */,
-				E64AC0F415E7582500D2E046 /* libboost_regex-mt.dylib */,
-				E0F85A7A15F10F8200A4D821 /* libboost_iostreams-mt.dylib */,
-				E64AC0F515E7582500D2E046 /* libboost_thread-mt.dylib */,
+				E63561BA15FC62EA00167B1B /* Youcrypt.xcodeproj */,
 				E64ABFCA15E724A600D2E046 /* CPP-NETLIB.xcodeproj */,
-				E6D7D2B115D27D6700780915 /* libosxfuse_i64.2.dylib */,
-				E6D7D2AF15D27CD100780915 /* librlog.5.0.0.dylib */,
 				E6D7D2A015D26AD100780915 /* yc-encfs.xcodeproj */,
 				E66988C3159D403B002323AD /* StartOnLogin.xcodeproj */,
 				256C356B158EA75F00E2BEC4 /* main.mm */,
@@ -1046,6 +1040,11 @@
 				E633656215EF24B3003EC0F9 /* wordset_4k.h */,
 			);
 			path = passwdqc;
+			sourceTree = "<group>";
+		};
+		E63561BB15FC62EA00167B1B /* Products */ = {
+			isa = PBXGroup;
+			name = Products;
 			sourceTree = "<group>";
 		};
 		E635DE8915AE2BAA00A81117 /* Products */ = {
@@ -1323,24 +1322,25 @@
 		E6C0469E15AE1A58004B52E5 /* lib */ = {
 			isa = PBXGroup;
 			children = (
-				E61DF50015BB49080011A05D /* libboost_filesystem.dylib */,
-				E61DF50115BB49080011A05D /* libboost_serialization.dylib */,
-				E61DF50215BB49080011A05D /* libboost_system.dylib */,
-				E61DF4FD15BB47DF0011A05D /* libiconv.2.dylib */,
+				E6EB3E3E15FCC68400123085 /* libiconv.2.dylib */,
+				E63561C415FC645300167B1B /* libboost_chrono-mt.dylib */,
+				E63561C115FC641700167B1B /* libicudata.48.dylib */,
+				E63561BD15FC63BE00167B1B /* libicui18n.48.dylib */,
+				E63561B415FC62A800167B1B /* libicuuc.48.dylib */,
+				E65C97B115FC0F090061A26C /* libosxfuse_i64.2.dylib */,
+				E65C97AF15FC0F090061A26C /* libcrypto.1.0.0.dylib */,
+				E65C977A15FC06080061A26C /* libboost_date_time-mt.dylib */,
+				E65C977C15FC06080061A26C /* libboost_filesystem-mt.dylib */,
+				E65C977E15FC06080061A26C /* libboost_iostreams-mt.dylib */,
+				E65C977F15FC06080061A26C /* libboost_program_options-mt.a */,
+				E65C978015FC06080061A26C /* libboost_program_options-mt.dylib */,
+				E65C978215FC06080061A26C /* libboost_regex-mt.dylib */,
+				E65C978415FC06080061A26C /* libboost_serialization-mt.dylib */,
+				E65C978515FC06080061A26C /* libboost_serialization.dylib */,
+				E65C978715FC06080061A26C /* libboost_system-mt.dylib */,
+				E65C978915FC06080061A26C /* libboost_thread-mt.dylib */,
 				E61DF4FA15BA6E8B0011A05D /* libssl.1.0.0.dylib */,
-				E61DF4F415BA69360011A05D /* libencfs.a */,
-				E61DF4F515BA69360011A05D /* libintl.a */,
-				2537E35815B1271D0034E6E3 /* libintl.dylib */,
-				2537E35915B1271D0034E6E3 /* librlog.dylib */,
-				2537E32F15B1012F0034E6E3 /* libboost_filesystem-mt.dylib */,
-				2537E33015B1012F0034E6E3 /* libboost_serialization-mt.dylib */,
-				2537E33115B1012F0034E6E3 /* libboost_system-mt.dylib */,
-				2537E34915B125320034E6E3 /* libintl.8.dylib */,
 				2537E34A15B125320034E6E3 /* librlog.5.0.0.dylib */,
-				2537E34B15B125320034E6E3 /* librlog.5.dylib */,
-				25E8BC2F15AE4F7200A323D8 /* libencfs.6.dylib */,
-				25E8BC3015AE4F7200A323D8 /* libencfs.dylib */,
-				25E8BC3115AE4F7200A323D8 /* libencfs.la */,
 			);
 			path = lib;
 			sourceTree = SOURCE_ROOT;
@@ -1421,6 +1421,7 @@
 				256C3557158EA75F00E2BEC4 /* Sources */,
 				256C3558158EA75F00E2BEC4 /* Frameworks */,
 				256C3559158EA75F00E2BEC4 /* Resources */,
+				E63561C715FC685E00167B1B /* ShellScript */,
 				252C3A461593A34A0044EB3C /* CopyFiles */,
 			);
 			buildRules = (
@@ -1500,6 +1501,10 @@
 				{
 					ProductGroup = E6D7D2A115D26AD100780915 /* Products */;
 					ProjectRef = E6D7D2A015D26AD100780915 /* yc-encfs.xcodeproj */;
+				},
+				{
+					ProductGroup = E63561BB15FC62EA00167B1B /* Products */;
+					ProjectRef = E63561BA15FC62EA00167B1B /* Youcrypt.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -1737,21 +1742,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E60AEFC315F894BF00C723FF /* get_dropbox_folder.sh in Resources */,
-				E6D7D2B315D27E2400780915 /* libosxfuse_i64.2.dylib in Resources */,
-				E61DF50615BB49190011A05D /* libboost_filesystem.dylib in Resources */,
-				E61DF50715BB49190011A05D /* libboost_serialization.dylib in Resources */,
-				E61DF50815BB49190011A05D /* libboost_system.dylib in Resources */,
-				E61DF4FF15BB48070011A05D /* libiconv.2.dylib in Resources */,
-				E61DF4FC15BA6EC00011A05D /* libssl.1.0.0.dylib in Resources */,
-				2537E35C15B127300034E6E3 /* libintl.dylib in Resources */,
-				2537E35D15B127300034E6E3 /* librlog.dylib in Resources */,
 				E6C046A115AE1A58004B52E5 /* simple-mailer.py in Resources */,
-				2537E34F15B126520034E6E3 /* libintl.8.dylib in Resources */,
-				2537E35115B126520034E6E3 /* librlog.5.dylib in Resources */,
-				2537E35015B126520034E6E3 /* librlog.5.0.0.dylib in Resources */,
-				2537E33F15B101480034E6E3 /* libboost_filesystem-mt.dylib in Resources */,
-				2537E34015B101480034E6E3 /* libboost_serialization-mt.dylib in Resources */,
-				2537E34115B101480034E6E3 /* libboost_system-mt.dylib in Resources */,
 				256C3570158EA75F00E2BEC4 /* Credits.rtf in Resources */,
 				256C35A9158EAF8700E2BEC4 /* Preferences.xib in Resources */,
 				25F3D14D15923FE800E3383C /* Decrypt.xib in Resources */,
@@ -1817,12 +1808,29 @@
 				254412E515AFB1E60098B8FB /* DBSetup.xib in Resources */,
 				E67AC5C715AFA7AD005A7938 /* Grey_Add_Folder.png in Resources */,
 				E67AC5C915AFB0C4005A7938 /* Grey_Open_Folder.png in Resources */,
+				E63561C615FC645700167B1B /* libboost_chrono-mt.dylib in Resources */,
 				E68F199415B4E265008A90FC /* screenshot-open.png in Resources */,
 				E68F199615B4EE67008A90FC /* screenshot-rightclick.png in Resources */,
 				2537E39515B4F1660034E6E3 /* About.xib in Resources */,
 				E6A3907F15CB3104007388BE /* AskPassphrase.xib in Resources */,
 				E6D72B8615D0936900C2A13F /* rightclickoptions.png in Resources */,
 				E6DEDD7215F1737A00DD7C80 /* curl-ca-bundle.crt in Resources */,
+				E6EB3E4015FCC68B00123085 /* libiconv.2.dylib in Resources */,
+				E63561C315FC641B00167B1B /* libicudata.48.dylib in Resources */,
+				E63561BF15FC63CC00167B1B /* libicui18n.48.dylib in Resources */,
+				E63561B815FC62C100167B1B /* libicuuc.48.dylib in Resources */,
+				E65C97B515FC0F090061A26C /* libosxfuse_i64.2.dylib in Resources */,
+				E65C979C15FC063D0061A26C /* libboost_date_time-mt.dylib in Resources */,
+				E65C979E15FC063D0061A26C /* libboost_filesystem-mt.dylib in Resources */,
+				E65C97A015FC063D0061A26C /* libboost_iostreams-mt.dylib in Resources */,
+				E65C97A215FC063D0061A26C /* libboost_program_options-mt.dylib in Resources */,
+				E65C97A415FC063D0061A26C /* libboost_regex-mt.dylib in Resources */,
+				E65C97A615FC063D0061A26C /* libboost_serialization-mt.dylib in Resources */,
+				E65C97A915FC063D0061A26C /* libboost_system-mt.dylib in Resources */,
+				E65C97AB15FC063D0061A26C /* libboost_thread-mt.dylib in Resources */,
+				E63561B215FC61CC00167B1B /* libcrypto.1.0.0.dylib in Resources */,
+				E61DF4FC15BA6EC00011A05D /* libssl.1.0.0.dylib in Resources */,
+				2537E35015B126520034E6E3 /* librlog.5.0.0.dylib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1849,6 +1857,20 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
+		};
+		E63561C715FC685E00167B1B /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 12;
+			files = (
+			);
+			inputPaths = (
+				"$(TARGET_BUILD_DIR)/$(EXECUTABLE_PATH)",
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "install_name_tool -change /usr/local/lib/librlog.5.0.0.dylib @loader_path/../Resources/librlog.5.0.0.dylib $TARGET_BUILD_DIR/$EXECUTABLE_PATH\ninstall_name_tool -change /usr/local/lib/libosxfuse_i64.2.dylib @loader_path/../Resources/libosxfuse_i64.2.dylib $TARGET_BUILD_DIR/$EXECUTABLE_PATH\ninstall_name_tool -change /opt/local/lib/libcrypto.1.0.0.dylib @loader_path/../Resources/libcrypto.1.0.0.dylib  $TARGET_BUILD_DIR/$EXECUTABLE_PATH\ninstall_name_tool -change /opt/local/lib/libboost_date_time-mt.dylib @loader_path/../Resources/libboost_date_time-mt.dylib $TARGET_BUILD_DIR/$EXECUTABLE_PATH\ninstall_name_tool -change /opt/local/lib/libboost_filesystem-mt.dylib @loader_path/../Resources/libboost_filesystem-mt.dylib $TARGET_BUILD_DIR/$EXECUTABLE_PATH\ninstall_name_tool -change /opt/local/lib/libboost_iostreams-mt.dylib @loader_path/../Resources/libboost_iostreams-mt.dylib $TARGET_BUILD_DIR/$EXECUTABLE_PATH\ninstall_name_tool -change /opt/local/lib/libboost_program_options-mt.dylib @loader_path/../Resources/libboost_program_options-mt.dylib $TARGET_BUILD_DIR/$EXECUTABLE_PATH\ninstall_name_tool -change /opt/local/lib/libboost_regex-mt.dylib @loader_path/../Resources/libboost_regex-mt.dylib $TARGET_BUILD_DIR/$EXECUTABLE_PATH\ninstall_name_tool -change /opt/local/lib/libboost_serialization-mt.dylib @loader_path/../Resources/libboost_serialization-mt.dylib  $TARGET_BUILD_DIR/$EXECUTABLE_PATH\ninstall_name_tool -change /usr/local/lib/libboost_serialization-mt.dylib @loader_path/../Resources/libboost_serialization-mt.dylib $TARGET_BUILD_DIR/$EXECUTABLE_PATH\ninstall_name_tool -change /opt/local/lib/libboost_system-mt.dylib @loader_path/../Resources/libboost_system-mt.dylib $TARGET_BUILD_DIR/$EXECUTABLE_PATH\ninstall_name_tool -change /opt/local/lib/libboost_thread-mt.dylib @loader_path/../Resources/libboost_thread-mt.dylib  $TARGET_BUILD_DIR/$EXECUTABLE_PATH\ninstall_name_tool -change /opt/local/lib/libicuuc.48.dylib @loader_path/../Resources/libicuuc.48.dylib $TARGET_BUILD_DIR/$EXECUTABLE_PATH\ninstall_name_tool -change /opt/local/lib/libicui18n.48.dylib @loader_path/../Resources/libicui18n.48.dylib  $TARGET_BUILD_DIR/$EXECUTABLE_PATH\ninstall_name_tool -change /opt/local/lib/libicudata.48.dylib @loader_path/../Resources/libicudata.48.dylib $TARGET_BUILD_DIR/$EXECUTABLE_PATH\ninstall_name_tool -change /opt/local/lib/libboost_chrono-mt.dylib @loader_path/../Resources/libboost_chrono-mt.dylib  $TARGET_BUILD_DIR/$EXECUTABLE_PATH";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -2013,7 +2035,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				"INFOPLIST_FILE[sdk=*]" = Youcrypt.plist;
-				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = (
 					"-Wno-unused-variable",
@@ -2043,7 +2065,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				"INFOPLIST_FILE[sdk=*]" = Youcrypt.plist;
-				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				OTHER_CFLAGS = (
 					"-Wno-unused-variable",
 					"-Wno-deprecated-writable-strings",
@@ -2083,9 +2105,9 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/lib\"",
-					/opt/local/lib,
-					/usr/local/lib,
 				);
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = (
 					"-Wunused-variable",
 					"-Wdeprecated-writable-strings",
@@ -2110,10 +2132,11 @@
 					"-lfuse_ino64",
 					"-Wl,-search_paths_first",
 					"-Wl,-headerpad_max_install_names",
+					"-lssl",
+					"-lcrypto",
 				);
-				"OTHER_LDFLAGS[arch=*]" = "-lz";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = macosx10.7;
+				SDKROOT = macosx;
 				USER_HEADER_SEARCH_PATHS = "";
 				WRAPPER_EXTENSION = app;
 			};
@@ -2150,9 +2173,9 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/lib\"",
-					/opt/local/lib,
-					/usr/local/lib,
 				);
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = (
 					"-Wunused-variable",
 					"-Wdeprecated-writable-strings",
@@ -2175,10 +2198,13 @@
 					"-lz",
 					"-lrlog",
 					"-lfuse_ino64",
+					"-Wl,-search_paths_first",
+					"-Wl,-headerpad_max_install_names",
+					"-lssl",
+					"-lcrypto",
 				);
-				"OTHER_LDFLAGS[arch=*]" = "-lz";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = macosx10.7;
+				SDKROOT = macosx;
 				USER_HEADER_SEARCH_PATHS = "";
 				WRAPPER_EXTENSION = app;
 			};

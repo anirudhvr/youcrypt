@@ -57,7 +57,7 @@
 
 -(IBAction)closeButtonClicked:(id) sender
 {
-    NSLog(@"close button clicked");
+//    NSLog(@"close button clicked");
 }
 
 -(IBAction)goClicked:(id) sender {

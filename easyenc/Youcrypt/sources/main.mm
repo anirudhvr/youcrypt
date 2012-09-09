@@ -9,7 +9,8 @@
 
 #import <Cocoa/Cocoa.h>
 #import "libFunctions.h"
-#include "testhttpclient.h"
+#include <stdlib.h>
+#include <string.h>
 
 int main(int argc, char *argv[])
 {
