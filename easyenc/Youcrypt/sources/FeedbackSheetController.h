@@ -10,14 +10,14 @@
 
 @interface FeedbackSheetController : JCSSheetController
 
-@property (nonatomic, weak) IBOutlet NSTextField *message;
-@property (nonatomic, weak) IBOutlet NSButton *anonymize;
-@property (nonatomic, weak) IBOutlet NSButton *logfiles;
-@property (nonatomic, weak) IBOutlet NSTextField *progressMessage;
+@property (atomic, strong) IBOutlet NSTextField *message;
+@property (atomic, strong) IBOutlet NSButton *anonymize;
+@property (atomic, strong) IBOutlet NSButton *logfiles;
+@property (atomic, strong) IBOutlet NSTextField *progressMessage;
 
-@property (nonatomic, weak) IBOutlet NSButton *isBug;
-@property (nonatomic, weak) IBOutlet NSButton *isFeature;
-@property (nonatomic, weak) IBOutlet NSButton *isSuggestion;
+@property (atomic, strong) IBOutlet NSButton *isBug;
+@property (atomic, strong) IBOutlet NSButton *isFeature;
+@property (atomic, strong) IBOutlet NSButton *isSuggestion;
 
 
 -(IBAction)send:(id)sender;

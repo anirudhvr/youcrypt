@@ -48,8 +48,17 @@
     [theApp.listDirectories.sharingPopover close];
 }
 
+- (void)updateStatusMessage:(NSNotification*)notification
+{
+    [errmsg setStringValue:[[notification userInfo] objectForKey:@"message"]];
+    [NSThread sleepForTimeInterval:0.5f];
+}
+
 - (IBAction)shareButtonClicked:(id)sender
 {
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateStatusMessage:) name:YC_KEYOPS_NOTIFICATION object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateStatusMessage:) name:YC_SERVEROPS_NOTIFICATION object:nil];
+    
     emailStatus = NO;
     NSString *e = [emailField stringValue];
     NSString *m = [emailMessageField stringValue];
@@ -65,6 +74,7 @@
     
     if ([_listDirWindow performShare:e message:m]) {
         [errmsg setStringValue:[NSString stringWithFormat:@"Successfully added user %@", e]];
+        [errmsg display];
         // Wait for a while for user to read msg
         [NSThread sleepForTimeInterval:1.0f]; 
         [theApp.listDirectories.sharingPopover close];
@@ -72,12 +82,9 @@
         [emailField setStringValue:@""];
         [emailMessageField setStringValue:@""];
         [errmsg setStringValue:@""];
-        
-        return;
-    } else {
-        [errmsg setStringValue:[NSString stringWithFormat:@"Error adding user %@", e]];
-        return;
+        [[NSNotificationCenter defaultCenter] removeObserver:self];
     }
+    
     
 //    [super goToNextView];
 }

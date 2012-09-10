@@ -46,7 +46,17 @@
     //[email setStringValue:[preferenceController getPreference:YC_USEREMAIL]];
     // Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
     
-    [[[NSWorkspace sharedWorkspace] notificationCenter] addObserver:self selector:@selector(updateStatusMessage:) name:@"RegistrationLinkedViewUpdateStatus" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateStatusMessage:) name:YC_KEYOPS_NOTIFICATION object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateStatusMessage:) name:YC_SERVEROPS_NOTIFICATION object:nil];
+}
+
+- (void)updateStatusMessage:(NSNotification*)notif
+{
+    NSDictionary *userInfo = notif.userInfo;
+    [msg setStringValue:[NSString stringWithFormat:@"%@\n%@", [msg stringValue], [userInfo objectForKey:@"message"]]];
+    [msg display];
+    [NSThread sleepForTimeInterval:0.1f];
 }
 
 - (void)continueClicked:(id)sender {
@@ -66,19 +76,11 @@
         return;
     } else {
         
-//        NSError *err;
-//        if (![theApp.passphraseManager setPassphrase:[password stringValue] error:&err]) {
-//            [msg setStringValue:[@"Insecure password: " stringByAppendingString:[err localizedDescription]]];
-//            [password setFocusRingType:NSFocusRingTypeExterior];
-//            [confirmPassword setFocusRingType:NSFocusRingTypeExterior];
-//            return;
-//        }
-//              
-        //[preferenceController setPreference:[email stringValue] value:YC_USEREMAIL];
-        //[preferenceController setPreference:[name stringValue] value:YC_USERREALNAME];
-        [[NSUserDefaults standardUserDefaults] setValue:[name stringValue] forKey:YC_USERREALNAME];
-        [[NSUserDefaults standardUserDefaults] setValue:[email stringValue] forKey:YC_USEREMAIL];
-        [[NSUserDefaults standardUserDefaults] synchronize];
+        [preferenceController setPreference:YC_USEREMAIL value:[email stringValue]];
+        [preferenceController setPreference:YC_USERREALNAME value:[name stringValue]];
+//        [[NSUserDefaults standardUserDefaults] setValue:[name stringValue] forKey:YC_USERREALNAME];
+//        [[NSUserDefaults standardUserDefaults] setValue:[email stringValue] forKey:YC_USEREMAIL];
+//        [[NSUserDefaults standardUserDefaults] synchronize];
         
         // [libFunctions registerWithKeychain:[password stringValue]:@"Youcrypt"];
         
@@ -89,7 +91,10 @@
         }
     }
     
+    [[NSNotificationCenter defaultCenter] removeObserver:self]; // Removes from all queues
+    
     [super goToNextView];
+    
 }
 
 

@@ -31,7 +31,7 @@
 									<key>Mode</key>
 									<integer>1</integer>
 									<key>Path</key>
-									<string>/Users/avr/code/easyenc/easyenc/Youcrypt/packaging/youcrypt-mpkg/YouCrypt-0.1/OSXFUSE.pkg/Contents/Resources/License.rtf</string>
+									<string>/Users/avr/code/easyenc/easyenc/Youcrypt/packaging/youcrypt-mpkg/YouCrypt/OSXFUSE.pkg/Contents/Resources/License.rtf</string>
 								</dict>
 							</dict>
 							<key>ReadMe</key>
@@ -51,7 +51,7 @@
 									<key>Mode</key>
 									<integer>1</integer>
 									<key>Path</key>
-									<string>/Users/avr/code/easyenc/easyenc/Youcrypt/packaging/youcrypt-mpkg/YouCrypt-0.1/OSXFUSE.pkg/Contents/Resources/Welcome.rtf</string>
+									<string>/Users/avr/code/easyenc/easyenc/Youcrypt/packaging/youcrypt-mpkg/YouCrypt/OSXFUSE.pkg/Contents/Resources/Welcome.rtf</string>
 								</dict>
 							</dict>
 						</dict>
@@ -69,7 +69,7 @@
 							<key>Imported Package</key>
 							<true/>
 							<key>Package Path</key>
-							<string>/Users/avr/code/easyenc/easyenc/Youcrypt/packaging/youcrypt-mpkg/YouCrypt-0.1/OSXFUSE.pkg</string>
+							<string>/Users/avr/code/easyenc/easyenc/Youcrypt/packaging/youcrypt-mpkg/YouCrypt/OSXFUSE.pkg</string>
 						</dict>
 						<key>Plugins</key>
 						<dict>
@@ -127,7 +127,7 @@
 								<array>
 									<dict>
 										<key>Path</key>
-										<string>/Users/avr/code/easyenc/easyenc/Youcrypt/packaging/youcrypt-mpkg/YouCrypt-0.1/OSXFUSE.pkg/Contents/Resources/choices.xml</string>
+										<string>/Users/avr/code/easyenc/easyenc/Youcrypt/packaging/youcrypt-mpkg/YouCrypt/OSXFUSE.pkg/Contents/Resources/choices.xml</string>
 										<key>Status</key>
 										<true/>
 									</dict>
@@ -138,7 +138,7 @@
 								<key>IFInstallationScriptsPostflight</key>
 								<dict>
 									<key>Path</key>
-									<string>/Users/avr/code/easyenc/easyenc/Youcrypt/packaging/youcrypt-mpkg/YouCrypt-0.1/OSXFUSE.pkg/Contents/Resources/postflight</string>
+									<string>/Users/avr/code/easyenc/easyenc/Youcrypt/packaging/youcrypt-mpkg/YouCrypt/OSXFUSE.pkg/Contents/Resources/postflight</string>
 									<key>Status</key>
 									<true/>
 								</dict>
@@ -316,7 +316,7 @@
 							<key>Imported Options</key>
 							<dict>
 								<key>IFPkgFlagInstalledSize</key>
-								<integer>17080</integer>
+								<integer>59496</integer>
 							</dict>
 							<key>Imported Package</key>
 							<true/>
@@ -663,7 +663,7 @@
 						<key>IFPkgDescriptionTitle</key>
 						<string>YouCrypt</string>
 						<key>IFPkgDescriptionVersion</key>
-						<string>0.15</string>
+						<string>0.22</string>
 					</dict>
 				</dict>
 				<key>Display Information</key>
@@ -671,7 +671,7 @@
 					<key>CFBundleGetInfoString</key>
 					<string>YouCrypt Copyrights © 2012 Nouvou Inc.</string>
 					<key>CFBundleIconFile</key>
-					<string></string>
+					<string>/Users/avr/code/easyenc/easyenc/Youcrypt/images/logo-512x512-alpha.icns</string>
 					<key>CFBundleIconFile Path Type</key>
 					<integer>1</integer>
 					<key>CFBundleIdentifier</key>
@@ -679,14 +679,14 @@
 					<key>CFBundleName</key>
 					<string>YouCrypt</string>
 					<key>CFBundleShortVersionString</key>
-					<string>0.15</string>
+					<string>0.22</string>
 				</dict>
 				<key>Version</key>
 				<dict>
 					<key>IFMajorVersion</key>
 					<integer>0</integer>
 					<key>IFMinorVersion</key>
-					<integer>15</integer>
+					<integer>22</integer>
 				</dict>
 			</dict>
 		</dict>

@@ -16,12 +16,12 @@
     NSString *stat;
 }
 
-@property (nonatomic, weak) IBOutlet NSTextField *sourcePath;
-@property (nonatomic, weak) IBOutlet NSTextField *mountPath;
-@property (nonatomic, weak) IBOutlet NSTextField *status;
-@property (nonatomic, weak) IBOutlet NSTextField *mountedDate;
-@property (nonatomic, weak) IBOutlet NSTextField *openedByUser;
-@property (nonatomic, weak) IBOutlet NSButton *openMountedPath;
+@property (atomic, strong) IBOutlet NSTextField *sourcePath;
+@property (atomic, strong) IBOutlet NSTextField *mountPath;
+@property (atomic, strong) IBOutlet NSTextField *status;
+@property (atomic, strong) IBOutlet NSTextField *mountedDate;
+@property (atomic, strong) IBOutlet NSTextField *openedByUser;
+@property (atomic, strong) IBOutlet NSButton *openMountedPath;
 
 @property (nonatomic, copy) NSString *sp;
 @property (nonatomic, copy) NSString *mp;

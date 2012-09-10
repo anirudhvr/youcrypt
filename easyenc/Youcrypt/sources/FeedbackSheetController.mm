@@ -72,11 +72,11 @@
     
     NSString *subject = @"subject='";
     if ([isBug state])
-        subject = [subject stringByAppendingString:@"[Bug]"];
+        subject = [subject stringByAppendingString:@"[Bug] "];
     if ([isFeature state])
-        subject = [subject stringByAppendingString:@"[Feature]"];
+        subject = [subject stringByAppendingString:@"[Feature] "];
     if ([isSuggestion state])
-        subject = [subject stringByAppendingString:@"[Suggestion]"];
+        subject = [subject stringByAppendingString:@"[Suggestion] "];
     
     subject = [subject stringByAppendingString:@"YouCrypt Feedback'"];
 
@@ -87,8 +87,8 @@
     
     NSMutableArray *args = [NSMutableArray arrayWithObjects: 
                      @"-s", @"-k", 
-                     @"--user", @"api:key-67fgovcfrggd6y4l02ucpz-av4b22i26",
-                     @"https://api.mailgun.net/v2/cloudclear.mailgun.org/messages",
+                     @"--user", YC_MAILGUN_API_KEY,
+                     YC_MAILGUN_URL,
                      @"-F", curlEmail,
                      @"-F", @"to=\"feedback@youcrypt.com\"",
                      @"-F", subject,
@@ -128,7 +128,7 @@
         
         [fh closeFile];
     } else {
-        DDLogInfo(@"Compression FAILED");
+        DDLogInfo(@"Sending feedback failed");
     }
     
     NSError *error = nil;

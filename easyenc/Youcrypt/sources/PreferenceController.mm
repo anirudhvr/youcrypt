@@ -9,7 +9,6 @@
 #import "PreferenceController.h"
 #import "PassphraseSheetController.h"
 #import "GmailSheetController.h"
-#import "FirstRunSheetController.h"
 #import <StartOnLogin/StartOnLogin.h>
 #import "libFunctions.h"
 #import "XMLDictionary.h"
@@ -21,7 +20,6 @@
 @synthesize passphraseSheetController;
 @synthesize gmailSheetController;
 @synthesize changePassphraseButton;
-@synthesize firstRunSheetController;
 
 - (id)init 
 {
@@ -35,25 +33,8 @@
     preferences = [[NSMutableDictionary alloc] init];
     passphraseSheetController = [[PassphraseSheetController alloc] init];
     gmailSheetController = [[GmailSheetController alloc] init];
-    firstRunSheetController = [[FirstRunSheetController alloc] init];
     [self readPreferences];
     return self;
-}
-
-- (id)getPreference:(NSString*)key
-{
-    return [preferences objectForKey:key];
-}
-
-- (void)setPreference:(NSString*)key value:(id)val
-{
-//    NSLog(@"setPref %@ %@",key,val);
-    [preferences setObject:val forKey:key];
-}
-
-- (void)removePreference:(NSString*)key
-{
-    [preferences removeObjectForKey:key];
 }
 
 - (void) readPreferences
@@ -105,6 +86,24 @@
     }
 }
 
+
+- (id)getPreference:(NSString*)key
+{
+    return [preferences objectForKey:key];
+}
+
+- (void)setPreference:(NSString*)key value:(id)val
+{
+//    NSLog(@"setPref %@ %@",key,val);
+    [preferences setObject:val forKey:key];
+}
+
+- (void)removePreference:(NSString*)key
+{
+    [preferences removeObjectForKey:key];
+}
+
+
 - (void) savePreferences
 {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -116,8 +115,6 @@
 
 - (void)awakeFromNib
 {	
-    
-
     /**
      * Set UI values to match prefs read from NSUserDEfaults
      */
@@ -325,23 +322,6 @@
     }];
 }
 
-
--(void)showFirstRun
-{
-    [tabView selectTabViewItem:[tabView tabViewItemAtIndex:1]];
-
-    [firstRunSheetController beginSheetModalForWindow:self.window completionHandler:^(NSUInteger returnCode) {
-        if (returnCode == kSheetReturnedSave) {
-            DDLogVerbose(@"showFirstRun: First run done");
-            [self.window close];
-        } else if (returnCode == kSheetReturnedCancel) {
-            DDLogVerbose(@"showFirstRun: First Run cancelled :( ");
-        } else {
-            DDLogVerbose(@"showFirstRun: Unknown return code");
-        }
-    }];
-
-}
 
 
 static NSArray *openFiles()

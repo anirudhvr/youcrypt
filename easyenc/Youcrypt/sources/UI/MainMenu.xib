@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <archive type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="8.00">
 	<data>
-		<int key="IBDocument.SystemTarget">1070</int>
+		<int key="IBDocument.SystemTarget">1060</int>
 		<string key="IBDocument.SystemVersion">11E53</string>
 		<string key="IBDocument.InterfaceBuilderVersion">2549</string>
 		<string key="IBDocument.AppKitVersion">1138.47</string>
@@ -863,12 +863,9 @@
 						<string key="openFeedbackPage:">id</string>
 						<string key="openHelpPage:">id</string>
 						<string key="showAboutWindow:">id</string>
-						<string key="showDecryptWindow:path:mountPoint:">id</string>
-						<string key="showEncryptWindow:path:">id</string>
 						<string key="showListDirectories:">id</string>
 						<string key="showMainApp:">id</string>
 						<string key="showPreferencePanel:">id</string>
-						<string key="showRestoreWindow:path:">id</string>
 						<string key="terminateApp:">id</string>
 						<string key="windowShouldClose:">id</string>
 					</dictionary>
@@ -885,14 +882,6 @@
 							<string key="name">showAboutWindow:</string>
 							<string key="candidateClassName">id</string>
 						</object>
-						<object class="IBActionInfo" key="showDecryptWindow:path:mountPoint:">
-							<string key="name">showDecryptWindow:path:mountPoint:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="showEncryptWindow:path:">
-							<string key="name">showEncryptWindow:path:</string>
-							<string key="candidateClassName">id</string>
-						</object>
 						<object class="IBActionInfo" key="showListDirectories:">
 							<string key="name">showListDirectories:</string>
 							<string key="candidateClassName">id</string>
@@ -903,10 +892,6 @@
 						</object>
 						<object class="IBActionInfo" key="showPreferencePanel:">
 							<string key="name">showPreferencePanel:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="showRestoreWindow:path:">
-							<string key="name">showRestoreWindow:path:</string>
 							<string key="candidateClassName">id</string>
 						</object>
 						<object class="IBActionInfo" key="terminateApp:">
@@ -1014,7 +999,7 @@
 		<string key="IBDocument.TargetRuntimeIdentifier">IBCocoaFramework</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginDeclaredDependencies">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin.macosx</string>
-			<integer value="1070" key="NS.object.0"/>
+			<real value="1060" key="NS.object.0"/>
 		</object>
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>

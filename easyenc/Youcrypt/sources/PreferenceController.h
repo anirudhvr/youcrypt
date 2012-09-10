@@ -13,7 +13,6 @@
 @class StartOnLogin;
 @class PassphraseSheetController;
 @class GmailSheetController;
-@class FirstRunSheetController;
 
 @interface PreferenceController : NSWindowController <NSAlertDelegate> {
     
@@ -47,7 +46,6 @@
     IBOutlet NSButton *changePassphraseButton;
     
     GmailSheetController *gmailSheetController;
-    FirstRunSheetController *firstRunSheetController;
     
     // Services preferences
     IBOutlet NSPathControl *dropboxLocation;
@@ -61,7 +59,6 @@
 // changing passphrase stuff
 @property (nonatomic, strong) PassphraseSheetController *passphraseSheetController;
 @property (nonatomic, strong) GmailSheetController *gmailSheetController;
-@property (nonatomic, strong) FirstRunSheetController *firstRunSheetController;
 
 @property (nonatomic, strong) IBOutlet NSButton *changePassphraseButton;
 @property (nonatomic, strong) BoxFSA *boxClient;
@@ -102,7 +99,6 @@
 - (IBAction)linkGmailAccount:(id)sender;
 
 - (void) sendEmail;
-- (void) showFirstRun;
 
 // start at login
 - (NSURL *)appURL;  

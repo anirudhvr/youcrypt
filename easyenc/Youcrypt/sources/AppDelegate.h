@@ -26,7 +26,6 @@ using namespace youcrypt;
 @class ConfigDirectory;
 @class YoucryptService;
 @class ListDirectoriesWindow;
-@class FirstRunSheetController;
 @class FeedbackSheetController;
 @class keyDownView;
 @class DDFileLogger;
@@ -66,7 +65,6 @@ class youcrypt::MacUISettings;
     boost::shared_ptr<youcrypt::ServerConnectionWrapper> serverConnectionWrapper;
     
     
-    FirstRunSheetController *firstRunSheetController;
     FeedbackSheetController *feedbackSheetController;
     keyDownView *keyDown;
 
@@ -102,9 +100,6 @@ class youcrypt::MacUISettings;
 
 - (IBAction)openFeedbackPage:(id)sender;
 
-//- (void)showFirstRunSheet;
-//- (void)showFirstRun;
-
 // Enc and Dec
 - (IBAction)showListDirectories:(id)sender;
 - (IBAction)openFeedbackPage:(id)sender;
@@ -137,6 +132,10 @@ createIfNotFound:(BOOL)val
 -(boost::shared_ptr<UserAccount>) getUserAccount;
 -(boost::shared_ptr<ServerConnectionWrapper>) getServerConnection;
 
+- (NSString*)sendEmail:(NSString*)emailaddr
+                  from:(NSString*)fromemail
+               subject:(NSString*)subj
+               message:(NSString*)msg;
 
 
 
@@ -144,7 +143,6 @@ createIfNotFound:(BOOL)val
 //@property (readonly) NSMutableArray *directories;
 @property (assign) IBOutlet NSWindow *window;
 @property (nonatomic,strong) ListDirectoriesWindow *listDirectories;
-@property (nonatomic, strong) FirstRunSheetController *firstRunSheetController;
 @property (nonatomic, strong) FeedbackSheetController *feedbackSheetController;
 @property (nonatomic, strong) keyDownView *keyDown;
 @property (nonatomic, strong) PreferenceController *preferenceController;

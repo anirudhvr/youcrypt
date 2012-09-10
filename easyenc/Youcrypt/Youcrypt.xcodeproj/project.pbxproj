@@ -15,7 +15,6 @@
 		252C3A6C1593CBA50044EB3C /* DDTTYLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 252C3A5D1593C6A80044EB3C /* DDTTYLogger.m */; };
 		25300E8B15A385BE009CDA08 /* GmailSheetController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 25300E8915A385BE009CDA08 /* GmailSheetController.mm */; };
 		25300E8C15A385BE009CDA08 /* Gmail.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25300E8A15A385BE009CDA08 /* Gmail.xib */; };
-		25300E9015A3BE74009CDA08 /* FirstRunSheetController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 25300E8E15A3BE73009CDA08 /* FirstRunSheetController.mm */; };
 		2537E32E15B0E4E80034E6E3 /* LFCGzipUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 2537E32D15B0E4E80034E6E3 /* LFCGzipUtility.m */; };
 		2537E35015B126520034E6E3 /* librlog.5.0.0.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 2537E34A15B125320034E6E3 /* librlog.5.0.0.dylib */; };
 		2537E38115B492720034E6E3 /* StartOnLogin.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E635DE8D15AE2BAA00A81117 /* StartOnLogin.framework */; };
@@ -171,7 +170,6 @@
 		E6BEB71A15A522A000878D4B /* logo-grayscale-alpha.png in Resources */ = {isa = PBXBuildFile; fileRef = E6BEB71915A522A000878D4B /* logo-grayscale-alpha.png */; };
 		E6BEB71C15A5290300878D4B /* logo-color-alpha.png in Resources */ = {isa = PBXBuildFile; fileRef = E6BEB71B15A5290300878D4B /* logo-color-alpha.png */; };
 		E6C0468115AE1733004B52E5 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E6C0468015AE1733004B52E5 /* Sparkle.framework */; };
-		E6C0468D15AE18B4004B52E5 /* FirstRunSheetController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E6C0468A15AE18B4004B52E5 /* FirstRunSheetController.xib */; };
 		E6C0468E15AE18B4004B52E5 /* GmailSheetController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E6C0468B15AE18B4004B52E5 /* GmailSheetController.xib */; };
 		E6C0468F15AE18B4004B52E5 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = E6C0468C15AE18B4004B52E5 /* MainMenu.xib */; };
 		E6C0469315AE1972004B52E5 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = E6C0469115AE1972004B52E5 /* InfoPlist.strings */; };
@@ -215,6 +213,8 @@
 		E6E5821015EF766F00ED4CEE /* SharingGetEmailsView.mm in Sources */ = {isa = PBXBuildFile; fileRef = E6E5820E15EF766F00ED4CEE /* SharingGetEmailsView.mm */; };
 		E6EB3E3F15FCC68400123085 /* libiconv.2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E6EB3E3E15FCC68400123085 /* libiconv.2.dylib */; };
 		E6EB3E4015FCC68B00123085 /* libiconv.2.dylib in Resources */ = {isa = PBXBuildFile; fileRef = E6EB3E3E15FCC68400123085 /* libiconv.2.dylib */; };
+		E6EB3E4315FDE69000123085 /* screenshot-share.png in Resources */ = {isa = PBXBuildFile; fileRef = E6EB3E4115FDE69000123085 /* screenshot-share.png */; };
+		E6EB3E4415FDE69000123085 /* screenshot-window.png in Resources */ = {isa = PBXBuildFile; fileRef = E6EB3E4215FDE69000123085 /* screenshot-window.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -485,8 +485,6 @@
 		25300E8815A385BD009CDA08 /* GmailSheetController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GmailSheetController.h; path = sources/GmailSheetController.h; sourceTree = "<group>"; };
 		25300E8915A385BE009CDA08 /* GmailSheetController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = GmailSheetController.mm; path = sources/GmailSheetController.mm; sourceTree = "<group>"; };
 		25300E8A15A385BE009CDA08 /* Gmail.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Gmail.xib; sourceTree = "<group>"; };
-		25300E8D15A3BE73009CDA08 /* FirstRunSheetController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FirstRunSheetController.h; path = sources/FirstRunSheetController.h; sourceTree = "<group>"; };
-		25300E8E15A3BE73009CDA08 /* FirstRunSheetController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = FirstRunSheetController.mm; path = sources/FirstRunSheetController.mm; sourceTree = "<group>"; };
 		2537E32C15B0E4E80034E6E3 /* LFCGzipUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LFCGzipUtility.h; path = ../sources/LFCGzipUtility.h; sourceTree = "<group>"; };
 		2537E32D15B0E4E80034E6E3 /* LFCGzipUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LFCGzipUtility.m; path = ../sources/LFCGzipUtility.m; sourceTree = "<group>"; };
 		2537E34A15B125320034E6E3 /* librlog.5.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = librlog.5.0.0.dylib; sourceTree = "<group>"; };
@@ -694,7 +692,6 @@
 		E6BEB71915A522A000878D4B /* logo-grayscale-alpha.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "logo-grayscale-alpha.png"; sourceTree = "<group>"; };
 		E6BEB71B15A5290300878D4B /* logo-color-alpha.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "logo-color-alpha.png"; sourceTree = "<group>"; };
 		E6C0468015AE1733004B52E5 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Sparkle.framework; sourceTree = "<group>"; };
-		E6C0468A15AE18B4004B52E5 /* FirstRunSheetController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FirstRunSheetController.xib; sourceTree = "<group>"; };
 		E6C0468B15AE18B4004B52E5 /* GmailSheetController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GmailSheetController.xib; sourceTree = "<group>"; };
 		E6C0468C15AE18B4004B52E5 /* MainMenu.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainMenu.xib; sourceTree = "<group>"; };
 		E6C0469215AE1972004B52E5 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -731,6 +728,8 @@
 		E6E5820D15EF766F00ED4CEE /* SharingGetEmailsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SharingGetEmailsView.h; path = sources/SharingGetEmailsView.h; sourceTree = "<group>"; };
 		E6E5820E15EF766F00ED4CEE /* SharingGetEmailsView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = SharingGetEmailsView.mm; path = sources/SharingGetEmailsView.mm; sourceTree = "<group>"; };
 		E6EB3E3E15FCC68400123085 /* libiconv.2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libiconv.2.dylib; sourceTree = "<group>"; };
+		E6EB3E4115FDE69000123085 /* screenshot-share.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "screenshot-share.png"; sourceTree = "<group>"; };
+		E6EB3E4215FDE69000123085 /* screenshot-window.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "screenshot-window.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -900,7 +899,6 @@
 			isa = PBXGroup;
 			children = (
 				254412E415AFB1E60098B8FB /* DBSetup.xib */,
-				E6C0468A15AE18B4004B52E5 /* FirstRunSheetController.xib */,
 				E6C0468B15AE18B4004B52E5 /* GmailSheetController.xib */,
 				E6C0468C15AE18B4004B52E5 /* MainMenu.xib */,
 				25C3FE4415A7A804006606DF /* Feedback.xib */,
@@ -1226,8 +1224,6 @@
 		E68F196A15B4A979008A90FC /* Firstrun_Tour */ = {
 			isa = PBXGroup;
 			children = (
-				25300E8D15A3BE73009CDA08 /* FirstRunSheetController.h */,
-				25300E8E15A3BE73009CDA08 /* FirstRunSheetController.mm */,
 				254412FE15AFCB910098B8FB /* DBSetupSheetController.h */,
 				254412FF15AFCB910098B8FB /* DBSetupSheetController.mm */,
 				E67AC5B215AF8BA6005A7938 /* LinkedView.h */,
@@ -1245,6 +1241,8 @@
 		E6BEB6C915A3A72000878D4B /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				E6EB3E4115FDE69000123085 /* screenshot-share.png */,
+				E6EB3E4215FDE69000123085 /* screenshot-window.png */,
 				E6D72B8515D0936900C2A13F /* rightclickoptions.png */,
 				E68F199515B4EE67008A90FC /* screenshot-rightclick.png */,
 				E68F199315B4E265008A90FC /* screenshot-open.png */,
@@ -1772,7 +1770,6 @@
 				E054042415AB1CE10011E5CC /* Restore.xib in Resources */,
 				2516C38F15ACCAA10075984B /* Key.png in Resources */,
 				E65C4B5515ABAD9F00AF9D8E /* processing-22x22.png in Resources */,
-				E6C0468D15AE18B4004B52E5 /* FirstRunSheetController.xib in Resources */,
 				E6C0468E15AE18B4004B52E5 /* GmailSheetController.xib in Resources */,
 				E6C0468F15AE18B4004B52E5 /* MainMenu.xib in Resources */,
 				E6C0469915AE1A35004B52E5 /* dsa_pub.pem in Resources */,
@@ -1831,6 +1828,8 @@
 				E63561B215FC61CC00167B1B /* libcrypto.1.0.0.dylib in Resources */,
 				E61DF4FC15BA6EC00011A05D /* libssl.1.0.0.dylib in Resources */,
 				2537E35015B126520034E6E3 /* librlog.5.0.0.dylib in Resources */,
+				E6EB3E4315FDE69000123085 /* screenshot-share.png in Resources */,
+				E6EB3E4415FDE69000123085 /* screenshot-window.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1896,7 +1895,6 @@
 				E66988D9159E63BE002323AD /* JCSSheetController.m in Sources */,
 				E66988DC159E63CF002323AD /* PassphraseSheetController.mm in Sources */,
 				25300E8B15A385BE009CDA08 /* GmailSheetController.mm in Sources */,
-				25300E9015A3BE74009CDA08 /* FirstRunSheetController.mm in Sources */,
 				E6649C7A15A53CD80096886F /* Encrypt.mm in Sources */,
 				E6649C9615A70FB00096886F /* VolumePropertiesSheetController.mm in Sources */,
 				25C3FE4515A7A805006606DF /* FeedbackSheetController.mm in Sources */,
@@ -2106,7 +2104,7 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/lib\"",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = (
 					"-Wunused-variable",
@@ -2174,7 +2172,7 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/lib\"",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = (
 					"-Wunused-variable",

@@ -61,24 +61,25 @@ yc::ServerConnection::getPublicKey(yc::UserAccount &account)
     try {
         http_client::response resp = _client.get(req);
         
-        Document d;
-        const char *tmp = resp.body().c_str();
-        if (!d.Parse<0>(tmp).HasParseError()) {
-            const Value &r = d["response"];
-            string s = r.GetString();
-            if (s == "OK") {
-                const Value &keys = d["keys"];
-                if (keys.IsArray()) {
-                    SizeType j = 0;
-                    k.setValue(keys[j]["key"].GetString());
-                } else {
-                    k.setValue(keys["key"].GetString());
+        if (resp.status() == 200) {
+            Document d;
+            const char *tmp = resp.body().c_str();
+            if (!d.Parse<0>(tmp).HasParseError()) {
+                const Value &r = d["response"];
+                string s = r.GetString();
+                if (s == "OK") {
+                    const Value &keys = d["keys"];
+                    if (keys.IsArray()) {
+                        SizeType j = 0;
+                        k.setValue(keys[j]["key"].GetString());
+                    } else {
+                        k.setValue(keys["key"].GetString());
+                    }
+                    k.id = 0;
+                    k.name = k.description = e;
                 }
-                k.id = 0;
-                k.name = k.description = e;
             }
         }
-        
     } catch (std::exception &ex) {
         std::cerr << "Server Error searching for email " << e << ":" <<
         ex.what() << std::endl;

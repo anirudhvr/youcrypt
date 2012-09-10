@@ -18,11 +18,11 @@
     PassphraseManager *ppman;
 }
 
-@property (nonatomic, weak) IBOutlet NSSecureTextField *oldpassphrase;
-@property (nonatomic, weak) IBOutlet NSSecureTextField *newpassphrase;
-@property (nonatomic, weak) IBOutlet NSSecureTextField *verifynewpassphrase;
-@property (nonatomic, weak) IBOutlet NSTextField *message;
-@property (nonatomic, weak) NSArray *arr;
+@property (atomic, strong) IBOutlet NSSecureTextField *oldpassphrase;
+@property (atomic, strong) IBOutlet NSSecureTextField *newpassphrase;
+@property (atomic, strong) IBOutlet NSSecureTextField *verifynewpassphrase;
+@property (atomic, strong) IBOutlet NSTextField *message;
+@property (atomic, strong) NSArray *arr;
 
 - (IBAction)saveClicked:(id)sender;
 - (IBAction)cancelClicked:(id)sender;

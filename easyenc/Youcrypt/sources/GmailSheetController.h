@@ -16,8 +16,8 @@
     PreferenceController *preferenceController;
 }
 
-@property (nonatomic, weak) IBOutlet NSTextField *username;
-@property (nonatomic, weak) IBOutlet NSSecureTextField *password;
+@property (atomic, strong) IBOutlet NSTextField *username;
+@property (atomic, strong) IBOutlet NSSecureTextField *password;
 
 
 - (IBAction)saveClicked:(id)sender;

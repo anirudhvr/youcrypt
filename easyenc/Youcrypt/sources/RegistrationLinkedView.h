@@ -16,14 +16,15 @@
     PreferenceController *preferenceController;
 }
 
-@property (nonatomic, weak) IBOutlet NSTextField *name;
-@property (nonatomic, weak) IBOutlet NSTextField *email;
-@property (nonatomic, weak) IBOutlet NSTextField *msg;
-@property (nonatomic, weak) IBOutlet NSSecureTextField *password;
-@property (nonatomic, weak) IBOutlet NSSecureTextField *confirmPassword;
+@property (atomic, strong) IBOutlet NSTextField *name;
+@property (atomic, strong) IBOutlet NSTextField *email;
+@property (atomic, strong) IBOutlet NSTextField *msg;
+@property (atomic, strong) IBOutlet NSSecureTextField *password;
+@property (atomic, strong) IBOutlet NSSecureTextField *confirmPassword;
 
 - (IBAction)continueClicked:(id)sender;
 - (void)setPreferenceController:(PreferenceController*)prefsController;
+- (void)updateStatusMessage:(NSNotification*)notif; 
 
 
 

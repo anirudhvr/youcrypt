@@ -15,7 +15,6 @@
 #import "YoucryptService.h"
 #import "libFunctions.h"
 #import "ListDirectoriesWindow.h"
-#import "FirstRunSheetController.h"
 #import "FeedbackSheetController.h"
 #import "CompressingLogFileManager.h"
 #import "TourWizard.h"
@@ -44,7 +43,6 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
 
 @synthesize window = _window;
 @synthesize listDirectories;
-@synthesize firstRunSheetController;
 @synthesize feedbackSheetController;
 @synthesize keyDown;
 @synthesize preferenceController;
@@ -86,7 +84,6 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
     
     preferenceController = [[PreferenceController alloc] init];
     listDirectories = [[ListDirectoriesWindow alloc] init];
-    firstRunSheetController = [[FirstRunSheetController alloc] init];
     feedbackSheetController = [[FeedbackSheetController alloc] init];
     dropboxEncryptedFolders = [[NSMutableSet alloc] init];
     passphraseManager = [[PassphraseManager alloc] 
@@ -105,6 +102,9 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
        pushKeys:(BOOL)pushkeys
 {
     string pass_cppstr = cppString(pass);
+    [[NSNotificationCenter defaultCenter] postNotificationName:YC_KEYOPS_NOTIFICATION
+                                                    object:self
+                                                  userInfo:[NSDictionary dictionaryWithObject:@"Creating new RSA 2048-bit key pair" forKey:@"message"]];
     try {
         RSACredentialManager *pcm =
         new RSACredentialManager(appSettings()->privKeyFile.string(),
@@ -116,8 +116,8 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
         p.reset(pcm);
         setGlobalCM(p);
     } catch (std::exception &e) {
-        DDLogError(@"Error unlocking credentials. Key decrypt problem?: %s", 
-                   e.what());
+        NSString *errstr = [NSString stringWithFormat:@"Error unlocking credentials. Key decrypt problem?: %s", e.what()];
+        DDLogError(errstr);
         return NO;
     }
     try {
@@ -126,17 +126,15 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
         setDirectories(shared_ptr<DirectoryMap>(new DirectoryMap));
     }
     
-    [[NSNotificationCenter defaultCenter]
-     addObserver:self
-     selector:@selector(appResignedActive:)
-     name:NSApplicationDidResignActiveNotification
-     object:nil ];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(appResignedActive:)
+                                                 name:NSApplicationDidResignActiveNotification
+                                               object:nil ];
     
-    [[NSNotificationCenter defaultCenter]
-     addObserver:self
-     selector:@selector(appBecameActive:)
-     name:NSApplicationDidBecomeActiveNotification
-     object:nil ];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(appBecameActive:)
+                                                 name:NSApplicationDidBecomeActiveNotification
+                                               object:nil ];
     
     youcryptService = [[YoucryptService alloc] init];
     [NSApp setServicesProvider:youcryptService];
@@ -147,17 +145,32 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
     userAccount.reset(new UserAccount(userEmail, pass_cppstr, userName));
     
     serverConnectionWrapper = [self getServerConnection];
-     
+    
     if (serverConnectionWrapper) {
+        
         ServerConnectionWrapper::OperationStatus stat;
         if (createacct) {
+            
+            [[NSNotificationCenter defaultCenter] postNotificationName:YC_SERVEROPS_NOTIFICATION
+                                                            object:self
+                                                          userInfo:[NSDictionary dictionaryWithObject:@"Creating new server account " forKey:@"message"]];
+        
             stat = serverConnectionWrapper->createNewAccount(*userAccount);
             if (stat != ServerConnectionWrapper::Success) {
-                DDLogError(@"Creating user account failed!");
+                NSString *errstr = @"Creating user account failed!";
+                DDLogError(errstr);
+                [[NSNotificationCenter defaultCenter] postNotificationName:YC_SERVEROPS_NOTIFICATION
+                                                                object:self
+                                                              userInfo:[NSDictionary dictionaryWithObject:errstr forKey:@"message"]];
             }
         }
         
         if (pushkeys) {
+            
+            [[NSNotificationCenter defaultCenter] postNotificationName:YC_SERVEROPS_NOTIFICATION
+                                                            object:self
+                                                          userInfo:[NSDictionary dictionaryWithObject:@"Uploading public key to  server" forKey:@"message"]];
+        
             Key k;
             k.algtype = Key::RSA;
             k.type = Key::Public;
@@ -167,7 +180,10 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
             } else {
                 stat = serverConnectionWrapper->addPublicKey(k, *userAccount);
                 if (stat != ServerConnectionWrapper::Success) {
-                    DDLogError(@"Pushinng account failed!");
+                    DDLogError(@"Pushing keys failed!");
+                    [[NSNotificationCenter defaultCenter] postNotificationName:YC_SERVEROPS_NOTIFICATION
+                                                                    object:self
+                                                                  userInfo:[NSDictionary dictionaryWithObject:@"Uploading key failed!" forKey:@"message"]];
                 }
             }
         }
@@ -635,15 +651,6 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
     [preferenceController showWindow:self];
 }
 
-//- (void)showFirstRunSheet {
-//    // Is preferenceController nil?
-//    if (!preferenceController) {
-//        preferenceController = [[PreferenceController alloc] init];
-//    }
-//    [self showFirstRun];
-//
-//}
-
 - (IBAction)showAboutWindow:(id)sender {
     
     // Is preferenceController nil?
@@ -904,6 +911,38 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
     
     return userAccount;
 }
+
+- (NSString*)sendEmail:(NSString*)emailaddr
+                  from:(NSString*)fromemail
+               subject:(NSString*)subj
+               message:(NSString*)msg
+{
+    NSString *ret = @"";
+    NSMutableArray *args = [NSMutableArray arrayWithObjects: 
+                            @"-s", @"-k", 
+                            @"--user", YC_MAILGUN_API_KEY,
+                            YC_MAILGUN_URL,
+                            @"-F", [NSString stringWithFormat:@"from=\"%@\"",fromemail],
+                            @"-F", [NSString stringWithFormat:@"to=\"%@\"", emailaddr],
+                            @"-F", [NSString stringWithFormat:@"subject=%@", subj],
+                            @"-F", [NSString stringWithFormat:@"text=%@", msg],
+                            nil];
+    NSFileHandle *fh = [NSFileHandle alloc];
+    NSString *reply;
+    NSTask *mailerTask = [NSTask alloc];
+    
+    if ([libFunctions execWithSocket:@"/usr/bin/curl" arguments:args env:nil io:fh proc:mailerTask]) {
+        [mailerTask waitUntilExit];
+        NSData *bytes = [fh availableData];
+        reply = [[NSString alloc] initWithData:bytes encoding:NSUTF8StringEncoding];
+        
+        [fh closeFile];
+    } else {
+        ret = reply;
+    }
+    return ret;
+}
+
 
 @end
 

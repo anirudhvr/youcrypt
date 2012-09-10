@@ -25,6 +25,7 @@
 
 - (void)setListDirWindow:(ListDirectoriesWindow*)listDirWindow;
 - (IBAction)shareButtonClicked:(id)sender;
+- (void)updateStatusMessage:(NSNotificationCenter*)notification;
 
 @end
 

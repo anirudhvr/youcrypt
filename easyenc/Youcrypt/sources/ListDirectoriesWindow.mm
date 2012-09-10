@@ -275,12 +275,18 @@ void printCloseError(int ret)
             message:(NSString*)msg
 {
     BOOL ret = YES;
+    NSString *fromname = [theApp.preferenceController getPreference:YC_USERREALNAME];
+    NSString *fromemail = [NSString stringWithFormat:@"%@ <%@>", fromname, [theApp.preferenceController getPreference:YC_USEREMAIL]];
     yc::UserAccount ua_to_search(cppString(email), "");
     DDLogVerbose(@"Searching for email %@ in server database", email);
     boost::shared_ptr<ServerConnectionWrapper> sc = [theApp getServerConnection];
     yc::Key k = sc->getPublicKey(ua_to_search);
     if (k.empty) {
         std::cout << "Key not found / is empty" << std::endl;
+        [[NSNotificationCenter defaultCenter] postNotificationName:YC_SERVEROPS_NOTIFICATION object:nil userInfo:[NSDictionary dictionaryWithObject:@"Could not find email in server database. Invite sent" forKey:@"message"]];
+        NSString *subj = [NSString stringWithFormat:@"%@ wants to share an encrypted folder with you using YouCrypt!", fromname];
+        NSString *mess = [NSString stringWithFormat:@"Hi %@, \n\n%@ wants to share an encrypted folder with you. Message follows:\n\n\t%@\n\n\nPlease download YouCrypt by going to %@ to share and receive shared files with YouCrypt.\n\nCheers,\nThe YouCrypt Team\n", email, fromemail, msg, YC_YOUCRYPT_DOWNLOADLOCATION];
+        [theApp sendEmail:email from:fromemail subject:subj message:mess];
         return NO;
     }
     
@@ -305,7 +311,13 @@ void printCloseError(int ret)
             Folder dir = beg->second;
             if (!dir->addCredential(c)) {
                 DDLogError(@"Adding credentials failed!");
+                [[NSNotificationCenter defaultCenter] postNotificationName:YC_KEYOPS_NOTIFICATION object:nil userInfo:[NSDictionary dictionaryWithObject:@"Adding Credentials Failed" forKey:@"message"]];
                 ret = NO;
+            } else {
+                [theApp sendEmail:email from:fromemail
+                          subject:[NSString stringWithFormat:@"%@ wants to share an encrypted folder with you with YouCrypt!", fromname]
+                          message:[NSString stringWithFormat:@"Hi %@, \n\n%@ wants to share an encrypted folder, %@, with you. Message follows:\n\n\t%@\n\n\nCheers,\nThe YouCrypt Team\n", email, fromname,
+                                   nsstrFromCpp(dir->alias()), msg, YC_YOUCRYPT_DOWNLOADLOCATION]];
             }
         } else {
             DDLogError(@"row (%d)< count (%d)!", row, count);
