@@ -31,7 +31,6 @@
 
     switch (theEvent.keyCode) {
         case 125: // down
-            [[listDirObj sharingPopover] close];
         case 126: // up
             [listDirObj setStatusToSelectedRow:[listDirObj.table selectedRow]];
             break;
@@ -219,6 +218,9 @@
 - (void)mouseDown:(NSEvent *)theEvent {
     // determine if I handle theEvent
     // if not...
+    
+    // Issue #251
+    [[listDirObj sharingPopover] close];
     [super mouseDown:theEvent];
     
     NSPoint globalLocation = [ NSEvent mouseLocation ];

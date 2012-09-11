@@ -194,7 +194,6 @@
 		E6C046D115AE2321004B52E5 /* XMLDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = E6C046CE15AE2321004B52E5 /* XMLDictionary.m */; };
 		E6C046D215AE2321004B52E5 /* XMLReader.m in Sources */ = {isa = PBXBuildFile; fileRef = E6C046D015AE2321004B52E5 /* XMLReader.m */; };
 		E6C046D415AE236A004B52E5 /* YoucryptService.mm in Sources */ = {isa = PBXBuildFile; fileRef = E6E2A0B6159266F6003E3F6C /* YoucryptService.mm */; };
-		E6C046D615AE2817004B52E5 /* CompressingLogFileManager.h in Sources */ = {isa = PBXBuildFile; fileRef = 252C3A961593E84F0044EB3C /* CompressingLogFileManager.h */; };
 		E6C046D715AE2846004B52E5 /* CompressingLogFileManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 252C3A971593E84F0044EB3C /* CompressingLogFileManager.m */; };
 		E6C046DB15AE29AA004B52E5 /* SSKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = E6C046DA15AE29AA004B52E5 /* SSKeychain.m */; };
 		E6C046DD15AE2B63004B52E5 /* Sparkle.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = E6C0468015AE1733004B52E5 /* Sparkle.framework */; };
@@ -1805,7 +1804,6 @@
 				254412E515AFB1E60098B8FB /* DBSetup.xib in Resources */,
 				E67AC5C715AFA7AD005A7938 /* Grey_Add_Folder.png in Resources */,
 				E67AC5C915AFB0C4005A7938 /* Grey_Open_Folder.png in Resources */,
-				E63561C615FC645700167B1B /* libboost_chrono-mt.dylib in Resources */,
 				E68F199415B4E265008A90FC /* screenshot-open.png in Resources */,
 				E68F199615B4EE67008A90FC /* screenshot-rightclick.png in Resources */,
 				2537E39515B4F1660034E6E3 /* About.xib in Resources */,
@@ -1825,6 +1823,7 @@
 				E65C97A615FC063D0061A26C /* libboost_serialization-mt.dylib in Resources */,
 				E65C97A915FC063D0061A26C /* libboost_system-mt.dylib in Resources */,
 				E65C97AB15FC063D0061A26C /* libboost_thread-mt.dylib in Resources */,
+				E63561C615FC645700167B1B /* libboost_chrono-mt.dylib in Resources */,
 				E63561B215FC61CC00167B1B /* libcrypto.1.0.0.dylib in Resources */,
 				E61DF4FC15BA6EC00011A05D /* libssl.1.0.0.dylib in Resources */,
 				2537E35015B126520034E6E3 /* librlog.5.0.0.dylib in Resources */,
@@ -1878,7 +1877,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E6C046D615AE2817004B52E5 /* CompressingLogFileManager.h in Sources */,
 				E6C046D415AE236A004B52E5 /* YoucryptService.mm in Sources */,
 				256C356C158EA75F00E2BEC4 /* main.mm in Sources */,
 				256C3573158EA75F00E2BEC4 /* AppDelegate.mm in Sources */,
@@ -2104,7 +2102,7 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/lib\"",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = (
 					"-Wunused-variable",
@@ -2172,7 +2170,7 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/lib\"",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = (
 					"-Wunused-variable",

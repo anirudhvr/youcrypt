@@ -57,7 +57,8 @@ namespace youcrypt {
 
             filenameEncryption = filenamePlain;
             ignoreList.push_back(".DS_STORE");
-
+            ignoreList.push_back(".dropbox");
+            
             keySize = 256;
             blockSize = 1024;
             algoName = "aes";
