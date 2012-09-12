@@ -598,7 +598,6 @@
 		E633656115EF24B3003EC0F9 /* wordset_4k.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = wordset_4k.c; sourceTree = "<group>"; };
 		E633656215EF24B3003EC0F9 /* wordset_4k.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = wordset_4k.h; sourceTree = "<group>"; };
 		E63561B415FC62A800167B1B /* libicuuc.48.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libicuuc.48.dylib; sourceTree = "<group>"; };
-		E63561BA15FC62EA00167B1B /* Youcrypt.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = Youcrypt.xcodeproj; sourceTree = "<group>"; };
 		E63561BD15FC63BE00167B1B /* libicui18n.48.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libicui18n.48.dylib; sourceTree = "<group>"; };
 		E63561C115FC641700167B1B /* libicudata.48.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libicudata.48.dylib; sourceTree = "<group>"; };
 		E63561C415FC645300167B1B /* libboost_chrono-mt.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = "libboost_chrono-mt.dylib"; sourceTree = "<group>"; };
@@ -808,7 +807,6 @@
 		256C3550158EA75F00E2BEC4 = {
 			isa = PBXGroup;
 			children = (
-				E63561BA15FC62EA00167B1B /* Youcrypt.xcodeproj */,
 				E64ABFCA15E724A600D2E046 /* CPP-NETLIB.xcodeproj */,
 				E6D7D2A015D26AD100780915 /* yc-encfs.xcodeproj */,
 				E66988C3159D403B002323AD /* StartOnLogin.xcodeproj */,
@@ -1037,11 +1035,6 @@
 				E633656215EF24B3003EC0F9 /* wordset_4k.h */,
 			);
 			path = passwdqc;
-			sourceTree = "<group>";
-		};
-		E63561BB15FC62EA00167B1B /* Products */ = {
-			isa = PBXGroup;
-			name = Products;
 			sourceTree = "<group>";
 		};
 		E635DE8915AE2BAA00A81117 /* Products */ = {
@@ -1498,10 +1491,6 @@
 				{
 					ProductGroup = E6D7D2A115D26AD100780915 /* Products */;
 					ProjectRef = E6D7D2A015D26AD100780915 /* yc-encfs.xcodeproj */;
-				},
-				{
-					ProductGroup = E63561BB15FC62EA00167B1B /* Products */;
-					ProjectRef = E63561BA15FC62EA00167B1B /* Youcrypt.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -2076,6 +2065,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CODE_SIGN_IDENTITY = "Mac Developer: Anirudh Ramachandran (6SNX9MRMUF)";
 				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2132,6 +2122,7 @@
 					"-lcrypto",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SDKROOT = macosx;
 				USER_HEADER_SEARCH_PATHS = "";
 				WRAPPER_EXTENSION = app;
@@ -2142,7 +2133,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CODE_SIGN_IDENTITY = "Mac Developer: Anirudh Ramachandran (6SNX9MRMUF)";
 				COMBINE_HIDPI_IMAGES = YES;
+				DEBUG_INFORMATION_FORMAT = dwarf;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
@@ -2200,6 +2193,7 @@
 					"-lcrypto",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SDKROOT = macosx;
 				USER_HEADER_SEARCH_PATHS = "";
 				WRAPPER_EXTENSION = app;

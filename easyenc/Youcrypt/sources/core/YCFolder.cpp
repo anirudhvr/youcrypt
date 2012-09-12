@@ -83,12 +83,14 @@ YCFolder::initEncryptedFolderInPlaceAddExtension
 
     out.reset(new YCFolder(dest, opts, credss[0]));
     if (out->currStatus() != YoucryptFolder::initialized) {
+        std::cerr << "Folder status not initialized after YCFolder constructor" << std::endl;
         out.reset();
         return out;
     }
 
     if (!out->importContent(boost::filesystem::path(path), "/")) {
         // FIXME: Import failed.
+        std::cerr << "Import content to new YCFolder failed" << std::endl;
         out.reset();
         return out;
     }
@@ -99,6 +101,9 @@ YCFolder::initEncryptedFolderInPlaceAddExtension
     for (directory_iterator pi = directory_iterator(p),
              en = directory_iterator(); pi!=en; ++pi) {
         boost::filesystem::remove_all(pi->path());
+        if (boost::filesystem::exists(pi->path())) {
+            std::cerr << "Removing " << pi->path().string() << " failed!" << std::endl;
+        }
     }
 
     // 5. (move files from dest to source)
@@ -274,8 +279,11 @@ bool YCFolder::deleteCredential(const Credentials &cred)
 
 bool YCFolder::restoreFolderInPlace() 
 {
-    if (status != YoucryptDirectoryStatusInitialized)
+    if (status != YoucryptDirectoryStatusInitialized) {
+        std::cerr << "Directory to be restored has status " << stringStatus() << std::endl;
         return false;
+    }
+    
     int ostatus = status;
     status = YoucryptDirectoryStatusProcessing;
 
@@ -313,7 +321,6 @@ bool YCFolder::restoreFolderInPlace()
 
     // 6. (rename source to dest)
     boost::filesystem::rename(encPath, newPath);
-
 
     status = ostatus;
     return true;

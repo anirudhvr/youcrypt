@@ -83,16 +83,21 @@
     destFolder = [srcFolder stringByAppendingPathExtension:
                   ENCRYPTED_DIRECTORY_EXTENSION];
 
-    dir = YCFolder::initEncryptedFolderInPlaceAddExtension(cppString(srcFolder),
-                                                           opts);
-    /* change folder icon of encrypted folder */
+    dir = YCFolder::initEncryptedFolderInPlaceAddExtension(cppString(srcFolder), opts);
+    
+    if (dir.get() == NULL) {
+        DDLogError(@"Encrypting directory in place failed!");
+        return;
+    }
+    
+    /* Hide directory extension of encrypted folder */
     {
         NSNumber *num = [NSNumber numberWithBool:YES];
         NSDictionary *attribs = [NSDictionary dictionaryWithObjectsAndKeys:num, NSFileExtensionHidden, nil];        
         [[NSFileManager defaultManager] setAttributes:attribs ofItemAtPath:destFolder error:nil];
     }
     
-    // Send number of objects in directory
+    // Send number of objects in directory to Mixpanel
     NSString *dirCountS = [NSString stringWithFormat:@"%d",dirCount];
     NSString *fileSizeS = [NSString stringWithFormat:@"%llu",fileSize];
     if ([[theApp.preferenceController getPreference:YC_ANONYMOUSSTATISTICS] intValue])
@@ -102,9 +107,7 @@
                          fileSizeS, @"dirSize",
                          nil]];
     
-    [self.window close];
     [theApp didEncrypt:dir];
-    return;
 }
 
 

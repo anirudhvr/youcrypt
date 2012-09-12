@@ -52,7 +52,7 @@
         NSAlert *alert = [NSAlert alertWithMessageText:@"Incorrect passphrase" defaultButton:nil alternateButton:nil otherButton:nil informativeTextWithFormat:@"The passphrase does not decrypt %@", [path stringByDeletingLastPathComponent]];
             [alert runModal];
     } else { // success
-        [self.window close];
+//        [self.window close];
         [theApp didRestore:path];
     }        
     return;
