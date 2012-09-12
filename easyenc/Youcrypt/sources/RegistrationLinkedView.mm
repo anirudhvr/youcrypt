@@ -78,11 +78,13 @@
         
         [preferenceController setPreference:YC_USEREMAIL value:[email stringValue]];
         [preferenceController setPreference:YC_USERREALNAME value:[name stringValue]];
-//        [[NSUserDefaults standardUserDefaults] setValue:[name stringValue] forKey:YC_USERREALNAME];
-//        [[NSUserDefaults standardUserDefaults] setValue:[email stringValue] forKey:YC_USEREMAIL];
-//        [[NSUserDefaults standardUserDefaults] synchronize];
         
-        // [libFunctions registerWithKeychain:[password stringValue]:@"Youcrypt"];
+        // This is critical now because encrypt/decrypt/restore get the pp from the passphrase manager
+        NSError *err;
+        if (![theApp.passphraseManager setPassphrase:[password stringValue] error:&err]) {
+            DDLogError(@"Setting passphrase during registraiton failed: %@", [err localizedDescription]);
+            return;
+        }
         
         if (![theApp setupCM:[password stringValue]
             createIfNotFound:YES createAccount:YES pushKeys:YES]) {

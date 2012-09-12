@@ -275,6 +275,8 @@
 								<integer>0</integer>
 								<key>Path</key>
 								<string></string>
+								<key>Path Type</key>
+								<integer>1</integer>
 							</dict>
 							<key>License</key>
 							<dict>
@@ -284,6 +286,8 @@
 									<integer>0</integer>
 									<key>Path</key>
 									<string></string>
+									<key>Path Type</key>
+									<integer>1</integer>
 								</dict>
 							</dict>
 							<key>ReadMe</key>
@@ -294,6 +298,8 @@
 									<integer>0</integer>
 									<key>Path</key>
 									<string></string>
+									<key>Path Type</key>
+									<integer>1</integer>
 								</dict>
 							</dict>
 							<key>Welcome</key>
@@ -304,6 +310,8 @@
 									<integer>0</integer>
 									<key>Path</key>
 									<string></string>
+									<key>Path Type</key>
+									<integer>1</integer>
 								</dict>
 							</dict>
 						</dict>
@@ -446,6 +454,10 @@
 							<dict>
 								<key>CFBundleGetInfoString</key>
 								<string>youcrypt-app 1.0 Copyrights © 2012 Nouvou Inc.</string>
+								<key>CFBundleIconFile</key>
+								<string></string>
+								<key>CFBundleIconFile Path Type</key>
+								<integer>1</integer>
 								<key>CFBundleIdentifier</key>
 								<string>com.youcrypt.youcrypt-app</string>
 								<key>CFBundleName</key>
@@ -460,8 +472,6 @@
 								<key>IFPkgFlagAuthorizationAction</key>
 								<integer>0</integer>
 								<key>IFPkgFlagFollowLinks</key>
-								<false/>
-								<key>IFPkgFlagInstallFat</key>
 								<false/>
 								<key>IFPkgFlagIsRequired</key>
 								<false/>
@@ -663,7 +673,7 @@
 						<key>IFPkgDescriptionTitle</key>
 						<string>YouCrypt</string>
 						<key>IFPkgDescriptionVersion</key>
-						<string>0.22</string>
+						<string>0.23</string>
 					</dict>
 				</dict>
 				<key>Display Information</key>
@@ -679,7 +689,7 @@
 					<key>CFBundleName</key>
 					<string>YouCrypt</string>
 					<key>CFBundleShortVersionString</key>
-					<string>0.22</string>
+					<string>0.23</string>
 				</dict>
 				<key>Version</key>
 				<dict>
@@ -706,7 +716,7 @@
 	<key>Settings</key>
 	<dict>
 		<key>10.1 Compatibility</key>
-		<true/>
+		<false/>
 		<key>Build Path</key>
 		<string>build</string>
 		<key>Build Path Type</key>

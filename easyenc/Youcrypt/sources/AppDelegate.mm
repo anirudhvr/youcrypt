@@ -409,15 +409,16 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
     NSString *pp = [passphraseManager getPassphrase];
     
     // NSString *pp =[libFunctions getPassphraseFromKeychain:@"Youcrypt"];
-    DDLogInfo(@"showing %@", decryptController);
+//    DDLogInfo(@"showing %@", decryptController);
     
     if ((pp != nil) && !([pp isEqualToString:@""])) {
-        DDLogVerbose(@"In doDecrypt: Got pp from keychain successfully");
+//        DDLogVerbose(@"In doDecrypt: Got pp from keychain successfully");
         decryptController.passphraseFromKeychain = pp;
         decryptController.keychainHasPassphrase = YES;
         [decryptController decrypt:self];
     }
     else {
+        DDLogError(@"Passphrasemanager doesnot have pp before decrypt");
         decryptController.keychainHasPassphrase = NO;
         [decryptController showWindow:self];
     }
@@ -469,15 +470,16 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
     [listDirectories.progressIndicator startAnimation:listDirectories.window];
     
     
-    NSString *pp =[passphraseManager getPassphrase];
+    NSString *pp = [passphraseManager getPassphrase];
     encryptController.sourceFolderPath = path;
     
     if (pp != nil && [pp isNotEqualTo:@""]) {
-        DDLogVerbose(@"In doEncrypt: Got pp from keychain successfully");
+//        DDLogVerbose(@"In doEncrypt: Got pp from keychain successfully");
         encryptController.passphraseFromKeychain = pp;
         encryptController.keychainHasPassphrase = YES;
         [encryptController encrypt:self];
     } else {
+        DDLogError(@"Encryptcontroller does not have pp beore encrypt!");
         NSButton *storePasswd = encryptController.checkStorePasswd;
         [storePasswd setState:NSOnState];
         encryptController.passphraseFromKeychain = nil;
@@ -585,12 +587,12 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
     restoreController.dir = d;
     NSString *pp = [passphraseManager getPassphrase];
     if (pp != nil && !([pp isEqualToString:@""])) {
-        DDLogVerbose(@"In doRestore: Got pp from keychain successfully");
         restoreController.passwd = pp;
         restoreController.keychainHasPassphrase = YES;
         [restoreController restore:self];
     }
     else {
+        DDLogError(@"doRestore: Cannot find pp from passphraseManager");
         restoreController.keychainHasPassphrase = NO;
         [restoreController showWindow:self];
     }

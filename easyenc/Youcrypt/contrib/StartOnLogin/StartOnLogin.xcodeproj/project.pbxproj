@@ -246,6 +246,7 @@
 				GCC_PREFIX_HEADER = "StartOnLogin/StartOnLogin-Prefix.pch";
 				INFOPLIST_FILE = "StartOnLogin/StartOnLogin-Info.plist";
 				INSTALL_PATH = "@loader_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = framework;
 			};
@@ -262,6 +263,7 @@
 				GCC_PREFIX_HEADER = "StartOnLogin/StartOnLogin-Prefix.pch";
 				INFOPLIST_FILE = "StartOnLogin/StartOnLogin-Info.plist";
 				INSTALL_PATH = "@loader_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = framework;
 			};
