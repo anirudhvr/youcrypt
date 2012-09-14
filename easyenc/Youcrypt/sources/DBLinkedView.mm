@@ -76,17 +76,27 @@
     if (selectedDBFolders == nil)
         selectedDBFolders = [[NSMutableSet alloc] init];
     
+    NSFileManager *fm = [NSFileManager defaultManager];
+    BOOL isDir;
+    
     if ([newYCFolderInDropbox state] == NSOnState) {
         NSString *dbloc = [libFunctions locateDropboxFolder];
         if ([dbloc isNotEqualTo:@""]) {
-            NSString* newYCfolder = [dbloc stringByAppendingPathComponent:@"/YouCrypt"];
-            [selectedDBFolders addObject:newYCfolder];
+            NSString* newYCfolder = [dbloc stringByAppendingPathComponent:@"YouCrypt"];
+            
+            if ([fm fileExistsAtPath:[newYCfolder stringByAppendingPathExtension:ENCRYPTED_DIRECTORY_EXTENSION] isDirectory:&isDir]) {
+                DDLogError(@"Folder %@.%@ already exists and is encrypted?", newYCfolder, ENCRYPTED_DIRECTORY_EXTENSION);
+            } else if ( ([fm fileExistsAtPath:newYCfolder isDirectory:&isDir] && isDir) ||
+                       ([libFunctions mkdirRecursive:newYCfolder]) ) {
+                [selectedDBFolders addObject:newYCfolder];
+            } else {
+                DDLogError(@"Could not create folder %@", newYCfolder);
+            }
+                
         }
     }
     
-    NSFileManager *fm = [NSFileManager defaultManager];
     long i = 1, count = [selectedDBFolders count];
-    BOOL isDir;
     for (NSString *path in selectedDBFolders) {
         if ([fm fileExistsAtPath:path isDirectory:&isDir] && isDir) {                  
             // encrypt it if it'ns not already encrypted

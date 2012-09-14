@@ -2065,7 +2065,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
-				CODE_SIGN_IDENTITY = "Mac Developer: Anirudh Ramachandran (6SNX9MRMUF)";
+				CODE_SIGN_IDENTITY = "Developer ID Application: Anirudh Ramachandran";
 				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2133,7 +2133,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
-				CODE_SIGN_IDENTITY = "Mac Developer: Anirudh Ramachandran (6SNX9MRMUF)";
+				CODE_SIGN_IDENTITY = "Developer ID Application: Anirudh Ramachandran";
 				COMBINE_HIDPI_IMAGES = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				FRAMEWORK_SEARCH_PATHS = (
