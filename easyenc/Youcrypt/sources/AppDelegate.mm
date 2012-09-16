@@ -149,12 +149,11 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
     if (serverConnectionWrapper) {
         
         ServerConnectionWrapper::OperationStatus stat;
+#ifdef RELEASE
         if (createacct) {
-            
             [[NSNotificationCenter defaultCenter] postNotificationName:YC_SERVEROPS_NOTIFICATION
                                                             object:self
                                                           userInfo:[NSDictionary dictionaryWithObject:@"Creating new server account " forKey:@"message"]];
-        
             stat = serverConnectionWrapper->createNewAccount(*userAccount);
             if (stat != ServerConnectionWrapper::Success) {
                 NSString *errstr = @"Creating user account failed!";
@@ -166,11 +165,9 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
         }
         
         if (pushkeys) {
-            
             [[NSNotificationCenter defaultCenter] postNotificationName:YC_SERVEROPS_NOTIFICATION
                                                             object:self
                                                           userInfo:[NSDictionary dictionaryWithObject:@"Uploading public key to  server" forKey:@"message"]];
-        
             Key k;
             k.algtype = Key::RSA;
             k.type = Key::Public;
@@ -187,6 +184,7 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
                 }
             }
         }
+#endif
     }
     
     appIsUp = YES;

@@ -41,13 +41,15 @@
 	<string>????</string>
 	<key>CFBundleVersion</key>
 	<string>0.23.1</string>
-	<key>LSMinimumSystemVersion</key>
-	<string>${MACOSX_DEPLOYMENT_TARGET}</string>
+	<key>LSApplicationCategoryType</key>
+	<string>public.app-category.utilities</string>
 	<key>LSEnvironment</key>
 	<dict>
 		<key>DYLD_LIBRARY_PATH</key>
 		<string>/Applications/Youcrypt.app/Contents/Resources:/Applications/Utilities/Youcrypt.app/Contents/Resources/:$DYLD_LIBRARY_PATH</string>
 	</dict>
+	<key>LSMinimumSystemVersion</key>
+	<string>${MACOSX_DEPLOYMENT_TARGET}</string>
 	<key>LSUIElement</key>
 	<false/>
 	<key>NSHumanReadableCopyright</key>

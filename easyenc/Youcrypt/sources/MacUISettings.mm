@@ -22,11 +22,11 @@ namespace youcrypt {
     {
         
         folderExtension = ".yc";
-
+        
         if (appFirstRun)
             firstRun();
     }
-        
+    
     void MacUISettings::firstRun()
     {
         // Insert code here to initialize stuff the first time.
@@ -40,11 +40,11 @@ namespace youcrypt {
         {
             ofstream uout(userUUIDFile);
             uout << cppString(
-                [[NSProcessInfo processInfo] globallyUniqueString]);
+                              [[NSProcessInfo processInfo] globallyUniqueString]);
         }
-
+        
     }
-
+    
     void MacUISettings::loadSettings()
     {
         // Insert code here to initialize your application
@@ -76,13 +76,28 @@ namespace youcrypt {
                                                         error:&error];
         [mpUUID stringByReplacingOccurrencesOfString:@"\n" withString:@""];
         mixPanelUUID = cppString(mpUUID);
-
+        
         // XXX FIXME Change for Release
 #ifdef DEBUG
-            mixpanel.dontLog = YES;
+        mixpanel.dontLog = YES;
 #elif RELEASE
-            mixpanel.dontLog = NO;
+        mixpanel.dontLog = NO;
 #endif
         
     }
-};
+    
+    bool MacUISettings::setPreference(std::string &prefname, boost::any &value)
+    {
+        bool  ret = false;
+        
+        return ret;
+    }
+    
+    boost::any& MacUISettings::getPreference(std::string &prefname)
+    {
+        boost::any a = 1;
+        return a;
+    }
+    
+    
+}
