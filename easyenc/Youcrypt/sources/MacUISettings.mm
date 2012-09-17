@@ -16,6 +16,7 @@
 
 using namespace youcrypt;
 using std::string;
+namespace bf = boost::filesystem;
 
 namespace youcrypt {
     MacUISettings::MacUISettings(string base): YCSettings(base)
@@ -31,12 +32,11 @@ namespace youcrypt {
     {
         // Insert code here to initialize stuff the first time.
         
-        namespace fs = boost::filesystem;
-        fs::create_directories(baseDirectory);
-        fs::create_directories(volumeDirectory);
-        fs::create_directories(tmpDirectory);
-        fs::create_directories(logDirectory);
-        fs::create_directories(keyDirectory);
+        bf::create_directories(baseDirectory);
+        bf::create_directories(volumeDirectory);
+        bf::create_directories(tmpDirectory);
+        bf::create_directories(logDirectory);
+        bf::create_directories(keyDirectory);
         {
             ofstream uout(userUUIDFile);
             uout << cppString(
@@ -50,11 +50,13 @@ namespace youcrypt {
         // Insert code here to initialize your application
         
         // Add new steps here before adding the code.
+        // 0. Read config file from disk if it exists, else create the file
         // 1. Enable logging.
         // 2. Setup MixPanel API with the UUID
         // 3. Initialize directory list
         // 4. Setup resign notification (to sync dir. list)
         // 5. Setup youcrypt service and register pb services
+        
         
         
         // (step 1):  Enable logging.
@@ -86,18 +88,19 @@ namespace youcrypt {
         
     }
     
-    bool MacUISettings::setPreference(std::string &prefname, boost::any &value)
+    bool MacUISettings::setPreference(std::string &prefname, std::string &value)
     {
         bool  ret = false;
         
         return ret;
     }
     
-    boost::any& MacUISettings::getPreference(std::string &prefname)
+    std::string& MacUISettings::getPreference(std::string &prefname)
     {
-        boost::any a = 1;
+        std::string a = "1";
         return a;
     }
     
     
 }
+

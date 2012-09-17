@@ -11,9 +11,8 @@
 
 #include <boost/filesystem/path.hpp>
 #include <boost/shared_ptr.hpp>
-// Multiple types
-#include <boost/any.hpp>
 #include <string>
+#import <map>
 
 namespace bf = boost::filesystem;
 using std::string;
@@ -42,6 +41,7 @@ public:
     //! Each entry here should have a init. in loadSettings() and
     //! in firstRun().  
     bf::path baseDirectory;
+    bf::path configFile;
     bf::path volumeDirectory;
     bf::path tmpDirectory;
     bf::path logDirectory;
@@ -56,20 +56,26 @@ public:
 
     //! ".yc"
     string folderExtension;
+    
+    //! Application preferences that are editable by the user
+    std::map <std::string, std::string> _appPreferences;
+    
 
     bool isSetup, appFirstRun;
     
 
     YCSettings(string);
     static void settingsUp();
+    
+    virtual ~YCSettings();
 
 protected:
     virtual void firstRun() = 0;
     virtual void initializeSettings();
     virtual void loadSettings() = 0;
     
-    virtual bool setPreference(std::string &prefname, boost::any &value) = 0;
-    virtual boost::any& getPreference(std::string &prefname) = 0;
+    virtual bool setPreference(std::string &prefname, std::string &value) = 0;
+    virtual std::string& getPreference(std::string &prefname) = 0;
     
 }; // end class YCSettings
     

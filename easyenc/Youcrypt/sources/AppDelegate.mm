@@ -78,8 +78,7 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
 - (id) init {
     appIsUp = NO;
     self = [super init];
-    NSString *base = [NSHomeDirectory() stringByAppendingPathComponent:
-                      @".youcrypt"];
+    NSString *base = [NSHomeDirectory() stringByAppendingPathComponent:@".youcrypt"];
     macSettings = new MacUISettings(cppString(base));
     
     preferenceController = [[PreferenceController alloc] init];

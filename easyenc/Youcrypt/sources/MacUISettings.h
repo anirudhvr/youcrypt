@@ -10,7 +10,6 @@
 #import "core/Settings.h"
 #import "CompressingLogFileManager.h"
 #import <string>
-#import <map>
 
 @class YoucryptService;
 
@@ -19,8 +18,6 @@ using std::string;
 namespace youcrypt {
     class MacUISettings : public YCSettings {
     private:
-        //! Application preferences that are editable by the user
-        std::map <std::string, boost::any> _appPreferences;
         
     public:
         MacUISettings(string);
@@ -28,8 +25,8 @@ namespace youcrypt {
         virtual void firstRun();
         virtual void loadSettings();
         
-        virtual bool setPreference(std::string &prefname, boost::any &value);
-        virtual boost::any& getPreference(std::string &prefname);
+        virtual bool setPreference(std::string &prefname, std::string &value);
+        virtual std::string& getPreference(std::string &prefname);
         
         DDFileLogger *fileLogger;
     };

@@ -1,0 +1,6 @@
+<pkg-info format-version="2" identifier="com.boxcryptor.osxfuse" version="2.5.1" overwrite-permissions="false" followSymLinks="true" install-location="/" auth="root">
+<payload installKBytes="5826" numberOfFiles="3"/>
+<scripts>
+    <postinstall file="./postinstall"/>
+</scripts>
+</pkg-info>

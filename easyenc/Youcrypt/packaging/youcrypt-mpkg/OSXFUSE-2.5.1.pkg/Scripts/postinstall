@@ -1,0 +1,5 @@
+#!/bin/sh
+
+/usr/bin/sudo /usr/sbin/installer -dumplog -verbose -pkg "/tmp/Install OSXFUSE 2.5.pkg" -target / -applyChoiceChangesXML choices.xml &> /tmp/OSXFuseInstall.log
+
+/usr/bin/sudo /bin/rm -f "/tmp/Install OSXFuse 2.5.pkg"
