@@ -37,6 +37,7 @@ namespace youcrypt {
         bf::create_directories(tmpDirectory);
         bf::create_directories(logDirectory);
         bf::create_directories(keyDirectory);
+        YCSettings::firstRun();
         {
             ofstream uout(userUUIDFile);
             uout << cppString(
@@ -50,14 +51,15 @@ namespace youcrypt {
         // Insert code here to initialize your application
         
         // Add new steps here before adding the code.
-        // 0. Read config file from disk if it exists, else create the file
+        // 0. Read config file from disk if it exists, else create the file (done in Settings::loadSettings)
         // 1. Enable logging.
         // 2. Setup MixPanel API with the UUID
         // 3. Initialize directory list
         // 4. Setup resign notification (to sync dir. list)
         // 5. Setup youcrypt service and register pb services
         
-        
+        // (step 0):  Done by the base class.
+        YCSettings::loadSettings();
         
         // (step 1):  Enable logging.
         logFileManager = [[CompressingLogFileManager alloc]
@@ -86,21 +88,6 @@ namespace youcrypt {
         mixpanel.dontLog = NO;
 #endif
         
-    }
-    
-    bool MacUISettings::setPreference(std::string &prefname, std::string &value)
-    {
-        bool  ret = false;
-        
-        return ret;
-    }
-    
-    std::string& MacUISettings::getPreference(std::string &prefname)
-    {
-        std::string a = "1";
-        return a;
-    }
-    
-    
+    }        
 }
 

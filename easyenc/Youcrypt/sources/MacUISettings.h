@@ -24,10 +24,6 @@ namespace youcrypt {
     protected:
         virtual void firstRun();
         virtual void loadSettings();
-        
-        virtual bool setPreference(std::string &prefname, std::string &value);
-        virtual std::string& getPreference(std::string &prefname);
-        
         DDFileLogger *fileLogger;
     };
     

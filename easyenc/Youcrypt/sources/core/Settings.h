@@ -58,25 +58,22 @@ public:
     string folderExtension;
     
     //! Application preferences that are editable by the user
-    std::map <std::string, std::string> _appPreferences;
-    
+    std::string &operator[] (const std::string &);
 
     bool isSetup, appFirstRun;
     
 
     YCSettings(string);
-    static void settingsUp();
-    
-    virtual ~YCSettings();
-
+    static void settingsUp();    
+    virtual void saveSettings();
 protected:
-    virtual void firstRun() = 0;
-    virtual void initializeSettings();
-    virtual void loadSettings() = 0;
+    void initializeSettings();
     
-    virtual bool setPreference(std::string &prefname, std::string &value) = 0;
-    virtual std::string& getPreference(std::string &prefname) = 0;
-    
+    virtual void loadSettings();
+    virtual void firstRun();
+    std::map <std::string, std::string> _appPreferences;
+
+        
 }; // end class YCSettings
     
     

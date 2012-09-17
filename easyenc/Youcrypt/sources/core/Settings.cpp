@@ -12,7 +12,6 @@
 #include <boost/shared_ptr.hpp>
 #include <string>
 #include <boost/filesystem/fstream.hpp>
-#import <boost/serialization/map.hpp>
 #import <boost/archive/xml_iarchive.hpp>
 #import <boost/archive/xml_oarchive.hpp>
 
@@ -43,24 +42,16 @@ YCSettings::YCSettings(string b) {
     else
         _theAppSettings.reset(this);
     
-    
-    if (bf::exists(baseDirectory)) {
+    if (bf::exists(configFile)) {
         // Not first run.
         appFirstRun = false;
-        if (bf::exists(configFile)) {
-            try {
-                bf::ifstream confin(configFile);
-                boost::archive::xml_iarchive xi(confin);
-                xi & BOOST_SERIALIZATION_NVP( _appPreferences);
-            } catch (...) {
-                std::cerr << "Could not read from config file"<< std::endl;
-            }
-        } else {
-            throw std::runtime_error("Not first run but cannot find config file");
-        }
     } else {
         appFirstRun = true;
     }
+}
+    
+std::string &YCSettings::operator[] (const std::string &prefKey) {
+    return _appPreferences[prefKey];
 }
     
 
@@ -91,23 +82,72 @@ void YCSettings::settingsUp() {
     _theAppSettings->isSetup = true;
 }
 
-YCSettings::~YCSettings() {
+void YCSettings::saveSettings() {
     bf::ofstream confout(configFile);
     boost::archive::xml_oarchive xo(confout);
-    xo & BOOST_SERIALIZATION_NVP(_appPreferences);
+    xo & make_nvp("Preferences", _appPreferences);
+}
+    
+void YCSettings::loadSettings() {
+    if (bf::exists(configFile)) {
+        bf::ifstream confin(configFile);
+        boost::archive::xml_iarchive xi(confin);
+        xi & make_nvp("Preferences", _appPreferences);
+    } else {
+        // FIXME: Create one?
+    }
+}
+    
+void YCSettings::firstRun() {
+    // Nothing much: create and save an empty map.
+    saveSettings();
 }
     
     
 } // end namespace youcrypt
-            
-            
-namespace boost { namespace serialization {
-    template<class Archive>
-    void serialize(Archive &ar, std::map<std::string, std::string> &m, const unsigned int)
-    {
-        for (auto el: m) {
-            ar & make_nvp("Key", el.first);
-            ar & make_nvp("Value", el.second);
+
+namespace boost{
+    namespace serialization{
+        template<class A>
+        void save (A &ar, const std::map<std::string, std::string> &mp, const unsigned int) {
+            int s = mp.size();
+            ar & make_nvp("count", s);
+            for (auto el: mp) {
+                ar & make_nvp("Key", el.first);
+                ar & make_nvp("Value", el.second);
+            }
         }
+        
+        template<class A>
+        void load (A &ar, std::map<std::string, std::string> &mp, const unsigned int) {
+            int s;
+            ar & make_nvp("count", s);
+            for (int i=0; i<s; i++) {
+                std::string key, value;
+                ar & make_nvp("Key", key);
+                ar & make_nvp("Value", value);
+                mp[key] = value;
+            }
+        }
+        
+        template<class A>
+        void serialize(A &ar, std::map<std::string, std::string> &mp, const unsigned int v) {
+            split_free(ar, mp, v);
+        }
+        
     }
-}}
+}
+
+//if (bf::exists(configFile)) {
+//    try {
+//        bf::ifstream confin(configFile);
+//        boost::archive::xml_iarchive xi(confin);
+//        xi & BOOST_SERIALIZATION_NVP( _appPreferences);
+//    } catch (...) {
+//        std::cerr << "Could not read from config file"<< std::endl;
+//        }
+//        } else {
+//            throw std::runtime_error("Not first run but cannot find config file");
+//        }
+
+            
