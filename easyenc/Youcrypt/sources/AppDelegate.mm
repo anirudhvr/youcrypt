@@ -79,7 +79,7 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
     appIsUp = NO;
     self = [super init];
     NSString *base = [NSHomeDirectory() stringByAppendingPathComponent:@".youcrypt"];
-    macSettings = new MacUISettings(cppString(base));
+    macSettings = new MacUISettings(cppString(base)); // XXX automatically sets appSettings
     
     preferenceController = [[PreferenceController alloc] init];
     listDirectories = [[ListDirectoriesWindow alloc] init];
@@ -139,8 +139,8 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
     [NSApp setServicesProvider:youcryptService];
     NSUpdateDynamicServices();
     
-    std::string userEmail = cppString([preferenceController getPreference:YC_USEREMAIL]);
-    std::string userName = cppString([preferenceController getPreference:YC_USERREALNAME]);
+    std::string userEmail = cppString([preferenceController getPreference:(MacUISettings::MacPreferenceKeys::yc_useremail)]);
+    std::string userName = cppString([preferenceController getPreference:(MacUISettings::MacPreferenceKeys::yc_userrealname)]);
     userAccount.reset(new UserAccount(userEmail, pass_cppstr, userName));
     
     serverConnectionWrapper = [self getServerConnection];
@@ -664,7 +664,8 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
         tourWizard = [[TourWizard alloc] init];
     }
     
-    [tourWizard showWindow:self];
+    [NSApp runModalForWindow:[tourWizard window]];
+    //    [tourWizard showWindow:self];
 }
 
 
@@ -902,8 +903,8 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
 -(boost::shared_ptr<UserAccount>) getUserAccount {
     if (!userAccount) {
         
-        std::string userEmail = cppString([preferenceController getPreference:YC_USEREMAIL]);
-        std::string userName = cppString([preferenceController getPreference:YC_USERREALNAME]);
+        std::string userEmail = cppString([preferenceController getPreference:(MacUISettings::MacPreferenceKeys::yc_useremail)]);
+        std::string userName = cppString([preferenceController getPreference:(MacUISettings::MacPreferenceKeys::yc_userrealname)]);
         std::string userPW = cppString([passphraseManager getPassphrase]);
         userAccount.reset(new UserAccount(userEmail, userPW, userName));
     }
@@ -944,18 +945,6 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
 
 
 @end
-
-std::string cppString(NSString *s) {
-    return std::string
-    ([s cStringUsingEncoding:NSASCIIStringEncoding]);
-}
-
-NSString *nsstrFromCpp(std::string st) {
-    NSString *s =
-    [NSString stringWithCString:st.c_str()
-                       encoding:NSASCIIStringEncoding];
-    return s;
-}
 
 
 

@@ -13,6 +13,8 @@
 #import "libFunctions.h"
 #import "XMLDictionary.h"
 #import "core/DirectoryMap.h"
+#import "core/Settings.h"
+#import "MacUISettings.h"
 
 @implementation PreferenceController
 
@@ -21,148 +23,89 @@
 @synthesize gmailSheetController;
 @synthesize changePassphraseButton;
 
+typedef MacUISettings::MacPreferenceKeys ms;
+
 - (id)init 
 {
     if (![super initWithWindowNibName:@"Preferences"])
         return nil;
     
     /* initializing some arrays */
-    boxClient = [[BoxFSA alloc] init];
-
     startOnLogin = [[StartOnLogin alloc] init];
-    preferences = [[NSMutableDictionary alloc] init];
     passphraseSheetController = [[PassphraseSheetController alloc] init];
-    gmailSheetController = [[GmailSheetController alloc] init];
-    [self readPreferences];
+    
     return self;
 }
 
-- (void) readPreferences
+- (NSString*)getPreference:(std::string)key
 {
-    /**
-     * Set up default prefs
-     */
-    preferencesKeys = [NSArray arrayWithObjects:
-                       YC_DROPBOXLOCATION, 
-                       YC_BOXLOCATION, 
-                       YC_ENCRYPTFILENAMES, 
-                       YC_STARTONBOOT,  
-                       YC_ANONYMOUSSTATISTICS, 
-                       YC_IDLETIME, 
-                       YC_USERREALNAME, 
-                       YC_USEREMAIL, 
-                       YC_GMAILUSERNAME, 
-                       YC_BOXSTATUS, 
-                       nil];
-    
-    defaultPreferences = [[NSMutableDictionary alloc] initWithObjects:[NSArray arrayWithObjects:
-                                                                       [libFunctions locateDropboxFolder], 
-                                                                       [self locateBoxFolder], 
-                                                                       [NSNumber numberWithInt:0], 
-                                                                       [NSNumber numberWithInt:1], 
-                                                                       [NSNumber numberWithInt:1], 
-                                                                       @"",
-                                                                       @"", 
-                                                                       @"", 
-                                                                       @"", 
-                                                                       @"", 
-                                                                       nil] 
-                                                              forKeys:preferencesKeys];
-
-    //    NSLog(@"Reading stored preferences");
-    NSString *prefValue;
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    for (NSString *prefKey in preferencesKeys) {
-        prefValue = [defaults stringForKey:prefKey];
-        
-        if(prefValue == nil){
-            [preferences setValue:[defaultPreferences objectForKey:prefKey] forKey:prefKey];
-            DDLogVerbose(@"WARNING: Setting %@ %@ was Nil in Defaults",prefKey,[defaultPreferences objectForKey:prefKey]);
-            
-        }
-        else{
-            [preferences setValue:prefValue forKey:prefKey];
-        }
-    }
+    return nsstrFromCpp((*appSettings())[key]);
 }
 
-
-- (id)getPreference:(NSString*)key
+- (NSString*)getPreferenceFromNSString:(NSString*)key
 {
-    return [preferences objectForKey:key];
+    return nsstrFromCpp((*appSettings())[cppString(key)]);
 }
 
-- (void)setPreference:(NSString*)key value:(id)val
+- (void)setPreferenceFromNSString:(NSString*)key value:(NSString*)val
 {
-//    NSLog(@"setPref %@ %@",key,val);
-    [preferences setObject:val forKey:key];
+    (*appSettings())[cppString(key)] = cppString((NSString*)val);
 }
 
-- (void)removePreference:(NSString*)key
+- (void)setPreference:(std::string)key value:(NSString*)val
 {
-    [preferences removeObjectForKey:key];
+    (*appSettings())[key] = cppString((NSString*)val);
 }
-
 
 - (void) savePreferences
 {
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults setValuesForKeysWithDictionary:preferences];
-    //   NSLog(@"SAVING:  %@",preferences);
-    [defaults synchronize];
+    appSettings()->saveSettings();
 }
-
 
 - (void)awakeFromNib
 {	
     /**
-     * Set UI values to match prefs read from NSUserDEfaults
+     * Set UI values to match prefs read from NSUserDefaults
      */
-    [startOnBoot setState:[[self getPreference:YC_STARTONBOOT] intValue]];
-    [enableFilenameEncryption setState:[[self getPreference:YC_ENCRYPTFILENAMES] intValue]];
-    [allowAnonymousUsageStatistics setState:[[self getPreference:YC_ANONYMOUSSTATISTICS] intValue]];
-    [idleTime setStringValue:[self getPreference:YC_IDLETIME]];
+    [startOnBoot setState:[[self getPreference:(ms::yc_startonboot)] intValue]];
+    [enableFilenameEncryption setState:[[self getPreference:(ms::yc_encryptfilenames)] intValue]];
+    [allowAnonymousUsageStatistics setState:[[self getPreference:(ms::yc_anonymousstatistics)] intValue]];
+    [idleTime setStringValue:[self getPreference:(ms::yc_idletime)]];
     
     
-    [realName setStringValue:[self getPreference:YC_USERREALNAME]];
-    [email setStringValue:[self getPreference:YC_USEREMAIL]];
+    [realName setStringValue:[self getPreference:(ms::yc_userrealname)]];
+    [email setStringValue:[self getPreference:(ms::yc_useremail)]];
+    
     [passphrase setStringValue:@"somerandomvalue"];
     [passphrase setEditable:NO];
     
-    
-//    if([self getPreference:YC_USERREALNAME] == nil)
-//        NSLog(@"NIL!");
-
     passphraseSheetController = [[PassphraseSheetController alloc] init];
     
     [tabView selectTabViewItem:[tabView tabViewItemAtIndex:0]];
     
-//    NSLog(@"email, name : %@ %@ %@",[self getPreference:YC_USEREMAIL],[self getPreference:YC_USERREALNAME],@"");
-//    NSLog(@"dbloc aw; %@",[self getPreference:YC_DROPBOXLOCATION]);
-//    
-    if([self getPreference:YC_DROPBOXLOCATION] == nil){
+    /* We don't show this tab currently */
+    if([self getPreference:(ms::yc_dropboxlocation)] == nil){
         [dropboxLocation setHidden:YES];
     } else {
         [dropboxLocation setHidden:NO];
-        [dropboxLocation setURL:[NSURL URLWithString:[self getPreference:YC_DROPBOXLOCATION]]];
+        [dropboxLocation setURL:[NSURL URLWithString:[self getPreference:(ms::yc_dropboxlocation)]]];
     }
-    
-    if(([self getPreference:YC_BOXSTATUS] == nil) ||([[self getPreference:YC_BOXSTATUS] isEqualToString:@""])) {
+    if(([self getPreference:(ms::yc_boxstatus)] == nil) ||([[self getPreference:(ms::yc_boxstatus)] isEqualToString:@""])) {
         [linkBox setTitle:@"Link Box Account"];
         [boxLocation setHidden:YES];
         
     } else {
-        DDLogInfo(@"box loc valid : %@",[self getPreference:YC_BOXLOCATION]);
+        DDLogInfo(@"box loc valid : %@",[self getPreference:(ms::yc_boxlocation)]);
         [boxLocation setHidden:NO];
-        [boxLocation setURL:[NSURL URLWithString:[self getPreference:YC_BOXLOCATION]]];
+        [boxLocation setURL:[NSURL URLWithString:[self getPreference:(ms::yc_boxlocation)]]];
         [linkBox setTitle:@"Unlink Box Account"];
     }
     
-    if(([self getPreference:YC_GMAILUSERNAME] == nil) || [self getPreference:YC_GMAILUSERNAME] == @"") {
+    if(([self getPreference:(ms::yc_gmailusername)] == nil) || [self getPreference:(ms::yc_gmailusername)] == @"") {
         [linkGmail setTitle:@"Set GMail Credentials"];
 
     } else {
-        DDLogInfo(@"gmail username valid : %@",[self getPreference:YC_GMAILUSERNAME]);
+        DDLogInfo(@"gmail username valid : %@",[self getPreference:(ms::yc_gmailusername)]);
         [linkGmail setTitle:@"Change GMail Credentials"];
     }
     
@@ -172,7 +115,81 @@
     [boxIcon setImage:boxLogo];
 }
 
-                    
+///////////////////////////////////////
+// Handlers for various controls on the
+// Preferences windwo
+///////////////////////////////////////
+
+- (IBAction)filenameEncryptionChecked:(id)sender
+{
+    (void)sender;
+    long encState = [enableFilenameEncryption state];
+    if (encState != [nsstrFromCpp((*appSettings())[ms::yc_encryptfilenames]) intValue]) {
+        DDLogVerbose(@"updating encstate to %ld", encState);
+        [self setPreference:(ms::yc_encryptfilenames) value:[NSString stringWithFormat:@"%ld", encState]];
+    }
+}
+
+- (IBAction)startOnBootChecked:(id)sender
+{
+    (void)sender;
+    long onBootState = [startOnBoot state];
+    if (onBootState != [nsstrFromCpp((*appSettings())[ms::yc_startonboot]) intValue]) {
+        [self setPreference:(ms::yc_startonboot) value:[NSString stringWithFormat:@"%ld", onBootState]];
+     //   DDLogVerbose(@"Setting onboot state to %d", onBootState);
+        if (onBootState == NSOnState) {
+            DDLogInfo(@"Will start at login");
+            [StartOnLogin setStartAtLogin:[self appURL] enabled:YES];
+        } else {
+            DDLogInfo(@"Will not start at login");
+            [StartOnLogin setStartAtLogin:[self appURL] enabled:NO];
+        }
+    }
+}
+
+- (IBAction)allowAnonymousUsageStatisticsChecked:(id)sender
+{
+    (void)sender;
+    long state = [allowAnonymousUsageStatistics state];
+    if (state != [[self getPreference:(ms::yc_anonymousstatistics)] intValue]) {
+        DDLogInfo(@"old anonym feedback checkbox state: %ld, new: %d", state, [[self getPreference:(ms::yc_anonymousstatistics)] intValue]);
+        [self setPreference:(ms::yc_anonymousstatistics) value:[NSString stringWithFormat:@"%ld", state]];
+    }
+}
+
+- (IBAction)idleTimeChanged:(id)sender
+{
+    (void)sender;
+    DDLogInfo(@"idle time changed to %@", [idleTime stringValue]);
+    [self setPreference:(ms::yc_idletime) value:[idleTime stringValue]];
+}
+
+-(IBAction)changePassphrase:(id)sender
+{
+    (void)sender;
+    DirectoryMap &dmap = getDirectories();
+
+    NSMutableArray *arr = [[NSMutableArray alloc] init];
+    for (auto d: dmap) {
+        [arr addObject:[NSString stringWithCString:d.first.c_str()
+                                          encoding:NSASCIIStringEncoding]];
+    }
+    passphraseSheetController.arr = arr;
+    [passphraseSheetController beginSheetModalForWindow:self.window completionHandler:^(NSUInteger returnCode) {
+        if (returnCode == kSheetReturnedSave) {
+            DDLogVerbose(@"changePassphrase: Passphrase change saved");
+        } else if (returnCode == kSheetReturnedCancel) {
+            DDLogVerbose(@"changePassphrase: Passphrase change cancelled");
+        } else {
+            DDLogVerbose(@"changePassphrase: Unknown return code");
+        }
+    }];
+}
+
+
+///////////////////////////////////////
+// Box linking / sharing code
+///////////////////////////////////////
 -(void)refreshBoxLinkStatus:(BOOL)linked
 {
     if(linked){
@@ -198,8 +215,8 @@
 -(IBAction)linkBoxAccount:(id)sender
 {
     (void)sender;
-    DDLogVerbose(@"box status: %@",[self getPreference:YC_BOXSTATUS]);
-    if(([self getPreference:YC_BOXSTATUS] == nil) || ([[self getPreference:YC_BOXSTATUS] isEqualToString:@""]) ) {
+    DDLogVerbose(@"box status: %@",[self getPreference:(ms::yc_boxstatus)]);
+    if(([self getPreference:(ms::yc_boxstatus)] == nil) || ([[self getPreference:(ms::yc_boxstatus)] isEqualToString:@""]) ) {
         [boxClient auth];
         
         NSAlert *alert = [[NSAlert alloc] init];
@@ -212,12 +229,28 @@
     }
     else {
         DDLogVerbose(@"removing boxstatus pref");
-        //[self removePreference:YC_BOXSTATUS];
-        [self setPreference:YC_BOXSTATUS value:@""];
+        [self setPreference:(ms::yc_boxstatus) value:@""];
         [self refreshBoxLinkStatus:NO];
     }
 }
 
+-(void)boxAuthDone:(NSAlert *)alert returnCode:(NSInteger)returnCode
+{
+    (void)alert;
+    if (returnCode == NSAlertFirstButtonReturn) {
+        DDLogVerbose(@"BOX AUTH DONE!");
+        //[self sendEmail];
+        NSString *boxAuthToken = [boxClient userGavePerms];
+        if(![boxAuthToken isEqualToString:@""]) {
+            [self setPreference:(ms::yc_boxstatus) value:boxAuthToken];
+            [self refreshBoxLinkStatus:YES];    
+        }
+    }
+}
+
+///////////////////////////////////////
+// Gmail linking / sharing code
+///////////////////////////////////////
 -(IBAction)linkGmailAccount:(id)sender
 {
     (void)sender;
@@ -254,19 +287,6 @@
 //    FIXME
 }
 
--(void)boxAuthDone:(NSAlert *)alert returnCode:(NSInteger)returnCode
-{
-    (void)alert;
-    if (returnCode == NSAlertFirstButtonReturn) {
-        DDLogVerbose(@"BOX AUTH DONE!");
-        //[self sendEmail];
-        NSString *boxAuthToken = [boxClient userGavePerms];
-        if(![boxAuthToken isEqualToString:@""]) {
-            [self setPreference:YC_BOXSTATUS value:boxAuthToken];
-            [self refreshBoxLinkStatus:YES];    
-        }
-    }
-}
 
 -(IBAction)windowDidLoad:(id)sender
 {
@@ -286,10 +306,8 @@
 {
     (void)sender;
     
-    [self setPreference:YC_USERREALNAME value:[realName stringValue]];
-    [self setPreference:YC_USEREMAIL value:[email stringValue]];
-    //[self setPreference:YC_BOXLOCATION value:[[boxLocation URL] absoluteString]];
-    //[self setPreference:YC_DROPBOXLOCATION value:[[dropboxLocation URL] absoluteString]];
+    [self setPreference:(ms::yc_userrealname) value:[realName stringValue]];
+    [self setPreference:(ms::yc_useremail) value:[email stringValue]];
     [self savePreferences];
     
    // [self close];
@@ -300,29 +318,10 @@
     return YES;
 }
 
--(IBAction)changePassphrase:(id)sender
-{
-    (void)sender;
-    DirectoryMap &dmap = getDirectories();
 
-    NSMutableArray *arr = [[NSMutableArray alloc] init];
-    for (auto d: dmap) {
-        [arr addObject:[NSString stringWithCString:d.first.c_str()
-                                          encoding:NSASCIIStringEncoding]];
-    }
-    passphraseSheetController.arr = arr;
-    [passphraseSheetController beginSheetModalForWindow:self.window completionHandler:^(NSUInteger returnCode) {
-        if (returnCode == kSheetReturnedSave) {
-            DDLogVerbose(@"changePassphrase: Passphrase change saved");
-        } else if (returnCode == kSheetReturnedCancel) {
-            DDLogVerbose(@"changePassphrase: Passphrase change cancelled");
-        } else {
-            DDLogVerbose(@"changePassphrase: Unknown return code");
-        }
-    }];
-}
-
-
+////////////////////////////////
+// Set Dropbox folder
+/////////////////////////////////
 
 static NSArray *openFiles()
 { 
@@ -354,6 +353,10 @@ static NSArray *openFiles()
 
 }
 
+////////////////////////////////
+// Set Box folder
+/////////////////////////////////
+
 - (IBAction)chooseBoxLocation:(id)sender
 {
     (void)sender;
@@ -366,53 +369,6 @@ static NSArray *openFiles()
     NSURL *url = [path objectAtIndex:0];
     [boxLocation setURL:url];
 
-}
-- (IBAction)filenameEncryptionChecked:(id)sender
-{
-    (void)sender;
-    long encState = [enableFilenameEncryption state];
-    if (encState != [[preferences objectForKey:YC_ENCRYPTFILENAMES] intValue]) {
-        // NSDictionary* dict = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:encState], YC_ENCRYPTFILENAMES, nil];
-        DDLogVerbose(@"updating encstate to %ld", encState);
-        [self setPreference:YC_ENCRYPTFILENAMES value:[NSNumber numberWithLong:encState]];
-    }
-}
-
-- (IBAction)startOnBootChecked:(id)sender
-{
-    (void)sender;
-    long onBootState = [startOnBoot state];
-  //  NSLog(@"checkbox state: %d, stored state: %d", onBootState, [[preferences objectForKey:YC_STARTONBOOT] intValue]);
-    if (onBootState != [[preferences objectForKey:YC_STARTONBOOT] intValue]) {
-       // NSDictionary* dict = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:onBootState], YC_STARTONBOOT, nil];
-        [self setPreference:YC_STARTONBOOT value:[NSNumber numberWithLong:onBootState]];
-     //   DDLogVerbose(@"Setting onboot state to %d", onBootState);
-     //   NSLog(@"Stored prefs state: %d", [[self getPreference:YC_STARTONBOOT] intValue]);
-        if (onBootState == NSOnState) {
-            DDLogInfo(@"Will start at login");
-            [StartOnLogin setStartAtLogin:[self appURL] enabled:YES];
-        } else {
-            DDLogInfo(@"Will not start at login");
-            [StartOnLogin setStartAtLogin:[self appURL] enabled:NO];
-        }
-    }
-}
-
-- (IBAction)allowAnonymousUsageStatisticsChecked:(id)sender
-{
-    (void)sender;
-    long state = [allowAnonymousUsageStatistics state];
-    if (state != [[self getPreference:YC_ANONYMOUSSTATISTICS] intValue]) {
-        DDLogInfo(@"old anonym feedback checkbox state: %ld, new: %d", state, [[self getPreference:YC_ANONYMOUSSTATISTICS] intValue]);
-        [self setPreference:YC_ANONYMOUSSTATISTICS value:[NSNumber numberWithLong:state]];
-    }
-}
-
-- (IBAction)idleTimeChanged:(id)sender
-{
-    (void)sender;
-    DDLogInfo(@"idle time changed to %@", [idleTime stringValue]);
-    [self setPreference:YC_IDLETIME value:[idleTime stringValue]];
 }
 
 - (NSURL *)appURL

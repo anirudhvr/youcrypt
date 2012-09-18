@@ -21,8 +21,6 @@
 using boost::shared_ptr;
 using std::string;
 
-#define YC_EXTENSION ".yc"
-
 namespace youcrypt {
 
     enum {

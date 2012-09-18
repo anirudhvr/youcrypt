@@ -70,7 +70,8 @@
         for(int i=0;i<count;i++) {
             NSString *path = [arr objectAtIndex:i];
             [message setStringValue:[NSString stringWithFormat:@"Updating %ld%%",((i+1)*100)/count]];
-            BOOL ret = [libFunctions changeEncFSPasswd:path oldPasswd:[oldpassphrase stringValue] newPasswd:[newpassphrase stringValue]];
+//            BOOL ret = [libFunctions changeEncFSPasswd:path oldPasswd:[oldpassphrase stringValue] newPasswd:[newpassphrase stringValue]];
+            BOOL ret = false;
             if (!ret)
                 DDLogVerbose(@"Changing encfs password seems to have failed");
         }

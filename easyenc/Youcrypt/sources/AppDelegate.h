@@ -35,9 +35,6 @@ using namespace youcrypt;
 @class AboutController;
 @class PassphraseManager;
 
-extern "C" std::string cppString(NSString *);
-extern "C" NSString *nsstrFromCpp(std::string);
-
 class youcrypt::MacUISettings;
 
 

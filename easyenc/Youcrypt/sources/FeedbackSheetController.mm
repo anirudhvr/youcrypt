@@ -60,10 +60,9 @@
         curlEmail = [NSString stringWithFormat:@"from=\"anonymous@youcrypt.com\""];
     }
     else {
-        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-        NSString *userRealName = [defaults objectForKey:YC_USERREALNAME];
-        NSString *userEmail = [defaults objectForKey:YC_USEREMAIL];
-        if (![libFunctions validateEmail:userEmail]) 
+        NSString *userRealName = [theApp.preferenceController getPreference:(MacUISettings::MacPreferenceKeys::yc_userrealname)];
+        NSString *userEmail = [theApp.preferenceController getPreference:(MacUISettings::MacPreferenceKeys::yc_useremail)];
+        if (![libFunctions validateEmail:userEmail])
             userEmail = @"invalid-email@youcrypt.com";
         
         curlEmail = [NSString stringWithFormat:@"from=\"%@ <%@>\"",userRealName,userEmail];

@@ -9,6 +9,7 @@
 #import <Cocoa/Cocoa.h>
 #import "BoxFSA.h"
 #import "XMLDictionary.h"
+#import <string>
 
 @class StartOnLogin;
 @class PassphraseSheetController;
@@ -19,41 +20,33 @@
     // the tabview
     IBOutlet NSTabView *tabView;    
 
-    // the preference keys and the preferences array
-    NSArray *preferencesKeys;
-    NSMutableDictionary *defaultPreferences;
-    NSMutableDictionary *preferences;
-    
-    // General preferences
+    // General Preference Tab buttons / controls
     IBOutlet NSButton *startOnBoot;
     IBOutlet NSButton *enableFilenameEncryption;
     IBOutlet NSButton *allowAnonymousUsageStatistics;
     IBOutlet NSTextField *idleTime;
     
-    // Libarray to start on login
-    StartOnLogin *startOnLogin;
-    
     // Account preferences
-    IBOutlet NSButton *linkBox;
-    IBOutlet NSTextField *boxLinkStatus; 
-    BoxFSA *boxClient;
     IBOutlet NSTextField *realName;
     IBOutlet NSTextField *email;
     IBOutlet NSSecureTextField *passphrase;
     IBOutlet NSSecureTextField *passphrase_verification;
-    
-    PassphraseSheetController *passphraseSheetController;
     IBOutlet NSButton *changePassphraseButton;
     
-    GmailSheetController *gmailSheetController;
-    
     // Services preferences
+    IBOutlet NSButton *linkBox;
+    IBOutlet NSTextField *boxLinkStatus;
     IBOutlet NSPathControl *dropboxLocation;
     IBOutlet NSPathControl *boxLocation;
-    
     IBOutlet NSButton *linkGmail;
     IBOutlet NSImageView *dbIcon;
     IBOutlet NSImageView *boxIcon;
+    
+    // Libarray to start on login
+    StartOnLogin *startOnLogin;
+    BoxFSA *boxClient;
+    GmailSheetController *gmailSheetController;
+    PassphraseSheetController *passphraseSheetController;
 }
 
 // changing passphrase stuff
@@ -64,9 +57,10 @@
 @property (nonatomic, strong) BoxFSA *boxClient;
 
 // public methods
-- (id)getPreference:(NSString*)key;
-- (void)setPreference:(NSString*)key value:(id)val;
-- (void)removePreference:(NSString*)key;
+- (NSString*)getPreferenceFromNSString:(NSString*)key;
+- (NSString*)getPreference:(std::string)key;
+- (void)setPreference:(std::string)key value:(NSString*)val;
+- (void)setPreferenceFromNSString:(NSString*)key value:(NSString*)val;
 
 /*
  *  Private methods

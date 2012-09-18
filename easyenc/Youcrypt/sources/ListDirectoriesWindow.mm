@@ -263,7 +263,7 @@ void printCloseError(int ret)
         [sharingGetEmailsView setListDirWindow:self];
         [sharingPopover showRelativeToRect:[table rectOfRow:row] ofView:table preferredEdge:NSMaxYEdge];
         
-        if ([[theApp.preferenceController getPreference:YC_ANONYMOUSSTATISTICS] intValue])
+        if ([[theApp.preferenceController getPreference:(MacUISettings::MacPreferenceKeys::yc_anonymousstatistics)] intValue])
             [mixpanel track:nsstrFromCpp(appSettings()->mixPanelUUID)
                  properties:[NSDictionary dictionaryWithObjectsAndKeys:
                              @"YES", @"shareClicked",
@@ -275,8 +275,8 @@ void printCloseError(int ret)
             message:(NSString*)msg
 {
     BOOL ret = YES;
-    NSString *fromname = [theApp.preferenceController getPreference:YC_USERREALNAME];
-    NSString *fromemail = [NSString stringWithFormat:@"%@ <%@>", fromname, [theApp.preferenceController getPreference:YC_USEREMAIL]];
+    NSString *fromname = [theApp.preferenceController getPreference:(MacUISettings::MacPreferenceKeys::yc_userrealname)];
+    NSString *fromemail = [NSString stringWithFormat:@"%@ <%@>", fromname, [theApp.preferenceController getPreference:(MacUISettings::MacPreferenceKeys::yc_useremail)]];
     yc::UserAccount ua_to_search(cppString(email), "");
     DDLogVerbose(@"Searching for email %@ in server database", email);
     boost::shared_ptr<ServerConnectionWrapper> sc = [theApp getServerConnection];

@@ -55,7 +55,8 @@
     NSString *volname = [[srcFolder stringByDeletingPathExtension] lastPathComponent];
     NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:@"logo-512x512-alpha.icns", @"volicon", volname, @"volname", nil];
         
-    int idletime = [[theApp.preferenceController getPreference:YC_IDLETIME] intValue];
+    int idletime = [[theApp.preferenceController
+                     getPreference:(MacUISettings::MacPreferenceKeys::yc_idletime)] intValue];
     BOOL res;
     std::vector<std::string> mount_opts, &fuse_opts = mount_opts;
     NSDictionary *fuseOpts = dict;

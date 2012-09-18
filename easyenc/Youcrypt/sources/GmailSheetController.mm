@@ -9,6 +9,7 @@
 #import "GmailSheetController.h"
 #import "libFunctions.h"
 #import "PreferenceController.h"
+#import "MacUISettings.h"
 
 @interface GmailSheetController ()
 
@@ -35,8 +36,9 @@
 
 -(void) sheetDidDisplay
 {
-    if(!(([preferenceController getPreference:YC_GMAILUSERNAME] == nil) || ([preferenceController getPreference:YC_GMAILUSERNAME] == @""))) {
-        [username setStringValue:[preferenceController getPreference:YC_GMAILUSERNAME]];
+    if(!(([preferenceController getPreference:(youcrypt::MacUISettings::MacPreferenceKeys::yc_gmailusername)] == nil) ||
+         ([preferenceController getPreference:(youcrypt::MacUISettings::MacPreferenceKeys::yc_gmailusername)] == @""))) {
+        [username setStringValue:[preferenceController getPreference:(youcrypt::MacUISettings::MacPreferenceKeys::yc_gmailusername)]];
         //[password setStringValue:[libFunctions getPassphraseFromKeychain:@"ycgmail"]];
     }
 }
@@ -55,7 +57,7 @@
 - (IBAction)saveClicked:(id)sender {
     (void)sender;
    //     [libFunctions registerWithKeychain:[password stringValue]:@"ycgmail"];
-        [preferenceController setPreference:YC_GMAILUSERNAME value:[username stringValue]];
+    [preferenceController setPreference:(youcrypt::MacUISettings::MacPreferenceKeys::yc_gmailusername) value:[username stringValue]];
         [username setStringValue:@""];
         [password setStringValue:@""];
         [username becomeFirstResponder];

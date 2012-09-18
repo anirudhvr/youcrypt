@@ -51,15 +51,26 @@ public:
     bf::path listFile;
     bf::path userUUIDFile;
     
+    struct PreferenceKeys {
+        // User information
+        static const string yc_userrealname;
+        static const string yc_useremail;
+        
+        // Application prefrences
+        static const string yc_encryptfilenames;
+        static const string yc_idletime;
+        static const string yc_startonboot;
+        static const string yc_folderextension;
+        
+    };
+    
     //! For mixpanel logging.
     string mixPanelUUID;
 
-    //! ".yc"
-    string folderExtension;
-    
     //! Application preferences that are editable by the user
-    std::string &operator[] (const std::string &);
+    string &operator[] (const string &);
 
+    //! Flags that maybe shouldn't be public? FIXME
     bool isSetup, appFirstRun;
     
 
@@ -68,10 +79,12 @@ public:
     virtual void saveSettings();
 protected:
     void initializeSettings();
-    
     virtual void loadSettings();
     virtual void firstRun();
-    std::map <std::string, std::string> _appPreferences;
+    virtual void setDefaultPreferences();
+    
+    //! Stores application preferences
+    std::map <string, string> _appPreferences;
 
         
 }; // end class YCSettings

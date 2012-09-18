@@ -25,6 +25,14 @@ using boost::serialization::make_nvp;
     
 static Settings _theAppSettings;
     
+// Initializing Application's const preference keys
+const string YCSettings::PreferenceKeys::yc_userrealname           = "yc.userrealname";
+const string YCSettings::PreferenceKeys::yc_useremail              = "yc.useremail";
+const string YCSettings::PreferenceKeys::yc_encryptfilenames       = "yc.encryptfilenames";
+const string YCSettings::PreferenceKeys::yc_idletime               = "yc.idletime";
+const string YCSettings::PreferenceKeys::yc_startonboot            = "yc.startonboot";
+const string YCSettings::PreferenceKeys::yc_folderextension        = "yc.folderextension";
+    
 Settings appSettings() {
     if (!_theAppSettings ||
         !_theAppSettings->isSetup)
@@ -37,8 +45,7 @@ YCSettings::YCSettings(string b) {
     baseDirectory = b;
     initializeSettings();
     if (_theAppSettings) 
-        throw std::runtime_error(
-                                 "Application already has a settings object.");
+        throw std::runtime_error("Application already has a settings object.");
     else
         _theAppSettings.reset(this);
     
@@ -50,11 +57,16 @@ YCSettings::YCSettings(string b) {
     }
 }
     
-std::string &YCSettings::operator[] (const std::string &prefKey) {
-    return _appPreferences[prefKey];
+std::string& YCSettings::operator[](const std::string &prefKey) {
+    auto elem = _appPreferences.find(prefKey);
+    if (elem != _appPreferences.end()) {
+        return elem->second;
+    } else {
+        _appPreferences[prefKey] = "value.empty";
+        return _appPreferences[prefKey];
+    }
 }
     
-
 void YCSettings::initializeSettings() {
     configFile = baseDirectory / bf::path("config.xml");
     volumeDirectory = baseDirectory / bf::path("volumes");
@@ -66,8 +78,6 @@ void YCSettings::initializeSettings() {
     listFile =  baseDirectory / bf::path("folders.xml");
     userUUIDFile = baseDirectory / bf::path("uuid.txt");
     
-    folderExtension = ".yc";
-
 }
 
 void YCSettings::settingsUp() {
@@ -89,6 +99,7 @@ void YCSettings::saveSettings() {
 }
     
 void YCSettings::loadSettings() {
+    setDefaultPreferences();
     if (bf::exists(configFile)) {
         bf::ifstream confin(configFile);
         boost::archive::xml_iarchive xi(confin);
@@ -101,6 +112,16 @@ void YCSettings::loadSettings() {
 void YCSettings::firstRun() {
     // Nothing much: create and save an empty map.
     saveSettings();
+}
+    
+void YCSettings::setDefaultPreferences() {
+        // User information
+    (*this)[PreferenceKeys::yc_userrealname] = "";
+    (*this)[PreferenceKeys::yc_useremail] = "";
+    (*this)[PreferenceKeys::yc_encryptfilenames] = "";
+    (*this)[PreferenceKeys::yc_idletime] = "";
+    (*this)[PreferenceKeys::yc_startonboot] = "";
+    (*this)[PreferenceKeys::yc_folderextension] = ".yc";
 }
     
     

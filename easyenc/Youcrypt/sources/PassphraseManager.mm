@@ -44,7 +44,7 @@
 -(void)awakeFromNib {
     NSString *e = nil;
     [email becomeFirstResponder];
-    if (prefC && (e = [prefC getPreference:YC_USEREMAIL]) && (e != nil))
+    if (prefC && (e = [prefC getPreference:(MacUISettings::MacPreferenceKeys::yc_useremail)]) && (e != nil))
         [email setStringValue:e];
     else
         [email setStringValue:@""];

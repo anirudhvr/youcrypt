@@ -21,6 +21,7 @@
 #include "YCFolder.h"
 #include "CredentialsManager.h"
 #include <boost/filesystem/path.hpp>
+#include "Settings.h"
 
 using namespace youcrypt;
 
@@ -69,7 +70,8 @@ YCFolder::initEncryptedFolderInPlaceAddExtension
     //   get active credentials from the global cred. manager
     vector<Credentials> credss = getGlobalCM()->getEncodingCreds();
     //   destination path is path + YC_EXTENSION
-    string destPath = path + YC_EXTENSION;
+    string destPath = path +
+        (*appSettings())[YCSettings::PreferenceKeys::yc_folderextension];
 
     // 2. (sanity check)
     //   check that destPath does not exists

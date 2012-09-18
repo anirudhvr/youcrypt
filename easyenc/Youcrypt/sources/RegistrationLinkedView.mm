@@ -42,8 +42,6 @@
     [super awakeFromNib];
     preferenceController = [theApp preferenceController];
     
-    //[name setStringValue:[preferenceController getPreference:YC_USERREALNAME]];
-    //[email setStringValue:[preferenceController getPreference:YC_USEREMAIL]];
     // Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateStatusMessage:) name:YC_KEYOPS_NOTIFICATION object:nil];
@@ -60,7 +58,6 @@
 }
 
 - (void)continueClicked:(id)sender {
-//    NSLog(@" username %@",[preferenceController getPreference:YC_USERREALNAME]);
     if([[password stringValue] isEqualToString:@""] ||
        [[password stringValue] isNotEqualTo:[confirmPassword stringValue]]) {
         
@@ -76,8 +73,8 @@
         return;
     } else {
         
-        [preferenceController setPreference:YC_USEREMAIL value:[email stringValue]];
-        [preferenceController setPreference:YC_USERREALNAME value:[name stringValue]];
+        [preferenceController setPreference:(MacUISettings::MacPreferenceKeys::yc_useremail) value:[email stringValue]];
+        [preferenceController setPreference:(MacUISettings::MacPreferenceKeys::yc_userrealname) value:[name stringValue]];
         
         // This is critical now because encrypt/decrypt/restore get the pp from the passphrase manager
         NSError *err;

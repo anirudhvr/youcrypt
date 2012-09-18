@@ -20,6 +20,8 @@
 #import <sys/un.h>
 #import <string.h>
 
+#import <string>
+
 @interface libFunctions : NSObject {
     
 }
@@ -55,5 +57,9 @@
 + (BOOL) openMountedPathInTopFinderWindow:(NSString*)diskName;
 + (BOOL) openMountedPathInFinderSomehow:(NSString*)sourcepath
                             mountedPath:(NSString*)mountedpath;
+
+extern "C" std::string cppString(NSString *);
+extern "C" NSString *nsstrFromCpp(std::string);
+
 
 @end
