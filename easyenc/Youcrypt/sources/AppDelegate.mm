@@ -249,6 +249,8 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
         getDirectories().archiveToFile(appSettings()->listFile);
     } catch(...) {
     }
+    // Save preferences
+    [preferenceController savePreferences];
 }
 - (void) appBecameActive:(NSNotification *)notification
 {

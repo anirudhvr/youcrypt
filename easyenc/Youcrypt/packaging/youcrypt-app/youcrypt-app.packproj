@@ -78,7 +78,7 @@
 											<key>GID</key>
 											<integer>80</integer>
 											<key>Path</key>
-											<string>/Users/avr/Library/Developer/Xcode/DerivedData/Youcrypt-ggysqscodtvhathjsipjtpfuvepf/Build/Products/Debug/Youcrypt.app</string>
+											<string>/Users/avr/Library/Developer/Xcode/DerivedData/Youcrypt-ggysqscodtvhathjsipjtpfuvepf/Build/Products/Release/Youcrypt.app</string>
 											<key>Path Type</key>
 											<integer>1</integer>
 											<key>Privileges</key>
