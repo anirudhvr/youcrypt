@@ -234,7 +234,7 @@ namespace boost
             ar & make_nvp("userKeys", keys);
             
             /* Rajsekar: easyenc whitelist */
-            WhiteLists whiteList(cfg.ignoreList);
+            WhiteLists whiteList(*cfg.ignoreList);
             ar & make_nvp("ignoreList", whiteList);
 			       
 
@@ -349,25 +349,25 @@ ConfigType readConfig_load( ConfigInfo *nm, const char *path,
 {
     if( nm->loadFunc )
     {
-	try
-	{
-	    if( (*nm->loadFunc)( path, config, nm ))
+        try
+        {
+            if( (*nm->loadFunc)( path, config, nm ))
             {
                 config->cfgType = nm->type;
-		return nm->type;
+                return nm->type;
             }
-	} catch( rlog::Error & err )
-	{
-	    err.log( _RLWarningChannel );
-	}
-
-	rError( _("Found config file %s, but failed to load"), path);
-	return Config_None;
+        } catch( rlog::Error & err )
+        {
+            err.log( _RLWarningChannel );
+        }
+        
+        rError( _("Found config file %s, but failed to load"), path);
+        return Config_None;
     } else
     {
-	// No load function - must be an unsupported type..
+        // No load function - must be an unsupported type..
         config->cfgType = nm->type;
-	return nm->type;
+        return nm->type;
     }
 }
 
@@ -1281,13 +1281,6 @@ RootPtr createV6Config( EncFS_Context *ctx,
                     "Please report this error."));
         return rootInfo;
     }
-
-
-    // Rajsekar Manokaran
-    // Add default whitelist 
-    config->ignoreList.push_back(".DS_STORE");
-    config->ignoreList.push_back(".ignore_enc");
-    
 
     if(!saveConfig( Config_YC, rootDir, config ))
         return rootInfo;

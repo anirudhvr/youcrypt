@@ -58,6 +58,8 @@ private:
     int _bs;
     boost::shared_ptr<Cipher> _cipher;
     CipherKey _key;
+    
+    bool should_ignore(const char *plainText) const;
 };
 
 

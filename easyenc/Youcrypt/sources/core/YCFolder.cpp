@@ -37,7 +37,7 @@ static const char*statusInString[] = {
 };
 
 using boost::filesystem::path;
-static void moveDirectory(path src, path dest) 
+static void copyDirectory(path src, path dest) 
 {
     // src and dest are presumed to exist.
     using namespace boost::filesystem;
@@ -51,7 +51,7 @@ static void moveDirectory(path src, path dest)
                           dest / si->path().filename());
             else if (is_directory(*si)) {
                 create_directories( dest / si->path().filename());
-                moveDirectory(*si, dest / si->path().filename());
+                copyDirectory(*si, dest / si->path().filename());
             }
         }
     }
@@ -62,9 +62,7 @@ YCFolder::initEncryptedFolderInPlaceAddExtension
     (string path,
      YoucryptFolderOpts opts)
 {
-
-
-    // 1. (setup parameters) 
+    // 1. (setup parameters)
     //   shared_ptr to store the folder we create
     shared_ptr<YCFolder> out; 
     //   get active credentials from the global cred. manager
@@ -97,7 +95,7 @@ YCFolder::initEncryptedFolderInPlaceAddExtension
         return out;
     }
 
-    // 4. (delete directories in the source)
+    // 4. (delete all files and directories in the source dir)
     boost::filesystem::path p(path);
     using boost::filesystem::directory_iterator;
     for (directory_iterator pi = directory_iterator(p),
@@ -108,8 +106,8 @@ YCFolder::initEncryptedFolderInPlaceAddExtension
         }
     }
 
-    // 5. (move files from dest to source)
-    moveDirectory(dest, p);
+    // 5. (copy files from dest to source)
+    copyDirectory(dest, p);
     boost::filesystem::remove_all(dest);
 
     // 6. (rename source to dest)
@@ -124,6 +122,7 @@ YCFolder::initEncryptedFolderInPlaceAddExtension
         out.reset();
         return out;
     }
+    
     for (int i=1; i<credss.size(); i++)
         out->addCredential(credss[i]);
     return out;
@@ -318,7 +317,7 @@ bool YCFolder::restoreFolderInPlace()
     }
 
     // 5. (move files from dest to source)
-    moveDirectory(newPath, encPath);
+    copyDirectory(newPath, encPath);
     boost::filesystem::remove_all(newPath);
 
     // 6. (rename source to dest)

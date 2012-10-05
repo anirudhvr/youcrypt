@@ -13,6 +13,7 @@
 
 @synthesize message;
 @synthesize currentView;
+@synthesize skipTourButton;
 
 - (id)init
 {
@@ -82,6 +83,12 @@
     if (![[self currentView] previousView]) return;
     [transition setSubtype:kCATransitionFromLeft];
     [self setCurrentView:[[self currentView] previousView]];
+}
+
+- (IBAction) skipTour:(id)sender
+{
+    [NSApp endSheet:self.window];
+    [self.window close];
 }
 
 

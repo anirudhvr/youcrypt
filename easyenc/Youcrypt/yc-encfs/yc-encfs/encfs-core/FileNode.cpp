@@ -79,11 +79,11 @@ bool _should_ignore(const char *plainText, boost::shared_ptr<EncFSConfig> &confi
     }
     lastPathComp++;
 
-    for (int i=0; i<config->ignoreList.size(); i++)
+    for (int i=0; i < config->ignoreList->size(); i++)
     {
 	if (!strncmp (lastPathComp,
-		      config->ignoreList[i].c_str(),
-		      config->ignoreList[i].length()))
+		      (*config->ignoreList)[i].c_str(),
+		      (*config->ignoreList)[i].length()))
 	    return true;
     }
     return false;

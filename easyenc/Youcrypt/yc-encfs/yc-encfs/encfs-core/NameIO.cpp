@@ -23,6 +23,8 @@
 
 #include <map>
 #include <cstring>
+#include <iostream>
+#include <iterator>
 
 // for static build.  Need to reference the modules which are registered at
 // run-time, to ensure that the linker doesn't optimize them away.
@@ -174,8 +176,15 @@ bool NameIO::getReverseEncryption() const
     return reverseEncryption;
 }
 
+void NameIO::setFilenameIgnoreList(const boost::shared_ptr<std::vector<std::string> > &ignorelist)
+{
+    ignoreList = ignorelist;
+    std::cout << "Printing ignore List in NameIO: ";
+    std::copy(ignoreList->begin(), ignoreList->end(), ostream_iterator<string>(cout, " "));
+    std::cout << std::endl;
+}
 
-std::string NameIO::recodePath( const char *path, 
+std::string NameIO::recodePath( const char *path,
 	int (NameIO::*_length)(int) const,
 	int (NameIO::*_code)(const char*, int, uint64_t *, char*) const,
 	uint64_t *iv ) const

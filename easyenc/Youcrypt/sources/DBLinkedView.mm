@@ -108,14 +108,14 @@
         }
     }
 
-    [NSApp endSheet:self.window];
+//    [NSApp endSheet:self.window];
     [self.window close];
     
 }
 
 -(IBAction)notNow:(id)sender
 {
-    [NSApp endSheet:self.window];
+//    [NSApp endSheet:self.window];
     [self.window close];
 }
 

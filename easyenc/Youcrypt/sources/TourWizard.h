@@ -15,13 +15,16 @@
 @interface TourWizard : NSWindowController
 {
     IBOutlet LinkedView *currentView;
+    IBOutlet NSButton *skipTourButton;
     CATransition *transition;
 }
 
 @property(nonatomic, strong) LinkedView *currentView;
 @property(nonatomic, strong) IBOutlet NSTextField *message;
-          
+@property(nonatomic, strong) IBOutlet NSButton *skipTourButton;
+
 - (IBAction)nextView:(id)sender;
 - (IBAction)previousView:(id)sender;
+- (IBAction) skipTour:(id)sender;
 
 @end

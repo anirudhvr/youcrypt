@@ -28,7 +28,7 @@ namespace youcrypt {
         int filenameEncryption;
 
         //! List of filepatterns to not encrypt.
-        vector<string> ignoreList;
+        shared_ptr<vector<string> > ignoreList;
 
         //! Volume Key size
         int keySize;
@@ -53,21 +53,7 @@ namespace youcrypt {
             
 
         //! Constructing providing sane defaults.
-        YoucryptFolderOpts() {
-
-            filenameEncryption = filenamePlain;
-            ignoreList.push_back(".DS_STORE");
-            ignoreList.push_back(".dropbox");
-            
-            keySize = 256;
-            blockSize = 1024;
-            algoName = "aes";
-            blockMACBytes = 8;
-            blockMACRandBytes = 0;
-            uniqueIV = true;
-            chainedIV = true;
-            externalIV = false;
-        }            
+        YoucryptFolderOpts();
     };
 
     class YoucryptFolder {
@@ -116,6 +102,7 @@ namespace youcrypt {
 
         int currStatus() { return status; }
         string getFuseMessage(bool=false);
+        
     public:
         enum Status {
             //! Status is not known (not parseable, not readable, etc.)

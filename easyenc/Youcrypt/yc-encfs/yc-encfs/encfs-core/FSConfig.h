@@ -77,11 +77,12 @@ struct EncFSConfig
     std::vector<std::vector<unsigned char> >  easyencKeys;
 
     // Rajsekar: Easyenc ignore list
-    std::vector<std::string> ignoreList;
+    boost::shared_ptr<std::vector<std::string> > ignoreList;
 
     EncFSConfig()
         : keyData()
         , salt()
+        , ignoreList(new std::vector<std::string> ())
     {
         cfgType = Config_None;
         subVersion = 0;

@@ -212,6 +212,29 @@ static bool decryptFolder( shared_ptr<DirNode> root,
     return true;
 }
 
+YoucryptFolderOpts::YoucryptFolderOpts() :
+ignoreList(new vector<string>())
+{
+    filenameEncryption = filenamePlain;
+#if (defined(__APPLE__) && defined(__MACH__))
+    ignoreList->push_back(".DS_STORE");
+#endif
+    ignoreList->push_back(".dropbox");
+//    ignoreList->push_back(sttring(etConfigFileName);
+    
+    keySize = 256;
+    blockSize = 1024;
+    algoName = "aes";
+    blockMACBytes = 8;
+    blockMACRandBytes = 0;
+    uniqueIV = true;
+    chainedIV = true;
+    externalIV = false;
+}
+
+
+
+
 /*! Implementation: Creates an empty object */
 YoucryptFolder::YoucryptFolder()
 {
@@ -269,7 +292,7 @@ bool YoucryptFolder::loadConfigAtPath(const path &_rootPath,
     else
         return false;
 
-    config.reset(new EncFSConfig);
+    config.reset(new EncFSConfig());
 
     if(readConfig( rootDir, config ) != Config_None)
     {
@@ -336,8 +359,9 @@ bool YoucryptFolder::loadConfigAtPath(const path &_rootPath,
         if(!nameCoder)
             return false;
 
-        nameCoder->setChainedNameIV( config->chainedNameIV );
+        nameCoder->setChainedNameIV(config->chainedNameIV );
         nameCoder->setReverseEncryption( false );
+        nameCoder->setFilenameIgnoreList(config->ignoreList);
 
         FSConfigPtr fsConfig( new FSConfig );
         fsConfig->cipher = cipher;
@@ -507,7 +531,8 @@ bool YoucryptFolder::createAtPath(const path& _rootPath,
 
     nameCoder->setChainedNameIV( config->chainedNameIV );
     nameCoder->setReverseEncryption( reverseEncryption );
-
+    nameCoder->setFilenameIgnoreList(config->ignoreList);
+    
     FSConfigPtr fsConfig (new FSConfig);
     fsConfig->cipher = cipher;
     fsConfig->key = volumeKey;

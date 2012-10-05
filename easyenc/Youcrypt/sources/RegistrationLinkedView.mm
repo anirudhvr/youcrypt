@@ -91,6 +91,7 @@
     }
     
     [[NSNotificationCenter defaultCenter] removeObserver:self]; // Removes from all queues
+    [NSApp endSheet:self.window];
     
     [super goToNextView];
     

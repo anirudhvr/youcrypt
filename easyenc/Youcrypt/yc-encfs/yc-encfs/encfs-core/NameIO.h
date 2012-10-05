@@ -20,6 +20,7 @@
 
 #include <string>
 #include <list>
+#include <vector>
 
 #include <inttypes.h>
 
@@ -64,6 +65,7 @@ public:
     bool getChainedNameIV() const;
     void setReverseEncryption( bool enable );
     bool getReverseEncryption() const;
+    void setFilenameIgnoreList(const boost::shared_ptr<std::vector<std::string> > &ignorelist);
 
     std::string encodePath( const char *plaintextPath ) const;
     std::string decodePath( const char *encodedPath ) const;
@@ -88,7 +90,10 @@ protected:
     virtual int decodeName( const char *encodedName, int length,
 	                    uint64_t *iv, char *plaintextName ) const =0;
 
-
+protected:
+    // Accessible to derived classes
+    boost::shared_ptr<std::vector<std::string> > ignoreList;
+    
 private:
 
     std::string recodePath( const char *path,

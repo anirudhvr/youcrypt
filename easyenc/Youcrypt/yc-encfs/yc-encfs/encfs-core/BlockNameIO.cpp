@@ -33,7 +33,6 @@ using namespace boost;
 
 static RLogChannel * Info = DEF_CHANNEL( "info/nameio", Log_Info );
 
-
 static shared_ptr<NameIO> NewBlockNameIO( const Interface &iface,
 	const shared_ptr<Cipher> &cipher, const CipherKey &key )
 {
@@ -92,6 +91,19 @@ Interface BlockNameIO::interface() const
     return CurrentInterface();
 }
 
+bool BlockNameIO::should_ignore(const char *plainText) const
+{
+    for (int i=0; i < ignoreList->size(); i++)
+    {
+        if (!strncmp (plainText,
+                      (*ignoreList)[i].c_str(),
+                      (*ignoreList)[i].length()))
+            return true;
+    }
+    return false;
+}
+
+
 int BlockNameIO::maxEncodedNameLen( int plaintextNameLen ) const
 {
     // number of blocks, rounded up.. Only an estimate at this point, err on
@@ -110,100 +122,110 @@ int BlockNameIO::maxDecodedNameLen( int encodedNameLen ) const
 int BlockNameIO::encodeName( const char *plaintextName, int length,
 	uint64_t *iv, char *encodedName ) const
 {
-    // copy the data into the encoding buffer..
-    memcpy( encodedName+2, plaintextName, length );
-    
-    // Pad encryption buffer to block boundary..
-    int padding = _bs - length % _bs;
-    if(padding == 0)
-	padding = _bs; // padding a full extra block!
-
-    memset( encodedName+length+2, (unsigned char)padding, padding );
-    
-    // store the IV before it is modified by the MAC call.
-    uint64_t tmpIV = 0;
-    if( iv && _interface >= 3 )
-	tmpIV = *iv;
-
-    // include padding in MAC computation
-    unsigned int mac = _cipher->MAC_16( (unsigned char *)encodedName+2,
-	    length+padding, _key, iv );
-
-    // add checksum bytes
-    encodedName[0] = (mac >> 8) & 0xff;
-    encodedName[1] = (mac     ) & 0xff;
-
-    _cipher->blockEncode( (unsigned char *)encodedName+2, length+padding,
-	    (uint64_t)mac ^ tmpIV, _key);
-
-    // convert to base 64 ascii
-    int encodedStreamLen = length + 2 + padding;
-    int encLen64 = B256ToB64Bytes( encodedStreamLen );
-
-    changeBase2Inline( (unsigned char *)encodedName, encodedStreamLen,
-	    8, 6, true );
-    B64ToAscii( (unsigned char *)encodedName, encLen64 );
-
-    return encLen64;
+    if (should_ignore(plaintextName)) {
+        memcpy(encodedName, plaintextName, length);
+        return length;
+    } else {
+        // copy the data into the encoding buffer..
+        memcpy( encodedName+2, plaintextName, length );
+        
+        // Pad encryption buffer to block boundary..
+        int padding = _bs - length % _bs;
+        if(padding == 0)
+            padding = _bs; // padding a full extra block!
+        
+        memset( encodedName+length+2, (unsigned char)padding, padding );
+        
+        // store the IV before it is modified by the MAC call.
+        uint64_t tmpIV = 0;
+        if( iv && _interface >= 3 )
+            tmpIV = *iv;
+        
+        // include padding in MAC computation
+        unsigned int mac = _cipher->MAC_16( (unsigned char *)encodedName+2,
+                                           length+padding, _key, iv );
+        
+        // add checksum bytes
+        encodedName[0] = (mac >> 8) & 0xff;
+        encodedName[1] = (mac     ) & 0xff;
+        
+        _cipher->blockEncode( (unsigned char *)encodedName+2, length+padding,
+                             (uint64_t)mac ^ tmpIV, _key);
+        
+        // convert to base 64 ascii
+        int encodedStreamLen = length + 2 + padding;
+        int encLen64 = B256ToB64Bytes( encodedStreamLen );
+        
+        changeBase2Inline( (unsigned char *)encodedName, encodedStreamLen,
+                          8, 6, true );
+        B64ToAscii( (unsigned char *)encodedName, encLen64 );
+        
+        return encLen64;
+    }
 }
 
 int BlockNameIO::decodeName( const char *encodedName, int length,
 	uint64_t *iv, char *plaintextName ) const
 {
-    int decLen256 = B64ToB256Bytes( length );
-    int decodedStreamLen = decLen256 - 2;
-
-    // don't bother trying to decode files which are too small
-    if(decodedStreamLen < _bs)
-	throw ERROR("Filename too small to decode");
-
-    BUFFER_INIT( tmpBuf, 32, (unsigned int)length );
-
-    // decode into tmpBuf,
-    AsciiToB64((unsigned char *)tmpBuf, (unsigned char *)encodedName, length);
-    changeBase2Inline((unsigned char *)tmpBuf, length, 6, 8, false);
-
-    // pull out the header information
-    unsigned int mac = ((unsigned int)((unsigned char)tmpBuf[0])) << 8
-	             | ((unsigned int)((unsigned char)tmpBuf[1]));
-
-    uint64_t tmpIV = 0;
-    if( iv && _interface >= 3 )
-	tmpIV = *iv;
-
-    _cipher->blockDecode( (unsigned char *)tmpBuf+2, decodedStreamLen,
-	    (uint64_t)mac ^ tmpIV, _key);
-
-    // find out true string length
-    int padding = (unsigned char)tmpBuf[2+decodedStreamLen-1];
-    int finalSize = decodedStreamLen - padding;
-    
-    // might happen if there is an error decoding..
-    if(padding > _bs || finalSize < 0)
-    {
-	rDebug("padding, _bx, finalSize = %i, %i, %i", padding, 
-		_bs, finalSize);
-	throw ERROR( "invalid padding size" );
+    if (should_ignore(encodedName)) {
+        memcpy(plaintextName, encodedName, length);
+        return length;
+    } else {
+        int decLen256 = B64ToB256Bytes( length );
+        int decodedStreamLen = decLen256 - 2;
+        
+        // don't bother trying to decode files which are too small
+        if(decodedStreamLen < _bs)
+            throw ERROR("Filename too small to decode");
+        
+        BUFFER_INIT( tmpBuf, 32, (unsigned int)length );
+        
+        // decode into tmpBuf,
+        AsciiToB64((unsigned char *)tmpBuf, (unsigned char *)encodedName, length);
+        changeBase2Inline((unsigned char *)tmpBuf, length, 6, 8, false);
+        
+        // pull out the header information
+        unsigned int mac = ((unsigned int)((unsigned char)tmpBuf[0])) << 8
+        | ((unsigned int)((unsigned char)tmpBuf[1]));
+        
+        uint64_t tmpIV = 0;
+        if( iv && _interface >= 3 )
+            tmpIV = *iv;
+        
+        _cipher->blockDecode( (unsigned char *)tmpBuf+2, decodedStreamLen,
+                             (uint64_t)mac ^ tmpIV, _key);
+        
+        // find out true string length
+        int padding = (unsigned char)tmpBuf[2+decodedStreamLen-1];
+        int finalSize = decodedStreamLen - padding;
+        
+        // might happen if there is an error decoding..
+        if(padding > _bs || finalSize < 0)
+        {
+            rDebug("padding, _bx, finalSize = %i, %i, %i", padding, 
+                   _bs, finalSize);
+            throw ERROR( "invalid padding size" );
+        }
+        
+        // copy out the result..
+        memcpy(plaintextName, tmpBuf+2, finalSize);
+        plaintextName[finalSize] = '\0';
+        
+        // check the mac
+        unsigned int mac2 = _cipher->MAC_16((const unsigned char *)tmpBuf+2,
+                                            decodedStreamLen, _key, iv);
+        
+        BUFFER_RESET( tmpBuf );
+        
+        if(mac2 != mac)
+        {
+            rDebug("checksum mismatch: expected %u, got %u", mac, mac2);
+            rDebug("on decode of %i bytes", finalSize);
+            throw ERROR( "checksum mismatch in filename decode" );
+        }
+        
+        return finalSize;
     }
-
-    // copy out the result..
-    memcpy(plaintextName, tmpBuf+2, finalSize);
-    plaintextName[finalSize] = '\0';
-
-    // check the mac
-    unsigned int mac2 = _cipher->MAC_16((const unsigned char *)tmpBuf+2,
-	    decodedStreamLen, _key, iv);
-    
-    BUFFER_RESET( tmpBuf );
-
-    if(mac2 != mac)
-    {
-	rDebug("checksum mismatch: expected %u, got %u", mac, mac2);
-	rDebug("on decode of %i bytes", finalSize);
-	throw ERROR( "checksum mismatch in filename decode" );
-    }
-
-    return finalSize;
 }
 
 bool BlockNameIO::Enabled()
