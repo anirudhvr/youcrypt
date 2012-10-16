@@ -1,6 +1,6 @@
 /*****************************************************************************
  * Author:   Valient Gough <vgough@pobox.com>
- *           Rajsekar Manokaran (for Nouvou/Youcrypt)
+ *           Anirudh Ramachandran (for Nouvou/Youcrypt)
  *
  *****************************************************************************
  * Copyright (c) 2004, Valient Gough

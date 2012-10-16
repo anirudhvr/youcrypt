@@ -2,7 +2,7 @@
 //  RestoreController.h
 //  Youcrypt Mac alpha
 //
-//  Created by Rajsekar Manokaran on 7/9/12.
+//  Created by Anirudh Ramachandran on 7/9/12.
 //  Copyright (c) 2012 Nouvou Inc. All rights reserved.
 //
 

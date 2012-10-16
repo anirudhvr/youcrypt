@@ -2,7 +2,7 @@
 //  YCFolder.h
 //  Youcrypt
 //
-//  Created by Rajsekar Manokaran on 8/29/12.
+//  Created by Anirudh Ramachandran on 8/29/12.
 //  Copyright (c) 2012 Nouvou Inc. All rights reserved.
 //
 
@@ -171,7 +171,7 @@ namespace boost {
 //  YoucryptDirectory.h
 //  Youcrypt Mac alpha
 //
-//  Created by Rajsekar Manokaran on 6/23/12.
+//  Created by Anirudh Ramachandran on 6/23/12.
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 

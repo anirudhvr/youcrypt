@@ -2,7 +2,7 @@
 //  ListDirectoriesWindow.m
 //  Youcrypt Mac alpha
 //
-//  Created by Rajsekar Manokaran on 6/24/12.
+//  Created by Anirudh Ramachandran on 6/24/12.
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
