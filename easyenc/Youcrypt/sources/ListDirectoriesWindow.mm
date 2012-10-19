@@ -44,7 +44,7 @@ namespace yc = youcrypt;
 
 - (id)init
 {
-    if (![super initWithWindowNibName:@"ListDirectoriesWindow"])
+    if (!(self = [super initWithWindowNibName:@"ListDirectoriesWindow"]))
         return nil;
 
     allowedToolbarItemKeys = [[NSArray alloc] initWithObjects:AddToolbarItemIdentifier, RemoveToolbarItemIdentifier, PreferencesToolbarItemIdentifier, ChangePassphraseToolbarIdentifier, QuitToolbarItemIdentifier, HelpToolbarItemIdentifier, nil];

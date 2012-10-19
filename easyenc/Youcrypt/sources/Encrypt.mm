@@ -31,7 +31,7 @@
 -(id)init
 {
     keychainHasPassphrase = NO;
-	if (![super initWithWindowNibName:@"Encrypt"]){
+	if (!(self = [super initWithWindowNibName:@"Encrypt"])){
          return nil;
          DDLogVerbose(@"ERROR: encryptController is NIL in Encrypt.m");
     }

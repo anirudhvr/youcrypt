@@ -27,7 +27,7 @@ typedef MacUISettings::MacPreferenceKeys ms;
 
 - (id)init 
 {
-    if (![super initWithWindowNibName:@"Preferences"])
+    if (!(self = [super initWithWindowNibName:@"Preferences"]))
         return nil;
     
     /* initializing some arrays */
