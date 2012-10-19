@@ -983,7 +983,7 @@ RootPtr createV6Config( EncFS_Context *ctx,
 
     RootPtr rootInfo;
     char numusers_s[10] = {0};
-    int numusers;
+    int numusers=0;
 
     if (opts->no_interactive_configuration) { /* easyenc */
         rAssert(opts->num_users > 0 &&
