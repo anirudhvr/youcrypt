@@ -148,7 +148,8 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
     if (serverConnectionWrapper) {
         
         ServerConnectionWrapper::OperationStatus stat;
-#ifdef RELEASE
+#if 1
+//#ifdef RELEASE
         if (createacct) {
             [[NSNotificationCenter defaultCenter] postNotificationName:YC_SERVEROPS_NOTIFICATION
                                                             object:self

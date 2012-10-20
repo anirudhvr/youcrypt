@@ -655,7 +655,7 @@ bool YoucryptFolder::deleteCredential(const Credentials& cred)
 
         int numUsers = config->easyencNumUsers;
         CipherKey decodedKey;
-        if (numUsers = 1)
+        if (numUsers == 1)
             return false;
         for (int i=0; i<numUsers; i++) {
             decodedKey = cred->decryptVolumeKey( config->easyencKeys[i], 
