@@ -46,6 +46,8 @@
 		25F3D14D15923FE800E3383C /* Decrypt.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25F3D14B15923FE800E3383C /* Decrypt.xib */; };
 		25F3D1511592435600E3383C /* libFunctions.mm in Sources */ = {isa = PBXBuildFile; fileRef = 25F3D1501592435600E3383C /* libFunctions.mm */; };
 		25F3D15B159244E800E3383C /* Encrypt.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25F3D159159244E800E3383C /* Encrypt.xib */; };
+		D744500D162E3A4A00A8AA90 /* libboost_regex-mt.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D744500C162E3A4A00A8AA90 /* libboost_regex-mt.dylib */; };
+		D7F7EC36162FC8B600D04136 /* libboost_regex-mt.dylib in Resources */ = {isa = PBXBuildFile; fileRef = D744500C162E3A4A00A8AA90 /* libboost_regex-mt.dylib */; };
 		E007C09F15A646DC00D60802 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25EE6A5815928D2C008A0DC8 /* Security.framework */; };
 		E01A6CD915AE3ED3004F442C /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 256C355F158EA75F00E2BEC4 /* Cocoa.framework */; };
 		E054042315AB1CE10011E5CC /* RestoreController.mm in Sources */ = {isa = PBXBuildFile; fileRef = E054042115AB1CE10011E5CC /* RestoreController.mm */; };
@@ -124,7 +126,6 @@
 		E65C978F15FC06080061A26C /* libboost_iostreams-mt.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E65C977E15FC06080061A26C /* libboost_iostreams-mt.dylib */; };
 		E65C979015FC06080061A26C /* libboost_program_options-mt.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E65C977F15FC06080061A26C /* libboost_program_options-mt.a */; };
 		E65C979115FC06080061A26C /* libboost_program_options-mt.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E65C978015FC06080061A26C /* libboost_program_options-mt.dylib */; };
-		E65C979315FC06080061A26C /* libboost_regex-mt.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E65C978215FC06080061A26C /* libboost_regex-mt.dylib */; };
 		E65C979515FC06080061A26C /* libboost_serialization-mt.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E65C978415FC06080061A26C /* libboost_serialization-mt.dylib */; };
 		E65C979615FC06080061A26C /* libboost_serialization.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E65C978515FC06080061A26C /* libboost_serialization.dylib */; };
 		E65C979815FC06080061A26C /* libboost_system-mt.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E65C978715FC06080061A26C /* libboost_system-mt.dylib */; };
@@ -133,7 +134,6 @@
 		E65C979E15FC063D0061A26C /* libboost_filesystem-mt.dylib in Resources */ = {isa = PBXBuildFile; fileRef = E65C977C15FC06080061A26C /* libboost_filesystem-mt.dylib */; };
 		E65C97A015FC063D0061A26C /* libboost_iostreams-mt.dylib in Resources */ = {isa = PBXBuildFile; fileRef = E65C977E15FC06080061A26C /* libboost_iostreams-mt.dylib */; };
 		E65C97A215FC063D0061A26C /* libboost_program_options-mt.dylib in Resources */ = {isa = PBXBuildFile; fileRef = E65C978015FC06080061A26C /* libboost_program_options-mt.dylib */; };
-		E65C97A415FC063D0061A26C /* libboost_regex-mt.dylib in Resources */ = {isa = PBXBuildFile; fileRef = E65C978215FC06080061A26C /* libboost_regex-mt.dylib */; };
 		E65C97A615FC063D0061A26C /* libboost_serialization-mt.dylib in Resources */ = {isa = PBXBuildFile; fileRef = E65C978415FC06080061A26C /* libboost_serialization-mt.dylib */; };
 		E65C97A915FC063D0061A26C /* libboost_system-mt.dylib in Resources */ = {isa = PBXBuildFile; fileRef = E65C978715FC06080061A26C /* libboost_system-mt.dylib */; };
 		E65C97AB15FC063D0061A26C /* libboost_thread-mt.dylib in Resources */ = {isa = PBXBuildFile; fileRef = E65C978915FC06080061A26C /* libboost_thread-mt.dylib */; };
@@ -538,6 +538,7 @@
 		25F3D1501592435600E3383C /* libFunctions.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = libFunctions.mm; path = sources/libFunctions.mm; sourceTree = "<group>"; };
 		25F3D159159244E800E3383C /* Encrypt.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Encrypt.xib; sourceTree = "<group>"; };
 		25FDA07015A269B1004F2914 /* Automator.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Automator.framework; path = System/Library/Frameworks/Automator.framework; sourceTree = SDKROOT; };
+		D744500C162E3A4A00A8AA90 /* libboost_regex-mt.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = "libboost_regex-mt.dylib"; sourceTree = "<group>"; };
 		E01A6CDA15AE57A9004F442C /* libcommonCrypto.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcommonCrypto.dylib; path = usr/lib/system/libcommonCrypto.dylib; sourceTree = SDKROOT; };
 		E054042015AB1CE10011E5CC /* RestoreController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RestoreController.h; path = sources/RestoreController.h; sourceTree = "<group>"; };
 		E054042115AB1CE10011E5CC /* RestoreController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = RestoreController.mm; path = sources/RestoreController.mm; sourceTree = "<group>"; };
@@ -641,7 +642,6 @@
 		E65C977E15FC06080061A26C /* libboost_iostreams-mt.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = "libboost_iostreams-mt.dylib"; sourceTree = "<group>"; };
 		E65C977F15FC06080061A26C /* libboost_program_options-mt.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libboost_program_options-mt.a"; sourceTree = "<group>"; };
 		E65C978015FC06080061A26C /* libboost_program_options-mt.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = "libboost_program_options-mt.dylib"; sourceTree = "<group>"; };
-		E65C978215FC06080061A26C /* libboost_regex-mt.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = "libboost_regex-mt.dylib"; sourceTree = "<group>"; };
 		E65C978415FC06080061A26C /* libboost_serialization-mt.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = "libboost_serialization-mt.dylib"; sourceTree = "<group>"; };
 		E65C978515FC06080061A26C /* libboost_serialization.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libboost_serialization.dylib; sourceTree = "<group>"; };
 		E65C978715FC06080061A26C /* libboost_system-mt.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = "libboost_system-mt.dylib"; sourceTree = "<group>"; };
@@ -751,7 +751,6 @@
 				E65C978F15FC06080061A26C /* libboost_iostreams-mt.dylib in Frameworks */,
 				E65C979015FC06080061A26C /* libboost_program_options-mt.a in Frameworks */,
 				E65C979115FC06080061A26C /* libboost_program_options-mt.dylib in Frameworks */,
-				E65C979315FC06080061A26C /* libboost_regex-mt.dylib in Frameworks */,
 				E65C979515FC06080061A26C /* libboost_serialization-mt.dylib in Frameworks */,
 				E65C979615FC06080061A26C /* libboost_serialization.dylib in Frameworks */,
 				E65C979815FC06080061A26C /* libboost_system-mt.dylib in Frameworks */,
@@ -762,6 +761,7 @@
 				E63561C215FC641700167B1B /* libicudata.48.dylib in Frameworks */,
 				E63561C515FC645400167B1B /* libboost_chrono-mt.dylib in Frameworks */,
 				E6EB3E3F15FCC68400123085 /* libiconv.2.dylib in Frameworks */,
+				D744500D162E3A4A00A8AA90 /* libboost_regex-mt.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1312,6 +1312,7 @@
 		E6C0469E15AE1A58004B52E5 /* lib */ = {
 			isa = PBXGroup;
 			children = (
+				D744500C162E3A4A00A8AA90 /* libboost_regex-mt.dylib */,
 				E6EB3E3E15FCC68400123085 /* libiconv.2.dylib */,
 				E63561C415FC645300167B1B /* libboost_chrono-mt.dylib */,
 				E63561C115FC641700167B1B /* libicudata.48.dylib */,
@@ -1324,7 +1325,6 @@
 				E65C977E15FC06080061A26C /* libboost_iostreams-mt.dylib */,
 				E65C977F15FC06080061A26C /* libboost_program_options-mt.a */,
 				E65C978015FC06080061A26C /* libboost_program_options-mt.dylib */,
-				E65C978215FC06080061A26C /* libboost_regex-mt.dylib */,
 				E65C978415FC06080061A26C /* libboost_serialization-mt.dylib */,
 				E65C978515FC06080061A26C /* libboost_serialization.dylib */,
 				E65C978715FC06080061A26C /* libboost_system-mt.dylib */,
@@ -1727,6 +1727,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D7F7EC36162FC8B600D04136 /* libboost_regex-mt.dylib in Resources */,
 				E60AEFC315F894BF00C723FF /* get_dropbox_folder.sh in Resources */,
 				E6C046A115AE1A58004B52E5 /* simple-mailer.py in Resources */,
 				256C3570158EA75F00E2BEC4 /* Credits.rtf in Resources */,
@@ -1808,7 +1809,6 @@
 				E65C979E15FC063D0061A26C /* libboost_filesystem-mt.dylib in Resources */,
 				E65C97A015FC063D0061A26C /* libboost_iostreams-mt.dylib in Resources */,
 				E65C97A215FC063D0061A26C /* libboost_program_options-mt.dylib in Resources */,
-				E65C97A415FC063D0061A26C /* libboost_regex-mt.dylib in Resources */,
 				E65C97A615FC063D0061A26C /* libboost_serialization-mt.dylib in Resources */,
 				E65C97A915FC063D0061A26C /* libboost_system-mt.dylib in Resources */,
 				E65C97AB15FC063D0061A26C /* libboost_thread-mt.dylib in Resources */,
@@ -2000,27 +2000,22 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
-				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
-				CLANG_CXX_LIBRARY = "compiler-default";
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				CLANG_ENABLE_OBJC_ARC = YES;
 				COPY_PHASE_STRIP = NO;
-				GCC_C_LANGUAGE_STANDARD = "compiler-default";
-				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
 				);
-				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_VERSION = "";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				"INFOPLIST_FILE[sdk=*]" = Youcrypt.plist;
-				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = (
 					"-Wno-unused-variable",
@@ -2036,13 +2031,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
-				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
-				CLANG_CXX_LIBRARY = "compiler-default";
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				CLANG_ENABLE_OBJC_ARC = YES;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_C_LANGUAGE_STANDARD = "compiler-default";
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_VERSION = "";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -2050,7 +2042,8 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				"INFOPLIST_FILE[sdk=*]" = Youcrypt.plist;
-				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = (
 					"-Wno-unused-variable",
 					"-Wno-deprecated-writable-strings",
@@ -2064,36 +2057,27 @@
 		256C358E158EA75F00E2BEC4 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
-				CODE_SIGN_IDENTITY = "";
 				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
 					"\"$(SRCROOT)/frameworks\"",
 				);
-				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
-				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				GCC_PREFIX_HEADER = "sources/Youcrypt-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS_NOT_USED_IN_PRECOMPS = "";
-				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
-				GCC_WARN_UNUSED_VALUE = NO;
-				GCC_WARN_UNUSED_VARIABLE = NO;
 				HEADER_SEARCH_PATHS = (
-					"\"$(SRCROOT)\"",
 					"\"$(SRCROOT)/yc-encfs/yc-encfs\"",
+					"\"$(SRCROOT)\"",
 					/opt/local/include,
 					/usr/local/include/osxfuse,
-					"\"$(SRCROOT)/cpp-netlib-0.9.4/\"",
 				);
 				INFOPLIST_FILE = sources/Youcrypt.plist;
 				LD_RUNPATH_SEARCH_PATHS = /Library/Frameworks;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/lib\"",
+					/opt/local/lib,
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.7;
-				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = (
 					"-Wunused-variable",
 					"-Wdeprecated-writable-strings",
@@ -2121,9 +2105,6 @@
 					"-lssl",
 					"-lcrypto",
 				);
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = macosx;
-				USER_HEADER_SEARCH_PATHS = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -2131,39 +2112,28 @@
 		256C358F158EA75F00E2BEC4 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
-				CODE_SIGN_IDENTITY = "";
 				COMBINE_HIDPI_IMAGES = YES;
-				DEBUG_INFORMATION_FORMAT = dwarf;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
 					"\"$(SRCROOT)/frameworks\"",
 				);
-				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
-				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				GCC_PREFIX_HEADER = "sources/Youcrypt-Prefix.pch";
 				"GCC_PREPROCESSOR_DEFINITIONS[sdk=macosx10.7][arch=x86_64]" = "RELEASE=1";
 				GCC_PREPROCESSOR_DEFINITIONS_NOT_USED_IN_PRECOMPS = "";
-				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
-				GCC_WARN_UNUSED_VALUE = NO;
-				GCC_WARN_UNUSED_VARIABLE = NO;
 				HEADER_SEARCH_PATHS = (
-					"\"$(SRCROOT)\"",
 					"\"$(SRCROOT)/yc-encfs/yc-encfs\"",
+					"\"$(SRCROOT)\"",
 					/opt/local/include,
 					/usr/local/include/osxfuse,
-					"\"$(SRCROOT)/cpp-netlib-0.9.4/\"",
 				);
 				INFOPLIST_FILE = sources/Youcrypt.plist;
 				LD_RUNPATH_SEARCH_PATHS = /Library/Frameworks;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/lib\"",
+					/opt/local/lib,
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.7;
-				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = (
 					"-Wunused-variable",
 					"-Wdeprecated-writable-strings",
@@ -2191,9 +2161,6 @@
 					"-lssl",
 					"-lcrypto",
 				);
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = macosx;
-				USER_HEADER_SEARCH_PATHS = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -2207,8 +2174,6 @@
 					"$(DEVELOPER_LIBRARY_DIR)/Frameworks",
 					"\"$(SRCROOT)\"",
 				);
-				GCC_PRECOMPILE_PREFIX_HEADER = NO;
-				GCC_PREFIX_HEADER = "";
 				INFOPLIST_FILE = "Youcrypt Mac alphaTests/Youcrypt Mac alphaTests-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
@@ -2225,8 +2190,6 @@
 					"$(DEVELOPER_LIBRARY_DIR)/Frameworks",
 					"\"$(SRCROOT)\"",
 				);
-				GCC_PRECOMPILE_PREFIX_HEADER = NO;
-				GCC_PREFIX_HEADER = "";
 				INFOPLIST_FILE = "Youcrypt Mac alphaTests/Youcrypt Mac alphaTests-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
