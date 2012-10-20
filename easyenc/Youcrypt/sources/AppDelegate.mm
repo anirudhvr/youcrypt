@@ -523,7 +523,7 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
 
 - (void) removeFSAtPath:(NSString*) path {
     std::string stdPath([path cStringUsingEncoding:NSASCIIStringEncoding]);
-    int found;
+    int found = 0;
     
     
     dispatch_queue_t taskQ =

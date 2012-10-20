@@ -21,9 +21,10 @@
     self = [super initWithFrame:frame];
     if (self) {
         // Initialization code here.
+         tourWizard = nil;
     }
     
-    tourWizard = nil;
+   
     
     return self;
 }

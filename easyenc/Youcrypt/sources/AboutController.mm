@@ -16,7 +16,7 @@
 
 - (id)init
 {
-    if (![super initWithWindowNibName:@"About"])
+    if (!(self =[super initWithWindowNibName:@"About"]))
         return nil;
     return self;
 }
