@@ -270,6 +270,30 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
     return [self openEncryptedFolder:filename];
 }
 
+- (void)refreshFolderListMenu
+{
+    [folderListMainMenuItem setSubmenu:nil];
+    [folderListMainMenuItem setEnabled:NO];
+    [folderListMenu removeAllItems];
+    
+    // Populate the folder list in the status menu
+    DirectoryMap &dmap = getDirectories();
+    if (dmap.size() > 0) {
+        DirectoryMap::iterator i;
+        for(i = dmap.begin(); i != dmap.end(); i++) {
+            Folder dir = i->second;
+            SEL selector = NSSelectorFromString(@"showListDirectories:");
+            NSMenuItem *mi = [[NSMenuItem alloc]
+                              initWithTitle:nsstrFromCpp(dir->alias())
+                              action:selector
+                              keyEquivalent:@""];
+            [folderListMenu addItem:mi];
+        }
+        [folderListMainMenuItem setEnabled:YES];
+        [folderListMainMenuItem setSubmenu:folderListMenu];
+    }
+}
+
 - (void)awakeFromNib{
     
     //--------------------------------------------------------------------------------------------------
@@ -283,7 +307,10 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
     [statusItem setImage:statusItemImage];
     [statusItem setMenu:statusMenu];
     [statusItem setHighlightMode:YES];
-    
+    folderListMenu = [[NSMenu alloc] init];
+    [statusMenu setAutoenablesItems:NO];
+    [folderListMainMenuItem setSubmenu:nil];
+    [folderListMainMenuItem setEnabled:NO];
     
     if (macSettings->appFirstRun) {
         boost::filesystem::create_directories(macSettings->baseDirectory);
@@ -295,6 +322,9 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
             throw std::runtime_error("Error initializing Youcrypt settings.");
         [passphraseManager getPassphraseFromUser]; // get passphrase
     }
+    
+    [self refreshFolderListMenu];
+    
 }
 
 // --------------------------------------------------------------------------------------
@@ -391,6 +421,8 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
     if (listDirectories != nil) {
         [listDirectories.table reloadData];
     }
+    
+    [self refreshFolderListMenu];
 }
 
 - (BOOL)doDecrypt:(NSString *)path
@@ -510,6 +542,8 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
         [listDirectories.table reloadData];
     }
     
+    [self refreshFolderListMenu];
+    
 }
 
 - (void)cancelEncrypt:(NSString *)path {
@@ -609,6 +643,8 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
         [listDirectories.progressIndicator setHidden:YES];
         [listDirectories.table reloadData];
     }
+    
+    [self refreshFolderListMenu];
 }
 
 -(void) cancelRestore:(NSString *)path {

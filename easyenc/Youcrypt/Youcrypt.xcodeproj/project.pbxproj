@@ -83,6 +83,7 @@
 		E60AEFC315F894BF00C723FF /* get_dropbox_folder.sh in Resources */ = {isa = PBXBuildFile; fileRef = 25E8BC2315AE4F5F00A323D8 /* get_dropbox_folder.sh */; };
 		E61DF4FC15BA6EC00011A05D /* libssl.1.0.0.dylib in Resources */ = {isa = PBXBuildFile; fileRef = E61DF4FA15BA6E8B0011A05D /* libssl.1.0.0.dylib */; };
 		E61F694115F1AC57009990C6 /* ServerConnectionWrapper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E61F693F15F1AC57009990C6 /* ServerConnectionWrapper.cpp */; };
+		E62E3D7916355399009B066B /* MyNSMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = E62E3D7816355399009B066B /* MyNSMenu.m */; };
 		E6310AD415F07A670078F61E /* ServerConnection.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E6310AD215F07A670078F61E /* ServerConnection.cpp */; };
 		E633656315EF24B3003EC0F9 /* concat.c in Sources */ = {isa = PBXBuildFile; fileRef = E633655A15EF24B3003EC0F9 /* concat.c */; };
 		E633656415EF24B3003EC0F9 /* passwdqc_check.c in Sources */ = {isa = PBXBuildFile; fileRef = E633655C15EF24B3003EC0F9 /* passwdqc_check.c */; };
@@ -587,6 +588,8 @@
 		E61DF4FA15BA6E8B0011A05D /* libssl.1.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libssl.1.0.0.dylib; sourceTree = "<group>"; };
 		E61F693F15F1AC57009990C6 /* ServerConnectionWrapper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ServerConnectionWrapper.cpp; sourceTree = "<group>"; };
 		E61F694015F1AC57009990C6 /* ServerConnectionWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServerConnectionWrapper.h; sourceTree = "<group>"; };
+		E62E3D7716355399009B066B /* MyNSMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MyNSMenu.h; path = sources/Subclasses/MyNSMenu.h; sourceTree = "<group>"; };
+		E62E3D7816355399009B066B /* MyNSMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MyNSMenu.m; path = sources/Subclasses/MyNSMenu.m; sourceTree = "<group>"; };
 		E6310AD215F07A670078F61E /* ServerConnection.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ServerConnection.cpp; sourceTree = "<group>"; };
 		E6310AD315F07A670078F61E /* ServerConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServerConnection.h; sourceTree = "<group>"; };
 		E633655A15EF24B3003EC0F9 /* concat.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = concat.c; sourceTree = "<group>"; };
@@ -929,6 +932,7 @@
 		25F3D154159243E300E3383C /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				E62E3D7616355342009B066B /* Subclasses */,
 				E077154115EF1BEA009AB1C2 /* Core */,
 				256C3571158EA75F00E2BEC4 /* AppDelegate.h */,
 				256C3572158EA75F00E2BEC4 /* AppDelegate.mm */,
@@ -1019,6 +1023,15 @@
 				E603DBB515AEC9DE00ABB170 /* AMToolTipTableView.m */,
 			);
 			name = AMToolTipTableView;
+			sourceTree = "<group>";
+		};
+		E62E3D7616355342009B066B /* Subclasses */ = {
+			isa = PBXGroup;
+			children = (
+				E62E3D7716355399009B066B /* MyNSMenu.h */,
+				E62E3D7816355399009B066B /* MyNSMenu.m */,
+			);
+			name = Subclasses;
 			sourceTree = "<group>";
 		};
 		E633655915EF2491003EC0F9 /* passwdqc */ = {
@@ -1930,6 +1943,7 @@
 				E61F694115F1AC57009990C6 /* ServerConnectionWrapper.cpp in Sources */,
 				E09146F015F8C97B00DB8051 /* Settings.cpp in Sources */,
 				E09146F315F9819C00DB8051 /* MacUISettings.mm in Sources */,
+				E62E3D7916355399009B066B /* MyNSMenu.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

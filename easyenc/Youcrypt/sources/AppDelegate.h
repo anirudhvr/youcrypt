@@ -7,6 +7,7 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "Subclasses/MyNSMenu.h"
 #import "RestoreController.h"
 #import <boost/shared_ptr.hpp>
 #import "DirectoryMap.h"
@@ -41,7 +42,9 @@ class youcrypt::MacUISettings;
 @interface AppDelegate : NSObject <NSTableViewDataSource, NSTableViewDelegate, NSApplicationDelegate> { // changed from NSApplicationDelegate
     
     // Status Bar for Agent
-    IBOutlet NSMenu *statusMenu;
+    IBOutlet MyNSMenu *statusMenu;
+    MyNSMenu *folderListMenu;
+    IBOutlet NSMenuItem *folderListMainMenuItem;
     NSStatusItem *statusItem;
     
     // Controllers for various windows
@@ -89,6 +92,7 @@ class youcrypt::MacUISettings;
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification;
 - (void)awakeFromNib;
 - (IBAction)windowShouldClose:(id)sender;
+- (void) refreshFolderListMenu;
 
 // Window Related Stuff:  show / close app, etc.
 - (IBAction)showMainApp:(id)sender;
