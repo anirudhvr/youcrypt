@@ -107,6 +107,7 @@ class youcrypt::MacUISettings;
 - (IBAction)openHelpPage:(id)sender;
 - (IBAction)showAboutWindow:(id)sender;
 
+- (BOOL)openEncryptedFolderFromMenu:(id)sender;
 -(BOOL)openEncryptedFolder:(NSString *)path;
 -(BOOL)doDecrypt:(NSString *)path mountedPath:(NSString *)mPath;
 -(void)didDecrypt:(Folder)dir;
@@ -123,6 +124,9 @@ class youcrypt::MacUISettings;
 -(BOOL)doRestore:(NSString *)path;
 
 - (void) showTour;
+
+
+- (IBAction) shareFolderFromMenu:(id) sender;
 
 -(id) passphraseReceivedFromUser:(id) sender;
 - (BOOL) setupCM:(NSString*)pass

@@ -282,16 +282,44 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
         DirectoryMap::iterator i;
         for(i = dmap.begin(); i != dmap.end(); i++) {
             Folder dir = i->second;
-            SEL selector = NSSelectorFromString(@"showListDirectories:");
-            NSMenuItem *mi = [[NSMenuItem alloc]
-                              initWithTitle:nsstrFromCpp(dir->alias())
-                              action:selector
-                              keyEquivalent:@""];
-            [folderListMenu addItem:mi];
+            NSString *alias = nsstrFromCpp(dir->alias());
+            NSString *dirpath = nsstrFromCpp(dir->rootPath());
+            //            SEL selector = NSSelectorFromString(@"showListDirectories:");
+            NSMenuItem *folderNameMenuItem = [[NSMenuItem alloc]
+                                              initWithTitle:alias
+                                              action:nil
+                                              keyEquivalent:@""];
+            
+            // The submenu for each folder
+            NSMenu *folderOptionsMenu = [[NSMenu alloc] initWithTitle:@"Options"];
+            // "Open" menu item for each folder
+            NSMenuItem *openMenuItem = [[NSMenuItem alloc]
+                                        initWithTitle:@"Open"
+                                        action:NSSelectorFromString(@"openEncryptedFolderFromMenu:")
+                                        keyEquivalent:@""];
+            [openMenuItem setRepresentedObject:dirpath];
+            
+            // "Share" menu item
+            NSMenuItem *shareMenuItem = [[NSMenuItem alloc]
+                                        initWithTitle:@"Share"
+                                        action:NSSelectorFromString(@"shareFolderFromMenu:")
+                                        keyEquivalent:@""];
+            [shareMenuItem setRepresentedObject:dirpath];
+            
+            [folderOptionsMenu addItem:openMenuItem];
+            [folderOptionsMenu addItem:shareMenuItem];
+            [folderNameMenuItem setSubmenu:folderOptionsMenu];
+            [folderListMenu addItem:folderNameMenuItem];
         }
         [folderListMainMenuItem setEnabled:YES];
         [folderListMainMenuItem setSubmenu:folderListMenu];
     }
+}
+
+- (IBAction) shareFolderFromMenu:(id) sender
+{
+    [listDirectories.sharingPopover showRelativeToRect:[[statusItem view] frame]
+                                                ofView:[statusItem view] preferredEdge:CGRectMinYEdge];
 }
 
 - (void)awakeFromNib{
@@ -332,6 +360,13 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
 // Decryption methods
 // --------------------------------------------------------------------------------------
 // --------------------------------------------------------------------------------------
+- (BOOL)openEncryptedFolderFromMenu:(id)sender
+{
+    NSString *p = [sender representedObject];
+    NSLog(p);
+    return [self openEncryptedFolder:p];
+}
+
 - (BOOL)openEncryptedFolder:(NSString *)path {
     
     // Procedure:
@@ -340,7 +375,7 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
     // 3.  check/add path to our managed list
     // 4.  open the (mounted) path
     
-    
+    NSLog(path);
     if (appIsUp == NO) {
         openFilesQ.queueJob(cppString(path));
         return YES;
