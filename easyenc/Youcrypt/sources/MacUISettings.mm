@@ -7,8 +7,8 @@
 //
 
 #import "MacUISettings.h"
-#import "MixpanelAPI.h"
 #import "AppDelegate.h"
+#import "MixpanelAPI.h"
 #import "libFunctions.h"
 #import "CompressingLogFileManager.h"
 #import "YoucryptService.h"
@@ -96,7 +96,7 @@ namespace youcrypt {
         [DDLog addLogger:fileLogger];
         
         // (step 2):  Setup MixPanel API with the UUID from UUID file
-        mixpanel = [MixpanelAPI sharedAPIWithToken:MIXPANEL_TOKEN];
+//        mixpanel = [MixpanelAPI sharedAPIWithToken:MIXPANEL_TOKEN];
         NSError *error = nil;
         NSString *mpUUID = [NSString stringWithContentsOfFile:nsstrFromCpp
                             (userUUIDFile.string())

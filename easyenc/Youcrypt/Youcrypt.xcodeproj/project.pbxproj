@@ -84,6 +84,8 @@
 		E61DF4FC15BA6EC00011A05D /* libssl.1.0.0.dylib in Resources */ = {isa = PBXBuildFile; fileRef = E61DF4FA15BA6E8B0011A05D /* libssl.1.0.0.dylib */; };
 		E61F694115F1AC57009990C6 /* ServerConnectionWrapper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E61F693F15F1AC57009990C6 /* ServerConnectionWrapper.cpp */; };
 		E62E3D7916355399009B066B /* MyNSMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = E62E3D7816355399009B066B /* MyNSMenu.m */; };
+		E62E3DE41639D296009B066B /* MAAttachedWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = E62E3DE31639D296009B066B /* MAAttachedWindow.m */; };
+		E62E3DE71639DB49009B066B /* SharingWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = E62E3DE61639DB49009B066B /* SharingWindow.xib */; };
 		E6310AD415F07A670078F61E /* ServerConnection.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E6310AD215F07A670078F61E /* ServerConnection.cpp */; };
 		E633656315EF24B3003EC0F9 /* concat.c in Sources */ = {isa = PBXBuildFile; fileRef = E633655A15EF24B3003EC0F9 /* concat.c */; };
 		E633656415EF24B3003EC0F9 /* passwdqc_check.c in Sources */ = {isa = PBXBuildFile; fileRef = E633655C15EF24B3003EC0F9 /* passwdqc_check.c */; };
@@ -96,6 +98,7 @@
 		E633656B15EF2D0E003EC0F9 /* libcppnetlib-uri.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E64AC00B15E724A700D2E046 /* libcppnetlib-uri.a */; };
 		E633656C15EF2D12003EC0F9 /* libyc-encfs-static.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E6D7D2AC15D26AD100780915 /* libyc-encfs-static.a */; };
 		E633656D15EF2D15003EC0F9 /* StartOnLogin.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E635DE8D15AE2BAA00A81117 /* StartOnLogin.framework */; };
+		E633719B163BDC8400F91112 /* SharingController.m in Sources */ = {isa = PBXBuildFile; fileRef = E633719A163BDC8400F91112 /* SharingController.m */; };
 		E63561B215FC61CC00167B1B /* libcrypto.1.0.0.dylib in Resources */ = {isa = PBXBuildFile; fileRef = E65C97AF15FC0F090061A26C /* libcrypto.1.0.0.dylib */; };
 		E63561B615FC62A900167B1B /* libicuuc.48.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E63561B415FC62A800167B1B /* libicuuc.48.dylib */; };
 		E63561B815FC62C100167B1B /* libicuuc.48.dylib in Resources */ = {isa = PBXBuildFile; fileRef = E63561B415FC62A800167B1B /* libicuuc.48.dylib */; };
@@ -590,6 +593,9 @@
 		E61F694015F1AC57009990C6 /* ServerConnectionWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServerConnectionWrapper.h; sourceTree = "<group>"; };
 		E62E3D7716355399009B066B /* MyNSMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MyNSMenu.h; path = sources/Subclasses/MyNSMenu.h; sourceTree = "<group>"; };
 		E62E3D7816355399009B066B /* MyNSMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MyNSMenu.m; path = sources/Subclasses/MyNSMenu.m; sourceTree = "<group>"; };
+		E62E3DE31639D296009B066B /* MAAttachedWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAAttachedWindow.m; sourceTree = "<group>"; };
+		E62E3DE51639D29D009B066B /* MAAttachedWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MAAttachedWindow.h; sourceTree = "<group>"; };
+		E62E3DE61639DB49009B066B /* SharingWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SharingWindow.xib; sourceTree = "<group>"; };
 		E6310AD215F07A670078F61E /* ServerConnection.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ServerConnection.cpp; sourceTree = "<group>"; };
 		E6310AD315F07A670078F61E /* ServerConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServerConnection.h; sourceTree = "<group>"; };
 		E633655A15EF24B3003EC0F9 /* concat.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = concat.c; sourceTree = "<group>"; };
@@ -601,6 +607,8 @@
 		E633656015EF24B3003EC0F9 /* pwqcheck.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = pwqcheck.c; sourceTree = "<group>"; };
 		E633656115EF24B3003EC0F9 /* wordset_4k.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = wordset_4k.c; sourceTree = "<group>"; };
 		E633656215EF24B3003EC0F9 /* wordset_4k.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = wordset_4k.h; sourceTree = "<group>"; };
+		E6337199163BDC8400F91112 /* SharingController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SharingController.h; path = sources/SharingController.h; sourceTree = "<group>"; };
+		E633719A163BDC8400F91112 /* SharingController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SharingController.m; path = sources/SharingController.m; sourceTree = "<group>"; };
 		E63561B415FC62A800167B1B /* libicuuc.48.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libicuuc.48.dylib; sourceTree = "<group>"; };
 		E63561BD15FC63BE00167B1B /* libicui18n.48.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libicui18n.48.dylib; sourceTree = "<group>"; };
 		E63561C115FC641700167B1B /* libicudata.48.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libicudata.48.dylib; sourceTree = "<group>"; };
@@ -914,6 +922,7 @@
 				E67AC5B515AF9448005A7938 /* TourWizard.xib */,
 				2537E39415B4F1660034E6E3 /* About.xib */,
 				E6A3907E15CB3104007388BE /* AskPassphrase.xib */,
+				E62E3DE61639DB49009B066B /* SharingWindow.xib */,
 			);
 			name = UI;
 			path = sources/UI;
@@ -1032,6 +1041,15 @@
 				E62E3D7816355399009B066B /* MyNSMenu.m */,
 			);
 			name = Subclasses;
+			sourceTree = "<group>";
+		};
+		E62E3DE21639D285009B066B /* MAAttachedWindow */ = {
+			isa = PBXGroup;
+			children = (
+				E62E3DE51639D29D009B066B /* MAAttachedWindow.h */,
+				E62E3DE31639D296009B066B /* MAAttachedWindow.m */,
+			);
+			path = MAAttachedWindow;
 			sourceTree = "<group>";
 		};
 		E633655915EF2491003EC0F9 /* passwdqc */ = {
@@ -1211,6 +1229,7 @@
 		E6649C0A15A53BFA0096886F /* contrib */ = {
 			isa = PBXGroup;
 			children = (
+				E62E3DE21639D285009B066B /* MAAttachedWindow */,
 				E633655915EF2491003EC0F9 /* passwdqc */,
 				E64AC1A715E7698900D2E046 /* bcrypt */,
 				E64AC19B15E7695900D2E046 /* rapidjson */,
@@ -1410,6 +1429,8 @@
 			children = (
 				E6E5820D15EF766F00ED4CEE /* SharingGetEmailsView.h */,
 				E6E5820E15EF766F00ED4CEE /* SharingGetEmailsView.mm */,
+				E6337199163BDC8400F91112 /* SharingController.h */,
+				E633719A163BDC8400F91112 /* SharingController.m */,
 			);
 			name = Sharing;
 			sourceTree = "<group>";
@@ -1831,6 +1852,7 @@
 				2537E35015B126520034E6E3 /* librlog.5.0.0.dylib in Resources */,
 				E6EB3E4315FDE69000123085 /* screenshot-share.png in Resources */,
 				E6EB3E4415FDE69000123085 /* screenshot-window.png in Resources */,
+				E62E3DE71639DB49009B066B /* SharingWindow.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1944,6 +1966,8 @@
 				E09146F015F8C97B00DB8051 /* Settings.cpp in Sources */,
 				E09146F315F9819C00DB8051 /* MacUISettings.mm in Sources */,
 				E62E3D7916355399009B066B /* MyNSMenu.m in Sources */,
+				E62E3DE41639D296009B066B /* MAAttachedWindow.m in Sources */,
+				E633719B163BDC8400F91112 /* SharingController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

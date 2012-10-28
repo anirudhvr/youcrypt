@@ -20,6 +20,7 @@
 
 using namespace youcrypt;
 
+@class SharingController;
 @class PreferenceController;
 @class FileSystemsController;
 @class Decrypt;
@@ -35,9 +36,9 @@ using namespace youcrypt;
 @class MixpanelAPI;
 @class AboutController;
 @class PassphraseManager;
+@class SharingGetEmailsView;
 
 class youcrypt::MacUISettings;
-
 
 @interface AppDelegate : NSObject <NSTableViewDataSource, NSTableViewDelegate, NSApplicationDelegate> { // changed from NSApplicationDelegate
     
@@ -46,6 +47,8 @@ class youcrypt::MacUISettings;
     MyNSMenu *folderListMenu;
     IBOutlet NSMenuItem *folderListMainMenuItem;
     NSStatusItem *statusItem;
+    
+    SharingController *sharingController;
     
     // Controllers for various windows
     ListDirectoriesWindow *listDirectories;
@@ -101,6 +104,7 @@ class youcrypt::MacUISettings;
 
 - (IBAction)openFeedbackPage:(id)sender;
 
+
 // Enc and Dec
 - (IBAction)showListDirectories:(id)sender;
 - (IBAction)openFeedbackPage:(id)sender;
@@ -127,6 +131,9 @@ class youcrypt::MacUISettings;
 
 
 - (IBAction) shareFolderFromMenu:(id) sender;
+-(BOOL)performShare:(NSString*)email
+            message:(NSString*)msg
+            dirPath:(NSString*)path;
 
 -(id) passphraseReceivedFromUser:(id) sender;
 - (BOOL) setupCM:(NSString*)pass
@@ -151,6 +158,7 @@ createIfNotFound:(BOOL)val
 @property (nonatomic, strong) FeedbackSheetController *feedbackSheetController;
 @property (nonatomic, strong) keyDownView *keyDown;
 @property (nonatomic, strong) PreferenceController *preferenceController;
+@property (nonatomic, strong) SharingController *sharingController;
 @property (nonatomic, strong) NSMutableSet *dropboxEncryptedFolders;
 @property (nonatomic, strong) TourWizard *tourWizard;
 @property (nonatomic, strong) AboutController *aboutController;

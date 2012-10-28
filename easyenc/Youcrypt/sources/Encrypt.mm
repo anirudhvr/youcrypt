@@ -100,12 +100,14 @@
     // Send number of objects in directory to Mixpanel
     NSString *dirCountS = [NSString stringWithFormat:@"%d",dirCount];
     NSString *fileSizeS = [NSString stringWithFormat:@"%llu",fileSize];
+#if 0
     if ([[theApp.preferenceController getPreference:(MacUISettings::MacPreferenceKeys::yc_anonymousstatistics)] intValue])
         [mixpanel track:nsstrFromCpp(appSettings()->mixPanelUUID)
              properties:[NSDictionary dictionaryWithObjectsAndKeys:
                          dirCountS, @"dirCount",
                          fileSizeS, @"dirSize",
                          nil]];
+#endif
     
     [theApp didEncrypt:dir];
 }

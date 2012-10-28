@@ -260,14 +260,16 @@ void printCloseError(int ret)
         for (int i=0; i<row; i++)
             ++beg;
         Folder dir = beg->second;
-        [sharingGetEmailsView setListDirWindow:self];
+//        [sharingGetEmailsView setListDirWindow:self];
         [sharingPopover showRelativeToRect:[table rectOfRow:row] ofView:table preferredEdge:NSMaxYEdge];
         
+#if 0
         if ([[theApp.preferenceController getPreference:(MacUISettings::MacPreferenceKeys::yc_anonymousstatistics)] intValue])
             [mixpanel track:nsstrFromCpp(appSettings()->mixPanelUUID)
                  properties:[NSDictionary dictionaryWithObjectsAndKeys:
                              @"YES", @"shareClicked",
                              nil]];
+#endif 
     }
 }
          

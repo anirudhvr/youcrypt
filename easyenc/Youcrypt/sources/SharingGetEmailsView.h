@@ -1,5 +1,5 @@
 //
-//  SharingWindowController.h
+//  SharingController.h
 //  Youcrypt
 //
 //  Created by avr on 8/30/12.
@@ -8,12 +8,11 @@
 
 #import <Cocoa/Cocoa.h>
 #import "LinkedView.h"
-#import "ListDirectoriesWindow.h"
 
 @interface SharingGetEmailsView : LinkedView
 {
     BOOL emailStatus;
-    ListDirectoriesWindow *_listDirWindow;
+    NSString *dirPath;
 }
 
 @property (nonatomic, strong) NSMutableArray *emails;
@@ -23,8 +22,8 @@
 @property (nonatomic, strong) IBOutlet NSButton *shareButton;
 
 
-- (void)setListDirWindow:(ListDirectoriesWindow*)listDirWindow;
 - (IBAction)shareButtonClicked:(id)sender;
+- (void) setDirPath:(NSString*)path;
 - (void)updateStatusMessage:(NSNotificationCenter*)notification;
 
 @end

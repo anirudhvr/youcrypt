@@ -1,5 +1,5 @@
 //
-//  SharingWindowController.m
+//  SharingController.m
 //  Youcrypt
 //
 //  Created by avr on 8/30/12.
@@ -9,6 +9,7 @@
 #import "SharingGetEmailsView.h"
 #import "libFunctions.h"
 #import "ListDirectoriesWindow.h"
+#import "LinkedView.h"
 #import "AppDelegate.h"
 
 @implementation SharingGetEmailsView
@@ -29,11 +30,6 @@
     return self;
 }
 
--(BOOL)setListDirWindow:(ListDirectoriesWindow*)ldw
-{
-    _listDirWindow = ldw;
-}
-
 - (void) awakeFromNib
 {
     [emailField becomeFirstResponder];
@@ -45,7 +41,12 @@
     [emailField setStringValue:@""];
     [emailMessageField setStringValue:@""];
     [errmsg setStringValue:@""];
-    [theApp.listDirectories.sharingPopover close];
+    [self.window close];
+}
+
+- (void) setDirPath:(NSString*)path
+{
+    dirPath = [NSString stringWithString:path];
 }
 
 - (void)updateStatusMessage:(NSNotification*)notification
@@ -67,27 +68,26 @@
         return;
     }
     
-    if (!_listDirWindow) {
-        [errmsg setStringValue:@"Sharing not correctly initialized"];
+    if (dirPath == nil) {
+        [errmsg setStringValue:@"Unknown folder shared!"];
         return;
     }
     
-    if ([_listDirWindow performShare:e message:m]) {
+    if ([theApp performShare:e message:m dirPath:dirPath]) {
         [errmsg setStringValue:[NSString stringWithFormat:@"Successfully added user %@", e]];
         [errmsg display];
         // Wait for a while for user to read msg
         [NSThread sleepForTimeInterval:1.0f]; 
-        [theApp.listDirectories.sharingPopover close];
         
         [emailField setStringValue:@""];
         [emailMessageField setStringValue:@""];
         [errmsg setStringValue:@""];
         [[NSNotificationCenter defaultCenter] removeObserver:self];
+        [self.window close];
     }
     
     
 //    [super goToNextView];
 }
-
 
 @end

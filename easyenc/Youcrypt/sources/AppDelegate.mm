@@ -22,11 +22,19 @@
 #import "MixpanelAPI.h"
 #import "AboutController.h"
 #import "PassphraseManager.h"
+#import "sharingController.h"
+#import "SharingGetEmailsView.h"
+
+#import "yc-networking/Key.h"
+#include "encfs-core/Credentials.h"
+#include "encfs-core/PassphraseCredentials.h"
+#include "encfs-core/RSACredentials.h"
+
 #import "PortingQ.h"
 #import "MacUISettings.h"
 #import "core/Settings.h"
 
-#import "yc-networking/Key.h"
+#import <cstdio>
 
 using namespace youcrypt;
 
@@ -34,8 +42,6 @@ using namespace youcrypt;
 /* These variables should be initialized */
 AppDelegate *theApp;
 CompressingLogFileManager *logFileManager;
-MixpanelAPI *mixpanel;
-
 int ddLogLevel = LOG_LEVEL_VERBOSE;
 
 
@@ -46,6 +52,7 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
 @synthesize feedbackSheetController;
 @synthesize keyDown;
 @synthesize preferenceController;
+@synthesize sharingController;
 @synthesize tourWizard;
 @synthesize dropboxEncryptedFolders;
 @synthesize aboutController;
@@ -88,7 +95,7 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
     passphraseManager = [[PassphraseManager alloc] 
                          initWithPrefController:preferenceController 
                           saveInKeychain:NO];
-    
+    sharingController = [[SharingController alloc] init];
     
     theApp = self;
     return self;
@@ -318,10 +325,12 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
 
 - (IBAction) shareFolderFromMenu:(id) sender
 {
-    [listDirectories.sharingPopover showRelativeToRect:[[statusItem view] frame]
-                                                ofView:[statusItem view] preferredEdge:CGRectMinYEdge];
-}
+    NSString *p  = [sender representedObject];
+    [sharingController setWindowAttributes:[NSString stringWithFormat:@"Share folder %@", p]
+                                folderPath:p];
+    [sharingController showWindow:self];
 
+}
 - (void)awakeFromNib{
     
     //--------------------------------------------------------------------------------------------------
@@ -1014,6 +1023,74 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
     } else {
         ret = reply;
     }
+    return ret;
+}
+
+-(BOOL)performShare:(NSString*)email
+            message:(NSString*)msg
+            dirPath:(NSString*)path
+{
+    BOOL ret = YES;
+    NSString *fromname = [preferenceController getPreference:(MacUISettings::MacPreferenceKeys::yc_userrealname)];
+    NSString *fromemail = [NSString stringWithFormat:@"%@ <%@>", fromname, [preferenceController getPreference:(MacUISettings::MacPreferenceKeys::yc_useremail)]];
+    UserAccount ua_to_search(cppString(email), "");
+    DDLogVerbose(@"Searching for email %@ in server database", email);
+    boost::shared_ptr<ServerConnectionWrapper> sc = [theApp getServerConnection];
+    Key k = sc->getPublicKey(ua_to_search);
+    if (k.empty) {
+        std::cout << "Key not found / is empty" << std::endl;
+        [[NSNotificationCenter defaultCenter] postNotificationName:YC_SERVEROPS_NOTIFICATION object:nil userInfo:[NSDictionary dictionaryWithObject:@"Could not find email in server database. Invite sent" forKey:@"message"]];
+        NSString *subj = [NSString stringWithFormat:@"%@ wants to share an encrypted folder with you using YouCrypt!", fromname];
+        NSString *mess = [NSString stringWithFormat:@"Hi %@, \n\n%@ wants to share an encrypted folder with you. Message follows:\n\n\t%@\n\n\nPlease download YouCrypt by going to %@ to share and receive shared files with YouCrypt.\n\nCheers,\nThe YouCrypt Team\n", email, fromemail, msg, YC_YOUCRYPT_DOWNLOADLOCATION];
+        [self sendEmail:email from:fromemail subject:subj message:mess];
+        return NO;
+    }
+    
+    std::cout << "Got key " << k.value() << std::endl;
+    // Create a Credential object wtih the retrieved key
+    char *tmpfile = tmpnam(NULL); // tmpfile is a static buffer so doesn't need dealloc
+    if (tmpfile) {
+        // Create new credentials object with this user's keys
+        std::string tmp_pub(tmpfile);
+        std::map <std::string, std::string> empty;
+        k.writeValueToFile(tmp_pub);
+        CredentialStorage cs(new RSACredentialStorage("", tmp_pub, empty));
+        Credentials c(new RSACredentials("", cs));
+            
+        // Get the currently selected folder's YCFolder object
+        DirectoryMap &dmap = getDirectories();
+        string path_str = cppString(path);
+        DirectoryMap::iterator i = dmap.begin();
+        for (; i != dmap.end(); i++) {
+            if (i->second->rootPath() == path_str)
+                break;
+        }
+        if (i == dmap.end()) {
+            DDLogError(@"Cannot find dir %@ in DirectoryMap", path);
+            [[NSNotificationCenter defaultCenter] postNotificationName:YC_KEYOPS_NOTIFICATION object:nil userInfo:[NSDictionary dictionaryWithObject:@"Internal error locating directory structure." forKey:@"message"]];
+            ret = NO;
+        } else {
+            Folder dir = i->second;
+            if (!dir->addCredential(c)) {
+                DDLogError(@"Adding credentials failed!");
+                [[NSNotificationCenter defaultCenter] postNotificationName:YC_KEYOPS_NOTIFICATION object:nil userInfo:[NSDictionary dictionaryWithObject:@"Adding Credentials Failed" forKey:@"message"]];
+                ret = NO;
+            } else {
+                [theApp sendEmail:email from:fromemail
+                          subject:[NSString stringWithFormat:@"%@ wants to share an encrypted folder with you with YouCrypt!", fromname]
+                          message:[NSString stringWithFormat:@"Hi %@, \n\n%@ wants to share an encrypted folder, %@, with you. Message follows:\n\n\t%@\n\n\nCheers,\nThe YouCrypt Team\n", email, fromname,
+                                   nsstrFromCpp(dir->alias()), msg, YC_YOUCRYPT_DOWNLOADLOCATION]];
+            }
+        }
+        
+        if (!boost::filesystem::remove(boost::filesystem::path(tmp_pub))) {
+            DDLogError(@"Error removing temporary file %s", tmp_pub.c_str());
+        }
+    } else {
+        DDLogError(@"Cannot create tmp pubkey file for %@'s cred!", email);
+        ret = NO;
+    }
+            
     return ret;
 }
 
