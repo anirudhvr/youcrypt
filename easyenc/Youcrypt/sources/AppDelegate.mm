@@ -313,8 +313,16 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
                                         keyEquivalent:@""];
             [shareMenuItem setRepresentedObject:dirpath];
             
+            // "Decrypt" menu item
+            NSMenuItem *decryptMenuItem = [[NSMenuItem alloc]
+                                        initWithTitle:@"Decrypt"
+                                        action:NSSelectorFromString(@"decryptFolderFromMenu:")
+                                        keyEquivalent:@""];
+            [decryptMenuItem setRepresentedObject:dirpath];
+            
             [folderOptionsMenu addItem:openMenuItem];
             [folderOptionsMenu addItem:shareMenuItem];
+            [folderOptionsMenu addItem:decryptMenuItem];
             [folderNameMenuItem setSubmenu:folderOptionsMenu];
             [folderListMenu addItem:folderNameMenuItem];
         }
@@ -330,6 +338,12 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
                                 folderPath:p];
     [sharingController showWindow:self];
 
+}
+
+- (IBAction) decryptFolderFromMenu:(id) sender
+{
+    NSString *pth  = [sender representedObject];
+    [self removeFSAtPath:pth];
 }
 - (void)awakeFromNib{
     

@@ -96,6 +96,8 @@ class youcrypt::MacUISettings;
 - (void)awakeFromNib;
 - (IBAction)windowShouldClose:(id)sender;
 - (void) refreshFolderListMenu;
+- (IBAction) shareFolderFromMenu:(id) sender;
+- (IBAction) decryptFolderFromMenu:(id) sender;
 
 // Window Related Stuff:  show / close app, etc.
 - (IBAction)showMainApp:(id)sender;
@@ -130,7 +132,6 @@ class youcrypt::MacUISettings;
 - (void) showTour;
 
 
-- (IBAction) shareFolderFromMenu:(id) sender;
 -(BOOL)performShare:(NSString*)email
             message:(NSString*)msg
             dirPath:(NSString*)path;
