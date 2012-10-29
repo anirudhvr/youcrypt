@@ -15,6 +15,7 @@
 #import "core/DirectoryMap.h"
 #import "core/Settings.h"
 #import "MacUISettings.h"
+#import "AppDelegate.h"
 
 @implementation PreferenceController
 
@@ -32,7 +33,7 @@ typedef MacUISettings::MacPreferenceKeys ms;
     
     /* initializing some arrays */
     startOnLogin = [[StartOnLogin alloc] init];
-    passphraseSheetController = [[PassphraseSheetController alloc] init];
+    passphraseSheetController = [[PassphraseSheetController alloc] initWithPassphraseManager:[theApp passphraseManager]];
     
     return self;
 }
@@ -78,8 +79,6 @@ typedef MacUISettings::MacPreferenceKeys ms;
     
     [passphrase setStringValue:@"somerandomvalue"];
     [passphrase setEditable:NO];
-    
-    passphraseSheetController = [[PassphraseSheetController alloc] init];
     
     [tabView selectTabViewItem:[tabView tabViewItemAtIndex:0]];
     
@@ -175,7 +174,8 @@ typedef MacUISettings::MacPreferenceKeys ms;
                                           encoding:NSASCIIStringEncoding]];
     }
     passphraseSheetController.arr = arr;
-    [passphraseSheetController beginSheetModalForWindow:self.window completionHandler:^(NSUInteger returnCode) {
+    NSLog(@"%lx %lx", [self window], [passphraseSheetController window]);
+    [passphraseSheetController beginSheetModalForWindow:[self window] completionHandler:^(NSUInteger returnCode) {
         if (returnCode == kSheetReturnedSave) {
             DDLogVerbose(@"changePassphrase: Passphrase change saved");
         } else if (returnCode == kSheetReturnedCancel) {

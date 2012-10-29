@@ -18,11 +18,22 @@
 
 @synthesize handler;
 
+- (void)beginSheetModalForWindow:(NSWindow *)window withSheetWindow:(NSWindow*)sheetWindow completionHandler:(JCSCompletionHandler)aHandler {
+    self.handler = aHandler;
+    
+    [self sheetWillDisplay];
+   
+    [NSApp beginSheet:sheetWindow modalForWindow:window modalDelegate:self didEndSelector:@selector(sheetDidEnd:returnCode:contextInfo:) contextInfo:NULL];
+    
+    [self sheetDidDisplay];
+
+}
+
 - (void)beginSheetModalForWindow:(NSWindow *)window completionHandler:(JCSCompletionHandler)aHandler {
     self.handler = aHandler;
     
     [self sheetWillDisplay];
-    
+   
     [NSApp beginSheet:self.window modalForWindow:window modalDelegate:self didEndSelector:@selector(sheetDidEnd:returnCode:contextInfo:) contextInfo:NULL];
     
     [self sheetDidDisplay];

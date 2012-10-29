@@ -24,6 +24,7 @@
         return nil; // Bail!
     }
     ppman = ppm;
+    super.window = self.window;
     return self;
 }
 

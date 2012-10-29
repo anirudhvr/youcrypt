@@ -256,9 +256,11 @@ bool YCFolder::mount()
 
 bool YCFolder::unmount() 
 {
-    if (YoucryptFolder::unmount()) {
+    bool ret = YoucryptFolder::unmount();
+    if (ret)
         _isMounted = false;
-    }    
+    updateStatus();
+    return ret;
 }
 
 bool YCFolder::cleanUpRoot() 
@@ -280,6 +282,10 @@ bool YCFolder::deleteCredential(const Credentials &cred)
 
 bool YCFolder::restoreFolderInPlace() 
 {
+    if (status == YoucryptDirectoryStatusMounted)
+        if (unmount() == false)
+            return false;
+        
     if (status != YoucryptDirectoryStatusInitialized) {
         std::cerr << "Directory to be restored has status " << stringStatus() << std::endl;
         return false;

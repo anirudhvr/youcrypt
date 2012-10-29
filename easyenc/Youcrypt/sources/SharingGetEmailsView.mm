@@ -8,7 +8,6 @@
 
 #import "SharingGetEmailsView.h"
 #import "libFunctions.h"
-#import "ListDirectoriesWindow.h"
 #import "LinkedView.h"
 #import "AppDelegate.h"
 

@@ -184,7 +184,6 @@ namespace yc = youcrypt;
         if (dir->currStatus() == YoucryptDirectoryStatusMounted) {
             int ret = [self closeMountedFolder:dir];
             if (ret) {
-                printCloseError(ret);
                 return;
             }
         }
@@ -221,17 +220,6 @@ namespace yc = youcrypt;
     return dir->unmount();
 }
 
-void printCloseError(int ret)
-{
-    if (ret != 0) {
-        NSString *errString = [NSString stringWithFormat:@"%s", strerror(ret)];
-        [[NSAlert alertWithMessageText:errString defaultButton:@"OK" alternateButton:nil  otherButton:nil informativeTextWithFormat:@""] runModal];
-    } else if (ret == -1) {
-        [[NSAlert alertWithMessageText:@"Closing directory failed: unknown error" defaultButton:@"OK" alternateButton:nil  otherButton:nil informativeTextWithFormat:@""] runModal];
-    }
-    
-}
-
 
 - (IBAction)close:(id)sender {
     NSInteger row = [table selectedRow];
@@ -243,7 +231,6 @@ void printCloseError(int ret)
             ++beg;
         Folder dir = beg->second;
         int ret = [self closeMountedFolder:dir];
-        printCloseError(ret);
         
     }
     [table reloadData];
@@ -558,7 +545,7 @@ void printCloseError(int ret)
                                           encoding:NSASCIIStringEncoding]];
     }
     passphraseSheet.arr = arr;
-    [passphraseSheet beginSheetModalForWindow:theApp.listDirectories.window completionHandler:^(NSUInteger returnCode) {
+    [passphraseSheet beginSheetModalForWindow:[self window] completionHandler:^(NSUInteger returnCode) {
         if (returnCode == kSheetReturnedSave) {
             DDLogVerbose(@"showChangePassphraseSheet: Change Passphrase done");
         } else if (returnCode == kSheetReturnedCancel) {

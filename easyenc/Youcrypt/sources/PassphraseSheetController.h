@@ -24,7 +24,8 @@
 @property (atomic, strong) IBOutlet NSTextField *message;
 @property (atomic, strong) NSArray *arr;
 
-- (IBAction)saveClicked:(id)sender;
+- (id)initWithPassphraseManager:(PassphraseManager*)ppm;
+    - (IBAction)saveClicked:(id)sender;
 - (IBAction)cancelClicked:(id)sender;
 
 @end

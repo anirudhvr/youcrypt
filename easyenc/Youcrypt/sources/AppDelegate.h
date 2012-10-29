@@ -27,7 +27,6 @@ using namespace youcrypt;
 @class Encrypt;
 @class ConfigDirectory;
 @class YoucryptService;
-@class ListDirectoriesWindow;
 @class FeedbackSheetController;
 @class keyDownView;
 @class DDFileLogger;
@@ -51,7 +50,6 @@ class youcrypt::MacUISettings;
     SharingController *sharingController;
     
     // Controllers for various windows
-    ListDirectoriesWindow *listDirectories;
     PreferenceController *preferenceController;
     Decrypt *decryptController;
     Encrypt  *encryptController;
@@ -129,6 +127,9 @@ class youcrypt::MacUISettings;
 -(void)cancelRestore:(NSString *)path;
 -(BOOL)doRestore:(NSString *)path;
 
+
+- (BOOL)close:(Folder)dir;
+    
 - (void) showTour;
 
 
@@ -155,7 +156,6 @@ createIfNotFound:(BOOL)val
 // Setters and getters
 //@property (readonly) NSMutableArray *directories;
 @property (assign) IBOutlet NSWindow *window;
-@property (nonatomic,strong) ListDirectoriesWindow *listDirectories;
 @property (nonatomic, strong) FeedbackSheetController *feedbackSheetController;
 @property (nonatomic, strong) keyDownView *keyDown;
 @property (nonatomic, strong) PreferenceController *preferenceController;

@@ -14,7 +14,6 @@
 #import "Encrypt.h"
 #import "YoucryptService.h"
 #import "libFunctions.h"
-#import "ListDirectoriesWindow.h"
 #import "FeedbackSheetController.h"
 #import "CompressingLogFileManager.h"
 #import "TourWizard.h"
@@ -48,7 +47,6 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
 @implementation AppDelegate
 
 @synthesize window = _window;
-@synthesize listDirectories;
 @synthesize feedbackSheetController;
 @synthesize keyDown;
 @synthesize preferenceController;
@@ -89,7 +87,6 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
     macSettings = new MacUISettings(cppString(base)); // XXX automatically sets appSettings
     
     preferenceController = [[PreferenceController alloc] init];
-    listDirectories = [[ListDirectoriesWindow alloc] init];
     feedbackSheetController = [[FeedbackSheetController alloc] init];
     dropboxEncryptedFolders = [[NSMutableSet alloc] init];
     passphraseManager = [[PassphraseManager alloc] 
@@ -476,10 +473,6 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
                                      mountedPath:nsstrFromCpp(dir->mountedPath())];
     DDLogVerbose(@"didDecrypt folder %@\n", nsstrFromCpp(dir->rootPath()));
     
-    if (listDirectories != nil) {
-        [listDirectories.table reloadData];
-    }
-    
     [self refreshFolderListMenu];
 }
 
@@ -555,11 +548,6 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
         encryptController = [[Encrypt alloc] init];
     }
     
-    [listDirectories.statusLabel setStringValue:@"Encrypting"];
-    [listDirectories.progressIndicator setHidden:NO];
-    [listDirectories.progressIndicator startAnimation:listDirectories.window];
-    
-    
     NSString *pp = [passphraseManager getPassphrase];
     encryptController.sourceFolderPath = path;
     
@@ -593,12 +581,6 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
     dir->alias() = cppString([[p stringByDeletingPathExtension]
                               lastPathComponent]);
     (getDirectories())[dir->rootPath()] = dir;
-    if (listDirectories != nil) {
-        [listDirectories.statusLabel setStringValue:@""];
-        [listDirectories.progressIndicator stopAnimation:listDirectories.window];
-        [listDirectories.progressIndicator setHidden:YES];
-        [listDirectories.table reloadData];
-    }
     
     [self refreshFolderListMenu];
     
@@ -649,18 +631,21 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
     }
 }
 
+
+
 - (BOOL)doRestore:(NSString *)path {
     std::string strPath([path cStringUsingEncoding:NSASCIIStringEncoding]);
     Folder d = (getDirectories())[strPath];
     if (!d)
         d = YCFolder::initFromScanningPath(strPath);
     
+    
+    
     switch (d->currStatus()) {
         case YoucryptDirectoryStatusUnknown:
         case YoucryptDirectoryStatusUninitialized:
         case YoucryptDirectoryStatusBadConfig:
         case YoucryptDirectoryStatusMounted:
-            return NO;
         case YoucryptDirectoryStatusInitialized:
         case YoucryptDirectoryStatusNeedAuth:
             break;
@@ -669,10 +654,6 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
     if (!restoreController) {
         restoreController = [[RestoreController alloc] init];
     }
-    
-    [listDirectories.statusLabel setStringValue:@"Restoring"];
-    [listDirectories.progressIndicator setHidden:NO];
-    [listDirectories.progressIndicator startAnimation:listDirectories.window];
     
     
     restoreController.path = path;
@@ -695,13 +676,6 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
     std::string strPath([path cStringUsingEncoding:NSASCIIStringEncoding]);
     (getDirectories()).erase(strPath);
     
-    if (listDirectories != nil) {
-        [listDirectories.statusLabel setStringValue:@""];
-        [listDirectories.progressIndicator stopAnimation:listDirectories.window];
-        [listDirectories.progressIndicator setHidden:YES];
-        [listDirectories.table reloadData];
-    }
-    
     [self refreshFolderListMenu];
 }
 
@@ -718,13 +692,38 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
     [NSApp terminate:nil];
 }
 
+// Clsoe folder
+
+void printCloseError(int ret)
+{
+    if (ret != 0) {
+        NSString *errString = [NSString stringWithFormat:@"%s", strerror(ret)];
+        [[NSAlert alertWithMessageText:errString defaultButton:@"OK" alternateButton:nil  otherButton:nil informativeTextWithFormat:@""] runModal];
+    } else if (ret == -1) {
+        [[NSAlert alertWithMessageText:@"Closing directory failed: unknown error" defaultButton:@"OK" alternateButton:nil  otherButton:nil informativeTextWithFormat:@""] runModal];
+    }
+    
+}
+
+- (BOOL)close:(Folder)dir {
+    DirectoryMap &dmap = getDirectories();
+    DirectoryMap::iterator it = dmap.begin();
+    Folder d = it->second;
+    int ret = d->unmount();
+    if (ret != 0) {
+        printCloseError(ret);
+        return NO;
+    } else {
+        return YES;
+    }
+}
+
 
 
 // --------------------------------------------------------------------------------------
 // Helper functions to show any window; you name it, we've it.
 // --------------------------------------------------------------------------------------
 - (IBAction)showMainApp:(id)sender {    
-    [listDirectories.window makeKeyAndOrderFront:self];
 }
 
 - (IBAction)showListDirectories:(id)sender {
@@ -734,8 +733,8 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
     //        listDirectories = [[ListDirectoriesWindow alloc] init];
     //    }
     //[listDirectories.window makeKeyAndOrderFront:self];
-    [listDirectories showWindow:self];
-    [NSApp activateIgnoringOtherApps:YES];
+//    [listDirectories showWindow:self];
+//    [NSApp activateIgnoringOtherApps:YES];
     
 }
 
@@ -770,17 +769,7 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
 - (IBAction)openFeedbackPage:(id)sender
 {
     //[[NSWorkspace sharedWorkspace] openURL: [NSURL URLWithString:@"http://youcrypt.com"]];
-    [feedbackSheetController beginSheetModalForWindow:theApp.listDirectories.window completionHandler:^(NSUInteger returnCode) {
-        if (returnCode == kSheetReturnedSave) {
-            DDLogVerbose(@"feedbackSheetController: Feedback run done");
-            [self.window close];
-        } else if (returnCode == kSheetReturnedCancel) {
-            DDLogVerbose(@"feedbackSheetController: Feedback cancelled :( ");
-        } else {
-            DDLogVerbose(@"feedbackSheetController: Unknown return code");
-        }
-    }];
-    
+    [feedbackSheetController showWindow:self];
 }
 
 - (IBAction)openHelpPage:(id)sender
@@ -849,139 +838,12 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
     return NSDragOperationNone;
 }
 
-- (BOOL)tableView:(NSTableView *)tableView
-       acceptDrop:(id<NSDraggingInfo>)info
-              row:(NSInteger)row
-    dropOperation:(NSTableViewDropOperation)dropOperation {
-    
-    NSPasteboard *pb = [info draggingPasteboard];
-    
-    BOOL ret = NO;
-    NSArray *fileURLs = nil;
-    {
-        NSArray *classes = [NSArray arrayWithObject:[NSURL class]];
-        fileURLs = [pb readObjectsForClasses:classes options:nil];
-    }
-    
-    
-    // Check if the pboard contains a URL that's a diretory.
-    if ([[pb types] containsObject:NSURLPboardType]) {
-        NSFileManager *fm = [NSFileManager defaultManager];
-        [listDirectories.table setDefaultImage];
-        NSURL *url;
-        for (url in fileURLs) {
-            BOOL isDir;
-            NSString *path = [url path];
-            if ([fm fileExistsAtPath:path isDirectory:&isDir] && isDir) {
-                // If it's a .yc folder and if it contains YOUCRYPT_XMLCONFIG_FILENAME ,
-                //  we open it, otherwise, we encrypt it
-                if ([[path pathExtension] isEqualToString:ENCRYPTED_DIRECTORY_EXTENSION] &&
-                    [fm fileExistsAtPath:[path stringByAppendingPathComponent:YOUCRYPT_XMLCONFIG_FILENAME]]) {
-                    [theApp openEncryptedFolder:path];
-                }
-                else {
-                    [theApp encryptFolder:path];
-                }
-                ret = YES;
-            }
-        }
-    }
-    return ret;
-}
-
-//--------------------------------------------------------------------------------------------------
-// Code to color mounted and unmounted folders separately and change their icons
-//--------------------------------------------------------------------------------------------------
-- (void)tableView:(NSTableView*)tableView willDisplayCell:(id)cell forTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
-    NSString *colId = [tableColumn identifier];
-    
-    
-    Folder dirAtRow = getDirectories()[row];
-    if (!dirAtRow)
-        return;
-    
-    //    [dirAtRow updateInfo];
-    
-    if (dirAtRow->currStatus() == YoucryptDirectoryStatusMounted)
-    {
-        // mounted => unlocked
-        if ([cell isKindOfClass:[NSTextFieldCell class]]) {
-            //            [cell setTextColor:[NSColor redColor]];
-            //            [cell setBackgroundColor:[NSColor grayColor]];
-        } else if ([cell isKindOfClass:[NSButtonCell class]] && [colId isEqualToString:@"status"]) {
-            [cell setImage:[NSImage imageNamed:@"box_open_48x48.png"]];
-        } else if ([cell isKindOfClass:[NSPopUpButtonCell class]] && [colId isEqualToString:@"props"]) {
-            /*NSPopUpButtonCell *dataTypeDropDownCell = [tableColumn dataCell];
-             [[dataTypeDropDownCell itemAtIndex:1] setTitle:@"Close"];*/
-            [[[tableColumn dataCell] itemAtIndex:2] setHidden:NO];
-        }
-    } else  { // unmounted => locked
-        if ([cell isKindOfClass:[NSTextFieldCell class]]) {
-            //            [cell setTextColor:[NSColor blackColor]];
-            //            [cell setBackgroundColor:[NSColor darkGrayColor]];
-            
-        } else if ([cell isKindOfClass:[NSButtonCell class]] && [colId isEqualToString:@"status"]) {
-            if (dirAtRow->currStatus() == YoucryptDirectoryStatusInitialized)
-                [cell setImage:[NSImage imageNamed:@"box_closed_48x48.png"]];
-            else if (dirAtRow->currStatus() == YoucryptDirectoryStatusBadConfig
-                     || dirAtRow->currStatus() == YoucryptDirectoryStatusUnknown)
-                [cell setImage:[NSImage imageNamed:@"error-22x22.png"]];
-            if (dirAtRow->currStatus() == YoucryptDirectoryStatusProcessing)
-                [cell setImage:[NSImage imageNamed:@"processing-22x22.gif"]];
-        } else if ([cell isKindOfClass:[NSPopUpButtonCell class]] && [colId isEqualToString:@"props"]) {
-            //NSPopUpButtonCell *dataTypeDropDownCell = [tableColumn dataCell];
-            //NSLog(@"Trying to disable close");
-            [[[tableColumn dataCell] itemAtIndex:2] setHidden:YES];
-            
-        }
-    }
-}
-
-- (NSString *)tableView:(NSTableView *)aTableView toolTipForTableColumn:(NSTableColumn *)aTableColumn row:(NSInteger)rowIndex
-{
-    NSString *tooltip;
-    if (rowIndex >= 0) {
-        Folder dir = getDirectories()[rowIndex];
-        tooltip = [NSString stringWithFormat:@"Source folder: %@\n\n"
-                   "Status: %@"
-                   "%@", nsstrFromCpp(dir->rootPath()),
-                   nsstrFromCpp(dir->stringStatus()),
-                   ((dir->currStatus() == YoucryptDirectoryStatusMounted) ?
-                    [NSString stringWithFormat:@"\n\nMounted at %@", nsstrFromCpp(dir->mountedPath())]
-                    : @"")];
-    } else {
-        tooltip = @"Drag folders here to encrypt them with YouCrypt";
-    }
-    
-    return tooltip;
-}
-
-- (id) tableView:(NSTableView*)tableView dataCellForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row
-{
-    
-    /*
-     NSString *colId = [tableColumn identifier];
-     
-     if ([colId isEqualToString:@"props"]) {
-     NSPopUpButtonCell *dataTypeDropDownCell = [[NSPopUpButtonCell alloc] initTextCell:@"Actions..." pullsDown:YES];
-     [dataTypeDropDownCell setBordered:NO];
-     [dataTypeDropDownCell setEditable:YES];
-     NSArray *dataTypeNames = [NSArray arrayWithObjects:@"NULLOrignal", @"String", @"Money", @"Date", @"Int", nil];
-     [dataTypeDropDownCell addItemsWithTitles:dataTypeNames];
-     return dataTypeDropDownCell;
-     } else {
-     return nil;
-     }
-     */
-    return nil;
-}
-
 
 -(id) someUnMount:(id) sender {
     // Someone unmount us a bomb.
 //    DDLogVerbose(@"Something unmounted\n");
-    if (listDirectories != nil)
-        [listDirectories.table reloadData];
+//    if (listDirectories != nil)
+//        [listDirectories.table reloadData];
     return nil;
 }
 
