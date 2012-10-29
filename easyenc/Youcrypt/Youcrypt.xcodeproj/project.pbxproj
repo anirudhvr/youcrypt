@@ -21,13 +21,11 @@
 		2537E38815B496400034E6E3 /* StartOnLogin.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = E635DE8D15AE2BAA00A81117 /* StartOnLogin.framework */; };
 		2537E39515B4F1660034E6E3 /* About.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2537E39415B4F1660034E6E3 /* About.xib */; };
 		2537E39D15B4FD260034E6E3 /* AboutController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 2537E39C15B4FD260034E6E3 /* AboutController.mm */; };
-		253C3D7F159BBF9400120B8D /* BoxFSA.mm in Sources */ = {isa = PBXBuildFile; fileRef = 253C3D7E159BBF9400120B8D /* BoxFSA.mm */; };
 		254412E515AFB1E60098B8FB /* DBSetup.xib in Resources */ = {isa = PBXBuildFile; fileRef = 254412E415AFB1E60098B8FB /* DBSetup.xib */; };
 		254412F615AFBAD60098B8FB /* FSBrowserCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 254412F315AFBAD60098B8FB /* FSBrowserCell.m */; };
 		254412F715AFBAD60098B8FB /* FSNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 254412F515AFBAD60098B8FB /* FSNode.m */; };
 		254412FD15AFC0BD0098B8FB /* DBLinkedView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 254412FC15AFC0BD0098B8FB /* DBLinkedView.mm */; };
 		2544130015AFCB910098B8FB /* DBSetupSheetController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 254412FF15AFCB910098B8FB /* DBSetupSheetController.mm */; };
-		25617DC715ABD54B00EED7F7 /* ListDirTable.mm in Sources */ = {isa = PBXBuildFile; fileRef = 25617DC615ABD54B00EED7F7 /* ListDirTable.mm */; };
 		256C3560158EA75F00E2BEC4 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 256C355F158EA75F00E2BEC4 /* Cocoa.framework */; };
 		256C356C158EA75F00E2BEC4 /* main.mm in Sources */ = {isa = PBXBuildFile; fileRef = 256C356B158EA75F00E2BEC4 /* main.mm */; };
 		256C3570158EA75F00E2BEC4 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 256C356E158EA75F00E2BEC4 /* Credits.rtf */; };
@@ -55,7 +53,6 @@
 		E05DB60915F0A7F800F70DF0 /* RSACredentialManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E05DB60715F0A7F800F70DF0 /* RSACredentialManager.cpp */; };
 		E05DB60C15F0B38200F70DF0 /* ProcessQ.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E05DB60A15F0B38200F70DF0 /* ProcessQ.cpp */; };
 		E05DB68D15F0C81A00F70DF0 /* PortingQ.mm in Sources */ = {isa = PBXBuildFile; fileRef = E05DB68B15F0C81A00F70DF0 /* PortingQ.mm */; };
-		E06E2B4115A76ABE00E52B2D /* ListRightClick.xib in Resources */ = {isa = PBXBuildFile; fileRef = E06E2B4015A76ABE00E52B2D /* ListRightClick.xib */; };
 		E077154715EF1CA4009AB1C2 /* YCFolder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E077154515EF1CA4009AB1C2 /* YCFolder.cpp */; };
 		E077154A15EF276C009AB1C2 /* CredentialsManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E077154815EF276C009AB1C2 /* CredentialsManager.cpp */; };
 		E0812F3315F09466007EE3AF /* DirectoryMap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E0812F3115F09466007EE3AF /* DirectoryMap.cpp */; };
@@ -65,8 +62,6 @@
 		E0BF0E9D1596D01F002F9FB9 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E0BF0E9C1596D01F002F9FB9 /* Foundation.framework */; };
 		E0BF0EA01596D01F002F9FB9 /* main.mm in Sources */ = {isa = PBXBuildFile; fileRef = E0BF0E9F1596D01F002F9FB9 /* main.mm */; };
 		E0BF0EA41596D01F002F9FB9 /* TestBed.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = E0BF0EA31596D01F002F9FB9 /* TestBed.1 */; };
-		E0BF0EBD159838DD002F9FB9 /* ListDirectoriesWindow.mm in Sources */ = {isa = PBXBuildFile; fileRef = E0BF0EBB159838DD002F9FB9 /* ListDirectoriesWindow.mm */; };
-		E0BF0EBE159838DD002F9FB9 /* ListDirectoriesWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = E0BF0EBC159838DD002F9FB9 /* ListDirectoriesWindow.xib */; };
 		E0C5ACAF15A5670A000FC253 /* lockedfolder2.icns in Resources */ = {isa = PBXBuildFile; fileRef = E0C5ACAE15A56709000FC253 /* lockedfolder2.icns */; };
 		E0C5ACB115A56D0D000FC253 /* logo-512x512-alpha.png in Resources */ = {isa = PBXBuildFile; fileRef = E0C5ACB015A56D0C000FC253 /* logo-512x512-alpha.png */; };
 		E603DB9B15AEC19F00ABB170 /* box_closed.png in Resources */ = {isa = PBXBuildFile; fileRef = E603DB9315AEC19F00ABB170 /* box_closed.png */; };
@@ -83,6 +78,7 @@
 		E60AEFC315F894BF00C723FF /* get_dropbox_folder.sh in Resources */ = {isa = PBXBuildFile; fileRef = 25E8BC2315AE4F5F00A323D8 /* get_dropbox_folder.sh */; };
 		E61DF4FC15BA6EC00011A05D /* libssl.1.0.0.dylib in Resources */ = {isa = PBXBuildFile; fileRef = E61DF4FA15BA6E8B0011A05D /* libssl.1.0.0.dylib */; };
 		E61F694115F1AC57009990C6 /* ServerConnectionWrapper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E61F693F15F1AC57009990C6 /* ServerConnectionWrapper.cpp */; };
+		E6247AAA163E9C3C00597F9D /* BoxFSA.mm in Sources */ = {isa = PBXBuildFile; fileRef = E6247AA9163E9C3C00597F9D /* BoxFSA.mm */; };
 		E62E3D7916355399009B066B /* MyNSMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = E62E3D7816355399009B066B /* MyNSMenu.m */; };
 		E62E3DE41639D296009B066B /* MAAttachedWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = E62E3DE31639D296009B066B /* MAAttachedWindow.m */; };
 		E62E3DE71639DB49009B066B /* SharingWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = E62E3DE61639DB49009B066B /* SharingWindow.xib */; };
@@ -498,8 +494,6 @@
 		253C3D77159BBF3900120B8D /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		253C3D79159BBF4000120B8D /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		253C3D7B159BBF4A00120B8D /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
-		253C3D7D159BBF9400120B8D /* BoxFSA.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BoxFSA.h; path = sources/BoxFSA.h; sourceTree = "<group>"; };
-		253C3D7E159BBF9400120B8D /* BoxFSA.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = BoxFSA.mm; path = sources/BoxFSA.mm; sourceTree = "<group>"; };
 		254412E415AFB1E60098B8FB /* DBSetup.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DBSetup.xib; sourceTree = "<group>"; };
 		254412F215AFBAD60098B8FB /* FSBrowserCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FSBrowserCell.h; path = FileBrowser/FSBrowserCell.h; sourceTree = "<group>"; };
 		254412F315AFBAD60098B8FB /* FSBrowserCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FSBrowserCell.m; path = FileBrowser/FSBrowserCell.m; sourceTree = "<group>"; };
@@ -509,8 +503,6 @@
 		254412FC15AFC0BD0098B8FB /* DBLinkedView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = DBLinkedView.mm; path = sources/DBLinkedView.mm; sourceTree = "<group>"; };
 		254412FE15AFCB910098B8FB /* DBSetupSheetController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DBSetupSheetController.h; path = sources/DBSetupSheetController.h; sourceTree = "<group>"; };
 		254412FF15AFCB910098B8FB /* DBSetupSheetController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = DBSetupSheetController.mm; path = sources/DBSetupSheetController.mm; sourceTree = "<group>"; };
-		25617DC515ABD54A00EED7F7 /* ListDirTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ListDirTable.h; path = sources/ListDirTable.h; sourceTree = "<group>"; };
-		25617DC615ABD54B00EED7F7 /* ListDirTable.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = ListDirTable.mm; path = sources/ListDirTable.mm; sourceTree = "<group>"; };
 		256C355B158EA75F00E2BEC4 /* Youcrypt.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Youcrypt.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		256C355F158EA75F00E2BEC4 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		256C3562158EA75F00E2BEC4 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -554,7 +546,6 @@
 		E05DB68B15F0C81A00F70DF0 /* PortingQ.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; lineEnding = 0; name = PortingQ.mm; path = sources/PortingQ.mm; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		E05DB68C15F0C81A00F70DF0 /* PortingQ.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = PortingQ.h; path = sources/PortingQ.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		E06E2B3F15A7671B00E52B2D /* constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = constants.h; path = sources/constants.h; sourceTree = "<group>"; };
-		E06E2B4015A76ABE00E52B2D /* ListRightClick.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ListRightClick.xib; sourceTree = "<group>"; };
 		E077154515EF1CA4009AB1C2 /* YCFolder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = YCFolder.cpp; path = sources/core/YCFolder.cpp; sourceTree = "<group>"; };
 		E077154615EF1CA4009AB1C2 /* YCFolder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = YCFolder.h; path = sources/core/YCFolder.h; sourceTree = "<group>"; };
 		E077154815EF276C009AB1C2 /* CredentialsManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; name = CredentialsManager.cpp; path = sources/core/CredentialsManager.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
@@ -571,9 +562,6 @@
 		E0BF0E9F1596D01F002F9FB9 /* main.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; lineEnding = 0; path = main.mm; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		E0BF0EA21596D01F002F9FB9 /* TestBed-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TestBed-Prefix.pch"; sourceTree = "<group>"; };
 		E0BF0EA31596D01F002F9FB9 /* TestBed.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = TestBed.1; sourceTree = "<group>"; };
-		E0BF0EBA159838DD002F9FB9 /* ListDirectoriesWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ListDirectoriesWindow.h; path = sources/ListDirectoriesWindow.h; sourceTree = "<group>"; };
-		E0BF0EBB159838DD002F9FB9 /* ListDirectoriesWindow.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; lineEnding = 0; name = ListDirectoriesWindow.mm; path = sources/ListDirectoriesWindow.mm; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		E0BF0EBC159838DD002F9FB9 /* ListDirectoriesWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ListDirectoriesWindow.xib; sourceTree = "<group>"; };
 		E0C5ACAE15A56709000FC253 /* lockedfolder2.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = lockedfolder2.icns; sourceTree = "<group>"; };
 		E0C5ACB015A56D0C000FC253 /* logo-512x512-alpha.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "logo-512x512-alpha.png"; sourceTree = "<group>"; };
 		E603DB9315AEC19F00ABB170 /* box_closed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = box_closed.png; sourceTree = "<group>"; };
@@ -591,6 +579,8 @@
 		E61DF4FA15BA6E8B0011A05D /* libssl.1.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libssl.1.0.0.dylib; sourceTree = "<group>"; };
 		E61F693F15F1AC57009990C6 /* ServerConnectionWrapper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ServerConnectionWrapper.cpp; sourceTree = "<group>"; };
 		E61F694015F1AC57009990C6 /* ServerConnectionWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServerConnectionWrapper.h; sourceTree = "<group>"; };
+		E6247AA8163E9C3C00597F9D /* BoxFSA.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BoxFSA.h; path = sources/BoxFSA.h; sourceTree = "<group>"; };
+		E6247AA9163E9C3C00597F9D /* BoxFSA.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = BoxFSA.mm; path = sources/BoxFSA.mm; sourceTree = "<group>"; };
 		E62E3D7716355399009B066B /* MyNSMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MyNSMenu.h; path = sources/Subclasses/MyNSMenu.h; sourceTree = "<group>"; };
 		E62E3D7816355399009B066B /* MyNSMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MyNSMenu.m; path = sources/Subclasses/MyNSMenu.m; sourceTree = "<group>"; };
 		E62E3DE31639D296009B066B /* MAAttachedWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAAttachedWindow.m; sourceTree = "<group>"; };
@@ -911,11 +901,9 @@
 				E6C0468C15AE18B4004B52E5 /* MainMenu.xib */,
 				25C3FE4415A7A804006606DF /* Feedback.xib */,
 				E6649C9515A70FB00096886F /* VolumePropertiesSheetController.xib */,
-				E06E2B4015A76ABE00E52B2D /* ListRightClick.xib */,
 				25300E8A15A385BE009CDA08 /* Gmail.xib */,
 				E054042215AB1CE10011E5CC /* Restore.xib */,
 				25F3D159159244E800E3383C /* Encrypt.xib */,
-				E0BF0EBC159838DD002F9FB9 /* ListDirectoriesWindow.xib */,
 				256C35A8158EAF8700E2BEC4 /* Preferences.xib */,
 				25F3D14B15923FE800E3383C /* Decrypt.xib */,
 				E66988D4159E62D8002323AD /* ChangePassphrase.xib */,
@@ -942,19 +930,13 @@
 			isa = PBXGroup;
 			children = (
 				E62E3D7616355342009B066B /* Subclasses */,
-				E077154115EF1BEA009AB1C2 /* Core */,
+				E077154115EF1BEA009AB1C2 /* CoreC++ */,
 				256C3571158EA75F00E2BEC4 /* AppDelegate.h */,
 				256C3572158EA75F00E2BEC4 /* AppDelegate.mm */,
-				E0BF0EBA159838DD002F9FB9 /* ListDirectoriesWindow.h */,
-				E0BF0EBB159838DD002F9FB9 /* ListDirectoriesWindow.mm */,
 				E09146F115F9819B00DB8051 /* MacUISettings.h */,
 				E09146F215F9819B00DB8051 /* MacUISettings.mm */,
 				E05DB68C15F0C81A00F70DF0 /* PortingQ.h */,
 				E05DB68B15F0C81A00F70DF0 /* PortingQ.mm */,
-				E05DB60815F0A7F800F70DF0 /* RSACredentialManager.h */,
-				E05DB60715F0A7F800F70DF0 /* RSACredentialManager.cpp */,
-				25617DC515ABD54A00EED7F7 /* ListDirTable.h */,
-				25617DC615ABD54B00EED7F7 /* ListDirTable.mm */,
 				256C359B158EA88700E2BEC4 /* PreferenceController.h */,
 				256C359C158EA88700E2BEC4 /* PreferenceController.mm */,
 				E6649C7B15A53CE40096886F /* Encrypt.h */,
@@ -965,8 +947,6 @@
 				25F3D1501592435600E3383C /* libFunctions.mm */,
 				E6E2A0B7159266F6003E3F6C /* YoucryptService.h */,
 				E6E2A0B6159266F6003E3F6C /* YoucryptService.mm */,
-				253C3D7D159BBF9400120B8D /* BoxFSA.h */,
-				253C3D7E159BBF9400120B8D /* BoxFSA.mm */,
 				E054042015AB1CE10011E5CC /* RestoreController.h */,
 				E054042115AB1CE10011E5CC /* RestoreController.mm */,
 				E6E2A0B7159266F6003E3F6C /* YoucryptService.h */,
@@ -983,13 +963,15 @@
 				2537E39C15B4FD260034E6E3 /* AboutController.mm */,
 				E6A3907B15CA0C73007388BE /* PassphraseManager.h */,
 				E6A3907C15CA0C73007388BE /* PassphraseManager.mm */,
+				E6247AA8163E9C3C00597F9D /* BoxFSA.h */,
+				E6247AA9163E9C3C00597F9D /* BoxFSA.mm */,
 				E6E5821215F03CFA00ED4CEE /* Sharing */,
 				E68F196A15B4A979008A90FC /* Firstrun_Tour */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
 		};
-		E077154115EF1BEA009AB1C2 /* Core */ = {
+		E077154115EF1BEA009AB1C2 /* CoreC++ */ = {
 			isa = PBXGroup;
 			children = (
 				E077154515EF1CA4009AB1C2 /* YCFolder.cpp */,
@@ -1002,8 +984,10 @@
 				E0812F3215F09466007EE3AF /* DirectoryMap.h */,
 				E05DB60A15F0B38200F70DF0 /* ProcessQ.cpp */,
 				E05DB60B15F0B38200F70DF0 /* ProcessQ.h */,
+				E05DB60815F0A7F800F70DF0 /* RSACredentialManager.h */,
+				E05DB60715F0A7F800F70DF0 /* RSACredentialManager.cpp */,
 			);
-			name = Core;
+			name = "CoreC++";
 			sourceTree = "<group>";
 		};
 		E0BF0E9E1596D01F002F9FB9 /* TestBed */ = {
@@ -1768,7 +1752,6 @@
 				256C35A9158EAF8700E2BEC4 /* Preferences.xib in Resources */,
 				25F3D14D15923FE800E3383C /* Decrypt.xib in Resources */,
 				25F3D15B159244E800E3383C /* Encrypt.xib in Resources */,
-				E0BF0EBE159838DD002F9FB9 /* ListDirectoriesWindow.xib in Resources */,
 				E66988D5159E62D8002323AD /* ChangePassphrase.xib in Resources */,
 				25300E8C15A385BE009CDA08 /* Gmail.xib in Resources */,
 				E6BEB6F015A4BB4F00878D4B /* Exit.png in Resources */,
@@ -1788,7 +1771,6 @@
 				E6649C9215A707270096886F /* unlocked-24x24.png in Resources */,
 				E6649C9715A70FB00096886F /* VolumePropertiesSheetController.xib in Resources */,
 				E6C0469315AE1972004B52E5 /* InfoPlist.strings in Resources */,
-				E06E2B4115A76ABE00E52B2D /* ListRightClick.xib in Resources */,
 				25C3FE4615A7A805006606DF /* Feedback.xib in Resources */,
 				E054042415AB1CE10011E5CC /* Restore.xib in Resources */,
 				2516C38F15ACCAA10075984B /* Key.png in Resources */,
@@ -1912,8 +1894,6 @@
 				252C3A6A1593CB9B0044EB3C /* DDASLLogger.m in Sources */,
 				252C3A6B1593CBA00044EB3C /* DDFileLogger.m in Sources */,
 				252C3A6C1593CBA50044EB3C /* DDTTYLogger.m in Sources */,
-				E0BF0EBD159838DD002F9FB9 /* ListDirectoriesWindow.mm in Sources */,
-				253C3D7F159BBF9400120B8D /* BoxFSA.mm in Sources */,
 				E66988D9159E63BE002323AD /* JCSSheetController.m in Sources */,
 				E66988DC159E63CF002323AD /* PassphraseSheetController.mm in Sources */,
 				25300E8B15A385BE009CDA08 /* GmailSheetController.mm in Sources */,
@@ -1921,7 +1901,6 @@
 				E6649C9615A70FB00096886F /* VolumePropertiesSheetController.mm in Sources */,
 				25C3FE4515A7A805006606DF /* FeedbackSheetController.mm in Sources */,
 				E054042315AB1CE10011E5CC /* RestoreController.mm in Sources */,
-				25617DC715ABD54B00EED7F7 /* ListDirTable.mm in Sources */,
 				E6C046D115AE2321004B52E5 /* XMLDictionary.m in Sources */,
 				E6C046D215AE2321004B52E5 /* XMLReader.m in Sources */,
 				E6C046DB15AE29AA004B52E5 /* SSKeychain.m in Sources */,
@@ -1968,6 +1947,7 @@
 				E62E3D7916355399009B066B /* MyNSMenu.m in Sources */,
 				E62E3DE41639D296009B066B /* MAAttachedWindow.m in Sources */,
 				E633719B163BDC8400F91112 /* SharingController.m in Sources */,
+				E6247AAA163E9C3C00597F9D /* BoxFSA.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

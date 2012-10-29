@@ -39,7 +39,7 @@ using namespace youcrypt;
 
 class youcrypt::MacUISettings;
 
-@interface AppDelegate : NSObject <NSTableViewDataSource, NSTableViewDelegate, NSApplicationDelegate> { // changed from NSApplicationDelegate
+@interface AppDelegate : NSObject <NSApplicationDelegate> { // changed from NSApplicationDelegate
     
     // Status Bar for Agent
     IBOutlet MyNSMenu *statusMenu;

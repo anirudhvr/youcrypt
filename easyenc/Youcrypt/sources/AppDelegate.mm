@@ -267,8 +267,6 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
     return YES;
 }
 
-
-
 - (BOOL)application:(NSApplication *)theApplication openFile:(NSString *)filename {
     [[NSFileManager defaultManager] createDirectoryAtPath:@"/tmp/super" withIntermediateDirectories:YES attributes:nil error:nil];
     return [self openEncryptedFolder:filename];
@@ -284,6 +282,8 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
     DirectoryMap &dmap = getDirectories();
     if (dmap.size() > 0) {
         DirectoryMap::iterator i;
+        NSImage *errorImage = [NSImage imageNamed:@"error-22x22.png"];
+        [errorImage setSize:NSMakeSize(16,16)];
         for(i = dmap.begin(); i != dmap.end(); i++) {
             Folder dir = i->second;
             NSString *alias = nsstrFromCpp(dir->alias());
@@ -293,32 +293,46 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
                                               initWithTitle:alias
                                               action:nil
                                               keyEquivalent:@""];
-            
             // The submenu for each folder
             NSMenu *folderOptionsMenu = [[NSMenu alloc] initWithTitle:@"Options"];
-            // "Open" menu item for each folder
-            NSMenuItem *openMenuItem = [[NSMenuItem alloc]
-                                        initWithTitle:@"Open"
-                                        action:NSSelectorFromString(@"openEncryptedFolderFromMenu:")
-                                        keyEquivalent:@""];
-            [openMenuItem setRepresentedObject:dirpath];
+            NSMenuItem *decryptMenuItem;
             
-            // "Share" menu item
-            NSMenuItem *shareMenuItem = [[NSMenuItem alloc]
-                                        initWithTitle:@"Share"
-                                        action:NSSelectorFromString(@"shareFolderFromMenu:")
-                                        keyEquivalent:@""];
-            [shareMenuItem setRepresentedObject:dirpath];
-            
-            // "Decrypt" menu item
-            NSMenuItem *decryptMenuItem = [[NSMenuItem alloc]
-                                        initWithTitle:@"Decrypt"
-                                        action:NSSelectorFromString(@"decryptFolderFromMenu:")
-                                        keyEquivalent:@""];
-            [decryptMenuItem setRepresentedObject:dirpath];
-            
-            [folderOptionsMenu addItem:openMenuItem];
-            [folderOptionsMenu addItem:shareMenuItem];
+            std::cerr << "Dir " << dir->alias() << " status " << dir->stringStatus() << std::endl;
+            if (! ((dir->currStatus() == YoucryptDirectoryStatusInitialized) ||
+                   (dir->currStatus() == YoucryptDirectoryStatusMounted)) ) {
+                [folderNameMenuItem setImage:errorImage];
+                // "Decrypt" menu item
+                decryptMenuItem = [[NSMenuItem alloc]
+                                               initWithTitle:@"Remove"
+                                               action:NSSelectorFromString(@"decryptFolderFromMenu:")
+                                               keyEquivalent:@""];
+                [decryptMenuItem setRepresentedObject:dirpath];
+            } else {
+                
+                // "Open" menu item for each folder
+                NSMenuItem *openMenuItem = [[NSMenuItem alloc]
+                                            initWithTitle:@"Open"
+                                            action:NSSelectorFromString(@"openEncryptedFolderFromMenu:")
+                                            keyEquivalent:@""];
+                [openMenuItem setRepresentedObject:dirpath];
+                
+                // "Share" menu item
+                NSMenuItem *shareMenuItem = [[NSMenuItem alloc]
+                                             initWithTitle:@"Share"
+                                             action:NSSelectorFromString(@"shareFolderFromMenu:")
+                                             keyEquivalent:@""];
+                [shareMenuItem setRepresentedObject:dirpath];
+                
+                // "Decrypt" menu item
+                decryptMenuItem = [[NSMenuItem alloc]
+                                               initWithTitle:@"Decrypt"
+                                               action:NSSelectorFromString(@"decryptFolderFromMenu:")
+                                               keyEquivalent:@""];
+                [decryptMenuItem setRepresentedObject:dirpath];
+                
+                [folderOptionsMenu addItem:openMenuItem];
+                [folderOptionsMenu addItem:shareMenuItem];
+            }
             [folderOptionsMenu addItem:decryptMenuItem];
             [folderNameMenuItem setSubmenu:folderOptionsMenu];
             [folderListMenu addItem:folderNameMenuItem];
@@ -605,8 +619,16 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
    
     Folder dir = (getDirectories())[stdPath];
     if (dir) {
-        resQ.queueJob(stdPath);
-        found = 1;
+        // If status is not Initialized or Mounted, just remove from DirectoryMap
+        if (!(
+            (dir->currStatus() == YoucryptDirectoryStatusInitialized) ||
+              (dir->currStatus() == YoucryptDirectoryStatusMounted)
+              )) {
+            [self didRestore:path];
+        } else {
+            resQ.queueJob(stdPath);
+            found = 1;
+        }
     }
     
     if (!found) {
@@ -780,62 +802,9 @@ void printCloseError(int ret)
 //--------------------------------------------------------------------------------------------------
 // The AppDelegate is also our tableview's data source.  It populates shit using the directories array.
 //--------------------------------------------------------------------------------------------------
-- (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView {
-        int r =getDirectories().size();
-    return r;
-}
 
 - (void)keyDown:(NSEvent *)theEvent
 {
-}
-
-
-- (id)tableView:(NSTableView *)tableView objectValueForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
-    
-    NSString *colId = [tableColumn identifier];
-    
-    Folder dirAtRow = getDirectories()[row];
-    if (!dirAtRow)
-        return nil;
-    
-    //    [dirAtRow updateInfo];
-    
-    
-    if ([colId isEqualToString:@"alias"]) {
-        NSMutableAttributedString *str = [[NSMutableAttributedString alloc] initWithString:nsstrFromCpp(dirAtRow->alias())];
-        NSRange selectedRange = NSRangeFromString(nsstrFromCpp(dirAtRow->alias()));
-        [str addAttribute:NSForegroundColorAttributeName
-                    value:[NSColor blueColor]
-                    range:selectedRange];
-        [str addAttribute:NSUnderlineStyleAttributeName
-                    value:[NSNumber numberWithInt:NSSingleUnderlineStyle]
-                    range:selectedRange];
-        
-        return str;
-    }
-    else if ([colId isEqualToString:@"mountedPath"])
-        return nsstrFromCpp(dirAtRow->mountedPath());
-    else {
-        return nil;
-    }
-}
-
-//--------------------------------------------------------------------------------------------------
-// The tableview's data source also does drag drop
-//--------------------------------------------------------------------------------------------------
-- (NSDragOperation)tableView:(NSTableView *)tableView validateDrop:(id<NSDraggingInfo>)info proposedRow:(NSInteger)row proposedDropOperation:(NSTableViewDropOperation)dropOperation {
-    NSPasteboard *pb = [info draggingPasteboard];
-    
-    // Check if the pboard contains a URL that's a diretory.
-    if ([[pb types] containsObject:NSURLPboardType]) {
-        NSString *path = [[NSURL URLFromPasteboard:pb] path];
-        NSFileManager *fm = [NSFileManager defaultManager];
-        BOOL isDir;
-        if ([fm fileExistsAtPath:path isDirectory:&isDir] && isDir) {
-            return NSDragOperationCopy;
-        }
-    }
-    return NSDragOperationNone;
 }
 
 

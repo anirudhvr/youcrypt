@@ -44,10 +44,20 @@
         *error = NSLocalizedString(@"Error: Pasteboard deosn't contain URL", @"Pasteboard didn't give url");
         return;
     }
+    
+    NSArray *classes = [NSArray arrayWithObject:[NSURL class]];
+//    NSDictionary *options = [NSDictionary dictionaryWithObject:
+//                             [NSNumber numberWithBool:YES] forKey:NSPasteboardURLReadingFileURLsOnlyKey];
+    NSDictionary *options = [NSDictionary dictionary];
 
-    NSURL *url = [NSURL URLFromPasteboard:pboard];
-    NSString *path = [url path];
-    [theApp encryptFolder:path];
+    NSArray *fileURLs = [pboard readObjectsForClasses:classes options:options];
+    for (NSURL *u in fileURLs) {
+        NSString *path = [u path];
+        [theApp encryptFolder:path];
+    }
+//    NSURL *url = [NSURL URLFromPasteboard:pboard];
+//    NSString *path = [url path];
+//    [theApp encryptFolder:path];
     return;
 }
 
