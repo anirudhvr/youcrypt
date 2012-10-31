@@ -14,13 +14,14 @@
 #include <boost/network/protocol/http.hpp>
 #include <boost/network/uri.hpp>
 #include "Key.h"
+#include "FolderInfo.h"
 #include "UserAccount.h"
 
 using std::string;
 
 namespace youcrypt {
-
-class ServerConnection {
+    
+    class ServerConnection {
     public:
         
         typedef boost::network::http::basic_client<
@@ -51,6 +52,11 @@ class ServerConnection {
         // Push new public key for supplied account to server
         OperationStatus addPublicKey(Key &key, UserAccount &account);
         
+        OperationStatus addFolderInfo(FolderInfo &folderInfo,
+                                      UserAccount &account);
+        
+        int getFolderSharingStatus(FolderInfo &folderToCheck, UserAccount &account);
+        
         ConnectionStatus status() { return _status; } 
         
     private:
@@ -60,8 +66,8 @@ class ServerConnection {
         
         string retrieveSalt(UserAccount &account);
         
-};
-
+    };
+    
 };
 
 #endif /* defined(__Youcrypt__ServerConnection__) */

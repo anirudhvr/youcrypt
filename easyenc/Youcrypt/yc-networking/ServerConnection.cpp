@@ -215,4 +215,112 @@ yc::ServerConnection::retrieveSalt(yc::UserAccount &account)
     return salt;
 }
 
+// XXX TODO
+yc::ServerConnection::OperationStatus
+yc::ServerConnection::addFolderInfo(yc::FolderInfo &folderInfo,
+                                    yc::UserAccount &account)
+{
+    OperationStatus stat = yc::ServerConnection::UnknownError;
+    string salt, bcrypted_pw;
+    
+    // Todo
+    // 1. Get salt from server
+    salt = retrieveSalt(account);
+    if (salt.length() <= 0)
+        return yc::ServerConnection::CredentialsInvalid;
+    
+    bcrypted_pw = account.bcryptedPassword(salt);
+    if (bcrypted_pw.length() <= 0)
+        return yc::ServerConnection::CredentialsInvalid;
+    
+    // 2. Construct query to post key to server (currently as a public key)
+    
+    stringstream ss;
+    ss << "user[email]=" << account.email() << "&" <<
+    "user[password]=" << bcrypted_pw << "&" <<
+    "folder[uuid]=" << folderInfo.uuid << "&" <<
+    "folder[sharing_status]=" << folderInfo.sharing_status << "&";
+    
+    string params = ss.str();
+    char paramlen[10];
+    sprintf(paramlen, "%u", params.length());
+    
+    bn::uri::uri add_folderinfo_uri(_base_uri);
+    add_folderinfo_uri << bn::uri::path("folders/") << bn::uri::query(yc::encoded(params));
+    http_client::request req(add_folderinfo_uri);
+    req << bn::header("User-Agent", string(YC_USER_AGENT));
+    
+    try {
+        http_client::response resp = _client.get(req);
+        if (resp.status() == 200u) {
+            stat = yc::ServerConnection::Success;
+        } else {
+            stat = yc::ServerConnection::CredentialsInvalid;
+        }
+    } catch (std::exception &ex) {
+        std::cerr << "Server Error searching for email " << ex.what() << ":" <<
+        ex.what() << std::endl;
+    }
+    
+    return stat;
+    
+}
+
+
+// XXX TODO
+int
+yc::ServerConnection::getFolderSharingStatus(yc::FolderInfo &folderToCheck,
+                                             yc::UserAccount &account)
+{
+    using namespace rapidjson;
+    
+    string params("email="), e = account.email();
+    params += e;
+    
+    bn::uri::uri find_by_email_uri(_base_uri);
+    find_by_email_uri << bn::uri::path("users/findbyemail/") << bn::uri::query(params);
+    http_client::request req(find_by_email_uri);
+    req << bn::header("User-Agent", string(YC_USER_AGENT));
+    
+//    std::cout << find_by_email_uri.scheme() << " , " <<
+//    find_by_email_uri.host() << ", " << find_by_email_uri.path() <<
+//    ", " << find_by_email_uri.query() << std::endl;
+    
+    try {
+        http_client::response resp = _client.get(req);
         
+        if (resp.status() == 200) {
+            Document d;
+            const char *tmp = resp.body().c_str();
+            std::cerr << "Got response:[" << tmp << "]" << std::endl;
+            if (!d.Parse<0>(tmp).HasParseError()) {
+                const Value &r = d["response"];
+                string s = r.GetString();
+                if (s == "OK") {
+                    const Value &folders = d["folders"];
+                    
+                    if (folders.IsArray()) {
+                        for (SizeType j = 0; j < folders.Size(); ++j) {
+                            const Value &f = folders[j];
+                            if (folderToCheck.uuid == f["uuid"].GetString()) {
+                                return f["sharing_status"].GetInt();
+                            }
+                        }
+                    } else {
+                        if (folders["uuid"].IsString()  &&
+                            (folderToCheck.uuid ==
+                             folders["uuid"].GetString()) )  {
+                            return folders["sharing_status"].GetInt();
+                        }
+                        
+                    }
+                }
+            }
+        }
+    } catch (std::exception &ex) {
+        std::cerr << "Server Error searching for email " << e << ":" <<
+        ex.what() << std::endl;
+    }
+    
+    return -1;
+}

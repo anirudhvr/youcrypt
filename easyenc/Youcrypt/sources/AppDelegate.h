@@ -98,7 +98,6 @@ class youcrypt::MacUISettings;
 - (IBAction) decryptFolderFromMenu:(id) sender;
 
 // Window Related Stuff:  show / close app, etc.
-- (IBAction)showMainApp:(id)sender;
 - (IBAction)showPreferencePanel:(id)sender;
 - (IBAction)terminateApp:(id)sender;
 
@@ -106,7 +105,6 @@ class youcrypt::MacUISettings;
 
 
 // Enc and Dec
-- (IBAction)showListDirectories:(id)sender;
 - (IBAction)openFeedbackPage:(id)sender;
 - (IBAction)openHelpPage:(id)sender;
 - (IBAction)showAboutWindow:(id)sender;
@@ -151,7 +149,10 @@ createIfNotFound:(BOOL)val
                subject:(NSString*)subj
                message:(NSString*)msg;
 
+-(BOOL)pushFolderInfo:(string)uuid
+        sharingStatus:(int)sharingstatus;
 
+- (BOOL) ensureFolderCanBeDecrypted:(Folder)dir;
 
 // Setters and getters
 //@property (readonly) NSMutableArray *directories;

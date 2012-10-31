@@ -107,6 +107,10 @@ public:
     bool addCredential(const Credentials &);
     bool deleteCredential(const Credentials &);
     bool restoreFolderInPlace();
+    
+    string uuid() { return YoucryptFolder::uuid(); }
+    string ownerID() {return YoucryptFolder::ownerID(); }
+    
 public:
     static shared_ptr<YCFolder> 
         initEncryptedFolderInPlaceAddExtension(

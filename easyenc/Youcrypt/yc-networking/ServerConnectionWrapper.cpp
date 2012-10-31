@@ -35,3 +35,15 @@ ServerConnectionWrapper::addPublicKey(Key &key, UserAccount &account)
 {
     return (ServerConnectionWrapper::OperationStatus)_sc->addPublicKey(key, account);
 }
+
+ServerConnectionWrapper::OperationStatus
+ServerConnectionWrapper::addFolderInfo(FolderInfo &fi, UserAccount &ua)
+{
+    return (ServerConnectionWrapper::OperationStatus)_sc->addFolderInfo(fi, ua);
+}
+
+int
+ServerConnectionWrapper::getFolderSharingStatus(FolderInfo &fi, UserAccount &ua)
+{
+    return _sc->getFolderSharingStatus(fi, ua);
+}

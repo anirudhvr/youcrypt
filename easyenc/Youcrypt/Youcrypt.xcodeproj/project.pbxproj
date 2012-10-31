@@ -673,6 +673,7 @@
 		E67AC5B815AF989E005A7938 /* TourWizard.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = TourWizard.mm; path = sources/TourWizard.mm; sourceTree = "<group>"; };
 		E67AC5C615AFA7AD005A7938 /* Grey_Add_Folder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Grey_Add_Folder.png; sourceTree = "<group>"; };
 		E67AC5C815AFB0C4005A7938 /* Grey_Open_Folder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Grey_Open_Folder.png; sourceTree = "<group>"; };
+		E68C495216413989000F75F8 /* FolderInfo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FolderInfo.h; sourceTree = "<group>"; };
 		E68D51F615F9BA9F000DC47C /* ycencode.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ycencode.hpp; sourceTree = "<group>"; };
 		E68F196715B4A96D008A90FC /* RegistrationLinkedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RegistrationLinkedView.h; path = sources/RegistrationLinkedView.h; sourceTree = "<group>"; };
 		E68F196815B4A96D008A90FC /* RegistrationLinkedView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = RegistrationLinkedView.mm; path = sources/RegistrationLinkedView.mm; sourceTree = "<group>"; };
@@ -1104,6 +1105,7 @@
 				E64AC1B915E769D500D2E046 /* UserAccount.h */,
 				E64AC0EF15E7575700D2E046 /* testhttpclient.cpp */,
 				E64AC0F015E7575700D2E046 /* testhttpclient.h */,
+				E68C495216413989000F75F8 /* FolderInfo.h */,
 				E6310AD215F07A670078F61E /* ServerConnection.cpp */,
 				E6310AD315F07A670078F61E /* ServerConnection.h */,
 				E61F693F15F1AC57009990C6 /* ServerConnectionWrapper.cpp */,

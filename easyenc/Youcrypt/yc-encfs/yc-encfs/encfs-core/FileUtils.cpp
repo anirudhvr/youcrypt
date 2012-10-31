@@ -208,8 +208,13 @@ namespace boost
             (void)version;
             // version 20 (aka 20100613)
             ar & make_nvp("version", cfg.subVersion);
-
             ar & make_nvp("creator", cfg.creator);
+            
+            // Added by avr 10/30/2012
+            ar & make_nvp("uuid", cfg.uuid);
+            ar & make_nvp("owner_id", cfg.owner_id);
+            ar & make_nvp("revokable", cfg.revokable);
+            
             ar & make_nvp("cipherAlg", cfg.cipherIface);
             ar & make_nvp("nameAlg", cfg.nameIface);
             ar & make_nvp("keySize", cfg.keySize);

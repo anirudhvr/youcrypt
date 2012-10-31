@@ -131,7 +131,7 @@
 					<reference key="NSNextKeyView" ref="348470983"/>
 					<string key="NSHuggingPriority">{239, 239}</string>
 				</object>
-				<string key="NSScreenRect">{{0, 0}, {1920, 1058}}</string>
+				<string key="NSScreenRect">{{0, 0}, {1440, 878}}</string>
 				<string key="NSMaxSize">{10000000000000, 10000000000000}</string>
 				<bool key="NSWindowIsRestorable">YES</bool>
 			</object>
@@ -5082,7 +5082,7 @@
 		<dictionary class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
 			<string key="DropBox">{120, 120}</string>
 			<string key="NSSwitch">{15, 15}</string>
-			<string key="logo-512x512-alpha">{123.23501884948161, 123.23501884948161}</string>
+			<string key="logo-512x512-alpha">{512, 512}</string>
 			<string key="rightclickoptions">{432, 495}</string>
 			<string key="screenshot-share">{646, 504}</string>
 			<string key="screenshot-window">{627, 471}</string>

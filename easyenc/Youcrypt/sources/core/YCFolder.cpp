@@ -279,6 +279,7 @@ bool YCFolder::deleteCredential(const Credentials &cred)
 {
     return YoucryptFolder::deleteCredential(cred);
 }
+        
 
 bool YCFolder::restoreFolderInPlace() 
 {

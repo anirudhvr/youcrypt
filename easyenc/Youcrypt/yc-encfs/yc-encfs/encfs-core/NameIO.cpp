@@ -179,9 +179,9 @@ bool NameIO::getReverseEncryption() const
 void NameIO::setFilenameIgnoreList(const boost::shared_ptr<std::vector<std::string> > &ignorelist)
 {
     ignoreList = ignorelist;
-    std::cout << "Printing ignore List in NameIO: ";
-    std::copy(ignoreList->begin(), ignoreList->end(), ostream_iterator<string>(cout, " "));
-    std::cout << std::endl;
+//    std::cout << "Printing ignore List in NameIO: ";
+//    std::copy(ignoreList->begin(), ignoreList->end(), ostream_iterator<string>(cout, " "));
+//    std::cout << std::endl;
 }
 
 std::string NameIO::recodePath( const char *path,

@@ -25,6 +25,7 @@
 #import "SharingGetEmailsView.h"
 
 #import "yc-networking/Key.h"
+#import "yc-networking/FolderInfo.h"
 #include "encfs-core/Credentials.h"
 #include "encfs-core/PassphraseCredentials.h"
 #include "encfs-core/RSACredentials.h"
@@ -93,6 +94,11 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
                          initWithPrefController:preferenceController 
                           saveInKeychain:NO];
     sharingController = [[SharingController alloc] init];
+    
+    // Is decryptController nil?
+    decryptController = [[Decrypt alloc] init];
+    encryptController = [[Encrypt alloc] init];
+    restoreController = [[RestoreController alloc] init];
     
     theApp = self;
     return self;
@@ -261,16 +267,24 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
 {
 }
 
+
 - (BOOL)applicationShouldHandleReopen:(NSApplication *)theApplication hasVisibleWindows:(BOOL)flag
 {
-    [self showListDirectories:self];
+//    [self showListDirectories:self];
     return YES;
 }
 
 - (BOOL)application:(NSApplication *)theApplication openFile:(NSString *)filename {
+    NSLog(@"application:openFile called with %@", filename);
     [[NSFileManager defaultManager] createDirectoryAtPath:@"/tmp/super" withIntermediateDirectories:YES attributes:nil error:nil];
     return [self openEncryptedFolder:filename];
 }
+
+
+//- (BOOL)application:(NSApplication *)theApplication openFiles:(NSArray *)filenames {
+//    NSLog(@"application:openFiles called");
+//    return YES;
+//}
 
 - (void)refreshFolderListMenu
 {
@@ -382,11 +396,13 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
         YCSettings::settingsUp();
         if (!macSettings->isSetup)
             throw std::runtime_error("Error initializing Youcrypt settings.");
+        
+        [passphraseManager.window makeKeyAndOrderFront:self];
+        [NSApp activateIgnoringOtherApps:YES];
         [passphraseManager getPassphraseFromUser]; // get passphrase
     }
     
     [self refreshFolderListMenu];
-    
 }
 
 // --------------------------------------------------------------------------------------
@@ -464,6 +480,15 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
     }
     
     if (dir->currStatus() == YoucryptDirectoryStatusMounted){
+        
+        // avr 10/31/2012
+        if (![self ensureFolderCanBeDecrypted:dir]) {
+            dir->unmount();
+            NSString *msg = [NSString stringWithFormat:@"This directory's access has been revoked by %s", dir->ownerID().c_str()];
+            [[NSAlert alertWithMessageText:msg defaultButton:@"OK" alternateButton:nil  otherButton:nil informativeTextWithFormat:@""] runModal];
+            return NO;
+        }
+        
         [libFunctions openMountedPathInFinderSomehow:nsstrFromCpp(dir->rootPath())
                                          mountedPath:nsstrFromCpp(dir->mountedPath())];
     }
@@ -479,27 +504,49 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
     return YES;
 }
 
-- (void)didDecrypt:(Folder)dir {
-    if (!dir) return;
+
+
+// avr 10/31/2012
+- (BOOL) ensureFolderCanBeDecrypted:(Folder)dir
+{
+    // First check if the current user is the same as the owner of the folder
+    boost::shared_ptr<UserAccount> ua = [self getUserAccount];
+    if (ua->email() == dir->ownerID()) {
+        return YES;
+    }
+    UserAccount other_ua(dir->ownerID(), "", "");
     
-    // FIXME:  implement mountdateasstring in YCFolder
-    [libFunctions openMountedPathInFinderSomehow:nsstrFromCpp(dir->rootPath())
-                                     mountedPath:nsstrFromCpp(dir->mountedPath())];
-    DDLogVerbose(@"didDecrypt folder %@\n", nsstrFromCpp(dir->rootPath()));
+    // So someone else is the owner of this folder. Let's make sure
+    // They have still given us access to this folder
+    youcrypt::FolderInfo fi;
+    fi.uuid = dir->uuid();
     
-    [self refreshFolderListMenu];
+    boost::shared_ptr<ServerConnectionWrapper> sc = [self getServerConnection];
+    int ret = sc->getFolderSharingStatus(fi, other_ua);
+    NSLog(@"Got foldersharing status %d", ret);
+    
+    // Owner revoked access
+    if ((youcrypt::FolderInfo::SharingStatus)ret ==
+        youcrypt::FolderInfo::FolderInfo_Private)
+        return NO;
+    
+    return YES;
 }
 
 - (BOOL)doDecrypt:(NSString *)path
       mountedPath:(NSString *)mountPath {
         
-    // Is decryptController nil?
-    if (!decryptController) {
-        decryptController = [[Decrypt alloc] init];
-    }
     Folder dir = (getDirectories())[cppString(path)];
     if (!dir)
         return NO;
+    
+    // avr 10/31/2012
+    if (![self ensureFolderCanBeDecrypted:dir]) {
+        NSString *msg = [NSString stringWithFormat:@"This directory's access has been revoked by %s", dir->ownerID().c_str()];
+        
+        [[NSAlert alertWithMessageText:msg defaultButton:@"OK" alternateButton:nil  otherButton:nil informativeTextWithFormat:@""] runModal];
+        return NO;
+    }
     
     decryptController.dir = dir;
     decryptController.mountPath = mountPath;
@@ -520,6 +567,17 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
         [decryptController showWindow:self];
     }
     return YES;
+}
+
+- (void)didDecrypt:(Folder)dir {
+    if (!dir) return;
+    
+    // FIXME:  implement mountdateasstring in YCFolder
+    [libFunctions openMountedPathInFinderSomehow:nsstrFromCpp(dir->rootPath())
+                                     mountedPath:nsstrFromCpp(dir->mountedPath())];
+    DDLogVerbose(@"didDecrypt folder %@\n", nsstrFromCpp(dir->rootPath()));
+    
+    [self refreshFolderListMenu];
 }
 
 - (void) cancelDecrypt:(Folder)dir {
@@ -557,11 +615,6 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
 }
 
 - (BOOL)doEncrypt:(NSString *)path {
-    // Is encryptController nil?
-    if (!encryptController) {
-        encryptController = [[Encrypt alloc] init];
-    }
-    
     NSString *pp = [passphraseManager getPassphrase];
     encryptController.sourceFolderPath = path;
     
@@ -578,6 +631,21 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
         encryptController.keychainHasPassphrase = NO;
         [encryptController showWindow:self];
     }
+    return YES;
+}
+
+// avr 10/31/2012
+-(BOOL)pushFolderInfo:(string)uuid
+        sharingStatus:(int)sharingstatus
+{
+    boost::shared_ptr<UserAccount> ua = [self getUserAccount];
+    youcrypt::FolderInfo fi;
+    fi.uuid = uuid;
+    fi.sharing_status = (youcrypt::FolderInfo::SharingStatus)sharingstatus;
+    
+    boost::shared_ptr<ServerConnectionWrapper> sc = [self getServerConnection];
+    int ret = sc->addFolderInfo(fi, *ua);
+    NSLog(@"addfolderInfo retcode: %d", ret);
     return YES;
 }
 
@@ -598,6 +666,8 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
     
     [self refreshFolderListMenu];
     
+    // avr 10/31/2012 -- push folder information to server
+    [self pushFolderInfo:dir->uuid() sharingStatus:1];
 }
 
 - (void)cancelEncrypt:(NSString *)path {
@@ -672,11 +742,6 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
         case YoucryptDirectoryStatusNeedAuth:
             break;
     }
-        
-    if (!restoreController) {
-        restoreController = [[RestoreController alloc] init];
-    }
-    
     
     restoreController.path = path;
     restoreController.dir = d;
@@ -745,26 +810,7 @@ void printCloseError(int ret)
 // --------------------------------------------------------------------------------------
 // Helper functions to show any window; you name it, we've it.
 // --------------------------------------------------------------------------------------
-- (IBAction)showMainApp:(id)sender {    
-}
-
-- (IBAction)showListDirectories:(id)sender {
-    
-    // Is list directories nil?
-    //    if (!listDirectories) {
-    //        listDirectories = [[ListDirectoriesWindow alloc] init];
-    //    }
-    //[listDirectories.window makeKeyAndOrderFront:self];
-//    [listDirectories showWindow:self];
-//    [NSApp activateIgnoringOtherApps:YES];
-    
-}
-
-- (IBAction)showPreferencePanel:(id)sender {    
-    // Is preferenceController nil?
-    //    if (!preferenceController) {
-    //        preferenceController = [[PreferenceController alloc] init];
-    //    }
+- (IBAction)showPreferencePanel:(id)sender {
     [preferenceController showWindow:self];
 }
 
@@ -783,10 +829,7 @@ void printCloseError(int ret)
     }
     
     [NSApp runModalForWindow:[tourWizard window]];
-    //    [tourWizard showWindow:self];
 }
-
-
 
 - (IBAction)openFeedbackPage:(id)sender
 {
@@ -870,6 +913,7 @@ void printCloseError(int ret)
     }
     return ret;
 }
+
 
 -(BOOL)performShare:(NSString*)email
             message:(NSString*)msg

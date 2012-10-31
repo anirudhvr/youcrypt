@@ -14,6 +14,7 @@
 #import "PassphraseManager.h"
 #import "MixpanelAPI.h"
 #import "core/Settings.h"
+#import "MacUISettings.h"
 
 @implementation Encrypt
 
@@ -69,16 +70,23 @@
     } else {
         yourPasswordString = [yourPassword stringValue];
     }
-        
-    BOOL encfnames = NO;
-    if ([[theApp.preferenceController getPreference:(MacUISettings::MacPreferenceKeys::yc_encryptfilenames)]
-         intValue] != 0)
-        encfnames = YES;
+    
+    // Create the options structure for this folder
     youcrypt::YoucryptFolderOpts opts;
-    if (encfnames == YES)
+    
+    // Figure out whether we should encrypt filenames or not?
+    if ([[theApp.preferenceController getPreference:(MacUISettings::MacPreferenceKeys::yc_encryptfilenames)]
+         intValue] != 0) {
         opts.filenameEncryption = youcrypt::YoucryptFolderOpts::filenameEncrypt;
-    else
+    } else {
         opts.filenameEncryption = youcrypt::YoucryptFolderOpts::filenamePlain;
+    }
+    
+    // Set the owner (email) for this folder
+    opts.owner_id = cppString([theApp.preferenceController getPreference:(MacUISettings::MacPreferenceKeys::yc_useremail)]);
+    
+    // By default, the folder's access is revokable
+    opts.revokable = 1;
 
     destFolder = [srcFolder stringByAppendingPathExtension:
                   ENCRYPTED_DIRECTORY_EXTENSION];

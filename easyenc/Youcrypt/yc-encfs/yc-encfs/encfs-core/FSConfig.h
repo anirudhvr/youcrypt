@@ -78,7 +78,13 @@ struct EncFSConfig
 
     // Rajsekar: Easyenc ignore list
     boost::shared_ptr<std::vector<std::string> > ignoreList;
-
+    
+    // Added by avr 10/30/2012
+    std::string owner_id;
+    std::string uuid;
+    int revokable;
+    
+    
     EncFSConfig()
         : keyData()
         , salt()

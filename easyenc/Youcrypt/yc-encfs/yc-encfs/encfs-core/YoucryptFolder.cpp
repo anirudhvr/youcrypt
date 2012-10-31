@@ -39,6 +39,9 @@
 #include <boost/iostreams/stream.hpp>
 #include <boost/archive/xml_iarchive.hpp>
 #include <boost/serialization/nvp.hpp>
+#include <boost/uuid/uuid.hpp>            // uuid class
+#include <boost/uuid/uuid_generators.hpp> // generators
+#include <boost/uuid/uuid_io.hpp>         // streaming operators etc.
 
 using boost::iostreams::file_descriptor_source;
 using boost::iostreams::stream;
@@ -224,16 +227,18 @@ ignoreList(new vector<string>())
     
     keySize = 256;
     blockSize = 1024;
-    algoName = "aes";
     blockMACBytes = 8;
     blockMACRandBytes = 0;
     uniqueIV = true;
     chainedIV = true;
     externalIV = false;
+    algoName = "AES";
+    
+    boost::uuids::uuid u = boost::uuids::random_generator()();
+    uuid = boost::uuids::to_string(u);
+    owner_id = "default@user.com";
+    revokable = 0; // default value for revokable -- 0
 }
-
-
-
 
 /*! Implementation: Creates an empty object */
 YoucryptFolder::YoucryptFolder()
@@ -422,7 +427,7 @@ bool YoucryptFolder::createAtPath(const path& _rootPath,
     int numusers;
 
 
-    alg = findCipherAlgorithm("AES", keySize);
+    alg = findCipherAlgorithm(opts.algoName.c_str(), keySize);
     switch (opts.filenameEncryption) {
     case YoucryptFolderOpts::filenamePlain:
         nameIOIface = NullNameIO::CurrentInterface();
@@ -470,6 +475,11 @@ bool YoucryptFolder::createAtPath(const path& _rootPath,
     config->salt.clear();
     config->kdfIterations = 16; // filled in by keying function
     config->desiredKDFDuration = desiredKDFDuration;
+    
+    // New fields added by avr 10/30/2012
+    config->uuid = opts.uuid;
+    config->owner_id = opts.owner_id;
+    config->revokable = opts.revokable;
 
     // Create Volume Key
 

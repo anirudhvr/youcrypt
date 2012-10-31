@@ -17,6 +17,7 @@
 #include <boost/shared_ptr.hpp>
 #include "UserAccount.h"
 #include "Key.h"
+#include "FolderInfo.h"
 
 namespace youcrypt {
     
@@ -51,6 +52,11 @@ public:
     
     // Push new public key for supplied account to server
     OperationStatus addPublicKey(Key &key, UserAccount &account);
+    
+    OperationStatus addFolderInfo(FolderInfo &folderInfo,
+                                      UserAccount &account);
+    
+    int getFolderSharingStatus(FolderInfo &folderToCheck, UserAccount &account);
     
 };
 }

@@ -39,11 +39,23 @@ namespace youcrypt {
         //! Algoname: aes, blowfish
         string algoName;
         
+        //! Algorithm params
         int blockMACBytes;
         int blockMACRandBytes;
         bool uniqueIV;
         bool chainedIV;
-        bool externalIV;        
+        bool externalIV;
+        
+        // Auxiliary folder information
+        //! Unique identifier for this folder
+        string uuid; 
+        //! Unique id (e.g., email) identifying the user that created this folder
+        string owner_id;
+        
+        //! Is this folder's access "revokable" by the owner
+        //! implies that when mounting/decrypting the folder,
+        //! YouCrypt checks a specific URL to see if the folder's access has been revoked
+        int revokable;
 
         enum {
             filenamePlain,
@@ -102,6 +114,10 @@ namespace youcrypt {
 
         int currStatus() { return status; }
         string getFuseMessage(bool=false);
+        
+        //! New functions to get folder's UUID and owner id
+        string ownerID() { return config->owner_id; } ;
+        string uuid() { return config->uuid; } ;
         
     public:
         enum Status {
