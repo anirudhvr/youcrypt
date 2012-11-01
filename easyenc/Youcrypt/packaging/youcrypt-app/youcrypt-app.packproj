@@ -78,7 +78,7 @@
 											<key>GID</key>
 											<integer>80</integer>
 											<key>Path</key>
-											<string>/Users/avr/Library/Developer/Xcode/DerivedData/Youcrypt-ggysqscodtvhathjsipjtpfuvepf/Build/Products/Release/Youcrypt.app</string>
+											<string>/Users/avr/code/easyenc/easyenc/Youcrypt/packaging/Youcrypt.app</string>
 											<key>Path Type</key>
 											<integer>1</integer>
 											<key>Privileges</key>
@@ -555,6 +555,8 @@
 		<true/>
 		<key>Remove .pbdevelopment</key>
 		<true/>
+		<key>Remove CVS</key>
+		<false/>
 	</dict>
 </dict>
 </plist>

@@ -23,8 +23,6 @@
 								<integer>0</integer>
 								<key>Path</key>
 								<string></string>
-								<key>Path Type</key>
-								<integer>1</integer>
 							</dict>
 							<key>License</key>
 							<dict>
@@ -34,8 +32,6 @@
 									<integer>0</integer>
 									<key>Path</key>
 									<string></string>
-									<key>Path Type</key>
-									<integer>1</integer>
 								</dict>
 							</dict>
 							<key>ReadMe</key>
@@ -46,8 +42,6 @@
 									<integer>0</integer>
 									<key>Path</key>
 									<string></string>
-									<key>Path Type</key>
-									<integer>1</integer>
 								</dict>
 							</dict>
 							<key>Welcome</key>
@@ -58,8 +52,6 @@
 									<integer>0</integer>
 									<key>Path</key>
 									<string></string>
-									<key>Path Type</key>
-									<integer>1</integer>
 								</dict>
 							</dict>
 						</dict>
@@ -72,7 +64,7 @@
 							<key>Imported Options</key>
 							<dict>
 								<key>IFPkgFlagInstalledSize</key>
-								<integer>59604</integer>
+								<integer>45424</integer>
 							</dict>
 							<key>Imported Package</key>
 							<true/>
@@ -202,10 +194,6 @@
 							<dict>
 								<key>CFBundleGetInfoString</key>
 								<string>youcrypt-app 1.0 Copyrights © 2012 Nouvou Inc.</string>
-								<key>CFBundleIconFile</key>
-								<string></string>
-								<key>CFBundleIconFile Path Type</key>
-								<integer>1</integer>
 								<key>CFBundleIdentifier</key>
 								<string>com.youcrypt.youcrypt-app</string>
 								<key>CFBundleName</key>
@@ -220,6 +208,8 @@
 								<key>IFPkgFlagAuthorizationAction</key>
 								<integer>0</integer>
 								<key>IFPkgFlagFollowLinks</key>
+								<false/>
+								<key>IFPkgFlagInstallFat</key>
 								<false/>
 								<key>IFPkgFlagIsRequired</key>
 								<false/>
@@ -673,7 +663,7 @@
 						<key>IFPkgDescriptionTitle</key>
 						<string>YouCrypt</string>
 						<key>IFPkgDescriptionVersion</key>
-						<string>0.23.3</string>
+						<string>0.24.2</string>
 					</dict>
 				</dict>
 				<key>Display Information</key>
@@ -689,7 +679,7 @@
 					<key>CFBundleName</key>
 					<string>YouCrypt</string>
 					<key>CFBundleShortVersionString</key>
-					<string>0.23.2</string>
+					<string>0.24.2</string>
 				</dict>
 				<key>Version</key>
 				<dict>
