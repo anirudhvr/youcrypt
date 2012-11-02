@@ -9,7 +9,9 @@
 @interface FeedbackSheetController : NSWindowController
 
 @property (atomic, strong) IBOutlet NSTextField *message;
+@property (atomic, strong) IBOutlet NSTextView *textView;
 @property (atomic, strong) IBOutlet NSButton *anonymize;
+@property (atomic, strong) IBOutlet NSButton *emailCopy;
 @property (atomic, strong) IBOutlet NSButton *logfiles;
 @property (atomic, strong) IBOutlet NSTextField *progressMessage;
 

@@ -23,8 +23,10 @@
 @implementation FeedbackSheetController
 
 @synthesize message;
+@synthesize textView;
 @synthesize anonymize;
 @synthesize logfiles;
+@synthesize emailCopy;
 @synthesize progressMessage;
 @synthesize isBug;
 @synthesize isFeature;
@@ -47,26 +49,28 @@
 
 - (void) awakeFromNib
 {
-    [message setStringValue:@""];
+    [textView setString:@""];
     [progressMessage setStringValue:@""];
 }
 
 -(IBAction)send:(id)sender
 {
     (void)sender;
-    NSString *curlEmail;
+    NSString *curlEmail, *copyEmail = @"";
    
+    NSString *userRealName = [theApp.preferenceController getPreference:(MacUISettings::MacPreferenceKeys::yc_userrealname)];
+    NSString *userEmail = [theApp.preferenceController getPreference:(MacUISettings::MacPreferenceKeys::yc_useremail)];
+    
     if([anonymize state]) {
         curlEmail = [NSString stringWithFormat:@"from=\"anonymous@youcrypt.com\""];
     }
     else {
-        NSString *userRealName = [theApp.preferenceController getPreference:(MacUISettings::MacPreferenceKeys::yc_userrealname)];
-        NSString *userEmail = [theApp.preferenceController getPreference:(MacUISettings::MacPreferenceKeys::yc_useremail)];
         if (![libFunctions validateEmail:userEmail])
             userEmail = @"invalid-email@youcrypt.com";
         
         curlEmail = [NSString stringWithFormat:@"from=\"%@ <%@>\"",userRealName,userEmail];
     }
+    
     
     
     NSString *subject = @"subject='";
@@ -81,11 +85,11 @@
 
     
     
-    NSString *curlText   = [NSString stringWithFormat:@"text=\%@\"", [message stringValue]];
+    NSString *curlText   = [NSString stringWithFormat:@"text=%@", [textView string]];
     NSString *compressedLogFile;
     
     NSMutableArray *args = [NSMutableArray arrayWithObjects: 
-                     @"-s", @"-k", 
+                     @"-s", @"-k",
                      @"--user", YC_MAILGUN_API_KEY,
                      YC_MAILGUN_URL,
                      @"-F", curlEmail,
@@ -93,6 +97,12 @@
                      @"-F", subject,
                      @"-F", curlText, 
             nil];
+    
+    if ([emailCopy state]) {
+        copyEmail = [NSString stringWithFormat:@"bcc=\"%@\"",userEmail];
+        [args addObject:@"-F"];
+        [args addObject:copyEmail];
+    }
     
     if([logfiles state]) {
         // Include most recent log file.
@@ -120,29 +130,40 @@
     NSString *reply;
     NSTask *feedbackTask = [NSTask alloc];
     
-    if ([libFunctions execWithSocket:@"/usr/bin/curl" arguments:args env:nil io:fh proc:feedbackTask]) {
+    BOOL ret = [libFunctions execWithSocket:@"/usr/bin/curl" arguments:args env:nil io:fh proc:feedbackTask];
+    if (ret) {
         [feedbackTask waitUntilExit];
         NSData *bytes = [fh availableData];
         reply = [[NSString alloc] initWithData:bytes encoding:NSUTF8StringEncoding];
         
         [fh closeFile];
+        
+        [progressMessage setStringValue:@"Email sent to feedback@youcrypt.com. Thanks!"];
+        [progressMessage display];
+        [NSThread sleepForTimeInterval:1.0f];
+        
     } else {
+        
+        [progressMessage setStringValue:@"Error. curl not installed?"];
         DDLogInfo(@"Sending feedback failed");
+        [progressMessage display];
+        [NSThread sleepForTimeInterval:1.5f];
     }
     
     NSError *error = nil;
-
     [[NSFileManager defaultManager] removeItemAtPath:compressedLogFile error:&error];
     
-    [progressMessage setStringValue:@"Email sent to feedback@youcrypt.com. Thanks!"];
-    [progressMessage display];
-    [NSThread sleepForTimeInterval:1.0f];
+    
+    [textView setString:@""];
+    [progressMessage setStringValue:@""];
     
     [self.window close];
 }
 
 -(IBAction)cancel:(id)sender
 {
+    [textView setString:@""];
+    [progressMessage setStringValue:@""];
     [self.window close];
 }
 
