@@ -6,9 +6,7 @@
 //  Copyright (c) 2012 Nouvou Inc. All rights reserved.
 //
 
-#import "Contrib/JCSSheet/JCSSheetController.h"
-
-@interface FeedbackSheetController : JCSSheetController
+@interface FeedbackSheetController : NSWindowController
 
 @property (atomic, strong) IBOutlet NSTextField *message;
 @property (atomic, strong) IBOutlet NSButton *anonymize;

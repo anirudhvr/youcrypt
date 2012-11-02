@@ -133,18 +133,17 @@
     NSError *error = nil;
 
     [[NSFileManager defaultManager] removeItemAtPath:compressedLogFile error:&error];
-
-    [self endSheetWithReturnCode:kSheetReturnedSave];
-}
-
-- (void)sheetWillDisplay {
-    [super sheetWillDisplay];
+    
+    [progressMessage setStringValue:@"Email sent to feedback@youcrypt.com. Thanks!"];
+    [progressMessage display];
+    [NSThread sleepForTimeInterval:1.0f];
+    
+    [self.window close];
 }
 
 -(IBAction)cancel:(id)sender
 {
-    (void)sender;
-    [self endSheetWithReturnCode:kSheetReturnedCancel];
+    [self.window close];
 }
 
 @end

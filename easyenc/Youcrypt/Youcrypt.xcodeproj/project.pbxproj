@@ -80,7 +80,6 @@
 		E61F694115F1AC57009990C6 /* ServerConnectionWrapper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E61F693F15F1AC57009990C6 /* ServerConnectionWrapper.cpp */; };
 		E6247AAA163E9C3C00597F9D /* BoxFSA.mm in Sources */ = {isa = PBXBuildFile; fileRef = E6247AA9163E9C3C00597F9D /* BoxFSA.mm */; };
 		E62E3D7916355399009B066B /* MyNSMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = E62E3D7816355399009B066B /* MyNSMenu.m */; };
-		E62E3DE41639D296009B066B /* MAAttachedWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = E62E3DE31639D296009B066B /* MAAttachedWindow.m */; };
 		E62E3DE71639DB49009B066B /* SharingWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = E62E3DE61639DB49009B066B /* SharingWindow.xib */; };
 		E6310AD415F07A670078F61E /* ServerConnection.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E6310AD215F07A670078F61E /* ServerConnection.cpp */; };
 		E633656315EF24B3003EC0F9 /* concat.c in Sources */ = {isa = PBXBuildFile; fileRef = E633655A15EF24B3003EC0F9 /* concat.c */; };
@@ -583,8 +582,6 @@
 		E6247AA9163E9C3C00597F9D /* BoxFSA.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = BoxFSA.mm; path = sources/BoxFSA.mm; sourceTree = "<group>"; };
 		E62E3D7716355399009B066B /* MyNSMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MyNSMenu.h; path = sources/Subclasses/MyNSMenu.h; sourceTree = "<group>"; };
 		E62E3D7816355399009B066B /* MyNSMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MyNSMenu.m; path = sources/Subclasses/MyNSMenu.m; sourceTree = "<group>"; };
-		E62E3DE31639D296009B066B /* MAAttachedWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAAttachedWindow.m; sourceTree = "<group>"; };
-		E62E3DE51639D29D009B066B /* MAAttachedWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MAAttachedWindow.h; sourceTree = "<group>"; };
 		E62E3DE61639DB49009B066B /* SharingWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SharingWindow.xib; sourceTree = "<group>"; };
 		E6310AD215F07A670078F61E /* ServerConnection.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ServerConnection.cpp; sourceTree = "<group>"; };
 		E6310AD315F07A670078F61E /* ServerConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServerConnection.h; sourceTree = "<group>"; };
@@ -1028,15 +1025,6 @@
 			name = Subclasses;
 			sourceTree = "<group>";
 		};
-		E62E3DE21639D285009B066B /* MAAttachedWindow */ = {
-			isa = PBXGroup;
-			children = (
-				E62E3DE51639D29D009B066B /* MAAttachedWindow.h */,
-				E62E3DE31639D296009B066B /* MAAttachedWindow.m */,
-			);
-			path = MAAttachedWindow;
-			sourceTree = "<group>";
-		};
 		E633655915EF2491003EC0F9 /* passwdqc */ = {
 			isa = PBXGroup;
 			children = (
@@ -1215,7 +1203,6 @@
 		E6649C0A15A53BFA0096886F /* contrib */ = {
 			isa = PBXGroup;
 			children = (
-				E62E3DE21639D285009B066B /* MAAttachedWindow */,
 				E633655915EF2491003EC0F9 /* passwdqc */,
 				E64AC1A715E7698900D2E046 /* bcrypt */,
 				E64AC19B15E7695900D2E046 /* rapidjson */,
@@ -1947,7 +1934,6 @@
 				E09146F015F8C97B00DB8051 /* Settings.cpp in Sources */,
 				E09146F315F9819C00DB8051 /* MacUISettings.mm in Sources */,
 				E62E3D7916355399009B066B /* MyNSMenu.m in Sources */,
-				E62E3DE41639D296009B066B /* MAAttachedWindow.m in Sources */,
 				E633719B163BDC8400F91112 /* SharingController.m in Sources */,
 				E6247AAA163E9C3C00597F9D /* BoxFSA.mm in Sources */,
 			);
@@ -2022,6 +2008,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CODE_SIGN_IDENTITY = "Mac Developer: Anirudh Ramachandran (6SNX9MRMUF)";
 				COPY_PHASE_STRIP = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -2035,7 +2022,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				"INFOPLIST_FILE[sdk=*]" = Youcrypt.plist;
-				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = (
 					"-Wno-unused-variable",
@@ -2043,6 +2030,7 @@
 					"-D__ASSERT_MACROS_DEFINE_VERSIONS_WITHOUT_UNDERSCORES=0",
 				);
 				PRODUCT_NAME = Youcrypt;
+				PROVISIONING_PROFILE = "";
 				SDKROOT = macosx;
 			};
 			name = Debug;
@@ -2053,8 +2041,9 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CODE_SIGN_IDENTITY = "Mac Developer: Anirudh Ramachandran (6SNX9MRMUF)";
 				COPY_PHASE_STRIP = YES;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEBUG_INFORMATION_FORMAT = dwarf;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_VERSION = "";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -2062,7 +2051,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				"INFOPLIST_FILE[sdk=*]" = Youcrypt.plist;
-				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = (
 					"-Wno-unused-variable",
@@ -2070,6 +2059,7 @@
 					"-D__ASSERT_MACROS_DEFINE_VERSIONS_WITHOUT_UNDERSCORES=0",
 				);
 				PRODUCT_NAME = Youcrypt;
+				PROVISIONING_PROFILE = "";
 				SDKROOT = macosx;
 			};
 			name = Release;
@@ -2077,6 +2067,7 @@
 		256C358E158EA75F00E2BEC4 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "Mac Developer: Anirudh Ramachandran (6SNX9MRMUF)";
 				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2098,6 +2089,8 @@
 					"\"$(SRCROOT)/lib\"",
 					/opt/local/lib,
 				);
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = (
 					"-Wunused-variable",
 					"-Wdeprecated-writable-strings",
@@ -2125,6 +2118,7 @@
 					"-lssl",
 					"-lcrypto",
 				);
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -2132,7 +2126,9 @@
 		256C358F158EA75F00E2BEC4 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "Mac Developer: Anirudh Ramachandran (6SNX9MRMUF)";
 				COMBINE_HIDPI_IMAGES = YES;
+				DEBUG_INFORMATION_FORMAT = dwarf;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
@@ -2154,6 +2150,8 @@
 					"\"$(SRCROOT)/lib\"",
 					/opt/local/lib,
 				);
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = (
 					"-Wunused-variable",
 					"-Wdeprecated-writable-strings",
@@ -2181,6 +2179,7 @@
 					"-lssl",
 					"-lcrypto",
 				);
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

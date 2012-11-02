@@ -554,6 +554,7 @@
 					"$(SRCROOT)/../lib",
 					/usr/lib/,
 				);
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				OTHER_CPLUSPLUSFLAGS = (
 					"$(OTHER_CFLAGS)",
 					"-D_FILE_OFFSET_BITS=64",
@@ -845,6 +846,7 @@
 					"$(SRCROOT)/../lib",
 					/usr/lib/,
 				);
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				OTHER_CPLUSPLUSFLAGS = (
 					"$(OTHER_CFLAGS)",
 					"-D_FILE_OFFSET_BITS=64",
@@ -884,6 +886,7 @@
 					"$(SRCROOT)/../lib",
 					/usr/lib/,
 				);
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				OTHER_CPLUSPLUSFLAGS = (
 					"$(OTHER_CFLAGS)",
 					"-D_FILE_OFFSET_BITS=64",

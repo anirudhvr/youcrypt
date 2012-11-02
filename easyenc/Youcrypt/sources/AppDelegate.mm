@@ -362,7 +362,8 @@ int ddLogLevel = LOG_LEVEL_VERBOSE;
     [sharingController setWindowAttributes:[NSString stringWithFormat:@"Share folder %@", p]
                                 folderPath:p];
     [sharingController showWindow:self];
-
+    [NSApp activateIgnoringOtherApps:YES];
+    
 }
 
 - (IBAction) decryptFolderFromMenu:(id) sender
@@ -812,6 +813,7 @@ void printCloseError(int ret)
 // --------------------------------------------------------------------------------------
 - (IBAction)showPreferencePanel:(id)sender {
     [preferenceController showWindow:self];
+    [NSApp activateIgnoringOtherApps:YES];
 }
 
 - (IBAction)showAboutWindow:(id)sender {
@@ -834,7 +836,9 @@ void printCloseError(int ret)
 - (IBAction)openFeedbackPage:(id)sender
 {
     //[[NSWorkspace sharedWorkspace] openURL: [NSURL URLWithString:@"http://youcrypt.com"]];
-    [feedbackSheetController showWindow:self];
+//    [feedbackSheetController showWindow:self];
+    [feedbackSheetController.window makeKeyAndOrderFront:self];
+    [NSApp activateIgnoringOtherApps:YES];
 }
 
 - (IBAction)openHelpPage:(id)sender
