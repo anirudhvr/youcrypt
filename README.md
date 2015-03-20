@@ -1,10 +1,10 @@
 YouCrypt
 ========
 
-YouCrypt is (was) an attempt to give Dropbox-like shared folders for
-all, **but with end-to-end encryption**. Using the FUSE-based encrypted
-filesystem exposed by [EncFS](https://github.com/vgough/encfs), we
-created a higher-layer app that managed multiple encrypted folders, as
+YouCrypt (http://youcrypt.com) is (was) an attempt to give Dropbox-like 
+shared folders for all, **but with end-to-end encryption**. Using the 
+FUSE-based encrypted filesystem exposed by [EncFS](https://github.com/vgough/encfs), 
+we created a higher-layer app that managed multiple encrypted folders, as
 well as folder sharing via a public key mechanism (hosted on
 a PKI server at youcrypt.com).
 
