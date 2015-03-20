@@ -51,7 +51,7 @@
 ///////////////////////////////////////
 //          SECRETS
 ///////////////////////////////////////
-#define MIXPANEL_TOKEN @"b01b99df347adcb20353ba2a4cb6faf4" // avr@nouvou.com's token
+#define MIXPANEL_TOKEN @"b01b99df347adcb20353ba2a4cb6faf4" // Example
 
 
 ///////////////////////////////////////
@@ -60,13 +60,13 @@
 #define API_BASE_URL "https://youcrypt.herokuapp.com/"
 //#define API_BASE_URL "http://localhost:3000/"
 // This string should match the one set on the server (config/initializers/youcrypt_constants.rb)
-#define YC_USER_AGENT "YouCrypt_User_Agent_e4946cc8f61edaaccb8239c3f1b43cc3"
+#define YC_USER_AGENT "blahblah" // Example
 #define YC_YOUCRYPT_DOWNLOADLOCATION @"http://youcrypt.com/alpha/download"
 
 ///////////////////////////////////////
 //          MAILGUN CONFIG
 ///////////////////////////////////////
-#define YC_MAILGUN_API_KEY @"api:key-4xtch32ho6y6lcnv9euv8668kws42d49"
+#define YC_MAILGUN_API_KEY @"api:key-foobar"
 #define YC_MAILGUN_URL     @"https://api.mailgun.net/v2/cloudclear.mailgun.org/messages"
 
 
