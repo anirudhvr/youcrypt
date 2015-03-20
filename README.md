@@ -1,7 +1,7 @@
-Youcrypt
+YouCrypt
 ========
 
-Youcrypt is (was) an attempt to give Dropbox-like shared folders for
+YouCrypt is (was) an attempt to give Dropbox-like shared folders for
 all, **but with end-to-end encryption**. Using the FUSE-based encrypted
 filesystem exposed by [EncFS](https://github.com/vgough/encfs), we
 created a higher-layer app that managed multiple encrypted folders, as
@@ -9,8 +9,7 @@ well as folder sharing via a public key mechanism (hosted on
 a PKI server at youcrypt.com).
 
 The service is no longer maintained so this code is being open-sourced
-under the GPLv3 license. 
-
+under the GPLv2 license.
 
 Features
 --------
@@ -28,12 +27,12 @@ Screenshots
 Encryption:
 ![Encryption](https://raw.github.com/anirudhvr/youcrypt/master/easyenc/Youcrypt/images/yc-1.png)
 
-
-Folder icon for encrypted folders:
-![Icon](https://raw.github.com/anirudhvr/youcrypt/master/easyenc/Youcrypt/images/yc-2.png)
-
 Youcrypt supports filename encryption as well; decrypted view (via FUSE)
 shown above. 
+![Icon](https://raw.github.com/anirudhvr/youcrypt/master/easyenc/Youcrypt/images/yc-2.png)
+
+
+Distinctive folder icon for encrypted folders:
 ![Icon](https://raw.github.com/anirudhvr/youcrypt/master/easyenc/Youcrypt/images/yc-3.png)
 
 
