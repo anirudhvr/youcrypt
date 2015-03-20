@@ -120,6 +120,7 @@ namespace youcrypt {
         string uuid() { return config->uuid; } ;
         
     public:
+        
         enum Status {
             //! Status is not known (not parseable, not readable, etc.)
             statusUnknown,

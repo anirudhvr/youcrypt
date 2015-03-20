@@ -943,8 +943,6 @@
 				25F3D14A15923FE800E3383C /* Decrypt.mm */,
 				E6649C7C15A53CFC0096886F /* libFunctions.h */,
 				25F3D1501592435600E3383C /* libFunctions.mm */,
-				E6E2A0B7159266F6003E3F6C /* YoucryptService.h */,
-				E6E2A0B6159266F6003E3F6C /* YoucryptService.mm */,
 				E054042015AB1CE10011E5CC /* RestoreController.h */,
 				E054042115AB1CE10011E5CC /* RestoreController.mm */,
 				E6E2A0B7159266F6003E3F6C /* YoucryptService.h */,
@@ -1447,7 +1445,7 @@
 			name = YoucryptTest;
 			productName = "Youcrypt Mac alphaTests";
 			productReference = 256C357C158EA75F00E2BEC4 /* YoucryptTest.octest */;
-			productType = "com.apple.product-type.bundle";
+			productType = "com.apple.product-type.bundle.ocunit-test";
 		};
 		E0BF0E991596D01F002F9FB9 /* TestBed */ = {
 			isa = PBXNativeTarget;
@@ -2068,6 +2066,7 @@
 		256C358E158EA75F00E2BEC4 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_WARN_CXX0X_EXTENSIONS = NO;
 				CODE_SIGN_IDENTITY = "Mac Developer: Anirudh Ramachandran (6SNX9MRMUF)";
 				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -2127,6 +2126,7 @@
 		256C358F158EA75F00E2BEC4 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_WARN_CXX0X_EXTENSIONS = NO;
 				CODE_SIGN_IDENTITY = "Mac Developer: Anirudh Ramachandran (6SNX9MRMUF)";
 				COMBINE_HIDPI_IMAGES = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;

@@ -84,7 +84,7 @@ void EncFS_Context::setRoot(const shared_ptr<DirNode> &r)
 
 bool EncFS_Context::isMounted()
 {
-    return root;
+    return root.get();
 }
 
 int EncFS_Context::getAndResetUsageCounter()

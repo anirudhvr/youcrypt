@@ -248,9 +248,9 @@ YoucryptFolder::YoucryptFolder()
 
 /*! Implementation: Create a YoucryptFolder object
  */
-YoucryptFolder::YoucryptFolder(const path &_rootPath) : YoucryptFolder()
+YoucryptFolder::YoucryptFolder(const path &_rootPath)
 {
-    YoucryptFolder::YoucryptFolder();
+    status = YoucryptFolder::statusUnknown;
     rootPath = _rootPath;
     string rootDir = _rootPath.string();
     slashTerminate(rootDir);
@@ -261,8 +261,12 @@ YoucryptFolder::YoucryptFolder(const path &_rootPath) : YoucryptFolder()
  */
 YoucryptFolder::YoucryptFolder(const path &_rootPath,
                                const YoucryptFolderOpts& _opts,
-                               const Credentials& creds) : YoucryptFolder(_rootPath)
+                               const Credentials& creds)
 {
+    status = YoucryptFolder::statusUnknown;
+    rootPath = _rootPath;
+    string rootDir = _rootPath.string();
+    slashTerminate(rootDir);
     loadConfigAtPath(_rootPath, creds);
     if (status == YoucryptFolder::uninitialized)
         createAtPath(rootPath, _opts, creds);
