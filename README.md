@@ -26,15 +26,15 @@ Screenshots
 -----------
 
 Encryption:
-![Encryption][https://raw.github.com/anirudhvr/youcrypt/master/easyenc/Youcrypt/images/yc-1.png]
+![Encryption](https://raw.github.com/anirudhvr/youcrypt/master/easyenc/Youcrypt/images/yc-1.png)
 
 
 Folder icon for encrypted folders:
-![Icon][https://raw.github.com/anirudhvr/youcrypt/master/easyenc/Youcrypt/images/yc-2.png]
+![Icon](https://raw.github.com/anirudhvr/youcrypt/master/easyenc/Youcrypt/images/yc-2.png)
 
 Youcrypt supports filename encryption as well; decrypted view (via FUSE)
 shown above. 
-![Icon][https://raw.github.com/anirudhvr/youcrypt/master/easyenc/Youcrypt/images/yc-3.png]
+![Icon](https://raw.github.com/anirudhvr/youcrypt/master/easyenc/Youcrypt/images/yc-3.png)
 
 
 Bugs
